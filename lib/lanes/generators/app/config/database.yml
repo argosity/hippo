@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  database: <%= name %>_dev
+  host: /tmp
+
+test:
+  adapter: postgresql
+  database: <%= name %>_test
+  host: /tmp

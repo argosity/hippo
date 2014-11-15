@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
+        <title><%= Lanes.config.app_title %></title>
+
+        <%=  javascript_tag 'lanes-workspace.js' %>
+        <%=  stylesheet_tag 'lanes-workspace' %>
+
+
+        <script type="text/javascript">
+         Lanes.Workspace.create('.lanes-test-root', {
+           csrf_token: "<%= csrf_token %>",
+           view: 'Lanes.Workspace.Layout',
+           user_data:  <%= user_data %>,
+           root_path: "<%= lanes_api_url %>"
+         }, <%= bootstrap_data %> );
+        </script>
+    </head>
+
+    <body style="margin: 0; background-color: white;">
+
+        <div class="lanes-test-root">
+        </div>
+
+    </body>
+</html>

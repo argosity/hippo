@@ -8,7 +8,6 @@ require 'guard'
 
 Dir.glob('tasks/*.rake').each { |r| load r}
 
-
 Rake::TestTask.new do |t|
     t.libs << 'test'
     t.pattern = "test/*_test.rb"
@@ -29,9 +28,9 @@ task :console do
     require 'irb'
     require 'irb/completion'
     require 'pp'
-    require 'skr/core'
-    include Skr
-    Skr::Core::DB.establish_connection
+    require 'lanes'
+    include Lanes
+    Lanes::DB.establish_connection
     ActiveRecord::Base.logger = Logger.new STDOUT
     ARGV.clear
     IRB.start
@@ -55,4 +54,21 @@ task :guard => [ 'db:migrate', 'db:test:clone_structure' ] do
     # and doesn't listen for changes.  Which kinda defeats the purpose
     # For now just shell out until I can figure it out
     sh "bundle exec guard"
+end
+
+args = ['-F','config/puma.rb']
+
+task :dev do
+    args.push('start')
+    Puma::ControlCLI.new(args).run
+end
+
+# require 'jasmine'
+# load 'jasmine/tasks/jasmine.rake'
+
+
+task :testj do
+    require 'lanes/api'
+    Lanes.config.specs_root = Pathname.getwd
+
 end

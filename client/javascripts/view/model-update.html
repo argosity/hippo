@@ -1,0 +1,13 @@
+<li class="update">
+    <span class="name"  data-toggle="tooltip" data-placement="top" data-tooltip-message="<%= this.by.email %>">
+        <%= this.by.name %>
+    </span>
+    set <%= @record.api_path %>
+    <% for field in @displayed_fields: %>
+        <% change = @changeFor(field) %>
+        <span data-toggle="tooltip" data-placement="top" data-tooltip-message="<%= change.from %> -> <%=change.to %>">
+            <%= field %>
+        </span>
+    <% end %>
+    <div class="ago"></div>
+</li>

@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gem "lanes", :path=>"/Users/nas/code/lanes" #"~><%= Lanes::VERSION %>"
+gem "rake"
+gem 'puma'

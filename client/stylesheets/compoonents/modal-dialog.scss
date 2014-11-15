@@ -1,0 +1,23 @@
+.modal-backdrop{
+  position: absolute;
+}
+
+.modal-dialog{
+  position: absolute;
+  top: 30px;
+  z-index: 28;
+  right: 5%;
+  left: 5%;
+
+  &.tiny {
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+
+  &.modal-lg{
+    width: 800px;
+  }
+
+}

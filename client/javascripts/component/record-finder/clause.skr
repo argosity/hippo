@@ -1,0 +1,35 @@
+<div class="row clause">
+    <div class="col-xs-10">
+        <div class="input-group">
+
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="query-field-description"></span>
+                    <span class="caret"></span>
+                </button>
+                <div class="query dropdown dropdown-menu">
+                    <form>
+                        <div class="<%= h.grid_widths 6 %> fields">
+                        </div>
+                        <div class="<%= h.grid_widths 6 %> operators">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <input type="text" name="value" class="form-control query-string" <%= h.elid() %>>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default del-clause">
+                    <i class="icon-trash-o"></i>
+                </button>
+                <button type="button" class="btn btn-default add-clause">
+                    <i class="icon-plus"></i>
+                </button>
+            </span>
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+    <div class="col-xs-2 action">
+        <button type="button" class="btn btn-default run-query">
+            <i class="icon-search"></i><span> Search</span>
+        </button>
+    </div>
+</div>

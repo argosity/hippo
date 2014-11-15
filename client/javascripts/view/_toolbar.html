@@ -1,0 +1,27 @@
+    <nav class="toolbar">
+        <div class="container-fluid">
+            <div class="navbar-header navbar-left">
+                <% for button in @buttons: %>
+                <%= h.button(button) %>
+                <% end  %>
+            </div>
+
+            <ul class="nav top-menu navbar-right">
+                <li class="dropdown open changes-notification">
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-cloud"></i>
+                        <span class="badge bg-theme"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <div class="arrow"></div>
+                        <h3 class="title">There have been <span></span> updates.</h3>
+                        <div class="scroller">
+                            <ul data-hook="changes-display" class="list-group changes">
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </nav>

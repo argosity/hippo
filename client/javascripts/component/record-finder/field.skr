@@ -1,0 +1,8 @@
+<div class="input-group">
+    <input type="text" name="<%= @field_name %>" id="foo" class="form-control record-finder-query-string">
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default record-finder-query">
+            <i class="icon-search"></i>
+        </button>
+    </span>
+</div>

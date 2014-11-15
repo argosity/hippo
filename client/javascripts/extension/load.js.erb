@@ -1,0 +1,3 @@
+<% Lanes::Extension.each(self) do | ext | %>
+<% require_asset ext.logical_path %>
+<% end %>

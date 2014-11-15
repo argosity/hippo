@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
+        <title>Lanes Specs</title>
+
+        <%=  javascript_tag 'lanes-workspace.js' %>
+
+        <% specs.css_files.each do |css_file| %>
+          <link rel="stylesheet" href="<%= css_file %>" type="text/css" media="screen"/>
+        <% end %>
+
+        <% specs.js_files.each do | js_file | %>
+          <script src="<%= js_file %>" type="text/javascript"></script>
+        <% end %>
+
+    </head>
+
+    <body style="margin: 0; background-color: white;">
+      <div id="jasmine_content"></div>
+    </body>
+
+</html>
