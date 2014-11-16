@@ -18,9 +18,9 @@ module Lanes
             ::ActiveRecord::Base.establish_connection( configuration )
         end
 
-        def migration_exists?( file_name ) #:nodoc:
-            Dir.glob("#{migrations_dir}/[0-9]*_*.rb").grep(/\d+_#{file_name}.rb$/).first
-        end
+        # def migration_exists?( file_name ) #:nodoc:
+        #     Dir.glob("#{migrations_dir}/[0-9]*_*.rb").grep(/\d+_#{file_name}.rb$/).first
+        # end
 
         def load_seed
             load Pathname.new(__FILE__).dirname.join("../../db/seed.rb")
@@ -41,20 +41,26 @@ module Lanes
             ActiveRecord::Tasks::DatabaseTasks.current_config( :config => ActiveRecord::Base.configurations[ env ] )
         end
 
-        def create_migration( migration_name )
-            STDERR.puts "Migration #{migration_name} already exists!" and return false if migration_exists?( migration_name )
-            migration_number = Time.now.utc.strftime("%Y%m%d%H%M%S")
-            migration_file = File.join(migrations_dir, "#{migration_number}_#{migration_name}.rb")
-            migration_class = migration_name.split("_").map(&:capitalize).join
-            File.open(migration_file, 'w') do |file|
-                file.write <<-MIGRATION.strip_heredoc
-            class #{migration_class} < ActiveRecord::Migration
-                def change
-                end
-            end
-            MIGRATION
-            end
-        end
+        # def create_migration( migration_name, fields={} )
+        #     STDERR.puts "Migration #{migration_name} already exists!" and return false if migration_exists?( migration_name )
+        #     migration_number = Time.now.utc.strftime("%Y%m%d%H%M%S")
+        #     migration_file = File.join(migrations_dir, "#{migration_number}_#{migration_name}.rb")
+        #     migration_class = migration_name.split("_").map(&:capitalize).join
+        #     File.open(migration_file, 'w') do |file|
+        #         migration = "class #{migration_class} < ActiveRecord::Migration\n    def change\n"
+        #         fields.each do |name, type|
+        #             migration << "        " +
+        #         end
+        #         file.write migration
+        #         <<-MIGRATION.strip_heredoc
+
+        #             MIGRATION
+        #             <<-MIGRATION.strip_heredoc
+        #                 end
+        #             end
+        #             MIGRATION
+        #     end
+        # end
 
         def migrate(version = nil)
             silence_activerecord do

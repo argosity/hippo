@@ -15,7 +15,7 @@ namespace :db do
 
     desc "create an ActiveRecord migration"
     task :create_migration,[ :name ] do | t, args |
-        Lanes::DB.create_migration( "create_skr_" + args[:name] )
+        Lanes::DB.create_migration( "create_" + args[:name] )
     end
 
 

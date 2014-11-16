@@ -1,6 +1,5 @@
 require 'sprockets'
 require 'sass'
-require 'sass-css-importer'
 require 'sinatra/sprockets-helpers'
 require_relative 'javascript_processor'
 

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem "lanes", :path=>"/Users/nas/code/lanes" #"~><%= Lanes::VERSION %>"
+gem "lanes", :github => 'argosity/lanes', :branch => 'master'
 gem "rake"
 gem 'puma'
