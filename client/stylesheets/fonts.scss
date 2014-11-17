@@ -30,7 +30,7 @@
                       @extend .font-icon-display;
                     }
 
-  @import "CSS:fonts/style";
+  @import "fonts/style";
 
   .icon-reset:before {
     @extend .icon-refresh:before;
