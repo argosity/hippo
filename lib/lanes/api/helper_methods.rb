@@ -4,7 +4,7 @@ module Lanes
         module HelperMethods
 
             def bootstrap_data
-                Oj.dump Extension.bootstrap_data(self)
+                Oj.dump(Extension.bootstrap_data(self), mode: :compat)
             end
 
             def user_data
