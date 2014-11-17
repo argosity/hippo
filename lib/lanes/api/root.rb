@@ -3,7 +3,7 @@ require 'oj'
 require 'rack/csrf'
 require 'sprockets-helpers'
 require 'message_bus'
-require_relative 'asset_pipeline'
+require_relative 'sprockets_extension'
 require_relative 'helper_methods'
 require_relative 'pub_sub'
 
@@ -14,7 +14,7 @@ module Lanes
             Lanes.config.get(:environment) do | env |
                 set :environment, env
             end
-            register AssetPipeline
+            register SprocketsExtension
             helpers Sinatra::RequestWrapper
             helpers HelperMethods
             not_found do

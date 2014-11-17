@@ -5,37 +5,37 @@ require_relative 'javascript_processor'
 
 module Lanes
     module API
-        module AssetPipeline
+        module SprocketsExtension
 
             def self.configure(env)
                 root = Pathname.new(__FILE__).dirname.join("../../..")
                 Lanes.config.get(:environment) do
                     if Lanes.env.development?
-                        env.cache = Sprockets::Cache::FileStore.new(root.join('tmp','cache'))
+                        env.cache = ::Sprockets::Cache::FileStore.new(root.join('tmp','cache'))
                     end
                 end
                 env.append_path root.join('client', 'javascripts')
                 env.append_path root.join('client', 'stylesheets')
                 env.append_path root.join('client', 'screens')
                 env.append_path root.join('client', 'images')
-
                 JsAssetCompiler.register(env)
+                Lanes::Extension.each(env) do | ext |
+                    ext.client_paths.each{ |path| env.append_path(path) }
+                end
+
             end
 
             def self.registered(app)
                 app.register Sinatra::Sprockets::Helpers
-
-                app.set :sprockets, Sprockets::Environment.new
+                app.set :sprockets, ::Sprockets::Environment.new
                 configure(app.sprockets)
 
                 # The url for client
                 app.set :assets_prefix, '/assets'
-
                 app.set :digest_assets, false
 
                 app.configure do
-
-                    Sprockets::Helpers.configure do |config|
+                    ::Sprockets::Helpers.configure do |config|
                         config.environment = app.sprockets
                         config.prefix      = app.assets_prefix
                         config.digest      = app.digest_assets
