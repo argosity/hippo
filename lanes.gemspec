@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "activerecord",           "~> 4.1"
     spec.add_dependency "pg",                     "~> 0.17"
     spec.add_dependency "sinatra",                "~> 1.4"
-    spec.add_dependency "bcrypt-ruby",            "~> 3.1"
+    spec.add_dependency "bcrypt",                 "~> 3.1"
     spec.add_dependency "oj",                     "~> 2.1"
     spec.add_dependency "message_bus",            "~> 1.0"
     spec.add_dependency "rack_csrf",              "~> 2.5"
