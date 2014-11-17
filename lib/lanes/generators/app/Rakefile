@@ -1,9 +1,2 @@
-require 'lanes'
-require 'puma/control_cli'
-
-args = []
-
-task :dev do
-    args.push('start')
-    Puma::ControlCLI.new(args).run
-end
+require_relative 'lib/<%= namespace %>'
+require 'lanes/rake_tasks'
