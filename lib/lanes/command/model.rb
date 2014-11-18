@@ -1,7 +1,7 @@
 require_relative 'model_attribute'
 require 'pry'
 module Lanes
-    module Generators
+    module Command
 
         class Model < Thor::Group
             RESERVED_YAML_KEYWORDS = %w(y yes n no true false on off null)
@@ -17,7 +17,7 @@ module Lanes
             attr_reader :namespace, :file_name, :class_name, :table_name
 
             def self.source_root
-                Pathname.new(__FILE__).dirname.join("app")
+                Pathname.new(__FILE__).dirname.join("templates")
             end
 
             def initialize(*args)

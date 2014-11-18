@@ -3,7 +3,7 @@ require 'active_support/time'
 # This is a straight-up copy of railties/lib/rails/generators/generated_attribute.rb
 
 module Lanes
-  module Generators
+  module Command
     class ModelAttribute # :nodoc:
       INDEX_OPTIONS = %w(index uniq)
       UNIQ_INDEX_OPTIONS = %w(uniq)

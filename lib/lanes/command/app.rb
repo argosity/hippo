@@ -1,5 +1,5 @@
 module Lanes
-    module Generators
+    module Command
 
         class App < Thor::Group
             include Thor::Actions
@@ -12,7 +12,7 @@ module Lanes
             attr_reader :file_name, :namespace, :class_name
 
             def self.source_root
-                Pathname.new(__FILE__).dirname.join("app")
+                Pathname.new(__FILE__).dirname.join("templates")
             end
 
             def initialize(*args)
@@ -33,6 +33,8 @@ module Lanes
                 template "client/stylesheets/index.css", "client/stylesheets/#{name}/index.css"
             end
 
+
         end
+
     end
 end
