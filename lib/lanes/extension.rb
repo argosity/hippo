@@ -1,36 +1,46 @@
 module Lanes
 
-    class Extension
-        include Concerns::AttrAccessorWithDefault
+    module Extensions
 
-        attr_reader :context
+        class Definition
+            include Concerns::AttrAccessorWithDefault
 
-        attr_accessor_with_default :identifier
+            attr_reader :context
 
-        # Array of Pathname's to add to sprockets
-        attr_accessor_with_default :root_path
+            attr_accessor_with_default :load_phase, :late
 
-        # Load extension before/after the named extensions
-        class_attribute :before
-        class_attribute :after
+            attr_accessor_with_default :identifier
 
-        def bootstrap_data(view)
-            {}
-        end
+            # Array of Pathname's to add to sprockets
+            attr_accessor_with_default :root_path
 
-        def initialize(context)
-            @context = context
-        end
+            # Load extension before/after the named extensions
+            class_attribute :before
+            class_attribute :after
 
-        def javascript_include
-            self.identifier + ".js"
-        end
+            #
+            def client_bootstrap_data(view)
+                {}
+            end
 
-        def client_paths
-            client = self.root_path.join("client")
-            client.entries.select{ |path|
-                !path.to_s.start_with?(".")
-            }.map{ |path| client.join(path).expand_path }
+            def javascript_include
+                self.identifier + "-extension.js"
+            end
+
+            def client_namespace
+                identifier.underscore.camelize
+            end
+
+            def client_paths
+                [ self.root_path.join("client") ]
+            end
+
+            def route(route_set)
+                routes_config = root_path.join('config','routes.rb')
+                if routes_config.exist?
+                    require routes_config
+                end
+            end
         end
 
         class << self
@@ -43,8 +53,12 @@ module Lanes
                 self.before = extension
             end
 
-            def active
-                unmapped = self.descendants
+            def all
+                Definition.descendants
+            end
+
+            def sorted
+                unmapped = all
                 mapped   = []
                 while unmapped.any?
                     mapped_count = mapped.length
@@ -67,17 +81,26 @@ module Lanes
                 mapped
             end
 
-            def each(context={})
-                self.active.each{ |klass| yield klass.new(context) }
+            def each
+                sorted.map{ |klass| yield klass.new }
             end
 
-            def bootstrap_data(context)
-                data = { 'roles' => Lanes::Access::Role.all_available }
+            def early_loaded
+                each{ |ext| yield ext if ext.load_phase == :early }
+            end
+
+            def late_loaded
+                each{ |ext| yield ext if ext.load_phase == :late  }
+            end
+
+            def client_bootstrap_data(view)
+                data = {}
                 each do | ext |
-                    data[ext.identifier] = ext.bootstrap_data(context)
+                    data[ext.identifier] = ext.client_bootstrap_data(view)
                 end
                 return data
             end
+
         end
 
     end
