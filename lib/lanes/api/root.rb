@@ -44,7 +44,7 @@ module Lanes
                 # use Rack::Csrf, :skip=>['GET:/'], :raise => true
             end
 
-            def self.build_route(model, options = {})
+            def self.resources(model, options = {})
 
                 path = options[:path] || model.api_path
                 controller = options[:controller] || Lanes::API::Controller
