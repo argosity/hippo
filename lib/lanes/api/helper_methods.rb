@@ -3,16 +3,8 @@ module Lanes
 
         module HelperMethods
 
-            def bootstrap_data
-                Oj.dump(Extension.bootstrap_data(self), mode: :compat)
-            end
-
-            def user_data
-                if (user_id = session[:user_id]) && (user = Lanes::User.where( id: user_id ).first)
-                    Oj.dump(user.workspace_data, mode: :compat)
-                else
-                    {}
-                end
+            def client_bootstrap_data
+                Oj.dump(Extensions.client_bootstrap_data(self), mode: :compat)
             end
 
             def csrf_token

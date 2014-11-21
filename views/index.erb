@@ -14,9 +14,8 @@
          Lanes.Workspace.create('.lanes-test-root', {
            csrf_token: "<%= csrf_token %>",
            view: 'Lanes.Workspace.Layout',
-           user_data:  <%= user_data %>,
            root_path: "<%= lanes_api_url %>"
-         }, <%= bootstrap_data %> );
+         }, <%= client_bootstrap_data %> );
         </script>
     </head>
 
