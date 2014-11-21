@@ -1,5 +1,6 @@
 require_relative "../lanes"
-require 'guard'
+require 'guard/jasmine'
+require 'guard/minitest'
 
 module Lanes
     module GuardTasks
@@ -20,9 +21,9 @@ module Lanes
             matchers = CustomMatchers.new
             yield matchers
 
-            jasmine_options = {
-                server_mount: '/spec', server_env: 'test', server: :puma, spec_dir: 'spec/client', debug: false
-            }
+            jasmine_options = options.merge({
+                port: 8888, server_mount: '/spec', server_env: 'test', server: :puma, spec_dir: 'spec/client', debug: false
+            })
 
             dsl.guard :jasmine, jasmine_options do
                 dsl.watch(%r{^client/javascripts/(.+?)\.(js|coffee)$}){ |m| "spec/client/#{m[1]}_spec.#{m[2]}" }
