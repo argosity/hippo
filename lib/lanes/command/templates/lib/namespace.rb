@@ -1,8 +1,12 @@
 require "lanes"
-require_relative "<%= namespace %>/version.rb"
-require_relative "<%= namespace %>/extension.rb"
+require 'require_all'
+require_relative "<%= name %>/version.rb"
+require_relative "<%= name %>/extension.rb"
+require_rel '<%= name %>'
 
 # The main namespace for <%= name.camelize %>
 module <%= namespace %>
-
+    def self.table_name_prefix
+        "<%= name %>_"
+    end
 end

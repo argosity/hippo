@@ -1,5 +1,5 @@
 require 'bundler'
 Bundler.require
+require_relative 'lib/<%= file_name %>'
 require 'lanes/api'
-require_relative 'lib/<%= namespace %>'
 run Lanes::API::Root

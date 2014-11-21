@@ -18,19 +18,29 @@ module Lanes
             def initialize(*args)
                 super
                 self.destination_root = options[:directory] || name
+                @file_name = name.downcase
                 @class_name = @namespace = name.camelize
             end
 
             def create_files
-                ["Gemfile", "Rakefile", "config.ru", "config/database.yml"].each do | file |
+                ["Gemfile", "Rakefile", "Guardfile", "config.ru", "config/database.yml"].each do | file |
                     template file
                 end
                 template "lib/namespace.rb", "lib/#{name}.rb"
                 template "lib/namespace/version.rb", "lib/#{name}/version.rb"
                 template "lib/namespace/extension.rb", "lib/#{name}/extension.rb"
+                template "config/routes.rb"
+                template "gitignore",".gitignore"
                 empty_directory "tmp"
-                template "client/javascripts/index.js",  "client/javascripts/#{name}/index.js"
-                template "client/stylesheets/index.css", "client/stylesheets/#{name}/index.css"
+            end
+
+            def create_client_files
+                self.class.source_root.join('client').children.each do | path |
+                    empty_directory "client/#{path.basename}" if path.directory?
+                end
+                template "client/namespace-extension.js", "client/#{name}-extension.js"
+                template "client/Extension.coffee",   "client/Extension.coffee"
+                template "client/styles/styles.scss", "client/#{name}-styles.scss"
             end
 
 

@@ -1,0 +1,11 @@
+Create the bare-bones definition of a screen
+
+Screens are a special type of view that have a few extra attributes.
+Namely, they have a "title" attribute and can be hidden and shown.  
+
+They are dynamically loaded.  Initially only the definition for the view
+is available, and the css and javascript for the view is only loaded
+when the view is first displayed.
+
+If the "model-class" option is provided, the screen will only be
+available to users who have read or write access to the given model.

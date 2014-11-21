@@ -1,10 +1,13 @@
+require_relative '../<%= name %>'
+
 module <%= namespace %>
 
-    class Extension < Lanes::Extension
+    class Extension < Lanes::Extensions::Definition
 
         identifier "<%= name %>"
 
-        client_roots Pathname.new(__FILE__).dirname.join("..","..","client").entries
+        root_path Pathname.new(__FILE__).dirname.join("..","..").expand_path
+
     end
 
 end

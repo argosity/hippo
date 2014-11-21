@@ -1,2 +1,2 @@
-require_relative 'lib/<%= namespace %>'
+require_relative 'lib/<%= file_name %>'
 require 'lanes/rake_tasks'

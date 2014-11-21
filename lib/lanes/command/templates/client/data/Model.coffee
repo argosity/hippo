@@ -1,4 +1,6 @@
-class Lanes.<%= namespace.camelize %>.<%= class_name %> extends <%= client_parent %>
+class Lanes.<%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_parent %>
+
+    api_path: '<%= name.downcase.pluralize.underscore.dasherize %>'
 
     props:
 <% fields.each do |field| -%>
@@ -15,3 +17,7 @@ class Lanes.<%= namespace.camelize %>.<%= class_name %> extends <%= client_paren
         <%= sprintf("%-#{max_field_length}s ",field.name) %>: { <%= field.belongs_to? ? 'model' : 'collection' -%>: "Lanes.<%= namespace.camelize %>.<%= field.name.camelize %>" }
 <% end -%>
 <% end -%>
+
+class Lanes.<%= namespace.camelize %>.Data.<%= class_name %>.Collection extends <%= options[:client_collection_parent] %>
+
+    model: Lanes.<%= namespace.camelize %>.Data.<%= class_name %>
