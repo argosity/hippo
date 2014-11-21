@@ -8,5 +8,6 @@
 //= require ../view
 //= require ../component
 //= require_tree .
+//= require ../extension/LateLoaded
 
 Lanes.namespace( 'Workspace' );

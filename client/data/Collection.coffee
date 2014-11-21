@@ -44,7 +44,7 @@ class DataCollection
         )
 
     url: ->
-        @model::urlRoot() + '.json'
+        @model::urlRoot()
 
     sync: ->
         Lanes.Data.Sync.apply(this,arguments)

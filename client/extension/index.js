@@ -1,6 +1,7 @@
 //= require_self
 //= require ./Base
 //= require ./Extensions
-//= require ./load
+//= require ./namespace
+//= require ./EarlyExtensions
 
 Lanes.namespace('Extension');

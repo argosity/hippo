@@ -14,4 +14,9 @@ Lanes.Extensions = {
         for identifier,data of bootstrap_data
             instance.setBootstrapData(data) if instance = this.instances[identifier]
 
+    makeNamespace: (identifier)->
+        for ns in ['Data','View','Controller','Screen']
+            Lanes.namespace("#{identifier}.#{ns}")
+
+
 }

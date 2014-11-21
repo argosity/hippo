@@ -10,19 +10,15 @@ module Lanes
             def self.configure(env)
                 root = Pathname.new(__FILE__).dirname.join("../../..")
                 Lanes.config.get(:environment) do
-                    if Lanes.env.development?
-                        env.cache = ::Sprockets::Cache::FileStore.new(root.join('tmp','cache'))
+                    unless Lanes.env.production?
+                        env.cache = ::Sprockets::Cache::FileStore.new(Pathname.pwd.join('tmp','cache'))
                     end
                 end
-                env.append_path root.join('client', 'javascripts')
-                env.append_path root.join('client', 'stylesheets')
-                env.append_path root.join('client', 'screens')
-                env.append_path root.join('client', 'images')
+                env.append_path root.join('client')
                 JsAssetCompiler.register(env)
-                Lanes::Extension.each(env) do | ext |
+                Lanes::Extensions.each do | ext |
                     ext.client_paths.each{ |path| env.append_path(path) }
                 end
-
             end
 
             def self.registered(app)

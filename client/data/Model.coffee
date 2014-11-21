@@ -230,7 +230,7 @@ setupStandardProps=(klass)->
     klass.associations['updated_by'] ||= { model: 'Lanes.Data.User' }
 
 copyServerResp = (record,resp)->
-    record.errors = resp.errors
+    record.errors = resp?.errors
     record.lastServerMessage = resp.message
     { record: record, response: resp }
 
@@ -242,7 +242,7 @@ wrapRequest = (record, options)->
         options.rejectPromise  = reject
     )
     options.error = (record, resp, req)->
-        options.rejectPromise( copyServerResp(record,resp.responseJSON) )
+        options.rejectPromise( copyServerResp(record,resp.responseJSON || {error: resp.responseText}) )
         error?.apply(options.scope, arguments)
 
     options.success = (record,resp,req)->
