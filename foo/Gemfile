@@ -1,5 +1,0 @@
-source 'https://rubygems.org'
-
-gem "lanes", "~>0.2"
-
-gemspec
