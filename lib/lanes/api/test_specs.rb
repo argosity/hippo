@@ -36,24 +36,28 @@ module Lanes
             end
         end
 
+
         Lanes.config.get(:specs_root) do | root |
             TestSpecs.current = TestSpecs.new(root)
             Root.sprockets.append_path(root.join("spec"))
         end
 
+
         Root.sprockets.append_path(Jasmine::Core.path)
 
-        Root.get '/spec' do
-            content_type 'text/html'
-            erb :specs, locals: { specs: TestSpecs.current }
+        routes.draw do
+
+            get '/spec' do
+                content_type 'text/html'
+                erb :specs, locals: { specs: TestSpecs.current }
+            end
+
+            get "/spec/*" do |path|
+                env_sprockets = request.env.dup
+                env_sprockets['PATH_INFO'] = path
+                settings.sprockets.call env_sprockets
+            end
+
         end
-
-        Root.get "/spec/*" do |path|
-            env_sprockets = request.env.dup
-            env_sprockets['PATH_INFO'] = path
-            settings.sprockets.call env_sprockets
-        end
-
-
     end
 end
