@@ -42,7 +42,7 @@ class Screen extends Lanes.Data.BasicModel
     derived:
         model_type:
             deps: ['model'], fn: ->
-                Lanes.Data[this.model]
+                Lanes.getPath(this.model,"Lanes.Data")
 
     initialize: ->
         @views = []
