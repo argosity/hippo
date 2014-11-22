@@ -1,4 +1,4 @@
-class Lanes.Screens.<%= class_name %> extends Lanes.View.Screens
+class Lanes.Screens.<%= class_name %> extends Lanes.Screens.Base
 
     templateName: "<%= name.dasherize %>"
 

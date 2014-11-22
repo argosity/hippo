@@ -1,7 +1,0 @@
-<% Lanes::Screens::Group.each(self) do | spec | %>
-Lanes.Data.Screens.groups.add( <%= spec.to_json %> );
-<% end %>
-
-<% Lanes::Screens::Definition.each(self) do | spec | %>
-Lanes.Data.Screens.register( <%= spec.to_json %> );
-<% end %>

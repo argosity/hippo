@@ -1,4 +1,4 @@
-class Lanes.View.TimedMask
+class Lanes.Views.TimedMask
     stages:
         pending:
             msg: "Please Wait …"

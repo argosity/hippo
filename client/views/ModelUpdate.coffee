@@ -1,4 +1,4 @@
-class Lanes.View.ModelUpdate extends Lanes.View.Base
+class Lanes.Views.ModelUpdate extends Lanes.Views.Base
 
     templateName: 'view/model-update'
 

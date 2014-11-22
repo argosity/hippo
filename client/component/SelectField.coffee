@@ -1,4 +1,4 @@
-class SelectOption extends Lanes.View.Base
+class SelectOption extends Lanes.Views.Base
     template: (scope)->
         '<option></option>'
 

@@ -1,4 +1,4 @@
-class Lanes.Workspace.Pages extends Lanes.View.Base
+class Lanes.Workspace.Pages extends Lanes.Views.Base
 
     templateName: 'workspace/pages'
 

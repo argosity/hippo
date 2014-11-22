@@ -1,6 +1,6 @@
 km = Lanes.Vendor.KeyMaster
 
-Lanes.View.Keys = {
+Lanes.Views.Keys = {
 
     scopes:{}
     defaultTime: 5000
@@ -14,13 +14,13 @@ Lanes.View.Keys = {
         return unless @timeout
         clearTimeout(@timeout)
         this.setScopeTimer(scope)
-        Lanes.View.TimedHighlight.reset(scope.time || @defaultTime)
+        Lanes.Views.TimedHighlight.reset(scope.time || @defaultTime)
 
     addScope:(scope)->
         km(scope.shortcut, (ev)=>
             km.setScope(scope.name)
             for view in scope.views
-                Lanes.View.TimedHighlight.on(view, scope.time || @defaultTime)
+                Lanes.Views.TimedHighlight.on(view, scope.time || @defaultTime)
 
             @setScopeTimer() unless scope.permanent
 

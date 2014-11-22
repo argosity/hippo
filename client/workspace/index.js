@@ -5,7 +5,8 @@
 //= require ../extension
 //= require ../data
 //= require ../plugins
-//= require ../view
+//= require ../views
+//= require ../screens
 //= require ../component
 //= require_tree .
 //= require ../extension/LateLoaded

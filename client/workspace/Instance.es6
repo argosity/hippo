@@ -7,15 +7,12 @@ Lanes.Workspace.Instance = class Instance {
     constructor(selector, options, extension_data){
         _.extend(this,options);
 
-        this.ui = new Lanes.View.InterfaceState({ selector: selector, instance: this });
+        this.ui = new Lanes.Views.InterfaceState({ selector: selector, instance: this });
         Lanes.Data.Bootstrap.initialize({
             csrf: options.csrf_token,
             root: options.root_path,
             data: extension_data
         });
-        options.user_data = ( options.user_data || {} );
-        Lanes.current_user.setLoginData( options.user_data.user, options.user_data.access );
-
         Lanes.$(document).ready( ()=> {
             this.boot();
         });
@@ -48,11 +45,11 @@ Lanes.Workspace.Instance = class Instance {
 
         this.root.append( this.view.el );
 
-        Lanes.View.Keys.initialize();
+        Lanes.Views.Keys.initialize();
         Lanes.Data.PubSub.initialize();
         Lanes.Extensions.fireOnAvailable(this);
 
-        this.login_dialog = new Lanes.View.LoginDialog({ parent: this });
+        this.login_dialog = new Lanes.Views.LoginDialog({ parent: this });
 
         // var screen = Lanes.Data.Screens.all.findWhere({ id: 'user-maintenance' });
         // screen.display();

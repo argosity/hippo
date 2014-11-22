@@ -2,7 +2,7 @@
 class ModelSaver
 
     constructor: ( @element, @options )->
-        @mask = new Lanes.View.TimedMask( @element, @options.message )
+        @mask = new Lanes.Views.TimedMask( @element, @options.message )
         @mask.prefixActions( "Save" )
         _.bindAll(this,'_onError','_onSuccess')
 
@@ -23,7 +23,7 @@ class ModelSaver
         @options.callback(success,resp,@options.model) if @options.callback
 
 
-Lanes.View.SaveNotify = ( view, options={} )->
+Lanes.Views.SaveNotify = ( view, options={} )->
     el = if view.jquery then view else view.$el
     _.defaults( options, { model: view.model, message: "Saving, Please Wait…"} )
     ms = new ModelSaver(el, options)

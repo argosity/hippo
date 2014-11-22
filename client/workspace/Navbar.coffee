@@ -1,4 +1,4 @@
-class Lanes.Workspace.Navbar extends Lanes.View.Base
+class Lanes.Workspace.Navbar extends Lanes.Views.Base
 
     templateName: 'workspace/navbar'
 

@@ -1,4 +1,4 @@
-class Lanes.View.FormBindings
+class Lanes.Views.FormBindings
 
     constructor: (@view, @keypath, @selector)->
         _.bindAll(this,'onFieldChange')

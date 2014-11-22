@@ -1,5 +1,5 @@
 # Responsible for adding and removing a view's model(s) from Data.PubSub
-class Lanes.View.PubSub extends Lanes.View.ModelObserver
+class Lanes.Views.PubSub extends Lanes.Views.ModelObserver
 
     model_events:
         'remote-update': 'onChange'

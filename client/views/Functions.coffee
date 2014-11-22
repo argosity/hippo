@@ -1,5 +1,5 @@
 
-Lanes.View.fn = {
+Lanes.Views.fn = {
 
     toggleClass: (class_name, selector='')->
         {

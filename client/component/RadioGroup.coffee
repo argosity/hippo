@@ -15,7 +15,7 @@ class RadioInput
         super
 
 
-Lanes.View.Base.extend(RadioInput)
+Lanes.Views.Base.extend(RadioInput)
 
 
 class RadioGroup

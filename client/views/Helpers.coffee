@@ -3,9 +3,9 @@ impl = {
     field: (name, options, writeable_input, readonly_input)->
         readonly_input = writeable_input if ! readonly_input
         o = this.field_options(name, options)
-        if options.writable || Lanes.View.RenderContext.canRead(name)
+        if options.writable || Lanes.Views.RenderContext.canRead(name)
             contents  = if options.unwrapped then "" else "<label class='skr #{o.widths}'><b>#{o.title}:</b>"
-            contents += if options.writable || Lanes.View.RenderContext.canWrite(name)
+            contents += if options.writable || Lanes.Views.RenderContext.canWrite(name)
                 writeable_input
             else
                 readonly_input
@@ -15,7 +15,7 @@ impl = {
         this.markSafe(contents)
 
     template: (template,data)->
-        this.markSafe( Lanes.Templates.find('view/_'+template)(data) )
+        this.markSafe( Lanes.Templates.find('views/_'+template)(data) )
 
     markSafe: (str)->
         result = new String(str)
@@ -36,7 +36,7 @@ impl = {
         ( "col-#{width}#{type}-#{widths[index]}" for index,width of ['xs','sm','md','lg'] ).join(' ')
 }
 
-Lanes.View.Helpers = {
+Lanes.Views.Helpers = {
 
     elid: -> 'id="' + _.uniqueId('v') + '"'
 
@@ -47,7 +47,7 @@ Lanes.View.Helpers = {
         if _.isString(options)
             options={ name: options, text: _.titleize(options) }
         _.defaults(options, { css: options.name, icon: "icon-#{options.name}" })
-        if options.name == 'save' && !Lanes.View.RenderContext.canWrite(name)
+        if options.name == 'save' && !Lanes.Views.RenderContext.canWrite(name)
             ""
         else
             impl.template('button', options )
@@ -65,7 +65,7 @@ Lanes.View.Helpers = {
         )
 
     subview: (name,options={})->
-        definition = Lanes.View.RenderContext.view().subviews[name]
+        definition = Lanes.Views.RenderContext.view().subviews[name]
         selector = if definition.hook
             "data-hook='#{definition.hook}'"
         else

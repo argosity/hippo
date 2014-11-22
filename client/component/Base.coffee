@@ -28,12 +28,12 @@ class BaseComponent
             scope.emptyTemplate()
 
     calculate_access:->
-        if ! @field_name || Lanes.View.RenderContext.canWrite(@field_name)
+        if ! @field_name || Lanes.Views.RenderContext.canWrite(@field_name)
             'write'
-        else if Lanes.View.RenderContext.canRead(@field_name)
+        else if Lanes.Views.RenderContext.canRead(@field_name)
             'read'
         else
             'none'
 
 
-Lanes.Component.Base = Lanes.View.Base.extend(BaseComponent)
+Lanes.Component.Base = Lanes.Views.Base.extend(BaseComponent)

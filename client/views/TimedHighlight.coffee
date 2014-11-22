@@ -1,4 +1,4 @@
-Lanes.View.TimedHighlight = {
+Lanes.Views.TimedHighlight = {
 
     cssClass: 'highlighted'
     displayLength: 2000

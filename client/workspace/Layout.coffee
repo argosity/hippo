@@ -1,5 +1,5 @@
 
-class Lanes.Workspace.Layout extends Lanes.View.Base
+class Lanes.Workspace.Layout extends Lanes.Views.Base
 
     templateName: 'workspace/layout'
 

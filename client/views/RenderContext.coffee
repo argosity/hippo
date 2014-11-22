@@ -1,4 +1,4 @@
-Lanes.View.RenderContext = {
+Lanes.Views.RenderContext = {
 
     stack: []
 

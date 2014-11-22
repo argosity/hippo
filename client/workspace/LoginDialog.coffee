@@ -1,4 +1,4 @@
-class Lanes.View.LoginDialog extends Lanes.Component.ModalDialog
+class Lanes.Views.LoginDialog extends Lanes.Component.ModalDialog
 
     bodyTemplateName: 'workspace/login-dialog'
     size: 'md'
@@ -20,7 +20,7 @@ class Lanes.View.LoginDialog extends Lanes.Component.ModalDialog
 
     onLogin: (ev)->
         msg = this.$('.alert').hide()
-        mask = new Lanes.View.TimedMask(this.$el, "Attempting Login …")
+        mask = new Lanes.Views.TimedMask(this.$el, "Attempting Login …")
         Lanes.Data.User.attemptLogin( this.query('#LoginField').value, this.query('#PasswordField').value, {
             scope: this
             success: ->

@@ -1,4 +1,4 @@
-class TabView extends Lanes.View.Base
+class TabView extends Lanes.Views.Base
 
     template: "<li><a data-toggle='tab'></a><span class='close'>×</span></li>"
 
@@ -20,7 +20,7 @@ class TabView extends Lanes.View.Base
 TAB_PADDING = 0
 
 
-class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.View.Base
+class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.Views.Base
 
     templateName: 'workspace/screens-switcher'
 

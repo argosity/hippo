@@ -41,10 +41,10 @@ class ViewBase
         this.initializeFormBindings() if @form_bindings
 
         if @keyBindings
-            Lanes.View.Keys.add(this, @keyBindings, @keyScope)
+            Lanes.Views.Keys.add(this, @keyBindings, @keyScope)
 
         if @pubSub
-            this._pubSub = new Lanes.View.PubSub(this)
+            this._pubSub = new Lanes.Views.PubSub(this)
 
     _onParentSet: ->
         if this.root_view.ui
@@ -60,7 +60,7 @@ class ViewBase
 
     remove: ->
         this.unBindModel( @model ) if @model
-        Lanes.View.Keys.remove(this, @key_bindings, @key_scope) if @key_bindings
+        Lanes.Views.Keys.remove(this, @key_bindings, @key_scope) if @key_bindings
         super
 
     initializeKeyBindings: ->
@@ -70,7 +70,7 @@ class ViewBase
     initializeFormBindings: ->
         @_form_bindings = {}
         for data, selector of @form_bindings
-            @_form_bindings[data] = new Lanes.View.FormBindings(this, data, selector)
+            @_form_bindings[data] = new Lanes.Views.FormBindings(this, data, selector)
 
     setFieldsFromBindings: ->
         binding.setAllFields() for name, binding of @_form_bindings
@@ -125,18 +125,18 @@ class ViewBase
             this.renderSubview(this[name], selector) unless options.collection
 
     withRenderContext: (fn)->
-        Lanes.View.RenderContext.push( @subViewId, @model )
+        Lanes.Views.RenderContext.push( @subViewId, @model )
         try
             returned = fn.apply(this,arguments)
         catch e
             Lanes.warn e
         finally
-            Lanes.View.RenderContext.pop()
+            Lanes.Views.RenderContext.pop()
         returned
 
     renderContextFree: ->
         previousClass = this.el?.className
-        Lanes.View.Base.__super__.render.apply(this, arguments)
+        Lanes.Views.Base.__super__.render.apply(this, arguments)
         if previousClass
             this.$el.addClass( previousClass )
         this.onRender?()
@@ -160,7 +160,7 @@ class ViewBase
 
     belongsToScreen: ->
         view = this
-        while view and ! ( view instanceof Lanes.View.Screen )
+        while view and ! ( view instanceof Lanes.Views.Screen )
             view = view.parent
         view
 
@@ -169,7 +169,7 @@ class ViewBase
             Lanes.getPath("Lanes.Component.#{subview.component}")
         else if subview.view
             if _.isString(subview.view)
-                Lanes.getPath(subview.view, "Lanes.View")# || Lanes.getPath("Lanes.View.#{subview.view}")
+                Lanes.getPath(subview.view, "Lanes.Views")
             else
                 subview.view
         Lanes.warn( "Unable to obtain view for %o", subview) if ! klass
@@ -228,4 +228,4 @@ setupWritableBindings=(klass)->
         definition = writeFn.call(klass, keypath, options)
         klass.events[ definition.selector ] = definition.handler
 
-Lanes.View.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.View, ViewBase )
+Lanes.Views.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.View, ViewBase )
