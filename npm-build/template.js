@@ -17,12 +17,12 @@ Lanes.Vendor.AmpersandInputView       = require("ampersand-input-view");
 Lanes.Vendor.KeyMaster                = require("keymaster");
 Lanes.Vendor.Moment                   = require("moment");
 Lanes.Vendor.RSVP                     = require('rsvp');
-Lanes.Promise                         = Lanes.Vendor.RSVP.Promise;
-Lanes.Deferred                        = Lanes.Vendor.RSVP.defer;
-
 
 var u        = require('underscore');
 var spf      = require('sprintf-js');
+
+u.Promise    = Lanes.Vendor.RSVP.Promise;
+u.defer      = Lanes.Vendor.RSVP.defer;
 
 u.getPath    = require('get-object-path');
 u.bigDecimal = require('big.js');

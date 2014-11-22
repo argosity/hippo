@@ -36,7 +36,7 @@ class Lanes.Component.PopOver extends Lanes.Component.Base
 
     show: ->
         this.target.popover('show')
-        this.notification = new Lanes.Deferred
+        this.notification = new _.defer
         return this.notification.promise
 
     destroy: ->

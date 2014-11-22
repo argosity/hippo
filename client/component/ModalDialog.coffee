@@ -29,12 +29,12 @@ class Lanes.Component.ModalDialog extends Lanes.Component.Base
 
     hide:->
         this.$el.modal('hide')
-        Lanes.Promise.resolve( this )
+        _.Promise.resolve( this )
 
     show: ->
         this.render()
         this.$el.modal({ body: this.ui.viewport })
-        this.notification = new Lanes.Deferred
+        this.notification = new _.defer
         return this.notification.promise
 
     destroy: ->

@@ -82,7 +82,7 @@ class DataModel
         if _.isEmpty( needed )
             options.success.call(scope, this  ) if options.success
             options.complete.call(scope,this  ) if options.complete
-            return Lanes.Promise.resolve(this)
+            return _.Promise.resolve(this)
         else
             options['include']=needed
             this.fetch(options)
@@ -237,7 +237,7 @@ copyServerResp = (record,resp)->
 wrapRequest = (record, options)->
     error   = options.error
     success = options.success
-    options.promise = new Lanes.Promise( (resolve,reject)->
+    options.promise = new _.Promise( (resolve,reject)->
         options.resolvePromise = resolve
         options.rejectPromise  = reject
     )

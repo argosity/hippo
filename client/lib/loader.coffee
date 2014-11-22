@@ -83,7 +83,7 @@ class Loader
 
 Lanes.lib.Loader = (urls...)->
     urls = urls[0] if urls.length == 1 && _.isArray(urls[0])
-    new Lanes.Promise(  (resolve,reject)->
+    new _.Promise(  (resolve,reject)->
         new Loader(urls, (completed)->
             failures = _.pick(completed, (status,url)-> !status.success )
             if _.isEmpty(failures)

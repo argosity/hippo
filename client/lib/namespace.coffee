@@ -7,3 +7,6 @@ Lanes.namespace = (target, name, block) ->
     top    = target
     target = target[item] or= {} for item in name.split '.'
     block( target, top ) if typeof block == 'function'
+
+for ns in ['Component','Data','Screens', 'Views','Vendor', 'Templates']
+    Lanes.namespace(ns)
