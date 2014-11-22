@@ -96,29 +96,11 @@ module Lanes
                     icon:  icon,
                     model: model_class,
                     view:  view_class,
-                    files: files,
+                    files: files.map{ |f| "#{Lanes.config.assets_path_prefix}/#{f}"},
                     group_id: group_id,
                     description: description
                 }, mode: :compat)
             end
-        end
-
-        class SystemGroup < Group
-            identifier  "system-settings"
-            title       "System Settings"
-            description "Modify system settings"
-            icon        "icon-wrench"
-        end
-
-        class UserMaintScreen < Definition
-            identifier  "user-maintenance"
-            title       "User Maintenance"
-            description "Add/Remove/Modify User Accounts"
-            icon        "icon-group"
-            group_id    "system-settings"
-            model_class "User"
-            view_class  "UserManagement"
-            files       ['/assets/user-management.js','/assets/user-management.css']
         end
 
     end

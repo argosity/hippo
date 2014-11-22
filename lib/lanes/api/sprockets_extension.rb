@@ -27,13 +27,12 @@ module Lanes
                 configure(app.sprockets)
 
                 # The url for client
-                app.set :assets_prefix, '/assets'
                 app.set :digest_assets, false
 
                 app.configure do
                     ::Sprockets::Helpers.configure do |config|
                         config.environment = app.sprockets
-                        config.prefix      = app.assets_prefix
+                        config.prefix      = Lanes.config.assets_path_prefix
                         config.digest      = app.digest_assets
                         config.public_path = app.public_folder
                         config.debug = true
@@ -41,7 +40,7 @@ module Lanes
                 end
 
                 app.configure :test, :development do
-                    app.get "#{app.assets_prefix}/*" do |path|
+                    app.get "#{Lanes.config.assets_path_prefix}/*" do |path|
                         env_sprockets = request.env.dup
                         env_sprockets['PATH_INFO'] = path
                         settings.sprockets.call env_sprockets
