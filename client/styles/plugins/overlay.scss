@@ -29,7 +29,7 @@
       font-size: 3.2rem;
       float: left;
       &.loading-spinner {
-        background:url(asset_path('ajax-loader.gif')) no-repeat;
+        background:url(image-path('images/ajax-loader.gif')) no-repeat;
         height: 32px;
         margin-top: 10px;
         width: 32px;
