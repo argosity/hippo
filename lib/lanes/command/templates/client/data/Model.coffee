@@ -18,6 +18,6 @@ class Lanes.<%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_
 <% end -%>
 <% end -%>
 
-class Lanes.<%= namespace.camelize %>.Data.<%= class_name %>.Collection extends <%= options[:client_collection_parent] %>
+class Lanes.<%= namespace.camelize %>.Data.<%= class_name %>Collection extends <%= options[:client_collection_parent] %>
 
     model: Lanes.<%= namespace.camelize %>.Data.<%= class_name %>
