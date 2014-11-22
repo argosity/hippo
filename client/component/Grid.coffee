@@ -160,7 +160,7 @@ class Lanes.Component.Grid extends Lanes.Component.Base
             oScroller: { loadingIndicator: true }
 #            columnDefs: @column_definitions
             ajax:
-                url: @record_query.url
+                url: @record_query.url + ".json"
                 data: (d)=>@buildData(d)
                 dataSrc: (d)->
                     d.recordsFiltered = d.recordsTotal = d.total
