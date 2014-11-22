@@ -107,7 +107,7 @@ module Lanes
 
             def compile(template)
                 template = template.read if template.respond_to?(:read)
-                context.call("eco.precompile", template, 'Lanes.TemplateWrapper','Lanes.View.Helpers')
+                context.call("eco.precompile", template, 'Lanes.Templates.Wrapper','Lanes.Views.Helpers')
             end
 
         end

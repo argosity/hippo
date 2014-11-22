@@ -1,6 +1,3 @@
-Lanes.namespace "Templates"
-
-
 ns2path = (ns)->
     ns.replace(".","/").toLowerCase()
 
@@ -13,13 +10,13 @@ Lanes.Templates.find = (name, namespace) ->
 
 # scribbed from eco's compiler.coffee
 # we include the functions here rather than on every single template
-Lanes.TemplateWrapper = {
+Lanes.Templates.Wrapper = {
 
     sanitize: (value) ->
         if value and value.HTMLSafe
             value
         else if typeof value isnt "undefined" and value?
-            Lanes.TemplateWrapper.escape value
+            Lanes.Templates.Wrapper.escape value
         else
             ""
 
