@@ -10,7 +10,8 @@ module Lanes
                 description: '',
                 icon:        '',
                 group_id:    '',
-                model_class: ''
+                model_class: '',
+                namespace: nil
             }
             argument :name
             attr_reader :namespace, :class_name
@@ -25,7 +26,7 @@ module Lanes
             end
 
             def load_extension
-                @namespace  = Command.load_current_extension.identifier
+                @namespace  = options[:namespace] || Command.load_current_extension.identifier
                 @class_name = name.camelize
             end
 
@@ -34,7 +35,7 @@ module Lanes
                 template "client/screens/index.js",      "client/screens/#{name}.js"
                 template "client/screens/styles.scss",   "client/screens/#{name}.scss"
                 template "client/screens/Screen.coffee", "client/screens/#{name.classify}.coffee"
-                template "client/screens/template.html", "client/screens/#{name.dasherize}.html"
+                template "client/screens/template.html", "client/screens/#{name.dasherize}-layout.html"
             end
 
         end
