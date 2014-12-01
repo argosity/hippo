@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "thor",                   "~> 0.19"
     spec.add_dependency "sass",                   "~> 3.4"
     spec.add_dependency "sprockets-helpers",      "~> 1.1"
+    spec.add_dependency "compass-import-once",    "~> 1.0"
     spec.add_dependency "guard",                  "~> 2.0"
     spec.add_dependency "hashie",                 "~> 3.3"
     spec.add_dependency "rack-test",              "~> 0.6"
