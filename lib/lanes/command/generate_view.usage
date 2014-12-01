@@ -1,0 +1,13 @@
+Stubs out a new View. Pass the view name, either CamelCased or
+under_scored
+
+ When executed inside a project called "Blog":
+
+ `lanes generate view comment`
+
+ Lanes will create:
+
+         Client View: client/view/Comment.coffee
+         Template:    client/view/comment.html
+         Spec:        spec/client/view/CommentSpec.coffee
+
