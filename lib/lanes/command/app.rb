@@ -30,8 +30,10 @@ module Lanes
                 template "lib/namespace/version.rb", "lib/#{name}/version.rb"
                 template "lib/namespace/extension.rb", "lib/#{name}/extension.rb"
                 template "config/routes.rb"
+                template "config/lanes.rb"
                 template "gitignore",".gitignore"
-                empty_directory "tmp"
+                create_file "tmp/.gitkeep",""
+                create_file "db/.gitkeep", ""
             end
 
             def create_client_files
@@ -43,7 +45,9 @@ module Lanes
                 template "client/styles/styles.scss", "client/#{name}-styles.scss"
             end
 
-
+            def create_first_screen
+                invoke GenerateScreen, [name], title: name.titleize, namespace: name
+            end
         end
 
     end
