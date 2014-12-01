@@ -2,6 +2,7 @@ require 'sprockets'
 require 'sass'
 require 'sinatra/sprockets-helpers'
 require_relative 'javascript_processor'
+require 'compass/import-once/activate'
 
 module Lanes
     module API
@@ -14,11 +15,11 @@ module Lanes
                         env.cache = ::Sprockets::Cache::FileStore.new(Pathname.pwd.join('tmp','cache'))
                     end
                 end
-                env.append_path root.join('client')
-                JsAssetCompiler.register(env)
                 Lanes::Extensions.each do | ext |
                     ext.client_paths.each{ |path| env.append_path(path) }
                 end
+                env.append_path root.join('client')
+                JsAssetCompiler.register(env)
             end
 
             def self.registered(app)
