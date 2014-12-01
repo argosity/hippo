@@ -18,15 +18,13 @@ Lanes.Workspace.Instance = class Instance {
         });
     }
 
-
-
     boot(){
-        this.root = Lanes.$( this.ui.selector );
+        this.root = Lanes.$( this.viewport.selector );
         this.root.data().workspace = this;
-        this.ui.root = this.root;
+        this.viewport.root = this.root;
 
-        Lanes.lib.ResizeSensor(this.root[0],  _.bind( _.debounce( function(a,b,c){
-            this.ui.set({ viewport_width: this.root.width(), viewport_height: this.root.height() });
+        Lanes.lib.ResizeSensor(this.root[0],  _.bind( _.debounce( function(){
+            this.viewport.set({ width: this.root.width(), height: this.root.height() });
         }, 250 ), this) );
 
         this.root.addClass('lanes root');
@@ -35,23 +33,32 @@ Lanes.Workspace.Instance = class Instance {
             selector: '[data-tooltip-message]',
             title: function(){ return this.getAttribute('data-tooltip-message'); }
         });
-
         var view = Lanes.getPath(this.view);
-        if (!view){
-            Lanes.fatal(this.view + " doesn't exist!");
+        if (view){
+            this.displayInitialView(view);
+        } else {
+            var definition=Lanes.Data.Screens.all.findWhere({view: this.view});
+            if (definition){
+                definition.getScreen().then( (screen)=>{
+                    // break out of the promise so an errors during render get thrown properly
+                    _.defer( ()=>{ this.displayInitialView(screen); } );
+                }, (msg)=>{
+                    Lanes.fatal("Unable to load initial screen ${this.view}", msg);
+                });
+            } else {
+                Lanes.fatal(this.view + " doesn't exist!");
+            }
         }
-        this.view = new view({parent: this, model: this.ui}).render();
-        this.ui.viewport = this.view.$el;
+    }
+
+    displayInitialView(view){
+        this.view = new view({parent: this, model: this.viewport}).render();
+        this.viewport.el = this.view.$el;
 
         this.root.append( this.view.el );
 
         Lanes.Views.Keys.initialize();
         Lanes.Data.PubSub.initialize();
         Lanes.Extensions.fireOnAvailable(this);
-
-        this.login_dialog = new Lanes.Views.LoginDialog({ parent: this });
-
-        // var screen = Lanes.Data.Screens.all.findWhere({ id: 'user-maintenance' });
-        // screen.display();
     }
 };
