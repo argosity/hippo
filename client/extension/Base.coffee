@@ -6,4 +6,4 @@ class BaseExtension
         Lanes.Extensions.register(klass)
 
 
-Lanes.Extension.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BaseExtension )
+Lanes.Extensions.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BaseExtension )

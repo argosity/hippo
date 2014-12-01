@@ -41,6 +41,7 @@ module Lanes
                 set :show_exceptions, false
                 DB.establish_connection
                 PubSub.initialize
+                Extensions.load_current_config
                 # use Rack::Csrf, :skip=>['GET:/'], :raise => true
             end
 

@@ -1,4 +1,4 @@
-class Lanes.<%= namespace.underscore.camelize %>.Extension extends Lanes.Extension.Base
+class Lanes.<%= namespace.underscore.camelize %>.Extension extends Lanes.Extensions.Base
 
     identifier: "<%= namespace %>"
 

@@ -18,7 +18,10 @@ module Lanes
             class_attribute :before
             class_attribute :after
 
-            #
+            def self.components(*names)
+                Components.enable(*names)
+            end
+
             def client_bootstrap_data(view)
                 {}
             end
@@ -99,6 +102,14 @@ module Lanes
                     data[ext.identifier] = ext.client_bootstrap_data(view)
                 end
                 return data
+            end
+
+
+            def load_current_config
+                config_file = Pathname.getwd.join('config','lanes.rb')
+                if config_file.exist?
+                    require config_file
+                end
             end
 
         end
