@@ -11,17 +11,17 @@
 
 
         <script type="text/javascript">
-         Lanes.Workspace.create('.lanes-test-root', {
+         Lanes.Workspace.create('.lanes-root', {
            csrf_token: "<%= csrf_token %>",
-           view: 'Lanes.Workspace.Layout',
+           view: "<%= Lanes.config.root_view %>",
            root_path: "<%= lanes_api_url %>"
          }, <%= client_bootstrap_data %> );
         </script>
     </head>
 
-    <body style="margin: 0; background-color: white;">
+    <body>
 
-        <div class="lanes-test-root">
+        <div class="lanes-root">
         </div>
 
     </body>
