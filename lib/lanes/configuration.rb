@@ -67,7 +67,7 @@ module Lanes
         config_option :app_title, "Lanes Test"
         config_option :assets_path_prefix, "/assets"
         config_option :mounted_at, ''
-
+        config_option :root_view, 'Lanes.Workspace.Layout'
         config_option :specs_root, Pathname.getwd
     end
 
