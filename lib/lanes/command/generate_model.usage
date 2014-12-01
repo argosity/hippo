@@ -37,8 +37,8 @@ Are the same as ActiveRecord, to wit:
          Model:         lib/blog/comment.rb
          Model Spec:    spec/comment_spec.rb
          Fixtures:      spec/fixtures/comments.yml
-         Client Model:  client/javascripts/blog/data/Comment.coffee
-         Client Spec:   spec/client/model/CommentSpec.coffee
+         Client Model:  client/data/Comment.coffee
+         Client Spec:   spec/client/data/CommentSpec.coffee
 
   The Ruby model will contain a `belongs_to` association to the User model,
   and the Javascript model definition will also have an association defined.
