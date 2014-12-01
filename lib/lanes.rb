@@ -15,6 +15,6 @@ require_relative "lanes/concerns/all"
 require_relative "lanes/validators/all"
 require_relative "lanes/model"
 
-
+require_relative "lanes/components"
 require_relative "lanes/extension"
 require_relative "lanes/screens"
