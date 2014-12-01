@@ -7,6 +7,7 @@ if (!Lanes){
 }
 
 Lanes.noConflict = function(){
+    Lanes.$ = window.jQuery.noConflict(true);
     window.Lanes = previousLanes;
     return Lanes;
 };
