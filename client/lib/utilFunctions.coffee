@@ -5,11 +5,18 @@ Lanes.fatal = (args...)->
     throw new Error(args...)
 
 Lanes.warn = (msg...)->
-    console.warn(msg...) if console
+    return unless console
+    console.warn(msg...)
+    if msg[0] instanceof Error
+        console.warn(msg[0].stack)
+    else console.warn(msg...)
     null
 
 Lanes.log = (msg...)->
-    console.log(msg...) if console
+    return unless console
+    if msg[0] instanceof Error
+        console.warn(msg[0].stack)
+    else console.log(msg...)
     null
 
 distillTypes = (type, ns)->
@@ -20,6 +27,7 @@ distillTypes = (type, ns)->
 # or with ns being an object, which will dref name inside it
 Lanes.getPath = ( name, ns='Lanes' ) ->
     return name unless _.isString(name)
+    ns = "Lanes.#{ns}" if _.isString(ns) && !ns.match("Lanes")
     if _.isObject(ns)
         distillTypes(name,ns)
     else
