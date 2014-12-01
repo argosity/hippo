@@ -7,7 +7,7 @@ Lanes.Workspace.Instance = class Instance {
     constructor(selector, options, extension_data){
         _.extend(this,options);
 
-        this.ui = new Lanes.Views.InterfaceState({ selector: selector, instance: this });
+        this.viewport = new Lanes.Views.Viewport({ selector: selector, instance: this });
         Lanes.Data.Bootstrap.initialize({
             csrf: options.csrf_token,
             root: options.root_path,

@@ -11,14 +11,14 @@ BREAKPOINTS = {
 
 ALL_INSTANCES = []
 
-class Lanes.Views.InterfaceState extends Lanes.Data.BasicModel
+class Lanes.Views.Viewport extends Lanes.Data.BasicModel
 
     constructor: ->
         super
         ALL_INSTANCES.push(this)
 
         this.on('change:root', =>
-            @viewport_width = @root.width()
+            @width = @root.width()
             @root.data()['ui']=@
         )
         this.on('change:menu_view', =>
@@ -34,15 +34,15 @@ class Lanes.Views.InterfaceState extends Lanes.Data.BasicModel
             type: 'string',
             values: [ 'menu-wide', 'menu-narrow', 'menu-hidden' ]
         }
-        root:              'element'
-        menu_view:         'any'
-        viewport:          'element'
-        viewport_width:    'number'
-        viewport_height:   'number'
+        root:       'element'
+        menu_view:  'any'
+        el:         'element'
+        width:      'number'
+        height:     'number'
+        http_error: 'string'
+        selector:   'string'
+        instance:   'object'
         screen_menu_shown: 'boolean'
-        http_error:        'string'
-        selector:          'string'
-        instance:          'object'
 
     derived:
         menu_width:
@@ -63,24 +63,24 @@ class Lanes.Views.InterfaceState extends Lanes.Data.BasicModel
                 @layout_size == 'tiny'
 
         screen_menu_position:
-            deps: ['viewport_width'], fn: ->
-                if this.viewport_width < BREAKPOINTS.sm + MENU_NARROW_WIDTH then 'top' else 'side'
+            deps: ['width'], fn: ->
+                if this.width < BREAKPOINTS.sm + MENU_NARROW_WIDTH then 'top' else 'side'
 
         screen_menu_size:
-            deps: ['viewport_width','screen_menu_preference'], fn: ->
+            deps: ['width','screen_menu_preference'], fn: ->
                 return @screen_menu_preference if @screen_menu_preference
-                width = this.viewport_width
+                width = this.width
                 switch
                     when width < BREAKPOINTS.sm + MENU_NARROW_WIDTH then 'menu-hidden'
                     when width < BREAKPOINTS.lg + MENU_WIDE_WIDTH   then 'menu-narrow'
                     else 'menu-wide'
         screens_width:
-            deps: ['viewport_width','screen_menu_size'], fn: ->
-                @viewport_width - @menu_width
+            deps: ['width','screen_menu_size'], fn: ->
+                @width - @menu_width
 
         screens_height:
-            deps: ['viewport_height'], fn: ->
-                @viewport_height - NAVBAR_HEIGHT
+            deps: ['height'], fn: ->
+                @height - NAVBAR_HEIGHT
 
     nextSidebarState: ->
         if ! @screen_menu_preference
