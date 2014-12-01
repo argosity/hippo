@@ -1,3 +1,7 @@
+# inspiration from https://github.com/ramitos/lazyload/blob/master/src/lazyload.js
+#
+GECKO = /Gecko\//.test(navigator.userAgent)
+
 class Loader
 
     constructor: (urls,cb)->
@@ -36,10 +40,12 @@ class Loader
         )
         return fn(url, true)  if exists
         called = false
-        node = _.el("link",
-          type: "text/css"
-          href: url
-          rel: "stylesheet"
+        tag = "link" #if GECKO then "style" else "link"
+        node = _.el( tag,
+           type: "text/css"
+           href: url
+           media: "screen"
+           rel: "stylesheet"
         )
 
         onloaded=(success,err)->
@@ -48,15 +54,14 @@ class Loader
             fn(url, success, err)
         node.onload  = ()->    onloaded(true,false)
         node.onerror = (err)-> onloaded(false,err)
-
-
         node.onreadystatechange = ->
             return if not (/loaded|complete/.test(node.readyState)) or called
             called=true
             fn(url, true)
-
         @head.appendChild node
-        poll()
+        # GECKO cannot query the node immediatly after it's created
+        if GECKO then _.delay(poll,250) else poll()
+
 
 
     loadJS: (url, fn) ->
@@ -81,7 +86,7 @@ class Loader
         this.body.appendChild(node)
 
 
-Lanes.lib.Loader = (urls...)->
+Lanes.lib.Request = (urls...)->
     urls = urls[0] if urls.length == 1 && _.isArray(urls[0])
     new _.Promise(  (resolve,reject)->
         new Loader(urls, (completed)->
