@@ -1,4 +1,4 @@
-Lanes.Data.mixins.HasCodeField = {
+Lanes.Data.Mixins.HasCodeField = {
 
     INVALID: /[^A-Z0-9a-z]/
 

@@ -8,5 +8,5 @@ Lanes.namespace = (target, name, block) ->
     target = target[item] or= {} for item in name.split '.'
     block( target, top ) if typeof block == 'function'
 
-for ns in ['Component','Data','Screens', 'Views','Vendor', 'Templates']
+for ns in ['Components', 'Data.Mixins', 'Views.Mixins', 'Screens', 'Vendor', 'Templates', 'Extensions']
     Lanes.namespace(ns)
