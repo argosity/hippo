@@ -1,6 +1,6 @@
 class Lanes.Workspace.Pages extends Lanes.Views.Base
 
-    templateName: 'workspace/pages'
+    template: 'workspace/pages'
 
     bindings:
         'model.screen_menu_size': { type: 'class' }
@@ -12,6 +12,9 @@ class Lanes.Workspace.Pages extends Lanes.Views.Base
             deps: ['model.screen_menu_position']
             fn: -> if @model.screen_menu_position == 'side' then 'with-screen-menu' else 'no-screen-menu'
 
+    ui:
+        screen: '.screen'
+        screens_menu_container: '.screens-menu-container'
 
     initialize: (options)->
         this.listenTo( Lanes.Data.Screens.displaying, "change:active", this.onActiveChange )
@@ -19,17 +22,10 @@ class Lanes.Workspace.Pages extends Lanes.Views.Base
         this.listenTo( @model,'change:screen_menu_position', this.moveScreensMenu )
         super
 
-    render: ->
-        super
-        this.cacheElements({
-            screen: '.screen'
-            screens_menu_container: '.screens-menu-container'
-        })
-        this
 
     moveScreensMenu: ->
-        return unless 'side' == @ui.screen_menu_position
-        this.screens_menu_container.appendChild( @ui.menu_view.el )
+        return unless 'side' == this.viewport.screen_menu_position
+        this.ui.screens_menu_container.append( this.viewport.menu_view.el )
 
     onRemove: (sv)->
         sv.view.remove()
@@ -41,6 +37,6 @@ class Lanes.Workspace.Pages extends Lanes.Views.Base
             view.render()
 
         if active
-            @screen.appendChild( view.el )
+            this.ui.screen.append( view.el )
         else
-            @screen.removeChild( view.el )
+            view.$el.detach()

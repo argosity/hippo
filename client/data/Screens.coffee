@@ -5,12 +5,15 @@ class ScreenView extends Lanes.Data.BasicModel
 
     session:
         active: ['boolean', true, false]
-        ui: 'state'
+        viewport: 'state'
 
     derived:
         view:
             deps: ['screen'], fn: ->
-                new @screen.viewModel( screen: this.screen, ui: @ui )
+                if @screen?.viewModel?
+                    new @screen.viewModel( screen: this.screen, viewport: this.viewport )
+                else
+                    Lanes.warn("Undefined screen for #{this}")
 
     initialize: (options)->
         super
@@ -26,7 +29,7 @@ class ScreenView extends Lanes.Data.BasicModel
 
 
 
-class Screen extends Lanes.Data.BasicModel
+class ScreenDefinition extends Lanes.Data.BasicModel
 
     session:
         id:          'string'
@@ -47,23 +50,49 @@ class Screen extends Lanes.Data.BasicModel
     initialize: ->
         @views = []
 
-    _setDisplaying: (ui)->
-        @views.push( new ScreenView( screen: this, ui: ui ) )
+    _setDisplaying: (viewport)->
+        @views.push( new ScreenView( screen: this, viewport: viewport ) )
+
+    getScreen: ->
+        @viewModel ||= Lanes.getPath(this.view,"Lanes.Screens")
+        if @viewModel?
+            _.Promise.resolve(@viewMOdel)
+        else
+            this.loadScreen()
+
+    loadScreen: ->
+        me=this
+        return new _.Promise(  (resolve,reject)->
+             me.loading=true
+             Lanes.lib.Request(me.files)
+                 .then ->
+                     me.loading=false
+                     me.viewModel = Lanes.getPath(me.view,"Lanes.Screens")
+                     if me.viewModel then resolve(me.viewModel)
+                     else reject("Screen #{me.view} not definied after file retrieval")
+                 ,(msg)->
+                     Lanes.warn(msg)
+                     me.loading=false
+                     reject(msg)
+        )
+
 
     display: (ui)->
-        @viewModel ||= Lanes.Screens[this.view]
-        if @viewModel?
-           this._setDisplaying(ui)
-        else
-            this.loading=true
-            Lanes.lib.Loader(this.files)
-                .then =>
-                    @viewModel = Lanes.Screens[this.view]
-                    @_setDisplaying(ui)
-                    @loading=false
-                .catch (failures)=>
-                    @loading=false
-                    Lanes.warn(failures)
+        this.getScreen().then => @_setDisplaying(ui)
+
+        # @viewModel ||= Lanes.Screens[this.view]
+        # if @viewModel?
+        #    this._setDisplaying(ui)
+        # else
+        #     this.loading=true
+        #     Lanes.lib.Request(this.files)
+        #         .then =>
+        #             @viewModel = Lanes.Screens[this.view]
+        #             @_setDisplaying(ui)
+        #             @loading=false
+        #         .catch (failures)=>
+        #             @loading=false
+        #             Lanes.warn(failures)
 
 
 class ScreenViewSet extends Lanes.Data.BasicCollection
@@ -106,7 +135,7 @@ class ScreenViewSet extends Lanes.Data.BasicCollection
 
 class ScreenSet extends Lanes.Data.BasicCollection
 
-    model: Screen
+    model: ScreenDefinition
 
     register: (spec)->
 

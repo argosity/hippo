@@ -6,7 +6,7 @@ class ScreenList extends Lanes.Views.Base
         click: 'displayScreen'
 
     displayScreen: ->
-        this.model.display(this.ui)
+        this.model.display(this.viewport)
 
     bindings:
         'model.title':{ selector: 'span', type: 'text' }
@@ -43,7 +43,7 @@ class ScreenGroup extends Lanes.Views.Base
 class Lanes.Workspace.ScreensMenu extends Lanes.Views.Base
 
     constructor: -> super
-    templateName: 'workspace/screens-menu'
+    template: 'workspace/screens-menu'
 
     subviews:
         navigation:
