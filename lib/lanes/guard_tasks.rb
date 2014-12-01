@@ -22,11 +22,12 @@ module Lanes
             yield matchers
 
             jasmine_options = options.merge({
-                port: 8888, server_mount: '/spec', server_env: 'test', server: :puma, spec_dir: 'spec/client', debug: false
+                port: 8888, server_mount: '/spec', server_env: 'test', server: :puma,
+                spec_dir: 'spec/client', console: :always, debug: false
             })
 
             dsl.guard :jasmine, jasmine_options do
-                dsl.watch(%r{^client/javascripts/(.+?)\.(js|coffee)$}){ |m| "spec/client/#{m[1]}_spec.#{m[2]}" }
+                dsl.watch(%r{^client/(.+?)\.(js|coffee)$}){ |m| "spec/client/#{m[1]}_spec.#{m[2]}" }
                 dsl.watch(%r{^spec/client/.*(?:_s|S)pec\.coffee$})
                 matchers.client_matches.call if matchers.client_matches
             end
