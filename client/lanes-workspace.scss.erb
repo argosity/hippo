@@ -7,11 +7,15 @@
   background-color: $body-bg;
   position: relative;
   min-height: 10px; // needs height for resizing sensor to function
-  @import "styles/components/all";
+<% Lanes::Components.enabled_with_dependencies(self) do | component | %>
+  @import "components/<%= component %>/<%= component %>";
+<% end %>
   @import "styles/plugins/all";
   @import "styles/layout";
   @import "styles/tabs";
   @import "styles/screens";
+  @import "styles/forms";
+  @import "styles/forms";
   @import "styles/forms";
   @import "styles/keybindings";
 }
