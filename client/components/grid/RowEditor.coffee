@@ -1,7 +1,6 @@
-class Lanes.Component.Grid.RowEditor extends Lanes.Component.Grid.Editor
+class Lanes.Components.Grid.RowEditor extends Lanes.Components.Grid.Editor
 
-
-    templateName: 'grid/row-editor'
+    template: 'grid/row-editor'
 
     move: (row)->
         super

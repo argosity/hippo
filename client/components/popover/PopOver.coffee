@@ -1,4 +1,4 @@
-class Lanes.Component.PopOver extends Lanes.Component.Base
+class Lanes.Components.PopOver extends Lanes.Components.Base
 
     events:
         'hide.bs.popover': '_onHide'
@@ -26,8 +26,8 @@ class Lanes.Component.PopOver extends Lanes.Component.Base
             Lanes.warn "PopOver Template #{this.template} was not found"
 
     initialize: (options)->
-        template = Lanes.Templates.find('component/popover')({ className: options.className||'' })
-        _.extend(options, this.options, {template: template, container: this.ui?.viewport})
+        template = Lanes.Templates.find('components/popover/template')({ className: options.className||'' })
+        _.extend(options, this.options, {template: template, container: this.viewport?.root})
         this.target.popover(options).on("hide.bs.popover", _.bind(this._onHide, this) )
         this.show() if options.autoShow
 
@@ -36,7 +36,7 @@ class Lanes.Component.PopOver extends Lanes.Component.Base
 
     show: ->
         this.target.popover('show')
-        this.notification = new _.defer
+        this.notification = new _.DeferredPromise
         return this.notification.promise
 
     destroy: ->

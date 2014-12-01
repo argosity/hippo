@@ -1,0 +1,3 @@
+<% Lanes::Components.enabled_with_dependencies(self) do | component |
+    require_asset "components/#{component}"
+end %>

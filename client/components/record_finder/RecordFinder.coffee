@@ -1,7 +1,7 @@
 class FinderClause
     constructor: -> super
 
-    templateName: 'record-finder/clause'
+    template: 'record-finder/clause'
 
     initialize: ->
         window.fc = this.model
@@ -102,7 +102,7 @@ Lanes.Component.ModalDialog.extend(FinderDialog)
 
 class RecordFinder
     constructor: -> super
-    templateName: 'record-finder/field'
+    template: 'record-finder/field'
     templateData: -> { field_name: @record_query.initial_field }
 
     events:
@@ -125,7 +125,7 @@ class RecordFinder
         ).then( (record)=>
             record.withAssociations(@.includeAssociations...) if record
         ).then( (record)=>
-            @.fireEvent("display-record", record) if record
+            this.$el.trigger("display-record", record) if record
         , (e)->Lanes.warn(e) )
 
     onKey: (ev)->
@@ -138,6 +138,6 @@ class RecordFinder
     runQuery: (ev)->
         code = this.$(ev.target).val()
         @record_query.loadSingle(code.toUpperCase(),{ include: @includeAssociations })
-            .then( (reply)=> @fireEvent("display-record", reply.record) if reply.record )
+            .then( (reply)=> this.$el.trigger("display-record", reply.record) if reply.record )
 
 Lanes.Component.RecordFinder = Lanes.Component.Base.extend(RecordFinder)

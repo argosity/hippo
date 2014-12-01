@@ -1,6 +1,6 @@
-class Lanes.Component.Grid.PopOverEditor extends Lanes.Component.Grid.Editor
+class Lanes.Components.Grid.PopOverEditor extends Lanes.Components.Grid.Editor
 
-    templateName: 'grid/popover-editor'
+    template: 'grid/popover-editor'
     templateData: ->
         { columns: this.grid.column_definitions }
 
@@ -12,7 +12,7 @@ class Lanes.Component.Grid.PopOverEditor extends Lanes.Component.Grid.Editor
         super
         if @popover
             @popover.destroy()
-        @popover = new Lanes.Component.PopOver({
+        @popover = new Lanes.Components.PopOver({
                 parent: this
                 className: 'grid-popover-editor'
                 target: Lanes.$(ev.target)

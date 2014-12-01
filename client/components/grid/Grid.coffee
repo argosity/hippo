@@ -7,7 +7,7 @@ _.extend( Lanes.$.fn.dataTableExt.oStdClasses,{
 })
 
 
-class Lanes.Component.Grid extends Lanes.Component.Base
+class Lanes.Components.Grid extends Lanes.Components.Base
 
     events:
         'click button.refresh': 'reload'
@@ -17,7 +17,7 @@ class Lanes.Component.Grid extends Lanes.Component.Base
         'cancel-edit': 'onCancelEdit'
         'order.dt table': 'onSort'
 
-    templateName: 'grid'
+    template: 'grid/template'
     templateData: ->
         data = { grid: this, buttons: ['refresh'] }
         data['buttons'].push('create') if @add_records
@@ -46,7 +46,7 @@ class Lanes.Component.Grid extends Lanes.Component.Base
         editing_controller:  'any' # either string or constructor fn
 
     initialize: (options)->
-        this.listenTo(this.ui,'change:screen_menu_size', this.delayedWidthReset)
+        this.listenTo(this.viewport,'change:screen_menu_size', this.delayedWidthReset)
 
         unless Lanes.current_user.canWrite(this.model_class)
             this.edit_records = false
@@ -74,7 +74,7 @@ class Lanes.Component.Grid extends Lanes.Component.Base
         @dt_api.ajax.reload()
 
     unselect: (row)->
-        @fireEvent('unselect-row', @modelForRow(row), {row:row} )
+        this.$el.trigger('unselect-row', [@modelForRow(row), {row:row}])
         row.removeClass('active')
 
     beginEdit: (row,ev)->
@@ -118,7 +118,7 @@ class Lanes.Component.Grid extends Lanes.Component.Base
                 this.unselect(row)
             else
                 row.addClass('active')
-                @fireEvent('select-row', {model:model, row:row} ) if model = this.modelForRow(row)
+                this.$el.trigger('select-row', {model:model, row:row} ) if model = this.modelForRow(row)
 
     updateRow: (row, model)->
         row.attr('id', model.id)

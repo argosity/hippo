@@ -38,6 +38,7 @@
         factory( require( 'jquery' ) );
     }
 	else if ( jQuery && !jQuery.fn.dataTable ) {
+
 		// Define using browser globals otherwise
 		// Prevent multiple instantiations if the script is loaded twice
 		factory( jQuery );

@@ -1,4 +1,4 @@
-class Lanes.Component.Grid.Editor extends Lanes.Component.Base
+class Lanes.Components.Grid.Editor extends Lanes.Components.Base
 
     session:
         grid: 'object' # n.b. - not 'state'.  Doing so causes stack overflow since grid also has a 'editor' session var
@@ -7,24 +7,21 @@ class Lanes.Component.Grid.Editor extends Lanes.Component.Base
         'click .save':   'saveChanges'
         'click .cancel': 'cancelEditing'
 
+    ui:
+        form: 'form'
+
     constructor: (config)->
         super
         this.grid = this.parent
 
     move: (row)->
         if @row
-            @grid.fireEvent('cancel-edit',@row)
+            this.$el.trigger('cancel-edit',@row)
         @row=row
         @model = this.grid.modelForRow(@row)
         this.render() unless this.rendered
         this.grid.$('.dataTables_scrollBody').append(this.el)
         this.updateFields()
-
-    render: ->
-        super
-        this.cacheJqElements({
-            form: 'form'
-        })
 
     updateFields: ->
         for input, index in this.$('input')
@@ -45,12 +42,12 @@ class Lanes.Component.Grid.Editor extends Lanes.Component.Base
         @model.save().then => @updateGridRow()
 
     updateGridRow: ->
-        @grid.fireEvent('row-updated', @row)
+        this.$el.trigger('row-updated', @row)
         @grid.updateRow(@row,@model)
         this.cancelEditing()
 
     cancelEditing: ->
-        @grid.fireEvent('cancel-edit', @row)
+        this.$el.trigger('cancel-edit',@row)
         this.detach()
         this.model = null
 
@@ -60,6 +57,6 @@ class Lanes.Component.Grid.Editor extends Lanes.Component.Base
             @cancelEditing()
 
     fields: ->
-        _.map(this.form.children(), (input,index)->
+        _.map(this.ui.form.children(), (input,index)->
             { index: index, input: Lanes.$(input), column: this.grid.column_definitions[index] }
         ,this)

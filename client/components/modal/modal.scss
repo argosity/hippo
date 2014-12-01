@@ -1,0 +1,20 @@
+@import "styles/vendor/bootstrap/modals";
+
+.modal-backdrop{
+  position: absolute;
+}
+
+
+// Use our sizing detection instead of media-queries
+
+.modal {
+
+  &.md{
+    .modal-lg {
+      right: 5%;
+      width: 100%;
+      left: 5%;
+    }
+  }
+
+}
