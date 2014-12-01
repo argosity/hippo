@@ -1,6 +1,6 @@
 class Lanes.Workspace.Navbar extends Lanes.Views.Base
 
-    templateName: 'workspace/navbar'
+    template: 'workspace/navbar'
 
     events:
         'click .screens-menu-toggle': 'switchMenu'

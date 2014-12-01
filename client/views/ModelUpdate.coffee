@@ -1,6 +1,6 @@
 class Lanes.Views.ModelUpdate extends Lanes.Views.Base
 
-    templateName: 'view/model-update'
+    template: 'view/model-update'
 
     bindings:
         'model.name':{ selector: 'a', type: 'text' }
