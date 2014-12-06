@@ -66,14 +66,14 @@ class ScreenDefinition extends Lanes.Data.BasicModel
              me.loading=true
              Lanes.lib.Request(me.files)
                  .then ->
-                     me.loading=false
-                     me.viewModel = Lanes.getPath(me.view,"Lanes.Screens")
-                     if me.viewModel then resolve(me.viewModel)
-                     else reject("Screen #{me.view} not definied after file retrieval")
+                    me.loading=false
+                    me.viewModel = Lanes.getPath(me.view)
+                    if me.viewModel then resolve(me.viewModel)
+                    else reject("Screen #{me.view} not definied after file retrieval")
                  ,(msg)->
-                     Lanes.warn(msg)
-                     me.loading=false
-                     reject(msg)
+                    Lanes.warn(msg)
+                    me.loading=false
+                    reject(msg)
         )
 
 
