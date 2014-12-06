@@ -27,7 +27,7 @@ module Lanes
             end
 
             def javascript_include
-                self.identifier + "-extension.js"
+                self.identifier + ".js"
             end
 
             def client_namespace
@@ -103,7 +103,6 @@ module Lanes
                 end
                 return data
             end
-
 
             def load_current_config
                 config_file = Pathname.getwd.join('config','lanes.rb')
