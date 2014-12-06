@@ -48,12 +48,6 @@ _.mixin({
                 last
         else
             ''
-
-    sprintfArray: (array, format)->
-        _.map( array, (field)->
-            _.sprintf( format, field )
-        )
-
     evaluateFunction: (fn,args)->
         if this.isFunction(fn) then fn(args) else fn
 })
