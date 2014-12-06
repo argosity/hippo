@@ -31,13 +31,18 @@ class DataCollection
         @errors=[]
         Lanes.Vendor.Ampersand.Collection.apply(this, arguments)
 
-    isLoaded:->
-        @isLoaded
-
+    @fetch: (options)->
+        collection = new this
+        collection.fetch(options)
+        collection
+        
     fetch: (options={})->
         @isLoaded = true
         wrapRequest(this,options)
         super(options).then => @
+
+    isLoaded:->
+        @isLoaded
 
     ensureLoaded: ( callback )->
         if ! @isLoaded && ! this.length
@@ -46,6 +51,8 @@ class DataCollection
             callback()
 
     isDirty: ->
+        for model in @models
+            return true if model.isDirty()
         false
 
     parse:(resp)->
@@ -59,8 +66,16 @@ class DataCollection
     url: ->
         @model::urlRoot()
 
-    sync: ->
-        Lanes.Data.Sync.apply(this,arguments)
+    sync: Lanes.Data.Sync
+
+    save: (options)->
+        Lanes.Data.Sync('update', this, options)
+
+    dataForSave: (options)->
+        unsaved = []
+        for model in @models
+            unsaved.push( model.unsavedData() ) if model.isDirty()
+        unsaved
 
     _prepareModel: (attrs, options={})->
         options.collection = this;
@@ -109,6 +124,9 @@ class SubCollection
     mixins:[
         CommonMethods
     ]
+
+    url: ->
+        this.collection.url()
 
     filter: ->
         this._runFilters()
