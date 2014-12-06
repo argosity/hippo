@@ -26,13 +26,13 @@ class Lanes.Components.Grid.Editor extends Lanes.Components.Base
     updateFields: ->
         for input, index in this.$('input')
             if definition = this.getColumn(input.name)
-                _.dom.setAttribute(input, 'value', this.model.get(definition.field) )
+                Lanes.dom.setAttribute(input, 'value', this.model.get(definition.field) )
         this.$('input').first().focus()
 
     persistFields: ->
         for input, index in this.$('input')
             if definition = this.getColumn(input.name)
-                @model.set( definition.field, _.dom.getAttribute(input,'value') )
+                @model.set( definition.field, Lanes.dom.getAttribute(input,'value') )
 
     getColumn: (name)->
         _.findWhere(this.grid.column_definitions, { field: name })

@@ -5,10 +5,10 @@ class Lanes.Views.PubSub extends Lanes.Views.ModelObserver
         'remote-update': 'onChange'
 
     hideUpdate: (field)->
-        _.dom.removeClass(field,"updated")
+        Lanes.dom.removeClass(field,"updated")
 
     showUpdate: (field)->
-        _.dom.addClass(field,"updated")
+        Lanes.dom.addClass(field,"updated")
         _.delay(@hideUpdate, 3000, field )
 
     onChange: (model,change)->
