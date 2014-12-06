@@ -29,13 +29,9 @@ Lanes.getPath = ( name, ns='Lanes' ) ->
     return name unless _.isString(name)
     ns = "Lanes.#{ns}" if _.isString(ns) && !ns.match("Lanes")
     if _.isObject(ns)
-        distillTypes(name,ns)
+        distillTypes(name,ns) || distillTypes(name, Lanes)
     else
         distillTypes(name,window) || distillTypes(name, distillTypes(ns, window))
-
-Lanes.getModelPath = (scope,name)->
-    [model..., field] = name.split('.')
-    [ Lanes.getPath( model.join('.'), scope), field ]
 
 _.mixin({
 
