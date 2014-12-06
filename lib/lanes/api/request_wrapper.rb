@@ -1,42 +1,63 @@
-module Sinatra
+module Lanes
+    module API
 
-    module RequestWrapper
+        module RequestWrapper
+            class << self
 
-        def wrap_request(model, params, parent_attribute)
-
-            authentication = Lanes::API::AuthenticationProvider.new(
-              request_type: request.request_method,
-              session:      session,
-              params:       params
-            )
-
-            unless authentication.allowed_access_to?(model)
-                halt( 401, Oj.dump({
-                    success:false, errors: {user: "Access Denied"}, message: authentication.error_message
-                }))
-            end
-            ::Lanes::User.scoped_to(authentication.current_user) do | user |
-                Lanes.logger.debug "User   : #{user.id} (#{user.login})"
-                Lanes.logger.debug "Params : #{request.params}"
-
-                params[:nested_attribute] = Hash[ parent_attribute, params[parent_attribute] ] if parent_attribute
-
-                wrap_json_reply do
-                    yield authentication
+                def get(*args)
+                    wrap_request(*args) do |controller|
+                        controller.perform_retrieval
+                    end
                 end
 
+                def post(*args)
+                    wrap_request(*args) do |controller|
+                        controller.perform_creation
+                    end
+                end
+
+                def update(*args)
+                    wrap_request(*args) do |controller|
+                        controller.perform_update
+                    end
+                end
+
+                def delete(*args)
+                    wrap_request(*args) do |controller|
+                        controller.perform_destroy
+                    end
+                end
+
+                def wrap_request(model, controller, parent_attribute)
+                    lambda do
+                        authentication = Lanes::API::AuthenticationProvider.new(
+                          request_type: request.request_method,
+                          session:      session,
+                          params:       params
+                        )
+                        authentication.wrap_request(model) do
+                            if parent_attribute
+                              params[:nested_attribute] = Hash[ parent_attribute,
+                                                               params[parent_attribute] ]
+                            end
+                            wrap_json_reply do
+                                yield controller.new(model, authentication, params, data)
+                            end
+                        end
+                    end
+                end
             end
+
+            def wrap_json_reply
+                response = yield
+                if false == response[:success]
+                    status(406)
+                end
+                Oj.dump(response, mode: :compat)
+            end
+
         end
 
-        def wrap_json_reply
-            response = yield
-            if false == response[:success]
-                status(406)
-            end
-            Oj.dump(response, mode: :compat)
-        end
 
     end
-
-
 end

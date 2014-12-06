@@ -15,7 +15,7 @@ module Lanes
                 set :environment, env
             end
             register SprocketsExtension
-            helpers Sinatra::RequestWrapper
+            helpers RequestWrapper
             helpers HelperMethods
             not_found do
                 Oj.dump({ message: "endpoint not found", success: false  })
@@ -42,6 +42,8 @@ module Lanes
                 DB.establish_connection
                 PubSub.initialize
                 Extensions.load_current_config
+                # late load in case an extension has provided an alternative implementation
+                require "lanes/api/null_authentication_provider" unless API.const_defined?(:AuthenticationProvider)
                 # use Rack::Csrf, :skip=>['GET:/'], :raise => true
             end
 
