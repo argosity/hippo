@@ -109,7 +109,6 @@ describe "BaseView Suite", ->
             bindings: { "model.name": { type: "text" } }
         Lanes.Views.Base.extend(LowerView)
         collection = new Collection
-        collection.add([{ name: "One"}, {name: "Two"},{name:"Three"}])
         view = makeView({
             subviews:
                 lower:
@@ -119,6 +118,8 @@ describe "BaseView Suite", ->
             template: "<div>text,text,text<div data-hook='lower'>unmodified</div>More text</div>"
         }, { collection: collection})
         view.render()
+        expect(view.$('h1')).toHaveLength(0)
+        collection.add([{ name: "One"}, {name: "Two"},{name:"Three"}])
         expect(view.$('h1')).toHaveLength(3)
         expect(view.$('h1:first')).toContainText('One')
 
@@ -150,3 +151,16 @@ describe "BaseView Suite", ->
 
         model.name="Ralph"
         expect(nameSpy).toHaveBeenCalled()
+
+
+    it "invokes collection events", ->
+        eventSpy = jasmine.createSpy('event')
+        view = makeView({
+            collectionEvents:
+                all: 'onEvent'
+            onEvent: eventSpy
+            initialize: -> this.collection = new Collection
+        })
+        expect(eventSpy).not.toHaveBeenCalled()
+        view.collection.add(new Model)
+        expect(eventSpy).toHaveBeenCalled()
