@@ -3,5 +3,5 @@
 #
 # It will not be evaluated if another extension is loading this one
 Lanes.configure do | config |
-    config.root_view = "Lanes.Screens.<%= class_name %>"
+    config.root_view = "<%= class_name %>.Screens.<%= class_name %>"
 end

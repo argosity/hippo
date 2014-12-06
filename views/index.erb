@@ -5,17 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
         <title><%= Lanes.config.app_title %></title>
-
-        <%=  javascript_tag 'lanes-workspace.js' %>
-        <%=  stylesheet_tag 'lanes-workspace' %>
-
-
+        <%=  javascript_tag 'lanes/workspace' %>
+        <%=  stylesheet_tag 'lanes/workspace' %>
         <script type="text/javascript">
-         Lanes.Workspace.create('.lanes-root', {
-           csrf_token: "<%= csrf_token %>",
-           view: "<%= Lanes.config.root_view %>",
-           root_path: "<%= lanes_api_url %>"
-         }, <%= client_bootstrap_data %> );
+        Lanes.Workspace.create('.lanes-root', {
+            csrf_token: "<%= csrf_token %>",
+            view: "<%= Lanes.config.root_view %>",
+            root_path: "<%= lanes_api_url %>"
+        }, <%= client_bootstrap_data %> );
         </script>
     </head>
 
