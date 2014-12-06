@@ -1,8 +1,8 @@
 class DataModel
     isModel: true
 
-    constructor: (attrs,options)->
-        this._unsaved = if attrs then _.keys(attrs) else []
+    constructor: (attrs,options={})->
+        this._unsaved = if attrs and !options.xhr then _.keys(attrs) else []
         super
         this.on('change', this._recordUnsaved )
 
