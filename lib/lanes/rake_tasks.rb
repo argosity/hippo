@@ -38,3 +38,10 @@ namespace :db do
         Lanes::DB.configure_rake_environment
     end
 end
+
+namespace :assets do
+    task :precompile do
+        require_relative 'api/sprockets_extension'
+        Lanes::API::SprocketsExtension.compile!
+    end
+end
