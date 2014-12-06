@@ -1,4 +1,3 @@
-# rubocop:disable IndentationWidths
 module Lanes
     module API
 
@@ -50,19 +49,61 @@ module Lanes
             end
 
             def perform_update
-                record   = build_query.first
-                record.set_attribute_data(data, user)
-                options = build_reply_options.merge(success: record.save)
-                build_reply(record, :update, options)
+                if params[:id]
+                    perform_single_update( build_query.first! )
+                elsif data.is_a?(Array)
+                    perform_multiple_updates
+                end
             end
 
             def perform_destroy
+                if params[:id]
+                    perform_single_destroy
+                elsif data.is_a?(Array)
+                    perform_multiple_destroy
+                end
+            end
+
+          protected
+
+            def perform_single_destroy
                 record = model.find(params[:id])
                 record.destroy
                 build_reply(record, :destroy, {})
             end
 
-          protected
+            def perform_multiple_destroy
+                records = model.find( data.map{|rec|rec['id']} )
+                success = true
+                records.each do | record |
+                    if user.can_delete?(record, record.id)
+                        success = false unless record.destroy
+                    end
+                end
+                options = build_reply_options.merge(success: success)
+                build_reply(records, :update, options)
+            end
+
+            def perform_multiple_updates
+                records = model.find( data.map{|rec|rec['id']} )
+                success = true
+                records.each do | record |
+                    record_data = data.detect{ |rd| rd['id'] == record.id }
+                    if user.can_write?(record, record.id)
+                        record.set_attribute_data(record_data, user)
+                        success = false unless record.save
+                    end
+                end
+                options = build_reply_options.merge(success: success)
+                build_reply(records, :update, options)
+            end
+
+            def perform_single_update(record)
+                record.set_attribute_data(data, user)
+                options = build_reply_options.merge(success: record.save)
+                build_reply(record, :update, options)
+            end
+
             # @return [Array<String>] The fields to include in query.  May represent either an attribute or a method
             def requested_fields
                 [*params[:f]]

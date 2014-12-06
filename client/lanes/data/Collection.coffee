@@ -9,6 +9,19 @@ CommonMethods = {
                     break
             break if found != -1
         found
+
+
+    destroyAll: (options={})->
+        success = options.success
+        _.extend( options, {
+            data: this.map( (model)-> { id: model.id } )
+            success: =>
+                for model in @models
+                    model.trigger('destroy', model, model.collection, options)
+                success.apply(@,arguments) if success
+        })
+        Lanes.Data.Sync('delete', this, options)
+
 }
 
 class DataCollection

@@ -57,42 +57,21 @@ module Lanes
                              ''
                          end
 
-
                 # index
-                get "#{prefix}/#{path}/?:id?.json" do
-                    wrap_request(model, params, parent_attribute) do |authentication|
-                        controller.new(model, authentication, params).perform_retrieval
-                    end
-                end
+                get "#{prefix}/#{path}/?:id?.json", &RequestWrapper.get(model, controller, parent_attribute)
 
                 # create
-                post "#{prefix}/#{path}.json" do
-                    wrap_request(model, params, parent_attribute) do |authentication|
-                        controller.new(model, authentication, params, data).perform_creation
-                    end
-                end
+                post "#{prefix}/#{path}.json", &RequestWrapper.post(model, controller, parent_attribute)
 
                 unless options[:immutable]
-                    patch "#{prefix}/#{path}/:id.json" do
-                        perform_request(model, params, parent_attribute) do |authentication|
-                            controller.new(model, authentication, params, data).perform_update
-                        end
-                    end
 
                     # update
-                    put "#{prefix}/#{path}/:id.json" do
-                        wrap_request(model, params, parent_attribute) do |authentication|
-                            controller.new(model, authentication, params, data).perform_update
-                        end
-                    end
+                    patch "#{prefix}/#{path}/?:id?.json", &RequestWrapper.update(model, controller, parent_attribute)
+                    put   "#{prefix}/#{path}/?:id?.json", &RequestWrapper.update(model, controller, parent_attribute)
 
                     unless options[:indestructible]
                         # destroy
-                        delete "#{prefix}/#{path}/:id.json" do
-                            wrap_request(model, params, parent_attribute) do |authentication|
-                                controller.new(model, authentication, params).perform_destroy
-                            end
-                        end
+                        delete "#{prefix}/#{path}/?:id?.json", &RequestWrapper.delete(model, controller, parent_attribute)
                     end
 
                 end
