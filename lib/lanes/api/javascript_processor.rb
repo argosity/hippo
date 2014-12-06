@@ -19,10 +19,20 @@ module Lanes
                 end
             end
 
-            def wrap_js(js)
-                "(function(Lanes, _, window, undefined) {\n#{js}\n})(window.Lanes, window._, window);"
+            def wrap_js(scope, js)
+                ns  = namespace(scope)
+                if ns && ns != "Lanes"
+                    ref = "(window.Lanes ? window.Lanes['#{ns}'] : null)"
+                    "(function(Lanes, #{ns}, NAMESPACE, _, window, undefined) {\n#{js}\n})(window.Lanes, #{ref}, {ref:#{ref},name:'#{ns}'}, window._, window);"
+                else
+                    "(function(Lanes, NAMESPACE, _, window, undefined) {\n#{js}\n})(window.Lanes, {ref:window.Lanes,name:'Lanes'}, window._, window);"
+                end
             end
 
+            def namespace(scope)
+                dirs = scope.logical_path.split(File::SEPARATOR)
+                return dirs.many? ? dirs.first.camelize : nil
+            end
         end
 
         class CoffeeScriptWrapper < JsAssetCompiler
@@ -63,7 +73,7 @@ module Lanes
             end
 
             def evaluate(scope, locals, &block)
-                wrap_js ::CoffeeScript.compile(cleaned, bare: true)
+                wrap_js scope, ::CoffeeScript.compile(cleaned, bare: true)
             end
         end
 
@@ -73,7 +83,7 @@ module Lanes
                 cmd = "#{Lanes.config.es6_transpiler_path} #{Lanes.config.es6_transpiler_options}"
                 stdout, stderr, _status = Open3.capture3(cmd, stdin_data: data)
                 if stderr.empty?
-                    wrap_js stdout
+                    wrap_js scope, stdout
                 else
                     raise TranspileError, stderr
                 end
@@ -83,11 +93,11 @@ module Lanes
         class JSWrapper < JsAssetCompiler
             self.registered_extension = '.lanes'
             def evaluate(scope, locals, &block)
-                wrap_js data
+                wrap_js scope, data
             end
         end
 
-        class SkrTemplates < JsAssetCompiler
+        class LanesTemplates < JsAssetCompiler
             self.registered_extension = '.html'
             def evaluate(scope, locals, &block)
                 "Lanes.Templates['#{scope.logical_path}']=" + self.compile(data)
