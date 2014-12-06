@@ -230,7 +230,7 @@ setupStandardProps=(klass)->
 
 copyServerResp = (record,resp)->
     record.errors = resp?.errors
-    record.lastServerMessage = resp.message
+    record.lastServerMessage = resp?.message
     { record: record, response: resp }
 
 wrapRequest = (record, options)->
