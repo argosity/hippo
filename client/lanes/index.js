@@ -8,5 +8,4 @@
 //= require ./screens
 //= require ./components/Base
 //= require ./components/enabled
-//= require ./workspace
 //= require ./extension/LateLoaded
