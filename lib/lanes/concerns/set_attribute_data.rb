@@ -55,7 +55,7 @@ module Lanes::Concerns
                 attributes.each{|attr| self.blacklisted_attributes[ attr.to_sym ] = options }
             end
 
-            def from_attribute_data(data,user=Lanes::User.current)
+            def from_attribute_data(data,user)
                 record = self.new
                 record.set_attribute_data(data, user)
                 record
@@ -84,7 +84,7 @@ module Lanes::Concerns
         # @param data [Hash]
         # @param user [User] who is performing request
         # @returns
-        def set_attribute_data(data, user = Lanes::User.current)
+        def set_attribute_data(data, user)
 
             return {} unless self.can_write_attributes?(data, user)
 
