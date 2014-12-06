@@ -1,6 +1,6 @@
-class Lanes.<%= namespace.classify %>.Views.<%= class_name %> extends Lanes.Views.Base
+class <%= namespace.classify %>.Views.<%= class_name %> extends Lanes.Views.Base
 
-    templateName: "<%= name.dasherize %>"
+    namespace: NAMESPACE
 
     # List subviews <TODO: add link to docs>
     subviews: {}

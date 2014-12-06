@@ -1,6 +1,6 @@
 require_relative '../<%= name %>'
 
-module <%= namespace %>
+module <%= namespace.camelize %>
 
     class Extension < Lanes::Extensions::Definition
 

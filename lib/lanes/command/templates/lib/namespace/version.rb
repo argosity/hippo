@@ -1,3 +1,3 @@
-module <%= name.camelize %>
+module <%= namespace.camelize %>
     VERSION=0.1
 end

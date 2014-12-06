@@ -12,9 +12,12 @@ module Lanes
                 Pathname.new(__FILE__).dirname.join("templates")
             end
 
-            def load_extension
+            def load_namespace
                 @namespace  = options[:namespace] || Command.load_current_extension.identifier
                 raise Thor::Error("Unable to locate Lanes environment") unless @namespace
+            end
+
+            def set_variables
                 @class_name = name.classify
                 @client_dir = "client/#{namespace}"
             end

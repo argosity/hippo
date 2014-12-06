@@ -10,7 +10,7 @@ module <%= namespace.camelize %>
         icon        "<%= options[:icon] %>"
         group_id    "<%= options[:group] %>"
         model_class "<%= options[:model_class] %>"
-        view_class  "Lanes.Screens.<%= class_name %>"
+        view_class  "<%= namespace.camelize %>.Screens.<%= class_name %>"
         files       ['screens/<%= name.dasherize %>.js','screens/<%= name.dasherize %>.css']
     end
 

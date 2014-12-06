@@ -1,6 +1,7 @@
-class Lanes.<%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_parent %>
+class <%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_parent %>
 
     api_path: '<%= name.downcase.pluralize.underscore.dasherize %>'
+    namespace: NAMESPACE
 
     props:
 <% fields.each do |field| -%>

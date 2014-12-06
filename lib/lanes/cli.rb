@@ -2,6 +2,7 @@ require 'thor'
 require 'require_all'
 require_relative '../lanes'
 require_relative 'command'
+require_relative 'command/named_command'
 require_rel 'command/*.rb'
 
 module Lanes

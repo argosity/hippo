@@ -1,6 +1,6 @@
-class Lanes.Screens.<%= class_name %> extends Lanes.Screens.Base
+class <%= namespace.camelize %>.Screens.<%= class_name %> extends Lanes.Screens.Base
 
-    templateName: "<%= name.dasherize %>-layout"
+    namespace: NAMESPACE
 
     # List subviews <TODO: add link to docs>
     subviews: {}

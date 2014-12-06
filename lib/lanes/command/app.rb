@@ -1,25 +1,20 @@
 module Lanes
     module Command
 
-        class App < Thor::Group
-            include Thor::Actions
+        class App < NamedCommand
 
             class_options :force => :boolean
 
             class_option  :directory, :type=>:string
 
-            argument :name
-            attr_reader :file_name, :namespace, :class_name
 
-            def self.source_root
-                Pathname.new(__FILE__).dirname.join("templates")
+            def load_namespace # override
+                @namespace  = name
             end
 
-            def initialize(*args)
+            def set_variables
                 super
                 self.destination_root = options[:directory] || name
-                @file_name = name.downcase
-                @class_name = @namespace = name.camelize
             end
 
             def create_files
@@ -38,11 +33,11 @@ module Lanes
 
             def create_client_files
                 self.class.source_root.join('client').children.each do | path |
-                    empty_directory "client/#{path.basename}" if path.directory?
+                    empty_directory "#{client_dir}/#{path.basename}" if path.directory?
                 end
-                template "client/namespace-extension.js", "client/#{name}-extension.js"
-                template "client/Extension.coffee",   "client/Extension.coffee"
-                template "client/styles/styles.scss", "client/#{name}-styles.scss"
+                template "client/namespace-extension.js", "#{client_dir}/index.js"
+                template "client/Extension.coffee",       "#{client_dir}/Extension.coffee"
+                template "client/styles/styles.scss",     "client/#{name}-styles.scss"
             end
 
             def create_first_screen
