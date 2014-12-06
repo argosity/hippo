@@ -17,6 +17,9 @@ class ScreenBase
 
     reset: Lanes.emptyFn
 
+    template: ->
+        this.namespace.name.toLowerCase() + "/screens/" + this.constructor.name.toLowerCase() + "/layout";
+
     render: ->
         previouslyRendered = this.rendered
         Lanes.Views.RenderContext.start(this)
