@@ -185,8 +185,7 @@ class DataModel
         else
             ''
 
-    sync: ->
-        Lanes.Data.Sync.apply(this,arguments)
+    sync: Lanes.Data.Sync
 
     _recordUnsaved: (record,options)->
         attrs = this.changedAttributes()
