@@ -1,4 +1,5 @@
 require "yui/compressor"
+require "closure-compiler"
 
 module Lanes
     module API
@@ -9,13 +10,14 @@ module Lanes
 
             def initialize_engine
                 require_template_library 'yui/compressor'
+                require_template_library 'closure-compiler'
             end
 
             def prepare
             end
 
             def js
-                @js||=YUI::JavaScriptCompressor.new(:munge => true, :java_opts=>'-client')
+                @js||=Closure::Compiler.new(compilation_level: 'ADVANCED_OPTIMIZATIONS')
             end
             def css
                 @css ||= YUI::CssCompressor.new( :java_opts=>'-client' )
@@ -23,7 +25,7 @@ module Lanes
             def evaluate(context, locals, &block)
                 case context.content_type
                 when 'application/javascript'
-                    js.compress(data)
+                    js.compile(data)
                 when 'text/css'
                     css.compress(data)
                 else

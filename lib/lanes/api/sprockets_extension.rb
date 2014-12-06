@@ -2,7 +2,6 @@ require 'sprockets'
 require 'sass'
 require 'sinatra/sprockets-helpers'
 require_relative 'javascript_processor'
-require_relative 'sprockets_compressor'
 require 'compass/import-once/activate'
 
 module Lanes
@@ -29,6 +28,7 @@ module Lanes
                         ext.client_paths.each{ |path| env.append_path(path) }
                     end
                     if compress
+                        require_relative 'sprockets_compressor'
                         env.js_compressor  = AssetCompressor
                         env.css_compressor = AssetCompressor
                     end
