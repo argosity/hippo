@@ -8,7 +8,6 @@ InstalledFiles
 coverage
 doc/
 log/
-public
 lib/bundler/man
 pkg
 rdoc
