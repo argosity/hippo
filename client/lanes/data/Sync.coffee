@@ -29,7 +29,7 @@ paramsMap = {
     start   : 's'
 }
 
-Lanes.Data.Sync = (method, model, options)->
+Lanes.Data.Sync = (method, model, options={})->
 
     query = {}
     for key, value of options
@@ -48,10 +48,10 @@ Lanes.Data.Sync = (method, model, options)->
     params.headers = {
         X_CSRF_TOKEN: Lanes.Data.Config.csrf_token
     }
-    # Ensure that we have the appropriate request data.
-    if !options.data? && model && _.contains([ "create", "update", "patch" ], method )
-        params.contentType = "application/json"
-        params.data = JSON.stringify( model.dataForSave(options) )
+    params.contentType = "application/json"
+    if options.data || _.contains(['create','update','patch'], method)
+        params.data = JSON.stringify( options.data || model.dataForSave(options) )
+        delete options.data
 
     # Don't process data on a non-GET request.
     #params.processData = false if params.type isnt "GET"
