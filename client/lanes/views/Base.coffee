@@ -1,6 +1,5 @@
 amp = Lanes.Vendor.Ampersand
 delegateEventSplitter = /^(\S+)\s*(.*)$/
-
 class ViewBase
 
     @extended_properties = ['ui']
@@ -50,7 +49,6 @@ class ViewBase
             deps: ['parent'], fn:->
                 this.root_view?.viewport
 
-    namespace: "Views"
 
     constructor: (attrs={})->
 
@@ -63,17 +61,15 @@ class ViewBase
 
         Lanes.Vendor.Ampersand.State.call(this, attrs, {init: false, parent: parent})
 
-        this.on('change:$el',   this._handleElementChange, this)
+        this.on('change:$el',   this._onElementChange, this)
         this.on('change:model', this._onModelChange, this)
-
+        this.on('change:collection', this._onCollectionChange, this)
+        this._onModelChange()      if @model
+        this._onCollectionChange() if @collection
         this._parsedBindings = Lanes.Vendor.Ampersand.Bindings(this.bindings, this)
-
-        # if ui = _.result(this,'ui')
-        #     _.extend(this._ui ||
-
         this._initializeBindings();
         if attrs.el && !this.autoRender
-            this._handleElementChange();
+            this._onElementChange();
 
         this._initializeSubviews();
         this.initialize.apply(this, arguments);
@@ -85,8 +81,6 @@ class ViewBase
         if !this.pubSub? # if it's unset, not true/false; default to parent or true
             this.pubSub = if this.parent?.pubSub? then this.parent.pubSub else true
 
-        this.on('change:model',  this._onModelChange )
-        this._onModelChange() if @model
 
         this.initializeFormBindings() if @form_bindings
 
@@ -103,12 +97,14 @@ class ViewBase
         )
 
     _substituteEventUI: ->
-        return unless @events && @ui
-        for selector in _.keys(@events)
-            replaced_selector = this._normalizeUIString(selector,@ui)
-            if replaced_selector != selector
-                @events[replaced_selector] = @events[selector]
-                delete @events[selector]
+        return unless @ui
+        if @events
+            for selector in _.keys(@events)
+                replaced_selector = this._normalizeUIString(selector,@ui)
+                if replaced_selector != selector
+                    @events[replaced_selector] = @events[selector]
+                    delete @events[selector]
+        # TODO - also apply ui to binding keys
 
 
     # Initialize is an empty function by default. Override it with your own
@@ -149,31 +145,30 @@ class ViewBase
     # If it's a function it will be passed the `context`
     # argument.
     renderWithTemplate: (templateArg)->
-        template = templateArg || this.template;
+        template = templateArg || this.resultsFor('template')
         throw new Error('Template string or function needed.') unless template
-
-        newDom = if _.isFunction(template)
-            template.call(this)
-        else if template_fn = Lanes.Templates.find(template, @namespace)
-            template = template_fn( _.result(this,'templateData'))
-        else template
-
+        template_fn = Lanes.Templates.find(template, this.namespace.name)
+        newDom = if template_fn then template_fn( _.result(this,'templateData')) else template
         newDom = Lanes.Vendor.domify(newDom) if _.isString(newDom);
         parent = this.el && this.el.parentNode;
         parent.replaceChild(newDom, this.el) if parent
         if newDom.nodeName == '#document-fragment'
             throw new Error('Views can only have one root element.')
+        if newDom.nodeName == '#text'
+            throw new Error('Views must have a root element.')
         this.el = newDom;
         return this;
 
     template: ->
-        '<div></div>'
+        this.namespace.name.toLowerCase() + "/views/" + _.underscore( this.constructor.name );
+
+    namespace: NAMESPACE
 
     templateData: ->
         { model: this.model, collection: this.collection }
 
     renderTemplate:(name,data={})->
-        template = Lanes.Templates.find(name, @namespace)
+        template = Lanes.Templates.find(name, this.namespace.name)
         if template
             template(data)
         else
@@ -201,13 +196,15 @@ class ViewBase
             );
             delete parsedBindings[modelName];
         );
-        this._unBindModel( @model ) if @model
+        this._unbindFromObject(@model, @modelEvents) if @model and @modelEvents
+        this._unbindFromObject(@collection, @collectionEvents) if @collection and @collectionEvents
+
         Lanes.Views.Keys.remove(this, @key_bindings, @key_scope) if @key_bindings
         this.trigger('remove', this);
         return this;
 
     # Change the view's element (`this.el` property), including event re-delegation.
-    _handleElementChange: (element, delegate) ->
+    _onElementChange: (element, delegate) ->
         if changes = this.changedAttributes()
             Lanes.$(changes['el']).off('.delegateEvents' + this.cid) if changes['el']
         this.bindEvents()
@@ -303,7 +300,7 @@ class ViewBase
             Lanes.getPath(subview.component, Lanes.Components)
         else if subview.view
             if _.isString(subview.view)
-                Lanes.getPath(subview.view, @namespace+".Views")
+                Lanes.getPath(subview.view, this.namespace.ref['Views'] )
             else
                 subview.view
         Lanes.warn( "Unable to obtain view for %o", subview) if ! klass
@@ -363,24 +360,32 @@ class ViewBase
             return this.el.querySelector(selector) || undefined;
         return selector;
 
-    # When
+    # Called when a different model is set
     _onModelChange: ->
         for name, definition of this.subviews
             continue unless ( view = this[name] )
             view.model = Lanes.getPath(definition.model, this) if definition.model
             view.collection = Lanes.getPath(definition.collection, this) if definition.collection
-        old_model = this.previous(@keypath)
-        return if old_model == @model
-        this._unBindModel( old_model ) if old_model
-        this._bindModel( @model ) if @model
+        prev = this.previous('model')
+        return if prev == @model
+        this._unBindFromObject(prev, @modelEvents) if prev
+        this._bindToObject(@model, @modelEvents)
 
-    _bindModel: (model)->
-        for event, fn of @modelEvents
-            this.listenTo(model, event, fn, this)
+    _onCollectionChange: ->
+        prev = this.previous('collection')
+        return if prev == @collection
+        this._unBindFromObject(prev, @collectionEvents) if prev
+        this._bindToObject(@collection, @collectionEvents)
 
-    _unBindModel: (model)->
-        for event, fn of @modelEvents
-            this.stopListening(model,event,fn, this)
+    _bindToObject: (state_object,events)->
+        for event, fn of events
+            fn = this[fn] unless _.isFunction(fn)
+            this.listenTo(state_object, event, fn, this)
+
+    _unbindFromObject: (state_object,events)->
+        for event, fn of events
+            fn = this[fn] unless _.isFunction(fn)
+            this.stopListening(state_object, event, fn, this)
 
     initializeKeyBindings: Lanes.emptyFn
 
@@ -396,12 +401,6 @@ class ViewBase
 
     detach: ->
         this.el.parentNode.removeChild(this.el) if this.el.parentNode
-
-
-    renderAllSubviews: ->
-        for name, options of this.subviews
-            selector = options.container || '[data-hook="' + options.hook + '"]'
-            this.renderSubview(this[name], selector) unless options.collection
 
     $: (selector)->
         this.$el.find(selector)
