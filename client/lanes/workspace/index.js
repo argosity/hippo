@@ -11,4 +11,4 @@
 //= require ../extension/LateLoaded
 //= require_self
 //= require_tree .
-Lanes.ns( 'Workspace' );
+Lanes.namespace( 'Workspace' );

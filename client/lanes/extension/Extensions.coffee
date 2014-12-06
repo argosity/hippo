@@ -16,7 +16,7 @@ Lanes.Extensions = {
 
     makeNamespace: (identifier)->
         for ns in ['Data','Views','Controllers','Screens']
-            Lanes.ns("#{identifier}.#{ns}")
+            Lanes.namespace("#{identifier}.#{ns}")
 
 
 }
