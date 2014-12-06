@@ -12,35 +12,6 @@ module Lanes
                 end
             end
 
-            def assets_for_directory(directory)
-                path = "skr/screens/#{directory.basename}"
-                assets = []
-                unless Pathname.glob([ directory.join('*.js'), directory.join('*.coffee')] ).empty?
-                    assets << "#{path}.js"
-                end
-                unless Pathname.glob([ directory.join('*.css'), directory.join('*.scss')] ).empty?
-                    assets << "#{path}.css"
-                end
-                assets
-            end
-
-            # def groups(sprockets)
-            #     groups = []
-            #     each_definition(sprockets) do | spec |
-            #         unless groups.detect{ |group| group['id'] == spec.group_id }
-            #             groups << spec.group_definition
-            #         end
-            #         groups
-            #     end
-            # end
-
-            # def each_definition(sprockets)
-            #     ScreenDefinition.each(sprockets) do | definition |
-            #         spec = definition.specification
-            #         spec['files'] = definition.asset_file_names.map{ |file| "/assets/#{file}" }
-            #         yield spec
-            #     end
-            # end
         end
 
         class Group
