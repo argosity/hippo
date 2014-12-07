@@ -20,19 +20,23 @@ module Lanes
             end
 
             def wrap_js(scope, js)
-                ns  = namespace(scope)
+                dirs = scope.logical_path.split(File::SEPARATOR)
+                ns   = dirs.many? ? dirs.first.camelize : nil
+                file = dirs.last
+                # if the file is being loaded under the "lanes" directory
+                # it's not an extension
                 if ns && ns != "Lanes"
                     ref = "(window.Lanes ? window.Lanes['#{ns}'] : null)"
-                    "(function(Lanes, #{ns}, NAMESPACE, _, window, undefined) {\n#{js}\n})(window.Lanes, #{ref}, {ref:#{ref},name:'#{ns}'}, window._, window);"
+                    "(function(Lanes, #{ns}, _, window, FILE, undefined)"\
+                      "{\n#{js}\n})(window.Lanes,#{ref},window._, window,"\
+                      "{namespace:#{ref},extension:'#{ns}',file:'#{file}'});"
                 else
-                    "(function(Lanes, NAMESPACE, _, window, undefined) {\n#{js}\n})(window.Lanes, {ref:window.Lanes,name:'Lanes'}, window._, window);"
+                    "(function(Lanes, _, window, FILE, undefined)"\
+                      "{\n#{js}\n})(window.Lanes,window._, window,"\
+                      "{namespace:window.Lanes,extension:'Lanes',file:'#{file}'});"
                 end
             end
 
-            def namespace(scope)
-                dirs = scope.logical_path.split(File::SEPARATOR)
-                return dirs.many? ? dirs.first.camelize : nil
-            end
         end
 
         class CoffeeScriptWrapper < JsAssetCompiler

@@ -147,7 +147,7 @@ class ViewBase
     renderWithTemplate: (templateArg)->
         template = templateArg || this.resultsFor('template')
         throw new Error('Template string or function needed.') unless template
-        template_fn = Lanes.Templates.find(template, this.namespace.name)
+        template_fn = Lanes.Templates.find(template, this.source.extension)
         newDom = if template_fn then template_fn( _.result(this,'templateData')) else template
         newDom = Lanes.Vendor.domify(newDom) if _.isString(newDom);
         parent = this.el && this.el.parentNode;
@@ -159,16 +159,18 @@ class ViewBase
         this.el = newDom;
         return this;
 
+    templateName: -> _.underscore( this.source.file )
+        
     template: ->
-        this.namespace.name.toLowerCase() + "/views/" + _.underscore( this.constructor.name );
+        this.source.extension.toLowerCase() + "/views/" + _.result(this,'templateName')
 
-    namespace: NAMESPACE
+    source: FILE
 
     templateData: ->
         { model: this.model, collection: this.collection }
 
     renderTemplate:(name,data={})->
-        template = Lanes.Templates.find(name, this.namespace.name)
+        template = Lanes.Templates.find(name, this.source.name)
         if template
             template(data)
         else
@@ -300,7 +302,7 @@ class ViewBase
             Lanes.getPath(subview.component, Lanes.Components)
         else if subview.view
             if _.isString(subview.view)
-                Lanes.getPath(subview.view, this.namespace.ref['Views'] )
+                Lanes.getPath(subview.view, this.source.namespace['Views'] )
             else
                 subview.view
         Lanes.warn( "Unable to obtain view for %o", subview) if ! klass

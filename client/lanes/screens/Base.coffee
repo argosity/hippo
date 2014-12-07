@@ -4,7 +4,6 @@ class ScreenBase
 
     constructor: -> super
 
-    namespace: "Screens"
 
     mixins:[
         Lanes.Screens.ChangeListener
@@ -18,7 +17,7 @@ class ScreenBase
     reset: Lanes.emptyFn
 
     template: ->
-        this.namespace.name.toLowerCase() + "/screens/" + this.constructor.name.toLowerCase() + "/layout";
+        this.source.extension.toLowerCase() + "/screens/" + _.underscore( this.source.file ) + "/layout";
 
     render: ->
         previouslyRendered = this.rendered
