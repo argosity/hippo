@@ -1,8 +1,8 @@
-Lanes.Workspace.create = (selector, options, extension_data)->
-    return new Lanes.Workspace.Instance(selector, options, extension_data);
+Lanes.renderScreenTo = (selector, options)->
+    return new Lanes.Screens.Instance(selector, options);
 
 
-class Lanes.Workspace.Instance
+class Lanes.Screens.Instance
 
     constructor: (selector, options)->
         this.viewport = new Lanes.Views.Viewport({ selector: selector, instance: this });

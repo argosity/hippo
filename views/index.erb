@@ -8,7 +8,7 @@
         <%=  javascript_tag 'lanes/workspace' %>
         <%=  stylesheet_tag 'lanes/workspace' %>
         <script type="text/javascript">
-        Lanes.Workspace.create('.lanes-root', <%= client_bootstrap_data %> );
+          Lanes.renderScreenTo('.lanes-root', <%= client_bootstrap_data %> );
         </script>
     </head>
 
