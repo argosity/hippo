@@ -13,9 +13,16 @@ module Lanes
                 def compile!
                     env = ::Sprockets::Environment.new
                     Lanes::API::SprocketsExtension.configure(env, compress:true)
-                    comp = Sprockets::Manifest.new( env.index, "public/assets" )
-                    comp.compile( 'lanes/workspace.js', 'lanes/workspace.css' )
-                    env
+                    manifest = Sprockets::Manifest.new( env.index, "public/assets/manifest.json" )
+                    manifest.compile('lanes/workspace.js', 'lanes/workspace.css',
+                                     'lanes/minimal.js', 'lanes/minimal.css' )
+                    Extensions.each{|ext|
+                        manifest.compile(ext.client_images.map(&:to_s))
+                    }
+                    Screens::Definition.each(env) do | screen |
+                        manifest.compile( screen.files )
+                    end
+                    
                 end
 
                 def configure(env, compress:false)
@@ -42,16 +49,16 @@ module Lanes
                     app.set :sprockets, ::Sprockets::Environment.new
                     configure(app.sprockets)
 
-                    # The url for client
-                    app.set :digest_assets, false
-
                     app.configure do
                         ::Sprockets::Helpers.configure do |config|
                             config.environment = app.sprockets
                             config.prefix      = Lanes.config.assets_path_prefix
-                            config.digest      = app.digest_assets
                             config.public_path = app.public_folder
-                            config.debug = true
+                            config.debug = !app.production?
+                            if app.production?
+                                config.manifest = Sprockets::Manifest.new(app.sprockets,
+                                                      "public/assets/manifest.json")
+                            end
                         end
                     end
 
@@ -60,6 +67,14 @@ module Lanes
                             env_sprockets = request.env.dup
                             env_sprockets['PATH_INFO'] = path
                             settings.sprockets.call env_sprockets
+                        end
+                    end
+                    app.configure :production do
+                        app.get "#{Lanes.config.assets_path_prefix}/*" do |path|
+                            if manifest_path = ::Sprockets::Helpers.manifest.assets[path]
+                                path = manifest_path
+                            end
+                            send_file "public/assets/" + path
                         end
                     end
                 end

@@ -39,7 +39,13 @@ module Lanes
             end
 
             def client_paths
-                [ self.root_path.join("client") ]
+                [ root_path.join('client') ]
+            end
+            
+            def client_images
+                images = []
+                root_path.join('client','images').find{|path| images << path if path.file? }
+                images
             end
 
             def route(route_set)
@@ -121,6 +127,10 @@ module Lanes
                 return data
             end
 
+            def client_images
+                each{|ext| }
+            end
+            
             def load_current_config
                 config_file = Pathname.getwd.join('config','lanes.rb')
                 if config_file.exist?
