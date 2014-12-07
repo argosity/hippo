@@ -19,9 +19,6 @@ module Lanes
             not_found do
                 Oj.dump({ message: "endpoint not found", success: false  })
             end
-            before do
-                content_type 'application/json'
-            end
 
             use Rack::Session::Cookie, :key => 'lanes.session', :secret => Lanes.config.session_secret_key_base
             use ActiveRecord::ConnectionAdapters::ConnectionManagement

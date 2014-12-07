@@ -53,6 +53,7 @@ module Lanes
                 if false == response[:success]
                     status(406)
                 end
+                content_type 'application/json'
                 Oj.dump(response, mode: :compat)
             end
 
