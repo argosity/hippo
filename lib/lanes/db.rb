@@ -6,14 +6,12 @@ module Lanes
         attr_accessor(:config_file)
 
         def establish_connection( env = ENV['RAILS_ENV'] || 'development')
-            file = config_file || 'config/database.yml'
-            config = YAML::load( IO.read( file ) )
-            ::ActiveRecord::Base.configurations = config
-            self.connect( ::ActiveRecord::Base.configurations[ env ] )
-        end
-
-        def connect( configuration )
-            ::ActiveRecord::Base.establish_connection( configuration )
+            if ENV['DATABASE_URL']
+                ::ActiveRecord::Base.establish_connection( ENV['DATABASE_URL'] )
+            else
+                config = YAML::load( IO.read( config_file || "config/database.yml" ) )
+                ::ActiveRecord::Base.establish_connection( config[env] )
+            end
         end
 
         def load_seed
