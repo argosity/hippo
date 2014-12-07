@@ -16,6 +16,7 @@ module Lanes
 
             # Does the extension use PubSub functionality
             class_attribute  :uses_pub_sub
+            class_attribute  :uses_workspace
 
             # Load extension before/after the named extensions
             class_attribute :before
@@ -63,6 +64,10 @@ module Lanes
                 Definition.descendants
             end
 
+            def require_workspace?
+                all.detect{|ext| ext.uses_workspace }
+            end
+            
             def require_pub_sub?
                 all.detect{|ext| ext.uses_pub_sub }
             end

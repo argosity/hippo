@@ -1,0 +1,5 @@
+.lanes {
+<% Lanes::Components.enabled_with_dependencies(self) do | component | %>
+  @import "components/<%= component %>/<%= component %>";
+<% end %>
+}
