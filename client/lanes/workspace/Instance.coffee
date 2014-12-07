@@ -4,18 +4,16 @@ Lanes.Workspace.create = (selector, options, extension_data)->
 
 class Lanes.Workspace.Instance
 
-    constructor: (selector, options, extension_data)->
-        _.extend(this,options);
-
+    constructor: (selector, options)->
         this.viewport = new Lanes.Views.Viewport({ selector: selector, instance: this });
         Lanes.Data.Bootstrap.initialize({
             csrf: options.csrf_token,
-            root: options.root_path,
-            data: extension_data
+            root: options.api_path,
+            data: options
         });
-        Lanes.$(document).ready => @boot()
+        Lanes.$(document).ready => @boot(options)
 
-    boot: ->
+    boot: (options)->
         this.root = Lanes.$( this.viewport.selector );
         this.root.data().workspace = this;
         this.viewport.root = this.root;
@@ -30,20 +28,23 @@ class Lanes.Workspace.Instance
             selector: '[data-tooltip-message]'
             title: => @getAttribute('data-tooltip-message')
         });
-        view = Lanes.getPath(this.view);
+        Lanes.Views.Keys.initialize();
+        Lanes.Data.PubSub.initialize() if options.pub_sub;
+        
+        view = Lanes.getPath(options.root_view);
         if view
             this.displayInitialView(view);
         else
-            definition=Lanes.Data.Screens.all.findWhere({view: this.view});
+            definition=Lanes.Data.Screens.all.findWhere({view: options.root_view});
             if definition
                 definition.getScreen().then( (screen)=>
                     # break out of the promise so an errors during render get thrown properly
                     _.defer( => @displayInitialView(screen); )
                 ,(msg)->
-                    Lanes.fatal("Unable to load initial screen ${this.view}", msg);
+                    Lanes.fatal("Unable to load initial screen ${options.root_view}", msg);
                 )
             else
-                Lanes.fatal(this.view + " doesn't exist!");
+                Lanes.fatal(options.root_view + " doesn't exist!");
 
 
 
@@ -53,9 +54,6 @@ class Lanes.Workspace.Instance
         this.viewport.el = this.view.$el;
 
         this.root.append( this.view.el );
-
-        Lanes.Views.Keys.initialize();
-        Lanes.Data.PubSub.initialize();
         Lanes.Extensions.fireOnAvailable(this);
 
 

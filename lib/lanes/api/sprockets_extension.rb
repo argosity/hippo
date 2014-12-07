@@ -3,6 +3,7 @@ require 'sass'
 require 'sinatra/sprockets-helpers'
 require_relative 'javascript_processor'
 require 'compass/import-once/activate'
+require 'sprockets-helpers'
 
 module Lanes
     module API

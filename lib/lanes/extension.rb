@@ -14,6 +14,9 @@ module Lanes
             # Array of Pathname's to add to sprockets
             attr_accessor_with_default :root_path
 
+            # Does the extension use PubSub functionality
+            class_attribute  :uses_pub_sub
+
             # Load extension before/after the named extensions
             class_attribute :before
             class_attribute :after
@@ -60,6 +63,10 @@ module Lanes
                 Definition.descendants
             end
 
+            def require_pub_sub?
+                all.detect{|ext| ext.uses_pub_sub }
+            end
+
             def sorted
                 unmapped = all
                 mapped   = []
@@ -97,7 +104,12 @@ module Lanes
             end
 
             def client_bootstrap_data(view)
-                data = {}
+                data = {
+                        csrf_token: Rack::Csrf.csrf_token(view.env),
+                        root_view:  Lanes.config.root_view,
+                        api_path: Lanes.config.mounted_at,
+                        pub_sub: require_pub_sub?
+                       }
                 each do | ext |
                     data[ext.identifier] = ext.client_bootstrap_data(view)
                 end

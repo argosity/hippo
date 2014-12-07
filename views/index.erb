@@ -8,11 +8,7 @@
         <%=  javascript_tag 'lanes/workspace' %>
         <%=  stylesheet_tag 'lanes/workspace' %>
         <script type="text/javascript">
-        Lanes.Workspace.create('.lanes-root', {
-            csrf_token: "<%= csrf_token %>",
-            view: "<%= Lanes.config.root_view %>",
-            root_path: "<%= lanes_api_url %>"
-        }, <%= client_bootstrap_data %> );
+        Lanes.Workspace.create('.lanes-root', <%= client_bootstrap_data %> );
         </script>
     </head>
 

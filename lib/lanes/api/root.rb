@@ -1,8 +1,7 @@
 require 'sinatra'
 require 'oj'
 require 'rack/csrf'
-require 'sprockets-helpers'
-require 'message_bus'
+
 require_relative 'sprockets_extension'
 require_relative 'helper_methods'
 require_relative 'pub_sub'
@@ -26,7 +25,6 @@ module Lanes
 
             use Rack::Session::Cookie, :key => 'lanes.session', :secret => Lanes.config.session_secret_key_base
             use ActiveRecord::ConnectionAdapters::ConnectionManagement
-            use MessageBus::Rack::Middleware
             error do
                 Lanes.logger.warn request.env['sinatra.error']#.backtrace
                 Oj.dump({
@@ -40,7 +38,7 @@ module Lanes
                 set :views, Pathname.new(__FILE__).dirname.join("../../../views")
                 set :show_exceptions, false
                 DB.establish_connection
-                PubSub.initialize
+                PubSub.initialize(self)
                 Extensions.load_current_config
                 # late load in case an extension has provided an alternative implementation
                 require "lanes/api/null_authentication_provider" unless API.const_defined?(:AuthenticationProvider)

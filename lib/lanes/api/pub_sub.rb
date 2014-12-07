@@ -1,9 +1,3 @@
-require "oj"
-
-require_relative "updates"
-
-require 'message_bus'
-
 module Lanes
     module API
 
@@ -13,7 +7,13 @@ module Lanes
                 MessageBus.publish channel, data #Oj.dump(data, mode: :compat)
             end
 
-            def self.initialize
+            def self.initialize(api)
+                return unless Extensions.require_pub_sub?
+                require "oj"
+                require_relative "updates"
+                require 'message_bus'
+                api.use MessageBus::Rack::Middleware
+
                 # Use OJ - it encodes dates properly as ISO 8601
                 # https://github.com/moment/moment/issues/1407
                 Oj.mimic_JSON()
