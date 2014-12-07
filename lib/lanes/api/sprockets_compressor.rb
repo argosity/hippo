@@ -17,7 +17,9 @@ module Lanes
             end
 
             def js
-                @js||=Closure::Compiler.new(compilation_level: 'ADVANCED_OPTIMIZATIONS')
+                # n.b. setting 'ADVANCED_OPTIMIZATIONS' doesn't work at this time, it
+                # introduces JS errors :(  Haven't debugged further
+                @js||=Closure::Compiler.new
             end
             def css
                 @css ||= YUI::CssCompressor.new( :java_opts=>'-client' )
