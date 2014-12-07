@@ -10,7 +10,8 @@ module Lanes
                 ::ActiveRecord::Base.establish_connection( ENV['DATABASE_URL'] )
             else
                 config = YAML::load( IO.read( config_file || "config/database.yml" ) )
-                ::ActiveRecord::Base.establish_connection( config[env] )
+                ::ActiveRecord::Base.configurations = config
+                ::ActiveRecord::Base.establish_connection( ::ActiveRecord::Base.configurations[ env ] )
             end
         end
 
