@@ -1,4 +1,5 @@
 require 'jasmine-core'
+require 'lanes/command'
 
 module Lanes
     module API
@@ -6,8 +7,9 @@ module Lanes
         class TestSpecs
             cattr_accessor :current
 
-            def initialize(root)
-                @root = root
+            attr_accessor :extension
+            def initialize(ext)
+                @extension = ext
             end
 
             def css_files
@@ -18,13 +20,13 @@ module Lanes
                 urlpath(Jasmine::Core.js_files)   +
                 urlpath(Jasmine::Core.boot_files) +
                 urlpath(spec_files("helpers"))    +
-                urlpath(spec_files("client"))
+                urlpath(spec_files(extension.identifier))
             end
 
           private
 
             def spec_files(path)
-                dir = @root.join("spec")
+                dir = extension.root_path.join("spec")
                 regex = /^#{dir}\//
                 Dir.glob( dir.join(path,"**/*.{coffee,js}") ).map do |file|
                     file.sub(regex,'').sub(/coffee$/,'js')
@@ -37,11 +39,10 @@ module Lanes
         end
 
 
-        Lanes.config.get(:specs_root) do | root |
-            TestSpecs.current = TestSpecs.new(root)
-            Root.sprockets.append_path(root.join("spec"))
-        end
-
+        ext = Lanes::Command.load_current_extension
+        TestSpecs.current = TestSpecs.new(ext)
+        Root.sprockets.append_path(ext.root_path.join("spec"))
+        
 
         Root.sprockets.append_path(Jasmine::Core.path)
 
