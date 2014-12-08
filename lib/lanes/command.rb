@@ -1,3 +1,5 @@
+require 'thor/error'
+
 module Lanes
     module Command
         class << self
@@ -16,22 +18,27 @@ module Lanes
             # Will silently swallow any exceptions that are raised when the file is required and return nil
             #
             # @return [Extension] extension that was loaded, nil if none was found
-            def load_current_extension
+            def load_current_extension(raise_on_fail:false)
+                
                 previous = Extensions.all
                 ext = Dir.glob("./lib/**/extension.rb").first
                 if ext
                     begin
                         require(ext)
                     rescue
-                        return nil
+                        return _maybe_fail(raise_on_fail)
                     end
                     diff = Extensions.all - previous
-                    return diff.any? ? diff.first.new : nil
+                    return diff.any? ? diff.first.new : Extensions.all.first.new
                 else
-                    return nil
+                    return _maybe_fail(raise_on_fail)
                 end
             end
 
+            def _maybe_fail(should_raise)
+                raise Thor::Error.new("Unable to locate Lanes environment") if should_raise
+                return nil
+            end
         end
     end
 end
