@@ -13,7 +13,7 @@ module Lanes
                 template "client/views/View.coffee",   "#{client_dir}/views/#{name.classify}.coffee"
                 template "client/views/template.html", "#{client_dir}/views/#{name.dasherize}.html"
                 template "spec/client/views/ViewSpec.coffee", \
-                         "spec/client/views/#{class_name}Spec.coffee"
+                  "#{spec_dir}/views/#{class_name}Spec.coffee"
             end
 
         end
