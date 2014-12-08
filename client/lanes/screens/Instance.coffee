@@ -6,11 +6,7 @@ class Lanes.Screens.Instance
 
     constructor: (selector, options)->
         this.viewport = new Lanes.Views.Viewport({ selector: selector, instance: this });
-        Lanes.Data.Bootstrap.initialize({
-            csrf: options.csrf_token,
-            root: options.api_path,
-            data: options
-        });
+        Lanes.Data.Bootstrap.initialize(options);
         Lanes.$(document).ready => @boot(options)
 
     boot: (options)->
@@ -45,9 +41,6 @@ class Lanes.Screens.Instance
                 )
             else
                 Lanes.fatal(options.root_view + " doesn't exist!");
-
-
-
 
     displayInitialView:(view)->
         this.view = new view({parent: this, model: this.viewport}).render();
