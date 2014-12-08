@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-gem "guard-jasmine",      github: "guard/guard-jasmine",   branch: 'master'
-gem "lanes",              github: "argosity/lanes",        branch: 'master'
+gem "lanes", github: "argosity/lanes", branch: 'master'
 
 # Uncomment to enable access control and user administration
 # gem "lanes-access",       github: "argosity/lanes-access", branch: 'master'
