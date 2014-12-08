@@ -30,8 +30,12 @@ module Lanes
                 {}
             end
 
+            def stylesheet_include
+                self.identifier + '/styles'
+            end
+
             def javascript_include
-                self.identifier + ".js"
+                self.identifier
             end
 
             def client_namespace
