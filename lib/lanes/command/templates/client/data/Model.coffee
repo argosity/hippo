@@ -1,7 +1,7 @@
 class <%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_parent %>
 
     api_path: '<%= name.downcase.pluralize.underscore.dasherize %>'
-    namespace: NAMESPACE
+    source: FILE
 
     props:
 <% fields.each do |field| -%>
@@ -19,6 +19,6 @@ class <%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_parent
 <% end -%>
 <% end -%>
 
-class Lanes.<%= namespace.camelize %>.Data.<%= class_name %>Collection extends <%= options[:client_collection_parent] %>
+class <%= namespace.camelize %>.Data.<%= class_name %>Collection extends <%= options[:client_collection_parent] %>
 
-    model: Lanes.<%= namespace.camelize %>.Data.<%= class_name %>
+    model: <%= namespace.camelize %>.Data.<%= class_name %>
