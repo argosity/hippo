@@ -11,7 +11,7 @@ module <%= namespace.camelize %>
         group_id    "<%= options[:group] %>"
         model_class "<%= options[:model_class] %>"
         view_class  "<%= namespace.camelize %>.Screens.<%= class_name %>"
-        files       ['screens/<%= name.dasherize %>.js','screens/<%= name.dasherize %>.css']
+        files       ['<%= namespace %>/screens/<%= name.dasherize %>.js','<%= namespace %>/screens/<%= name.dasherize %>.css']
     end
 
 end

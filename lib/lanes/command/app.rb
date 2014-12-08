@@ -33,15 +33,21 @@ module Lanes
 
             def create_client_files
                 self.class.source_root.join('client').children.each do | path |
-                    empty_directory "#{client_dir}/#{path.basename}" if path.directory?
+                    next unless path.directory?
+                    empty_directory "#{client_dir}/#{path.basename}" 
+                    create_file "#{client_dir}/#{path.basename}/.gitkeep"
                 end
-                template "client/namespace-extension.js", "#{client_dir}/index.js"
-                template "client/Extension.coffee",       "#{client_dir}/Extension.coffee"
-                template "client/styles/styles.scss",     "client/#{name}-styles.scss"
+                template "client/index.js",         "#{client_dir}/index.js"
+                template "client/Extension.coffee", "#{client_dir}/Extension.coffee"
+                template "client/styles.scss",      "#{client_dir}/styles.scss"
             end
 
+            def create_spec
+                
+            end
+            
             def create_first_screen
-                invoke GenerateScreen, [name], title: name.titleize, namespace: name
+                invoke GenerateScreen, ["base"], title: name.titleize, namespace: name
             end
         end
 

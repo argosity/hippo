@@ -7,6 +7,9 @@
   background-color: $body-bg;
   position: relative;
   min-height: 10px; // needs height for resizing sensor to function
+<% Lanes::Extensions.each do | ext | %>
+  @import "<%= ext.stylesheet_include %>";
+<% end %>
 <% Lanes::Components.enabled_with_dependencies(self) do | component | %>
   @import "components/<%= component %>/<%= component %>";
 <% end %>
