@@ -27,8 +27,8 @@ module Lanes
             })
 
             dsl.guard :jasmine, jasmine_options do
-                dsl.watch(%r{^client/(.+?)\.(js|coffee)$}){ |m| "spec/client/#{m[1]}_spec.#{m[2]}" }
-                dsl.watch(%r{^spec/client/.*(?:_s|S)pec\.coffee$})
+                dsl.watch(%r{^client/(.+?)\.(js|coffee)$}){ |m| "spec/#{m[1]}Spec.#{m[2]}" }
+                dsl.watch(%r{^spec/.*(?:_s|S)pec\.coffee$})
                 matchers.client_matches.call if matchers.client_matches
             end
 
