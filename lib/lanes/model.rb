@@ -17,10 +17,10 @@ module Lanes
         include Concerns::ExportScope
         include Concerns::ExportAssociations
         include Concerns::ExportJoinTables
-        include Concerns::SanitizeApiData
         include Concerns::AssociationExtensions
         include Concerns::ApiPath
-
+        include Concerns::SanitizeFields
+        
     end
 
 end

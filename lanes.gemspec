@@ -48,7 +48,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "rake",                   "~> 10.0"
     spec.add_dependency "jasmine-core",           "~> 2.0"
     spec.add_dependency "require_all",            "~> 1.3"
-
+    spec.add_dependency "sanitize",               "~> 3.0"
     spec.add_development_dependency "bundler",    "~> 1.5"
     spec.add_development_dependency "growl",      "~> 1.0"
     spec.add_development_dependency "pry-byebug", "~> 2.0"
