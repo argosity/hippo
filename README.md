@@ -2,6 +2,8 @@
 
 Lanes is a web framework that aims to make writing single page apps as simple as traditional Rails apps.
 
+Read more at [lanesframework.org](http://lanesframework.org/)
+
 It's extracted from the Stockor ERP application and is still very much a work in progress.
 
 ## Contributing
