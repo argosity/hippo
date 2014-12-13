@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "hashie",                 "~> 3.3"
     spec.add_dependency "rack-test",              "~> 0.6"
     spec.add_dependency "minitest-around",        "~> 0.2"
-    spec.add_dependency "mocha"                   "~>1.1"
+    spec.add_dependency "mocha",                  "~> 1.1"
     spec.add_dependency "guard-minitest",         "~> 2.3"
     spec.add_dependency "yui-compressor",         "~> 0.12"
     spec.add_dependency "closure-compiler",       "~> 1.1"
