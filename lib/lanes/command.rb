@@ -21,15 +21,18 @@ module Lanes
             def load_current_extension(raise_on_fail:false)
                 
                 previous = Extensions.all
-                ext = Dir.glob("./lib/**/extension.rb").first
+                ext = Dir.glob("./lib/*/extension.rb").first
                 if ext
                     begin
                         require(ext)
                     rescue
                         return _maybe_fail(raise_on_fail)
                     end
-                    diff = Extensions.all - previous
-                    return diff.any? ? diff.first.new : Extensions.all.first.new
+                    all = Extensions.all
+                    if all.any?
+                        diff = all - previous
+                        return diff.any? ? diff.first.new : Extensions.all.first.new
+                    end
                 else
                     return _maybe_fail(raise_on_fail)
                 end

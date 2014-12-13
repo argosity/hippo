@@ -69,8 +69,8 @@ class DataModel
 
     setupStandardProps: -> Lanes.emptyFn
 
-    isLoaded: ->
-        !_.isEmpty( _.omit(this.attributes,this.idAttribute) )
+    # isLoaded: ->
+    #     !_.isEmpty( _.omit(this.attributes,this.idAttribute) )
 
     withAssociations: (names...,options={})->
         scope = options.scope || this
@@ -94,13 +94,11 @@ class DataModel
         else
             new this(attrs,options)
 
-    @fetch: (options)->
+    @fetch: (id, options={})->
         record = new this()
-        if _.isNumber(options)
-            record.id = options
-            options = {}
-        ret = record.fetch(options)
-        ret
+        if _.isNumber(id)
+            record.id = id
+        record.fetch(options)
 
     fetch: (options={})->
         handlers = wrapRequest(this,options)
@@ -178,7 +176,7 @@ class DataModel
                 record
         }
 
-    validateFieldChange: (name, value)->
+    checkValid: (name, value)->
         return '' unless def = this._definition[name]
         if def.required && _.isEmpty(value)
             "Cannot be empty"

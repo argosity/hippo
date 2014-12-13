@@ -1,4 +1,4 @@
-require_relative "../spec_helper"
+require "lanes/spec_helper"
 
 class ApiUserTest < Lanes::ApiTestCase
 

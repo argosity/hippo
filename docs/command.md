@@ -6,9 +6,9 @@ heading: The "lanes" command
 position_after: model
 ---
 
-Lanes installs a command line application called "lanes".  This application can create new Lanes applications and also create and update an existing application's components.
+Lanes installs a command line application which can create and modify applicatons that used the framework.
 
-The command implemented using thor and is implemented using subcommands.
+The command "lanes" has subcommands that direct it's activities.
 
 # lanes help
 

@@ -1,5 +1,4 @@
 require 'minitest/autorun'
-require 'mocha/mini_test'
 require 'rack/test'
 require 'lanes'
 require 'lanes/api'
@@ -9,7 +8,7 @@ require 'active_record/fixtures'
 require 'minitest/around/unit'
 require 'minitest/spec'
 require 'minitest/autorun'
-require 'pry'
+require 'mocha/mini_test'
 
 require_relative 'testing_models'
 
@@ -28,10 +27,10 @@ module Lanes
 
         include ActiveRecord::TestFixtures
         self.fixture_path =  Pathname.new(__FILE__).dirname.join('fixtures')
-        setup do
-            Thread.current[:lanes_current_user] = lanes_users(:admin)
-            Lanes::Access.calculate_model_access!
-        end
+        # setup do
+        #     #Thread.current[:lanes_current_user] = lanes_users(:admin)
+        #     #Lanes::Access.calculate_model_access!
+        # end
 
         self.use_transactional_fixtures = true
         fixtures :all

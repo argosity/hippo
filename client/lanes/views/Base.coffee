@@ -137,8 +137,8 @@ class ViewBase
         this.listenTo(object, events, bound)
         bound();
 
-    # Shortcut for doing everything we need to do to
-    # render and fully replace current root element.
+    # Replaces the current root element with a newly created dom element
+    # 
     # Either define a `template` property of your view
     # or pass in a template directly.
     # The template can either be a string or a function.
@@ -408,7 +408,7 @@ class ViewBase
         this.$el.find(selector)
 
 
-    belongsToScreen: ->
+    parentScreen: ->
         view = this
         while view and ! ( view instanceof Lanes.Views.Screen )
             view = view.parent

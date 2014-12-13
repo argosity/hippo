@@ -27,6 +27,7 @@ paramsMap = {
     order   : 'o'
     limit   : 'l'
     start   : 's'
+    format  : 'df'
 }
 
 Lanes.Data.Sync = (method, model, options={})->

@@ -4,7 +4,9 @@ require 'lanes/command'
 module Lanes
     module API
 
+        LanesDummyExt = Struct.new(:identifier, :root_path)
         class TestSpecs
+
             cattr_accessor :current
 
             attr_accessor :extension
@@ -39,7 +41,8 @@ module Lanes
         end
 
 
-        ext = Lanes::Command.load_current_extension
+        ext = Lanes::Command.load_current_extension ||
+          LanesDummyExt.new('lanes', Pathname.new(__FILE__).dirname.join("../../../"))
         TestSpecs.current = TestSpecs.new(ext)
         Root.sprockets.append_path(ext.root_path.join("spec"))
         
