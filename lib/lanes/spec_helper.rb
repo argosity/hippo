@@ -21,6 +21,18 @@ ActiveSupport::Dependencies.mechanism = :require
 
 module Lanes
 
+    class DummyUser
+        def can_read?(*args)
+            true
+        end
+        def can_write?(*args)
+            true
+        end
+        def can_delete?(*args)
+            true
+        end
+    end
+    
     class TestCase < ActiveSupport::TestCase
         include Lanes
         include ActiveRecordMocks::IncludeMe

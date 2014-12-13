@@ -104,15 +104,15 @@ module Lanes::Concerns
 
                     result[name] = if value.is_a?(Hash) && [:belongs_to,:has_one].include?(association.reflection.macro)
                                        target = association.target || association.build
-                                       target.set_attribute_data(value)
+                                       target.set_attribute_data(value, user)
                                    elsif value.is_a?(Array) && :has_many == association.reflection.macro
-                                       _set_attribute_data_from_collection(association, value)
+                                       _set_attribute_data_from_collection(association, value, user)
                                    end
                 end
             end
         end
 
-        def _set_attribute_data_from_collection(association, value)
+        def _set_attribute_data_from_collection(association, value, user)
 
             records = if association.loaded?
                                    association.target
@@ -129,7 +129,7 @@ module Lanes::Concerns
                          else
                              records.detect{ |r| r.id.to_s == value['id'].to_s }
                          end
-                record.set_attribute_data(association_data) if record
+                record.set_attribute_data(association_data, user) if record
             end
         end
 
