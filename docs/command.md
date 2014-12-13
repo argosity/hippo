@@ -6,13 +6,13 @@ heading: The "lanes" command
 position_after: model
 ---
 
-Lanes installs a command line application which can create and modify applicatons that used the framework.
+Lanes framework installs a command line application which can be used to create and modify applicatons.
 
-The command "lanes" has subcommands that direct it's activities.
+The command "lanes" utilizes subcommands that direct it's activities.
 
 # lanes help
 
-Built-in help that can be accessed by either running `lanes help` or command specific help by prefixing the command with 'help'.  For instance `lanes generate help model` will display comphrensive help for the 'generate model' subcommand.
+Built-in help can be accessed by either running `lanes help` or command specific help by prefixing the final part of the command with 'help'.  For instance `lanes generate help model` will display comphrensive help for the 'lanes generate model' subcommand.
 
 # lanes new
 
@@ -56,7 +56,7 @@ Notable directories created are:
 
  * *lib/<app_name>*  This directory will hold all server-side Ruby files that are needed by your application such as ActiveRecord models.
  * *config* Contains the routes and a config file for modifying Lane's behaviour.
- * *client/<app_name>*  Contains all the client code that makes up your application.  It has directories for views, data (models and collections), and screens.  A "Base" screen is created to start you off with.  You can either use that screen as a base class for further screens if your application will be complex, or simply use it for your application if there will only be a single screen.  That's how the TODO MVC Example app is written.
+ * *client/<app_name>*  Contains all the client code that makes up your application.  It has directories for views, data (models and collections), and screens.  A "Base" screen is created to start you off with.  You can use that screen as a base class for further screens if your application will be complex, or simply use it for your application if there will only be a single screen.  That's how the TODO MVC Example app is written.
 
 # lanes generate
 
@@ -77,13 +77,11 @@ Creates a new model server and client side, a migration, fixtures file and accom
 
 The field specifications are given as `field:type` and seperated by spaces.
 
-For instance: `lanes generate model comment user:references title:string{80} content:text`, when executed inside of a project called "Blog"
+For instance, `lanes generate model comment user:references title:string{80} content:text`, when executed inside of a project called "Blog":
 
-Will create a Ruby ActiveRecord model called `Blog::Comment` and an accompanying migration to add a user_id, a title and content fields.
-
-It will also setup the a client model Blog.Data.Comment and a collection Blog.Data.BlogCollection
-
-Spec files will be created to test both the ActiveRecord model and the client Model and Collection.
+  * Will create a Ruby ActiveRecord model called `Blog::Comment` and an accompanying migration to add a user_id, a title and content fields.
+  * Setup a client model Blog.Data.Comment and a collection Blog.Data.BlogCollection
+  * Spec files will be created to test both the ActiveRecord model and the client Model and Collection.
 
 ## Screen
 
