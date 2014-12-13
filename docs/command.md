@@ -2,7 +2,8 @@
 # Front matter comment to ensure Jekyll properly reads file.
 # Do not remove
 title: lanes command
-position_after: welcome
+heading: The "lanes" command
+position_after: model
 ---
 
 Lanes installs a command line application called "lanes".  This application can create new Lanes applications and also create and update an existing application's components.

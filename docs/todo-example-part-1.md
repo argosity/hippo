@@ -1,5 +1,6 @@
 ---
 title: TODO MVC Example
+position_after: command
 ---
 
 As is required by all new frameworks, this is an example of creating a TODO application using the Lanes framework.
@@ -12,7 +13,9 @@ As always when using Lanes, the first thing you'll need to do is generate your a
 lanes new todo
 {% endhighlight %}
 
-This will create a new directory with a skeleton Lanes application.  Read more about the directories and what their purposes are at {% doc_link command#lanes new%}.  [Our example app at this point](https://github.com/argosity/lanes-todo-demo/tree/2d649b314a826cbbdbf54e3f72041caeeee8e428)
+This will create a new directory with a skeleton Lanes application.  Read more about the directories and what their purposes are at {% doc_link command heading:'lanes new' %}.
+
+[Our example app at this point](https://github.com/argosity/lanes-todo-demo/tree/2d649b314a826cbbdbf54e3f72041caeeee8e428)
 
 # Setup
 

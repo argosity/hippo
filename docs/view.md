@@ -1,5 +1,6 @@
 ---
 title: View
+heading: Lanes.Data.View
 ---
 
 Lanes provides a Lanes.Views.Base class that all other views extend from.
@@ -8,17 +9,24 @@ In their simplest form, a view simply renders a string into a DOM element. They 
 
 Since both Models, Collections, and the DOM emit events, a view's job is to listen to the events and then manipulate the other parties data structures.
 
-Lanes base view provides numerous hooks and helper functions to make the process of responding to events and relaying them easier.
+Lanes' base view provides numerous hooks and helper functions to make the process of responding to events and relaying them easier.
 
 Views can also be nested inside other views and will bubble relevant events up to thier parent views.
 
-Views inherit from [Ampersand State](http://ampersandjs.com/docs#ampersand-view), and therefore support all the same methods and declarations that it does.
+Views inherit from [Ampersand State](http://ampersandjs.com/docs#ampersand-state), and therefore support all the same methods and declarations that it does.
+
+<aside>
+Unlike Backbone.js, when the view is rendered the old el (if present)
+is discared and an new one is created at the same point in the DOM.
+This prevents the doubly nested divs issue that Backbone experiences,
+but can be suprising behaviour for those who aren't expecting it.
+</aside>
 
 ### API Reference
 
 # initialize
 
-`new AmpersandView([options])`
+`new View({options})`
 
 Called by the constructor after the view is initialized.  initialize can be used by your views for performing initialization of the class.
 
@@ -42,9 +50,9 @@ The "source" property is a way for Lanes to detect where the view was loaded fro
 
 # el
 
-All views have a DOM element.  If a view does is not provided an el when it's created, it will construct one when the render method is called.
+A reference to a DOM element that is controlled by the view.
 
-Unlike Backbone.js, when the view is rendered the old el (if present) is discared and an new one is created at the same point in the DOM.  This prevents the doubly nested divs issue that Backbone experiences, but can be suprising behaviour.
+All views have a single DOM element.  If a view does is not provided an el when it's created, it will construct one when the render method is called.
 
 # template
 
@@ -106,7 +114,9 @@ Subviews are View classes that should be rendered at a given point on the DOM on
 
 In order for a subview to render, the parent's el must have a valid reference to the DOM element to render the subview into, as well as all data for the subview being present.
 
-Subviews accept the following configuration:
+When Subviews are created they are passed the parent view and any other options that were specified.
+
+Definitions for subviews apre specified using:
 
  * A "view" or "component" key, given either as a class or a string that contains the keypath to the object.
  * Either a "container" or "hook" reference.  If one is not given, it will default to a hook with the same name as the subview reference.  For instace the "heading" subview below will default to `data-hook="heading"`
@@ -154,6 +164,31 @@ Notes:
    * A collection is specified.  A collectionView will be created and the NamesItem class given as the child view to the collectionView.  The collectionView will then handle rendering the collection whenever it has items added/removed.
    
 
+# subviewOptions(name,def)
+
+When subviews are created, they are initialized with an options object containing the parent view, and any other options that are returned by the `subviewOptions` method.
+
+The base view's implementation simply returns any options that were given on the subview's definition.
+
+Other views may override this method as a convienct way to specify the same options for all subviews.
+
+In the below example, each of the subviews will be initialied with:
+`{ parent: (MyView instance), model: (MyView instance).model, status: "red"}`
+
+
+``` coffee
+class MyApp.Views.MyView extends Lanes.Views.Base
+    subviews:
+        heading:
+            view: 'Heading'
+        footer:
+            view: 'Footer'
+    subviewOptions: ->
+        {model: @model, status: "red"}
+
+```
+
+
 
 # events
 
@@ -197,9 +232,9 @@ class MyApp.Views.MyView extends Lanes.Views.Base
 
 ### _Note:_ UI elements are not accessible until the view is rendered.
 
-# query
+# query(selector)
 
-Returns an single element based on CSS selector scoped to this.el
+Returns a single element based on CSS selector scoped to this.el
 if you pass an empty string it return `this.el`.
 
 Is more efficient that using the `$` method which calls out to jQuery
@@ -214,11 +249,12 @@ view.render()
 view.query('.title').click()
 ```
 
-# $
+# $(selector)
 
 The same as `query`, but uses jQuery to find the selection, and may return more than just one
 element.  Is essentially just a shortcut to running $el.find.  It runs queries scoped within the view's element.
 
+``` coffee
 class MyView extends Lanes.Views.Base
     template: "<div><a class='title'>click me!</a></div>"
 
@@ -226,14 +262,14 @@ view = new MyView
 view.render()
 # get the first element the class "title"
 view.$('.title').click()
+```
 
-
-# parentScreen
+# parentScreen()
 
 Walks up the parent chain, attempting to find a screen.  If it's found once is returned, otherwise returns null.
 
 It's sometimes useful to relay events up to a level where the user can make note of them.  This method provides a way to obtain a reference to the owning screen.
 
-# remove
+# remove()
 
-Completely removes a view from the DOM and unbinds all event listeners from it.
+Recursively calls remove() on all subviews, than removes itself form the DOM and unbinds all event listeners.
