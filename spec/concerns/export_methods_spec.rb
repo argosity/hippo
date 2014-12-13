@@ -3,22 +3,9 @@ require "lanes/spec_helper"
 class ExportMethodsTest < Lanes::TestCase
     include TestingModels
 
-    def around(&block)
-        with_testing_models(&block)
-    end
-
-    def setup
-        # @model = TestModel.new
-        # @model.bt = TestModelBelongsTo.new
-    end
-
-    def teardown
-#        TestModel.send( :remove_method, :bt_description ) if User.new.respond_to?( :bt_description )
-    end
 
 
     def test_simple_delegation
-
 
         refute TestModel.new.respond_to? :bt_description
 

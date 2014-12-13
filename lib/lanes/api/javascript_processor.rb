@@ -45,10 +45,10 @@ module Lanes
             CONSTRUCTOR = /constructor\s*:/
             EXTENDING_CLASS = /class\s+([\w|\.]+)\s+extends\s+([\w|\.]+)\s*?\n/
 
-            # Coffeescript has two shortcomings with regards to Ampersandjs
+            # Coffeescript has two shortcomings with regards to Lanes
             #
-            # The first is that it's extends format is incompatible with Ampersandjs,
-            # Ampersandjs does quite a bit more via it's own .extend methods.
+            # The first is that it's extends format is incompatible with AmpersandState,
+            # State does quite a bit more via it's own .extend methods.
             # Accordingly, we substitute our own "extend" call whenever we encounter a coffeescript extends
             #
             # The second issue is that if a constructor isn't present, coffeescript with generate it's own

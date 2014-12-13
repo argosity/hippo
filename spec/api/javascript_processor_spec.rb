@@ -48,7 +48,7 @@ Bar.extend(Foo)
 EOS
 
 JS=<<-EOS
-(function(Lanes, _, window, undefined) {
+(function(Lanes, Foo, _, window, FILE, undefined){
 var Foo;
 
 NS.Baz = (function() {
@@ -95,13 +95,16 @@ Foo = (function() {
 
 Bar.extend(Foo);
 
-})(window.Lanes, window._, window);
+})(window.Lanes,(window.Lanes ? window.Lanes['Foo'] : null),window._, window,{namespace:(window.Lanes ? window.Lanes['Foo'] : null),extension:'Foo',file:'baz'});
 EOS
 
+Scope = Struct.new(:logical_path)
 
     def test_coffeescript_generation
         template = API::CoffeeScriptWrapper.new{ |t| SCRIPT }
         assert_equal CLEANED, template.cleaned
-        assert_equal JS.chomp, template.render
+        
+        
+        assert_equal JS.chomp, template.render(Scope.new("foo/bar/baz"))
     end
 end

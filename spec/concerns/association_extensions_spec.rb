@@ -13,8 +13,12 @@ class AssociationExtensionsTest < Lanes::TestCase
     end
 
     def test_adds_listener
-        Tmhm.expects(:_add_event_listener).with(:save,is_a(Proc))
-        TestModel.has_one(:tmhm,:listen=>{:save=>:on_save}, :inverse_of=>:tm)
+        Tmhm.belongs_to(:tm)
+        TestModel.has_one(:tmhm,:listen=>{:save=>:on_tmhm_save}, :inverse_of=>:tm)
+        tm = TestModel.new
+        tm.expects(:on_tmhm_save)
+        tm.build_tmhm
+        assert tm.save
     end
 
     def test_exports_associations
