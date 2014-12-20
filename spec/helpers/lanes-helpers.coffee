@@ -37,6 +37,7 @@ syncResponse = (method,model,options)->
         options.success(model, syncReply, {})
     if options.failure && !syncReply.success
         options.failure(model, syncReply, {})
+    _.Promise.resolve(model,options)
 
 syncReply = {}
 
