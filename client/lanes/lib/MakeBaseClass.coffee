@@ -34,7 +34,7 @@ extendClass = (ampersand_base, parent, child)->
     child.extend = (klass)->
         extendClass( ampersand_base, child, klass )
 
-    parent.after_extended(child) if _.isFunction(parent.after_extended)
+    parent.afterExtended(child) if _.isFunction(parent.afterExtended)
     addMissingFunctionName(child)
     child
 
