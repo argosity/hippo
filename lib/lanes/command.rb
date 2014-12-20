@@ -25,8 +25,9 @@ module Lanes
                 if ext
                     begin
                         require(ext)
-                    rescue
-                        return _maybe_fail(raise_on_fail)
+                    rescue =>e
+                        stack = e.backtrace[0..4].join("\n")
+                        raise Thor::Error.new("Loading ./lib/*/extension.rb failed with: #{e}\n#{stack}")
                     end
                     all = Extensions.all
                     if all.any?
@@ -39,7 +40,7 @@ module Lanes
             end
 
             def _maybe_fail(should_raise)
-                raise Thor::Error.new("Unable to locate Lanes environment") if should_raise
+                raise Thor::Error.new("Unable to locate Lanes environment.\nDoes ./lib/*/extension.rb exist?") if should_raise
                 return nil
             end
         end
