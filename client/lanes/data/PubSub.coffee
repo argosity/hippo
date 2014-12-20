@@ -1,6 +1,5 @@
-MB = Lanes.Vendor.MessageBus
 
-class ModelType
+class ModelType extends Lanes.Data.State
     constructor: ->
         super
         @records = {}
@@ -11,7 +10,7 @@ class ModelType
 
     subscribe: (model)->
         channel = "/#{model.api_path}/#{model.id}"
-        MB.subscribe(channel,(changes)->
+        Lanes.Vendor.MessageBus.subscribe(channel,(changes)->
             model.addChangeSet(changes)
         )
         channel
@@ -24,21 +23,17 @@ class ModelType
 
     remove: (model)->
         if ( config = @records[model.id] )
-            MB.unsubscribe( config.channel )
+            Lanes.Vendor.MessageBus.unsubscribe( config.channel )
         delete @records[model.id]
 
 
-Lanes.Data.State.extend(ModelType)
 
-class ModelTypesCollection
+class ModelTypesCollection extends Lanes.Data.BasicCollection
     constructor: -> super
     model: ModelType
 
     forModel: (model)->
         models = this.get(model.api_path) || this.add(id: model.api_path)
-
-Lanes.Data.BasicCollection.extend(ModelTypesCollection)
-
 
 
 Lanes.Data.PubSub = {
@@ -62,7 +57,7 @@ Lanes.Data.PubSub = {
         @types = new ModelTypesCollection
 
     initialize: ->
-        MB.start()
-        MB.callbackInterval = 500
+        Lanes.Vendor.MessageBus.start()
+        Lanes.Vendor.MessageBus.callbackInterval = 500
 
 }
