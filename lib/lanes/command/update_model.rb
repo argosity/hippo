@@ -3,22 +3,15 @@ require_relative 'model_attribute'
 module Lanes
     module Command
 
-        class UpdateModel < Thor::Group
+        class UpdateModel < NamedCommand
 
-            include Thor::Actions
-
-            argument :name
-            attr_reader :namespace, :class_name, :namespaced_name
-
-            def self.source_root
-                Pathname.new(__FILE__).dirname.join("templates")
-            end
+            attr_reader :namespaced_name
 
             def read_class
                 if name=~/::/
                     (@namespace,@name) = name.split("::")
                 else
-                    ext = Command.load_current_extension
+                    ext = Command.load_current_extension(raise_on_fail:true)
                     @namespace = ext.identifier
                 end
                 class_name = name.camelize
@@ -27,7 +20,7 @@ module Lanes
                 if !@klass
                     raise Thor::Error.new("#{namespaced_name} was not found")
                 end
-                @file = Pathname.new("client/data/#{class_name}.coffee")
+                @file = Pathname.new(client_dir).join("data/#{class_name}.coffee")
                 unless @file.exist?
                     raise Thor::Error.new("Model #{@file} doesn't exist")
                 end
