@@ -82,33 +82,6 @@ class AssocationMap
                 list.push(name)
         list
 
-urlError = ->
-    throw new Error('A "url" property or function must be specified for Model or Collection')
-
-copyServerResp = (record,resp)->
-    record.errors = resp?.errors
-    record.lastServerMessage = resp?.message
-    { record: record, response: resp }
-
-# Wraps a sync request's error and success functions
-# Copies any errors onto the model and sets it's data on success
-wrapRequest = (record, options)->
-    error   = options.error
-    success = options.success
-    options.promise = new _.Promise( (resolve,reject)->
-        options.resolvePromise = resolve
-        options.rejectPromise  = reject
-    )
-    options.error = (reply, resp, req)->
-        options.rejectPromise( copyServerResp(record,resp.responseJSON || {error: resp.responseText}) )
-        error?.apply(options.scope, arguments)
-
-    options.success = (reply,resp,req)->
-        record.setFromResponse( resp.data ) if resp?.data?
-        options.resolvePromise( copyServerResp(record,resp) )
-        success?.apply(options.scope, arguments)
-    options
-
 
 # Da Model. Handles all things dataish
 class DataModel
@@ -178,7 +151,7 @@ class DataModel
 
     # Default URL for the model's representation on the server
     url: ->
-        base = _.result(this, 'urlRoot') || _.result(this.collection, 'url') || urlError();
+        base = _.result(this, 'urlRoot') || _.result(this.collection, 'url') || Lanes.Data.Sync.urlError();
         if this.isNew() then return base;
         if base.charAt(base.length - 1) != '/'
              base += "/"
@@ -231,9 +204,13 @@ class DataModel
         this.associations.set(this,attrs) if this.associations
         this
 
+    where: (query,options)->
+        collection = new @CollectionType
+        collection.fetch( _.extend({query: query}, options) )
+        collection
+
     # Sets the attribute data from a server respose
-    setFromResponse: (data)->
-        return unless data
+    setFromResponse: (data,options)->
         this.set( if _.isArray(data) then data[0] else data )
         this.changeMonitor.reset()
 
@@ -244,7 +221,7 @@ class DataModel
         options = _.clone(options)
 
         options.saving=true
-        handlers = wrapRequest(this,options)
+        handlers = Lanes.Data.Sync.wrapRequest(this,options)
 
         method = if this.isNew()
             'create'
@@ -260,7 +237,7 @@ class DataModel
     # triggering a `"change"` event.
     fetch:  (options={}) ->
         options = _.clone(options)
-        handlers = wrapRequest(this,options)
+        handlers = Lanes.Data.Sync.wrapRequest(this,options)
         _.extend(options,{limit:1,ignoreUnsaved:true})
 
         this.sync('read', this, options)
@@ -269,7 +246,7 @@ class DataModel
     # Removes the model's record from the server (if it is persistent)
     # and then fires the "destroy" event
     destroy: (options={})->
-        handlers = wrapRequest(this,options)
+        handlers = Lanes.Data.Sync.wrapRequest(this,options)
         model    = this
         success  = options.success
         options.success = (reply, msg, options)->
@@ -318,7 +295,7 @@ class DataModel
         else
             ''
     # Use Sync directly
-    sync: Lanes.Data.Sync
+    sync: Lanes.Data.Sync.perform
 
     # When the model is extended it auto-creates the created_at and updated_at
     # and sets up the AssociationMap
@@ -332,6 +309,11 @@ class DataModel
         if klass::associations
             klass::associations = new AssocationMap(klass) 
 
+        unless klass::CollectionType
+            class DefaultCollection
+                constructor: -> super
+                model: klass
+            klass::CollectionType = Lanes.Data.Collection.extend(DefaultCollection)
 
 Lanes.Data.Model = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, DataModel )
 

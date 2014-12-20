@@ -20,14 +20,14 @@ CommonMethods = {
                     model.trigger('destroy', model, model.collection, options)
                 success.apply(@,arguments) if success
         })
-        Lanes.Data.Sync('delete', this, options)
+        Lanes.Data.Sync.perform('delete', this, options)
 
 }
 
 class DataCollection
 
     constructor: ->
-        @isLoaded=false
+        @_isLoaded=false
         @errors=[]
         Lanes.Vendor.Ampersand.Collection.apply(this, arguments)
 
@@ -37,15 +37,21 @@ class DataCollection
         collection
         
     fetch: (options={})->
-        @isLoaded = true
-        wrapRequest(this,options)
-        super(options).then => @
+        @_isLoaded = true
+        Lanes.Data.Sync.wrapRequest(this,options)
+        return this.sync('read', this, options)
+
+    # Sets the attribute data from a server respose
+    setFromResponse: (data, options)->
+        method = if options.reset then 'reset' else 'set'
+        this[method](data, options)
+        this.trigger('sync', this, data, options)
 
     isLoaded:->
-        @isLoaded
+        @_isLoaded
 
     ensureLoaded: ( callback )->
-        if ! @isLoaded && ! this.length
+        if ! @_isLoaded && ! this.length
             this.fetch({ success: callback })
         else if callback
             callback()
@@ -66,10 +72,10 @@ class DataCollection
     url: ->
         @model::urlRoot()
 
-    sync: Lanes.Data.Sync
+    sync: Lanes.Data.Sync.perform
 
     save: (options)->
-        Lanes.Data.Sync('update', this, options)
+        Lanes.Data.Sync.perform('update', this, options)
 
     dataForSave: (options)->
         unsaved = []
@@ -87,32 +93,6 @@ class DataCollection
     mixins:[
         CommonMethods
     ]
-
-    @afterExtended: (klass)->
-        if klass::model
-            klass::model::Collection = klass
-
-copyServerMessages=(collection,msg)->
-    return unless msg
-    collection.errors = msg.errors || []
-    collection.lastServerMessage = msg.message
-
-wrapRequest = (collection, options)->
-    error   = options.error
-    success = options.success
-
-    options.error = (collection,resp)->
-        copyServerMessages(collection,resp.responseJSON)
-        error?.apply(options.scope, arguments)
-        Lanes.warn("request fail",resp)
-        options.complete?.apply(options.scope, arguments)
-    options.success = (collection,resp)->
-        copyServerMessages(collection,resp)
-        if resp.success
-            success?.apply(options.scope, arguments)
-        else
-            error?.apply(options.scope, arguments)
-        options.complete?.apply(options.scope, arguments)
 
 class BasicCollection
     constructor: -> super

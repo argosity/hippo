@@ -111,6 +111,23 @@ describe "Model Suite", ->
         expect(options).toHaveTrue('ignoreUnsaved')
         expect(options).toHaveNumberWithinRange('limit',1,1)
 
+    it "creates a CollectionType property", ->
+        model = makeModel({})
+        expect(model.CollectionType::model).toEqual(Model)
+    
+    it "loads using where", ->
+        model = makeModel({
+            props:
+                { id: 'integer', title: 'string' }
+        })
+        syncSucceedWith([
+            { id: 1, title: 'first value' }
+            { id: 2, title: 'second value' }
+        ])
+        collection = model.where(title: 'first value')
+        options = model.sync.lastOptions()
+        expect(options.query).toEqual({title:'first value'})
+        expect(collection.length).toEqual(2)
 
     it "can be destroyed", ->
         model = makeModel({
@@ -145,8 +162,3 @@ describe "Model Suite", ->
         expect(model.sync).toHaveBeenCalledWith('read', model, jasmine.any(Object))
         options = model.sync.lastOptions()
         expect(options.include).toEqual(['color'])
-        
-    it "assigns an inverse collection property", ->
-        model = makeModel({})
-        expect(Model::Collection).toEqual(Collection)
-    
