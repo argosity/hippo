@@ -88,6 +88,10 @@ class DataCollection
         CommonMethods
     ]
 
+    @afterExtended: (klass)->
+        if klass::model
+            klass::model::Collection = klass
+
 copyServerMessages=(collection,msg)->
     return unless msg
     collection.errors = msg.errors || []
