@@ -13,7 +13,8 @@ Gem::Specification.new do |spec|
     spec.summary       = %q{Lanes is a framework for easily writing single page web applications}
     spec.description   = %q{Lanes is a framework for writing single page web applications.  It's a full stack framework that contains  both server and client.}
 
-    spec.homepage      = "http://argosity.com/lanes/"
+    spec.homepage      = "http://lanesframework.org/"
+
     spec.license       = "MIT"
 
     spec.files         = `git ls-files`.split($/)
