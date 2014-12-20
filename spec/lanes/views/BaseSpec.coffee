@@ -1,23 +1,4 @@
 
-class Model extends Lanes.Data.Model
-    props:
-        id: 'number',
-        name: ['string', true],
-        html: 'string',
-        url: 'string',
-        something: 'string',
-        fireDanger: 'string'
-
-    session:
-        active: 'boolean'
-
-    derived:
-        classes:
-            deps: ['something', 'fireDanger', 'active'],
-            fn: -> this.something + this.active;
-
-class Collection extends Lanes.Data.Collection
-    model: Model
 
 describe "BaseView Suite", ->
     View = undefined
@@ -39,7 +20,6 @@ describe "BaseView Suite", ->
         view.on("change:el", spy)
         view.render()
         expect(spy).toHaveBeenCalled()
-
 
     it "renders a template string", ->
         view = makeView({
@@ -64,7 +44,7 @@ describe "BaseView Suite", ->
         expect(spy).toHaveBeenCalledWith(jasmine.any(Object),22)
 
     it "updates from bindings", ->
-        model = new Model({ name: "Bob" })
+        model = new Lanes.Testing.Model({ name: "Bob" })
         view = makeView({
             bindings: {
                 "model.name": { hook: 'link' }
@@ -85,7 +65,7 @@ describe "BaseView Suite", ->
             constructor: -> super
             session: { answer: 'string' }
         Lanes.Views.Base.extend(LowerView)
-        model = new Model
+        model = new Lanes.Testing.Model
         view = makeView({
             subviews:
                 lower:
@@ -108,7 +88,7 @@ describe "BaseView Suite", ->
             constructor: -> super
             bindings: { "model.name": { type: "text" } }
         Lanes.Views.Base.extend(LowerView)
-        collection = new Collection
+        collection = new Lanes.Testing.Collection
         view = makeView({
             subviews:
                 lower:
@@ -141,7 +121,7 @@ describe "BaseView Suite", ->
     it "invokes model events", ->
         nameSpy = jasmine.createSpy()
         urlSpy  = jasmine.createSpy()
-        model   = new Model
+        model   = new Lanes.Testing.Model
         view = makeView({
             modelEvents:
                 'change:name': nameSpy
@@ -159,8 +139,8 @@ describe "BaseView Suite", ->
             collectionEvents:
                 all: 'onEvent'
             onEvent: eventSpy
-            initialize: -> this.collection = new Collection
+            initialize: -> this.collection = new Lanes.Testing.Collection
         })
         expect(eventSpy).not.toHaveBeenCalled()
-        view.collection.add(new Model)
+        view.collection.add(new Lanes.Testing.Model)
         expect(eventSpy).toHaveBeenCalled()

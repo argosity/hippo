@@ -370,13 +370,13 @@ class ViewBase
             view.collection = Lanes.getPath(definition.collection, this) if definition.collection
         prev = this.previous('model')
         return if prev == @model
-        this._unBindFromObject(prev, @modelEvents) if prev
+        this._unbindFromObject(prev, @modelEvents) if prev
         this._bindToObject(@model, @modelEvents)
 
     _onCollectionChange: ->
         prev = this.previous('collection')
         return if prev == @collection
-        this._unBindFromObject(prev, @collectionEvents) if prev
+        this._unbindFromObject(prev, @collectionEvents) if prev
         this._bindToObject(@collection, @collectionEvents)
 
     _bindToObject: (state_object,events)->
