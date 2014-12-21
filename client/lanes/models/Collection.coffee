@@ -42,7 +42,7 @@ class ModelsCollection
         return this.sync('read', this, options)
 
     # Sets the attribute data from a server respose
-    setFromResponse: (data, options)->
+    setFromServer: (data, options)->
         method = if options.reset then 'reset' else 'set'
         this[method](data, options)
         this.trigger('sync', this, data, options)

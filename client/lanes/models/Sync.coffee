@@ -32,10 +32,10 @@ Lanes.Models.Sync = {
     urlError: ->
         throw new Error('A "url" property or function must be specified')
 
-    copyServerResp: (record,resp)->
-        record.errors = resp?.errors
-        record.lastServerMessage = resp?.message
-        { record: record, response: resp }
+    copyServerReply: (record, reply)->
+        record.errors = reply?.errors
+        record.lastServerMessage = reply?.message
+        { record: record, reply: reply }
 
     # Wraps a sync request's error and success functions
     # Copies any errors onto the model and sets it's data on success
@@ -51,8 +51,8 @@ Lanes.Models.Sync = {
             error?.apply(options.scope, arguments)
 
         options.success = (reply,resp,req)->
-            record.setFromResponse( resp.data, options ) if resp?.data?
-            options.resolvePromise( Lanes.Models.Sync.copyServerResp(record,resp) )
+            record.setFromServer( reply.data, options ) if reply?.data?
+            options.resolvePromise( Lanes.Models.Sync.copyServerReply(record,reply) )
             success?.apply(options.scope, arguments)
         options
 

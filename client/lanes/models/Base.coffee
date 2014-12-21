@@ -210,7 +210,7 @@ class BaseModel
         collection
 
     # Sets the attribute data from a server respose
-    setFromResponse: (data,options)->
+    setFromServer: (data,options)->
         this.set( if _.isArray(data) then data[0] else data )
         this.changeMonitor.reset()
 
