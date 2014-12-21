@@ -1,4 +1,4 @@
-class Field extends Lanes.Data.Model
+class Field extends Lanes.Models.Base
 
     constructor: (attributes)->
         super( _.defaults( attributes, {
@@ -25,7 +25,7 @@ class Field extends Lanes.Data.Model
             value
 
 
-class AvailableFields extends Lanes.Data.Collection
+class AvailableFields extends Lanes.Models.Collection
 
     constructor: (models,options)->
         @query = options.query
@@ -34,7 +34,7 @@ class AvailableFields extends Lanes.Data.Collection
 
 
 
-class Operator extends Lanes.Data.Model
+class Operator extends Lanes.Models.Base
 
     addStandardProperties: Lanes.emptyFn
 
@@ -52,7 +52,7 @@ class Operator extends Lanes.Data.Model
                 !this.types || ( this.field && _.contains(this.types, this.field.type) )
 
 
-class Operators extends Lanes.Data.Collection
+class Operators extends Lanes.Models.Collection
     model: Operator
 
     constructor: ->
@@ -72,7 +72,7 @@ class Operators extends Lanes.Data.Collection
             this.findWhere(valid:true).selected = true
 
 
-class Clause extends Lanes.Data.Model
+class Clause extends Lanes.Models.Base
 
     session:
         value     : { type: 'string', default: '' }
@@ -124,7 +124,7 @@ class Clause extends Lanes.Data.Model
         param
 
 
-class Clauses extends Lanes.Data.Collection
+class Clauses extends Lanes.Models.Collection
 
     model: Clause
 
@@ -134,7 +134,7 @@ class Clauses extends Lanes.Data.Collection
         @fields = options.query.fields
 
 
-class Lanes.Data.Query extends Lanes.Data.Model
+class Lanes.Models.Query extends Lanes.Models.Base
 
     session:
         fields:  'collection'

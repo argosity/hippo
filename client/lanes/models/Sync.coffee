@@ -28,7 +28,7 @@ paramsMap = {
     format  : 'df'
 }
 
-Lanes.Data.Sync = {
+Lanes.Models.Sync = {
     urlError: ->
         throw new Error('A "url" property or function must be specified')
 
@@ -52,7 +52,7 @@ Lanes.Data.Sync = {
 
         options.success = (reply,resp,req)->
             record.setFromResponse( resp.data, options ) if resp?.data?
-            options.resolvePromise( Lanes.Data.Sync.copyServerResp(record,resp) )
+            options.resolvePromise( Lanes.Models.Sync.copyServerResp(record,resp) )
             success?.apply(options.scope, arguments)
         options
 
@@ -69,10 +69,10 @@ Lanes.Data.Sync = {
         }
 
         # Ensure that we have a URL.
-        params.url = _.result(model, "url") or Lanes.Data.Sync.urlError() unless options.url
+        params.url = _.result(model, "url") or Lanes.Models.Sync.urlError() unless options.url
         params.url += '.json'
         params.headers = {
-            X_CSRF_TOKEN: Lanes.Data.Config.csrf_token
+            X_CSRF_TOKEN: Lanes.Models.Config.csrf_token
         }
         params.contentType = "application/json"
         if options.data || _.contains(['create','update','patch'], method)

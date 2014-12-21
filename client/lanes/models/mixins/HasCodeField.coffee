@@ -1,9 +1,9 @@
-Lanes.Data.Mixins.HasCodeField = {
+Lanes.Models.Mixins.HasCodeField = {
 
     INVALID: /[^A-Z0-9a-z]/
 
     included: ->
-        this.prototype.INVALID_CODE_CLanes.RS ||= Lanes.Data.mixins.Lanes.sCodeField.INVALID
+        this.prototype.INVALID_CODE_CLanes.RS ||= Lanes.Models.mixins.Lanes.sCodeField.INVALID
 
     initialize: ->
         this.on('change:code', this.upcaseCode )

@@ -1,4 +1,4 @@
-# DataTables class modifications
+# ModelsTables class modifications
 _.extend( Lanes.$.fn.dataTableExt.oStdClasses,{
     sTable: "table table-striped"
 	sWrapper: "dataTables_wrapper form-inline"
@@ -18,7 +18,7 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         'order.dt table': 'onSort'
 
     template: 'grid/template'
-    templateData: ->
+    templateModels: ->
         data = { grid: this, buttons: ['refresh'] }
         data['buttons'].push('create') if @add_records
         data['buttons'].push('delete') if @delete_records
@@ -161,7 +161,7 @@ class Lanes.Components.Grid extends Lanes.Components.Base
 #            columnDefs: @column_definitions
             ajax:
                 url: @record_query.url + ".json"
-                data: (d)=>@buildData(d)
+                data: (d)=>@buildModels(d)
                 dataSrc: (d)->
                     d.recordsFiltered = d.recordsTotal = d.total
                     row.DT_RowId = row.shift() for row in d.data
@@ -176,7 +176,7 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         this.delayedGridConfiguration()
         this
 
-    buildData: (d)->
+    buildModels: (d)->
         params = { o: {}, s: d.start, l: d.length||100, df:'array', f: ['id'].concat(_.pluck(@column_definitions, 'field')) }
         if ! _.isEmpty( query = @record_query.asParams() )
             params['q']=query

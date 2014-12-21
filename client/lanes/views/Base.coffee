@@ -42,7 +42,7 @@ class ViewBase
         rendered:
             deps: ["el"], fn: -> !!@el
 
-        hasData:
+        hasModels:
             deps: ["model"], fn: -> !!@model
 
         viewport:
@@ -148,7 +148,7 @@ class ViewBase
         template = templateArg || this.resultsFor('template')
         throw new Error('Template string or function needed.') unless template
         template_fn = Lanes.Templates.find(template, this.source.extension)
-        newDom = if template_fn then template_fn( _.result(this,'templateData')) else template
+        newDom = if template_fn then template_fn( _.result(this,'templateModels')) else template
         newDom = Lanes.Vendor.domify(newDom) if _.isString(newDom);
         parent = this.el && this.el.parentNode;
         parent.replaceChild(newDom, this.el) if parent
@@ -166,7 +166,7 @@ class ViewBase
 
     source: FILE
 
-    templateData: ->
+    templateModels: ->
         { model: this.model, collection: this.collection }
 
     renderTemplate:(name,data={})->
@@ -179,7 +179,7 @@ class ViewBase
 
     renderTemplateMethod: (method)->
         return null unless name = _.result(this, method)
-        this.renderTemplate(name, _.result(this, "#{method}Data") || @model)
+        this.renderTemplate(name, _.result(this, "#{method}Models") || @model)
 
 
     # Remove this view by taking the element out of the DOM, and removing any

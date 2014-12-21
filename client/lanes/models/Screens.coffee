@@ -1,4 +1,4 @@
-class ScreenView extends Lanes.Data.BasicModel
+class ScreenView extends Lanes.Models.BasicModel
 
     session:
         screen: 'object'
@@ -18,18 +18,18 @@ class ScreenView extends Lanes.Data.BasicModel
     initialize: (options)->
         super
         @screen=options.screen
-        Lanes.Data.Screens.displaying.add( this )
+        Lanes.Models.Screens.displaying.add( this )
         this.active=true
 
     renderScreen: ->
         this.view.render()
 
     remove: ->
-        Lanes.Data.Screens.displaying.remove( this )
+        Lanes.Models.Screens.displaying.remove( this )
 
 
 
-class ScreenDefinition extends Lanes.Data.BasicModel
+class ScreenDefinition extends Lanes.Models.BasicModel
 
     session:
         id:          'string'
@@ -45,7 +45,7 @@ class ScreenDefinition extends Lanes.Data.BasicModel
     derived:
         model_type:
             deps: ['model'], fn: ->
-                Lanes.getPath(this.model,"Lanes.Data")
+                Lanes.getPath(this.model,"Lanes.Models")
 
     initialize: ->
         @views = []
@@ -95,7 +95,7 @@ class ScreenDefinition extends Lanes.Data.BasicModel
         #             Lanes.warn(failures)
 
 
-class ScreenViewSet extends Lanes.Data.BasicCollection
+class ScreenViewSet extends Lanes.Models.BasicCollection
 
     model: ScreenView
 
@@ -133,7 +133,7 @@ class ScreenViewSet extends Lanes.Data.BasicCollection
 
 
 
-class ScreenSet extends Lanes.Data.BasicCollection
+class ScreenSet extends Lanes.Models.BasicCollection
 
     model: ScreenDefinition
 
@@ -145,7 +145,7 @@ class ScreenSet extends Lanes.Data.BasicCollection
 
 
 
-class MenuGroup extends Lanes.Data.BasicModel
+class MenuGroup extends Lanes.Models.BasicModel
 
     session:
         id:          'string'
@@ -155,18 +155,18 @@ class MenuGroup extends Lanes.Data.BasicModel
         active:      ['boolean', true, false]
 
     screens: ->
-        @avail ||= new Lanes.Data.SubCollection( Lanes.Data.Screens.all, {
+        @avail ||= new Lanes.Models.SubCollection( Lanes.Models.Screens.all, {
             filter: (screen)=>
                 screen.group_id == @id && Lanes.current_user.canRead(screen.model_type)
             watched: ['group_id']
         })
 
-class MenuGroupSet extends Lanes.Data.BasicCollection
+class MenuGroupSet extends Lanes.Models.BasicCollection
     constructor: -> super
     model: MenuGroup
 
     available: ->
-        @avail ||= new Lanes.Data.SubCollection(this, {
+        @avail ||= new Lanes.Models.SubCollection(this, {
             filter: (mgs)=>
                 mgs.screens().filter()
                 mgs.screens().length > 0
@@ -174,7 +174,7 @@ class MenuGroupSet extends Lanes.Data.BasicCollection
 
 
 
-Lanes.Data.Screens = {
+Lanes.Models.Screens = {
     all: new ScreenSet
     displaying: new ScreenViewSet([],{ single_active_only: true })
     groups:  new MenuGroupSet

@@ -1,17 +1,17 @@
-unless Lanes.Data.Roles
+unless Lanes.Models.Roles
 
-    class Lanes.Data.Role extends Lanes.Data.BasicModel
+    class Lanes.Models.Role extends Lanes.Models.BasicModel
         props:
             id:     'string'
             name:   'string'
             member: { type: 'boolean', default: false }
 
-    class Lanes.Data.Roles extends Lanes.Data.BasicCollection
-        model: Lanes.Data.Role
+    class Lanes.Models.Roles extends Lanes.Models.BasicCollection
+        model: Lanes.Models.Role
 
 
-unless Lanes.Data.User
-    class Lanes.Data.User extends Lanes.Data.Model
+unless Lanes.Models.User
+    class Lanes.Models.User extends Lanes.Models.Base
 
         constructor: (attributes,access)->
             super
@@ -24,7 +24,7 @@ unless Lanes.Data.User
             isLoggedIn:
                 fn: -> false
             allRoles:
-                fn: -> new Lanes.Data.Roles
+                fn: -> new Lanes.Models.Roles
 
         session:
             access_data: 'object'
@@ -43,4 +43,4 @@ unless Lanes.Data.User
         canDelete: (model)      -> true
 
 unless Lanes.current_user
-    Lanes.current_user = new Lanes.Data.User
+    Lanes.current_user = new Lanes.Models.User

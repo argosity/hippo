@@ -6,7 +6,7 @@ class Lanes.Screens.Instance
 
     constructor: (selector, options)->
         this.viewport = new Lanes.Views.Viewport({ selector: selector, instance: this });
-        Lanes.Data.Bootstrap.initialize(options);
+        Lanes.Models.Bootstrap.initialize(options);
         Lanes.$(document).ready => @boot(options)
 
     boot: (options)->
@@ -25,13 +25,13 @@ class Lanes.Screens.Instance
             title: => @getAttribute('data-tooltip-message')
         });
         Lanes.Views.Keys.initialize();
-        Lanes.Data.PubSub.initialize() if options.pub_sub;
+        Lanes.Models.PubSub.initialize() if options.pub_sub;
         
         view = Lanes.getPath(options.root_view);
         if view
             this.displayInitialView(view);
         else
-            definition=Lanes.Data.Screens.all.findWhere({view: options.root_view});
+            definition=Lanes.Models.Screens.all.findWhere({view: options.root_view});
             if definition
                 definition.getScreen().then( (screen)=>
                     # break out of the promise so an errors during render get thrown properly

@@ -1,5 +1,5 @@
 
-class ModelType extends Lanes.Data.State
+class ModelType extends Lanes.Models.State
     constructor: ->
         super
         @records = {}
@@ -28,7 +28,7 @@ class ModelType extends Lanes.Data.State
 
 
 
-class ModelTypesCollection extends Lanes.Data.BasicCollection
+class ModelTypesCollection extends Lanes.Models.BasicCollection
     constructor: -> super
     model: ModelType
 
@@ -36,7 +36,7 @@ class ModelTypesCollection extends Lanes.Data.BasicCollection
         models = this.get(model.api_path) || this.add(id: model.api_path)
 
 
-Lanes.Data.PubSub = {
+Lanes.Models.PubSub = {
 
     types: new ModelTypesCollection
 

@@ -38,8 +38,8 @@ class AssocationMap
     constructor: (@klass)->
         @klass::derived ||= {}
         @definitions = @klass::associations
-        @definitions['created_by'] ||= { model: 'Lanes.Data.User', readOnly: true }
-        @definitions['updated_by'] ||= { model: 'Lanes.Data.User', readOnly: true }
+        @definitions['created_by'] ||= { model: 'Lanes.Models.User', readOnly: true }
+        @definitions['updated_by'] ||= { model: 'Lanes.Models.User', readOnly: true }
         for name, options of @definitions
             @klass::derived[name] = this.derivedDefinition(name,options)
 
@@ -47,7 +47,7 @@ class AssocationMap
     derivedDefinition: (name,definition)->
         findAssocationClass = ->
             object = definition.model || definition.collection
-            if _.isObject(object) then object else Lanes.getPath( object, "Lanes.Data")
+            if _.isObject(object) then object else Lanes.getPath( object, "Lanes.Models")
         target_klass = findAssocationClass()
         # will be called in the scope of the model
         createAssocation = ->
@@ -84,7 +84,7 @@ class AssocationMap
 
 
 # Da Model. Handles all things dataish
-class DataModel
+class BaseModel
     isModel: true
     session:
         errors: 'object'
@@ -141,17 +141,17 @@ class DataModel
 
     # used by PubSub to record a remote change to the model
     addChangeSet: (change)->
-        this.changes ||= new Lanes.Data.ChangeSetCollection( parent: this )
+        this.changes ||= new Lanes.Models.ChangeSetCollection( parent: this )
         change.record = this
         change = this.changes.add(change)
         this.set( change.value() )
 
     urlRoot: ->
-        Lanes.Data.Config.api_path + '/' + _.result(this,'api_path')
+        Lanes.Models.Config.api_path + '/' + _.result(this,'api_path')
 
     # Default URL for the model's representation on the server
     url: ->
-        base = _.result(this, 'urlRoot') || _.result(this.collection, 'url') || Lanes.Data.Sync.urlError();
+        base = _.result(this, 'urlRoot') || _.result(this.collection, 'url') || Lanes.Models.Sync.urlError();
         if this.isNew() then return base;
         if base.charAt(base.length - 1) != '/'
              base += "/"
@@ -186,7 +186,7 @@ class DataModel
     # When not found, it will create a new record and return it.
     # The newly created record will not be stored, in PubSub map, only records bound to a view are stored
     @findOrCreate: (attrs, options={})->
-        if attrs.id && ( record = Lanes.Data.PubSub.instanceFor(this, attrs.id) )
+        if attrs.id && ( record = Lanes.Models.PubSub.instanceFor(this, attrs.id) )
             record.set(attrs)
         else
             new this(attrs,options)
@@ -221,7 +221,7 @@ class DataModel
         options = _.clone(options)
 
         options.saving=true
-        handlers = Lanes.Data.Sync.wrapRequest(this,options)
+        handlers = Lanes.Models.Sync.wrapRequest(this,options)
 
         method = if this.isNew()
             'create'
@@ -237,7 +237,7 @@ class DataModel
     # triggering a `"change"` event.
     fetch:  (options={}) ->
         options = _.clone(options)
-        handlers = Lanes.Data.Sync.wrapRequest(this,options)
+        handlers = Lanes.Models.Sync.wrapRequest(this,options)
         _.extend(options,{limit:1,ignoreUnsaved:true})
 
         this.sync('read', this, options)
@@ -246,7 +246,7 @@ class DataModel
     # Removes the model's record from the server (if it is persistent)
     # and then fires the "destroy" event
     destroy: (options={})->
-        handlers = Lanes.Data.Sync.wrapRequest(this,options)
+        handlers = Lanes.Models.Sync.wrapRequest(this,options)
         model    = this
         success  = options.success
         options.success = (reply, msg, options)->
@@ -260,7 +260,7 @@ class DataModel
         handlers.promise
 
     # returns any attributes that have been set and not saved
-    unsavedData: ->
+    unsavedModels: ->
         attrs = if this.isNew() then {} else { id: this.getId() }
         _.extend(attrs, _.pick( this.getAttributes(props:true, true),
             @changeMonitor.changedAttributes() ) )
@@ -272,7 +272,7 @@ class DataModel
         if options.saveAll
             data = this.getAttributes(props:true, true)
         else
-            data = this.unsavedData()
+            data = this.unsavedModels()
         _.extend(data, this.associations.dataForSave(this, options)) if this.associations
         data
 
@@ -295,7 +295,7 @@ class DataModel
         else
             ''
     # Use Sync directly
-    sync: Lanes.Data.Sync.perform
+    sync: Lanes.Models.Sync.perform
 
     # When the model is extended it auto-creates the created_at and updated_at
     # and sets up the AssociationMap
@@ -313,9 +313,9 @@ class DataModel
             class DefaultCollection
                 constructor: -> super
                 model: klass
-            klass::CollectionType = Lanes.Data.Collection.extend(DefaultCollection)
+            klass::CollectionType = Lanes.Models.Collection.extend(DefaultCollection)
 
-Lanes.Data.Model = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, DataModel )
+Lanes.Models.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BaseModel )
 
 
 
@@ -327,10 +327,10 @@ class BasicModel                #
     isPersistent: -> false
     isModel: true
 
-Lanes.Data.BasicModel = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BasicModel )
+Lanes.Models.BasicModel = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BasicModel )
 
 
 class State
     constructor: -> super
 
-Lanes.Data.State = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, State )
+Lanes.Models.State = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, State )

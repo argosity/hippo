@@ -71,7 +71,7 @@ class Lanes.Workspace.ScreensMenu extends Lanes.Views.Base
     initialize: ->
         super
         this.listenTo(Lanes.current_user, "change:isLoggedIn", this.resetGroups)
-        @groups = Lanes.Data.Screens.groups.available()
+        @groups = Lanes.Models.Screens.groups.available()
         this
 
     resetGroups: ->

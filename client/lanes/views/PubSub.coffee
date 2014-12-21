@@ -1,4 +1,4 @@
-# Responsible for adding and removing a view's model(s) from Data.PubSub
+# Responsible for adding and removing a view's model(s) from Models.PubSub
 class Lanes.Views.PubSub extends Lanes.Views.ModelObserver
 
     model_events:
@@ -17,13 +17,13 @@ class Lanes.Views.PubSub extends Lanes.Views.ModelObserver
             this.showUpdate(field) if field = @view.query("[name=#{field}]")
 
     bindModel: (model)->
-        Lanes.Data.PubSub.add(model)
+        Lanes.Models.PubSub.add(model)
         super
 
     unBindModel: (model)->
-        Lanes.Data.PubSub.remove(model)
+        Lanes.Models.PubSub.remove(model)
         super
 
     teardown: ->
         super
-        Lanes.Data.PubSub.remove(model) if model = this.getModel()
+        Lanes.Models.PubSub.remove(model) if model = this.getModel()

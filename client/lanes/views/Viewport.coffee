@@ -11,7 +11,7 @@ BREAKPOINTS = {
 
 ALL_INSTANCES = []
 
-class Lanes.Views.Viewport extends Lanes.Data.BasicModel
+class Lanes.Views.Viewport extends Lanes.Models.BasicModel
 
     constructor: ->
         super

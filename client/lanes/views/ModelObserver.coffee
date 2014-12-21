@@ -1,4 +1,4 @@
-class Lanes.Views.ModelObserver extends Lanes.Data.State
+class Lanes.Views.ModelObserver extends Lanes.Models.State
 
     model_events: {}
 

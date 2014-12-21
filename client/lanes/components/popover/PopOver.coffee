@@ -8,20 +8,20 @@ class Lanes.Components.PopOver extends Lanes.Components.Base
         title: 'string'
         content: 'any'
         template: 'string'
-        templateData: 'object'
+        templateModels: 'object'
         placement: { type: 'string', default: "right" }
         destroyAfterHide: [ 'boolean', true, false ]
 
     derived:
         options:
-            deps: ['title','content','template','templateData'], fn:->
+            deps: ['title','content','template','templateModels'], fn:->
                 content = if this.template then this.renderTemplate() else this.content
                 { title: @title, content: content, html: true, placement: "auto #{@placement}" }
 
     renderTemplate: ->
         template = Lanes.Templates.find(this.template)
         if template
-            template(this.templateData)
+            template(this.templateModels)
         else
             Lanes.warn "PopOver Template #{this.template} was not found"
 

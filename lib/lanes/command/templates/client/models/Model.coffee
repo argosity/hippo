@@ -18,7 +18,3 @@ class <%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_parent
         <%= sprintf("%-#{max_field_length}s ",field.name) %>: { <%= field.belongs_to? ? 'model' : 'collection' -%>: "Lanes.<%= namespace.camelize %>.<%= field.name.camelize %>" }
 <% end -%>
 <% end -%>
-
-class <%= namespace.camelize %>.Data.<%= class_name %>Collection extends <%= options[:client_collection_parent] %>
-
-    model: <%= namespace.camelize %>.Data.<%= class_name %>

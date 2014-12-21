@@ -1,6 +1,6 @@
 class BaseExtension
 
-    setBootstrapData: (data)->
+    setBootstrapModels: (data)->
 
     @extended:(klass)->
         Lanes.Extensions.register(klass)

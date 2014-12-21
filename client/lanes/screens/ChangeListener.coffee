@@ -11,7 +11,7 @@ Lanes.Screens.ChangeListener = {
 
     derived:
         changes: deps:[], fn: ->
-            new Lanes.Data.ChangeSetCollection([],{ parent: this })
+            new Lanes.Models.ChangeSetCollection([],{ parent: this })
         changes_visible: { deps: ['change_count'], fn:-> @change_count > 0 }
 
     bindings:

@@ -44,7 +44,7 @@ class Lanes.Components.SelectField extends Lanes.Components.Base
 
     initialize: (options={})->
         if @association
-            collection = Lanes.Data[@association.model].sharedCollection()
+            collection = Lanes.Models[@association.model].sharedCollection()
             collection.fetch().then (m)=>
                 @selections = m
                 this.on('change:model', this.onModelChange )

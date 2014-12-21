@@ -1,17 +1,17 @@
 
-describe "Model Suite", ->
+describe "Base Model Suite", ->
     Model = undefined
     Collection = undefined
     class Color
         constructor: -> super
         props: { id: 'integer', rgb: 'string' }
-    Lanes.Data.Model.extend(Color)
+    Lanes.Models.Base.extend(Color)
 
     makeModel = (props,args={})->
         _.extend(Model.prototype, props)
-        Lanes.Data.Model.extend(Model)
+        Lanes.Models.Base.extend(Model)
         Collection::model = Model
-        Lanes.Data.Collection.extend(Collection)
+        Lanes.Models.Collection.extend(Collection)
         collection = new Collection
         return collection.add(new Model(args))
 
@@ -35,7 +35,7 @@ describe "Model Suite", ->
         expect(model.isDirty()).toBeFalse()
         model.foo = 'baz' # session prop
         expect(model.isDirty()).toBeFalse()
-        expect(model.unsavedData()).toBeEmptyObject()
+        expect(model.unsavedModels()).toBeEmptyObject()
         model.set( saved: 'true' )
         expect(model.isDirty()).toBeTrue()
 
@@ -83,7 +83,7 @@ describe "Model Suite", ->
                 
         }, { foo: 'one, two, three'} )
         expect(model.isDirty()).toBeTrue()
-        expect(model.unsavedData()).toEqual( foo: 'one, two, three' )
+        expect(model.unsavedModels()).toEqual( foo: 'one, two, three' )
         model.save()
         expect(model.sync).toHaveBeenCalledWith('create', model, jasmine.any(Object))
         model.id=11

@@ -17,8 +17,8 @@ class Lanes.Workspace.Pages extends Lanes.Views.Base
         screens_menu_container: '.screens-menu-container'
 
     initialize: (options)->
-        this.listenTo( Lanes.Data.Screens.displaying, "change:active", this.onActiveChange )
-        this.listenTo( Lanes.Data.Screens.displaying, "remove",        this.onRemove )
+        this.listenTo( Lanes.Models.Screens.displaying, "change:active", this.onActiveChange )
+        this.listenTo( Lanes.Models.Screens.displaying, "remove",        this.onRemove )
         this.listenTo( @model,'change:screen_menu_position', this.moveScreensMenu )
         super
 

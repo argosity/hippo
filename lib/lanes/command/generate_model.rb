@@ -7,8 +7,7 @@ module Lanes
             RESERVED_YAML_KEYWORDS = %w(y yes n no true false on off null)
             OPTIONS ||= {
                 timestamps: true,
-                parent:    "Lanes::Model",
-                client_collection_parent: "Lanes.Data.Collection"
+                parent:    "Lanes::Model"
             }
 
             class_options OPTIONS
@@ -42,10 +41,10 @@ module Lanes
 
             def create_client
                 self.fields.unshift ModelAttribute.parse("id:integer")
-                template "client/data/Model.coffee", \
-                  "#{client_dir}/data/#{class_name}.coffee"
-                template "spec/client/data/ModelSpec.coffee", \
-                  "#{spec_dir}/data/#{class_name}Spec.coffee"
+                template "client/models/Model.coffee", \
+                  "#{client_dir}/models/#{class_name}.coffee"
+                template "spec/client/models/ModelSpec.coffee", \
+                  "#{spec_dir}/models/#{class_name}Spec.coffee"
             end
 
             def add_route
@@ -86,7 +85,7 @@ module Lanes
 
             def client_parent
                 if options[:parent] == 'Lanes::Model'
-                    "Lanes.Data.Model"
+                    "Lanes.Models.Base"
                 else
                     "Lanes.#{namespace.camelize}.#{options[:parent]}"
                 end

@@ -21,7 +21,7 @@ class Lanes.Component.ChoicesInput extends Lanes.Component.Base
 
     initialize: (options={})->
         if @association
-            collection = Lanes.Data[@association.model].sharedCollection()
+            collection = Lanes.Models[@association.model].sharedCollection()
             collection.fetch().then (m)=>
                 @selections = m
                 this.on('change:model', this.onModelChange )

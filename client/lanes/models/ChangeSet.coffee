@@ -1,4 +1,4 @@
-class Lanes.Data.ChangeSet extends Lanes.Data.Model
+class Lanes.Models.ChangeSet extends Lanes.Models.Base
 
     constructor: ->
         super
@@ -32,9 +32,9 @@ class Lanes.Data.ChangeSet extends Lanes.Data.Model
         @time_ago = Lanes.Vendor.Moment( @created_at ).fromNow()
 
 
-class Lanes.Data.ChangeSetCollection extends Lanes.Data.BasicCollection
+class Lanes.Models.ChangeSetCollection extends Lanes.Models.BasicCollection
 
-    model: Lanes.Data.ChangeSet
+    model: Lanes.Models.ChangeSet
 
     constructor: (options)->
         super([],options)

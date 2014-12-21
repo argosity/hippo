@@ -51,7 +51,7 @@ class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.Views.Base
     constructor: ->
         super
         _.bindAll(this, 'resetShownControls')
-        @collection = Lanes.Data.Screens.displaying
+        @collection = Lanes.Models.Screens.displaying
         this.listenTo( @collection, "change:active", this.onActiveChange )
         this.listenTo( this.viewport,  "change:width", this.resetShownControls )
         this.listenTo( Lanes.current_user, "change:isLoggedIn", this.closeScreens)

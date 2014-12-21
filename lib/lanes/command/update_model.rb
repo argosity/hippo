@@ -20,7 +20,7 @@ module Lanes
                 if !@klass
                     raise Thor::Error.new("#{namespaced_name} was not found")
                 end
-                @file = Pathname.new(client_dir).join("data/#{class_name}.coffee")
+                @file = Pathname.new(client_dir).join("models/#{class_name}.coffee")
                 unless @file.exist?
                     raise Thor::Error.new("Model #{@file} doesn't exist")
                 end

@@ -20,11 +20,11 @@ CommonMethods = {
                     model.trigger('destroy', model, model.collection, options)
                 success.apply(@,arguments) if success
         })
-        Lanes.Data.Sync.perform('delete', this, options)
+        Lanes.Models.Sync.perform('delete', this, options)
 
 }
 
-class DataCollection
+class ModelsCollection
 
     constructor: ->
         @_isLoaded=false
@@ -38,7 +38,7 @@ class DataCollection
         
     fetch: (options={})->
         @_isLoaded = true
-        Lanes.Data.Sync.wrapRequest(this,options)
+        Lanes.Models.Sync.wrapRequest(this,options)
         return this.sync('read', this, options)
 
     # Sets the attribute data from a server respose
@@ -72,15 +72,15 @@ class DataCollection
     url: ->
         @model::urlRoot()
 
-    sync: Lanes.Data.Sync.perform
+    sync: Lanes.Models.Sync.perform
 
     save: (options)->
-        Lanes.Data.Sync.perform('update', this, options)
+        Lanes.Models.Sync.perform('update', this, options)
 
     dataForSave: (options)->
         unsaved = []
         for model in @models
-            unsaved.push( model.unsavedData() ) if model.isDirty()
+            unsaved.push( model.unsavedModels() ) if model.isDirty()
         unsaved
 
     _prepareModel: (attrs, options={})->
@@ -115,12 +115,12 @@ class SubCollection
     filter: ->
         this._runFilters()
 
-Lanes.Data.SubCollection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.SubCollection, SubCollection )
+Lanes.Models.SubCollection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.SubCollection, SubCollection )
 
 
-Lanes.Data.BasicCollection = Lanes.lib.MakeBaseClass(
+Lanes.Models.BasicCollection = Lanes.lib.MakeBaseClass(
     Lanes.Vendor.Ampersand.Collection.extend(Lanes.Vendor.Ampersand.USCollection), BasicCollection
 )
 
 
-Lanes.Data.Collection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.RestCollection, DataCollection )
+Lanes.Models.Collection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.RestCollection, ModelsCollection )

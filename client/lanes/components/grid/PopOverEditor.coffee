@@ -1,7 +1,7 @@
 class Lanes.Components.Grid.PopOverEditor extends Lanes.Components.Grid.Editor
 
     template: 'grid/popover-editor'
-    templateData: ->
+    templateModels: ->
         { columns: this.grid.column_definitions }
 
     session:

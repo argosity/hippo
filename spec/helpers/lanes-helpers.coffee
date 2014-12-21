@@ -11,7 +11,7 @@ Lanes.Vendor.MessageBus = {
     start: Lanes.emptyFn
 }
     
-class Lanes.Testing.Model extends Lanes.Data.Model
+class Lanes.Testing.Model extends Lanes.Models.Base
     api_path: "test"
     props:
         id: 'number',
@@ -29,7 +29,7 @@ class Lanes.Testing.Model extends Lanes.Data.Model
             deps: ['something', 'fireDanger', 'active'],
             fn: -> this.something + this.active;
 
-class Lanes.Testing.Collection extends Lanes.Data.Collection
+class Lanes.Testing.Collection extends Lanes.Models.Collection
     model: Lanes.Testing.Model
 
 syncResponse = (method,model,options)->
@@ -56,7 +56,7 @@ beforeEach ->
     Lanes.Testing.syncSpy = jasmine.createSpy('sync').and.callFake(syncResponse)
     Lanes.Testing.syncSpy.lastOptions = ->
         this.calls.mostRecent().args[2]
-    Lanes.Data.Model::sync      = Lanes.Testing.syncSpy
-    Lanes.Data.Collection::sync = Lanes.Testing.syncSpy
+    Lanes.Models.Base::sync       = Lanes.Testing.syncSpy
+    Lanes.Models.Collection::sync = Lanes.Testing.syncSpy
 
 

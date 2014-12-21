@@ -103,7 +103,7 @@ Lanes.Component.ModalDialog.extend(FinderDialog)
 class RecordFinder
     constructor: -> super
     template: 'record-finder/field'
-    templateData: -> { field_name: @record_query.initial_field }
+    templateModels: -> { field_name: @record_query.initial_field }
 
     events:
         "keyup .record-finder-query-string": "onKey"
@@ -115,7 +115,7 @@ class RecordFinder
         query_field: [ 'string', false, 'code' ]
 
     initialize:(options)->
-        @record_query = new Lanes.Data.Query(fields: options.fields, collection_class: options.query_using)
+        @record_query = new Lanes.Models.Query(fields: options.fields, collection_class: options.query_using)
 
     displayFinder: ->
         finder = new FinderDialog( title: @title, record_query: @record_query )
@@ -132,8 +132,8 @@ class RecordFinder
         qf=this.$('.record-finder-query-string')
         if 13 == ev.keyCode
             this.runQuery(ev)
-        else if qf.val().match( Lanes.Data.mixins.Lanes.sCodeField.INVALID )
-            qf.val( qf.val().replace( Lanes.Data.mixins.Lanes.sCodeField.INVALID, '' ) )
+        else if qf.val().match( Lanes.Models.mixins.Lanes.sCodeField.INVALID )
+            qf.val( qf.val().replace( Lanes.Models.mixins.Lanes.sCodeField.INVALID, '' ) )
 
     runQuery: (ev)->
         code = this.$(ev.target).val()
