@@ -205,7 +205,7 @@ class BaseModel
         this
 
     where: (query,options)->
-        collection = new @CollectionType
+        collection = new @constructor.Collection
         collection.fetch( _.extend({query: query}, options) )
         collection
 
@@ -309,11 +309,11 @@ class BaseModel
         if klass::associations
             klass::associations = new AssocationMap(klass) 
 
-        unless klass::CollectionType
+        unless klass.Collection
             class DefaultCollection
                 constructor: -> super
                 model: klass
-            klass::CollectionType = Lanes.Models.Collection.extend(DefaultCollection)
+            klass.Collection = Lanes.Models.Collection.extend(DefaultCollection)
 
 Lanes.Models.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BaseModel )
 
@@ -322,7 +322,7 @@ Lanes.Models.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BaseM
 # ------------------------------------------------------------------ #
 # The BasicModel is just a very thin layer over State                #
 # ------------------------------------------------------------------ #
-class BasicModel                #
+class BasicModel
     constructor: -> super
     isPersistent: -> false
     isModel: true

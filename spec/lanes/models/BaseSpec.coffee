@@ -111,9 +111,9 @@ describe "Base Model Suite", ->
         expect(options).toHaveTrue('ignoreUnsaved')
         expect(options).toHaveNumberWithinRange('limit',1,1)
 
-    it "creates a CollectionType property", ->
+    it "creates a Collection property", ->
         model = makeModel({})
-        expect(model.CollectionType::model).toEqual(Model)
+        expect(Model.Collection::model).toEqual(Model)
     
     it "loads using where", ->
         model = makeModel({
