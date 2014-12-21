@@ -1,7 +1,7 @@
-class <%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_parent %>
+class <%= namespace.camelize %>.Models.<%= class_name %> extends <%= client_parent %>
 
     api_path: '<%= name.downcase.pluralize.underscore.dasherize %>'
-    source: FILE
+    FILE: FILE
 
     props:
 <% fields.each do |field| -%>
@@ -15,6 +15,6 @@ class <%= namespace.camelize %>.Data.<%= class_name %> extends <%= client_parent
 
     associations:
 <% reference_fields.each do |field| -%>
-        <%= sprintf("%-#{max_field_length}s ",field.name) %>: { <%= field.belongs_to? ? 'model' : 'collection' -%>: "Lanes.<%= namespace.camelize %>.<%= field.name.camelize %>" }
+        <%= sprintf("%-#{max_field_length}s ",field.name) %>: { <%= field.belongs_to? ? 'model' : 'collection' -%>: "<%= namespace.camelize %>.<%= field.name.camelize %>" }
 <% end -%>
 <% end -%>
