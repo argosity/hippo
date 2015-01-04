@@ -1,4 +1,3 @@
-
 # a simple reimplentation
 # to use traffic cop
 methodMap = {
@@ -47,12 +46,17 @@ Lanes.Models.Sync = {
             options.rejectPromise  = reject
         )
         options.error = (reply, resp, req)->
-            options.rejectPromise( this.copyServerResp(record,resp.responseJSON || {error: resp.responseText}) )
+            options.rejectPromise(
+                this.copyServerResp(record,resp.responseJSON || {error: resp.responseText})
+            )
+            delete record.requestInProgress
             error?.apply(options.scope, arguments)
 
-        options.success = (reply,resp,req)->
+        options.success = (reply, resp, req)->
             record.setFromServer( reply.data, options ) if reply?.data?
+            record.trigger("sync", record, reply, req)
             options.resolvePromise( Lanes.Models.Sync.copyServerReply(record,reply) )
+            delete record.requestInProgress
             success?.apply(options.scope, arguments)
         options
 
@@ -81,6 +85,7 @@ Lanes.Models.Sync = {
 
         # Make the request, allowing the user to override any Ajax options.
         xhr = options.xhr = Lanes.$.ajax(_.extend(params, options))
-        model.trigger "request", model, xhr, options
+        record.requestInProgress = true
+        model.trigger("request", model, xhr, options)
         xhr
 }
