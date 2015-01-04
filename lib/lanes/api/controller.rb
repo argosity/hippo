@@ -148,12 +148,11 @@ module Lanes
                 if options[:total_count]
                     json[:total] = options.delete(:total_count)
                 end
-                json.merge!({
-                                :success => success,
-                                :message => options[:messsage] || json_status_str(query, type.to_s.capitalize, success),
-                                :data    => success ? records_for_reply(query, options) : []
-                            })
-                return json
+                json.merge(
+                  success: success,
+                  message: options[:messsage] || json_status_str(query, type.to_s.capitalize, success),
+                  data:    success ? records_for_reply(query, options) : []
+                )
             end
 
 
@@ -327,5 +326,4 @@ module Lanes
 
         end
     end
-
 end
