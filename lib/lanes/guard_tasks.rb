@@ -23,7 +23,7 @@ module Lanes
 
             jasmine_options = options.merge({
                 port: 8888, server_mount: '/spec', server_env: 'test', server: :puma,
-                spec_dir: 'spec/client', console: :always, debug: false
+                spec_dir: "spec/#{app_name}", console: :always, debug: false
             })
 
             dsl.guard :jasmine, jasmine_options do
