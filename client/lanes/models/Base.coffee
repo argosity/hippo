@@ -1,4 +1,3 @@
-
 # ------------------------------------------------------------------ #
 # The ModelChangeMonitor watches for changes on the                  #
 # Model and remembers which attributes have been changed             #
@@ -58,7 +57,7 @@ class AssocationMap
             target_klass ||= findAssociationClass() # it might not have been present previously
             record = target_klass.findOrCreate(args)
             record.parent = this
-            record        
+            record
         { deps: [definition.fk], fn: createAssocation }
 
     # Sets the assocations for "model"
@@ -157,7 +156,7 @@ class BaseModel
              base += "/"
         return base + encodeURIComponent(this.getId())
 
-    
+
     # A record is considered loaded if it has the id set and some attributes set
     isLoaded: ->
         !this.isNew() && !_.isEmpty( _.omit(this.attributes,this.idAttribute) )
@@ -184,19 +183,13 @@ class BaseModel
     # Searches the PubSub idenity map for a record of the same type and matching id
     # If one is found, it will update it with the given attributes and return it
     # When not found, it will create a new record and return it.
-    # The newly created record will not be stored, in PubSub map, only records bound to a view are stored
+    # The newly created record will not be stored in the PubSub map,
+    # as only records bound to a view are stored there
     @findOrCreate: (attrs, options={})->
         if attrs.id && ( record = Lanes.Models.PubSub.instanceFor(this, attrs.id) )
             record.set(attrs)
         else
             new this(attrs,options)
-
-    # Fetch a single record using an ID and the query options
-    @fetch: (id, options={})->
-        record = new this()
-        if _.isNumber(id)
-            record.id = id
-        record.fetch(options)
 
     # Calls Ampersand State's set method, then sets any associations that are present as well
     set: (attrs,options)->
@@ -204,10 +197,14 @@ class BaseModel
         this.associations.set(this,attrs) if this.associations
         this
 
-    where: (query,options)->
-        collection = new @constructor.Collection
-        collection.fetch( _.extend({query: query}, options) )
-        collection
+    # Loads records from the server that match query, returns a collection
+    @where: (query, options)->
+        this.Collection.fetch( _.extend({query: query}, options) )
+
+    # Load a single record using an ID and the query options
+    @fetchById: (id, options={})->
+        record = new this(id: id)
+        record.fetch(options)
 
     # Sets the attribute data from a server respose
     setFromServer: (data,options)->
@@ -227,7 +224,7 @@ class BaseModel
             'create'
         else
             if options.saveAll then 'update' else 'patch'
-        
+
         sync = this.sync(method, this, options);
 
         handlers.promise
@@ -260,7 +257,7 @@ class BaseModel
         handlers.promise
 
     # returns any attributes that have been set and not saved
-    unsavedModels: ->
+    unsavedAttributes: ->
         attrs = if this.isNew() then {} else { id: this.getId() }
         _.extend(attrs, _.pick( this.getAttributes(props:true, true),
             @changeMonitor.changedAttributes() ) )
@@ -272,7 +269,7 @@ class BaseModel
         if options.saveAll
             data = this.getAttributes(props:true, true)
         else
-            data = this.unsavedModels()
+            data = this.unsavedAttributes()
         _.extend(data, this.associations.dataForSave(this, options)) if this.associations
         data
 
@@ -307,7 +304,7 @@ class BaseModel
         klass::session['updated_at'] ||= 'date'
 
         if klass::associations
-            klass::associations = new AssocationMap(klass) 
+            klass::associations = new AssocationMap(klass)
 
         unless klass.Collection
             class DefaultCollection
