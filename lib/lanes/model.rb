@@ -8,11 +8,6 @@ module Lanes
 
         include Concerns::PubSub
         include Concerns::ApiAttributeAccess
-        include Concerns::LockedFields
-        include Concerns::CodeIdentifier
-        include Concerns::RandomHashCode
-        include Concerns::VisibleIdIdentifier
-        include Concerns::ImmutableModel
         include Concerns::ExportMethods
         include Concerns::ExportScope
         include Concerns::ExportAssociations
