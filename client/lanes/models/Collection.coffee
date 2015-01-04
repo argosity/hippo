@@ -10,6 +10,9 @@ CommonMethods = {
             break if found != -1
         found
 
+    # convenience method to create a new subCollection
+    subcollection: (options)->
+        new Lanes.Models.SubCollection(this, options)
 
     destroyAll: (options={})->
         success = options.success
@@ -21,7 +24,6 @@ CommonMethods = {
                 success.apply(@,arguments) if success
         })
         Lanes.Models.Sync.perform('delete', this, options)
-
 }
 
 class ModelsCollection
@@ -31,56 +33,66 @@ class ModelsCollection
         @errors=[]
         Lanes.Vendor.Ampersand.Collection.apply(this, arguments)
 
+    # convenience method to instantiate a collection
+    # then call fetch on it with the options provided
     @fetch: (options)->
         collection = new this
         collection.fetch(options)
         collection
-        
+
+    # Fetch the a set of models for the collection, replacing all
+    # current models whith them when the call completes
     fetch: (options={})->
-        @_isLoaded = true
-        Lanes.Models.Sync.wrapRequest(this,options)
-        return this.sync('read', this, options)
+        handlers = Lanes.Models.Sync.wrapRequest(this,options)
+        if options.force || !@_isLoaded
+            this.sync('read', this, options)
+        else
+            handlers.resolvePromise( record: this, reply: {} )
+        handlers.promise
+
+    # Call the callback function when the current fetch succeeds
+    # If the collection is not currently being loaded,
+    # the callback is immediatly invoked
+    whenLoaded: (cb)->
+        if this.requestInProgress
+            cb(this)
+        else
+            this._loaded_callbacks ||= []
+            this._loaded_callbacks.push(cb)
+        this
 
     # Sets the attribute data from a server respose
     setFromServer: (data, options)->
+        @_isLoaded = true
         method = if options.reset then 'reset' else 'set'
         this[method](data, options)
-        this.trigger('sync', this, data, options)
+        if this._loaded_callbacks
+            cb(this) for cb in this._loaded_callbacks
+            delete this._loaded_callbacks
 
-    isLoaded:->
-        @_isLoaded
+    isLoaded:-> @_isLoaded
 
-    ensureLoaded: ( callback )->
-        if ! @_isLoaded && ! this.length
-            this.fetch({ success: callback })
-        else if callback
-            callback()
-
+    # true if any models have unsaved data
     isDirty: ->
         for model in @models
             return true if model.isDirty()
         false
 
-    parse:(resp)->
-        resp['data']
-
-    viewJSON: (options)->
-        this.map( (model) ->
-            model.viewJSON(options)
-        )
-
-    url: ->
-        @model::urlRoot()
+    url: -> @model::urlRoot()
 
     sync: Lanes.Models.Sync.perform
 
     save: (options)->
         Lanes.Models.Sync.perform('update', this, options)
 
+    # returns data to save to server.  If options.saveAll is true,
+    # all attributes from all models data is returned.
+    # Otherwise only unsaved attributes are returned.
     dataForSave: (options)->
         unsaved = []
         for model in @models
-            unsaved.push( model.unsavedModels() ) if model.isDirty()
+            if options.saveAll || model.isDirty()
+                unsaved.push( model.dataForSave(options) )
         unsaved
 
     _prepareModel: (attrs, options={})->
