@@ -1,20 +1,8 @@
-
-
-describe "BaseView Suite", ->
-    View = undefined
-    makeView = (props,args={})->
-        _.extend(View.prototype, props)
-        Lanes.Views.Base.extend(View)
-        return new View(args)
-
-    beforeEach ->
-        class TestView
-            constructor: -> super
-        View = TestView
+describe "Lanes.Views.Base", ->
 
     it "fires el change on render", ->
         spy = jasmine.createSpy()
-        view = makeView({
+        view = Lanes.Test.makeView({
             template: "<p>hi</p"
         })
         view.on("change:el", spy)
@@ -22,7 +10,7 @@ describe "BaseView Suite", ->
         expect(spy).toHaveBeenCalled()
 
     it "renders a template string", ->
-        view = makeView({
+        view = Lanes.Test.makeView({
             template: "<p>hi</p"
         })
         expect(view.template).toEqual "<p>hi</p"
@@ -33,7 +21,7 @@ describe "BaseView Suite", ->
     it "listens to events", ->
         spy = jasmine.createSpy('onClick')
         el = _.el( 'div',{id: 'testdiv'} )
-        view = makeView({
+        view = Lanes.Test.makeView({
             events: { "click #mylink": 'onClick' }
             template: "<div>text,text,text<a id='mylink'>click me</a>mor text</div>"
             onClick: spy
@@ -44,8 +32,8 @@ describe "BaseView Suite", ->
         expect(spy).toHaveBeenCalledWith(jasmine.any(Object),22)
 
     it "updates from bindings", ->
-        model = new Lanes.Testing.Model({ name: "Bob" })
-        view = makeView({
+        model = new Lanes.Test.DummyModel({ name: "Bob" })
+        view = Lanes.Test.makeView({
             bindings: {
                 "model.name": { hook: 'link' }
                 "model.url":  { type:'attribute', name: 'href', hook: 'link' }
@@ -65,8 +53,8 @@ describe "BaseView Suite", ->
             constructor: -> super
             session: { answer: 'string' }
         Lanes.Views.Base.extend(LowerView)
-        model = new Lanes.Testing.Model
-        view = makeView({
+        model = new Lanes.Test.DummyModel
+        view = Lanes.Test.makeView({
             subviews:
                 lower:
                     hook: 'lower'
@@ -88,8 +76,8 @@ describe "BaseView Suite", ->
             constructor: -> super
             bindings: { "model.name": { type: "text" } }
         Lanes.Views.Base.extend(LowerView)
-        collection = new Lanes.Testing.Collection
-        view = makeView({
+        collection = new Lanes.Test.DummyModel.Collection
+        view = Lanes.Test.makeView({
             subviews:
                 lower:
                     hook: 'lower'
@@ -105,7 +93,7 @@ describe "BaseView Suite", ->
 
     it "caches elements in ui", ->
         spy = jasmine.createSpy('onClick')
-        view = makeView({
+        view = Lanes.Test.makeView({
             ui:
                 link: '#linky'
             events:
@@ -121,8 +109,8 @@ describe "BaseView Suite", ->
     it "invokes model events", ->
         nameSpy = jasmine.createSpy()
         urlSpy  = jasmine.createSpy()
-        model   = new Lanes.Testing.Model
-        view = makeView({
+        model   = new Lanes.Test.DummyModel
+        view = Lanes.Test.makeView({
             modelEvents:
                 'change:name': nameSpy
                 'change:url' : 'onURLChange'
@@ -135,12 +123,12 @@ describe "BaseView Suite", ->
 
     it "invokes collection events", ->
         eventSpy = jasmine.createSpy('event')
-        view = makeView({
+        view = Lanes.Test.makeView({
             collectionEvents:
                 all: 'onEvent'
             onEvent: eventSpy
-            initialize: -> this.collection = new Lanes.Testing.Collection
+            initialize: -> this.collection = new Lanes.Test.DummyModel.Collection
         })
         expect(eventSpy).not.toHaveBeenCalled()
-        view.collection.add(new Lanes.Testing.Model)
+        view.collection.add(new Lanes.Test.DummyModel)
         expect(eventSpy).toHaveBeenCalled()

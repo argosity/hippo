@@ -1,17 +1,15 @@
-Lanes.namespace 'Testing'
+Lanes.namespace 'Test'
 
-class Lanes.Testing.View extends Lanes.Views.Base
+View       = undefined
+Model      = undefined
+Collection = undefined
+
+class Lanes.Test.DummyView extends Lanes.Views.Base
     template: "<p>hi</p"
     events: { "click #mylink": 'onClick' }
     onClick: Lanes.emptyFn
 
-Lanes.Vendor.MessageBus = {
-    subscribe:   jasmine.createSpy('subscribe')
-    unsubscribe: jasmine.createSpy('unsubscribe')
-    start: Lanes.emptyFn
-}
-    
-class Lanes.Testing.Model extends Lanes.Models.Base
+class Lanes.Test.DummyModel extends Lanes.Models.Base
     api_path: "test"
     props:
         id: 'number',
@@ -29,23 +27,49 @@ class Lanes.Testing.Model extends Lanes.Models.Base
             deps: ['something', 'fireDanger', 'active'],
             fn: -> this.something + this.active;
 
-class Lanes.Testing.Collection extends Lanes.Models.Collection
-    model: Lanes.Testing.Model
+Lanes.Test.makeModel = (props={}, args={})->
+    _.extend(Model.prototype, props)
+    Lanes.Models.Base.extend(Model)
+    Collection::model = Model
+    Lanes.Models.Collection.extend(Collection)
+    collection = new Collection
+    return collection.add(new Model(args))
 
-syncResponse = (method,model,options)->
-    if options.success && syncReply.success
-        options.success(model, syncReply, {})
-    if options.failure && !syncReply.success
-        options.failure(model, syncReply, {})
-    _.Promise.resolve(model,options)
+Lanes.Test.makeView = (props={}, args={})->
+    _.extend(View.prototype, props)
+    Lanes.Views.Base.extend(View)
+    return new View(args)
+
+syncResponse = (method, model, options)->
+    _.defer ->
+        if options.success && syncReply.success
+            options.success(syncReply, "success", {})
+        if options.failure && !syncReply.success
+            options.failure(syncReply, "failure", {})
+        _.Promise.resolve(model, options)
 
 syncReply = {}
+
+Lanes.Vendor.MessageBus = {
+    subscribe:   jasmine.createSpy('subscribe')
+    unsubscribe: jasmine.createSpy('unsubscribe')
+    start: Lanes.emptyFn
+}
 
 window.syncSucceedWith = (data)->
     syncReply.success = true
     syncReply.data = data
-    
+
 beforeEach ->
+    class TestModel
+        constructor: -> super
+    Model = TestModel
+    class TestCollection
+        constructor: -> super
+    Collection = TestCollection
+    class TestView
+        constructor: -> super
+    View = TestView
 
     syncReply = {
         success: true
@@ -53,10 +77,10 @@ beforeEach ->
         data: {}
     }
     
-    Lanes.Testing.syncSpy = jasmine.createSpy('sync').and.callFake(syncResponse)
-    Lanes.Testing.syncSpy.lastOptions = ->
+    Lanes.Test.syncSpy = jasmine.createSpy('sync').and.callFake(syncResponse)
+    Lanes.Test.syncSpy.lastOptions = ->
         this.calls.mostRecent().args[2]
-    Lanes.Models.Base::sync       = Lanes.Testing.syncSpy
-    Lanes.Models.Collection::sync = Lanes.Testing.syncSpy
+    Lanes.Models.Base::sync       = Lanes.Test.syncSpy
+    Lanes.Models.Collection::sync = Lanes.Test.syncSpy
 
 

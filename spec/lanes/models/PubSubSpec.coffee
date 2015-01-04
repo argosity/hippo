@@ -1,9 +1,9 @@
 
-describe "PubSub Suite", ->
+describe "Lanes.Model.PubSub", ->
         
     it "checks in/out a model when it binds to a view", ->
-        view  = new Lanes.Testing.View
-        model = new Lanes.Testing.Model(id:1)
+        view  = new Lanes.Test.DummyView
+        model = new Lanes.Test.DummyModel(id:1)
         spyOn(Lanes.Models.PubSub,'add').and.callThrough()
         spyOn(Lanes.Models.PubSub,'remove')
         view.model = model
@@ -14,8 +14,8 @@ describe "PubSub Suite", ->
         expect(Lanes.Models.PubSub.remove).toHaveBeenCalledWith(model)
 
     it "can retrieve a model after checkin", ->
-        model = new Lanes.Testing.Model(id: 11, name:'bar')
+        model = new Lanes.Test.DummyModel(id: 11, name:'bar')
         Lanes.Models.PubSub.add(model)
-        checkin = Lanes.Models.PubSub.instanceFor(Lanes.Testing.Model, 11)
+        checkin = Lanes.Models.PubSub.instanceFor(Lanes.Test.DummyModel, 11)
         expect(checkin).toEqual(model)
         

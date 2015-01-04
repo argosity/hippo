@@ -1,31 +1,31 @@
 
-describe "Base Model Suite", ->
-    Model = undefined
-    Collection = undefined
+describe "Lanes.Models.Base", ->
+    # Model = undefined
+    # Collection = undefined
     class Color
         constructor: -> super
         props: { id: 'integer', rgb: 'string' }
     Lanes.Models.Base.extend(Color)
 
-    makeModel = (props,args={})->
-        _.extend(Model.prototype, props)
-        Lanes.Models.Base.extend(Model)
-        Collection::model = Model
-        Lanes.Models.Collection.extend(Collection)
-        collection = new Collection
-        return collection.add(new Model(args))
+    # makeModel = (props,args={})->
+    #     _.extend(Model.prototype, props)
+    #     Lanes.Models.Base.extend(Model)
+    #     Collection::model = Model
+    #     Lanes.Models.Collection.extend(Collection)
+    #     collection = new Collection
+    #     return collection.add(new Model(args))
 
-    beforeEach ->
-        class TestModel
-            constructor: -> super
-        Model = TestModel
-        class TestCollection
-            constructor: -> super
-        Collection = TestCollection
+    # beforeEach ->
+    #     class TestModel
+    #         constructor: -> super
+    #     Model = TestModel
+    #     class TestCollection
+    #         constructor: -> super
+    #     Collection = TestCollection
 
         
     it "tracks unsaved attributes", ->
-        model = makeModel({
+        model = Lanes.Test.makeModel({
             session:
                 foo: 'string'
                 bar: 'integer'
@@ -35,13 +35,13 @@ describe "Base Model Suite", ->
         expect(model.isDirty()).toBeFalse()
         model.foo = 'baz' # session prop
         expect(model.isDirty()).toBeFalse()
-        expect(model.unsavedModels()).toBeEmptyObject()
+        expect(model.unsavedAttributes()).toBeEmptyObject()
         model.set( saved: 'true' )
         expect(model.isDirty()).toBeTrue()
 
         
     it "can tell if it has attributes", ->
-        model = makeModel({
+        model = Lanes.Test.makeModel({
             session:
                 foo: 'string'
             props:
@@ -53,7 +53,7 @@ describe "Base Model Suite", ->
 
     it "provides data for saving", ->
         # model with other types of data, but should only save "props"
-        model = makeModel({
+        model = Lanes.Test.makeModel({
             associations:
                 color:{ model: Color }
             session:
@@ -74,8 +74,8 @@ describe "Base Model Suite", ->
         a=model.changeMonitor.changedAttributes()
         expect( model.dataForSave() ).toEqual( id: 10, foo: 'a value', color: { rgb: '99FFFF' } )
 
-    it "can be saved", ->
-        model = makeModel({
+    it "can be saved", (done)->
+        model = Lanes.Test.makeModel({
             props:
                 id: 'integer'
                 foo: 'string'
@@ -83,7 +83,7 @@ describe "Base Model Suite", ->
                 
         }, { foo: 'one, two, three'} )
         expect(model.isDirty()).toBeTrue()
-        expect(model.unsavedModels()).toEqual( foo: 'one, two, three' )
+        expect(model.unsavedAttributes()).toEqual( foo: 'one, two, three' )
         model.save()
         expect(model.sync).toHaveBeenCalledWith('create', model, jasmine.any(Object))
         model.id=11
@@ -92,56 +92,57 @@ describe "Base Model Suite", ->
         syncSucceedWith({
             foo: 'a new foo value'
         })
-        model.save()
-        expect(model.sync).toHaveBeenCalledWith('patch', model, jasmine.any(Object))
-        expect(model.foo).toEqual('a new foo value')
-
-    it "can be fetched",->
-        model = makeModel({
+        model.save().then ->
+            expect(model.sync).toHaveBeenCalledWith('patch', model, jasmine.any(Object))
+            expect(model.foo).toEqual('a new foo value')
+            done()
+            
+    it "can be fetched", (done)->
+        model = Lanes.Test.makeModel({
             props:
                 { id: 'integer', foo: 'string' }
         })
         syncSucceedWith({
             foo: 'foo value'
         })
-        model.fetch()
-        expect(model.sync).toHaveBeenCalledWith('read', model, jasmine.any(Object))
-        expect(model.foo).toEqual('foo value')
-        options = model.sync.lastOptions()
-        expect(options).toHaveTrue('ignoreUnsaved')
-        expect(options).toHaveNumberWithinRange('limit',1,1)
+        model.fetch().then ->
+            expect(model.sync).toHaveBeenCalledWith('read', model, jasmine.any(Object))
+            expect(model.foo).toEqual('foo value')
+            options = model.sync.lastOptions()
+            expect(options).toHaveTrue('ignoreUnsaved')
+            expect(options).toHaveNumberWithinRange('limit',1,1)
+            done()
 
     it "creates a Collection property", ->
-        model = makeModel({})
+        Model = Lanes.Test.DummyModel
         expect(Model.Collection::model).toEqual(Model)
     
-    it "loads using where", ->
-        model = makeModel({
-            props:
-                { id: 'integer', title: 'string' }
-        })
+    it "loads using where", (done)->
+        Model = Lanes.Test.DummyModel
         syncSucceedWith([
-            { id: 1, title: 'first value' }
+            { id: 1, title: 'first value'  }
             { id: 2, title: 'second value' }
         ])
-        collection = model.where(title: 'first value')
-        options = model.sync.lastOptions()
-        expect(options.query).toEqual({title:'first value'})
-        expect(collection.length).toEqual(2)
+        Model.where(title: 'first value').whenLoaded (collection)->
+            options = Model::sync.lastOptions()
+            expect(options.query).toEqual({title:'first value'})
+            expect(collection.length).toEqual(2)
+            done()
 
-    it "can be destroyed", ->
-        model = makeModel({
+    it "can be destroyed", (done)->
+        model = Lanes.Test.makeModel({
             props: { id: 'integer' }
         },{ id: 1 })
         collection = model.collection
         expect(collection.length).toEqual(1)
-        model.destroy()
-        expect(model.sync)
-            .toHaveBeenCalledWith('delete', model, jasmine.any(Object))
-        expect(collection.length).toEqual(0)
+        model.destroy().then ->
+            expect(model.sync)
+                .toHaveBeenCalledWith('delete', model, jasmine.any(Object))
+            expect(collection.length).toEqual(0)
+            done()
 
     it "sets associations", ->
-        model = makeModel({
+        model = Lanes.Test.makeModel({
             associations:
                 color:{ model: Color }
             props: { id: 'integer', foo: 'string' }
@@ -149,11 +150,11 @@ describe "Base Model Suite", ->
         expect(model.color).toBeObject()
         model.set(color: { rgb: '99FFFF' })
         expect(model.color.rgb).toEqual('99FFFF')
-        model.setFromResponse(color:{ rgb: 'FFA500' })
+        model.setFromServer(color:{ rgb: 'FFA500' })
         expect(model.color.rgb).toEqual('FFA500')
 
     it "can fetch associations", ->
-        model = makeModel({
+        model = Lanes.Test.makeModel({
             associations:
                 color:{ model: Color }
             props: { id: 'integer', foo: 'string' }
