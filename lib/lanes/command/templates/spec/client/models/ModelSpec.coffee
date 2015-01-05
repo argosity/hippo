@@ -1,4 +1,4 @@
-describe "<%= class_name %> Model Suite", ->
+describe "<%= namespace.camelize %>.Models.<%= class_name %>", ->
 
     it "can be instantiated", ->
         model = new <%= namespace.camelize %>.Models.<%= class_name %>()

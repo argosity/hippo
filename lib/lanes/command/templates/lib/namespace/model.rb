@@ -1,6 +1,6 @@
 module <%= namespace.camelize %>
 
-    class <%= class_name %> < <%= options[:parent] %>
+    class <%= class_name %> < Model
 
     end
 

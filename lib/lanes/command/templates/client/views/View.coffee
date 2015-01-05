@@ -1,4 +1,4 @@
-class <%= namespace.classify %>.Views.<%= class_name %> extends Lanes.Views.Base
+class <%= namespace.classify %>.Views.<%= class_name %> extends <%= namespace.classify %>.Views.Base
 
     FILE: FILE
 

@@ -1,4 +1,4 @@
-class <%= namespace.camelize %>.Models.<%= class_name %> extends <%= client_parent %>
+class <%= namespace.camelize %>.Models.<%= class_name %> extends <%= namespace.camelize %>.Models.Base
 
     api_path: '<%= name.downcase.pluralize.underscore.dasherize %>'
     FILE: FILE

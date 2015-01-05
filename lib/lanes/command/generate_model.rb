@@ -28,7 +28,8 @@ module Lanes
             end
 
             def create_migration
-                migration = exising_migration || Time.now.utc.strftime("%Y%m%d%H%M%S") + "_create_#{table_name}.rb"
+                migration = exising_migration ||
+                  Time.now.utc.strftime("%Y%m%d%H%M%S") + "_create_#{table_name}.rb"
                 self.fields = fields.map{ |field| ModelAttribute.parse(field) }
                 template "db/create_table_migration.rb", "db/migrate/#{migration}"
             end
@@ -36,15 +37,16 @@ module Lanes
             def create_model
                 template "lib/namespace/model.rb", "lib/#{namespace}/#{file_name}.rb"
                 template "spec/namespace/model_spec.rb", "#{spec_dir}/#{file_name}.rb"
-                template "spec/fixtures/namespace/model.yml", "spec/fixtures/#{namespace}/#{file_name}.yml"
+                template "spec/fixtures/namespace/model.yml",
+                         "spec/fixtures/#{namespace}/#{file_name}.yml"
             end
 
             def create_client
                 self.fields.unshift ModelAttribute.parse("id:integer")
                 template "client/models/Model.coffee", \
-                  "#{client_dir}/models/#{class_name}.coffee"
+                         "#{client_dir}/models/#{class_name}.coffee"
                 template "spec/client/models/ModelSpec.coffee", \
-                  "#{spec_dir}/models/#{class_name}Spec.coffee"
+                         "#{spec_dir}/models/#{class_name}Spec.coffee"
             end
 
             def add_route
@@ -83,13 +85,13 @@ module Lanes
                 end
             end
 
-            def client_parent
-                if options[:parent] == 'Lanes::Model'
-                    "Lanes.Models.Base"
-                else
-                    "Lanes.#{namespace.camelize}.#{options[:parent]}"
-                end
-            end
+            # def client_parent
+            #     if options[:parent] == 'Lanes::Model'
+            #         "Lanes.Models.Base"
+            #     else
+            #         "#{namespace.camelize}.Models.#{options[:parent]}"
+            #     end
+            # end
 
             def max_field_length
                 @max_field_length ||= fields.map{|field|
