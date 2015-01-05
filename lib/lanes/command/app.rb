@@ -24,6 +24,7 @@ module Lanes
                 template "lib/namespace.rb", "lib/#{name}.rb"
                 template "lib/namespace/version.rb", "lib/#{name}/version.rb"
                 template "lib/namespace/extension.rb", "lib/#{name}/extension.rb"
+                template "lib/namespace/base_model.rb", "lib/#{name}/model.rb"
                 template "config/routes.rb"
                 template "config/lanes.rb"
                 template "gitignore",".gitignore"
@@ -34,18 +35,20 @@ module Lanes
             def create_client_files
                 self.class.source_root.join('client').children.each do | path |
                     next unless path.directory?
-                    empty_directory "#{client_dir}/#{path.basename}" 
+                    empty_directory "#{client_dir}/#{path.basename}"
                     create_file "#{client_dir}/#{path.basename}/.gitkeep"
                 end
+                template "client/models/BaseModel.coffee", "#{client_dir}/models/Base.coffee"
+                template "client/models/BaseView.coffee",  "#{client_dir}/views/Base.coffee"
                 template "client/index.js",         "#{client_dir}/index.js"
                 template "client/Extension.coffee", "#{client_dir}/Extension.coffee"
                 template "client/styles.scss",      "#{client_dir}/styles.scss"
             end
 
             def create_spec
-                
+
             end
-            
+
             def create_first_screen
                 invoke GenerateScreen, ["base"], title: name.titleize, namespace: name
             end

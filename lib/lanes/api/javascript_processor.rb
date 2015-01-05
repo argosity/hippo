@@ -29,11 +29,11 @@ module Lanes
                     ref = "(window.Lanes ? window.Lanes['#{ns}'] : null)"
                     "(function(Lanes, #{ns}, _, window, FILE, undefined)"\
                       "{\n#{js}\n})(window.Lanes,#{ref},window._, window,"\
-                      "{namespace:#{ref},extension:'#{ns}',file:'#{file}'});"
+                      "{namespace:#{ref},extensionName:'#{ns}',file:'#{file}'});"
                 else
                     "(function(Lanes, _, window, FILE, undefined)"\
                       "{\n#{js}\n})(window.Lanes,window._, window,"\
-                      "{namespace:window.Lanes,extension:'Lanes',file:'#{file}'});"
+                      "{namespace:window.Lanes,extensionName:'Lanes',file:'#{file}'});"
                 end
             end
 
