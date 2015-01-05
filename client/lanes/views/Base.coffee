@@ -138,18 +138,21 @@ class ViewBase
         bound();
 
     # Replaces the current root element with a newly created dom element
-    # 
+    #
     # Either define a `template` property of your view
     # or pass in a template directly.
     # The template can either be a string or a function.
     # If it's a function it will be passed the `context`
     # argument.
     renderWithTemplate: (templateArg)->
-        template = templateArg || this.resultsFor('template')
+        template = if templateArg
+            Lanes.Templates.render(this, templateArg)
+        else if this.template
+            this.template
+        else
+            Lanes.Templates.render(this, _.result(this, 'templateName'))
         throw new Error('Template string or function needed.') unless template
-        template_fn = Lanes.Templates.find(template, this.FILE.extension)
-        newDom = if template_fn then template_fn( _.result(this,'templateModels')) else template
-        newDom = Lanes.Vendor.domify(newDom) if _.isString(newDom);
+        newDom = Lanes.Vendor.domify(template)
         parent = this.el && this.el.parentNode;
         parent.replaceChild(newDom, this.el) if parent
         if newDom.nodeName == '#document-fragment'
@@ -159,10 +162,14 @@ class ViewBase
         this.el = newDom;
         return this;
 
-    templateName: -> _.underscore( this.FILE.file )
-        
-    template: ->
-        this.FILE.extension.toLowerCase() + "/views/" + _.result(this,'templateName')
+    templateName: ->
+        this.FILE.extensionName.toLowerCase() + "/views/" + _.underscore( this.FILE.file )
+
+    templateData: ->
+        { model: @model?.toJSON?(), collection: @collection?.toJSON?() }
+
+    # template: ->
+    #
 
     FILE: FILE
 

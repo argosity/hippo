@@ -8,6 +8,13 @@ Lanes.Templates.find = (name, namespace) ->
     else
         null
 
+Lanes.Templates.render = (view, name)->
+    template_fn = Lanes.Templates.find(name, view.FILE.extensionName)
+    if template_fn
+        template_fn( _.result(view,'templateData') )
+    else
+        null
+
 # scribbed from eco's compiler.coffee
 # we include the functions here rather than on every single template
 Lanes.Templates.Wrapper = {

@@ -9,14 +9,26 @@ describe "Lanes.Views.Base", ->
         view.render()
         expect(spy).toHaveBeenCalled()
 
+    it "renders a template file", ->
+        spy = jasmine.createSpy('view-test').and.callFake ->
+            "<p>a test</p>"
+        Lanes.Templates['view-test'] = spy
+
+        view = Lanes.Test.makeView({
+            templateName: "view-test"
+        }, { model: new Lanes.Test.DummyModel({name: 'foo'}) } )
+        view.render()
+        expect(spy).toHaveBeenCalledWith( model: { name: 'foo' }, collection: undefined )
+        expect(view.el.innerHTML).toEqual("a test")
+
     it "renders a template string", ->
         view = Lanes.Test.makeView({
-            template: "<p>hi</p"
+            template: "<p>hello test</p"
         })
-        expect(view.template).toEqual "<p>hi</p"
+        expect(view.template).toEqual "<p>hello test</p"
         view.render()
         expect(view.el.tagName).toEqual("P")
-        expect(view.el.innerHTML).toEqual("hi")
+        expect(view.el.innerHTML).toEqual("hello test")
 
     it "listens to events", ->
         spy = jasmine.createSpy('onClick')
