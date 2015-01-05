@@ -8,7 +8,7 @@ module Lanes
             # internally by commands to populate their long_desc
             # @param [String] basename of file to read usage from
             def usage_from_file(file)
-                Pathname.new(__FILE__).dirname.join("command","#{file}.usage").read
+                Pathname.new(__FILE__).dirname.join("command","#{file}.usage").read.gsub(/\n/,"\n\x5")
             end
 
             # Loads the code for the extension that the user is currently
@@ -19,7 +19,6 @@ module Lanes
             #
             # @return [Extension] extension that was loaded, nil if none was found
             def load_current_extension(raise_on_fail:false)
-                
                 previous = Extensions.all
                 ext = Dir.glob("./lib/*/extension.rb").first
                 if ext
