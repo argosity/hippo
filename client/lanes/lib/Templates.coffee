@@ -8,10 +8,10 @@ Lanes.Templates.find = (name, namespace) ->
     else
         null
 
-Lanes.Templates.render = (view, name)->
+Lanes.Templates.render = (view, name, data)->
     template_fn = Lanes.Templates.find(name, view.FILE.extensionName)
     if template_fn
-        template_fn( _.result(view,'templateData') )
+        template_fn( data )
     else
         null
 
