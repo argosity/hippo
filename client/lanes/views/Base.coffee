@@ -137,57 +137,42 @@ class ViewBase
         this.listenTo(object, events, bound)
         bound();
 
-    # Replaces the current root element with a newly created dom element
-    #
-    # Either define a `template` property of your view
-    # or pass in a template directly.
-    # The template can either be a string or a function.
-    # If it's a function it will be passed the `context`
-    # argument.
-    renderWithTemplate: (templateArg)->
-        template = if templateArg
-            Lanes.Templates.render(this, templateArg)
-        else if this.template
-            this.template
-        else
-            Lanes.Templates.render(this, _.result(this, 'templateName'))
-        throw new Error('Template string or function needed.') unless template
+    # Replaces the current root element with the contents of template
+    replaceEl: (template)->
         newDom = Lanes.Vendor.domify(template)
         parent = this.el && this.el.parentNode;
         parent.replaceChild(newDom, this.el) if parent
         if newDom.nodeName == '#document-fragment'
-            throw new Error('Views can only have one root element.')
+            throw new Error("View #{this.FILE.path} can only have one root element.")
         if newDom.nodeName == '#text'
-            throw new Error('Views must have a root element.')
+            throw new Error("View #{this.FILE.path} must have a root element.")
         this.el = newDom;
+        this.onRender?()
         return this;
 
-    templateName: ->
-        this.FILE.extensionName.toLowerCase() + "/views/" + _.underscore( this.FILE.file )
+    # Renders the results of calling method "name"
+    # to a string and returns it.
+    #
+    # The template can either be a string property or a function that returns a string.
+    renderTemplateMethod:(name="template",data)->
+        template = if this[name]
+            _.result(this, name)
+        else
+            data ||= _.result(this,"#{name}Data")
+            path = _.result(this,'templatePrefix') + _.result(this, "#{name}Name")
+            Lanes.Templates.render(this, path, data)
+        throw new Error("#{this.FILE.path} failed to render #{name}") unless template
+        template
+
+    templateName: -> _.underscore( this.FILE.path )
+
+    templatePrefix: -> this.FILE.extensionName.toLowerCase() + "/views/"
 
     templateData: ->
         { model: @model?.toJSON?(), collection: @collection?.toJSON?() }
 
-    # template: ->
-    #
 
     FILE: FILE
-
-    templateModels: ->
-        { model: this.model, collection: this.collection }
-
-    renderTemplate:(name,data={})->
-        template = Lanes.Templates.find(name, this.FILE.name)
-        if template
-            template(data)
-        else
-            Lanes.fatal( "Template #{name} doesn't exist!" )
-            ''
-
-    renderTemplateMethod: (method)->
-        return null unless name = _.result(this, method)
-        this.renderTemplate(name, _.result(this, "#{method}Models") || @model)
-
 
     # Remove this view by taking the element out of the DOM, and removing any
     # applicable events listeners.

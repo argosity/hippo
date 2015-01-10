@@ -15,6 +15,7 @@ describe "Lanes.Views.Base", ->
         Lanes.Templates['view-test'] = spy
 
         view = Lanes.Test.makeView({
+            templatePrefix: ''
             templateName: "view-test"
         }, { model: new Lanes.Test.DummyModel({name: 'foo'}) } )
         view.render()

@@ -16,8 +16,7 @@ class ScreenBase
 
     reset: Lanes.emptyFn
 
-    template: ->
-        this.FILE.extension.toLowerCase() + "/screens/" + _.underscore( this.FILE.file ) + "/layout";
+    templatePrefix: -> this.FILE.extensionName.toLowerCase() + "/screens/"
 
     render: ->
         previouslyRendered = this.rendered
