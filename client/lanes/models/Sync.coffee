@@ -45,16 +45,18 @@ Lanes.Models.Sync = {
             options.resolvePromise = resolve
             options.rejectPromise  = reject
         )
-        options.error = (reply, resp, req)->
+        options.error = (reply, status, req)->
             options.rejectPromise(
-                this.copyServerResp(record,resp.responseJSON || {error: resp.responseText})
+                Lanes.Models.Sync.copyServerReply( record,
+                    resp.responseJSON || {error: resp.responseText}
+                )
             )
             delete record.requestInProgress
             error?.apply(options.scope, arguments)
 
-        options.success = (reply, resp, req)->
+        options.success = (reply, status, req)->
             record.setFromServer( reply.data, options ) if reply?.data?
-            record.trigger("sync", record, reply, req)
+            record.trigger("sync", record, reply, status)
             options.resolvePromise( Lanes.Models.Sync.copyServerReply(record,reply) )
             delete record.requestInProgress
             success?.apply(options.scope, arguments)
@@ -85,7 +87,7 @@ Lanes.Models.Sync = {
 
         # Make the request, allowing the user to override any Ajax options.
         xhr = options.xhr = Lanes.$.ajax(_.extend(params, options))
-        record.requestInProgress = true
+        model.requestInProgress = true
         model.trigger("request", model, xhr, options)
         xhr
 }
