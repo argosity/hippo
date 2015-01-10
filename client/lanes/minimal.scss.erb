@@ -6,7 +6,7 @@
 <% end %>
 
 <% Lanes::Components.enabled_with_dependencies(self) do | component | %>
-  @import "components/<%= component %>/<%= component %>";
+  @import "lanes/components/<%= component %>/index";
 <% end %>
 
 }

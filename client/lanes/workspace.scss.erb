@@ -11,7 +11,7 @@
   @import "<%= ext.stylesheet_include %>";
 <% end %>
 <% Lanes::Components.enabled_with_dependencies(self) do | component | %>
-  @import "components/<%= component %>/<%= component %>";
+  @import "lanes/components/<%= component %>/index";
 <% end %>
   @import "styles/plugins/all";
   @import "styles/layout";
@@ -22,3 +22,8 @@
   @import "styles/forms";
   @import "styles/keybindings";
 }
+<% if !Lanes.config.initial_workspace_screen_id.blank? &&
+      screen = Lanes::Screen[Lanes.config.initial_workspace_screen_id]
+%>
+  @import "<%= screen.css.remove(/\.css$/) + "/index.scss" %>"
+<% end %>
