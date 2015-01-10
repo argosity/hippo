@@ -22,11 +22,11 @@ class Lanes.Screens.Instance
         this.root.tooltip({
             viewport: '.lanes'
             selector: '[data-tooltip-message]'
-            title: => @getAttribute('data-tooltip-message')
+            title: -> this.getAttribute('data-tooltip-message')
         });
         Lanes.Views.Keys.initialize();
         Lanes.Models.PubSub.initialize() if options.pub_sub;
-        
+
         view = Lanes.getPath(options.root_view);
         if view
             this.displayInitialView(view);
@@ -45,8 +45,5 @@ class Lanes.Screens.Instance
     displayInitialView:(view)->
         this.view = new view({parent: this, model: this.viewport}).render();
         this.viewport.el = this.view.$el;
-
         this.root.append( this.view.el );
         Lanes.Extensions.fireOnAvailable(this);
-
-
