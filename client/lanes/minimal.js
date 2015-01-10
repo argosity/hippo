@@ -5,7 +5,7 @@
 //= require ./models
 //= require ./plugins
 //= require ./views
-//= require ./screens
 //= require ./components/Base
 //= require ./components/enabled
 //= require ./extension/LateLoaded
+//= require ./screens
