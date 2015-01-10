@@ -4,8 +4,6 @@ class BaseComponent
         super
         @access ||= this.calculate_access()
 
-    namespace: "Components"
-
     session:
         access:
             type: 'string',
@@ -15,17 +13,21 @@ class BaseComponent
         readOnly:  { deps: ['access'], fn:-> @access=='read' }
         writeAble: { deps: ['access'], fn:-> @access=='write' }
 
-    readTemplate:  -> @renderTemplateMethod('template')
-    writeTemplate: -> @renderTemplateMethod('template')
-    emptyTemplate: -> '<span></span>'
+    emptyTemplateName: -> this.writeTemplate()
+    readTemplateName:  -> this.writeTemplate()
+    writeTemplateName: -> 'lanes/views/empty-span'
 
-    template: ->
-        if this.writeAble
-            this.writeTemplate()
+    renderContextFree: ->
+        tmpl = if this.writeAble
+            'writeTemplate'
         else if this.readOnly
-            this.readTemplate()
+            'readTemplate'
         else
-            this.emptyTemplate()
+            'emptyTemplate'
+
+        this.replaceEl( this.renderTemplateMethod(tmpl) );
+
+    templatePrefix: -> this.FILE.extensionName.toLowerCase() + "/components/"
 
     calculate_access:->
         if ! @field_name || Lanes.Views.RenderContext.canWrite(@field_name)
@@ -34,6 +36,5 @@ class BaseComponent
             'read'
         else
             'none'
-
 
 Lanes.Components.Base = Lanes.Views.Base.extend(BaseComponent)
