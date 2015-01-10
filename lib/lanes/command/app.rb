@@ -40,7 +40,7 @@ module Lanes
                     create_file "#{client_dir}/#{path.basename}/.gitkeep"
                 end
                 template "client/models/BaseModel.coffee", "#{client_dir}/models/Base.coffee"
-                template "client/models/BaseView.coffee",  "#{client_dir}/views/Base.coffee"
+                template "client/views/BaseView.coffee",   "#{client_dir}/views/Base.coffee"
                 template "client/index.js",         "#{client_dir}/index.js"
                 template "client/Extension.coffee", "#{client_dir}/Extension.coffee"
                 template "client/styles.scss",      "#{client_dir}/styles.scss"
