@@ -26,14 +26,15 @@ module Lanes
                 # if the file is being loaded under the "lanes" directory
                 # it's not an extension
                 if ns && ns != "Lanes"
+                    ns = ns.underscore.camelize
                     ref = "(window.Lanes ? window.Lanes['#{ns}'] : null)"
                     "(function(Lanes, #{ns}, _, window, FILE, undefined)"\
                       "{\n#{js}\n})(window.Lanes,#{ref},window._, window,"\
-                      "{namespace:#{ref},extensionName:'#{ns}',file:'#{file}'});"
+                      "{namespace:#{ref},extensionName:'#{ns}',path:'#{file}'});"
                 else
                     "(function(Lanes, _, window, FILE, undefined)"\
                       "{\n#{js}\n})(window.Lanes,window._, window,"\
-                      "{namespace:window.Lanes,extensionName:'Lanes',file:'#{file}'});"
+                      "{namespace:window.Lanes,extensionName:'Lanes',path:'#{file}'});"
                 end
             end
 
