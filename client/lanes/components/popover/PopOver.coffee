@@ -26,7 +26,7 @@ class Lanes.Components.PopOver extends Lanes.Components.Base
             Lanes.warn "PopOver Template #{this.template} was not found"
 
     initialize: (options)->
-        template = Lanes.Templates.find('components/popover/template')({ className: options.className||'' })
+        template = Lanes.Templates.find('lanes/components/popover/template')({ className: options.className||'' })
         _.extend(options, this.options, {template: template, container: this.viewport?.root})
         this.target.popover(options).on("hide.bs.popover", _.bind(this._onHide, this) )
         this.show() if options.autoShow

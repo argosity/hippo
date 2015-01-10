@@ -1,2 +1,2 @@
-//= require vendor/bootstrap/popover
+//= require lanes/vendor/bootstrap/popover
 //= require_tree .

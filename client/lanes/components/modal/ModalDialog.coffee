@@ -17,7 +17,7 @@ class Lanes.Components.ModalDialog extends Lanes.Components.Base
         if show then this.show() else this.hide()
 
     template: ->
-        tmpl = Lanes.Templates.find('modal/template', this.namespace)
+        tmpl = Lanes.Templates.find('lanes/components/modal/template')
         tmpl({
             size    : @size  || 'lg'
             title   : @title || context.dialog_title

@@ -1,2 +1,2 @@
-//= require vendor/bootstrap/modal
+//= require lanes/vendor/bootstrap/modal
 //= require_tree .

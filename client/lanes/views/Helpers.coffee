@@ -15,7 +15,7 @@ impl = {
         this.markSafe(contents)
 
     template: (template,data)->
-        this.markSafe( Lanes.Templates.find('views/_'+template)(data) )
+        this.markSafe( Lanes.Templates.find('lanes/views/_'+template)(data) )
 
     markSafe: (str)->
         result = new String(str)
