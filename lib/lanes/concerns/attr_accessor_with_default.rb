@@ -41,16 +41,18 @@ module Lanes::Concerns
                     end
                 end
             end
+
             def attr_reader_with_default( name, default )
                 module_eval do
                     define_method( name ) do
                         class << self; self; end.class_eval do
                             attr_reader( name )
                         end
-                        if instance_variables.include? "@#{name}"
-                            instance_variable_get( "@#{name}" )
+                        instance_var = "@#{name.to_s}".to_sym
+                        if instance_variable_defined?(instance_var)
+                            instance_variable_get(instance_var)
                         else
-                            instance_variable_set( "@#{name}", default.is_a?(Proc) ? default.call : default )
+                            instance_variable_set(instance_var, default.is_a?(Proc) ? default.call : default )
                         end
                     end
                 end
