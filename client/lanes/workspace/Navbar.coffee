@@ -1,6 +1,10 @@
 class Lanes.Workspace.Navbar extends Lanes.Views.Base
 
-    template: 'workspace/navbar'
+    templateName: 'navbar'
+    FILE: FILE
+    mixins:[
+        Lanes.Workspace.WorkspaceView
+    ]
 
     events:
         'click .screens-menu-toggle': 'switchMenu'
@@ -9,7 +13,7 @@ class Lanes.Workspace.Navbar extends Lanes.Views.Base
     subviews:
         screens:
             hook: 'screens-container'
-            view: 'Lanes.Workspace.ActiveScreenSwitcher'
+            view: 'Workspace.ActiveScreenSwitcher'
             model: 'model'
 
     bindings:

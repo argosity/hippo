@@ -1,6 +1,10 @@
 class ScreenList extends Lanes.Views.Base
 
     template: "<li><a href='#'><span></span><i></i></a></li>"
+    FILE: FILE
+    mixins:[
+        Lanes.Workspace.WorkspaceView
+    ]
 
     events:
         click: 'displayScreen'
@@ -16,6 +20,10 @@ class ScreenList extends Lanes.Views.Base
 class ScreenGroup extends Lanes.Views.Base
 
     template: -> '<li class="group"><a href="#"><span></span><i></i></a><ul></ul></li>'
+    FILE: FILE
+    mixins:[
+        Lanes.Workspace.WorkspaceView
+    ]
     events:
         'click .group>a': 'toggleMenu'
 
@@ -42,8 +50,12 @@ class ScreenGroup extends Lanes.Views.Base
 
 class Lanes.Workspace.ScreensMenu extends Lanes.Views.Base
 
-    constructor: -> super
-    template: 'workspace/screens-menu'
+    templateName: 'screens-menu'
+    mixins:[
+        Lanes.Workspace.WorkspaceView
+    ]
+
+    FILE: FILE
 
     subviews:
         navigation:

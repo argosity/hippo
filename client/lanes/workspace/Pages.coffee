@@ -1,6 +1,10 @@
 class Lanes.Workspace.Pages extends Lanes.Views.Base
 
-    template: 'workspace/pages'
+    templateName: 'pages'
+    FILE: FILE
+    mixins:[
+        Lanes.Workspace.WorkspaceView
+    ]
 
     bindings:
         'model.screen_menu_size': { type: 'class' }

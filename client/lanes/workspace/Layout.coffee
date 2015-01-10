@@ -1,16 +1,19 @@
-
 class Lanes.Workspace.Layout extends Lanes.Views.Base
 
-    template: 'workspace/layout'
+    templateName: 'layout'
+    mixins:[
+        Lanes.Workspace.WorkspaceView
+    ]
+    FILE: FILE
 
     subviews:
         navbar:
             hook: 'navbar-container'
-            view: 'Lanes.Workspace.Navbar'
+            view: 'Workspace.Navbar'
 
         pages:
             hook: 'page-container'
-            view: 'Lanes.Workspace.Pages'
+            view: 'Workspace.Pages'
 
     subviewOptions: -> { model: this.model }
 

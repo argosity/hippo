@@ -1,6 +1,10 @@
 class TabView extends Lanes.Views.Base
 
     template: "<li><a data-toggle='tab'></a><span class='close'>×</span></li>"
+    FILE: FILE
+    mixins:[
+        Lanes.Workspace.WorkspaceView
+    ]
 
     bindings:
         'model.screen.title': { selector: 'a', type: 'text' }
@@ -22,7 +26,10 @@ TAB_PADDING = 0
 
 class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.Views.Base
 
-    template: 'workspace/screens-switcher'
+    templateName: 'screens-switcher'
+    mixins:[
+        Lanes.Workspace.WorkspaceView
+    ]
 
     key_scope: { name: 'nav', shortcut: '⌘+shift+t,ctrl+shift+t' }
     key_bindings:
