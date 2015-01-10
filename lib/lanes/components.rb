@@ -1,4 +1,3 @@
-require 'pry'
 module Lanes
 
     module Components
@@ -20,8 +19,10 @@ module Lanes
             # Requires the enabled components and all of their dependencies
             def enabled_with_dependencies(env, &block)
                 enabled do | component |
-                    depends = component_configuration(component, env.environment)['depends']
-                    depends.each{ |d| yield d } if depends
+                    config = component_configuration(component, env.environment)
+                    if config['depends']
+                        config['depends'].each{ |d| yield d }
+                    end
                     yield component
                 end
             end
@@ -30,7 +31,7 @@ module Lanes
             # @return Hash configuration for component, read from a config.json file in the components directory,
             # or an empty hash if no configuration is present
             def component_configuration(component, env)
-                if asset = env.find_asset("components/#{component}")
+                if asset = env.find_asset("lanes/components/#{component}")
                     config_file = asset.pathname.dirname.join("config.json")
                     if config_file.exist?
                         return Oj.load(config_file.read)
