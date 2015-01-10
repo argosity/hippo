@@ -10,6 +10,7 @@ class AttrAccessorWithDefaultTest < Lanes::TestCase
         attr_accessor_with_default :non_copying, ->{ "default string" }
         attr_accessor_with_default :shared, Shared.new('default')
         attr_accessor_with_default :non_shared, ->{ Shared.new('default') }
+        attr_accessor_with_default :startingnil
     end
 
     class Inherited<AttrTestClass
@@ -53,5 +54,11 @@ class AttrAccessorWithDefaultTest < Lanes::TestCase
         assert_equal "default", b.non_shared.value
     end
 
+    def test_nils
+        a = AttrTestClass.new
+        assert_nil a.startingnil
+        a.startingnil = 22
+        assert_equal 22, a.startingnil
+    end
 
 end
