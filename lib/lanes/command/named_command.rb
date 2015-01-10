@@ -18,8 +18,8 @@ module Lanes
             end
 
             def set_variables
-                @class_name = name.classify
-                @spec_dir =   "spec/#{namespace}"
+                @class_name = name.underscore.classify
+                @spec_dir   = "spec/#{namespace}"
                 @client_dir = "client/#{namespace}"
             end
 
