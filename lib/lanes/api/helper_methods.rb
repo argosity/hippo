@@ -10,7 +10,7 @@ module Lanes
             def lanes_stylesheet_tag
                 stylesheet_tag( Extensions.require_workspace? ? 'lanes/workspace' : 'lanes/minimal' )
             end
-            
+
             def client_bootstrap_data
                 Oj.dump(Extensions.client_bootstrap_data(self), mode: :compat)
             end
