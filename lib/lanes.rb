@@ -17,4 +17,4 @@ require_relative "lanes/model"
 
 require_relative "lanes/components"
 require_relative "lanes/extension"
-require_relative "lanes/screens"
+require_relative "lanes/screen"
