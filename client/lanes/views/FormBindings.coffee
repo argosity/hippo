@@ -1,22 +1,21 @@
 class Lanes.Views.FormBindings
 
-    constructor: (@view, @keypath, @selector)->
+    constructor: (@view, config={})->
         _.bindAll(this,'onFieldChange')
-        @selector = "#{@selector} " if @selector
-        @view.on( "change:el",          this.rebindForm,    this )
-        @view.on( "change:#{@keypath}", this.rebindModel,   this )
-        @view.on( "remove",             this.teardown,      this )
-        this.rebindModel( @view, @model() )
+        @selector = if config.selector then "#{config.selector} " else ""
+        @view.on( "change:el",     this.rebindForm,    this )
+        @view.on( "change:model",  this.rebindModel,   this )
+        @view.on( "remove",        this.teardown,      this )
+        this.rebindModel( @view, @view.model )
 
     onFieldChange: (ev)->
         el = Lanes.$(ev.target);
         name = el.attr('name');
-        m = this.model();
+        m = @view.model;
         return unless m.hasAttribute(name)
         val = el.val()
-
         el[0]._is_setting=true; m.set( name, val ); delete el[0]._is_setting
-        msg = m.validateFieldChange(name,val)
+        msg = m.checkValid(name,val)
         this.setError( el, msg )
 
     onAttributeUpdate: (model, opts={})->
@@ -24,7 +23,7 @@ class Lanes.Views.FormBindings
         if attributes['errors'] && ! _.isEmpty(attributes['errors'])
             for name, message of attributes['errors']
                 this.setError(Lanes.$(el),message) if el = this.getElement(name)
-        for name, _ of attributes
+        for name, _val of attributes
             el = this.getElement(name)
             this.setElValue(Lanes.$(el),model.get(name)) if el && ! el._is_setting
 
@@ -32,7 +31,8 @@ class Lanes.Views.FormBindings
         if el.attr('type')
             switch el.attr('type')
                 when 'radio'
-                    for input in Lanes.$(this.view.el).find("#{@selector}input[type=radio][name=#{el.attr('name')}]")
+                    selector="#{@selector}input[type=radio][name=#{el.attr('name')}]"
+                    for input in Lanes.$(this.view.el).find(selector)
                         input.checked = input.value == value
                 when 'checkbox'
                      el.prop('checked', !!value)
@@ -67,27 +67,29 @@ class Lanes.Views.FormBindings
         attrs
 
     fields: ->
-        @cached_fields ||= Lanes.$(@view.el).find("#{@selector}input, #{@selector}.ro-input.update")
+        @cached_fields ||= @view.el?.querySelectorAll("#{@selector}input, #{@selector}.ro-input.update")
 
     getElement: (name)->
-        _.find( this.fields(), (i)->i.getAttribute('name') == name )
+        return unless fields = this.fields()
+        for field in fields
+            return field if field.getAttribute('name') == name
+        null
 
     setAllFields: ->
-        this.onAttributeUpdate(this.model(), all: true)
-
-    model: ->
-        @cached_model ||= Lanes.getPath(@keypath, @view)
+        this.onAttributeUpdate(@view.model, all: true)
 
     rebindForm: (view, el)->
         input_selector = "#{@selector}input, #{@selector}select"
         if old_el = @view.changedAttributes()['el']
             Lanes.$(el).off("change", input_selector, this.onFieldChange )
         @cached_fields = null
-        Lanes.$(el).on("change",input_selector, this.onFieldChange )
+        if @view.model
+            this.setAllFields()
+        @view.$el.on("change", input_selector, this.onFieldChange )
 
     rebindModel: (view, model)->
         this.clearErrors()
-        if old_model = @view.changedAttributes()[@keypath]
+        if old_model = @view.changedAttributes()['model']
             old_model.off( "change", this.onAttributeUpdate )
         if model
             this.onAttributeUpdate(model, { all: true } )
@@ -95,4 +97,4 @@ class Lanes.Views.FormBindings
             model.on('change', this.onAttributeUpdate, this )
 
     teardown: ->
-        this.model().off( "change", this.onAttributeUpdate )
+        @view.model?.off( "change", this.onAttributeUpdate )

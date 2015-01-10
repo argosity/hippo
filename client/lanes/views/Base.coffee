@@ -25,7 +25,7 @@ class ViewBase
         pubSub     : "boolean"
         parent     : "object"
         subviewId  : { type: "string", setOnce: true }
-
+        formBindings: { type: 'any', default: false }
 
     derived:
         '$el':
@@ -81,8 +81,8 @@ class ViewBase
         if !this.pubSub? # if it's unset, not true/false; default to parent or true
             this.pubSub = if this.parent?.pubSub? then this.parent.pubSub else true
 
-
-        this.initializeFormBindings() if @form_bindings
+        if @formBindings || @parent?.formBindings
+            @formBindings = new Lanes.Views.FormBindings(this, @formBindings)
 
         if @keyBindings
             Lanes.Views.Keys.add(this, @keyBindings, @keyScope)
@@ -114,20 +114,14 @@ class ViewBase
     # **render** is the core function that your view can override, its job is
     # to populate its element (`this.el`), with the appropriate HTML.
     render: ->
-        this.withRenderContext( this.renderWithTemplate )
-        return this;
-
-    withRenderContext: (fn, args...)->
         Lanes.Views.RenderContext.push( @subviewId, @model )
-        returned = fn.apply(this,args)
+        this.renderContextFree()
         Lanes.Views.RenderContext.pop()
-        this.onRender?()
-        returned
-
-    renderContextFree: ->
-        this.renderWithTemplate();
         this
 
+    renderContextFree: ->
+        this.replaceEl( this.renderTemplateMethod() );
+        this
 
     # ## listenToAndRun
     # Shortcut for registering a listener for a model
@@ -319,7 +313,6 @@ class ViewBase
                     new klass(_.extend(options,{ el: el, parent: self }))
 
         }
-
         action = ->
             return if (!this.el || !(el = this.query(opts.selector)))
             if (!opts.waitFor || _.getPath(this, opts.waitFor))
@@ -383,10 +376,10 @@ class ViewBase
 
     initializeKeyBindings: Lanes.emptyFn
 
-    initializeFormBindings: ->
-        @_form_bindings = {}
-        for data, selector of @form_bindings
-            @_form_bindings[data] = new Lanes.Views.FormBindings(this, data, selector)
+    # initializeFormBindings: ->
+    #     @_form_bindings = {}
+    #     for data, selector of @form_bindings
+    #         @_form_bindings[data] =
 
     setFieldsFromBindings: ->
         binding.setAllFields() for name, binding of @_form_bindings
