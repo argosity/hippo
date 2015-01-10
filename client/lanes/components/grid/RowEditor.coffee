@@ -14,7 +14,7 @@ class Lanes.Components.Grid.RowEditor extends Lanes.Components.Grid.Editor
         inputs = this.form.children()
         for input, index in inputs
             column = Lanes.$(this.row[0].cells[index])
-            definition = this.grid.column_definitions[index]
+            definition = this.grid.columnDefinitions[index]
             Lanes.$(input)
                 .width(column.width())
                 .css("left", column.position().left)

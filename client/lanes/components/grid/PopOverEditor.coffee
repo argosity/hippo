@@ -2,7 +2,7 @@ class Lanes.Components.Grid.PopOverEditor extends Lanes.Components.Grid.Editor
 
     template: 'grid/popover-editor'
     templateModels: ->
-        { columns: this.grid.column_definitions }
+        { columns: this.grid.columnDefinitions }
 
     session:
         view: 'object'
@@ -16,12 +16,12 @@ class Lanes.Components.Grid.PopOverEditor extends Lanes.Components.Grid.Editor
                 parent: this
                 className: 'grid-popover-editor'
                 target: Lanes.$(ev.target)
-                title: this.title || this.calculated_title()
+                title: this.title || this.calculatedTitle()
                 content: this.el
                 autoShow: true
             })
 
-    calculated_title: ->
+    calculatedTitle: ->
         (if this.model.isNew() then "Create: " else "Edit: ") + this.model.constructor.name
 
     cancelEditing: ->

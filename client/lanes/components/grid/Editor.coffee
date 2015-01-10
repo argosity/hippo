@@ -35,7 +35,7 @@ class Lanes.Components.Grid.Editor extends Lanes.Components.Base
                 @model.set( definition.field, Lanes.dom.getAttribute(input,'value') )
 
     getColumn: (name)->
-        _.findWhere(this.grid.column_definitions, { field: name })
+        _.findWhere(this.grid.columnDefinitions, { field: name })
 
     saveChanges: ->
         this.persistFields()
@@ -58,5 +58,5 @@ class Lanes.Components.Grid.Editor extends Lanes.Components.Base
 
     fields: ->
         _.map(this.ui.form.children(), (input,index)->
-            { index: index, input: Lanes.$(input), column: this.grid.column_definitions[index] }
+            { index: index, input: Lanes.$(input), column: this.grid.columnDefinitions[index] }
         ,this)
