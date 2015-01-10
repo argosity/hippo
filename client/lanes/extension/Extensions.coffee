@@ -10,9 +10,10 @@ Lanes.Extensions = {
     fireOnAvailable: (application)->
         instance.onAvailable?(application) for identifier, instance of @instances
 
-    setBootstrapModels: (bootstrap_data)->
+    setBootstrapData: (bootstrap_data)->
         for identifier,data of bootstrap_data
-            instance?.setBootstrapModels?(data)
+            instance = this.instances[identifier]
+            instance?.setBootstrapData?(data)
 
     makeNamespace: (identifier)->
         for ns in ['Models','Views','Controllers','Screens']
