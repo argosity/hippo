@@ -45,7 +45,7 @@ module Lanes
             def client_paths
                 [ root_path.join('client') ]
             end
-            
+
             def client_images
                 images = []
                 root_path.join('client','images').find{|path| images << path if path.file? }
@@ -58,9 +58,19 @@ module Lanes
                     require routes_config
                 end
             end
+
         end
 
         class << self
+
+            def load_screens
+                each do | ext |
+                    screens_config = ext.root_path.join('config','screens.rb')
+                    if screens_config.exist?
+                        require screens_config
+                    end
+                end
+            end
 
             def load_after(extension)
                 self.after = extension
@@ -77,7 +87,7 @@ module Lanes
             def require_workspace?
                 all.detect{|ext| ext.uses_workspace }
             end
-            
+
             def require_pub_sub?
                 all.detect{|ext| ext.uses_pub_sub }
             end
@@ -120,11 +130,12 @@ module Lanes
 
             def client_bootstrap_data(view)
                 data = {
-                        csrf_token: Rack::Csrf.csrf_token(view.env),
-                        root_view:  Lanes.config.root_view,
-                        api_path: Lanes.config.mounted_at,
-                        pub_sub: require_pub_sub?
-                       }
+                  csrf_token: Rack::Csrf.csrf_token(view.env),
+                  root_view:  Lanes.config.root_view,
+                  api_path: Lanes.config.mounted_at,
+                  initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id,
+                  pub_sub: require_pub_sub?
+                }
                 each do | ext |
                     data[ext.identifier] = ext.client_bootstrap_data(view)
                 end
@@ -134,7 +145,7 @@ module Lanes
             def client_images
                 each{|ext| }
             end
-            
+
             def load_current_config
                 config_file = Pathname.getwd.join('config','lanes.rb')
                 if config_file.exist?
@@ -145,7 +156,5 @@ module Lanes
         end
 
     end
-
-
 
 end

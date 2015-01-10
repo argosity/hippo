@@ -30,6 +30,7 @@ module Lanes
                 template "gitignore",".gitignore"
                 create_file "tmp/.gitkeep",""
                 create_file "db/.gitkeep", ""
+                create_file "config/screens.rb"
             end
 
             def create_client_files
@@ -50,7 +51,7 @@ module Lanes
             end
 
             def create_first_screen
-                invoke GenerateScreen, ["base"], title: name.titleize, namespace: name
+                template "client/screens/Screen.coffee", "#{client_dir}/screens/Base.coffee"
             end
         end
 
