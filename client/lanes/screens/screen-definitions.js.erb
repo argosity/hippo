@@ -1,7 +1,15 @@
-<% Lanes::Screens::Group.each(self) do | spec | %>
+<% if !Lanes.config.initial_workspace_screen_id.blank? &&
+      screen = Lanes::Screen[Lanes.config.initial_workspace_screen_id]
+require_asset screen.js
+end %>
+
+<% Lanes::Screen.each_group do | spec | %>
 Lanes.Models.Screens.groups.add( <%= spec.to_json %> );
 <% end %>
 
-<% Lanes::Screens::Definition.each(self) do | spec | %>
+<% Lanes::Screen.each do | spec | %>
 Lanes.Models.Screens.register( <%= spec.to_json %> );
 <% end %>
+
+<% depend_on "/Users/nas/code/lanes-access/config/screens.rb" %>
+

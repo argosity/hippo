@@ -38,9 +38,11 @@ class ScreenDefinition extends Lanes.Models.BasicModel
         view:        'string'
         icon:        'string'
         group_id:    'string'
-        files:       'array'
         loading:     'boolean'
         model:       'string'
+        assets:      'array'
+        js:          'string'
+        css:         'string'
 
     derived:
         model_type:
@@ -54,7 +56,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
         @views.push( new ScreenView( screen: this, viewport: viewport ) )
 
     getScreen: ->
-        @viewModel ||= Lanes.getPath(this.view,"Lanes.Screens")
+        @viewModel ||= Lanes.getPath(this.view)
         if @viewModel?
             _.Promise.resolve(@viewMOdel)
         else
@@ -62,9 +64,9 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
     loadScreen: ->
         me=this
-        return new _.Promise(  (resolve,reject)->
+        return new _.Promise( (resolve,reject)->
              me.loading=true
-             Lanes.lib.Request(me.files)
+             Lanes.lib.Request(me.assets)
                  .then ->
                     me.loading=false
                     me.viewModel = Lanes.getPath(me.view)
@@ -79,20 +81,6 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
     display: (ui)->
         this.getScreen().then => @_setDisplaying(ui)
-
-        # @viewModel ||= Lanes.Screens[this.view]
-        # if @viewModel?
-        #    this._setDisplaying(ui)
-        # else
-        #     this.loading=true
-        #     Lanes.lib.Request(this.files)
-        #         .then =>
-        #             @viewModel = Lanes.Screens[this.view]
-        #             @_setDisplaying(ui)
-        #             @loading=false
-        #         .catch (failures)=>
-        #             @loading=false
-        #             Lanes.warn(failures)
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection
