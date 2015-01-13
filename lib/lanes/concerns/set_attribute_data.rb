@@ -133,22 +133,6 @@ module Lanes::Concerns
             end
         end
 
-
-        # association = self.send(name)
-
-        # klass_name = self.class.reflections[ name.to_sym ].class_name
-        # klass = klass_name.safe_constantize || "Lanes::#{klass_name}".constantize
-
-        # # only Hash, Array & nil is valid for nesting attributes
-        # cleaned = case value
-        #           when Hash  then klass.sanitize_api_data( value, user, klass )
-        #           when Array then value.map{ | nested |
-        #                   klass.sanitize_api_data( nested, user, klass )
-        #               }
-        #           else
-        #               nil
-        #           end
-#        result[ name.to_sym ] = cleaned unless cleaned.blank?
     end
 
 end
