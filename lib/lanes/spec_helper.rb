@@ -32,7 +32,7 @@ module Lanes
             true
         end
     end
-    
+
     class TestCase < ActiveSupport::TestCase
         include Lanes
         include ActiveRecordMocks::IncludeMe

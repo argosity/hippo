@@ -15,7 +15,7 @@ module Lanes
         include Concerns::AssociationExtensions
         include Concerns::ApiPath
         include Concerns::SanitizeFields
-        
+
     end
 
 end
