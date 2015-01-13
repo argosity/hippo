@@ -14,8 +14,7 @@ module Lanes
             # option :from, :required => true
 
             def create_screen
-                template "client/views/View.coffee",   "#{client_dir}/views/#{name.classify}.coffee"
-                #template "client/views/template.html", "#{client_dir}/views/#{name.dasherize}.html"
+                template "client/views/View.coffee",   "#{client_dir}/#{name.classify}.coffee"
                 template "spec/client/views/ViewSpec.coffee", \
                   "#{spec_dir}/views/#{class_name}Spec.coffee"
             end
@@ -24,9 +23,9 @@ module Lanes
 
             def client_dir
                 if options[:screen] == 'global'
-                    "client/views"
+                    "client/#{namespace}/views"
                 else
-                    "client/screens/#{options[:screen].dasherize}"
+                    "client/#{namespace}/screens/#{options[:screen].dasherize}"
                 end
             end
         end

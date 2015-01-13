@@ -6,11 +6,13 @@ require 'hashie/mash'
 require 'active_record'
 require 'active_record/fixtures'
 require 'minitest/around/unit'
+require 'minitest/around/spec'
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'mocha/mini_test'
 
 require_relative 'testing_models'
+
 
 RAILS_ENV = "test"
 I18n.enforce_available_locales = true
