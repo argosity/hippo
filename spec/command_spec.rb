@@ -1,7 +1,7 @@
-require "lanes/spec_helper"
+require_relative "spec_helper"
 require "lanes/cli"
 require "find"
-require_relative "helpers/minitest_assertions"
+
 
 describe Lanes::Command do
     let(:lanes) { Pathname.new(__FILE__).dirname.join('..','bin','lanes') }

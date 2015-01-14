@@ -1,4 +1,4 @@
-require "lanes/spec_helper"
+require_relative "spec_helper"
 
 describe Lanes::Numbers do
 
@@ -21,6 +21,5 @@ describe Lanes::Numbers do
         assert_equal '137.38449', Num::PercNum.new( '33.383%' ).credit_to(103).to_s
         assert_equal '68.61551',  Num::PercNum.new( '33.383%' ).debit_from(103).to_s
     end
-
 
 end

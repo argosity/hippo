@@ -1,9 +1,7 @@
-require "lanes/spec_helper"
+require_relative "../spec_helper"
 
 class ExportMethodsTest < Lanes::TestCase
     include TestingModels
-
-
 
     def test_simple_delegation
 

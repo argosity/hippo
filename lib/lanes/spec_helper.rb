@@ -11,9 +11,6 @@ require 'minitest/spec'
 require 'minitest/autorun'
 require 'mocha/mini_test'
 
-require_relative 'testing_models'
-
-
 RAILS_ENV = "test"
 I18n.enforce_available_locales = true
 Lanes::DB.establish_connection('test')
@@ -37,14 +34,9 @@ module Lanes
 
     class TestCase < ActiveSupport::TestCase
         include Lanes
-        include ActiveRecordMocks::IncludeMe
 
         include ActiveRecord::TestFixtures
         self.fixture_path =  Pathname.new(__FILE__).dirname.join('fixtures')
-        # setup do
-        #     #Thread.current[:lanes_current_user] = lanes_users(:admin)
-        #     #Lanes::Access.calculate_model_access!
-        # end
 
         self.use_transactional_fixtures = true
         fixtures :all

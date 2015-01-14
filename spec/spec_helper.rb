@@ -1,10 +1,12 @@
+require "lanes/spec_helper"
+require_relative "helpers/minitest_assertions"
 require "active_record_mocks"
 
 module TestingModels
-
+    include ActiveRecordMocks::IncludeMe
 
     def around(&block)
-        with_testing_models(&block)
+        self.with_testing_models(&block)
     end
 
     def with_testing_models
@@ -50,5 +52,9 @@ module TestingModels
         end
     end
 
+
+end
+
+class TestCase < ActiveSupport::TestCase
 
 end

@@ -1,4 +1,4 @@
-require "lanes/spec_helper"
+require_relative "../spec_helper"
 
 class PubSubTest < Lanes::TestCase
 

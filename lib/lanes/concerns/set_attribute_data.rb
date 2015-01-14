@@ -1,6 +1,5 @@
 module Lanes::Concerns
 
-
     module ApiAttributeAccess
 
 

@@ -1,5 +1,4 @@
-require "lanes/spec_helper"
-
+require_relative "../spec_helper"
 
 class AssociationExtensionsTest < Lanes::TestCase
 

@@ -1,8 +1,8 @@
-require "lanes/spec_helper"
+require_relative "../spec_helper"
 
 class ExportScopeTest < Lanes::TestCase
     include TestingModels
-    
+
     def test_scope_method_creation
         refute TestModel.respond_to?(:big_query)
         TestModel.send( :export_scope, :big_query, ->{} )
