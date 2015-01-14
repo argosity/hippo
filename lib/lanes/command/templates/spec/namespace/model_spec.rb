@@ -1,4 +1,4 @@
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
 describe <%= namespace.camelize %>::<%= class_name %> do
 
