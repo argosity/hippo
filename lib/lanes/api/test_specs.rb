@@ -41,11 +41,11 @@ module Lanes
         end
 
 
-        ext = Lanes::Command.load_current_extension ||
+        ext = Extensions.controlling ||
           LanesDummyExt.new('lanes', Pathname.new(__FILE__).dirname.join("../../../"))
         TestSpecs.current = TestSpecs.new(ext)
         Root.sprockets.append_path(ext.root_path.join("spec"))
-        
+
 
         Root.sprockets.append_path(Jasmine::Core.path)
 

@@ -9,7 +9,8 @@ module Lanes
             if ENV['DATABASE_URL']
                 ::ActiveRecord::Base.establish_connection( ENV['DATABASE_URL'] )
             else
-                config = YAML::load( IO.read( config_file || "config/database.yml" ) )
+                file = config_file || Extensions.controlling.root_path.join("config","database.yml")
+                config = YAML::load( IO.read(file) )
                 ::ActiveRecord::Base.configurations = config
                 ::ActiveRecord::Base.establish_connection( ::ActiveRecord::Base.configurations[ env ] )
             end
@@ -23,7 +24,6 @@ module Lanes
         def configure_rake_environment
             ActiveRecord::Tasks::DatabaseTasks.seed_loader = Lanes::DB
             env = ENV['RAILS_ENV'] || 'development'
-            Lanes::DB.config_file  ||= 'config/database.yml'
             ENV['SCHEMA']          ||= 'db/schema.sql'
             ENV['DB_STRUCTURE']    ||= 'db/schema.sql'
             ActiveRecord::Base.schema_format = :sql

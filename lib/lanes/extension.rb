@@ -2,8 +2,14 @@ module Lanes
 
     module Extensions
 
+        ALL=Array.new
+
         class Definition
             include Concerns::AttrAccessorWithDefault
+
+            def self.inherited(klass)
+                ALL << klass
+            end
 
             attr_reader :context
 
@@ -95,7 +101,7 @@ module Lanes
             end
 
             def all
-                Definition.descendants
+                ALL
             end
 
             def require_workspace?
@@ -147,17 +153,16 @@ module Lanes
                 sorted.map{ |klass| yield klass.new }
             end
 
-            def early_loaded
-                each{ |ext| yield ext if ext.load_phase == :early }
-            end
-
-            def late_loaded
-                each{ |ext| yield ext if ext.load_phase == :late  }
+            def controlling
+                last = ALL.last
+                each{|ext| return ext if ext.is_a?(last) }
+                LanesExtension.new # fallback if can't find an extension
             end
 
             def client_bootstrap_data(view)
                 data = {
                   csrf_token: Rack::Csrf.csrf_token(view.env),
+                  controlling_extension: controlling.identifier,
                   root_view:  Lanes.config.root_view,
                   api_path: Lanes.config.mounted_at,
                   initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id,
@@ -173,8 +178,8 @@ module Lanes
                 each{|ext| }
             end
 
-            def load_current_config
-                config_file = Pathname.getwd.join('config','lanes.rb')
+            def load_controlling_config
+                config_file = self.controlling.root_path.join('config','lanes.rb')
                 if config_file.exist?
                     require config_file
                 end

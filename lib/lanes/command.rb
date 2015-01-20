@@ -28,11 +28,7 @@ module Lanes
                         stack = e.backtrace[0..4].join("\n")
                         raise Thor::Error.new("Loading ./lib/*/extension.rb failed with: #{e}\n#{stack}")
                     end
-                    all = Extensions.all
-                    if all.any?
-                        diff = all - previous
-                        return diff.any? ? diff.first.new : Extensions.all.first.new
-                    end
+                    Extensions.controlling
                 else
                     return _maybe_fail(raise_on_fail)
                 end
@@ -42,6 +38,7 @@ module Lanes
                 raise Thor::Error.new("Unable to locate Lanes environment.\nDoes ./lib/*/extension.rb exist?") if should_raise
                 return nil
             end
+
         end
     end
 end
