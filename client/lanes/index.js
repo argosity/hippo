@@ -2,10 +2,9 @@
 //= require ./vendor/modern-stack
 //= require ./lib
 //= require ./extension
-//= require ./data
+//= require ./models
 //= require ./plugins
 //= require ./views
 //= require ./screens
 //= require ./components/Base
 //= require ./components/enabled
-//= require ./extension/LateLoaded

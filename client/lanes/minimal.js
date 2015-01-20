@@ -7,5 +7,5 @@
 //= require ./views
 //= require ./components/Base
 //= require ./components/enabled
-//= require ./extension/LateLoaded
 //= require ./screens
+//= require ./extension/LateLoaded
