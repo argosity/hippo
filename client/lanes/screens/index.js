@@ -1,4 +1,5 @@
-//= require "./ChangeListener"
-//= require "./Base"
-//= require "./Instance"
-//= require "./definitions"
+//= require ./ChangeListener
+//= require ./Base
+//= require ./Router
+//= require ./Instance
+//= require ./definitions
