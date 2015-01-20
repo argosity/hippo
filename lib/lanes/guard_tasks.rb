@@ -35,8 +35,8 @@ module Lanes
             dsl.guard :minitest, :all_on_start => true do
                 dsl.watch(%r{^spec/spec_helper\.rb}) { 'test' }
                 dsl.watch(%r{^spec/.+_spec\.rb})
-                dsl.watch(%r{^spec/fixtures/#{app_name}/(.+)s\.yml})   { |m| "spec/#{m[1]}_spec.rb" }
-                dsl.watch(%r{^lib/#{app_name}/(.+)\.rb})               { |m| "spec/#{m[1]}_spec.rb" }
+                dsl.watch(%r{^spec/fixtures/#{app_name}/(.+)s\.yml})   { |m| "spec/server/#{m[1]}_spec.rb" }
+                dsl.watch(%r{^lib/#{app_name}/(.+)\.rb})               { |m| "spec/server/#{m[1]}_spec.rb" }
                 matchers.server_matches.call if matchers.server_matches
             end
 

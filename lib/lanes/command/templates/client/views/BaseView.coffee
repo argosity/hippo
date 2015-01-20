@@ -2,4 +2,4 @@
 # this common base class.
 class <%= namespace.classify %>.Views.Base extends Lanes.Views.Base
 
-    constructor: -> super
+    abstractClass: true

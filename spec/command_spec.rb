@@ -18,17 +18,7 @@ describe Lanes::Command do
         end
     end
 
-    FILES = [
-      ".", ".gitignore", "Gemfile", "Guardfile", "Rakefile", "client",
-      "client/test", "client/test/Extension.coffee", "client/test/components",
-      "client/test/components/.gitkeep", "client/test/controllers",
-      "client/test/controllers/.gitkeep", "client/test/index.js", "client/test/models",
-      "client/test/models/.gitkeep", "client/test/models/Base.coffee", "client/test/screens",
-      "client/test/screens/.gitkeep", "client/test/screens/Base.coffee", "client/test/styles.scss",
-      "client/test/views", "client/test/views/.gitkeep", "client/test/views/Base.coffee", "config",
-      "config/database.yml", "config/lanes.rb", "config/routes.rb", "config/screens.rb",
-      "config.ru", "db", "db/.gitkeep", "lib", "lib/test", "lib/test/extension.rb",
-      "lib/test/model.rb", "lib/test/version.rb", "lib/test.rb", "tmp", "tmp/.gitkeep"]
+    FILES = [".", ".gitignore", "Gemfile", "Guardfile", "Rakefile", "client", "client/test", "client/test/Extension.coffee", "client/test/Router.coffee", "client/test/components", "client/test/components/.gitkeep", "client/test/controllers", "client/test/controllers/.gitkeep", "client/test/index.js", "client/test/models", "client/test/models/.gitkeep", "client/test/models/Base.coffee", "client/test/screens", "client/test/screens/.gitkeep", "client/test/screens/Base.coffee", "client/test/styles.scss", "client/test/views", "client/test/views/.gitkeep", "client/test/views/Base.coffee", "config", "config.ru", "config/database.yml", "config/lanes.rb", "config/routes.rb", "config/screens.rb", "db", "db/.gitkeep", "lib", "lib/test", "lib/test.rb", "lib/test/extension.rb", "lib/test/model.rb", "lib/test/version.rb", "log", "log/.gitkeep", "spec", "spec/server", "spec/server/spec_helpers.rb", "spec/test", "spec/test/helpers", "spec/test/helpers/TestHelpers.coffee", "spec/test/screens", "spec/test/screens/Base.coffee", "tmp", "tmp/.gitkeep"]
 
     it "generates an application" do
         files = Find.find(".").to_a.map{|f| f.gsub(/^\.\//,'') }.sort

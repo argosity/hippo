@@ -1,6 +1,6 @@
 #= require <%= namespace %>/screens/<%= name %>
 
-describe "<%= class_name %> Screen Suite", ->
+describe "<%= namespace.camelize %>.Screens.<%= class_name %>", ->
 
     it "can be instantiated", ->
         view = new <%= namespace.camelize %>.Screens.<%= class_name %>()

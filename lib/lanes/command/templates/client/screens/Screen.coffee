@@ -1,6 +1,11 @@
 class <%= namespace.camelize %>.Screens.<%= class_name %> extends Lanes.Screens.Base
 
-    source: FILE
+    FILE: FILE
+<% if @template -%>
+    template: '''
+        <%= @template %>
+    '''
+<% end -%>
 
     subviews: {}
 

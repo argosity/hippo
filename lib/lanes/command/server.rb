@@ -1,4 +1,4 @@
-require 'guard'
+require 'guard/cli'
 
 module Lanes
     module Command

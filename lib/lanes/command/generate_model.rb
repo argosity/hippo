@@ -36,16 +36,16 @@ module Lanes
 
             def create_model
                 template "lib/namespace/model.rb", "lib/#{namespace}/#{file_name}.rb"
-                template "spec/namespace/model_spec.rb", "#{spec_dir}/#{file_name}.rb"
+                template "spec/server/model_spec.rb", "spec/server/#{file_name}_spec.rb"
                 template "spec/fixtures/namespace/model.yml",
                          "spec/fixtures/#{namespace}/#{file_name}.yml"
             end
 
             def create_client
                 self.fields.unshift ModelAttribute.parse("id:integer")
-                template "client/models/Model.coffee", \
+                template "client/models/Model.coffee",
                          "#{client_dir}/models/#{class_name}.coffee"
-                template "spec/client/models/ModelSpec.coffee", \
+                template "spec/client/models/ModelSpec.coffee",
                          "#{spec_dir}/models/#{class_name}Spec.coffee"
             end
 

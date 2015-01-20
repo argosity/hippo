@@ -1,6 +1,6 @@
-require_relative '../spec_helper'
+require_relative 'spec_helpers'
 
-describe <%= namespace.camelize %>::<%= class_name %> do
+class <%= class_name %>Spec < <%= namespace.camelize %>::TestCase
 
     it "can be instantiated" do
         model = <%= class_name %>.new

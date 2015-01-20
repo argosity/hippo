@@ -24,7 +24,7 @@ module Lanes
                 template "client/screens/Screen.coffee",
                          "#{client_dir}/screens/#{name}/#{class_name}.coffee"
                 template "client/screens/layout.html",   "#{client_dir}/screens/#{name}/layout.html"
-                template "spec/client/Screen.coffee",    "#{spec_dir}/screens/#{class_name}.coffee"
+                template "spec/client/Screen.coffee",    "#{spec_dir}/screens/#{class_name}Spec.coffee"
             end
 
             def add_definition
@@ -32,7 +32,6 @@ module Lanes
                     source = File.expand_path(find_in_source_paths("config/screen.rb"))
                     ERB.new(::File.binread(source), nil, "-","@output_buffer").result(binding)
                 end
-
             end
         end
     end
