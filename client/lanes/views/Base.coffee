@@ -2,7 +2,7 @@ amp = Lanes.Vendor.Ampersand
 delegateEventSplitter = /^(\S+)\s*(.*)$/
 class ViewBase
 
-    @extended_properties = ['ui']
+    extendedProperties: ['ui']
 
     # Custom datatypes for views
     dataTypes:
@@ -164,7 +164,6 @@ class ViewBase
 
     templateData: ->
         { model: @model?.toJSON?(), collection: @collection?.toJSON?() }
-
 
     FILE: FILE
 
@@ -407,7 +406,6 @@ class ViewBase
     @include Lanes.lib.defer
     @include Lanes.lib.debounce
     @include Lanes.lib.results
-
 
 
 Lanes.Views.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, ViewBase )
