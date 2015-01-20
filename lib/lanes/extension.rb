@@ -92,6 +92,19 @@ module Lanes
                 all.detect{|ext| ext.uses_pub_sub }
             end
 
+            def each_asset(phase: :early, type: :js)
+                each do |ext|
+                    if phase == :all || ext.load_phase == phase
+                        asset = case type
+                                when :js  then ext.javascript_include
+                                when :css then ext.stylesheet_include
+                                else nil
+                                end
+                        yield asset unless asset.nil?
+                    end
+                end
+            end
+
             def sorted
                 unmapped = all
                 mapped   = []

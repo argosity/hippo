@@ -1,3 +1,3 @@
-<% Lanes::Extensions.late_loaded do | ext | %>
-<% require_asset ext.javascript_include %>
-<% end %>
+<% Lanes::Extensions.each_asset(phase: :late, type: :js) do | asset |
+require_asset asset
+end %>

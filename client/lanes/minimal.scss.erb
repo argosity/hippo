@@ -1,8 +1,8 @@
 
 .lanes {
 
-<% Lanes::Extensions.each do | ext | %>
-  @import "<%= ext.stylesheet_include %>";
+<% Lanes::Extensions.each_asset(phase: :all, type: :css) do | asset | %>
+  @import "<%= asset %>";
 <% end %>
 
 <% Lanes::Components.enabled_with_dependencies(self) do | component | %>
