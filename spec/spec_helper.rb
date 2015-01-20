@@ -44,7 +44,6 @@ module TestingModels
             end
             Tmhm.blacklist_attributes :secret_field
 
-#            Lanes::Access.calculate_model_access!
             yield
 
             TestModel.blacklisted_attributes.clear if TestModel.blacklisted_attributes
