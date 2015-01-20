@@ -48,7 +48,7 @@ Lanes.Models.Sync = {
         options.error = (reply, status, req)->
             options.rejectPromise(
                 Lanes.Models.Sync.copyServerReply( record,
-                    resp.responseJSON || {error: resp.responseText}
+                    reply.responseJSON || {error: reply.responseText}
                 )
             )
             delete record.requestInProgress
