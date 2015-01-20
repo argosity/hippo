@@ -17,7 +17,7 @@ module Minitest::Assertions
 
     def execute_cmd(cmd)
         @cmd_last_output = `#{cmd} 2>&1`
-        $?.exitstatus == 0
+        assert_equal 0, $?.exitstatus, "Command exited with #{$?.exitstatus}.  Output was: #{@cmd_last_output}"
     end
 
 end
