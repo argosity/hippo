@@ -1,29 +1,9 @@
-
 describe "Lanes.Models.Base", ->
-    # Model = undefined
-    # Collection = undefined
     class Color
         constructor: -> super
         props: { id: 'integer', rgb: 'string' }
     Lanes.Models.Base.extend(Color)
 
-    # makeModel = (props,args={})->
-    #     _.extend(Model.prototype, props)
-    #     Lanes.Models.Base.extend(Model)
-    #     Collection::model = Model
-    #     Lanes.Models.Collection.extend(Collection)
-    #     collection = new Collection
-    #     return collection.add(new Model(args))
-
-    # beforeEach ->
-    #     class TestModel
-    #         constructor: -> super
-    #     Model = TestModel
-    #     class TestCollection
-    #         constructor: -> super
-    #     Collection = TestCollection
-
-        
     it "tracks unsaved attributes", ->
         model = Lanes.Test.makeModel({
             session:
@@ -39,7 +19,7 @@ describe "Lanes.Models.Base", ->
         model.set( saved: 'true' )
         expect(model.isDirty()).toBeTrue()
 
-        
+
     it "can tell if it has attributes", ->
         model = Lanes.Test.makeModel({
             session:
@@ -65,7 +45,7 @@ describe "Lanes.Models.Base", ->
             derived:
                 atest:
                     fn: -> 'blarg'
-                
+
         })
         model.set( id: 10, unsaved: 'falsify', color: { rgb: '99FFFF' } )
 
@@ -80,7 +60,7 @@ describe "Lanes.Models.Base", ->
                 id: 'integer'
                 foo: 'string'
                 bar: 'string'
-                
+
         }, { foo: 'one, two, three'} )
         expect(model.isDirty()).toBeTrue()
         expect(model.unsavedAttributes()).toEqual( foo: 'one, two, three' )
@@ -96,7 +76,7 @@ describe "Lanes.Models.Base", ->
             expect(model.sync).toHaveBeenCalledWith('patch', model, jasmine.any(Object))
             expect(model.foo).toEqual('a new foo value')
             done()
-            
+
     it "can be fetched", (done)->
         model = Lanes.Test.makeModel({
             props:
@@ -113,10 +93,18 @@ describe "Lanes.Models.Base", ->
             expect(options).toHaveNumberWithinRange('limit',1,1)
             done()
 
-    it "creates a Collection property", ->
-        Model = Lanes.Test.DummyModel
+    it "creates a Collection property even when the base is abstract", ->
+        class Base
+            constructor: -> super
+            abstractClass: true
+        Lanes.Models.Base.extend(Base)
+        class Model
+            constructor: -> super
+        debugger
+        Model = Base.extend(Model)
         expect(Model.Collection::model).toEqual(Model)
-    
+
+
     it "loads using where", (done)->
         Model = Lanes.Test.DummyModel
         syncSucceedWith([
