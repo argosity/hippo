@@ -297,6 +297,7 @@ class BaseModel
     # When the model is extended it auto-creates the created_at and updated_at
     # and sets up the AssociationMap
     @extended: (klass)->
+        return if klass::abstractClass
         klass::props   ||= {}
         klass::session ||= {}
 
@@ -306,11 +307,13 @@ class BaseModel
         if klass::associations
             klass::associations = new AssocationMap(klass)
 
-        unless klass.Collection
+    @afterExtended: (klass)->
+        if !klass::abstractClass && !klass.Collection
             class DefaultCollection
                 constructor: -> super
                 model: klass
             klass.Collection = Lanes.Models.Collection.extend(DefaultCollection)
+
 
 Lanes.Models.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BaseModel )
 
