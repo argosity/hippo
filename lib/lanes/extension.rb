@@ -61,6 +61,20 @@ module Lanes
 
         end
 
+        class LanesExtension < Definition
+            identifier "lanes"
+
+            root_path Pathname.new(__FILE__).dirname.join("..","..").expand_path
+            def stylesheet_include
+                nil
+            end
+
+            def javascript_include
+                nil
+            end
+
+        end
+
         class << self
 
             def load_screens
