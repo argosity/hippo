@@ -1,32 +1,31 @@
-FUNC_NAME_REGEX = /function\s+([^\s\(]+)/
-
-addMissingFunctionName = (klass)->
-    return if klass.name
-    Object.defineProperty( klass, 'name', {
-        get: ->
-            this._name_cache_ ||= (
-                results = FUNC_NAME_REGEX.exec((this).toString())
-                if (results && results.length) then results[1] else ""
-            )
-        set: (value)->
-            return {}
-    })
-
 mixinModules = (klass)->
     Lanes.lib.ModuleSupport.includeInto(klass)
     if klass::mixins
         klass.include(Lanes.getPath(mixin)) for mixin in klass::mixins
 
+extendProperties = (parent,child)->
+    child::extendProperties = _.uniq(
+        ( child::extendProperties || [] ).concat(parent::extendProperties)
+    )
+    for prop in child::extendProperties
+        if parent::[prop] && child::[prop]
+            _.extend( child::[prop], parent::[prop] )
+
+
 extendClass = (ampersand_base, parent, child)->
     child.__super__ = parent.prototype
     child.Derived = []
     parent.Derived.push(child)
-    for prop in parent::extended_properties || []
-        if parent::[prop] && child::[prop]
-            _.extend( child::[prop], parent::[prop] )
+
+    if parent::abstractClass && !_.has(child.prototype,'abstractClass')
+        child::abstractClass = undefined
+
+    extendProperties(parent, child) if parent::extendedProperties
 
     mixinModules(child)
 
+    if child::abstractClass && !child.extended && parent.extended
+        child.extended = parent.extended
     parent.extended(child) if _.isFunction(parent.extended)
 
     child = ampersand_base.extend.call(parent, child.prototype )
@@ -34,8 +33,10 @@ extendClass = (ampersand_base, parent, child)->
     child.extend = (klass)->
         extendClass( ampersand_base, child, klass )
 
+    if child::abstractClass && !child.afterExtended && parent.afterExtended
+        child.afterExtended = parent.afterExtended
     parent.afterExtended(child) if _.isFunction(parent.afterExtended)
-    addMissingFunctionName(child)
+
     child
 
 
