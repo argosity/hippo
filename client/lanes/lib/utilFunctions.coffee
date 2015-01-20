@@ -6,7 +6,6 @@ Lanes.fatal = (args...)->
 
 Lanes.warn = (msg...)->
     return unless console
-    console.warn(msg...)
     if msg[0] instanceof Error
         console.warn(msg[0].stack)
     else console.warn(msg...)
@@ -28,10 +27,7 @@ distillTypes = (type, ns)->
 Lanes.getPath = ( name, ns='Lanes' ) ->
     return name unless _.isString(name)
     ns = "Lanes.#{ns}" if _.isString(ns) && !ns.match("Lanes")
-    if _.isObject(ns)
-        distillTypes(name,ns) || distillTypes(name, Lanes)
-    else
-        distillTypes(name,window) || distillTypes(name, distillTypes(ns, window))
+    distillTypes(name, window) || distillTypes(name, if _.isObject(ns) then ns else distillTypes(ns, window) )
 
 _.mixin({
 
