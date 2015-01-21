@@ -15,14 +15,13 @@ module Lanes
                     Lanes::API::SprocketsExtension.configure(env, compress:true)
                     manifest = Sprockets::Manifest.new( env.index, "public/assets/manifest.json" )
                     manifest.compile('lanes/workspace.js', 'lanes/workspace.css',
-                                     'lanes/minimal.js', 'lanes/minimal.css' )
+                                     'lanes/minimal.js',   'lanes/minimal.css' )
                     Extensions.each{|ext|
                         manifest.compile(ext.client_images.map(&:to_s))
                     }
-                    Screens::Definition.each(env) do | screen |
-                        manifest.compile( screen.files )
+                    Screen.each do | screen |
+                        manifest.compile( screen.assets ) unless screen.assets.blank?
                     end
-                    
                 end
 
                 def configure(env, compress:false)

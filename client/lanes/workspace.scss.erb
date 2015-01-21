@@ -11,7 +11,7 @@
   @import "<%= asset %>";
 <% end %>
 <% Lanes::Components.enabled_with_dependencies(self) do | component | %>
-  @import "lanes/components/<%= component %>/index";
+  @import "lanes/components/<%= component %>/styles";
 <% end %>
   @import "styles/plugins/all";
   @import "styles/layout";
