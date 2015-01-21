@@ -1,3 +1,5 @@
 <% Lanes::Components.enabled_with_dependencies(self) do | component |
     require_asset "lanes/components/#{component}"
 end %>
+
+<% depend_on Lanes::Extensions.controlling.root_path.join("config","screens.rb") %>

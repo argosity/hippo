@@ -11,5 +11,5 @@ Lanes.Models.Screens.groups.add( <%= spec.to_json %> );
 Lanes.Models.Screens.register( <%= spec.to_json %> );
 <% end %>
 
-<% depend_on "/Users/nas/code/lanes-access/config/screens.rb" %>
+<% depend_on Lanes::Extensions.controlling.root_path.join("config","screens.rb") %>
 
