@@ -42,7 +42,7 @@ We'll also create a TaskSummary model that is in charge of summarizing the state
 ## Header View
 It's responsible for interaction with the "What needs to be done?" input.  When text is present and the "enter" key is pressed, it should save a record and add it to the collection.  We're able to do so in [just a few lines of code](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/views/Header.coffee#L22-L25)
 
-We can easily test that it performs as it should by [adding a few specs](https://github.com/argosity/lanes-todo-demo/blob/master/spec/todo/views/HeaderSpec.coffee#L18-L29). 
+We can easily test that it performs as it should by [adding a few specs](https://github.com/argosity/lanes-todo-demo/blob/master/spec/todo/views/HeaderSpec.coffee). 
 
 ## Listing View
 This view is a bit more complex.  It has a parent view which handles toggling all todo's between being complete and pending, and a collection of subviews that model each individual task. [ListingView](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/views/Listing.coffee)
