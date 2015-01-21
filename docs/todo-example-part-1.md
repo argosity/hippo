@@ -15,7 +15,7 @@ lanes new todo
 
 This will create a new directory with a skeleton Lanes application.  Read more about the directories and what their purposes are at {% doc_link command heading:'lanes new' %}.
 
-[Our example app at this point](https://github.com/argosity/lanes-todo-demo/tree/2d649b314a826cbbdbf54e3f72041caeeee8e428)
+[Our example app at this point](https://github.com/argosity/lanes-todo-demo/tree/a0909c52d63d3c8e577bdb4338c91ba74e4b1dfa)
 
 # Setup
 
@@ -25,17 +25,17 @@ Fire up the lanes testing server: `lanes serve`.  The test server will start the
 
 We'll copy the styles from the [TodoMVC template](https://github.com/tastejs/todomvc/tree/master/template).
 
-Looking at the Todo app, it has four distinct areas. A `sidebar`, `header`, `footer` and `listing` views. We can create views for them by executing `lanes generate view <name>`, where '< name >' is the view to create. [commit](https://github.com/argosity/lanes-todo-demo/commit/758d0e63359db18ee0291467656454c9fc1c3573)
+Looking at the Todo app, it has four distinct areas. A `sidebar`, `header`, `footer` and `listing` views. We can create views for them by executing `lanes generate view <name>`, where '< name >' is the view to create. [commit](https://github.com/argosity/lanes-todo-demo/commit/6d34c981637f75a182bf708290a146fdc72c77f2)
 
-First we take the TodoMVC html template and break it apart into sections and copy them to each view.  We're then able to plug each view's reference into the Screen as subviews. [commit](https://github.com/argosity/lanes-todo-demo/commit/8c5178a76f2a8abc0ffadbafb1239f7a8ba113b9)
+First we take the TodoMVC html template and break it apart into sections and copy them to each view.  We're then able to plug each view's reference into the Screen as subviews. [commit](https://github.com/argosity/lanes-todo-demo/commit/33d3d56b7a03e403276e894cc9233d4d2aa353e8)
 
-Next we'll create a data model `lanes generate model task title:string{80} completed:boolean` [commit](https://github.com/argosity/lanes-todo-demo/commit/5080c286aa4fb35a2b8372cc86ca4e9e18a18c3f)
+Next we'll create a data model `lanes generate model task title:string{80} completed:boolean` [commit](https://github.com/argosity/lanes-todo-demo/commit/c157f43fbf13a431e9ea08c67d65026c1b96e6dd)
 
-Since a task should default to being non-completed, we'll edit the migration to default that field to `false` and add a validation to the model [commit](https://github.com/argosity/lanes-todo-demo/commit/e3f7edf9f2863f0669cccac13f7f8e2b88276b5a)
+Since a task should default to being non-completed, we'll edit the migration to default that field to `false` and add a validation to the model [commit](https://github.com/argosity/lanes-todo-demo/commit/6ab50c30eee4b11a4406eacc53b1f5e63de76b45)
 
 Run migration: `lanes db migrate`
 
-We'll also create a TaskSummary model that is in charge of summarizing the state of the tasks.  It will listen to the tasks collection and perform calculations when events occur. [commit](https://github.com/argosity/lanes-todo-demo/commit/65da191ee749ab749855e06ce69c3bd09662e0d5)
+We'll also create a TaskSummary model that is in charge of summarizing the state of the tasks.  It will listen to the tasks collection and perform calculations when events occur. [commit](https://github.com/argosity/lanes-todo-demo/commit/c3372a0d76b5aafb4921b98c10f91d34c86ab86f)
 
 # Data and events
 
