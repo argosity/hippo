@@ -23,7 +23,6 @@ module Lanes
                 require_relative "../rake_tasks"
                 Extensions.each do |ext|
                     Dir.chdir(ext.root_path) do
-                        p ext.root_path
                         Rake::Task[task].reenable
                         Rake::Task[task].invoke
                     end
