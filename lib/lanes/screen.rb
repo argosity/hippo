@@ -36,6 +36,14 @@ module Lanes
                 Extensions.load_screens
                 GROUPS.values.each{ | group | yield group }
             end
+
+            def config_file
+                Lanes::Extensions.controlling.root_path.join("config","screens.rb")
+            end
+
+            def uncache_file_on_update(asset)
+                asset.depend_on(config_file) if config_file.exist?
+            end
         end
 
         class Group

@@ -2,4 +2,4 @@
     require_asset "lanes/components/#{component}"
 end %>
 
-<% depend_on Lanes::Extensions.controlling.root_path.join("config","screens.rb") %>
+<% Lanes::Screen.uncache_file_on_update(self) %>
