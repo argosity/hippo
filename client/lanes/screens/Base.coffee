@@ -2,17 +2,12 @@
 
 class ScreenBase
 
-    constructor: -> super
-
+    constructor: ->
+        super
 
     mixins:[
         Lanes.Screens.ChangeListener
     ]
-
-    initializeChanges:->
-        @_changeListeners = {}
-        for keypath in ( @usingModels || ['model'] )
-            @_changeListeners[keypath] = new Lanes.Views.ScreenChangeListener(this, keypath)
 
     reset: Lanes.emptyFn
 
