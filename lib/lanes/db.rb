@@ -23,9 +23,10 @@ module Lanes
 
         def configure_rake_environment
             ActiveRecord::Tasks::DatabaseTasks.seed_loader = Lanes::DB
+            default_schema = Extensions.controlling.root_path.join("db","schema.sql")
             env = ENV['RAILS_ENV'] || 'development'
-            ENV['SCHEMA']          ||= 'db/schema.sql'
-            ENV['DB_STRUCTURE']    ||= 'db/schema.sql'
+            ENV['SCHEMA']          ||= default_schema.to_s
+            ENV['DB_STRUCTURE']    ||= default_schema.to_s
             ActiveRecord::Base.schema_format = :sql
             Lanes::DB.establish_connection( env )
             ActiveRecord::Tasks::DatabaseTasks.database_configuration = ActiveRecord::Base.configurations
