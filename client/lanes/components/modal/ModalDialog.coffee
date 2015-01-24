@@ -25,6 +25,10 @@ class Lanes.Components.ModalDialog extends Lanes.Components.Base
             buttons : @buttons
         })
 
+    renderContextFree: ->
+        this.replaceEl( this.renderTemplateMethod() );
+        this
+
     hide:->
         this.$el.modal('hide')
         _.Promise.resolve( this )
