@@ -21,7 +21,6 @@ module Lanes
             def js_files
                 urlpath(Jasmine::Core.js_files)   +
                 urlpath(Jasmine::Core.boot_files) +
-                urlpath(spec_files("helpers"))    +
                 urlpath(spec_files(extension.identifier))
             end
 
