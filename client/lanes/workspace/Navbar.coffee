@@ -6,7 +6,7 @@ class Lanes.Workspace.Navbar extends Lanes.Views.Base
         Lanes.Workspace.WorkspaceView
     ]
 
-    events:
+    domEvents:
         'click .screens-menu-toggle': 'switchMenu'
         'click .navbar-toggle':  'showHideMenu'
 

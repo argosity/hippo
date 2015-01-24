@@ -11,7 +11,7 @@ class TabView extends Lanes.Views.Base
         'model.active': { type: 'booleanClass' }
 
 
-    events:
+    domEvents:
         'click': 'onClick'
 
     onClick: (ev)->
@@ -48,7 +48,7 @@ class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.Views.Base
         wrapper: '.wrapper'
         tabs:    '.nav-tabs'
 
-    events:
+    domEvents:
         'click .scroller-right': 'scrollRight'
         'click .scroller-left' : 'scrollLeft'
 

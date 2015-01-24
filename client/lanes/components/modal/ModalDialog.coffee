@@ -1,6 +1,6 @@
 class Lanes.Components.ModalDialog extends Lanes.Components.Base
 
-    events:
+    domEvents:
         'hide.bs.modal': '_onHide'
 
     bindings:

@@ -4,4 +4,6 @@ class <%= namespace.classify %>.Views.<%= class_name %> extends <%= namespace.cl
 
     subviews: {}
 
-    events: {}
+    domEvents: {}
+    modelEvents: {}
+    collectionEvents: {}

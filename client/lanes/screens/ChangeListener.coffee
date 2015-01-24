@@ -1,9 +1,9 @@
 Lanes.Screens.ChangeListener = {
 
-    model_events:
+    modelEvents:
         'remote-update': 'onChange'
 
-    events:
+    domEvents:
         'show.bs.dropdown .changes-notification': 'onChangesShow'
 
     session:

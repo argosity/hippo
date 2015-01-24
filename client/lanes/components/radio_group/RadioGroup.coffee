@@ -21,7 +21,7 @@ Lanes.Views.Base.extend(RadioInput)
 class RadioGroup
     constructor: -> super
 
-    events:
+    domEvents:
         'change input': 'onInputChange'
 
     writeTemplate: ->

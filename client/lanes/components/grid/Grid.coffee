@@ -9,7 +9,7 @@ _.extend( Lanes.$.fn.dataTableExt.oStdClasses,{
 
 class Lanes.Components.Grid extends Lanes.Components.Base
 
-    events:
+    domEvents:
         'click button.refresh': 'reload'
         'click button.delete':  'deleteRow'
         'click button.create':  'addRow'

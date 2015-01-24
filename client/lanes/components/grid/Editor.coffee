@@ -3,7 +3,7 @@ class Lanes.Components.Grid.Editor extends Lanes.Components.Base
     session:
         grid: 'object' # n.b. - not 'state'.  Doing so causes stack overflow since grid also has a 'editor' session var
 
-    events:
+    domEvents:
         'click .save':   'saveChanges'
         'click .cancel': 'cancelEditing'
 

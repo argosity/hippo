@@ -6,7 +6,7 @@ class FinderClause
     initialize: ->
         window.fc = this.model
 
-    events:
+    domEvents:
         'hidden.bs.dropdown': 'onQueryChange'
         'click .del-clause': 'delClause'
         'input input.query-string': 'onInput'
@@ -52,7 +52,7 @@ class FinderDialog
     constructor: ->
         super
 
-    events:
+    domEvents:
         'click .add-clause': 'addClause'
         'click .run-query':  'runQuery'
         'select-row .skr-grid': 'onSelect'
@@ -105,7 +105,7 @@ class RecordFinder
     template: 'record-finder/field'
     templateModels: -> { field_name: @record_query.initial_field }
 
-    events:
+    domEvents:
         "keyup .record-finder-query-string": "onKey"
         "click .record-finder-query": "displayFinder"
 

@@ -6,7 +6,7 @@ class ScreenList extends Lanes.Views.Base
         Lanes.Workspace.WorkspaceView
     ]
 
-    events:
+    domEvents:
         click: 'displayScreen'
 
     displayScreen: ->
@@ -24,7 +24,7 @@ class ScreenGroup extends Lanes.Views.Base
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
-    events:
+    domEvents:
         'click .group>a': 'toggleMenu'
 
     initialize: ->
@@ -63,7 +63,7 @@ class Lanes.Workspace.ScreensMenu extends Lanes.Views.Base
             collection: 'groups'
             view: ScreenGroup
 
-    events:
+    domEvents:
         'highlight-hide': 'onHighlightHide'
         'highlight-show': 'onHighlightShown'
         'click .logout':  'onLogout'

@@ -31,15 +31,15 @@ describe "Lanes.Views.Base", ->
         expect(view.el.tagName).toEqual("P")
         expect(view.el.innerHTML).toEqual("hello test")
 
-    it "listens to events", ->
+    it "listens to domEvents", ->
         spy = jasmine.createSpy('onClick')
         el = _.el( 'div',{id: 'testdiv'} )
         view = Lanes.Test.makeView({
-            events: { "click #mylink": 'onClick' }
+            domEvents: { "click #mylink": 'onClick' }
             template: "<div>text,text,text<a id='mylink'>click me</a>mor text</div>"
             onClick: spy
         },{el: el})
-        expect(view.events["click #mylink"]).toEqual('onClick')
+        expect(view.domEvents["click #mylink"]).toEqual('onClick')
         view.render()
         view.$('a').trigger('click',22)
         expect(spy).toHaveBeenCalledWith(jasmine.any(Object),22)
@@ -109,7 +109,7 @@ describe "Lanes.Views.Base", ->
         view = Lanes.Test.makeView({
             ui:
                 link: '#linky'
-            events:
+            domEvents:
                 'click @ui.link': spy
             template: "<div>text,text,text<a id='linky'>unmodified</a>More text</div>"
         })

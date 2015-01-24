@@ -98,12 +98,12 @@ class ViewBase
 
     _substituteEventUI: ->
         return unless @ui
-        if @events
-            for selector in _.keys(@events)
+        if @domEvents
+            for selector in _.keys(@domEvents)
                 replaced_selector = this._normalizeUIString(selector,@ui)
                 if replaced_selector != selector
-                    @events[replaced_selector] = @events[selector]
-                    delete @events[selector]
+                    @domEvents[replaced_selector] = @domEvents[selector]
+                    delete @domEvents[selector]
         # TODO - also apply ui to binding keys
 
 
@@ -155,12 +155,12 @@ class ViewBase
             data ||= _.result(this,"#{name}Data")
             path = _.result(this,'templatePrefix') + _.result(this, "#{name}Name")
             Lanes.Templates.render(this, path, data)
-        throw new Error("#{this.FILE.path} failed to render #{name}") unless template
+        throw new Error("#{this.FILE.path} failed to render #{path || name}") unless template
         template
 
     templateName: -> _.underscore( this.FILE.path )
 
-    templatePrefix: -> this.FILE.extensionName.toLowerCase() + "/views/"
+    templatePrefix: -> _.dasherize(this.FILE.extensionName) + "/views/"
 
     templateData: ->
         { model: @model?.toJSON?(), collection: @collection?.toJSON?() }
@@ -194,7 +194,7 @@ class ViewBase
     _onElementChange: (element, delegate) ->
         if changes = this.changedAttributes()
             Lanes.$(changes['el']).off('.delegateEvents' + this.cid) if changes['el']
-        this.bindEvents()
+        this.bindDomEvents()
         this._cacheUI()
         this._applyBindingsForKey();
 
@@ -215,7 +215,7 @@ class ViewBase
             this.ui[key] = this.$(selector)
 
 
-    # Sets callbacks, where `this.events` is a hash of
+    # Sets callbacks, where `this.domEvents` is a hash of
     #
     # *{"event selector": "callback"}*
     #
@@ -230,15 +230,14 @@ class ViewBase
     # Omitting the selector binds the event to `this.el`.
     # This only works for delegate-able events: not `focus`, `blur`, and
     # not `change`, `submit`, and `reset` in Internet Explorer.
-    bindEvents: (events)->
-        return this if (!(events || (events = _.result(this, 'events'))))
-        this.unbindEvents();
+    bindDomEvents: (events)->
+        return this if (!(events || (events = _.result(this, 'domEvents'))))
+        this.unbindDomEvents();
         for key, method of events
             method = this[ method ] unless _.isFunction(method);
             continue unless method
             match = key.match( delegateEventSplitter )
             this.bindEvent(match[1], match[2], _.bind(method, this))
-
         return this;
 
     # Add a single event listener to the view's element (or a child element
@@ -250,7 +249,7 @@ class ViewBase
     # Clears all callbacks previously bound to the view with `delegateEvents`.
     # You usually don't need to use this, but may wish to if you have multiple
     # views attached to the same DOM element.
-    unbindEvents: ->
+    unbindDomEvents: ->
         this.$el.off('.delegateEvents' + this.cid) if this.el
         return this;
 
@@ -287,11 +286,17 @@ class ViewBase
             Lanes.getPath(subview.component, Lanes.Components)
         else if subview.view
             if _.isString(subview.view)
-                Lanes.getPath(subview.view, this.FILE.namespace['Views'] )
+                Lanes.getPath(subview.view, this.subviewPrefix() )
             else
                 subview.view
         Lanes.warn( "Unable to obtain view for %o", subview) if ! klass
         klass
+
+    # ## subviewPrefix
+    # returns the namespace that the views should be in
+    # is needed so views can be specified by only thier name, rather than complete path
+    subviewPrefix: ->
+        this.FILE.namespace['Views']
 
     # ## _parseSubview
     # helper for parsing out the subview declaration and registering
@@ -399,6 +404,9 @@ class ViewBase
         view
 
     @extended: (klass)->
+        if klass::events && !klass::domEvents
+            klass::domEvents == klass::events
+            delete klass::events
         # perhaps we should merge 'events','bindings'?
 
 

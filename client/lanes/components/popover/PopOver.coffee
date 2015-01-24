@@ -1,6 +1,6 @@
 class Lanes.Components.PopOver extends Lanes.Components.Base
 
-    events:
+    domEvents:
         'hide.bs.popover': '_onHide'
 
     session:
