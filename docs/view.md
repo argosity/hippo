@@ -56,8 +56,7 @@ All views have a single DOM element.  If a view does is not provided an el when 
 
 # template
 
-Either an string or a function that returns a string.  The string can be either a path to a pre-compiled template, or a HTML string.
-
+Templates are specified either as inline strings on the "template" property, or as an external file with the same name as the view, but with the HTML extension.  If an external file is used, embedded CoffeeScript can be used inside it.  The name of the external template file can be changed by specifying a `templateName`
 
 ``` coffee
 class MyView extends Lanes.Views.Base
@@ -69,43 +68,41 @@ view.render()
 # view.el.innerHTML => <div><p>Hello World</p></div>
 ```
 
+Given a template file located in `myapp/views/file-list`
 
+```text
+<% if @files.length: %>
+  <h1>My Files:</h1>
+  <% for file in @files: %>
+    <p><%= file.name %></p>
+  <% end %>
+<% else: %>
+  No files
+<% end %>
+```
 
 ``` coffee
-class MyView extends Lanes.Views.Base
-    template: "views/myview"
+# Contained in file FileList.coffee
+class MyApp.Views.MyView extends Lanes.Views.Base
+    source: FILE
+    templateData: ->
+      {
+        files: [
+          { name: "Gifts" }, { name: "Secrets" }, { name: "Games" }
+        ]
+      {
 
-view = new MyView
-# attempt to render a template from path "views/myview"
+view = new FileList
+# will use the "FILE" information to render
+# template above from "myapp/views/file-list"
 view.render()
 ```
 
-
-``` coffee
-# Contained in file MyView.coffee
-
-class MyApp.Views.MyView extends Lanes.Views.Base
-    source: FILE
-
-view = new MyView
-# will use the "source" information to render
-# a template from "myapp/views/my_view"
-view.render()
-```
-
-# templateName
-
-A string (or function that returns one) that contains the name of a template.  The template will be loaded from the same path but using the templateName instead of one with the same name as the file.
-
-``` coffee
-class MyApp.Views.MyView extends Lanes.Views.Base
-    source: FILE
-    templateName: "contents"
-
-view = new MyView
-# will use the "source" information to render
-# a template from "myapp/views/contents"
-view.render()
+```html
+  <h1>My Files:</h1>
+    <p>Gifts</p>
+    <p></p>
+    <p>Gifts</p>
 ```
 
 # subviews
@@ -146,7 +143,7 @@ class MyApp.Views.MyView extends Lanes.Views.Base
            <div class='grid'></div>
            <div class='names'></div>
         </div>"
-```            
+```
 
 Notes:
 
@@ -162,9 +159,9 @@ Notes:
  * **names**
    * Since the "view" is given as a simple string, Lanes will search for it in the MyApp namespace, and will expect `MyApp.Views.NamesItem` to be defined
    * A collection is specified.  A collectionView will be created and the NamesItem class given as the child view to the collectionView.  The collectionView will then handle rendering the collection whenever it has items added/removed.
-   
 
-# subviewOptions(name,def)
+
+# subviewOptions
 
 When subviews are created, they are initialized with an options object containing the parent view, and any other options that are returned by the `subviewOptions` method.
 
@@ -183,14 +180,12 @@ class MyApp.Views.MyView extends Lanes.Views.Base
             view: 'Heading'
         footer:
             view: 'Footer'
-    subviewOptions: ->
+    subviewOptions: (name,definition)->
         {model: @model, status: "red"}
 
 ```
 
-
-
-# events
+# domEvents
 
 Listens for DOM events that occur within the view _(under it's el)_.  Events are specified as a
  hash containing "event selector" for the key and either a name of a method or function for the value.
@@ -201,11 +196,33 @@ If the selector is ommited, the event will be bound to the root element.
 ``` coffee
 class MyApp.Views.MyView extends Lanes.Views.Base
     template: "<div><a class='title'>click me!</a></div>"
-    events:
+    domEvents:
         "click .title": "onTitleClick"
         "click": -> console.log("I feel like I was clicked somewhere")
     onTitleClick: ->
         console.log "Title Was Clicked!"
+```
+
+# modelEvents
+
+### and collectionEvents
+
+Listens for events fired by the model and calls the given function when they occur.
+
+The function may be specified as either an inline function, or as a method reference.
+
+**Note**: The model and collection events are usually not needed.  If the only action taken is to update the DOM, it's almost always better to use bindings.
+
+``` coffee
+class MyApp.Views.MyView extends Lanes.Views.Base
+    modelEvents:
+        "read", "render"
+        "change:birthday_now", -> alert("Happy Birthday!")
+    collectionEvents:
+        "change:length", "recalcAll"
+
+    recalcAll: (ev)->
+        doStuff()
 ```
 
 # ui
@@ -220,7 +237,7 @@ class MyApp.Views.MyView extends Lanes.Views.Base
     ui:
         title: "a.title"
     template: "<div><a class='title'>click me!</a></div>"
-    events:
+    domEvents:
         "click @ui.title": "onTitleClick"
     onTitleClick: ->
         console.log "Title Was Clicked!"

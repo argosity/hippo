@@ -1,10 +1,10 @@
 ---
 title: Model
-heading: Lanes.Data.Model
+heading: Lanes.Models.Base
 position_after: view
 ---
 
-Lanes provides a Lanes.Data.Model class that all other models extend from.
+Lanes provides a Lanes.Models.Base class that all other models extend from.
 
 A Model is an extension of [Ampersand State](http://ampersandjs.com/docs#ampersand-state), and supports all the features that AmpersandState does.
 
@@ -22,6 +22,38 @@ Model methods that make requests to the server can specify options to control wh
 
 ### API Reference
 
+# @where
+
+Load models from server that match the query. Returns [Collection](#@query)
+
+``` coffee
+class Person extends Lanes.Models.Base
+    props:
+        id: 'integer'
+        name: 'string'
+
+
+collection = Person.where( last_name: "smith" )
+````
+
+
+# @Collection
+
+A collection definition is provided for each model.
+
+Read more about [Request Options](#request-options)
+
+``` coffee
+class Person extends Lanes.Models.Base
+    props:
+        id: 'integer'
+        name: 'string'
+
+
+collection = Person.Collection.fetch(query:{ name: "John" }, limit: 10, with: [ 'address','photo' ] )
+````
+
+
 # initialize
 
 `new Model({options})`
@@ -35,7 +67,7 @@ If a collection reference is provided to initalize, it will be copied onto the m
 Fetches and instantiates a record.  Is useful for when you all you know is the record's ID.  The identity map is consulted, and if the record is present there the existing copy is returned.
 
 ``` coffee
-class Balance extends Lanes.Data.Model
+class Balance extends Lanes.Models.Base
     props:
         id: 'integer'
         amount: 'bigdec'
@@ -59,7 +91,7 @@ Saves record state to server.  If options.saveAll is true, then the entire data 
 Save also saves it's associations along with itself.
 
 ``` coffee
-class Car extends Lanes.Data.Model
+class Car extends Lanes.Models.Base
     associations:
         driver: { model: Person }
     props:
@@ -85,7 +117,7 @@ Sets field and values.  Marks the fields as unsaved and the record as "dirty".  
 returns the field and values that have been modified and the unsavedData from associations as well.
 
 ``` coffee
-class Car extends Lanes.Data.Model
+class Car extends Lanes.Models.Base
     associations:
         driver: { model: Person }
     props:
@@ -113,7 +145,7 @@ Returns a string with an appropriate error message for setting the field to valu
 
 If the change is considered valid, an empty string is returned.
 
-The default implementation only checks the 'required' status of the field.  Models inheriting from `Lanes.Data.Model` may provide an alternative implementation.
+The default implementation only checks the 'required' status of the field.  Models inheriting from `Lanes.Models.Base` may provide an alternative implementation.
 
 # withAssociations(list...)
 
@@ -153,7 +185,7 @@ end
 It can be queried by the client:
 
 ``` coffee
-class Invoice extends Lanes.Data.Model
+class Invoice extends Lanes.Models.Base
     props:
         id: 'integer'
         total: 'bigdec'
