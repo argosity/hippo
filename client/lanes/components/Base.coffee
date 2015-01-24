@@ -24,10 +24,9 @@ class BaseComponent
             'readTemplate'
         else
             'emptyTemplate'
-
         this.replaceEl( this.renderTemplateMethod(tmpl) );
 
-    templatePrefix: -> this.FILE.extensionName.toLowerCase() + "/components/"
+    templatePrefix: -> _.dasherize(this.FILE.extensionName) + "/components/"
 
     calculate_access:->
         if ! @field_name || Lanes.Views.RenderContext.canWrite(@field_name)
