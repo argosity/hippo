@@ -4,7 +4,7 @@ require "find"
 
 
 describe Lanes::Command do
-    let(:lanes) { Pathname.new(__FILE__).dirname.join('..','bin','lanes') }
+    let(:lanes) { Pathname.new(__FILE__).dirname.join('..','..','bin','lanes') }
 
     around do |test|
         Dir.mktmpdir do |dir|
