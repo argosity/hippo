@@ -29,7 +29,13 @@ Lanes.getPath = ( name, ns='Lanes' ) ->
     ns = "Lanes.#{ns}" if _.isString(ns) && !ns.match("Lanes")
     distillTypes(name, window) || distillTypes(name, if _.isObject(ns) then ns else distillTypes(ns, window) )
 
+lcDash = (char, match, index)->
+    return ( if index == 0 then '' else '_' ) + char.toLowerCase()
+
 _.mixin({
+    dasherize: (str)->
+        _.trim(str).replace(/([A-Z])/g,lcDash).replace(/[-_\s]+/g, '-').toLowerCase();
+
 
     toSentence: (words=[], comma=', ', nd=' and ')->
         last = words.pop()
