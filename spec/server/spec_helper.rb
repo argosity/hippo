@@ -1,5 +1,5 @@
 require "lanes/spec_helper"
-require_relative "helpers/minitest_assertions"
+require_relative "minitest_assertions"
 require "active_record_mocks"
 
 module TestingModels
