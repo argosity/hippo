@@ -9,11 +9,11 @@ class Lanes.Workspace.Layout extends Lanes.Views.Base
     subviews:
         navbar:
             hook: 'navbar-container'
-            view: 'Workspace.Navbar'
+            view: 'Navbar'
 
         pages:
             hook: 'page-container'
-            view: 'Workspace.Pages'
+            view: 'Pages'
 
     subviewOptions: -> { model: this.model }
 
