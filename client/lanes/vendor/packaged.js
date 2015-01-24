@@ -427,7 +427,7 @@ extend(Collection.prototype, BackboneEvents, {
     get: function (query, indexName) {
         if (!query) return;
         var index = this._indexes[indexName || this.mainIndex];
-        return index[query] || index[query[this.mainIndex]] || this._indexes.cid[query.cid];
+        return index[query] || index[query[this.mainIndex]] || this._indexes.cid[query] || this._indexes.cid[query.cid];
     },
 
     // Get the model at the given index.
@@ -2443,7 +2443,7 @@ KeyTreeStore.prototype.get = function (keypath) {
 module.exports = KeyTreeStore;
 
 },{}],17:[function(require,module,exports){
-;window.ampersand = window.ampersand || {};window.ampersand["ampersand-subcollection"] = window.ampersand["ampersand-subcollection"] || [];window.ampersand["ampersand-subcollection"].push("1.5.0");
+;window.ampersand = window.ampersand || {};window.ampersand["ampersand-subcollection"] = window.ampersand["ampersand-subcollection"] || [];window.ampersand["ampersand-subcollection"].push("2.0.1");
 var _ = require('underscore');
 var Events = require('backbone-events-standalone');
 var classExtend = require('ampersand-class-extend');
@@ -2452,12 +2452,9 @@ var slice = Array.prototype.slice;
 
 
 function SubCollection(collection, spec) {
-    spec || (spec = {});
     this.collection = collection;
-    this._reset();
-    this._watched = spec.watched || [];
-    this._parseFilters(spec);
-    this._runFilters();
+    this.models = [];
+    this.configure(spec || {}, true);
     this.listenTo(this.collection, 'all', this._onCollectionEvent);
 }
 
@@ -2475,7 +2472,7 @@ _.extend(SubCollection.prototype, Events, underscoreMixins, {
 
     // clears filters fires events for changes
     clearFilters: function () {
-        this._reset();
+        this._resetFilters();
         this._runFilters();
     },
 
@@ -2508,7 +2505,7 @@ _.extend(SubCollection.prototype, Events, underscoreMixins, {
     },
 
     // Update sub collection config, if `clear`
-    // then clear existing filters before start.
+    // then clear existing spec before start.
     // This takes all the same filter arguments
     // as the init function. So you can pass:
     // {
@@ -2518,8 +2515,9 @@ _.extend(SubCollection.prototype, Events, underscoreMixins, {
     //   limit: 20
     // }
     configure: function (opts, clear) {
-        if (clear) this._resetFilters();
-        this._parseFilters(opts);
+        if (clear) this._resetFilters(clear);
+        //_.extend(this._spec, opts);
+        this._parseSpec(opts);
         this._runFilters();
     },
 
@@ -2543,17 +2541,17 @@ _.extend(SubCollection.prototype, Events, underscoreMixins, {
     },
 
     // clear all filters, reset everything
-    _reset: function () {
-        this.models = [];
-        this._resetFilters();
+    reset: function () {
+        this.configure({}, true);
     },
 
     // just reset filters, no model changes
-    _resetFilters: function () {
+    _resetFilters: function (resetComparator) {
         this._filters = [];
         this._watched = [];
         this.limit = undefined;
         this.offset = undefined;
+        if (resetComparator) this.comparator = undefined;
     },
 
     // internal method registering new filter function
@@ -2568,10 +2566,12 @@ _.extend(SubCollection.prototype, Events, underscoreMixins, {
 
     // removes a watched property
     _unwatch: function (item) {
-        this._watched = _.without(this._watched, item);
+        this._watched = _.difference(this._watched, _.isArray(item) ? item : [item]);
     },
 
-    _parseFilters: function (spec) {
+    _parseSpec: function (spec) {
+        if (spec.watched) this._watch(spec.watched);
+        if (spec.comparator) this.comparator = spec.comparator;
         if (spec.where) {
             _.each(spec.where, function (value, item) {
                 this._addFilter(function (model) {
@@ -2584,13 +2584,10 @@ _.extend(SubCollection.prototype, Events, underscoreMixins, {
         if (spec.hasOwnProperty('limit')) this.limit = spec.limit;
         if (spec.hasOwnProperty('offset')) this.offset = spec.offset;
         if (spec.filter) {
-            this._addFilter(spec.filter, false);
+            this._addFilter(spec.filter);
         }
         if (spec.filters) {
             spec.filters.forEach(this._addFilter, this);
-        }
-        if (spec.comparator) {
-            this.comparator = spec.comparator;
         }
     },
 
@@ -2614,7 +2611,11 @@ _.extend(SubCollection.prototype, Events, underscoreMixins, {
         if (this.comparator) newModels = _.sortBy(newModels, this.comparator);
 
         // trim it to length
-        if (this.limit || this.offset) newModels = newModels.slice(offset, this.limit + offset);
+        if (this.limit || this.offset) {
+            // Cache a reference to the full filtered set to allow this.filtered.length. Ref: #6
+            this.filtered = newModels;
+            newModels = newModels.slice(offset, this.limit + offset);
+        }
 
         // now we've got our new models time to compare
         toAdd = _.difference(newModels, existingModels);
@@ -2631,19 +2632,20 @@ _.extend(SubCollection.prototype, Events, underscoreMixins, {
             this.trigger('add', model, this);
         }, this);
 
-        // if they contain the same models, but in new order, trigger sort
+        // unless we have the same models in same order trigger `sort`
         if (!_.isEqual(existingModels, newModels)) {
             this.trigger('sort', this);
         }
     },
 
     _onCollectionEvent: function (eventName, model) {
+        var propName = eventName.split(':')[1];
         // conditions under which we should re-run filters
-        if (_.contains(this._watched, eventName.split(':')[1]) || _.contains(['add', 'remove', 'reset', 'sync'], eventName)) {
+        if (propName === this.comparator || _.contains(this._watched, propName) || _.contains(['add', 'remove', 'reset', 'sync'], eventName)) {
             this._runFilters();
         }
         // conditions under which we should proxy the events
-        if ((_.contains(['sync', 'invalid', 'destroy']) || eventName.indexOf('change') !== -1) && this.contains(model)) {
+        if (!_.contains(['add', 'remove'], eventName) && this.contains(model)) {
             this.trigger.apply(this, arguments);
         }
     }
