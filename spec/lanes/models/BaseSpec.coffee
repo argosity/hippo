@@ -100,7 +100,6 @@ describe "Lanes.Models.Base", ->
         Lanes.Models.Base.extend(Base)
         class Model
             constructor: -> super
-        debugger
         Model = Base.extend(Model)
         expect(Model.Collection::model).toEqual(Model)
 
