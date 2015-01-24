@@ -24,6 +24,7 @@ CommonMethods = {
                 success.apply(@,arguments) if success
         })
         Lanes.Models.Sync.perform('delete', this, options)
+
 }
 
 class ModelsCollection
@@ -32,6 +33,10 @@ class ModelsCollection
         @_isLoaded=false
         @errors=[]
         Lanes.Vendor.Ampersand.Collection.apply(this, arguments)
+        this.on('add remove reset', this._triggerLengthEvent )
+
+    _triggerLengthEvent: ->
+        this.trigger('change:length', this)
 
     # convenience method to instantiate a collection
     # then call fetch on it with the options provided
@@ -106,6 +111,13 @@ class ModelsCollection
         CommonMethods
     ]
 
+
+    # add: ->
+    #     r=super
+    #     this.trigger('change:length', this)
+    #     r
+
+
 class BasicCollection
     constructor: -> super
     isLoaded: -> true
@@ -133,6 +145,5 @@ Lanes.Models.SubCollection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.Sub
 Lanes.Models.BasicCollection = Lanes.lib.MakeBaseClass(
     Lanes.Vendor.Ampersand.Collection.extend(Lanes.Vendor.Ampersand.USCollection), BasicCollection
 )
-
 
 Lanes.Models.Collection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.RestCollection, ModelsCollection )
