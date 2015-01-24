@@ -1,20 +1,19 @@
 
 
 .modal-backdrop{
-  position: absolute;
+    position: absolute;
 }
 
 
-// Use our sizing detection instead of media-queries
-
 .modal {
-
-  &.md{
-    .modal-lg {
-      right: 5%;
-      width: 100%;
-      left: 5%;
+    .modal-dialog {
+        z-index: 26;
     }
-  }
-
+    &.md{
+        .modal-lg {
+            right: 5%;
+            width: 100%;
+            left: 5%;
+        }
+    }
 }
