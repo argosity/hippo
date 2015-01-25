@@ -67,7 +67,7 @@ module Lanes
 
         end
 
-        class LanesExtension < Definition
+        class Base < Definition
             identifier "lanes"
 
             root_path Pathname.new(__FILE__).dirname.join("..","..").expand_path
