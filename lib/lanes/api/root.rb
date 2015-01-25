@@ -23,7 +23,6 @@ module Lanes
             use Rack::Session::Cookie, :key => 'lanes.session', :secret => Lanes.config.session_secret_key_base
             use ActiveRecord::ConnectionAdapters::ConnectionManagement
             error do
-                Lanes.logger.warn request.env['sinatra.error']#.backtrace
                 Oj.dump({
                     success: false,
                     errors:  { exception: request.env['sinatra.error'].message },
