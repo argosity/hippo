@@ -1,7 +1,7 @@
 class Lanes.Access.LoginDialog extends Lanes.Components.ModalDialog
 
     bodyTemplateName: 'login-dialog'
-    templatePrefix: 'lanes/access/'
+    templatePrefix: 'lanes/access'
 
     size: 'md'
     title: 'Please sign in …'
@@ -38,3 +38,7 @@ class Lanes.Access.LoginDialog extends Lanes.Components.ModalDialog
         })
 
     onShown: -> @ui.l.focus()
+
+
+Lanes.Access.createLoginDialog = (view)->
+    new Lanes.Access.LoginDialog( parent: view )

@@ -1,6 +1,6 @@
 Lanes.Workspace.WorkspaceView = {
 
-    templatePrefix: -> 'workspace/'
+    templatePrefix: -> 'workspace'
 
     subviewPrefix: ->
         this.FILE.namespace['Workspace']

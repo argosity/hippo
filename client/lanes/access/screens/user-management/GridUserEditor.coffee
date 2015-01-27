@@ -1,7 +1,7 @@
 class Lanes.Access.Screens.UserManagement.GridUserEditor extends Lanes.Components.Grid.PopOverEditor
 
     writeTemplateName: 'user-management/grid-popover-editor'
-    templatePrefix: 'lanes/access/screens/'
+    templatePrefix: 'lanes/access/screens'
 
     writeTemplateData: ->
         { columns: _.reject(this.grid.columnDefinitions,(f)-> f.field=='role_names') }

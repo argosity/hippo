@@ -153,14 +153,14 @@ class ViewBase
             _.result(this, name)
         else
             data ||= _.result(this,"#{name}Data")
-            path = _.result(this,'templatePrefix') + _.result(this, "#{name}Name")
+            path = _.result(this,'templatePrefix') + '/' + _.result(this, "#{name}Name")
             Lanes.Templates.render(this, path, data)
         throw new Error("#{this.FILE.path} failed to render #{path || name}") unless template
         template
 
     templateName: -> _.underscore( this.FILE.path )
 
-    templatePrefix: -> _.dasherize(this.FILE.extensionName) + "/views/"
+    templatePrefix: -> _.dasherize(this.FILE.extensionName) + "/views"
 
     templateData: ->
         { model: @model?.toJSON?(), collection: @collection?.toJSON?() }
