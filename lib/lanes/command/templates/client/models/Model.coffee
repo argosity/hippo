@@ -1,6 +1,6 @@
-class <%= namespace.camelize %>.Models.<%= class_name %> extends <%= namespace.camelize %>.Models.Base
+class <%= namespace %>.Models.<%= class_name %> extends <%= namespace %>.Models.Base
 
-    api_path: '<%= name.downcase.pluralize.underscore.dasherize %>'
+    api_path: '<%= identifier.pluralize.dasherize %>'
     FILE: FILE
 
     props:
@@ -15,6 +15,6 @@ class <%= namespace.camelize %>.Models.<%= class_name %> extends <%= namespace.c
 
     associations:
 <% reference_fields.each do |field| -%>
-        <%= sprintf("%-#{max_field_length}s ",field.name) %>: { <%= field.belongs_to? ? 'model' : 'collection' -%>: "<%= namespace.camelize %>.<%= field.name.camelize %>" }
+        <%= sprintf("%-#{max_field_length}s ",field.name) %>: { <%= field.belongs_to? ? 'model' : 'collection' -%>: "<%= namespace %>.<%= field.name.camelize %>" }
 <% end -%>
 <% end -%>

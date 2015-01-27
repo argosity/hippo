@@ -1,6 +1,6 @@
-module <%= namespace.camelize %>
+module <%= namespace %>
 
-    # All models in <%= namespace.camelize %> will inherit from
+    # All models in <%= namespace %> will inherit from
     # this common base class.
     class Model < Lanes::Model
 

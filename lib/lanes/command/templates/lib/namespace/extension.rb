@@ -1,10 +1,10 @@
-require_relative '../<%= name %>'
+require_relative '../<%= identifier %>'
 
-module <%= namespace.camelize %>
+module <%= namespace %>
 
     class Extension < Lanes::Extensions::Definition
 
-        identifier "<%= name %>"
+        identifier "<%= identifier %>"
 
         root_path Pathname.new(__FILE__).dirname.join("..","..").expand_path
 

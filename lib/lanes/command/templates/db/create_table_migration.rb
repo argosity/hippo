@@ -1,4 +1,4 @@
-class Create<%= namespace.camelize %><%= class_name.pluralize %> < ActiveRecord::Migration
+class Create<%= namespace %><%= class_name.pluralize %> < ActiveRecord::Migration
     def change
         create_table :<%= table_name %> do |t|
 <% fields.each do |attribute| -%>

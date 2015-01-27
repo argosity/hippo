@@ -1,4 +1,4 @@
-module <%= namespace.camelize %>
+module <%= namespace %>
 
     class <%= class_name %> < Model
 

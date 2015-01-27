@@ -9,7 +9,8 @@ module Lanes
 
 
             def load_namespace # override
-                @namespace  = name
+                @namespace  = name.underscore.camelize
+                @identifier = @namespace.underscore.dasherize
             end
 
             def set_variables
@@ -18,13 +19,12 @@ module Lanes
             end
 
             def create_files
-                ["Gemfile", "Rakefile", "Guardfile", "config.ru", "config/database.yml"].each do | file |
-                    template file
+                ["Gemfile", "Rakefile", "Guardfile", "config.ru", "config/database.yml"].each do | file |                    template file
                 end
-                template "lib/namespace.rb", "lib/#{name}.rb"
-                template "lib/namespace/version.rb", "lib/#{name}/version.rb"
-                template "lib/namespace/extension.rb", "lib/#{name}/extension.rb"
-                template "lib/namespace/base_model.rb", "lib/#{name}/model.rb"
+                template "lib/namespace.rb", "lib/#{identifier}.rb"
+                template "lib/namespace/version.rb", "lib/#{identifier}/version.rb"
+                template "lib/namespace/extension.rb", "lib/#{identifier}/extension.rb"
+                template "lib/namespace/base_model.rb", "lib/#{identifier}/model.rb"
                 template "config/routes.rb"
                 template "config/lanes.rb"
                 template "gitignore",".gitignore"
@@ -50,7 +50,7 @@ module Lanes
 
             def create_spec_helpers
                 template "spec/client/helpers/ClientHelpers.coffee",
-                         "#{spec_dir}/helpers/#{name.camelize}Helpers.coffee"
+                         "#{spec_dir}/helpers/#{namespace}Helpers.coffee"
                 template "spec/server/spec_helpers.rb",
                          "spec/server/spec_helpers.rb"
             end
