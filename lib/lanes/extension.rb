@@ -105,11 +105,11 @@ module Lanes
             end
 
             def require_workspace?
-                all.detect{|ext| ext.uses_workspace }
+                all.any?{|ext| ext.uses_workspace }
             end
 
             def require_pub_sub?
-                all.detect{|ext| ext.uses_pub_sub }
+                all.any?{|ext| ext.uses_pub_sub }
             end
 
             def each_asset(phase: :early, type: :js)
