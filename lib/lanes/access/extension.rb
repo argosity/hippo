@@ -2,9 +2,9 @@ module Lanes
     module Access
         class Extension < Lanes::Extensions::Definition
             self.uses_workspace = true
-            self.uses_pub_sub   = true
 
             identifier "lanes-access"
+
             components :modal, :grid, :select_field
 
             root_path Pathname.new(__FILE__).dirname.expand_path
