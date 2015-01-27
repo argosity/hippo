@@ -26,11 +26,11 @@ impl = {
     field_options: (name, options)->
         options.widths=[options.width] if options.width # convert singular widths into an array if present
         {
-            widths: this.grid_widths(options.widths...)
+            widths: this.grid_widths(options.widths)
             title:  _.escape( options.label || _.titleize(name) )
         }
 
-    grid_width:(widths, type='')->
+    grid_widths:(widths, type='')->
         last = widths[widths.length-1]
         widths.push(last) for i in [widths.length-1..4]
         ( "col-#{width}#{type}-#{widths[index]}" for index,width of ['xs','sm','md','lg'] ).join(' ')
@@ -53,14 +53,14 @@ Lanes.Views.Helpers = {
             impl.template('button', options )
 
     grid_offsets: (widths...)->
-        impl.grid_width(widths,'-offset')
+        impl.grid_widths(widths,'-offset')
 
     grid_widths: (widths...)->
-        impl.grid_width(widths);
+        impl.grid_widths(widths);
 
     text_field: (name,options={})->
         impl.field(name, options,
-            "<input type='text' name='#{name}'><span class='feedback'></span>"
+            "<input type='#{options.type || 'text'}' name='#{name}'><span class='feedback'></span>"
             "<div class='ro-input update' name='#{name}'></div>"
         )
 
