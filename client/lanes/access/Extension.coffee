@@ -16,7 +16,4 @@ class Lanes.Access.Extension extends Lanes.Extensions.Base
             Lanes.current_user.access_data = data.access
 
     onAvailable: (view)->
-        this.login_dialog = new Lanes.Access.LoginDialog({ parent: view })
-
-        # screen=Lanes.Models.Screens.all.get("user-management")
-        # screen.display(view.viewport)
+        Lanes.Access.createLoginDialog(view)
