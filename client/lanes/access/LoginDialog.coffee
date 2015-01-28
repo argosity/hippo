@@ -2,6 +2,9 @@ class Lanes.Access.LoginDialog extends Lanes.Components.ModalDialog
 
     bodyTemplateName: 'login-dialog'
     templatePrefix: 'lanes/access'
+    hideOnBackdropClick: false
+    showHideButton: false
+    hideOnEsc: false
 
     size: 'md'
     title: 'Please sign in …'

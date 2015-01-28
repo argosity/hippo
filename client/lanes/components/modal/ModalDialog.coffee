@@ -1,7 +1,15 @@
 class Lanes.Components.ModalDialog extends Lanes.Components.Base
 
+    constructor: (options={})->
+        _.extend(this, _.pick(options, 'hideOnBackdropClick', 'hideButton'))
+        super
+
     domEvents:
         'hide.bs.modal': '_onHide'
+
+    hideOnEsc: true
+    showHideButton: true
+    hideOnBackdropClick: true
 
     bindings:
         'viewport.layout_size': { type:'class',selector:'.modal-dialog'}
@@ -23,6 +31,7 @@ class Lanes.Components.ModalDialog extends Lanes.Components.Base
             title   : @title || context.dialog_title
             body    : this.renderTemplateMethod('bodyTemplate')
             buttons : @buttons
+            showHideButton : @showHideButton
         })
 
     renderContextFree: ->
@@ -39,7 +48,12 @@ class Lanes.Components.ModalDialog extends Lanes.Components.Base
             this.$el.modal('show')
         else
             this.render()
-            this.$el.modal({ body: this.viewport.el })
+            this.$el.modal({
+                body: this.viewport.el
+                backdrop: if this.hideOnBackdropClick then true else 'static'
+                hideOnEsc: true
+                keyboard: @hideOnEsc
+            })
         this.notification = new _.DeferredPromise
         return this.notification.promise
 
