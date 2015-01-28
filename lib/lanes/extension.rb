@@ -22,7 +22,6 @@ module Lanes
 
             # Does the extension use PubSub functionality
             class_attribute  :uses_pub_sub
-            class_attribute  :uses_workspace
 
             # Load extension before/after the named extensions
             class_attribute :before

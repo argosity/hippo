@@ -1,3 +1,5 @@
+require_relative 'workspace'
+
 module Lanes
 
     module Access

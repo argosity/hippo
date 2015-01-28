@@ -4,11 +4,11 @@ module Lanes
         module HelperMethods
 
             def lanes_javascript_tag
-                javascript_tag( Extensions.require_workspace? ? 'lanes/workspace' : 'lanes/minimal' )
+                javascript_tag( 'lanes' )
             end
 
             def lanes_stylesheet_tag
-                stylesheet_tag( Extensions.require_workspace? ? 'lanes/workspace' : 'lanes/minimal' )
+                stylesheet_tag( 'lanes' )
             end
 
             def client_bootstrap_data

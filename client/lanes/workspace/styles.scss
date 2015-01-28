@@ -1,0 +1,21 @@
+@import "lanes/styles/bootstrap";
+@import "lanes/styles/fonts";
+// extensions are rooted at .lanes
+&{
+  padding: 0px;
+  margin: 0px;
+  background-color: $body-bg;
+  position: relative;
+  min-height: 10px; // needs height for resizing sensor to function
+}
+
+@import "styles/plugins/all";
+@import "styles/layout";
+@import "styles/tabs";
+@import "styles/screens";
+@import "styles/forms";
+@import "styles/forms";
+@import "styles/forms";
+@import "styles/changes-notification";
+@import "styles/keybindings";
+

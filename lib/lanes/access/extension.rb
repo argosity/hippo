@@ -1,7 +1,8 @@
+require_relative '../workspace'
+
 module Lanes
     module Access
         class Extension < Lanes::Extensions::Definition
-            self.uses_workspace = true
 
             identifier "lanes-access"
 
