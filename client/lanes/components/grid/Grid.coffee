@@ -8,6 +8,7 @@ _.extend( Lanes.$.fn.dataTableExt.oStdClasses,{
 
 
 class Lanes.Components.Grid extends Lanes.Components.Base
+    FILE: FILE
 
     domEvents:
         'click button.refresh': 'reload'
@@ -17,7 +18,7 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         'cancel-edit': 'onCancelEdit'
         'order.dt table': 'onSort'
 
-    writeTemplateName: 'grid/template'
+    writeTemplateName: 'template'
 
     writeTemplateData: ->
         data = { grid: this, buttons: ['refresh'] }
@@ -31,7 +32,8 @@ class Lanes.Components.Grid extends Lanes.Components.Base
                 @recordQuery.fields.map(this._makeField, this)
 
         modelClass:
-             deps:['recordQuery'], fn:-> @recordQuery.model_class
+             deps:['recordQuery'], fn:->
+                 @recordQuery?.modelClass
 
         singleSelectMode:
              deps:['selectionMode'], fn:-> @selectionMode == 'single'
@@ -48,7 +50,8 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         editingController:  'any' # either string or constructor fn
 
     initialize: ->
-        this.listenTo(this.viewport,'change:screen_enu_size', this.delayedWidthReset)
+        if this.viewport
+            this.listenTo(this.viewport,'change:screen_enu_size', this.adjustColumnWidth)
         unless Lanes.current_user.canWrite(this.modelClass)
             this.editRecords = false
             this.addRecords  = false
@@ -76,7 +79,7 @@ class Lanes.Components.Grid extends Lanes.Components.Base
 
     unselect: (row)->
         this.$el.trigger('unselect-row', [@modelForRow(row), {row:row}])
-        row.removeClass('active')
+        Lanes.dom.removeClass(row,'active')
 
     beginEdit: (row,ev)->
         return false unless model = this.modelForRow(row)
@@ -116,14 +119,14 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         row = this.$(ev.target).closest('tr')
         if this.editRecords
             this.beginEdit(row,ev)
-        else if @singleSelectMode
-            this.unselect(row) for row in this.$('tr .active')
+        if @singleSelectMode
+            this.unselect(selected) for selected in this.$('tr.active')
+
+        if row.hasClass('active')
+            this.unselect(row)
         else
-            if row.hasClass('active')
-                this.unselect(row)
-            else
-                row.addClass('active')
-                this.$el.trigger('select-row', {model:model, row:row} ) if model = this.modelForRow(row)
+            row.addClass('active')
+            this.$el.trigger('select-row', model, row ) if model = this.modelForRow(row)
 
     updateRow: (row, model)->
         row.attr('id', model.id)
@@ -138,14 +141,11 @@ class Lanes.Components.Grid extends Lanes.Components.Base
             attrs[field.field] = data[i]
         data.model = new @modelClass(attrs,ignoreUnsaved:true)
 
-    delayedGridConfiguration: ->
-        _.delay( =>
-            @dt_api.columns.adjust()
-        ,500 )
+    adjustColumnWidth: ->
+        @dt_api.columns.adjust()
 
-    render: ->
-        super
-        responsiveHelper = undefined;
+
+    onRender: ->
         breakpointDefinition = {
             tablet: 1024,
             phone : 480
@@ -172,7 +172,6 @@ class Lanes.Components.Grid extends Lanes.Components.Base
             columns: @columnDefinitions
         )
         this.dt_api = this.dataTable.api()
-        this.delayedGridConfiguration()
         this
 
     buildModels: (d)->
