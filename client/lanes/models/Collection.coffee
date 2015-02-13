@@ -85,7 +85,9 @@ class ModelsCollection
 
     url: -> @model::urlRoot()
 
-    sync: Lanes.Models.Sync.perform
+    # Uses Lanes.Models.Sync by default
+    sync: (options...)->
+        Lanes.Models.Sync.perform(options...)
 
     save: (options)->
         Lanes.Models.Sync.perform('update', this, options)

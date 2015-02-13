@@ -1,5 +1,7 @@
 class Lanes.Models.ChangeSet extends Lanes.Models.Base
 
+    FILE: FILE
+
     constructor: ->
         super
         this.created_at = new Date
@@ -7,6 +9,7 @@ class Lanes.Models.ChangeSet extends Lanes.Models.Base
 
     session:
         update: 'object'
+        by: 'object'
         record: 'model'
         time_ago: 'string'
         created_at: { type: 'date', setOnce: true }
@@ -18,9 +21,6 @@ class Lanes.Models.ChangeSet extends Lanes.Models.Base
     changeFor:(field)->
         change = @update[field] || []
         { from: change[0], to: change[1] }
-
-    associations:
-        by: { model: "User" }
 
     value: ->
         set={}
