@@ -1,84 +1,9 @@
 module Lanes
 
     module Extensions
+        mattr_accessor :controlling_locked
 
         ALL=Array.new
-
-        class Definition
-            include Concerns::AttrAccessorWithDefault
-
-            def self.inherited(klass)
-                ALL << klass
-            end
-
-            attr_reader :context
-
-            attr_accessor_with_default :load_phase, :late
-
-            attr_accessor_with_default :identifier
-
-            # Array of Pathname's to add to sprockets
-            attr_accessor_with_default :root_path
-
-            # Does the extension use PubSub functionality
-            class_attribute  :uses_pub_sub
-
-            # Load extension before/after the named extensions
-            class_attribute :before
-            class_attribute :after
-
-            def self.components(*names)
-                Components.enable(*names)
-            end
-
-            def client_bootstrap_data(view)
-                {}
-            end
-
-            def stylesheet_include
-                self.identifier + '/styles'
-            end
-
-            def javascript_include
-                self.identifier
-            end
-
-            def client_namespace
-                identifier.underscore.camelize
-            end
-
-            def client_paths
-                [ root_path.join('client') ]
-            end
-
-            def client_images
-                images = []
-                root_path.join('client','images').find{|path| images << path if path.file? }
-                images
-            end
-
-            def route(route_set)
-                routes_config = root_path.join('config','routes.rb')
-                if routes_config.exist?
-                    require routes_config
-                end
-            end
-
-        end
-
-        class Base < Definition
-            identifier "lanes"
-
-            root_path Pathname.new(__FILE__).dirname.join("..","..").expand_path
-            def stylesheet_include
-                nil
-            end
-
-            def javascript_include
-                nil
-            end
-
-        end
 
         class << self
 
@@ -89,6 +14,12 @@ module Lanes
                         require screens_config
                     end
                 end
+            end
+
+            # lock the current controlling extension so that it can't
+            # be changed by other extensions that are loaded later
+            def lock_controlling!
+                self.controlling_locked=true
             end
 
             def load_after(extension)
@@ -188,4 +119,7 @@ module Lanes
 
     end
 
+
 end
+
+require_relative 'extension/definition'
