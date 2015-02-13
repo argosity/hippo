@@ -16,8 +16,8 @@ module Lanes
                     @client_dir << "/views"
                     @spec_dir   << "/views"
                 else
-                    @client_dir << "/screens/#{options[:screen].dasherize}"
-                    @spec_dir   << "/screens/#{options[:screen].dasherize}"
+                    @client_dir << "/screens/#{options[:screen].underscore.dasherize}"
+                    @spec_dir   << "/screens/#{options[:screen].underscore.dasherize}"
                 end
             end
 
