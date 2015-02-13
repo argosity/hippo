@@ -1,5 +1,5 @@
-
 class ModelType extends Lanes.Models.State
+
     constructor: ->
         super
         @records = {}
@@ -9,7 +9,7 @@ class ModelType extends Lanes.Models.State
         records: 'object'
 
     subscribe: (model)->
-        channel = "/#{model.api_path}/#{model.id}"
+        channel = "/#{model.api_path()}/#{model.id}"
         Lanes.Vendor.MessageBus.subscribe(channel,(changes)->
             model.addChangeSet(changes)
         )
@@ -27,13 +27,13 @@ class ModelType extends Lanes.Models.State
         delete @records[model.id]
 
 
-
 class ModelTypesCollection extends Lanes.Models.BasicCollection
+
     constructor: -> super
     model: ModelType
 
     forModel: (model)->
-        models = this.get(model.api_path) || this.add(id: model.api_path)
+        models = this.get(model.api_path()) || this.add(id: model.api_path())
 
 
 Lanes.Models.PubSub = {
@@ -51,7 +51,7 @@ Lanes.Models.PubSub = {
         @types.forModel(model).remove(model)
 
     instanceFor: ( model_klass, id )->
-        @types.get(model_klass.prototype.api_path)?.records[id]?.model
+        @types.get(model_klass.prototype.api_path())?.records[id]?.model
 
     clear: ->
         @types = new ModelTypesCollection

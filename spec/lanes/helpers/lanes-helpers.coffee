@@ -10,7 +10,7 @@ class Lanes.Test.DummyView extends Lanes.Views.Base
     onClick: Lanes.emptyFn
 
 class Lanes.Test.DummyModel extends Lanes.Models.Base
-    api_path: "test"
+    api_path: -> "test"
     props:
         id: 'number',
         name: ['string', true],
@@ -76,11 +76,9 @@ beforeEach ->
         message: ''
         data: {}
     }
-    
+
     Lanes.Test.syncSpy = jasmine.createSpy('sync').and.callFake(syncResponse)
     Lanes.Test.syncSpy.lastOptions = ->
         this.calls.mostRecent().args[2]
     Lanes.Models.Base::sync       = Lanes.Test.syncSpy
     Lanes.Models.Collection::sync = Lanes.Test.syncSpy
-
-
