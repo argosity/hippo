@@ -35,7 +35,7 @@ module Lanes
             end
 
             def create_model
-                template "lib/namespace/model.rb", "lib/#{namespace}/#{file_name}.rb"
+                template "lib/namespace/model.rb", "lib/#{namespace}/models/#{file_name}.rb"
                 template "spec/server/model_spec.rb", "spec/server/#{file_name}_spec.rb"
                 template "spec/fixtures/namespace/model.yml",
                          "spec/fixtures/#{namespace}/#{file_name}.yml"

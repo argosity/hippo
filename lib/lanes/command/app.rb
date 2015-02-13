@@ -28,6 +28,7 @@ module Lanes
                 template "config/routes.rb"
                 template "config/lanes.rb"
                 template "gitignore",".gitignore"
+                create_file "lib/#{identifier}/models/empty.rb",""
                 create_file "log/.gitkeep",""
                 create_file "tmp/.gitkeep",""
                 create_file "db/.gitkeep", ""
@@ -61,7 +62,7 @@ module Lanes
                 @template = "<div><h1>Base Screen</h1></div>"
                 options[:description] = "Base Screen for #{namespace.titleize}"
                 options[:fileless] = true
-
+                screen_id = 'base'
                 template "client/screens/Screen.coffee", "#{client_dir}/screens/Base.coffee"
                 template "spec/client/Screen.coffee",    "#{spec_dir}/screens/Base.coffee"
                 insert_into_file "config/screens.rb", after: "" do
