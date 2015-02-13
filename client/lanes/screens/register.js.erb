@@ -4,11 +4,11 @@ require_asset screen.js
 end %>
 
 <% Lanes::Screen.each_group do | spec | %>
-Lanes.Models.Screens.groups.add( <%= spec.to_json %> );
+Lanes.Screens.Definitions.groups.add( <%= spec.to_json %> );
 <% end %>
 
 <% Lanes::Screen.each do | spec | %>
-Lanes.Models.Screens.register( <%= spec.to_json %> );
+Lanes.Screens.Definitions.register( <%= spec.to_json %> );
 <% end %>
 
 <% Lanes::Screen.uncache_file_on_update(self) %>

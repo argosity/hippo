@@ -24,7 +24,7 @@ Lanes.Screens.ChangeListener = {
     subviews:
         changesDropDown:
             hook: 'changes-display'
-            view: 'ModelUpdate'
+            view: 'Lanes.Views.ModelUpdate'
             collection: 'changes'
 
     onChange: (model,change)->
@@ -39,5 +39,8 @@ Lanes.Screens.ChangeListener = {
     onChangesShow: (ev)->
         this.changes.invoke('updateTimeAgo')
         this.$('.changes-notification .scroller').animate({ scrollTop: 0 })
+
+    # included: ->
+    #     console.log this
 
 }

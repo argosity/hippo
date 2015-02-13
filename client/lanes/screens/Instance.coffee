@@ -27,11 +27,11 @@ class Lanes.Screens.Instance
         Lanes.Views.Keys.initialize()
         Lanes.Models.PubSub.initialize() if options.pub_sub
         cntrl = Lanes.Extensions.controlling()
-        view = Lanes.getPath(options.root_view)
+        view = Lanes.u.getPath(options.root_view)
         if view
             this.displayInitialView(view)
         else
-            definition=Lanes.Models.Screens.all.findWhere({view: options.root_view})
+            definition=Lanes.Screens.Definitions.all.findWhere({view: options.root_view})
             if definition
                 definition.getScreen().then( (screen)=>
                     # break out of the promise so an errors during render get thrown properly

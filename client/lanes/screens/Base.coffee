@@ -2,6 +2,8 @@
 
 class ScreenBase
 
+    abstractClass: true
+
     constructor: ->
         super
 
@@ -11,12 +13,12 @@ class ScreenBase
 
     reset: Lanes.emptyFn
 
-    templatePrefix: -> this.FILE.extensionName.toLowerCase() + "/screens"
+    templateName: 'layout'
 
     render: ->
         previouslyRendered = this.rendered
         Lanes.Views.RenderContext.start(this)
-        # Lanes.re we cheat and skip ViewBase so it doesn't push to context
+        # Here we cheat and skip ViewBase so it doesn't push to context
         this.reset()
         this.renderContextFree()
         #Lanes.Views.Base.__super__.render.apply(this, arguments)

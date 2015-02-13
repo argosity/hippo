@@ -2,4 +2,5 @@
 //= require ./Base
 //= require ./Router
 //= require ./Instance
-//= require ./definitions
+//= require ./Definitions
+//= require ./register

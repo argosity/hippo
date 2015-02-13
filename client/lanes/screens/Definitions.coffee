@@ -1,4 +1,5 @@
 class ScreenView extends Lanes.Models.BasicModel
+    FILE: FILE
 
     session:
         screen: 'object'
@@ -18,18 +19,19 @@ class ScreenView extends Lanes.Models.BasicModel
     initialize: (options)->
         super
         @screen=options.screen
-        Lanes.Models.Screens.displaying.add( this )
+        Lanes.Screens.Definitions.displaying.add( this )
         this.active=true
 
     renderScreen: ->
         this.view.render()
 
     remove: ->
-        Lanes.Models.Screens.displaying.remove( this )
+        Lanes.Screens.Definitions.displaying.remove( this )
 
 
 
 class ScreenDefinition extends Lanes.Models.BasicModel
+    FILE: FILE
 
     session:
         id:          'string'
@@ -47,7 +49,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
     derived:
         model_type:
             deps: ['model'], fn: ->
-                Lanes.getPath(this.model,"Lanes.Models")
+                Lanes.u.findObject(@model, "Models", this.FILE)
 
     initialize: ->
         @views = []
@@ -56,7 +58,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
         @views.push( new ScreenView( screen: this, viewport: viewport ) )
 
     getScreen: ->
-        @viewModel ||= Lanes.getPath(this.view)
+        @viewModel ||= Lanes.u.getPath(this.view,@FILE?['Views'])
         if @viewModel?
             _.Promise.resolve(@viewMOdel)
         else
@@ -69,7 +71,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
              Lanes.lib.Request(me.assets)
                  .then ->
                     me.loading=false
-                    me.viewModel = Lanes.getPath(me.view)
+                    me.viewModel = Lanes.u.getPath(me.view, me.FILE?['Views'])
                     if me.viewModel then resolve(me.viewModel)
                     else reject("Screen #{me.view} not definied after file retrieval")
                  ,(msg)->
@@ -84,6 +86,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection
+    FILE: FILE
 
     model: ScreenView
 
@@ -122,6 +125,7 @@ class ScreenViewSet extends Lanes.Models.BasicCollection
 
 
 class ScreenSet extends Lanes.Models.BasicCollection
+    FILE: FILE
 
     model: ScreenDefinition
 
@@ -134,6 +138,7 @@ class ScreenSet extends Lanes.Models.BasicCollection
 
 
 class MenuGroup extends Lanes.Models.BasicModel
+    FILE: FILE
 
     session:
         id:          'string'
@@ -143,13 +148,16 @@ class MenuGroup extends Lanes.Models.BasicModel
         active:      ['boolean', true, false]
 
     screens: ->
-        @avail ||= new Lanes.Models.SubCollection( Lanes.Models.Screens.all, {
+        @avail ||= new Lanes.Models.SubCollection( Lanes.Screens.Definitions.all, {
             filter: (screen)=>
-                screen.group_id == @id && Lanes.current_user.canRead(screen.model_type)
+                screen.group_id == @id &&
+                    (!screen.model_type || Lanes.current_user.canRead(screen.model_type))
             watched: ['group_id']
         })
 
 class MenuGroupSet extends Lanes.Models.BasicCollection
+    FILE: FILE
+
     constructor: -> super
     model: MenuGroup
 
@@ -160,9 +168,14 @@ class MenuGroupSet extends Lanes.Models.BasicCollection
                 mgs.screens().length > 0
         })
 
+Lanes.Screens.display_id = (screen_id)->
+    definition = Lanes.Screens.Definitions.all.get(screen_id)
+    if (definition)
+        definition.display()
+    else
+        Lanes.warn "Unable to find definition for screen #{screen_id}"
 
-
-Lanes.Models.Screens = {
+Lanes.Screens.Definitions = {
     all: new ScreenSet
     displaying: new ScreenViewSet([],{ single_active_only: true })
     groups:  new MenuGroupSet
