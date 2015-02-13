@@ -22,13 +22,11 @@ impl = {
         result.HTMLSafe = true
         result
 
-
     field_options: (name, options)->
-        options.widths=[options.width] if options.width # convert singular widths into an array if present
-        {
-            widths: this.grid_widths(options.widths)
-            title:  _.escape( options.label || _.titleize(name) )
-        }
+        options.widths = [options.width] if options.width
+        options.widths = this.grid_widths(options.widths) if options.widths
+        options.title  =  _.escape( options.label || _.titleize(name) )
+        options
 
     grid_widths:(widths, type='')->
         last = widths[widths.length-1]
