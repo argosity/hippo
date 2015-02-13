@@ -9,14 +9,15 @@ class Lanes.Views.FormBindings
         this.rebindModel( @view, @view.model )
 
     onFieldChange: (ev)->
-        el = Lanes.$(ev.target);
-        name = el.attr('name');
-        m = @view.model;
-        return unless m.hasAttribute(name)
+        el = Lanes.$(ev.target)
+        name = el.attr('name')
+        return unless @view.model?.hasAttribute(name)
         val = el.val()
-        el[0]._is_setting=true; m.set( name, val ); delete el[0]._is_setting
-        msg = m.checkValid(name,val)
+        unless false == this.view.trigger("update:#{val}", val)
+            el[0].binding_is_setting=true; @view.model.setFromView(name, val); delete el[0].binding_is_setting
+        msg = @view.model.checkValid(name,val)
         this.setError( el, msg )
+        return true
 
     onAttributeUpdate: (model, opts={})->
         attributes = if opts.all then this.attributesFor(model) else model.changedAttributes()
@@ -25,7 +26,8 @@ class Lanes.Views.FormBindings
                 this.setError(Lanes.$(el),message) if el = this.getElement(name)
         for name, _val of attributes
             el = this.getElement(name)
-            this.setElValue(Lanes.$(el),model.get(name)) if el && ! el._is_setting
+            this.setElValue(Lanes.$(el),model.get(name)) if el && ! el.binding_is_setting
+        return true
 
     setElValue:  (el, value)->
         if el.attr('type')
@@ -40,7 +42,6 @@ class Lanes.Views.FormBindings
                     file
                 else
                     el.val(value)
-
         else if el.is('input') || el.is('select') || el.is('textarea')
             el.val(value ||  ( if value == 0 then '0' else '') )
         else
@@ -85,7 +86,7 @@ class Lanes.Views.FormBindings
         @cached_fields = null
         if @view.model
             this.setAllFields()
-        @view.$el.on("change", input_selector, this.onFieldChange )
+        @view.$el.on("change", input_selector, this.onFieldChange)
 
     rebindModel: (view, model)->
         this.clearErrors()
