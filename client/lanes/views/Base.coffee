@@ -2,7 +2,7 @@ amp = Lanes.Vendor.Ampersand
 delegateEventSplitter = /^(\S+)\s*(.*)$/
 class ViewBase
 
-    extendedProperties: ['ui']
+    extendedProperties: ['ui','subviews']
 
     # Custom datatypes for views
     dataTypes:
@@ -81,7 +81,7 @@ class ViewBase
         if !this.pubSub? # if it's unset, not true/false; default to parent or true
             this.pubSub = if this.parent?.pubSub? then this.parent.pubSub else true
 
-        if @formBindings || @parent?.formBindings
+        if @formBindings || @useFormBindings || @parent?.formBindings
             @formBindings = new Lanes.Views.FormBindings(this, @formBindings)
 
         if @keyBindings
@@ -217,7 +217,7 @@ class ViewBase
 
         # bind each of the selectors
         for key, selector of bindings
-            this.ui[key] = this.$(selector)
+            this.ui[key] = this.$el.filter(selector).add(this.$el.find(selector))
 
 
     # Sets callbacks, where `this.domEvents` is a hash of
@@ -310,16 +310,20 @@ class ViewBase
         self = this;
         opts = {
             selector: subview.container || "[data-hook='#{subview.hook||name}']"
-            waitFor: subview.waitFor || '',
+            waitFor: subview.waitFor || subview.model || subview.collection || ''
             prepareView: subview.prepareView || (el,options)->
                 klass = self._subviewClass(subview)
                 if subview.collection
                     new Lanes.Vendor.Ampersand.CollectionView({
                         el: el, parent: self, viewOptions: options, view: klass,
-                        collection: _.getPath(this,subview.collection)
+                        collection: _.getPath(this, subview.collection)
                     })
                 else
-                    new klass(_.extend(options,{ el: el, parent: self }))
+                    options = _.extend(options,{ el: el, parent: self })
+                    for attr in ['model','data']
+                        if subview[attr]
+                            options[attr] = _.getPath(this, subview[attr])
+                    new klass(options)
 
         }
         action = ->
@@ -387,10 +391,6 @@ class ViewBase
 
     initializeKeyBindings: Lanes.emptyFn
 
-    # initializeFormBindings: ->
-    #     @_form_bindings = {}
-    #     for data, selector of @form_bindings
-    #         @_form_bindings[data] =
 
     setFieldsFromBindings: ->
         binding.setAllFields() for name, binding of @_form_bindings
