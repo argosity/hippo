@@ -1,10 +1,9 @@
 require 'jasmine-core'
-require 'lanes/command'
 
 module Lanes
     module API
 
-        LanesDummyExt = Struct.new(:identifier, :root_path)
+
         class TestSpecs
 
             cattr_accessor :current
@@ -39,13 +38,9 @@ module Lanes
             end
         end
 
-
-        ext = Extensions.controlling ||
-          LanesDummyExt.new('lanes', Pathname.new(__FILE__).dirname.join("../../../"))
+        ext = Extensions.controlling
         TestSpecs.current = TestSpecs.new(ext)
         Root.sprockets.append_path(ext.root_path.join("spec"))
-
-
         Root.sprockets.append_path(Jasmine::Core.path)
 
         routes.draw do
