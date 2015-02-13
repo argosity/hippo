@@ -24,12 +24,15 @@ class Lanes.Components.ModalDialog extends Lanes.Components.Base
     toggleShown: (show)->
         if show then this.show() else this.hide()
 
+    bodyClass: 'base'
+
     template: ->
         tmpl = Lanes.Templates.find('lanes/components/modal/template')
         tmpl({
             size    : @size  || 'lg'
-            title   : @title || context.dialog_title
+            title   : @title# || context.dialog_title
             body    : this.renderTemplateMethod('bodyTemplate')
+            bodyClass: _.result(this,'bodyClass')
             buttons : @buttons
             showHideButton : @showHideButton
         })
@@ -40,7 +43,7 @@ class Lanes.Components.ModalDialog extends Lanes.Components.Base
 
     hide:->
         this.$el.modal('hide')
-        _.Promise.resolve( this )
+        this.notification?.resolve(this)
 
     show: ->
         if this.rendered
