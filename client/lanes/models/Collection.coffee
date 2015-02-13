@@ -49,7 +49,11 @@ class ModelsCollection
     # current models whith them when the call completes
     fetch: (options={})->
         handlers = Lanes.Models.Sync.wrapRequest(this,options)
-        if options.force || !@_isLoaded
+        this.sync('read', this, options)
+        handlers.promise
+    ensureLoaded: (options={})->
+        handlers = Lanes.Models.Sync.wrapRequest(this,options)
+        if options.force || (!@_isLoaded && !this.length )
             this.sync('read', this, options)
         else
             handlers.resolvePromise( record: this, reply: {} )
