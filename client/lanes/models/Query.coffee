@@ -30,8 +30,8 @@ class AvailableFields extends Lanes.Models.Collection
     constructor: (models,options)->
         @query = options.query
         super
-    model: Field
 
+    model: Field
 
 
 class Operator extends Lanes.Models.Base
@@ -76,9 +76,15 @@ class Clause extends Lanes.Models.Base
 
     session:
         value     : { type: 'string', default: '' }
-        operators : 'collection'
-        field     : 'model'
-        operator  : 'model'
+        field     : 'state'
+        operator  : 'state'
+
+    associations:
+        operators : { collection: Operators }
+        fields:
+            collection: AvailableFields, options: ->
+                query: this.collection.query
+
 
     derived:
         description:
@@ -89,10 +95,9 @@ class Clause extends Lanes.Models.Base
             deps: ['field', 'operator', 'value']
             fn: -> this.field.validValue(@value)
 
-    initialize:(attrs,options)->
+    constructor: (options)->
         super
-        @operators = new Operators
-        @fields    = @collection.fields
+        this.fields.reset(options.available_fields.models)
         @operators.field = @fields.first()
         @fields.on('change:selected',    this.setField,    this)
         @operators.on('change:selected', this.setOperator, this)
@@ -100,7 +105,12 @@ class Clause extends Lanes.Models.Base
         @fields.at(0).selected = true
         @operators.at(0).selected = true
 
-        window.q = this
+
+    setFromView: (type, val)->
+        if type=="fields" || type == "operators"
+            this[type].get(val).selected=true
+        else
+            super
 
     setField: (field)->
         return unless field.selected
@@ -120,7 +130,7 @@ class Clause extends Lanes.Models.Base
         value = this.get('value')
         value +='%' if 'like' == op
         value = parseFloat(value) if @field.type == "n"
-        param[ this.field.field ] = if 'eq' == op then value else { op: op, value: value }
+        param[ this.field.id ] = if 'eq' == op then value else { op: op, value: value }
         param
 
 
@@ -139,26 +149,26 @@ class Lanes.Models.Query extends Lanes.Models.Base
     session:
         fields:  'collection'
         clauses: 'collection'
-        collection_class: 'function'
-        initial_field: 'string'
+        modelClass:  'function'
+        initialField: 'state'
 
     derived:
-        model_class:
-            deps:['collection_class'], fn: -> @collection_class::model
+        collection_class:
+            deps:['modelClass'], fn: -> @modelClass?.Collection
         url:
-            deps:['collection_class'], fn: -> @collection_class::url()
+            deps:['modelClass'], fn: -> @modelClass?::urlRoot()
 
     constructor: (options={})->
         super
         @fields = new AvailableFields(
-            _.map( options.fields, (col)-> if _.isObject(col) then col else { field: col } ),
+            _.map( options.fields, (col)-> if _.isObject(col) then col else { id: col } ),
             query: this
         )
         @clauses = new Clauses([], query: this )
         this.listenTo(@clauses,'change remove reset', ->
             this.trigger('change', arguments...)
         )
-        @initial_field = @fields.first.field
+        @initialField = @fields.first()
         this.addNewClause()
         this
 
@@ -167,11 +177,11 @@ class Lanes.Models.Query extends Lanes.Models.Base
 
     loadSingle: (code,options)->
         options.query = {}
-        options.query[ @initial_field ] = code
-        @collection_class::model.fetch(options)
+        options.query[ @initialField ] = code
+        @modelClass.fetch(options)
 
     defaultField: ->
-        @fields.findWhere( field: @initial_field )
+        @fields.findWhere( field: @initialField )
 
     asParams: ->
         params = {}
@@ -181,4 +191,4 @@ class Lanes.Models.Query extends Lanes.Models.Base
         params
 
     addNewClause: ->
-        @clauses.add({ field: @initial_field, operator: 'like' })
+        @clauses.add({ available_fields: @fields, field: @initialField })
