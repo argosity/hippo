@@ -1,4 +1,4 @@
-require_relative '../workspace'
+require_relative '../workspace/extension'
 
 module Lanes
     module Access
@@ -6,7 +6,7 @@ module Lanes
 
             identifier "lanes-access"
 
-            components :modal, :grid, :select_field
+            components 'modal', 'grid', 'select-field'
 
             root_path Pathname.new(__FILE__).dirname.expand_path
 
