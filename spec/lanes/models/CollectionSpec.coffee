@@ -9,7 +9,7 @@ describe "Lanes.Models.Collection", ->
         ])
         collection = Model.where( name: 'foo' )
         collection.whenLoaded ->
-            expect( collection.isLoaded() ).toBeTrue()
+            expect( collection.isLoaded() ).toEqual( true )
             done()
 
     it "triggers length when changed", ->

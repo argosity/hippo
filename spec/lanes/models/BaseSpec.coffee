@@ -12,12 +12,12 @@ describe "Lanes.Models.Base", ->
             props:
                 saved: 'string'
         }, {bar: 'baz'})
-        expect(model.isDirty()).toBeFalse()
+        expect(model.isDirty()).toBe(false)
         model.foo = 'baz' # session prop
-        expect(model.isDirty()).toBeFalse()
+        expect(model.isDirty()).toBe(false)
         expect(model.unsavedAttributes()).toBeEmptyObject()
         model.set( saved: 'true' )
-        expect(model.isDirty()).toBeTrue()
+        expect(model.isDirty()).toBe(true)
 
 
     it "can tell if it has attributes", ->
@@ -27,9 +27,9 @@ describe "Lanes.Models.Base", ->
             props:
                 bar: 'string'
         })
-        expect(model.hasAttribute('missing')).toBeFalse()
-        expect(model.hasAttribute('foo')).toBeTrue()
-        expect(model.hasAttribute('bar')).toBeTrue()
+        expect(model.hasAttribute('missing')).toBe(false)
+        expect(model.hasAttribute('foo')).toBe(true)
+        expect(model.hasAttribute('bar')).toBe(true)
 
     it "provides data for saving", ->
         # model with other types of data, but should only save "props"
@@ -42,14 +42,14 @@ describe "Lanes.Models.Base", ->
                 id: 'integer'
                 foo: 'string'
                 bar: 'string'
+                color_id: 'integer'
             derived:
                 atest:
                     fn: -> 'blarg'
-
         })
-        model.set( id: 10, unsaved: 'falsify', color: { rgb: '99FFFF' } )
+        model.set( id: 10, foo:'bar', unsaved: 'falsify', color: { rgb: '99FFFF' } )
+        expect(id: 10, foo:'bar', color: { rgb: '99FFFF' }).toEqual( model.dataForSave()  )
 
-        expect( model.dataForSave() ).toEqual( id: 10, color: { rgb: '99FFFF' } )
         model.foo = 'a value'
         a=model.changeMonitor.changedAttributes()
         expect( model.dataForSave() ).toEqual( id: 10, foo: 'a value', color: { rgb: '99FFFF' } )
@@ -62,12 +62,12 @@ describe "Lanes.Models.Base", ->
                 bar: 'string'
 
         }, { foo: 'one, two, three'} )
-        expect(model.isDirty()).toBeTrue()
+        expect(model.isDirty()).toBe(true)
         expect(model.unsavedAttributes()).toEqual( foo: 'one, two, three' )
         model.save()
         expect(model.sync).toHaveBeenCalledWith('create', model, jasmine.any(Object))
         model.id=11
-        expect(model.isNew()).toBeFalse()
+        expect(model.isNew()).toBe(false)
         model.sync.calls.reset()
         syncSucceedWith({
             foo: 'a new foo value'

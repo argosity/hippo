@@ -12,7 +12,7 @@ describe "Lanes.Views.Base", ->
     it "renders a template file", ->
         spy = jasmine.createSpy('view-test').and.callFake ->
             "<p>a test</p>"
-        Lanes.Templates['view-test'] = spy
+        Lanes.Templates['/view-test'] = spy
 
         view = Lanes.Test.makeView({
             templatePrefix: ''
@@ -54,11 +54,11 @@ describe "Lanes.Views.Base", ->
             template: "<div>text,text,text<a data-hook='link'>click me</a>mor text</div>"
         }, { model: model })
         view.render()
-        expect( view.el ).toContainText("Bob")
+        expect( view.$('a').text() ).toEqual("Bob")
         model.name="Ralph"
         model.url = 'http://lanesframework.org/'
         expect( view.$('a').text() ).toEqual("Ralph")
-        expect( view.$('a') ).toHaveAttr('href', model.url )
+        expect( view.$('a').attr('href') ).toEqual( model.url )
 
     it "renders subviews", ->
         class LowerView
@@ -77,10 +77,10 @@ describe "Lanes.Views.Base", ->
             subviewOptions: ->{ answer: '42' }
         }, { model: model })
         view.render()
-        expect(view.el).toContainText("unmodified")
-        expect(view.el).not.toContainText("Lower View")
+        expect(view.$('[data-hook]').text()).toEqual("unmodified")
+        expect( view.$el.text() ).not.toMatch(/Hello from Lower View/)
         model.name="Ralph"
-        expect(view.el).toContainText("Lower View")
+        expect( view.$el.text() ).toMatch(/Hello from Lower View/)
         expect(view.lower.answer).toEqual('42')
 
     it "renders collection views", ->
@@ -99,10 +99,10 @@ describe "Lanes.Views.Base", ->
             template: "<div>text,text,text<div data-hook='lower'>unmodified</div>More text</div>"
         }, { collection: collection})
         view.render()
-        expect(view.$('h1')).toHaveLength(0)
+        expect(view.$('h1').length).toEqual(0)
         collection.add([{ name: "One"}, {name: "Two"},{name:"Three"}])
-        expect(view.$('h1')).toHaveLength(3)
-        expect(view.$('h1:first')).toContainText('One')
+        expect(view.$('h1').length).toEqual(3)
+        expect(view.$('h1:first').text()).toMatch('One')
 
     it "caches elements in ui", ->
         spy = jasmine.createSpy('onClick')
@@ -114,7 +114,7 @@ describe "Lanes.Views.Base", ->
             template: "<div>text,text,text<a id='linky'>unmodified</a>More text</div>"
         })
         view.render()
-        expect(view.ui.link).toHaveLength(1)
+        expect(view.ui.link.length).toEqual(1)
         view.$('a').click()
         expect(spy).toHaveBeenCalled()
 
