@@ -1,22 +1,26 @@
 class Lanes.Workspace.Layout extends Lanes.Views.Base
 
+    FILE: FILE
     templateName: 'layout'
+    templateData: ->
+        { ui: this.ui_state }
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
-    FILE: FILE
-
     subviews:
         navbar:
             hook: 'navbar-container'
             view: 'Navbar'
-
         pages:
             hook: 'page-container'
             view: 'Pages'
 
-    subviewOptions: -> { model: this.model }
+    session:
+        ui_state: 'state'
 
-    onRender: ->
-        @screens = new Lanes.Workspace.ScreensMenu({ parent: this, model: @model })
-        this.viewport.menu_view = @screens.render()
+    subviewOptions: ->
+        { model: this.ui_state }
+
+    constructor: (options={})->
+        options.ui_state = new Lanes.Workspace.UIState( model: options.model, layout: this )
+        super
