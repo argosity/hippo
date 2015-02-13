@@ -27,7 +27,7 @@ module Lanes
             end
 
             def client_bootstrap_data(view)
-                data = { roles: Lanes::Access::Role.all_available }
+                data = {}
                 if (user_id = view.session['user_id']) && (user = Lanes::User.where( id: user_id ).first)
                     data.merge!(user.workspace_data)
                 end
