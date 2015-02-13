@@ -12,13 +12,13 @@ class Lanes.Access.Screens.UserManagement extends Lanes.Screens.Base
     gridOptions: ->
         {
             recordQuery: new Lanes.Models.Query({
-                collection_class: Lanes.Models.UserCollection,
+                modelClass: Lanes.Models.User,
                 fields: [ 'login', 'name', 'email', 'role_names' ]
             }),
             editorConfig: {}
+            editRecords: true
             editingController: Lanes.Access.Screens.UserManagement.GridUserEditor
             selectionMode: 'single',
-            editRecords: true
             addRecords: true
             deleteRecords: true
         }

@@ -2,21 +2,21 @@ class Field extends Lanes.Models.Base
 
     constructor: (attributes)->
         super( _.defaults( attributes, {
-            title: _.titleize(attributes.field)
+            title: _.titleize(attributes.id)
         }))
 
     session:
+        id:       'string'
         title:    'string'
-        field:    'string'
         selected: 'boolean'
-        type:
-            type: 'string'
-            default: -> @model_field?.type
 
     derived:
         model_field:
-            deps: ['field'], fn:->
-                this.collection.query.model_class::_definition[@field]
+            deps: ['id'], fn:->
+                this.collection.query.modelClass::_definition[@id]
+        type:
+            deps: ['model_field'], fn: ->
+                @model_field?.type
 
     validValue: (value)->
         if this.type == 'n'
