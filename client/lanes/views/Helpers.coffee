@@ -58,17 +58,17 @@ Lanes.Views.Helpers = {
 
     text_field: (name,options={})->
         impl.field(name, options,
-            "<input type='#{options.type || 'text'}' name='#{name}'><span class='feedback'></span>"
+            "<input type='#{options.type || 'text'}' name='#{name}' value='#{options.value}'><span class='feedback'></span>"
             "<div class='ro-input update' name='#{name}'></div>"
         )
 
     subview: (name,options={})->
-        definition = Lanes.Views.RenderContext.view().subviews[name]
-        selector = if definition.hook
-            "data-hook='#{definition.hook}'"
-        else
-            "class='#{definition.selector}'"
-        impl.field( name, options, "<div #{selector}></div>" )
+        view = Lanes.Views.RenderContext.view()
+        definition = view.subviews[name]
+        if !definition
+            Lanes.warn("Subview #{name} not found on View #{Lanes.u.path(this.FILE)}")
+            return
+        impl.field( name, options, "<div data-hook='#{definition.hook||name}'></div>" )
 
 
 
