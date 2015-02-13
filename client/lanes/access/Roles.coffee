@@ -10,8 +10,6 @@ class Lanes.Models.Roles extends Lanes.Models.BasicCollection
     comparator: 'name'
 
 
-
-
 class UserRole
     constructor: (config={})->
         @type = config.type
@@ -21,12 +19,16 @@ class UserRole
     can: (type,model)->
         -1 != this[type].indexOf(model)
 
+    decodeLockedFields: (fields, previous={})->
+        decoded = _.extend({}, previous)
+        for lock in fields
+            if klass = klassFor(lock.type)
+                decoded[ klass ] = locks = {}
+                locks[field] = grants for field, grants of lock.locks
+        decoded
 
 RWD = ['read','write','delete']
 
-RoleMap = {
-    administrator: Administrator
-}
 
 # The admin is special and can do anything
 class Administrator
@@ -34,6 +36,12 @@ class Administrator
         UserRole.prototype.constructor.apply(this,arguments)
     can: -> true
 
+    decodeLockedFields: ->
+        {}
+
+RoleMap = {
+    "administrator": Administrator
+}
 
 
 class Lanes.Models.UserRoleSet
@@ -41,14 +49,12 @@ class Lanes.Models.UserRoleSet
     constructor: (access={})->
         _.defaults(access, { roles: [], locked_fields: [] })
         @roles = []
+        @locked_fields = {}
         for role in access.roles
             klass = RoleMap[role.type] || UserRole
-            @roles.push( new klass(role) )
-        @locked_fields = {}
-        for lock in access.locked_fields
-            if klass = klassFor(lock.type)
-                @locked_fields[ klass ] = locks = {}
-                locks[field] = grants for field, grants of lock.locks
+            role = new klass(role)
+            @roles.push( role )
+            @locked_fields = role.decodeLockedFields(access.locked_fields, @locked_fields)
 
     can:(method,model,field)->
         if model instanceof Lanes.Models.Base
@@ -78,6 +84,5 @@ class Lanes.Models.UserRoleSet
         this.can('delete',model)
 
 klassFor = (identifier)->
-    name = _.classify(identifier)
-    Lanes.Models[name] ||
-        Lanes.warn("Role Data object not found for #{identifier}")
+    Lanes.u.getPath(identifier) ||
+        Lanes.warn("Model #{identifier} not found for role")

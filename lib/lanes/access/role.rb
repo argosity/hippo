@@ -1,5 +1,3 @@
-# N.B. Keep in sync with js/user-extension/lanes/extensions/user-access/Roles.coffee
-
 module Lanes
     module Access
 
@@ -23,15 +21,18 @@ module Lanes
             end
 
             class << self
-                def grant_global_access(klass,types=[:read,:write,:delete])
+                ALL=Array.new
+
+                def grant_global_access(types=[:read,:write,:delete], *klass)
                     types = [*types]
-                    descendants.each do | child |
-                        types.each{ |type| child.send(type).push(klass) }
+                    ALL.each do | child |
+                        types.each{ |type| child.send(type).concat(klass) }
                     end
                 end
 
-                def inherited(sub)
-                    sub.read = []; sub.write = []; sub.delete = []
+                def inherited(subklass)
+                    ALL << subklass
+                    subklass.read = []; subklass.write = []; subklass.delete = []
                 end
 
                 def grant( *klasses )
@@ -49,8 +50,9 @@ module Lanes
                 end
 
                 def all_available
-                    descendants.map{ |klass| klass.to_s.demodulize }
+                    ALL
                 end
+
             end
         end
 

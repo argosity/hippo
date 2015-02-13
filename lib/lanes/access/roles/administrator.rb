@@ -16,7 +16,21 @@ module Lanes
                     end
                 end
 
+
+                def can_read?(model)
+                    true
+                end
+
+                def can_write?(model)
+                    true
+                end
+
+                def can_delete?(model)
+                    true
+                end
+
                 lock User, :password_digest
+
             end
 
         end

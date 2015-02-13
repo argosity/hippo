@@ -61,7 +61,8 @@ module Lanes
                 if roles.empty?
                     return !!@roles.detect { |role| yield role }.present?
                 else
-                    !!roles.find { |role| @roles.map(&:class).include?(role) }
+                    roles.any?{ |role| role.models_include?(model) }
+                    #!!roles.find { |role| @roles.map(&:class).include?(role) }
                 end
             end
 
