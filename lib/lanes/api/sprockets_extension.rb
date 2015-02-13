@@ -31,9 +31,12 @@ module Lanes
                             env.cache = ::Sprockets::Cache::FileStore.new(Pathname.pwd.join('tmp','cache'))
                         end
                     end
+
                     Lanes::Extensions.each do | ext |
+                        ext.on_boot
                         ext.client_paths.each{ |path| env.append_path(path) }
                     end
+
                     if compress
                         require_relative 'sprockets_compressor'
                         env.js_compressor  = AssetCompressor
