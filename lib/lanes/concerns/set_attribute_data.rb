@@ -14,7 +14,7 @@ module Lanes::Concerns
         module AccessChecks
             # Can the API read data from the model?
             def can_read_attributes?(params, user)
-                return user.can_write?(self, params)
+                return user.can_read?(self, params)
             end
 
             # Can the API write data to the model?
