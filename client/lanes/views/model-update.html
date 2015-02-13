@@ -1,10 +1,12 @@
 <li class="update">
-    <span class="name"  data-toggle="tooltip" data-placement="top" data-tooltip-message="<%= this.by.email %>">
-        <%= this.by.name %>
+    <% if @change.by: %>
+    <span class="name"  data-toggle="tooltip" data-placement="top" data-tooltip-message="<%= @change.by.email %>">
+        <%= @change.by.name %>
     </span>
-    set <%= @record.api_path %>
-    <% for field in @displayed_fields: %>
-        <% change = @changeFor(field) %>
+    <% end %>
+    <%= @change.record.api_path() %>
+    <% for field in @change.displayed_fields: %>
+        <% change = @change.changeFor(field) %>
         <span data-toggle="tooltip" data-placement="top" data-tooltip-message="<%= change.from %> -> <%=change.to %>">
             <%= field %>
         </span>
