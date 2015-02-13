@@ -22,7 +22,7 @@ module Lanes
             def wrap_js(scope, js)
                 dirs = scope.logical_path.split(File::SEPARATOR)
                 ns   = dirs.many? ? dirs.first.camelize : nil
-                file = dirs.last
+                path = "[" + dirs.map{|d| "\"#{d}\"" }.join(",") + "]"
                 # if the file is being loaded under the "lanes" directory
                 # it's not an extension
                 if ns && ns != "Lanes"
@@ -30,11 +30,11 @@ module Lanes
                     ref = "(window.Lanes ? window.Lanes['#{ns}'] : null)"
                     "(function(Lanes, #{ns}, _, window, FILE, undefined)"\
                       "{\n#{js}\n})(window.Lanes,#{ref},window._, window,"\
-                      "{namespace:#{ref},extensionName:'#{ns}',path:'#{file}'});"
+                      "{namespace:#{ref},extensionName:'#{ns}',path:#{path}});"
                 else
                     "(function(Lanes, _, window, FILE, undefined)"\
                       "{\n#{js}\n})(window.Lanes,window._, window,"\
-                      "{namespace:window.Lanes,extensionName:'Lanes',path:'#{file}'});"
+                      "{namespace:window.Lanes,extensionName:'Lanes',path:#{path}});"
                 end
             end
 

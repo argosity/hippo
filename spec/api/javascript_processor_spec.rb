@@ -95,7 +95,7 @@ Foo = (function() {
 
 Bar.extend(Foo);
 
-})(window.Lanes,(window.Lanes ? window.Lanes['Foo'] : null),window._, window,{namespace:(window.Lanes ? window.Lanes['Foo'] : null),extensionName:'Foo',path:'baz'});
+})(window.Lanes,(window.Lanes ? window.Lanes['Foo'] : null),window._, window,{namespace:(window.Lanes ? window.Lanes['Foo'] : null),extensionName:'Foo',path:["foo","bar","baz"]});
 EOS
 
 Scope = Struct.new(:logical_path)
