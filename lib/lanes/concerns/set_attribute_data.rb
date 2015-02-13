@@ -87,13 +87,12 @@ module Lanes::Concerns
 
             return {} unless self.can_write_attributes?(data, user)
 
-            data.each_with_object(Hash.new) do | kv, result |
-                ( key, value ) = kv
-
+            data.each_with_object(Hash.new) do | (key, value), result |
                 # First we set all the attributes that are allowed
                 if self.setting_attribute_is_allowed?(key.to_sym, user)
-                    public_send("#{key}=",result[key] = value)
-                else
+                    result[key] = value
+                    public_send("#{key}=", value)
+                elsif value.present?
                     # allow nested params to be specified using Rails _attributes
                     name = key.to_s.gsub(/_attributes$/,'').to_sym
 
