@@ -1,10 +1,12 @@
 class BaseComponent
+    abstractClass: true
 
     constructor: (options={})->
         super
         @access ||= this.calculate_access()
 
     session:
+        field_name: { 'string', setOnce: true }
         access:
             type: 'string',
             values: ['read','write','none']
@@ -15,7 +17,7 @@ class BaseComponent
 
     emptyTemplateName: -> this.writeTemplate()
     readTemplateName:  -> this.writeTemplate()
-    writeTemplateName: -> 'lanes/views/empty-span'
+    writeTemplateName: -> 'empty-span'
 
     renderContextFree: ->
         tmpl = if this.writeAble
@@ -25,8 +27,6 @@ class BaseComponent
         else
             'emptyTemplate'
         this.replaceEl( this.renderTemplateMethod(tmpl) );
-
-    templatePrefix: -> _.dasherize(this.FILE.extensionName) + "/components"
 
     calculate_access:->
         if ! @field_name || Lanes.Views.RenderContext.canWrite(@field_name)
