@@ -1,8 +1,8 @@
-class RadioInput
-    template: (scope)->
-        '<label><input type="radio" name="' + scope.field_name + '"/> <span></span></label>'
+#= require ../multi-select/MultiSelect
 
-    #bindings: {}
+class RadioInput extends Lanes.Views.Base
+    template: ->
+        '<label><input type="radio" name="' + this.field_name + '"/> <span></span></label>'
 
     constructor: (options)->
         @field_name=options.field_name
@@ -15,14 +15,9 @@ class RadioInput
         super
 
 
-Lanes.Views.Base.extend(RadioInput)
+class Lanes.Components.RadioGroup extends Lanes.Components.MultiSelect
 
-
-class RadioGroup
-    constructor: -> super
-
-    domEvents:
-        'change input': 'onInputChange'
+    FILE: FILE
 
     writeTemplate: ->
         "<span data-hook='choices-input'></span>"
@@ -31,13 +26,15 @@ class RadioGroup
         fields:
             hook: 'choices-input'
             collection: 'selections'
-            options: 'subViewOptions'
+            waitFor: 'selections'
             view: RadioInput
+            options: 'subViewOptions'
 
-
-    initialize: ->
+    constructor: (options)->
         super
-        this.listenTo(@selections, "change", this.onSelectionChange) if @selections
+
+    subViewOptions: ->
+        { field_name: @field_name, mappings: @mappings }
 
     onSelectionChange: (option)->
         return unless option[@mappings.selected]
@@ -45,15 +42,7 @@ class RadioGroup
             other_option[@mappings.selected] = other_option[@mappings.id] == option[@mappings.id]
         ,this)
 
-    onInputChange: (ev)->
-        @selections.each( (option)->
-            option[@mappings.selected] = option[@mappings.id] == ev.target.value
-        ,this)
-
     getSelected: ->
         q={}
         q[@mappings.selected]=true
         @selections.findWhere(q)
-
-
-Lanes.Component.RadioGroup = Lanes.Component.ChoicesInput.extend(RadioGroup)
