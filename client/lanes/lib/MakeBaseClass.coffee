@@ -1,13 +1,13 @@
 mixinModules = (klass)->
     Lanes.lib.ModuleSupport.includeInto(klass)
     if klass::mixins
-        klass.include(Lanes.getPath(mixin)) for mixin in klass::mixins
+        klass.include(Lanes.u.getPath(mixin,klass::FILE?.namespace)) for mixin in klass::mixins
 
 extendProperties = (parent,child)->
-    child::extendProperties = _.uniq(
-        ( child::extendProperties || [] ).concat(parent::extendProperties)
+    child::extendedProperties = _.uniq(
+        ( child::extendedProperties || [] ).concat(parent::extendedProperties)
     )
-    for prop in child::extendProperties
+    for prop in child::extendedProperties
         if parent::[prop] && child::[prop]
             _.extend( child::[prop], parent::[prop] )
 
