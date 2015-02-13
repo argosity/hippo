@@ -147,9 +147,28 @@ class SubCollection
 
 Lanes.Models.SubCollection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.SubCollection, SubCollection )
 
-
 Lanes.Models.BasicCollection = Lanes.lib.MakeBaseClass(
     Lanes.Vendor.Ampersand.Collection.extend(Lanes.Vendor.Ampersand.USCollection), BasicCollection
 )
 
 Lanes.Models.Collection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.RestCollection, ModelsCollection )
+
+
+
+## Override a few methods on the standard collection to ensure that
+# models are fetched correctly and have the fk set when they're created
+class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
+    constructor: (models,options)->
+        @model = options.model
+        @associationFilter = options.filter
+        super
+
+    _prepareModel: (attrs, options={})->
+        model = super
+        model.set(@associationFilter)
+        model
+
+    fetch: (options)->
+        options.query ||= {}
+        _.extend(options.query, @associationFilter)
+        super(options)
