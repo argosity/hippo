@@ -186,7 +186,7 @@ class ViewBase
         this._unbindFromObject(@model, @modelEvents) if @model and @modelEvents
         this._unbindFromObject(@collection, @collectionEvents) if @collection and @collectionEvents
 
-        Lanes.Views.Keys.remove(this, @key_bindings, @key_scope) if @key_bindings
+        Lanes.Views.Keys.remove(this, @keyBindings, @keyScope) if @keyBindings
         this.trigger('remove', this);
         return this;
 

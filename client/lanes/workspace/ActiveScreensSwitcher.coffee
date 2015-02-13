@@ -5,12 +5,9 @@ class TabView extends Lanes.Views.Base
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
-
     bindings:
         'model.screen.title': { selector: 'a', type: 'text' }
         'model.active': { type: 'booleanClass' }
-
-
     domEvents:
         'click': 'onClick'
 
@@ -30,18 +27,15 @@ class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.Views.Base
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
-
-    key_scope: { name: 'nav', shortcut: '⌘+shift+t,ctrl+shift+t' }
-    key_bindings:
+    keyScope: { name: 'nav', shortcut: '⌘+shift+t,ctrl+shift+t' }
+    keyBindings:
         left:  'nextScreen'
         right: 'prevScreen'
-
     subviews:
         tab_views:
             container: '.nav-tabs'
             collection: 'collection'
             view: TabView
-
     ui:
         lScroll: '.scroller-left'
         rScroll: '.scroller-right'
@@ -58,14 +52,14 @@ class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.Views.Base
     constructor: ->
         super
         _.bindAll(this, 'resetShownControls')
-        @collection = Lanes.Models.Screens.displaying
+        @collection = Lanes.Screens.Definitions.displaying
         this.listenTo( @collection, "change:active", this.onActiveChange )
         this.listenTo( this.viewport,  "change:width", this.resetShownControls )
         this.listenTo( Lanes.current_user, "change:isLoggedIn", this.closeScreens)
 
 
     closeScreens: ->
-        @collection.remove(model) for model in this.collection.models
+        @collection.reset()
 
     widthOfList: ->
         itemsWidth = 0
