@@ -5,7 +5,7 @@ class Lanes.lib.ModuleSupport
         _.extend(klass,this)
 
     @include: (obj) ->
-        special = this::extended_properties || []
+        special = this::extendedProperties || []
         if obj.initialize
             fn = @::initialize
             @::initialize = ->
