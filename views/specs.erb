@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
         <title>Lanes Specs</title>
-        <%= javascript_tag 'lanes/workspace.js' %>
+        <%= lanes_javascript_tag %>
         <%= javascript_tag 'lanes/screens/all.js' %>
         <% specs.css_files.each do |css_file| %>
           <link rel="stylesheet" href="<%= css_file %>" type="text/css" media="screen"/>
