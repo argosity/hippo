@@ -7,29 +7,28 @@ class Lanes.Workspace.Pages extends Lanes.Views.Base
     ]
 
     bindings:
-        'model.screen_menu_size': { type: 'class' }
         'model.layout_size': { selector: '.page-content', type: 'class' }
-        'screen_menu_class': { type: 'class' }
+        'model.screen_menu_size': { type: 'class' }
+        'model.popover_menu': { type: 'booleanClass', name: 'popover-menu' }
 
-    derived:
-        screen_menu_class:
-            deps: ['model.screen_menu_position']
-            fn: -> if @model.screen_menu_position == 'side' then 'with-screen-menu' else 'no-screen-menu'
+
+    subviews:
+        menu:
+            view: 'ScreensMenu'
 
     ui:
         screen: '.screen'
-        screens_menu_container: '.screens-menu-container'
+
 
     initialize: (options)->
-        this.listenTo( Lanes.Models.Screens.displaying, "change:active", this.onActiveChange )
-        this.listenTo( Lanes.Models.Screens.displaying, "remove",        this.onRemove )
-        this.listenTo( @model,'change:screen_menu_position', this.moveScreensMenu )
+        this.listenTo( Lanes.Screens.Definitions.displaying, "change:active", this.onActiveChange )
+        this.listenTo( Lanes.Screens.Definitions.displaying, "remove",        this.onRemove )
+        #this.listenTo( @model,'change:screen_menu_position', this.moveScreensMenu )
         super
 
-
-    moveScreensMenu: ->
-        return unless 'side' == this.viewport.screen_menu_position
-        this.ui.screens_menu_container.append( this.viewport.menu_view.el )
+    # moveScreensMenu: ->
+    #     return unless 'side' == this.viewport.screen_menu_position
+    #     this.ui.screens_menu_container.append( this.viewport.menu_view.el )
 
     onRemove: (sv)->
         sv.view.remove()

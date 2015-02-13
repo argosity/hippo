@@ -5,7 +5,6 @@ class ScreenList extends Lanes.Views.Base
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
-
     domEvents:
         click: 'displayScreen'
 
@@ -19,13 +18,13 @@ class ScreenList extends Lanes.Views.Base
 
 class ScreenGroup extends Lanes.Views.Base
 
-    template: -> '<li class="group"><a href="#"><span></span><i></i></a><ul></ul></li>'
+    template: '<li class="group"><a class="heading" href="#"><span></span><i></i></a><ul></ul></li>'
     FILE: FILE
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
     domEvents:
-        'click .group>a': 'toggleMenu'
+        'click a.heading': 'toggleMenu'
 
     initialize: ->
         this.screens = @model.screens()
@@ -46,44 +45,36 @@ class ScreenGroup extends Lanes.Views.Base
         @model.active = ! @model.active
 
 
-
-
 class Lanes.Workspace.ScreensMenu extends Lanes.Views.Base
 
+    FILE: FILE
     templateName: 'screens-menu'
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
-
-    FILE: FILE
-
     subviews:
         navigation:
             container: 'ul.navigation'
             collection: 'groups'
             view: ScreenGroup
-
     domEvents:
         'highlight-hide': 'onHighlightHide'
         'highlight-show': 'onHighlightShown'
         'click .logout':  'onLogout'
-
     session:
         groups: 'collection'
-
-    key_scope: { name: 'menu', shortcut: 'ctrl+shift+m' }
-    key_bindings:
+    keyScope: { name: 'menu', shortcut: 'ctrl+shift+m' }
+    keyBindings:
         up:    'prevMenu'
         down:  'nextMenu'
         enter: 'onEnter'
         right: 'expandMenu'
         left:  'collapseMenu'
 
-
     initialize: ->
         super
         this.listenTo(Lanes.current_user, "change:isLoggedIn", this.resetGroups)
-        @groups = Lanes.Models.Screens.groups.available()
+        @groups = Lanes.Screens.Definitions.groups.available()
         this
 
     resetGroups: ->
