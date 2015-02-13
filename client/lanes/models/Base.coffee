@@ -1,87 +1,3 @@
-# ------------------------------------------------------------------ #
-# The ModelChangeMonitor watches for changes on the                  #
-# Model and remembers which attributes have been changed             #
-# ------------------------------------------------------------------ #
-class ModelChangeMonitor
-    constructor: (@model)->
-        @model.on('change', this.onChange, this)
-
-    onChange: (record,options)->
-        attrs = @model.changedAttributes()
-        this.recordChanged( _.keys(attrs) )
-
-    recordChanged: (names)->
-        @_unsaved ||= {}
-        for name in names
-            this.recordChangedAttribute(name)
-
-    changedAttributes: ->
-        _.keys(@_unsaved)
-
-    recordChangedAttribute:(name)->
-        if @model._definition[name] && !@model._definition[name].session
-            @_unsaved[ name ] = true
-
-    reset: ->
-        delete @_unsaved
-
-    isDirty: ->
-        !_.isEmpty(@_unsaved)
-
-# ------------------------------------------------------------------ #
-# Handles Association definitions.                                   #
-# It creates a derived definition for each one                       #
-# and contains utility functions to operate on them                  #
-# ------------------------------------------------------------------ #
-class AssocationMap
-    constructor: (@klass)->
-        @klass::derived ||= {}
-        @definitions = @klass::associations
-        @definitions['created_by'] ||= { model: 'Lanes.Models.User', readOnly: true }
-        @definitions['updated_by'] ||= { model: 'Lanes.Models.User', readOnly: true }
-        for name, options of @definitions
-            @klass::derived[name] = this.derivedDefinition(name,options)
-
-    # returns the definition for the derived property
-    derivedDefinition: (name,definition)->
-        findAssocationClass = ->
-            object = definition.model || definition.collection
-            if _.isObject(object) then object else Lanes.getPath( object, "Lanes.Models")
-        target_klass = findAssocationClass()
-        # will be called in the scope of the model
-        createAssocation = ->
-            args = {}
-            args['id'] = this.get(definition.fk) if this.get(definition.fk)
-            if definition.defaultValue
-                _.defaults(args, _.evaluateFunction(definition.defaultValue))
-            target_klass ||= findAssociationClass() # it might not have been present previously
-            record = target_klass.findOrCreate(args)
-            record.parent = this
-            record
-        { deps: [definition.fk], fn: createAssocation }
-
-    # Sets the assocations for "model"
-    set: (model, data)->
-        for name, value of data
-            model[name].set(value) if _.has(@definitions, name)
-
-    # returns the data from all assocations for saving
-    dataForSave: (model,options)->
-        ret = {}
-        for name, options of @definitions
-            unless options.readOnly
-                ret[name] = model[name].dataForSave(options)
-        ret
-
-    # return a list of assocations from "name" that are not loaded
-    nonLoaded: (model, names)->
-        list = []
-        for name in names
-            if _.has(@definitions, name) && !model[name].isLoaded()
-                list.push(name)
-        list
-
-
 # Da Model. Handles all things dataish
 class BaseModel
     isModel: true
@@ -128,7 +44,7 @@ class BaseModel
 
     constructor: (attrs,options={})->
         super
-        @changeMonitor = new ModelChangeMonitor(this)
+        @changeMonitor = new Lanes.Models.ChangeMonitor(this)
         # The model was created with attributes and it did not originate from a XHR request
         if attrs and !options.xhr
             @changeMonitor.recordChanged(_.keys(attrs))
