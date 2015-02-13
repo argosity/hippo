@@ -1,8 +1,11 @@
 class Lanes.Views.ModelUpdate extends Lanes.Views.Base
 
-    template: 'view/model-update'
+    FILE: FILE
+
+    templateData: ->
+        { change: @model }
 
     bindings:
-        'model.name':{ selector: 'a', type: 'text' }
+        'model.name': { selector: 'a', type: 'text' }
         'model.icon': { selector: 'i', type: 'class' }
         'model.time_ago': '.ago'

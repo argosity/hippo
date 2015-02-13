@@ -1,6 +1,5 @@
 class <%= namespace %>.Models.<%= class_name %> extends <%= namespace %>.Models.Base
 
-    api_path: '<%= identifier.pluralize.dasherize %>'
     FILE: FILE
 
     props:
