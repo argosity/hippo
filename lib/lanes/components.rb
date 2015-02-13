@@ -7,7 +7,7 @@ module Lanes
 
             # @param names [Symbol] list of components to include in applications
             def enable(*names)
-                @@enabled += names.map(&:to_sym)
+                @@enabled += names.map(&:to_s)
                 @@enabled.uniq!
             end
 
