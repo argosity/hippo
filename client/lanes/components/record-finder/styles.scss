@@ -1,0 +1,73 @@
+
+.record-finder-query-string {
+  text-transform: uppercase;
+}
+
+.record-finder {
+  .form-control {
+    
+  }
+}
+
+.query-clauses {
+  .row {
+    margin-bottom: 5px;
+  }
+  .btn.del-clause {
+    border-bottom-right-radius: $border-radius-base !important;
+    border-top-right-radius: $border-radius-base !important;
+  }
+  >.clause {
+    .run-query {
+      display: none;
+    }
+    .add-clause {
+      display: none;
+    }
+    &:last-child {
+      .del-clause { display: none; }
+      .run-query  { display: inline-block; }
+      .add-clause { display: inline-block; }
+    }
+  }
+  &.multiple {
+    
+  }
+
+  .query-field {
+      width: 300px;
+
+      label {
+          display: block;
+      }
+      
+      .operators {
+          label {
+              display: block;
+              max-height: 3rem;
+              overflow: hidden;
+              &.invalid {
+                  max-height: 0;
+                  margin: 0;
+                  opacity: 0;
+              }
+              transition-property: opacity, margin, max-height;
+              transition-duration: 0.2s, 0.4s;
+          }
+      }
+  }
+
+}
+
+
+.modal-dialog.tiny {
+  .skr-grid thead > tr > th {
+    font-size: unset;
+  }
+  .action {
+    text-align: center;
+    .btn.run-query span {
+      display: none;
+    }
+  }
+}

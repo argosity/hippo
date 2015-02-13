@@ -7,12 +7,14 @@
                     <span class="query-field-description"></span>
                     <span class="caret"></span>
                 </button>
-                <div class="query dropdown dropdown-menu">
+                <div class="query-field dropdown dropdown-menu">
                     <form>
-                        <div class="<%= h.grid_widths 6 %> fields">
-                        </div>
-                        <div class="<%= h.grid_widths 6 %> operators">
-                        </div>
+                      <div class="<%= h.grid_widths 6 %>">
+                        <div data-hook="fields"></div>
+                      </div>
+                      <div class="<%= h.grid_widths 6 %>">
+                        <div data-hook="operators"></div>
+                      </div>
                     </form>
                 </div>
             </div>
