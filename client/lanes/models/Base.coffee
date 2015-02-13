@@ -5,7 +5,10 @@ class BaseModel
         errors: 'object'
         changes: { type: 'collection', setOnce: true }
         lastServerMessage: { type: 'string' }
+        parent: 'state'
+
     derived:
+
         errorMessage:
             deps:['errors'], fn: ->
                 if !@errors then ''
@@ -54,12 +57,20 @@ class BaseModel
     # This allows a subclass to specify the model type that should be checked.
     modelForAccess: -> this
 
+    # is the record saved
+    isPersistent: ->
+        !!( this.api_path() && !this.isNew() )
+
     # used by PubSub to record a remote change to the model
     addChangeSet: (change)->
         this.changes ||= new Lanes.Models.ChangeSetCollection( parent: this )
         change.record = this
         change = this.changes.add(change)
         this.set( change.value() )
+
+    api_path: ->
+        path = if this.FILE then _.last(this.FILE.path) else ''
+        _.pluralize(_.dasherize(path))
 
     urlRoot: ->
         Lanes.Models.Config.api_path + '/' + _.result(this,'api_path')
@@ -73,19 +84,11 @@ class BaseModel
         return base + encodeURIComponent(this.getId())
 
 
-    # A record is considered loaded if it has the id set and some attributes set
-    isLoaded: ->
-        !this.isNew() && !_.isEmpty( _.omit(this.attributes,this.idAttribute) )
-
-    # is the record saved
-    isPersistent: ->
-        !!( this.api_path && ! this.isNew() )
-
     # Ensures the assocations given in "needed" are loaded
     withAssociations: (names...,options={})->
-        scope = options.scope || this
         if _.isString(options)
             names.push(options); options={}
+        scope = options.scope || this
         needed = this.associations.nonLoaded(this,names)
         if _.isEmpty( needed )
             options.success.call(scope, this  ) if options.success
@@ -108,7 +111,14 @@ class BaseModel
             new this(attrs,options)
 
     # Calls Ampersand State's set method, then sets any associations that are present as well
-    set: (attrs,options)->
+    set: (key, value, options)->
+        # Handle both `"key", value` and `{key: value}` -style arguments.
+        if _.isObject(key) || key == null
+            attrs = key;
+            options = value;
+        else
+            attrs = {}
+            attrs[key] = value
         super
         this.associations.set(this,attrs) if this.associations
         this
@@ -152,9 +162,12 @@ class BaseModel
         options = _.clone(options)
         handlers = Lanes.Models.Sync.wrapRequest(this,options)
         _.extend(options,{limit:1,ignoreUnsaved:true})
-
         this.sync('read', this, options)
         handlers.promise
+
+    @fetch: (options={})->
+        record = new this()
+        record.fetch(options)
 
     # Removes the model's record from the server (if it is persistent)
     # and then fires the "destroy" event
@@ -186,7 +199,8 @@ class BaseModel
             data = this.getAttributes(props:true, true)
         else
             data = this.unsavedAttributes()
-        _.extend(data, this.associations.dataForSave(this, options)) if this.associations
+        if this.associations && (!_.isEmpty(data) || !this.isNew())
+            _.extend(data, this.associations.dataForSave(this, options))
         data
 
 
@@ -197,18 +211,11 @@ class BaseModel
 
     # True if the model has "name" as eitehr a prop or session attribute
     hasAttribute: (name)->
-        !!this._definition[name]
+        !! (this._definition[name] || this._derived[name])
 
-    # Check if an attribute named "name" can be set to "value"
-    # Returns an empty string if value, and an appropriate error message if not
-    checkValid: (name, value)->
-        return '' unless def = this._definition[name]
-        if def.required && _.isEmpty(value)
-            "Cannot be empty"
-        else
-            ''
-    # Use Sync directly
-    sync: Lanes.Models.Sync.perform
+    # Uses Lanes.Models.Sync by default
+    sync: (options...)->
+        Lanes.Models.Sync.perform(options...)
 
     # When the model is extended it auto-creates the created_at and updated_at
     # and sets up the AssociationMap
@@ -230,23 +237,38 @@ class BaseModel
                 model: klass
             klass.Collection = Lanes.Models.Collection.extend(DefaultCollection)
 
-
-Lanes.Models.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BaseModel )
-
-
-
-# ------------------------------------------------------------------ #
-# The BasicModel is just a very thin layer over State                #
-# ------------------------------------------------------------------ #
-class BasicModel
-    constructor: -> super
-    isPersistent: -> false
-    isModel: true
-
-Lanes.Models.BasicModel = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BasicModel )
+    Lanes.lib.ModuleSupport.includeInto(@)
+    @include Lanes.lib.results
 
 
 class State
     constructor: -> super
 
 Lanes.Models.State = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, State )
+
+# ------------------------------------------------------------------ #
+# The BasicModel is just a very thin layer over State                #
+# ------------------------------------------------------------------ #
+class BasicModel
+    constructor: -> super
+    isModel: true
+    isPersistent: ->
+        false
+
+    # Check if an attribute named "name" can be set to "value"
+    # Returns an empty string if value, and an appropriate error message if not
+    checkValid: (name, value)->
+        return '' unless def = this._definition[name]
+        if def.required && _.isEmpty(value)
+            "Cannot be empty"
+        else
+            ''
+
+    # sets the model from a user interaction
+    # subviews may override this to provide a custom implementation
+    setFromView: (key,value)->
+        this.set(key,value)
+
+Lanes.Models.BasicModel = State.extend( BasicModel )
+
+Lanes.Models.Base = BasicModel.extend( BaseModel )
