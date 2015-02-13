@@ -17,7 +17,7 @@ Lanes.Extensions = {
             instance?.setBootstrapData?(data)
 
     makeNamespace: (identifier)->
-        for ns in ['Models','Views','Controllers','Screens']
+        for ns in ['Models','Views','Controllers','Screens','Components']
             Lanes.namespace("#{identifier}.#{ns}")
 
     controlling: ->
