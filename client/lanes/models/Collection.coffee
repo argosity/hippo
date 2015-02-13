@@ -118,10 +118,6 @@ class ModelsCollection
     ]
 
 
-    # add: ->
-    #     r=super
-    #     this.trigger('change:length', this)
-    #     r
 
 
 class BasicCollection
