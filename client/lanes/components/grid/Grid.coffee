@@ -138,7 +138,7 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         return data.model if data.model?.isModel
         attrs = if row.attr('id') then { id: parseInt(row.attr('id')) } else {}
         for field,i in @columnDefinitions
-            attrs[field.field] = data[i]
+            attrs[field.id] = data[i]
         data.model = new @modelClass(attrs,ignoreUnsaved:true)
 
     adjustColumnWidth: ->
@@ -161,7 +161,7 @@ class Lanes.Components.Grid extends Lanes.Components.Base
             oScroller: { loadingIndicator: true }
             ajax:
                 url: @recordQuery.url + ".json"
-                data: (d)=>@buildModels(d)
+                data: (d)=>@buildQuery(d)
                 dataSrc: (d)->
                     d.recordsFiltered = d.recordsTotal = d.total
                     row.DT_RowId = row.shift() for row in d.data
@@ -174,16 +174,16 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         this.dt_api = this.dataTable.api()
         this
 
-    buildModels: (d)->
+    buildQuery: (d)->
         params = {
             o: {}, s: d.start, l: d.length||100, df:'array',
-            f: ['id'].concat(_.pluck(@columnDefinitions, 'field'))
+            f: ['id'].concat(_.pluck(@columnDefinitions, 'id'))
         }
         if ! _.isEmpty( query = @recordQuery.asParams() )
             params['q']=query
         for order in d.order
             column = @recordQuery.fields.at(order.column)
-            params['o'][column.field] = order.dir
+            params['o'][column.id] = order.dir
         params
 
 
@@ -191,10 +191,10 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         align = switch query_field.type
             when 'integer','bigdec' then 'r'
             else 'l'
-        { title: query_field.title, field: query_field.field, className: align, "targets": [ index ] }
+        { title: query_field.title, id: query_field.id, className: align, "targets": [ index ] }
 
     _dataFromModel: (model)->
         data = []
         for field,i in @columnDefinitions
-            data.push( model.get(field.field) || '' )
+            data.push( model.get(field.id) || '' )
         data
