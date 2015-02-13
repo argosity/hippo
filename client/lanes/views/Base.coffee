@@ -137,9 +137,9 @@ class ViewBase
         parent = this.el && this.el.parentNode;
         parent.replaceChild(newDom, this.el) if parent
         if newDom.nodeName == '#document-fragment'
-            throw new Error("View #{this.FILE.path} can only have one root element.")
+            throw new Error("View #{Lanes.u.path(this.FILE)} can only have one root element.")
         if newDom.nodeName == '#text'
-            throw new Error("View #{this.FILE.path} must have a root element.")
+            throw new Error("View #{Lanes.u.path(this.FILE)} must have a root element.")
         this.el = newDom;
         this.onRender?()
         return this;
@@ -153,14 +153,19 @@ class ViewBase
             _.result(this, name)
         else
             data ||= _.result(this,"#{name}Data")
-            path = _.result(this,'templatePrefix') + '/' + _.result(this, "#{name}Name")
+            template_name = _.result(this, "#{name}Name")
+            path = this.resultsFor('templatePrefix', template_name) + '/' + template_name
             Lanes.Templates.render(this, path, data)
-        throw new Error("#{this.FILE.path} failed to render #{path || name}") unless template
+        throw new Error("#{Lanes.u.path(this.FILE)} failed to render #{path || name}") unless template
         template
 
-    templateName: -> _.underscore( this.FILE.path )
+    templateName: -> _.dasherize(_.last(this.FILE.path))
 
-    templatePrefix: -> _.dasherize(this.FILE.extensionName) + "/views"
+    templatePrefix: (template)->
+        if template == "empty-span"
+            "lanes/views"
+        else
+            Lanes.u.dirname(this.FILE)
 
     templateData: ->
         { model: @model?.toJSON?(), collection: @collection?.toJSON?() }
@@ -283,10 +288,10 @@ class ViewBase
     # helper to detect the class for a given subviev
     _subviewClass: (subview)->
         klass = if subview.component
-            Lanes.getPath(subview.component, Lanes.Components)
+            Lanes.u.findObject(subview.component, 'Components', this.FILE)
         else if subview.view
             if _.isString(subview.view)
-                Lanes.getPath(subview.view, this.subviewPrefix() )
+                Lanes.u.getPath(subview.view, this.subviewPrefix() )
             else
                 subview.view
         Lanes.warn( "Unable to obtain view for %o", subview) if ! klass
@@ -296,7 +301,7 @@ class ViewBase
     # returns the namespace that the views should be in
     # is needed so views can be specified by only thier name, rather than complete path
     subviewPrefix: ->
-        this.FILE.namespace['Views']
+        Lanes.u.objectPath(this.FILE)
 
     # ## _parseSubview
     # helper for parsing out the subview declaration and registering
@@ -355,12 +360,14 @@ class ViewBase
     _onModelChange: ->
         for name, definition of this.subviews
             continue unless ( view = this[name] )
-            view.model = Lanes.getPath(definition.model, this) if definition.model
-            view.collection = Lanes.getPath(definition.collection, this) if definition.collection
+            view.model = Lanes.u.getPath(definition.model, this) if definition.model
+            view.collection = Lanes.u.getPath(definition.collection, this) if definition.collection
         prev = this.previous('model')
         return if prev == @model
         this._unbindFromObject(prev, @modelEvents) if prev
         this._bindToObject(@model, @modelEvents)
+        this.onModelChange?()
+        true
 
     _onCollectionChange: ->
         prev = this.previous('collection')

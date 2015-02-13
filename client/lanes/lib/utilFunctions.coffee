@@ -21,13 +21,58 @@ Lanes.log = (msg...)->
 distillTypes = (type, ns)->
     _.reduce( type.split( '.' ), ( ( memo, val )-> return if memo then memo[ val ] else null ),  ns )
 
+Lanes.u = {
+
+    objectPath: (FILE)->
+        FILE.path
+
+    path: (FILE)->
+        FILE.path.join("/")
+
+    dirname: (FILE)->
+        FILE.path[0...FILE.path.length-1].join("/")
+
+    findObject:(name, subPath, file=FILE) ->
+        if _.isObject(name)
+            name
+        else
+            file.namespace[subPath]?[name] || Lanes[subPath]?[name] || Lanes.u.getPath(name)
+
+    # Can be called one of two ways:
+    # With ns being a string, which will attempt to deref it then deref name inside it
+    # or with ns being an object, which will dref name inside it
+    getPath: ( name, ns='Lanes' ) ->
+        return name unless _.isString(name)
+        ns = "Lanes.#{ns}" if _.isString(ns) && !ns.match("Lanes")
+        distillTypes(name, window) || distillTypes(name, if _.isObject(ns) then ns else distillTypes(ns, window) )
+
+    # Like underscore's results but allows passing
+    # arguments to the function if it's called
+    resultsFor:( scope, method, args... )->
+        if _.isString(method)
+            if _.isFunction(scope[method])
+                scope[method].apply(scope,args)
+            else
+                scope[method]
+        else if _.isFunction(method)
+            method.apply(scope,args)
+        else
+            method
+}
+
 # Can be called one of two ways:
 # With ns being a string, which will attempt to deref it then deref name inside it
 # or with ns being an object, which will dref name inside it
-Lanes.getPath = ( name, ns='Lanes' ) ->
-    return name unless _.isString(name)
-    ns = "Lanes.#{ns}" if _.isString(ns) && !ns.match("Lanes")
-    distillTypes(name, window) || distillTypes(name, if _.isObject(ns) then ns else distillTypes(ns, window) )
+# Lanes.getPath = ( name, ns='Lanes' ) ->
+#     return name unless _.isString(name)
+#     ns = "Lanes.#{ns}" if _.isString(ns) && !ns.match("Lanes")
+#     distillTypes(name, window) || distillTypes(name, if _.isObject(ns) then ns else distillTypes(ns, window) )
+
+# Lanes.findObject = (name, subPath, file=FILE) ->
+#     if _.isObject(name)
+#         name
+#     else
+#         file.namespace[subPath]?[name] || Lanes[subPath]?[name] || Lanes.getPath(name)
 
 lcDash = (char, match, index)->
     return ( if index == 0 then '' else '_' ) + char.toLowerCase()
@@ -46,6 +91,5 @@ _.mixin({
                 last
         else
             ''
-    evaluateFunction: (fn,args)->
-        if this.isFunction(fn) then fn(args) else fn
+
 })
