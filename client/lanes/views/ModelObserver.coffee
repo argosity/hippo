@@ -1,6 +1,6 @@
 class Lanes.Views.ModelObserver extends Lanes.Models.State
 
-    model_events: {}
+    modelEvents: {}
 
     constructor: (@view, @keypath='model')->
         super
@@ -9,14 +9,14 @@ class Lanes.Views.ModelObserver extends Lanes.Models.State
         this.rebindModel()
 
     getModel: ->
-        @cached_model ||= Lanes.getPath(@keypath, @view)
+        @cached_model ||= Lanes.u.getPath(@keypath, @view)
 
     unBindModel: (model)->
-        for event, fn of @model_events
+        for event, fn of @modelEvents
             model.off(event, this[fn], this )
 
     bindModel: (model)->
-        for event, fn of @model_events
+        for event, fn of @modelEvents
             model.on(event, this[fn], this )
 
     rebindModel: ->
