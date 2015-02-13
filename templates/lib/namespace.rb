@@ -2,7 +2,6 @@ require "lanes"
 require 'require_all'
 require_relative "<%= identifier %>/version.rb"
 require_relative "<%= identifier %>/extension.rb"
-require_rel '<%= identifier %>'
 
 # The main namespace for <%= name.camelize %>
 module <%= namespace %>
@@ -10,3 +9,6 @@ module <%= namespace %>
         "<%= name %>_"
     end
 end
+
+require_relative "<%= identifier %>/model"
+require_rel "<%= identifier %>/models"
