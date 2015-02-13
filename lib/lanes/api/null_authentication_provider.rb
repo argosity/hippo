@@ -24,7 +24,7 @@ module Lanes
                 USER
             end
 
-            def wrap_request(model)
+            def wrap_request(model, req)
                 yield
             end
 
