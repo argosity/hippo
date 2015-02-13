@@ -9,7 +9,7 @@ module Lanes
             attr_reader :namespace, :class_name, :client_dir, :spec_dir, :identifier
 
             def self.source_root
-                Pathname.new(__FILE__).dirname.join("templates")
+                Pathname.new(__FILE__).dirname.join("..","..","..","templates")
             end
 
             def load_namespace
