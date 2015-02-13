@@ -1,0 +1,42 @@
+.header-top {
+    @extend .navbar;
+    @extend .navbar-inverse;
+    @extend .navbar-fixed-top;
+    z-index: 20;
+    height: 50px;
+    border-radius: 0;
+    margin: 0;
+    border: 0;
+    position:relative;
+
+    .navbar-header {
+        position: relative;
+        min-width: 203px;
+        width: 100%;
+        height: 50px;
+        margin-left: 0;
+    }
+
+    .logo {
+        display: inline-block;
+        height: 48px;
+        width: 150px;
+        margin: 2px;
+        background: url(asset_path('images/logo-sm.png')) no-repeat;
+    }
+
+    .navbar-toggle, .screens-menu-toggle {
+        color: #fff;
+        display: block;
+        float: left;
+        color: #fff;
+        border: 0;
+        padding: 6px 7px 7px;
+        line-height: 1;
+        background-color: rgba(0, 0, 0, 0.2);
+        margin: 12px 0 12px 0px;
+        border-radius: 0;
+    }
+    
+
+}

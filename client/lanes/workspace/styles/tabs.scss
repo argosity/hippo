@@ -1,148 +1,147 @@
 .active-screens .nav    a {
-  background-color: $gray-dark;
+    background-color: $gray-dark;
 }
 
 .header-top {
 
-  
-  .menu-container {
-    position:absolute;
-    left: 0;
-    position: absolute;
-    overflow-x: visible;
-    overflow-y: auto;
-    border: 0;
-    top: 5px;
-    transition: all 0.15s ease-in-out 0s;
-    overflow-x: visible;
-    overflow-y: auto;
-    left: 200px;
-    right: 35px;
-  }
-
-  &.with-screen-menu {
-    .menu-container {
-      left: 0px;
-    }
-  }
-
-  &.no-screen-menu {
-    .active-screens {
-      display: inline-block;
-    }
-  }
-
-  .menu-container {
-    .active-screens {
-      width: 100%;
-      .wrapper{
-        position:relative;
-        margin:0 auto;
-        overflow:hidden;
-        padding:5px;
-        height:45px;
-
-      }
-      .nav {
-        position:absolute;
-        left:0px;
-        top: 1px;
-        min-width:3000px;
-        /* margin-left:12px; */
-        margin-top:0px;
-
-        li {
-          display:table-cell;
-          position:relative;
-          text-align:center;
-          cursor:grab;
-          cursor:-webkit-grab;
-          color:#efefef;
-          vertical-align:middle;
-        }
-      }
-
-      .scroller {
-        text-align:center;
-        cursor:pointer;
-        visibility: hidden;
-        padding:7px;
-        padding-top:11px;
-        white-space:no-wrap;
-        vertical-align:middle;
-        color: $link-color;
-        &:hover{
-          color: $link-hover-color;
-        }
-        &.enabled {
-          visibility: visible;
-        }
-      }
-      
-      .scroller-right{
-        float:right;
-        &:before {
-          @extend .font-icon-display;
-          @extend .icon-arrow-right:before;
-        }
-      }
-
-      .scroller-left {
-        float:left;
-        &:before {
-          @extend .font-icon-display;
-          @extend .icon-arrow-left:before;
-        }
-      }
-    }
-  }
-
-
-  &.screen-menu-hidden {
-    .menu-container {
-      max-height: 45px;
-      overflow: hidden;
-    }
-    .screens-menu {
-       
-    }
-  }
-
-  &.screen-menu-visible {
-    .menu-container {
-      top: 50px;
-      left: 0px;
-      right: 0px;
-      /* bottom: unset; */
-      max-height: 300px;
-    }
-    .active-screens {
-      display: none;
-    }
-  }
-
-  .active-screens {
     
-    height: 45px;
-    padding: 0 5px;
-
-    .nav-tabs {
-      border-bottom: 0;
-      position: absolute;
-      bottom: 0px;
+    .menu-container {
+        position:absolute;
+        left: 0;
+        position: absolute;
+        overflow-x: visible;
+        overflow-y: auto;
+        border: 0;
+        top: 5px;
+        transition: all 0.15s ease-in-out 0s;
+        overflow-x: visible;
+        overflow-y: auto;
+        left: 200px;
+        right: 35px;
     }
 
-    .close {
-      position: absolute;
-      right: 7px;
-      top: 0px;    
-    }
-
-    /* a { */
-    /*   white-space: nowrap; */
+    /* &.with-screen-menu { */
+    /*   .menu-container { */
+    /*     left: 0px; */
+    /*   } */
     /* } */
 
-  }
+
+    .active-screens {
+        display: inline-block;
+    }
+
+    .menu-container {
+        .active-screens {
+            width: 100%;
+            .wrapper{
+                position:relative;
+                margin:0 auto;
+                overflow:hidden;
+                padding:5px;
+                height:45px;
+
+            }
+            .nav {
+                position:absolute;
+                left:0px;
+                top: 1px;
+                min-width:3000px;
+                /* margin-left:12px; */
+                margin-top:0px;
+
+                li {
+                    display:table-cell;
+                    position:relative;
+                    text-align:center;
+                    cursor:grab;
+                    cursor:-webkit-grab;
+                    color:#efefef;
+                    vertical-align:middle;
+                }
+            }
+
+            .scroller {
+                text-align:center;
+                cursor:pointer;
+                visibility: hidden;
+                padding:7px;
+                padding-top:11px;
+                white-space:no-wrap;
+                vertical-align:middle;
+                color: $link-color;
+                &:hover{
+                    color: $link-hover-color;
+                }
+                &.enabled {
+                    visibility: visible;
+                }
+            }
+            
+            .scroller-right{
+                float:right;
+                &:before {
+                    @extend .font-icon-display;
+                    @extend .icon-arrow-right:before;
+                }
+            }
+
+            .scroller-left {
+                float:left;
+                &:before {
+                    @extend .font-icon-display;
+                    @extend .icon-arrow-left:before;
+                }
+            }
+        }
+    }
+
+
+    &.screen-menu-hidden {
+        .menu-container {
+            max-height: 45px;
+            overflow: hidden;
+        }
+        .screens-menu {
+            
+        }
+    }
+
+    &.screen-menu-visible {
+        .menu-container {
+            top: 50px;
+            left: 0px;
+            right: 0px;
+            /* bottom: unset; */
+            max-height: 300px;
+        }
+        .active-screens {
+            display: none;
+        }
+    }
+
+    .active-screens {
+        
+        height: 45px;
+        padding: 0 5px;
+
+        .nav-tabs {
+            border-bottom: 0;
+            position: absolute;
+            bottom: 0px;
+        }
+
+        .close {
+            position: absolute;
+            right: 7px;
+            top: 0px;    
+        }
+
+        /* a { */
+        /*   white-space: nowrap; */
+        /* } */
+
+    }
 
 
 }

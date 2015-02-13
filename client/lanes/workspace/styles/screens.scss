@@ -1,66 +1,67 @@
 .screen {
-  padding: 5px;
-  overflow: hidden;
-  .toolbar {
-    margin-top: 10px;
-  }
-
-  .toolbar{
-    @extend .navbar;
-    @extend .navbar-default;
-
-    .btn {
-      @extend .btn-default;
-      @extend .navbar-btn;
+    padding: 5px;
+    //  overflow: hidden;
+    width: 100%;
+    .toolbar {
+        margin-top: 10px;
     }
 
-    .arrow {
-      border-style: solid;
+    .toolbar{
+        @extend .navbar;
+        @extend .navbar-default;
 
-      border-left-color: transparent;
-      border-right-color: transparent;
+        .btn {
+            @extend .btn-default;
+            @extend .navbar-btn;
+        }
 
-      border-bottom-color: $popover-title-bg;
-      border-top-color: $popover-title-bg !important; 
+        .arrow {
+            border-style: solid;
 
-      border-width: 0 9px 9px;
-      height: 0;
-      left: 7px;
-      margin-top: 10px;
-      opacity: 1;
-      position: absolute;
-      top: -18px;
-      transition: all 0.25s ease 0s;
-      width: 0;
-      z-index: 10;
+            border-left-color: transparent;
+            border-right-color: transparent;
+
+            border-bottom-color: $popover-title-bg;
+            border-top-color: $popover-title-bg !important; 
+
+            border-width: 0 9px 9px;
+            height: 0;
+            left: 7px;
+            margin-top: 10px;
+            opacity: 1;
+            position: absolute;
+            top: -18px;
+            transition: all 0.25s ease 0s;
+            width: 0;
+            z-index: 10;
+        }
+        .navbar-left {
+            float: left;
+        }
+        .navbar-right{
+            float: right;
+            .arrow {
+                left: unset;
+                right: 10px;
+            }
+        }
+
+        .dropdown-toggle {
+            .badge{
+                padding: 2px 2px 0;
+                position: relative;
+                font-size: 70%;
+                top: -6px;
+                right: 5px;
+            }
+            position: relative;
+            padding-right: 2px;
+            i {
+                /* position: absolute; */
+                /* left: 0px; */
+            }
+        }
+
     }
-    .navbar-left {
-      float: left;
-    }
-    .navbar-right{
-      float: right;
-      .arrow {
-        left: unset;
-        right: 10px;
-      }
-    }
-
-    .dropdown-toggle {
-      .badge{
-        padding: 2px 2px 0;
-        position: relative;
-        font-size: 70%;
-        top: -6px;
-        right: 5px;
-      }
-      position: relative;
-      padding-right: 2px;
-      i {
-        /* position: absolute; */
-        /* left: 0px; */
-      }
-    }
-
-  }
 
 }
