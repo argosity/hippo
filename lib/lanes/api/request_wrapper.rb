@@ -35,7 +35,7 @@ module Lanes
                           session:      session,
                           params:       params
                         )
-                        authentication.wrap_request(model) do
+                        authentication.wrap_request(model,self) do
                             if parent_attribute
                               params[:nested_attribute] = Hash[ parent_attribute,
                                                                params[parent_attribute] ]

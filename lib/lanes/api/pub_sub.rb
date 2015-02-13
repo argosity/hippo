@@ -4,15 +4,15 @@ module Lanes
         class PubSub
 
             def self.publish(channel, data)
-                MessageBus.publish channel, data #Oj.dump(data, mode: :compat)
+                MessageBus.publish channel, data
             end
 
-            def self.initialize(api)
+            def self.initialize(api=nil)
                 return unless Extensions.require_pub_sub?
                 require "oj"
                 require_relative "updates"
                 require 'message_bus'
-                api.use MessageBus::Rack::Middleware
+                api.use MessageBus::Rack::Middleware if api
 
                 # Use OJ - it encodes dates properly as ISO 8601
                 # https://github.com/moment/moment/issues/1407
