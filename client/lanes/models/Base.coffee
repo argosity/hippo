@@ -221,7 +221,7 @@ class BaseModel
         klass::session['updated_at'] ||= 'date'
 
         if klass::associations
-            klass::associations = new AssocationMap(klass)
+            klass::associations = new Lanes.Models.AssocationMap(klass)
 
     @afterExtended: (klass)->
         if !klass::abstractClass && !klass.Collection
