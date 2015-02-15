@@ -52,10 +52,16 @@ module Lanes
                 [ root_path.join('client') ]
             end
 
+            def client_images_directory
+                root_path.join('client','images')
+            end
+
             def client_images
-                images = []
-                root_path.join('client','images').find{|path| images << path if path.file? }
-                images
+                if client_images_directory.exist?
+                    client_images_directory.find.select{|path| path.file? }
+                else
+                    []
+                end
             end
 
             def route(route_set)

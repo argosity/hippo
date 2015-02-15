@@ -17,10 +17,12 @@ module Lanes
                     manifest.compile('lanes/workspace.js', 'lanes/workspace.css',
                                      'lanes/minimal.js',   'lanes/minimal.css' )
                     Extensions.each{|ext|
-                        manifest.compile(ext.client_images.map(&:to_s))
+                        images = ext.client_images.map(&:to_s)
+                        manifest.compile( images ) unless images.empty?
                     }
                     Screen.each do | screen |
-                        manifest.compile( screen.assets ) unless screen.assets.blank?
+                        assets = screen.assets
+                        manifest.compile( assets ) unless assets.empty?
                     end
                 end
 
