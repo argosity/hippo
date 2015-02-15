@@ -70,6 +70,7 @@ module Lanes
         config_option :root_view, 'Lanes.Workspace.Layout'
         config_option :initial_workspace_screen_id, ''
         config_option :specs_root, Pathname.getwd
+        config_option :static_asset_types, ['images','fonts']
     end
 
     class << self

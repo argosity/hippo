@@ -104,10 +104,6 @@ module Lanes
                 return data
             end
 
-            def client_images
-                each{|ext| }
-            end
-
             def load_controlling_config
                 config_file = self.controlling.root_path.join('config','lanes.rb')
                 if config_file.exist?

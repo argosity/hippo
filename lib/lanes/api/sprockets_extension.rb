@@ -15,10 +15,11 @@ module Lanes
                     Lanes::API::SprocketsExtension.configure(env, compress:true)
                     manifest = Sprockets::Manifest.new( env.index, "public/assets/manifest.json" )
                     manifest.compile('lanes.js', 'lanes.css')
-                    Extensions.each{|ext|
-                        images = ext.client_images.map(&:to_s)
-                        manifest.compile( images ) unless images.empty?
-                    }
+                    Extensions.each do |ext|
+                        ext.each_static_asset do | asset |
+                          manifest.compile( asset.to_s )
+                        end
+                    end
                     Screen.each do | screen |
                         assets = screen.assets
                         manifest.compile( assets ) unless assets.empty?

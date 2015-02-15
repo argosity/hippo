@@ -52,15 +52,19 @@ module Lanes
                 [ root_path.join('client') ]
             end
 
-            def client_images_directory
-                root_path.join('client','images')
+            def static_paths
+                client_paths.each_with_object(Array.new) do |path, result|
+                    Lanes.config.static_asset_types.each do | prefix |
+                        result << path.join(prefix) if path.join(prefix).exist?
+                    end
+                end
             end
 
-            def client_images
-                if client_images_directory.exist?
-                    client_images_directory.find.select{|path| path.file? }
-                else
-                    []
+            def each_static_asset
+                static_paths.each do | path |
+                    path.find.each do | entry |
+                        yield entry if entry.file?
+                    end
                 end
             end
 
