@@ -20,7 +20,7 @@
   @extend .font-icon-display;
 }
 
-@import "./fonts/style";
+@import "./font-definitions";
 
 .icon-reset:before {
     @extend .icon-refresh:before;

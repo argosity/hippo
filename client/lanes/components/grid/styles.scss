@@ -27,7 +27,7 @@
     padding-top: 20px;
     text-align: center;
     font-size: 1.2em;
-    background:url(asset_path('images/ajax-loader.gif')) no-repeat scroll 40% 7px $body-bg;
+    background:url(asset_path('images/lanes/ajax-loader.gif')) no-repeat scroll 40% 7px $body-bg;
   }
 
 
@@ -87,12 +87,12 @@
     cursor: pointer;
   }
 
-  thead .sorting { background: url(image-path('images/dataTables/sort_both.png')) no-repeat center right; }
-  thead .sorting_asc { background: url(image-path('images/dataTables/sort_asc.png')) no-repeat center right; }
-  thead .sorting_desc { background: url(image-path('images/dataTables/sort_desc.png')) no-repeat center right; }
+  thead .sorting { background: url(image-path('images/lanes/dataTables/sort_both.png')) no-repeat center right; }
+  thead .sorting_asc { background: url(image-path('images/lanes/dataTables/sort_asc.png')) no-repeat center right; }
+  thead .sorting_desc { background: url(image-path('images/lanes/dataTables/sort_desc.png')) no-repeat center right; }
 
-  thead .sorting_asc_disabled { background: url(image-path('images/dataTables/sort_asc_disabled.png')) no-repeat center right; }
-  thead .sorting_desc_disabled { background: url(image-path('images/dataTables/sort_desc_disabled.png')) no-repeat center right; }
+  thead .sorting_asc_disabled { background: url(image-path('images/lanes/dataTables/sort_asc_disabled.png')) no-repeat center right; }
+  thead .sorting_desc_disabled { background: url(image-path('images/lanes/dataTables/sort_desc_disabled.png')) no-repeat center right; }
 
   thead > tr > th {
     padding-left: 18px;
