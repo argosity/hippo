@@ -14,8 +14,7 @@ module Lanes
                     env = ::Sprockets::Environment.new
                     Lanes::API::SprocketsExtension.configure(env, compress:true)
                     manifest = Sprockets::Manifest.new( env.index, "public/assets/manifest.json" )
-                    manifest.compile('lanes/workspace.js', 'lanes/workspace.css',
-                                     'lanes/minimal.js',   'lanes/minimal.css' )
+                    manifest.compile('lanes.js', 'lanes.css')
                     Extensions.each{|ext|
                         images = ext.client_images.map(&:to_s)
                         manifest.compile( images ) unless images.empty?
