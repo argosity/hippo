@@ -14,6 +14,7 @@ module Lanes
                 ::ActiveRecord::Base.configurations = config
                 ::ActiveRecord::Base.establish_connection( ::ActiveRecord::Base.configurations[ env ] )
             end
+            ActiveRecord::Base.logger = Lanes.logger
         end
 
         def load_seed
