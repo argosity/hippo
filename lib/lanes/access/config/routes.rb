@@ -15,7 +15,7 @@ module Lanes
 
         delete "/user-session/:id.json" do
             session.destroy
-            wrap_json_reply do
+            wrap_request do
                 { success: true, message: "Logout succeeded", data: {} }
             end
         end

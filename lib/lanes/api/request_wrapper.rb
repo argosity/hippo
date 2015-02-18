@@ -5,30 +5,30 @@ module Lanes
             class << self
 
                 def get(*args)
-                    wrap_request(*args) do |controller|
+                    make_handler(*args) do |controller|
                         controller.perform_retrieval
                     end
                 end
 
                 def post(*args)
-                    wrap_request(*args) do |controller|
+                    make_handler(*args) do |controller|
                         controller.perform_creation
                     end
                 end
 
                 def update(*args)
-                    wrap_request(*args) do |controller|
+                    make_handler(*args) do |controller|
                         controller.perform_update
                     end
                 end
 
                 def delete(*args)
-                    wrap_request(*args) do |controller|
+                    make_handler(*args) do |controller|
                         controller.perform_destroy
                     end
                 end
 
-                def wrap_request(model, controller, parent_attribute)
+                def make_handler(model, controller, parent_attribute)
                     lambda do
                         authentication = Lanes::API::AuthenticationProvider.new(
                           request_type: request.request_method,
@@ -40,7 +40,7 @@ module Lanes
                               params[:nested_attribute] = Hash[ parent_attribute,
                                                                params[parent_attribute] ]
                             end
-                            wrap_json_reply do
+                            wrap_request(!request.get?) do
                                 yield controller.new(model, authentication, params, data)
                             end
                         end
@@ -48,8 +48,21 @@ module Lanes
                 end
             end
 
-            def wrap_json_reply
-                response = yield
+            def log_request
+                Lanes.logger.info "UserID: #{session['user_id']}, Params: #{request.params}"
+            end
+
+            def wrap_request(with_transaction=true)
+                response = { success: false, message: "No response was generated" }
+                log_request
+                if with_transaction
+                    Lanes::Model.transaction do
+                        response = yield
+                        raise ActiveRecord::StatementInvalid if request.env['X_ROLLBACK_AFTER_REQUEST']
+                    end
+                else
+                    response = yield
+                end
                 if false == response[:success]
                     status(406)
                 end
