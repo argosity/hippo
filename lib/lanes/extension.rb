@@ -95,6 +95,7 @@ module Lanes
                   controlling_extension: controlling.identifier,
                   root_view:  Lanes.config.root_view,
                   api_path: Lanes.config.mounted_at,
+                  environment: Lanes.config.environment,
                   initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id,
                   pub_sub: require_pub_sub?
                 }
