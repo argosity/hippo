@@ -83,9 +83,7 @@ class ModelsCollection
 
     # true if any models have unsaved data
     isDirty: ->
-        for model in @models
-            return true if model.isDirty()
-        false
+        !!this.findWhere(isDirty: true)
 
     url: -> @model::urlRoot()
 
@@ -102,7 +100,7 @@ class ModelsCollection
     dataForSave: (options)->
         unsaved = []
         for model in @models
-            if options.saveAll || model.isDirty()
+            if options.saveAll || model.isDirty
                 unsaved.push( model.dataForSave(options) )
         unsaved
 

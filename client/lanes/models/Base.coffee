@@ -6,9 +6,9 @@ class BaseModel
         changes: { type: 'collection', setOnce: true }
         lastServerMessage: { type: 'string' }
         parent: 'state'
+        isDirty: { type: 'boolean', default: false }
 
     derived:
-
         errorMessage:
             deps:['errors'], fn: ->
                 if !@errors then ''
@@ -50,7 +50,7 @@ class BaseModel
         @changeMonitor = new Lanes.Models.ChangeMonitor(this)
         # The model was created with attributes and it did not originate from a XHR request
         if attrs and !options.xhr
-            @changeMonitor.recordChanged(_.keys(attrs))
+            @changeMonitor.recordChanges(this, _.keys(attrs))
 
     # In some cases a model's security should depend on the parent record, not on itself.
     # For instance, a Customer's Address should have the same permissions as the Customer
@@ -134,8 +134,9 @@ class BaseModel
 
     # Sets the attribute data from a server respose
     setFromServer: (data,options)->
-        this.set( if _.isArray(data) then data[0] else data )
-        this.changeMonitor.reset()
+        BaseModel.__super__.set.call(this, if _.isArray(data) then data[0] else data )
+        this.associations.setFromServer(this,data) if this.associations
+        this.isDirty = false
 
     # save the model's data to the server
     # Only unsaved attributes will be sent unless
@@ -144,6 +145,7 @@ class BaseModel
         options = _.clone(options)
 
         options.saving=true
+
         handlers = Lanes.Models.Sync.wrapRequest(this,options)
 
         method = if this.isNew()
@@ -187,9 +189,12 @@ class BaseModel
 
     # returns any attributes that have been set and not saved
     unsavedAttributes: ->
-        attrs = if this.isNew() then {} else { id: this.getId() }
+        attrs = {} #if this.isNew() then {} else { id: this.getId() }
         _.extend(attrs, _.pick( this.getAttributes(props:true, true),
             @changeMonitor.changedAttributes() ) )
+        unless _.isEmpty(attrs) or this.isNew()
+            attrs.id = this.getId()
+        attrs
 
     # returns data to save to server.  If options.saveAll is true,
     # all data is returned.  Otherwise only unsaved attributes (and associations)
@@ -203,11 +208,6 @@ class BaseModel
             _.extend(data, this.associations.dataForSave(this, options))
         data
 
-
-    # returns true if any server-side attributes are unsaved
-    # Does not care about session-only properties
-    isDirty: ->
-        @changeMonitor.isDirty()
 
     # True if the model has "name" as eitehr a prop or session attribute
     hasAttribute: (name)->

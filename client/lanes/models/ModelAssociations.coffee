@@ -47,44 +47,29 @@ class Lanes.Models.AssocationMap
             new Lanes.Models.AssociationCollection(options.models||[],options)
     # returns the definition for the derived property
     derivedDefinition: (name,definition)->
-#        me = this
-#        target_klass = this.getClassFor(name)
-#        fk = this.fk(name) ; pk = this.pk(name)
-
-        # if definition.defaultValue
-        #     _.defaults(args, _.evaluateFunction(definition.defaultValue))
         createFn = _.partial(
             if definition.model then this.createModel else this.createCollection,
             this, name, definition, this.fk(name), this.pk(name), this.getClassFor(name)
         )
         { deps: [this.pk(name)], fn: createFn }
 
-        # createAssocation = if definition.model then ->
-        #     target_klass ||= me.getClassFor(name)
-        #     _.extend(args, parent: this)
-        #     model_id = this.get(pk)
-        #     if model_id && model_id == this._cache[name]?.id
-        #         this._cache[name]
-        #     else
-        #         target_klass.findOrCreate(args)
-        # else ->
-        #     target_klass ||= me.getClassFor(name)
-        #     filter = {}
-        #     filter[ fk ] = this.get( pk)
-        #     _.extend(args, filter: filter, parent: this)
-        #     if target_klass::isCollection
-        #         new target_klass([],args)
-        #     else
-        #         args.model=target_klass
-        #         new Lanes.Models.AssociationCollection(args)
-        # { deps: [pk], fn: createFn }
 
     # Sets the assocations for "model"
     set: (model, data)->
+        this._set(model, data, 'set')
+
+    setFromServer: (model, data)->
+        this._set(model, data, 'setFromServer')
+
+    _set: (model, data, fn_name)->
         for name, value of data
             if @definitions[name]
                 attributes = if _.isFunction(value.serialize) then value.serialize() else value
-                model[name].set( attributes )
+                association = model[name]
+                association[fn_name]( attributes )
+                # if we're replaceing the model's contents with another, copy the dirty status as well
+                if association.isModel && value.isModel
+                    association.isDirty = value.isDirty
 
     pk: (name)->
         def = @definitions[name]
@@ -101,8 +86,8 @@ class Lanes.Models.AssocationMap
         ret = {}
         options.saveDepth = ( if options.saveDepth then options.saveDepth+1 else 1 )
         return ret if options.saveDepth > 5
-        for name, assoc_options of @definitions
-            unless assoc_options.readOnly
+        for name, options of @definitions
+            unless options.readOnly
                 data = model[name].dataForSave(options)
                 unless _.isEmpty( data )
                     ret[name] = data
