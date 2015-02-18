@@ -100,7 +100,7 @@ module Lanes::Concerns
 
                     association = self.association(name)
                     if value.is_a?(Hash) && [:belongs_to,:has_one].include?(association.reflection.macro)
-                        target = association.target || association.build
+                        target = send(name) || association.build
                         result[name] = target.set_attribute_data(value, user)
                     elsif value.is_a?(Array) && :has_many == association.reflection.macro
                         result[name] = _set_attribute_data_from_collection(association, value, user)
