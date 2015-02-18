@@ -49,20 +49,23 @@ module Lanes
 
           private
 
+            def role_types
+                @role_types ||= @roles.map(&:class)
+            end
+
             def model_to_class(model)
-              model.is_a?(Class) ? model : model.class
+                model.is_a?(Class) ? model : model.class
             end
 
             # Test if the given roles grant access to the model
             def test_access(model, attribute, access_type)
                 # Check if the attribute is locked
                 # If it is, the locks determine access, otherwise use the model's grants
-                roles = LockedFields.roles_needed_for(model, attribute, access_type)
-                if roles.empty?
-                    return !!@roles.detect { |role| yield role }.present?
+                locked_to_roles = LockedFields.roles_needed_for(model, attribute, access_type)
+                if locked_to_roles.none?
+                    return @roles.detect{ |role| yield role }.present?
                 else
-                    roles.any?{ |role| role.models_include?(model) }
-                    #!!roles.find { |role| @roles.map(&:class).include?(role) }
+                    role_types.any?{|role| role.can_access_locked_roles?(locked_to_roles) }
                 end
             end
 

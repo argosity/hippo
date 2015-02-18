@@ -53,6 +53,11 @@ module Lanes
                     ALL
                 end
 
+                # By default a role can only access if it's type is included in the
+                # array of acceptable roles.  An Admin role may provide a custom implementation
+                def can_access_locked_roles?(roles)
+                    roles.include?(self)
+                end
             end
         end
 

@@ -5,17 +5,10 @@ module Lanes
 
             class Administrator < Role
 
-                def self.grant_global_access!
-
-                    self.grant( *Lanes::Model.descendants )
-
-                    LockedFields.definitions.each do | klass, fields |
-                        fields.each do |field, grants|
-                            grants.push({ role: self, only: nil })
-                        end
-                    end
+                # The admin can access all the things
+                def self.can_access_locked_roles?(roles)
+                    true
                 end
-
 
                 def can_read?(model)
                     true
