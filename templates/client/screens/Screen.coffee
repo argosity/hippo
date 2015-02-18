@@ -1,4 +1,4 @@
-class <%= namespace.camelize %>.Screens.<%= class_name %> extends Lanes.Screens.Base
+class <%= namespace.camelize %>.Screens.<%= class_name %> extends <%= namespace.camelize %>.Screens.Base
 
     FILE: FILE
 <% if @template -%>

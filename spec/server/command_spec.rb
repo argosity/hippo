@@ -1,39 +1,64 @@
 require_relative "spec_helper"
 require "lanes/cli"
-
+require "diffy"
 require "find"
 
 describe Lanes::Command do
-    let(:lanes) { Pathname.new(__FILE__).dirname.join('..','..','bin','lanes') }
+    let(:app_name)  { "appy-app" }
+    let(:lanes)     { Pathname.new(__FILE__).dirname.join('..','..','bin','lanes') }
+    let(:generated_path) { Pathname.pwd }
+    let(:reference_path) { Pathname(__FILE__).dirname.join("command-reference-files") }
 
     around do |test|
         Dir.mktmpdir do |dir|
             @dir = dir
             Dir.chdir(dir) do
-                `#{lanes} new test`
-                Dir.chdir("test") do
+                assert_executes "#{lanes} new #{app_name}"
+                Dir.chdir(app_name) do
                     test.call
                 end
             end
         end
     end
 
-    FILES = [".", ".gitignore", "Gemfile", "Guardfile", "Rakefile", "client", "client/test", "client/test/Extension.coffee", "client/test/Router.coffee", "client/test/components", "client/test/components/.gitkeep", "client/test/controllers", "client/test/controllers/.gitkeep", "client/test/index.js", "client/test/models", "client/test/models/.gitkeep", "client/test/models/Base.coffee", "client/test/screens", "client/test/screens/.gitkeep", "client/test/screens/Base.coffee", "client/test/styles.scss", "client/test/views", "client/test/views/.gitkeep", "client/test/views/Base.coffee", "config", "config.ru", "config/database.yml", "config/lanes.rb", "config/routes.rb", "config/screens.rb", "db", "db/.gitkeep", "lib", "lib/test", "lib/test.rb", "lib/test/extension.rb", "lib/test/model.rb", "lib/test/models", "lib/test/models/empty.rb", "lib/test/version.rb", "log", "log/.gitkeep", "spec", "spec/server", "spec/server/spec_helpers.rb", "spec/test", "spec/test/helpers", "spec/test/helpers/TestHelpers.coffee", "spec/test/screens", "spec/test/screens/Base.coffee", "tmp", "tmp/.gitkeep"]
+    def compare_generated(reference)
+        reference.find.each do | path |
+            relative = path.relative_path_from(reference)
+            generated = generated_path.join(relative)
+            assert generated.exist?, "File was not created: #{relative}"
+            next unless path.file?
+            diff = Diffy::Diff.new(generated.to_s, path.to_s, source: 'files', context: 1)
+            assert diff.to_s.empty?, "#{relative}\n #{diff}"
+        end
+    end
 
     it "generates an application" do
-        files = Find.find(".").to_a.map{|f| f.gsub(/^\.\//,'') }.sort
-        files.sort.must_equal FILES.sort
+        reference = reference_path.join('initial')
+        compare_generated(reference)
+        generated_path.find.each do | path |
+            relative = path.relative_path_from(generated_path)
+            reference_copy = reference.join(relative)
+            assert reference_copy.exist?, "Created file that should not exist: #{relative}"
+        end
     end
 
-    it "creates a view" do
-       assert_executes "#{lanes} generate view Test"
-       assert_match( /client\/test\/views\/Test.coffee/, last_cmd_execution_output )
-       assert_executes "#{lanes} generate view Testing --screen Base"
-       assert_match( /client\/test\/screens\/base\/Testing.coffee/, last_cmd_execution_output )
+    it "generates a screen" do
+        assert_executes "#{lanes} g screen ready-set-go"
+        reference = reference_path.join('screen')
+        compare_generated(reference)
     end
 
-    it "creates a model" do
-       assert_executes "#{lanes} generate model Test"
-       assert_match( /client\/test\/models\/Test.coffee/, last_cmd_execution_output )
+    it "generates a model" do
+        ENV['MIGRATION_TIMESTAMP']='20150218032025'
+        assert_executes "#{lanes} g model test-test name:string email:string"
+        reference = reference_path.join('model')
+        compare_generated(reference)
     end
+
+    it "generates a view" do
+        assert_executes "#{lanes} g view big-view"
+        reference = reference_path.join('view')
+        compare_generated(reference)
+    end
+
 end

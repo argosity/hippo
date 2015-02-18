@@ -25,7 +25,7 @@ module Lanes
             # option :from, :required => true
 
             def create_screen
-                template "client/views/View.coffee",   "#{client_dir}/#{name.classify}.coffee"
+                template "client/views/View.coffee",   "#{client_dir}/#{class_name}.coffee"
                 template "spec/client/views/ViewSpec.coffee", \
                   "#{spec_dir}/#{class_name}Spec.coffee"
             end

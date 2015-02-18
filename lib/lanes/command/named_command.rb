@@ -13,10 +13,8 @@ module Lanes
             end
 
             def load_namespace
-                @namespace  = options[:namespace] ||
-                  Command.load_current_extension(raise_on_fail:true)
-                    .identifier.underscore.camelize
-                @identifier = @namespace.underscore.dasherize
+                @identifier = extension.identifier
+                @namespace  = options[:namespace] || @identifier.underscore.camelize
             end
 
             def set_variables
@@ -25,6 +23,11 @@ module Lanes
                 @client_dir = "client/#{identifier}"
             end
 
+            protected
+
+            def extension
+                @extension ||= Command.load_current_extension(raise_on_fail:true)
+            end
         end
     end
 end

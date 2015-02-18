@@ -62,13 +62,9 @@ module Lanes
                 @template = "<div><h1>Base Screen</h1></div>"
                 options[:description] = "Base Screen for #{namespace.titleize}"
                 options[:fileless] = true
-                screen_id = 'base'
-                template "client/screens/Screen.coffee", "#{client_dir}/screens/Base.coffee"
+                template "client/screens/Base.coffee", "#{client_dir}/screens/Base.coffee"
                 template "spec/client/Screen.coffee",    "#{spec_dir}/screens/Base.coffee"
-                insert_into_file "config/screens.rb", after: "" do
-                    source = File.expand_path(find_in_source_paths("config/screen.rb"))
-                    ERB.new(::File.binread(source), nil, "-","@output_buffer").result(binding)
-                end
+                create_file "config/screens.rb", ""
             end
 
         end

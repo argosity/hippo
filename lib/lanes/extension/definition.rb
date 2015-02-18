@@ -21,6 +21,8 @@ module Lanes
             # Array of Pathname's to add to sprockets
             attr_accessor_with_default :root_path
 
+            attr_accessor_with_default :db_table_prefix
+
             # Does the extension use PubSub functionality
             class_attribute  :uses_pub_sub
 

@@ -18,27 +18,23 @@ module Lanes
 
             def set_variables
                 super
-                if name=~/::/
-                    (@namespace,@name) = name.split("::")
-                else
-                    @namespace = computed_namespace
-                end
                 @file_name  = name.underscore
-                @table_name = namespace + "_" + name.tableize
+                prefix = extension.db_table_prefix
+                @table_name = prefix ? "#{prefix}_#{name.tableize}" : name.tableize
             end
 
             def create_migration
                 migration = exising_migration ||
-                  Time.now.utc.strftime("%Y%m%d%H%M%S") + "_create_#{table_name}.rb"
+                  migration_timestamp + "_create_#{table_name}.rb"
                 self.fields = fields.map{ |field| ModelAttribute.parse(field) }
                 template "db/create_table_migration.rb", "db/migrate/#{migration}"
             end
 
             def create_model
-                template "lib/namespace/model.rb", "lib/#{namespace}/models/#{file_name}.rb"
+                template "lib/namespace/model.rb", "lib/#{identifier}/models/#{file_name}.rb"
                 template "spec/server/model_spec.rb", "spec/server/#{file_name}_spec.rb"
                 template "spec/fixtures/namespace/model.yml",
-                         "spec/fixtures/#{namespace}/#{file_name}.yml"
+                         "spec/fixtures/#{identifier}/#{file_name}.yml"
             end
 
             def create_client
@@ -50,8 +46,8 @@ module Lanes
             end
 
             def add_route
-                insert_into_file "config/routes.rb", before: "end" do
-                    "    resources #{namespace.camelize}::#{class_name}\n"
+                insert_into_file "config/routes.rb", after: /.*Lanes::API.routes.draw.*?\n/ do
+                    "    resources #{namespace}::#{class_name}\n"
                 end
             end
 
@@ -64,6 +60,10 @@ module Lanes
             def exising_migration
                 migrations = Pathname.glob("#{destination_root}/db/migrate/[0-9]*_create_#{table_name}.rb")
                 migrations.any? ? migrations.first.basename.to_s : nil
+            end
+
+            def migration_timestamp
+                ENV['MIGRATION_TIMESTAMP'] || Time.now.utc.strftime("%Y%m%d%H%M%S")
             end
 
             def computed_namespace

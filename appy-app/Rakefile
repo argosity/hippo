@@ -1,0 +1,2 @@
+require_relative 'lib/appy-app'
+require 'lanes/rake_tasks'
