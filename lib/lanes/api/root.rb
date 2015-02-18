@@ -9,19 +9,17 @@ require_relative 'pub_sub'
 module Lanes
     module API
         class Root < Sinatra::Application
-            set :environment, Lanes.config.environment
             Lanes.config.get(:environment) do | env |
                 set :environment, env
             end
             register SprocketsExtension
             helpers RequestWrapper
             helpers HelperMethods
+            use Rack::Session::Cookie, :key => 'lanes.session', :secret => Lanes.config.session_secret_key_base
+            use ActiveRecord::ConnectionAdapters::ConnectionManagement
             not_found do
                 Oj.dump({ message: "endpoint not found", success: false  })
             end
-
-            use Rack::Session::Cookie, :key => 'lanes.session', :secret => Lanes.config.session_secret_key_base
-            use ActiveRecord::ConnectionAdapters::ConnectionManagement
             error do
                 Oj.dump({
                     success: false,
