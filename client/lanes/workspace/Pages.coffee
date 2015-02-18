@@ -11,7 +11,6 @@ class Lanes.Workspace.Pages extends Lanes.Views.Base
         'model.screen_menu_size': { type: 'class' }
         'model.popover_menu': { type: 'booleanClass', name: 'popover-menu' }
 
-
     subviews:
         menu:
             view: 'ScreensMenu'
@@ -19,26 +18,22 @@ class Lanes.Workspace.Pages extends Lanes.Views.Base
     ui:
         screen: '.screen'
 
-
     initialize: (options)->
-        this.listenTo( Lanes.Screens.Definitions.displaying, "change:active", this.onActiveChange )
-        this.listenTo( Lanes.Screens.Definitions.displaying, "remove",        this.onRemove )
-        #this.listenTo( @model,'change:screen_menu_position', this.moveScreensMenu )
+        this.listenTo( Lanes.current_user,                   "change:isLoggedIn", this.closeScreens)
+        this.listenTo( Lanes.Screens.Definitions.displaying, "change:active",     this.onActiveChange)
         super
 
-    # moveScreensMenu: ->
-    #     return unless 'side' == this.viewport.screen_menu_position
-    #     this.ui.screens_menu_container.append( this.viewport.menu_view.el )
+    closeScreens: ->
+        this.ui.screen.children().detach()
 
-    onRemove: (sv)->
-        sv.view.remove()
+    onRemove: (screen)->
+        screen.view.remove()
 
     onActiveChange: (screen,active)->
         view = screen.view
         view.parent = this
         unless view.rendered
             view.render()
-
         if active
             this.ui.screen.append( view.el )
         else
