@@ -6,6 +6,7 @@ class Lanes.Screens.Instance
 
     constructor: (selector, options)->
         this.viewport = new Lanes.Views.Viewport({ selector: selector, instance: this })
+        Lanes.config.set(options)
         Lanes.Models.Bootstrap.initialize(options)
         Lanes.$(document).ready => @boot(options)
 

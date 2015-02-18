@@ -73,7 +73,7 @@ class BaseModel
         _.pluralize(_.dasherize(path))
 
     urlRoot: ->
-        Lanes.Models.Config.api_path + '/' + _.result(this,'api_path')
+        Lanes.config.api_path + '/' + _.result(this,'api_path')
 
     # Default URL for the model's representation on the server
     url: ->

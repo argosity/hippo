@@ -3,6 +3,7 @@
 //= require ./lib
 //= require ./extension
 //= require ./models
+//= require ./Config
 //= require ./plugins
 //= require ./views
 //= require ./components/Base
