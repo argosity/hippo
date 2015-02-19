@@ -57,8 +57,12 @@ module Lanes
                 log_request
                 if with_transaction
                     Lanes::Model.transaction do
-                        response = yield
-                        raise ActiveRecord::StatementInvalid if request.env['X_ROLLBACK_AFTER_REQUEST']
+                         response = yield
+                        # This is quite possibly a horrible idea.
+                        # It enables test specs to reset the db state after a request
+                        if Lanes.env.test? && request.env['HTTP_X_ROLLBACK_AFTER_REQUEST']
+                            Lanes::Model.connection.rollback_db_transaction
+                        end
                     end
                 else
                     response = yield

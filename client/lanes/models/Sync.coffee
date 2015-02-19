@@ -77,9 +77,9 @@ Lanes.Models.Sync = {
         # Ensure that we have a URL.
         params.url = _.result(model, "url") or Lanes.Models.Sync.urlError() unless options.url
         params.url += '.json'
-        params.headers = {
-            X_CSRF_TOKEN: Lanes.config.csrf_token
-        }
+
+        params.headers = _.extend({}, _.result(options,'headers'))
+        params.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
         params.contentType = "application/json"
         if options.data || _.contains(['create','update','patch'], method)
             params.data = JSON.stringify( options.data || model.dataForSave(options) )
