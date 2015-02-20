@@ -25,9 +25,16 @@ module Lanes
             def client_paths
                 []
             end
-
+            def roles_for_client
+                Lanes::Access::Role.all_available.map do |role|
+                    {
+                      id: role.to_s.demodulize.underscore,
+                      name: role.to_s.demodulize
+                    }
+                end
+            end
             def client_bootstrap_data(view)
-                data = {}
+                data = { roles: roles_for_client }
                 if (user_id = view.session['user_id']) && (user = Lanes::User.where( id: user_id ).first)
                     data.merge!(user.workspace_data)
                 end

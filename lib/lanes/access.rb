@@ -6,11 +6,11 @@ module Lanes
 
         class << self
 
-            def _type_to_ref(klass)
+            def type_to_client(klass)
                 klass.to_s.sub(/^(\w+).*?(\w+)$/,'\1.Models.\2')
             end
 
-            def _type_to_id(klass)
+            def type_to_client_id(klass)
                 ( klass.is_a?(Class) ? klass : klass.class ).to_s.demodulize.underscore
             end
 
@@ -18,18 +18,18 @@ module Lanes
                 {
                     :roles => user.roles.map{ | role |
                         {
-                            type: _type_to_id(role),
-                            read: role.read.map{ |klass| _type_to_ref(klass) },
-                            write: role.write.map{ |klass| _type_to_ref(klass) },
-                            delete: role.delete.map{ |klass| _type_to_ref(klass) }
+                            type: type_to_client_id(role),
+                            read: role.read.map{ |klass| type_to_client(klass) },
+                            write: role.write.map{ |klass| type_to_client(klass) },
+                            delete: role.delete.map{ |klass| type_to_client(klass) }
                         }
                     },
                     :locked_fields => LockedFields.definitions.map{ | klass, locks |
                         {
-                            type: _type_to_ref(klass),
+                            type: type_to_client(klass),
                             locks: locks.each_with_object({}) do |(field, grants), result|
                                 result[field] = grants.map do |grant|
-                                    { role: _type_to_id(grant[:role]), only: grant[:only] }
+                                    { role: type_to_client_id(grant[:role]), only: grant[:only] }
                                 end
                             end
                         }
