@@ -57,8 +57,9 @@ Lanes.Views.Helpers = {
         impl.grid_widths(widths);
 
     text_field: (name,options={})->
+        value = if options.value then " value=#{options.value}" else ''
         impl.field(name, options,
-            "<input type='#{options.type || 'text'}' name='#{name}' value='#{options.value}'><span class='feedback'></span>"
+            "<input type='#{options.type || 'text'}' name='#{name}'#{value}><span class='feedback'></span>"
             "<div class='ro-input update' name='#{name}'></div>"
         )
 
