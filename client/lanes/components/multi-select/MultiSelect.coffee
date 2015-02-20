@@ -26,21 +26,26 @@ class Lanes.Components.MultiSelect extends Lanes.Components.Base
         if options.choices
             @selections ||= options.choices
 
-        @selections.ensureLoaded()
+        @selections?.ensureLoaded?()
 
         @mappings = _.extend({
             id: 'id', title: 'title', selected: 'selected'
         },options.mappings||{})
 
+    unSelectAll: ->
+        this.$el.find(":selected").prop('selected',false)
 
     onModelChange: ->
-        if @selections
+        this.unSelectAll()
+        if @selections && @model
             this.onModelAttributeChange(@model,@model.get(@field_name))
 
     selectionForID: (id)->
-        q={}; q[@mappings.id]=parseInt(id)
+        q={}; q[@mappings.id]=id
         @selections.findWhere( q )
 
-    onModelAttributeChange: (model,fkid)->
+    onModelAttributeChange: (model,fkids)->
         if ! this.el.binding_is_setting
-            this.select( this.selectionForID( fkid ) )
+            _.each(fkids, (fkid)=>
+                @select( @selectionForID( fkid )  )
+            )

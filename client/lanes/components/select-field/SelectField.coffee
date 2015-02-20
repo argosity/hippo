@@ -51,6 +51,7 @@ class Lanes.Components.SelectField extends Lanes.Components.MultiSelect
     readTemplate: ->
         "<div class='ro-input' name='#{this.field_name}'></div>"
 
+
     select: (option)->
         if this.readOnly
             this.$el.text( if option then option.code else "" )
@@ -59,4 +60,4 @@ class Lanes.Components.SelectField extends Lanes.Components.MultiSelect
             option = this.query("option[value=\"#{id}\"]")
             option.selected = true
         else
-            this.$el.find(":selected").prop('selected',false)
+            this.unSelectAll()
