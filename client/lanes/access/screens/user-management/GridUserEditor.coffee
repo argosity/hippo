@@ -2,7 +2,7 @@ class Lanes.Access.Screens.UserManagement.GridUserEditor extends Lanes.Component
 
     writeTemplateName: 'user-management/grid-popover-editor'
     templatePrefix: 'lanes/access/screens'
-
+    useFormBindings: true
     writeTemplateData: ->
         { columns: _.reject(this.grid.columnDefinitions,(f)-> f.field=='role_names') }
 
@@ -13,10 +13,11 @@ class Lanes.Access.Screens.UserManagement.GridUserEditor extends Lanes.Component
             options: 'roleOptions'
 
     roleOptions: ->
-        { multiple: true, data: this.model.allRoles, mappings:{ title: 'name', selected: 'member' } }
-
-    constructor: (options={})->
-        super( _.extend(options,{formBindings: true}) )
+        {
+            field_name: 'role_names'
+            multiple: true, choices: this.model.allRoles
+            mappings:{ title: 'name', selected: 'member' }
+        }
 
     persistFields: ->
         @model.set({
