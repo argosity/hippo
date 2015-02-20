@@ -18,7 +18,7 @@ class Lanes.Views.TimedMask
             color: 'firebrick'
 
     failsafeTimeout: 25000
-    defaultTimeout:   2000
+    defaultTimeout:   1500
 
     constructor: ( @element, options={} )->
         _.bindAll(this,'destroy')
