@@ -35,12 +35,12 @@ module Lanes
                           session:      session,
                           params:       params
                         )
-                        authentication.wrap_request(model,self) do
+                        authentication.wrap_reply(model,self) do
                             if parent_attribute
                               params[:nested_attribute] = Hash[ parent_attribute,
                                                                params[parent_attribute] ]
                             end
-                            wrap_request(!request.get?) do
+                            wrap_reply(!request.get?) do
                                 yield controller.new(model, authentication, params, data)
                             end
                         end
@@ -52,7 +52,7 @@ module Lanes
                 Lanes.logger.info "UserID: #{session['user_id']}, Params: #{request.params}"
             end
 
-            def wrap_request(with_transaction=true)
+            def wrap_reply(with_transaction=true)
                 response = { success: false, message: "No response was generated" }
                 log_request
                 if with_transaction

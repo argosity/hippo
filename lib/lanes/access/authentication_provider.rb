@@ -41,7 +41,7 @@ module Lanes
             end
 
 
-            def wrap_request(model, req)
+            def wrap_reply(model, req)
                 if allowed_access_to?(model)
                     ::Lanes::User.scoped_to(current_user) do | user |
                         yield
