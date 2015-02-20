@@ -9,7 +9,7 @@ class ModelType extends Lanes.Models.State
         records: 'object'
 
     subscribe: (model)->
-        channel = "/#{model.api_path()}/#{model.id}"
+        channel = "/#{_.result(model,'api_path')}/#{model.id}"
         Lanes.Vendor.MessageBus.subscribe(channel,(changes)->
             model.addChangeSet(changes)
         )
@@ -33,7 +33,8 @@ class ModelTypesCollection extends Lanes.Models.BasicCollection
     model: ModelType
 
     forModel: (model)->
-        models = this.get(model.api_path()) || this.add(id: model.api_path())
+        path = _.result(model,'api_path')
+        models = this.get(path) || this.add(id: path)
 
 
 Lanes.Models.PubSub = {
@@ -51,7 +52,7 @@ Lanes.Models.PubSub = {
         @types.forModel(model).remove(model)
 
     instanceFor: ( model_klass, id )->
-        @types.get(model_klass.prototype.api_path())?.records[id]?.model
+        @types.get(_.result(model_klass.prototype,'api_path'))?.records[id]?.model
 
     clear: ->
         @types = new ModelTypesCollection

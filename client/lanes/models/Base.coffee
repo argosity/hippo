@@ -59,7 +59,7 @@ class BaseModel
 
     # is the record saved
     isPersistent: ->
-        !!( this.api_path() && !this.isNew() )
+        !!( _.result(this,'api_path') && !this.isNew() )
 
     # used by PubSub to record a remote change to the model
     addChangeSet: (change)->
