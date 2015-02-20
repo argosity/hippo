@@ -369,7 +369,7 @@ class ViewBase
         prev = this.previous('model')
         return if prev == @model
         this._unbindFromObject(prev, @modelEvents) if prev
-        this._bindToObject(@model, @modelEvents)
+        this._bindToObject(@model, @modelEvents) if @model
         this.onModelChange?()
         true
 
