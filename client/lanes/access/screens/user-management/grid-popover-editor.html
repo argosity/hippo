@@ -1,9 +1,9 @@
 <form class="user-edit form-horizontal" role="form">
 <% for field in @columns: %>
   <div class="form-group">
-    <label for="field-<%= field.field %>" class="col-sm-3 control-label"><%= field.title %></label>
+    <label for="field-<%= field.id %>" class="col-sm-3 control-label"><%= field.title %></label>
     <div class="col-sm-9">
-      <input type="text" name="<%= field.field %>" class="form-control" id="field-<%= field.field %>" placeholder="">
+      <input type="text" name="<%= field.id %>" class="form-control" id="field-<%= field.id %>" placeholder="">
     </div>
   </div>
 <% end %>
