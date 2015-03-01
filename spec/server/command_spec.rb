@@ -7,7 +7,7 @@ describe Lanes::Command do
     let(:app_name)  { "appy-app" }
     let(:lanes)     { Pathname.new(__FILE__).dirname.join('..','..','bin','lanes') }
     let(:generated_path) { Pathname.pwd }
-    let(:reference_path) { Pathname(__FILE__).dirname.join("command-reference-files") }
+    let(:reference_path) { Pathname(__FILE__).dirname.join("..","command-reference-files") }
 
     around do |test|
         Dir.mktmpdir do |dir|
