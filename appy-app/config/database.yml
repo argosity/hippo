@@ -1,9 +1,0 @@
-development:
-  adapter: postgresql
-  database: appy-app_dev
-  host: /tmp
-
-test:
-  adapter: postgresql
-  database: appy-app_test
-  host: /tmp
