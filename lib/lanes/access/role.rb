@@ -41,6 +41,18 @@ module Lanes
                     delete.push( *klasses )
                 end
 
+                def read( *klasses )
+                    self.read.push( *klasses )
+                end
+
+                def write( *klasses )
+                    self.write.push( *klasses )
+                end
+
+                def delete( *klasses )
+                    self.delete.push( *klasses )
+                end
+
                 def lock(klass, attribute)
                     LockedFields.lock( klass, attribute, self)
                 end
