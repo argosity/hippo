@@ -12,12 +12,12 @@ describe "Lanes.Models.Base", ->
             props:
                 saved: 'string'
         }, {bar: 'baz'})
-        expect(model.isDirty()).toBe(false)
+        expect(model.isDirty).toBe(false)
         model.foo = 'baz' # session prop
-        expect(model.isDirty()).toBe(false)
+        expect(model.isDirty).toBe(false)
         expect(model.unsavedAttributes()).toBeEmptyObject()
         model.set( saved: 'true' )
-        expect(model.isDirty()).toBe(true)
+        expect(model.isDirty).toBe(true)
 
 
     it "can tell if it has attributes", ->
@@ -62,7 +62,7 @@ describe "Lanes.Models.Base", ->
                 bar: 'string'
 
         }, { foo: 'one, two, three'} )
-        expect(model.isDirty()).toBe(true)
+        expect(model.isDirty).toBe(true)
         expect(model.unsavedAttributes()).toEqual( foo: 'one, two, three' )
         model.save()
         expect(model.sync).toHaveBeenCalledWith('create', model, jasmine.any(Object))
