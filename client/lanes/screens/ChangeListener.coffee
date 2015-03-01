@@ -40,7 +40,4 @@ Lanes.Screens.ChangeListener = {
         this.changes.invoke('updateTimeAgo')
         this.$('.changes-notification .scroller').animate({ scrollTop: 0 })
 
-    # included: ->
-    #     console.log this
-
 }
