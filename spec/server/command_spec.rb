@@ -34,6 +34,10 @@ describe Lanes::Command do
 
     it "generates an application" do
         reference = reference_path.join('initial')
+        gemfile = reference.join("Gemfile")
+        gemfile.write gemfile.read.gsub(/gem \"lanes\", \'\d+\.\d+\.\d+\'/, "gem \"lanes\", '#{Lanes::VERSION}'")
+
+
         compare_generated(reference)
         generated_path.find.each do | path |
             relative = path.relative_path_from(generated_path)
