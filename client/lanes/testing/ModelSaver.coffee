@@ -1,5 +1,8 @@
 class Lanes.Testing.ModelSaver
 
+    @setUser: (login)->
+        Lanes.Testing.ModelSaver::headers['X_TESTING_USER']= login
+
     @perform: (model,completion)->
         saver = new Lanes.Testing.ModelSaver(completion)
         saver.save(model)

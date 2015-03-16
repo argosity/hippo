@@ -17,7 +17,7 @@ module Lanes
         class AuthenticationProvider
             USER = DummyUser.new
 
-            def initialize(session:nil, params:nil, request_type: type)
+            def initialize(request)
             end
 
             def current_user

@@ -2,14 +2,20 @@ module Lanes
     module API
         class AuthenticationProvider
 
-            def initialize(session:nil, params:nil, request_type: type)
-                @session = session
-                @params  = params
-                @request_type = request_type
+            attr_reader :request
+
+            def initialize(request)
+                @request=request
             end
 
             def current_user
-                @current_user ||= Lanes::User.where(id: @session['user_id']).first
+                @current_user ||= (
+                    if Lanes.env.test? && request.env['HTTP_X_TESTING_USER']
+                        Lanes::User.where(login: request.env['HTTP_X_TESTING_USER']).first
+                    else
+                        Lanes::User.where(id: @session['user_id']).first
+                    end
+                )
             end
 
             def error_message
@@ -17,7 +23,7 @@ module Lanes
             end
 
             def error_message_for_access
-                return "Unable to " + case @request_type
+                return "Unable to " + case @request.request_method
                                       when 'GET' then "read"
                                       when 'POST','PATCH','PUT' then "write"
                                       when 'DELETE' then "delete"
@@ -28,13 +34,13 @@ module Lanes
 
             def allowed_access_to?(klass)
                 return false if current_user.nil?
-                case @request_type
+                case @request.request_method
                 when 'GET'
-                    klass.can_read_attributes?(@params,current_user)
+                    klass.can_read_attributes?(@request.params,current_user)
                 when 'POST','PATCH','PUT'
-                    klass.can_write_attributes?(@params,current_user)
+                    klass.can_write_attributes?(@request.params,current_user)
                 when 'DELETE'
-                    klass.can_delete_attributes?(@params,current_user)
+                    klass.can_delete_attributes?(@request.params,current_user)
                 else
                     false
                 end

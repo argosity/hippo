@@ -30,11 +30,7 @@ module Lanes
 
                 def make_handler(model, controller, parent_attribute)
                     lambda do
-                        authentication = Lanes::API::AuthenticationProvider.new(
-                          request_type: request.request_method,
-                          session:      session,
-                          params:       params
-                        )
+                        authentication = Lanes::API::AuthenticationProvider.new(request)
                         authentication.wrap_reply(model,self) do
                             if parent_attribute
                               params[:nested_attribute] = Hash[ parent_attribute,
