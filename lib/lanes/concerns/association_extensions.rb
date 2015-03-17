@@ -59,22 +59,31 @@ module Lanes::Concerns
                         "an inverse_of specified."
                 end
                 listeners.each do | name, target |
-                    targets[ name ] = Proc.new{ | record, *args |
-                        record = record.send( association.inverse_of.name )
-                        record.send( target, *( [record] + args ) ) if record
-                    }
+                    targets[name] = make_association_listener_for(target, association)
                 end
                 begin
                     klass = association.klass # This will throw if the class hasn't been loaded yet
-                    targets.each{ | name, proc | klass._add_event_listener( name, proc ) }
+                    targets.each{ | name, proc | klass._add_event_listener( name, &proc ) }
                 rescue NameError
-                    pending = PendingEventListeners.all[association.class_name.demodulize]
+                    pending = Lanes::Concerns::PubSub::PendingListeners.add(association.class_name)
                     targets.each do | name, proc |
                         pending[name] << proc
                     end
                 end
             end
-
+            def make_association_listener_for(target, association)
+                Proc.new{ | record, *args |
+                    associated_record = record.public_send(association.inverse_of.name)
+                    if associated_record
+                        args.unshift(record)
+                        if associated_record.is_a? ActiveRecord::Associations::CollectionProxy
+                            associated_record.each{ |r| r.send(target, *args) }
+                        else
+                            associated_record.send(target, *args)
+                        end
+                    end
+                }
+            end
             def setup_association_export( association, options )
                 export_associations( association.name, options == true ? {} : options )
             end

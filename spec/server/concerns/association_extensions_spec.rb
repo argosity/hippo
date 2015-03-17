@@ -11,14 +11,6 @@ class AssociationExtensionsTest < Lanes::TestCase
         assert_match( /does not have an inverse_of specified./, err.message )
     end
 
-    def test_adds_listener
-        Tmhm.belongs_to(:tm)
-        TestModel.has_one(:tmhm,:listen=>{:save=>:on_tmhm_save}, :inverse_of=>:tm)
-        tm = TestModel.new
-        tm.expects(:on_tmhm_save)
-        tm.build_tmhm
-        assert tm.save
-    end
 
     def test_exports_associations
         TestModel.expects(:export_associations).with(:tmhm,{})
