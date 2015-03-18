@@ -1,6 +1,6 @@
 module Lanes::Concerns
 
-    # Event subscription and publishing for Stockor Models
+    # Event subscription and publishing for Models
     # Every model has certain built-in events (:save, :create, :update, :destroy)
     # And may also implement custom events that reflect the models domain
     # @example Send an email when a customer's name is updated
@@ -50,29 +50,35 @@ module Lanes::Concerns
             class_attribute :_event_listeners
             base.valid_event_names = [ :save, :create, :update, :destroy ]
 
-            base.after_save    :fire_after_save_events
-            base.after_create  :fire_after_create_events
-            base.after_update  :fire_after_update_events
-            base.after_destroy :fire_after_destroy_events
+            base.after_save    :fire_after_save_pubsub_events
+            base.after_create  :fire_after_create_pubsub_events
+            base.after_update  :fire_after_update_pubsub_events
+            base.after_destroy :fire_after_destroy_pubsub_events
         end
 
         module ClassMethods
             def inherited(base)
                 super
                 klass = base.to_s.demodulize
-
-                #p klass
-                # if klass=="Tester"
-                #     binding.pry
-                # end
                 events = PubSub::PendingListeners.claim( klass )
-                events.each{ | name, procs | base.event_listeners[name] += procs  }
-
+                events.each{ | name, procs |
+                    procs.each{|pr|
+                        base.send(:_add_event_listener, name, &pr)
+                    }
+                }
             end
 
             def observe( event, &block )
-                _ensure_validate_event( event )
+                unless self.valid_event_names.include?(event.to_sym)
+                    raise InvalidEvent.new("#{event} is not a valid event for #{self}")
+                end
                 _add_event_listener( event.to_sym, &block )
+            end
+
+            protected
+
+            def has_additional_events( *names )
+                self.valid_event_names += names.map{ |name| name.to_sym }
             end
 
             private
@@ -84,46 +90,38 @@ module Lanes::Concerns
                 self._event_listeners = self._event_listeners.dup
                 self._event_listeners[name] = listeners
             end
-
-            def _ensure_validate_event(event)
-                unless self.valid_event_names.include?(event.to_sym)
-                    raise InvalidEvent.new("#{event} is not a valid event for #{self}")
-                end
-            end
-
-            def has_additional_events( *names )
-                self.valid_event_names += names.map{ |name| name.to_sym }
-            end
         end
 
         protected
 
-        def fire_after_destroy_events
-            _fire_event(:update, self )
-        end
-        def fire_after_update_events
-            _fire_event(:update, self )
-        end
-        def fire_after_create_events
-            _fire_event(:create, self )
-        end
-        def fire_after_save_events
-            _fire_event( :save, self )
+        def fire_after_destroy_pubsub_events
+            fire_pubsub_event(:update, self)
         end
 
-        def fire_event( name, *arguments )
-            self.class._ensure_validate_event( name )
-            arguments.unshift( self )
-            _fire_event( name, *arguments )
+        def fire_after_update_pubsub_events
+            fire_pubsub_event(:update, self)
+        end
+
+        def fire_after_create_pubsub_events
+            fire_pubsub_event(:create, self)
+        end
+
+        def fire_after_save_pubsub_events
+            fire_pubsub_event(:save, self)
+        end
+
+        def fire_pubsub_event(name, *arguments)
+            return if self.class._event_listeners.nil? ||
+                      !self.class._event_listeners.has_key?(name.to_sym)
+            arguments = arguments.dup.unshift(self)
+            self.class._event_listeners[ name.to_sym ].each{ | block |
+                block.call(*arguments)
+            }
         end
 
         private
 
-        def _fire_event( name, *arguments )
-            return if self.class._event_listeners.nil? ||
-                           !self.class._event_listeners.has_key?(name.to_sym)
-
-            self.class._event_listeners[ name.to_sym ].each{ | block | block.call(*arguments) }
+        def _fire_pubsub_event( name, *arguments )
         end
     end
 
