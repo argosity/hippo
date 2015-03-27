@@ -15,7 +15,7 @@ class Lanes.Models.AssocationMap
     getClassFor: (name)->
         definition = @definitions[name]
         object = definition.model || definition.collection
-        Lanes.u.findObject( object, 'Models', @klass::FILE)
+        Lanes.u.findObject(object, 'Models', @klass::FILE)
 
     getOptions: (name, definition, model)->
         options = { parent: model }
@@ -24,32 +24,32 @@ class Lanes.Models.AssocationMap
         options
 
     # will be called in the scope of the model
-    createModel: (association, name, definition, fk, pk, target_klass)->
-        target_klass ||= association.getClassFor(name)
+    createModel: (association, name, definition, fk, pk, target_class)->
+        target_class ||= association.getClassFor(name)
         options = association.getOptions(name,definition,this)
         model_id = this.get(pk)
         if model_id && model_id == this._cache[name]?.id
             this._cache[name]
         else
-            target_klass.findOrCreate(options)
+            target_class.findOrCreate(options)
 
     # will be called in the scope of the model
-    createCollection: (association, name, definition, fk, pk, target_klass)->
-        target_klass ||= association.getClassFor(name)
+    createCollection: (association, name, definition, fk, pk, target_class)->
+        target_class ||= association.getClassFor(name)
         options = association.getOptions(name,definition,this)
         options.filter ||= {}
         options.filter[fk]=this.get(pk)
 
-        if target_klass::isCollection
-            new target_klass(options.models||[],options)
+        if target_class::isCollection
+            new target_class(options.models||[],options)
         else
-            options.model=target_klass
+            options.model=target_class
             new Lanes.Models.AssociationCollection(options.models||[],options)
     # returns the definition for the derived property
     derivedDefinition: (name,definition)->
         createFn = _.partial(
             if definition.model then this.createModel else this.createCollection,
-            this, name, definition, this.fk(name), this.pk(name), this.getClassFor(name)
+            this, name, definition, this.fk(name), this.pk(name)
         )
         { deps: [this.pk(name)], fn: createFn }
 
