@@ -48,6 +48,7 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         selectionMode: ['string', true, 'single']
         editorConfig:  { type: 'object' }
         editingController:  'any' # either string or constructor fn
+        columnWidths: { type: 'array', default: -> [] }
 
     initialize: ->
         if this.viewport
@@ -191,7 +192,12 @@ class Lanes.Components.Grid extends Lanes.Components.Base
         align = switch query_field.type
             when 'integer','bigdec' then 'r'
             else 'l'
-        { title: query_field.title, id: query_field.id, className: align, "targets": [ index ] }
+        options = {
+            id: query_field.id, title: query_field.title,
+            className: align, "targets": [ index ]
+        }
+        options['width'] = @columnWidths[index] if @columnWidths[index]
+        options
 
     _dataFromModel: (model)->
         data = []

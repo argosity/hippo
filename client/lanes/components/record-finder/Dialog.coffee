@@ -12,7 +12,7 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.Components.ModalDialog
             hook: 'grid'
             component: 'Grid'
             options: ->
-                { recordQuery: @recordQuery }
+                _.extend(@gridOptions||{}, { recordQuery: @recordQuery, options: @gridOptions })
         query_clauses:
              container: '.query-clauses'
              view: Lanes.Components.RecordFinder.Clause, collection: 'clauses'
@@ -22,6 +22,7 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.Components.ModalDialog
 
     session:
         recordQuery: 'model'
+        gridOptions: 'object'
         clauses: 'collection'
 
     initialize:(options)->

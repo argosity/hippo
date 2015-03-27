@@ -13,6 +13,7 @@ class Lanes.Components.RecordFinder extends Lanes.Components.Base
         withAssociations: 'array'
         invalid_chars: 'regex'
         recordQuery: 'model'
+        gridOptions: 'gridOptions'
         fieldName:  'string'
         queryField: [ 'string', false, 'code' ]
 
@@ -30,7 +31,8 @@ class Lanes.Components.RecordFinder extends Lanes.Components.Base
 
     displayFinder: ->
         finder = new Lanes.Components.RecordFinder.Dialog(
-            parent:this, title: @title, recordQuery: @recordQuery
+            gridOptions: @gridOptions, parent:this
+            title: @title, recordQuery: @recordQuery
         )
         finder.show().then( (dlg)->
             dlg.remove().record
