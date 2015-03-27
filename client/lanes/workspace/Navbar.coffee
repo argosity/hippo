@@ -1,7 +1,6 @@
 class Lanes.Workspace.Navbar extends Lanes.Views.Base
 
     templateName: 'navbar'
-    FILE: FILE
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]

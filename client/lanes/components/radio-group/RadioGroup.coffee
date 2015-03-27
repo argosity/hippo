@@ -17,7 +17,6 @@ class RadioInput extends Lanes.Views.Base
 
 class Lanes.Components.RadioGroup extends Lanes.Components.MultiSelect
 
-    FILE: FILE
 
     writeTemplate: ->
         "<span data-hook='choices-input'></span>"

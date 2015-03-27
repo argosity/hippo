@@ -2,7 +2,6 @@ class Lanes.Access.Screens.UserManagement extends Lanes.Screens.Base
 
     templateName: 'user-management/screen'
     templatePrefix: 'lanes/access/screens'
-    FILE: FILE
 
     subviews:
         grid:

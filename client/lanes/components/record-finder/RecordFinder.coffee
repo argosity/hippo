@@ -1,5 +1,4 @@
 class Lanes.Components.RecordFinder extends Lanes.Components.Base
-    FILE: FILE
 
     writeTemplateName: 'field'
     writeTemplateData: ->

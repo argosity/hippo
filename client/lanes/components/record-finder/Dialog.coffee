@@ -1,5 +1,4 @@
 class Lanes.Components.RecordFinder.Dialog extends Lanes.Components.ModalDialog
-    FILE: FILE
 
     domEvents:
         'click .add-clause': 'addClause'

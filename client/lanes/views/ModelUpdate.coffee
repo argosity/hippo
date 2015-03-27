@@ -1,6 +1,5 @@
 class Lanes.Views.ModelUpdate extends Lanes.Views.Base
 
-    FILE: FILE
 
     templateData: ->
         { change: @model }

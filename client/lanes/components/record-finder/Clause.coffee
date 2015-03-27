@@ -1,5 +1,4 @@
 class Lanes.Components.RecordFinder.Clause extends Lanes.Components.Base
-    FILE: FILE
 
     writeTemplateName: 'clause'
     useFormBindings: true

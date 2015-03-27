@@ -1,5 +1,4 @@
 class ScreenView extends Lanes.Models.BasicModel
-    FILE: FILE
 
     session:
         screen: 'object'
@@ -31,7 +30,6 @@ class ScreenView extends Lanes.Models.BasicModel
 
 
 class ScreenDefinition extends Lanes.Models.BasicModel
-    FILE: FILE
 
     session:
         id:          'string'
@@ -86,7 +84,6 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection
-    FILE: FILE
 
     model: ScreenView
 
@@ -125,7 +122,6 @@ class ScreenViewSet extends Lanes.Models.BasicCollection
 
 
 class ScreenSet extends Lanes.Models.BasicCollection
-    FILE: FILE
 
     model: ScreenDefinition
 
@@ -138,7 +134,6 @@ class ScreenSet extends Lanes.Models.BasicCollection
 
 
 class MenuGroup extends Lanes.Models.BasicModel
-    FILE: FILE
 
     session:
         id:          'string'
@@ -156,7 +151,6 @@ class MenuGroup extends Lanes.Models.BasicModel
         })
 
 class MenuGroupSet extends Lanes.Models.BasicCollection
-    FILE: FILE
 
     constructor: -> super
     model: MenuGroup

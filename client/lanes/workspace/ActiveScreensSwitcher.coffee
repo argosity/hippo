@@ -1,7 +1,6 @@
 class TabView extends Lanes.Views.Base
 
     template: "<li><a data-toggle='tab'></a><span class='close'>×</span></li>"
-    FILE: FILE
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]

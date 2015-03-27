@@ -8,7 +8,6 @@ class Lanes.Access.LoginDialog extends Lanes.Components.ModalDialog
 
     size: 'md'
     title: 'Please sign in …'
-    FILE: FILE
 
     domEvents:
         'click .btn-primary': 'onLogin'

@@ -1,6 +1,5 @@
 class Lanes.Workspace.Layout extends Lanes.Views.Base
 
-    FILE: FILE
     templateName: 'layout'
     templateData: ->
         { ui: this.ui_state }

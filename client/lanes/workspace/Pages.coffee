@@ -1,7 +1,6 @@
 class Lanes.Workspace.Pages extends Lanes.Views.Base
 
     templateName: 'pages'
-    FILE: FILE
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]

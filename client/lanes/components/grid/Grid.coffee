@@ -8,7 +8,6 @@ _.extend( Lanes.$.fn.dataTableExt.oStdClasses,{
 
 
 class Lanes.Components.Grid extends Lanes.Components.Base
-    FILE: FILE
 
     domEvents:
         'click button.refresh': 'reload'

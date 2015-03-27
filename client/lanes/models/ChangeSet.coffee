@@ -1,6 +1,5 @@
 class Lanes.Models.ChangeSet extends Lanes.Models.Base
 
-    FILE: FILE
 
     constructor: ->
         super

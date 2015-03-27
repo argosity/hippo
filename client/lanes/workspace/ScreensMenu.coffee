@@ -1,7 +1,6 @@
 class ScreenList extends Lanes.Views.Base
 
     template: "<li><a href='#'><span></span><i></i></a></li>"
-    FILE: FILE
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
@@ -19,7 +18,6 @@ class ScreenList extends Lanes.Views.Base
 class ScreenGroup extends Lanes.Views.Base
 
     template: '<li class="group"><a class="heading" href="#"><span></span><i></i></a><ul></ul></li>'
-    FILE: FILE
     mixins:[
         Lanes.Workspace.WorkspaceView
     ]
@@ -47,7 +45,6 @@ class ScreenGroup extends Lanes.Views.Base
 
 class Lanes.Workspace.ScreensMenu extends Lanes.Views.Base
 
-    FILE: FILE
     templateName: 'screens-menu'
     mixins:[
         Lanes.Workspace.WorkspaceView
