@@ -35,7 +35,9 @@ module Lanes
                 PubSub.initialize(self)
                 Extensions.load_controlling_config
                 # late load in case an extension has provided an alternative implementation
-                require "lanes/api/null_authentication_provider" unless API.const_defined?(:AuthenticationProvider)
+                unless API.const_defined?(:AuthenticationProvider)
+                    require "lanes/api/null_authentication_provider"
+                end
                 # use Rack::Csrf, :skip=>['GET:/'], :raise => true
             end
 

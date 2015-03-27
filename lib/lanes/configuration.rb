@@ -51,25 +51,31 @@ module Lanes
         # Database tables will have this prefix applied to them
         config_option :table_prefix, ''
 
-        config_option :debug_assets, false
-        config_option :default_javascript_tag_options, {}
-
+        # The configuration environment to use, test, development, production
         config_option :environment, (ENV['RACK_ENV'] || 'development').to_sym
+
         # The secret key to use for session cookies.
         config_option :session_secret_key_base,  '1234', silent: true
-        config_option :redis, { path: "/tmp/redis.sock" }
-        config_option :pubsub_key, nil
-        config_option :pubsub_host, nil
-        config_option :pubsub_timeout, 10
 
-        config_option :es6_transpiler_path, '6to5'
-        config_option :es6_transpiler_options, '-t '
+        # Configuration for Redis
+        config_option :redis, { path: "/tmp/redis.sock" }
+
+        # Title of application
         config_option :app_title, "Lanes Test"
+
+        # url prefix to use for assets
         config_option :assets_path_prefix, "/assets"
+
+        # prefix to use for all urls
         config_option :mounted_at, ''
+
+        # The initial view class to display
         config_option :root_view, 'Lanes.Workspace.Layout'
+
+        # Screen to display on load (if workspace extension is used)
         config_option :initial_workspace_screen_id, ''
-        config_option :specs_root, Pathname.getwd
+
+        # types of assets to include into compiled package
         config_option :static_asset_types, ['images','fonts']
     end
 
