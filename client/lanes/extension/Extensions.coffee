@@ -18,7 +18,7 @@ Lanes.Extensions = {
 
     makeNamespace: (identifier)->
         for ns in ['Models','Views','Controllers','Screens','Components']
-            Lanes.namespace("#{identifier}.#{ns}")
+            Lanes.namespace("#{identifier}.#{ns}.Mixins")
 
     controlling: ->
         this.get( @controlling_id )
