@@ -1,6 +1,6 @@
 require "lanes/spec_helper"
 
-class JavascriptProcessorTest < Lanes::TestCase
+class CoffeeScriptProcessor < Lanes::TestCase
 
 SCRIPT = <<-EOS
 class NS.Baz
@@ -30,6 +30,7 @@ class NS.Baz
         alert(msg);
 
 class NS.Bar
+    FILE: FILE
     constructor: -> super
     squawk:->
         this.alert("Hello World!")
@@ -37,6 +38,7 @@ class NS.Bar
 NS.Baz.extend(NS.Bar)
 
 class Foo
+    FILE: FILE
     constructor: ->
         this.called=true
         super
@@ -65,6 +67,8 @@ NS.Baz = (function() {
 })();
 
 NS.Bar = (function() {
+  Bar.prototype.FILE = FILE;
+
   function Bar() {
     Bar.__super__.constructor.apply(this, arguments);
   }
@@ -80,6 +84,8 @@ NS.Bar = (function() {
 NS.Baz.extend(NS.Bar);
 
 Foo = (function() {
+  Foo.prototype.FILE = FILE;
+
   function Foo() {
     this.called = true;
     Foo.__super__.constructor.apply(this, arguments);
@@ -101,7 +107,7 @@ EOS
 Scope = Struct.new(:logical_path)
 
     def test_coffeescript_generation
-        template = API::CoffeeScriptWrapper.new{ |t| SCRIPT }
+        template = API::CoffeeScriptProcessor.new{ |t| SCRIPT }
         assert_equal CLEANED, template.cleaned
 
 

@@ -40,47 +40,53 @@ module Lanes
 
         end
 
-        class CoffeeScriptWrapper < JsAssetCompiler
-            self.registered_extension = '.coffee'
+        # class CoffeeScriptWrapper < JsAssetCompiler
+        #     self.registered_extension = '.coffee'
 
-            CONSTRUCTOR = /constructor\s*:/
-            EXTENDING_CLASS = /class\s+([\w|\.]+)\s+extends\s+([\w|\.]+)\s*?\n/
+        #     CONSTRUCTOR = /constructor\s*:/
+        #     CLASS_DEFINITION = /\s*class\s+([\w|\.]+)/
+        #     EXTENDING_CLASS = /class\s+([\w|\.]+)\s+extends\s+([\w|\.]+)\s*?\n/
 
-            # Coffeescript has two shortcomings with regards to Lanes
-            #
-            # The first is that it's extends format is incompatible with AmpersandState,
-            # State does quite a bit more via it's own .extend methods.
-            # Accordingly, we substitute our own "extend" call whenever we encounter a coffeescript extends
-            #
-            # The second issue is that if a constructor isn't present, coffeescript with generate it's own
-            # blank implementation that fails to call "super".  We add a constructor that does call super if one's missing.
+        #     # Coffeescript has two shortcomings with regards to Lanes
+        #     #
+        #     # The first is that it's extends format is incompatible with AmpersandState,
+        #     # State does quite a bit more via it's own .extend methods.
+        #     # Accordingly, we substitute our own "extend" call whenever we encounter a coffeescript extends
+        #     #
+        #     # The second issue is that if a constructor isn't present, coffeescript with generate it's own
+        #     # blank implementation that fails to call "super".  We add a constructor that does call super if one's missing.
 
-            def cleaned
-                contents = data.dup
-                data.scan(EXTENDING_CLASS) do |match|
-                    (name,extends) = match
+        #     def cleaned
+        #         contents = data.dup
+        #         data.scan(CLASS_DEFINITION) do |match|
+        #             (name, extends) = match
+        #             definition = get_definition(name)
 
-                    contents.gsub!(/class\s+#{name}\s+.*?\n/,"class #{name}\n")
-                    definition = contents[/(class #{name}\n.*?)(\n\w|\Z)/m,1]
-                    # is it missing a constructor?
-                    if definition !~ /constructor:/
-                        # figure out how much to indent, sigh.
-                        indent = definition[/\n(\s+)(\w+):/,1] || '    '
-                        contents.gsub!(/class #{name}\n/,"\\0#{indent}constructor: -> super\n")
 
-                    end
-                    contents.gsub!( /(class #{name}\n.*?)(\n\w|\Z)/m, "\\1\n#{extends}.extend(#{name})\n\\2" )
+        #             # is it missing a constructor?
+        #             if definition !~ /constructor:/
+        #                 # figure out how much to indent, sigh.
+        #                 indent = definition[/\n(\s+)(\w+):/,1] || '    '
+        #                 contents.gsub!(/class #{name}\n/,"\\0#{indent}constructor: -> super\n")
 
-                    contents
-                    #contents << "#{extends}.extend(#{name})\n"
-                end
-                contents
-            end
+        #             end
+        #             contents.gsub!( /(class #{name}\n.*?)(\n\w|\Z)/m, "\\1\n#{extends}.extend(#{name})\n\\2" )
 
-            def evaluate(scope, locals, &block)
-                wrap_js scope, ::CoffeeScript.compile(cleaned, bare: true)
-            end
-        end
+        #             contents
+        #             #contents << "#{extends}.extend(#{name})\n"
+        #         end
+        #         contents
+        #     end
+
+        #     def evaluate(scope, locals, &block)
+        #         wrap_js scope, ::CoffeeScript.compile(cleaned, bare: true)
+        #     end
+
+        #     def get_definition(name)
+        #         contents.gsub!(/class\s+#{name}\s+.*?\n/,"class #{name}\n")
+        #                        definition = contents[/(class #{name}\n.*?)(\n\w|\Z)/m,1]
+        #     end
+        # end
 
         class Es6Compiler < JsAssetCompiler
             self.registered_extension = '.es6'
@@ -129,3 +135,5 @@ module Lanes
 
     end
 end
+
+require_relative 'coffeescript_processor'
