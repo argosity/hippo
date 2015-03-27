@@ -10,10 +10,10 @@ module Lanes
 
             def current_user
                 @current_user ||= (
-                    if Lanes.env.test? && request.env['HTTP_X_TESTING_USER']
+                    if Lanes.env.test? && request.env['HTTP_X_TESTING_USER'].present?
                         Lanes::User.where(login: request.env['HTTP_X_TESTING_USER']).first
                     else
-                        Lanes::User.where(id: @session['user_id']).first
+                        Lanes::User.where(id: request.session['user_id']).first
                     end
                 )
             end
@@ -23,7 +23,7 @@ module Lanes
             end
 
             def error_message_for_access
-                return "Unable to " + case @request.request_method
+                return "Unable to " + case request.request_method
                                       when 'GET' then "read"
                                       when 'POST','PATCH','PUT' then "write"
                                       when 'DELETE' then "delete"
@@ -34,13 +34,13 @@ module Lanes
 
             def allowed_access_to?(klass)
                 return false if current_user.nil?
-                case @request.request_method
+                case request.request_method
                 when 'GET'
-                    klass.can_read_attributes?(@request.params,current_user)
+                    klass.can_read_attributes?(request.params,current_user)
                 when 'POST','PATCH','PUT'
-                    klass.can_write_attributes?(@request.params,current_user)
+                    klass.can_write_attributes?(request.params,current_user)
                 when 'DELETE'
-                    klass.can_delete_attributes?(@request.params,current_user)
+                    klass.can_delete_attributes?(request.params,current_user)
                 else
                     false
                 end
