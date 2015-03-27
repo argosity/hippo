@@ -18,5 +18,5 @@ class Lanes.lib.ModuleSupport
                 _.extend(@::[key], value)
             else
                 @::[key] = value
-        obj.included?.apply(@)
+        obj.included?(@)
         this
