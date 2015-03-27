@@ -1,4 +1,5 @@
 Lanes::Screen.define "<%= screen_id %>" do | screen |
+    screen.title       = "<%= options[:title] %>"
     screen.description = "<%= options[:description] %>"
     screen.icon        = "<%= options[:icon] %>"
     screen.group_id    = "<%= options[:group] %>"

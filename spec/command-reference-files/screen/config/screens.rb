@@ -1,4 +1,5 @@
 Lanes::Screen.define "ready-set-go" do | screen |
+    screen.title       = "Ready Set Go"
     screen.description = ""
     screen.icon        = ""
     screen.group_id    = ""
