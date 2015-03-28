@@ -78,10 +78,7 @@ module Lanes
             attr_accessor_with_default :css
 
             def assets
-                paths=[]
-                paths << "#{Lanes.config.assets_path_prefix}/#{js}"  unless js.blank?
-                paths << "#{Lanes.config.assets_path_prefix}/#{css}" unless css.blank?
-                paths
+                [js, css].reject{|asset| asset.blank? }
             end
 
             def to_json

@@ -66,7 +66,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
         me=this
         return new _.Promise( (resolve,reject)->
              me.loading=true
-             Lanes.lib.Request(me.assets)
+             Lanes.lib.RequestAssets(me.assets...)
                  .then ->
                     me.loading=false
                     me.viewModel = Lanes.u.getPath(me.view, me.FILE?['Views'])

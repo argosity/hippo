@@ -94,6 +94,7 @@ module Lanes
                   csrf_token: Rack::Csrf.csrf_token(view.env),
                   controlling_extension: controlling.identifier,
                   root_view:  Lanes.config.root_view,
+                  assets_path_prefix: Lanes.config.assets_path_prefix,
                   api_path: Lanes.config.mounted_at,
                   environment: Lanes.config.environment,
                   initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id,

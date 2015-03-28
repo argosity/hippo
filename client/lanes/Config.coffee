@@ -4,6 +4,7 @@ class Config extends Lanes.Models.State
     session:
         csrf_token:  { type: 'string', setOnce: true }
         api_path:    { type: 'string', default: '', setOnce: true }
+        assets_path_prefix: { type: 'string', setOnce: true }
         environment: { type: 'string', setOnce: true }
 
     derived:

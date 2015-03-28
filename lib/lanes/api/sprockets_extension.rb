@@ -22,7 +22,7 @@ module Lanes
                     end
                     Screen.each do | screen |
                         assets = screen.assets
-                        manifest.compile( assets ) unless assets.empty?
+                        manifest.compile(assets) unless assets.empty?
                     end
                 end
 
