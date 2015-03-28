@@ -18,7 +18,6 @@ task :console do
     IRB.start
 end
 
-
 # ## quite a bit of this is cribbed from Sinatra ActiveRecord
 load 'active_record/railties/databases.rake'
 
@@ -31,7 +30,6 @@ task :routes do
         end
     end
 end
-
 
 namespace :db do
     task :environment do

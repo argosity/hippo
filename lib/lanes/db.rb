@@ -5,14 +5,14 @@ module Lanes
 
         attr_accessor(:config_file)
 
-        def establish_connection( env = ENV['RAILS_ENV'] || 'development')
+        def establish_connection(env=Lanes.config.environment)
             if ENV['DATABASE_URL']
-                ::ActiveRecord::Base.establish_connection( ENV['DATABASE_URL'] )
+                ::ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
             else
                 file = config_file || Extensions.controlling.root_path.join("config","database.yml")
                 config = YAML::load( IO.read(file) )
                 ::ActiveRecord::Base.configurations = config
-                ::ActiveRecord::Base.establish_connection( ::ActiveRecord::Base.configurations[ env ] )
+                ::ActiveRecord::Base.establish_connection(::ActiveRecord::Base.configurations[env.to_s])
             end
             ActiveRecord::Base.logger = Lanes.logger
         end
@@ -25,17 +25,19 @@ module Lanes
         def configure_rake_environment
             ActiveRecord::Tasks::DatabaseTasks.seed_loader = Lanes::DB
             default_schema = Extensions.controlling.root_path.join("db","schema.sql")
-            env = ENV['RAILS_ENV'] || 'development'
             ENV['SCHEMA']          ||= default_schema.to_s
             ENV['DB_STRUCTURE']    ||= default_schema.to_s
             ActiveRecord::Base.schema_format = :sql
-            Lanes::DB.establish_connection( env )
+            ActiveRecord::Base.dump_schema_after_migration = !Lanes.env.production?
+            Lanes::DB.establish_connection
             ActiveRecord::Tasks::DatabaseTasks.database_configuration = ActiveRecord::Base.configurations
-            ActiveRecord::Tasks::DatabaseTasks.env = 'test'
+            env=Lanes.config.environment.to_s
+            ActiveRecord::Tasks::DatabaseTasks.env = env
             ActiveRecord::Tasks::DatabaseTasks.migrations_paths = 'db/migrate'
-            ActiveRecord::Tasks::DatabaseTasks.current_config( :config => ActiveRecord::Base.configurations[ env ] )
+            ActiveRecord::Tasks::DatabaseTasks.current_config(
+                config: ActiveRecord::Base.configurations[env]
+            )
         end
-
 
         private
 
@@ -43,7 +45,7 @@ module Lanes
             ::ActiveRecord::Migrator.migrations_paths.first
         end
 
-        def silence_activerecord(&block)
+        def silence_activerecord
             old_logger = ::ActiveRecord::Base.logger
             ::ActiveRecord::Base.logger = nil
             yield if block_given?

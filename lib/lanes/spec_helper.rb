@@ -11,7 +11,7 @@ require 'minitest/spec'
 require 'minitest/autorun'
 require 'mocha/mini_test'
 
-RAILS_ENV = "test"
+LANES_ENV = "test"
 I18n.enforce_available_locales = true
 Lanes::DB.establish_connection('test')
 Lanes.logger=Logger.new( File.open('log/test.log', File::WRONLY | File::APPEND | File::CREAT ))
