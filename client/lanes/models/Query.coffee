@@ -177,7 +177,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
 
     loadSingle: (code,options)->
         options.query = {}
-        options.query[ @initialField ] = code
+        options.query[ @initialField.id ] = code
         @modelClass.fetch(options)
 
     defaultField: ->
