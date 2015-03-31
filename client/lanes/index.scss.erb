@@ -22,7 +22,7 @@
 <% if !Lanes.config.initial_workspace_screen_id.blank? &&
       screen = Lanes::Screen[Lanes.config.initial_workspace_screen_id]
 %>
-  @import "<%= screen.css.remove(/\.css$/) + "/index.scss" %>"
+  @import "<%= screen.css.remove(/\.css$/) + "/index.scss" %>";
 <% end %>
 
   @import "styles/plugins/all"
