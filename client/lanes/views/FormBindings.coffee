@@ -3,7 +3,7 @@ class Lanes.Views.FormBindings
     constructor: (@view, config={})->
         _.bindAll(this,'onFieldChange')
         @selector = if config.selector then "#{config.selector} " else ""
-        @view.on( "change:el",     this.rebindForm,    this )
+        @view.on( "change:$el",    this.rebindForm,    this )
         @view.on( "change:model",  this.rebindModel,   this )
         @view.on( "remove",        this.teardown,      this )
         this.rebindModel( @view, @view.model )
