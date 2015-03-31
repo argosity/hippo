@@ -1,3 +1,10 @@
+$gray-light: lightGrey !default;
+$well-border: darkGrey !default;
+$border-radius-large: 8px !default;
+$body-bg: white !default;
+$font-size-large: 15px !default;
+$gray-darker: lighten(#000, 13.5%) !default;
+
 .overlay {
   position: absolute;
   z-index: 31;
