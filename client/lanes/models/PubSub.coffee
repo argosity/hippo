@@ -44,11 +44,11 @@ Lanes.Models.PubSub = {
     forModel: (model)->
 
     add: (model)->
-        return unless model.isPersistent()
+        return unless model.isPersistent?()
         @types.forModel(model).add(model)
 
     remove: (model)->
-        return unless model && model.isPersistent()
+        return unless model && model.isPersistent?()
         @types.forModel(model).remove(model)
 
     instanceFor: ( model_klass, id )->
