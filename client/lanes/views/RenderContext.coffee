@@ -8,8 +8,8 @@ Lanes.Views.RenderContext = {
     start: (@parent, model=@parent.model)->
         @stack = [[@parent,model]]
 
-    push: (identifier, model)->
-        @stack.push([identifier,model])
+    push: (view, model)->
+        @stack.push([view,model])
         @_grants = null
 
     model: ->
