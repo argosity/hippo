@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
-gem "lanes", '<%= Lanes::VERSION %>'
+# For development while Lanes is evolving track master branch
+gem "lanes",   github: 'argosity/lanes',   branch: 'master'
+
+# gem "lanes", '<%= Lanes::VERSION %>'
 
 gem "rake"
 gem 'puma'
