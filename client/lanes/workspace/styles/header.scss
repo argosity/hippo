@@ -22,7 +22,9 @@
         height: 48px;
         width: 150px;
         margin: 2px;
-        background: url(asset_path('images/lanes/logo-sm.png')) no-repeat;
+        color: rgb(205, 208, 212);
+        font-size: 30px;
+        text-shadow: rgb(143, 112, 112) 2px 2px 4px;
     }
 
     .navbar-toggle, .screens-menu-toggle {
