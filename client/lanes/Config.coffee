@@ -6,6 +6,7 @@ class Config extends Lanes.Models.State
         api_path:    { type: 'string', default: '', setOnce: true }
         assets_path_prefix: { type: 'string', setOnce: true }
         environment: { type: 'string', setOnce: true }
+        initial_workspace_screen_id: { type: 'string', setOnce: true }
 
     derived:
         env:
