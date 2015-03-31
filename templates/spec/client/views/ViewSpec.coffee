@@ -1,4 +1,4 @@
-describe "<%= namespace %>.Views.<%= class_name %>", ->
+describe "<%= view_class %>", ->
 
     it "can be instantiated", ->
         view = new <%= namespace %>.Views.<%= class_name %>()
