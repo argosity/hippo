@@ -40,7 +40,9 @@ class Lanes.Components.PopOver extends Lanes.Components.Base
         return this.notification.promise
 
     destroy: ->
+        this.isDestroying = true
         this.target.popover('destroy')
+        this.remove()
 
     hide:->
         this.target.popover('hide')
@@ -48,5 +50,6 @@ class Lanes.Components.PopOver extends Lanes.Components.Base
         this.destroy()
 
     _onHide: (ev)->
-        this.notification.resolve(this)
-        this.destroy() if this.destroyAfterHide
+        this.notification?.resolve(this)
+        if this.destroyAfterHide && !this.isDestroying
+            this.destroy()
