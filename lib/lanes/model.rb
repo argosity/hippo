@@ -14,6 +14,7 @@ module Lanes
         include Concerns::ExportJoinTables
         include Concerns::AssociationExtensions
         include Concerns::ApiPath
+        include Concerns::CodeIdentifier
         include Concerns::SanitizeFields
 
     end
