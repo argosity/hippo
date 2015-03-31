@@ -10,3 +10,4 @@
 //= require ./components/enabled
 //= require ./screens
 //= require ./extension/LateLoaded
+//= require ./Boot

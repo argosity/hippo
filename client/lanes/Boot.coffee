@@ -1,8 +1,4 @@
-Lanes.renderScreenTo = (selector, options)->
-    return new Lanes.Screens.Instance(selector, options);
-
-
-class Lanes.Screens.Instance
+class RootView
 
     constructor: (selector, options)->
         this.viewport = new Lanes.Views.Viewport({ selector: selector, instance: this })
@@ -48,3 +44,7 @@ class Lanes.Screens.Instance
         this.viewport.el = this.view.$el
         this.root.append( this.view.el )
         Lanes.Extensions.fireOnAvailable(this)
+
+
+Lanes.renderScreenTo = (selector, options)->
+    return new RootView(selector, options);
