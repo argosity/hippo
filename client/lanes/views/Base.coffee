@@ -25,7 +25,6 @@ class ViewBase
         pubSub     : "boolean"
         parent     : "object"
         subviewId  : { type: "string", setOnce: true }
-        formBindings: { type: 'any', default: false }
 
     derived:
         '$el':
@@ -72,7 +71,6 @@ class ViewBase
             this._onElementChange();
 
         this._initializeSubviews();
-        this.initialize.apply(this, arguments);
 
         this.set(_.pick(attrs, 'model', 'collection', 'el'))
 
@@ -81,7 +79,7 @@ class ViewBase
         if !this.pubSub? # if it's unset, not true/false; default to parent or true
             this.pubSub = if this.parent?.pubSub? then this.parent.pubSub else true
 
-        if @formBindings || @useFormBindings || @parent?.formBindings
+        if @formBindings || @parent?.formBindings
             @formBindings = new Lanes.Views.FormBindings(this, @formBindings)
 
         if @keyBindings
@@ -90,6 +88,8 @@ class ViewBase
         if @pubSub
             this._pubSub = new Lanes.Views.PubSub(this)
 
+        # all done, call initialize ourselves since we told state not to via 'init:false'
+        this.initialize.apply(this, arguments);
 
     _normalizeUIString: (uiString, ui)->
         uiString.replace(/@ui\.[a-zA-Z_$0-9]*/g, (r)->
@@ -114,7 +114,7 @@ class ViewBase
     # **render** is the core function that your view can override, its job is
     # to populate its element (`this.el`), with the appropriate HTML.
     render: ->
-        Lanes.Views.RenderContext.push( @subviewId, @model )
+        Lanes.Views.RenderContext.push( this, @model )
         this.renderContextFree()
         Lanes.Views.RenderContext.pop()
         this
@@ -291,17 +291,19 @@ class ViewBase
             Lanes.u.findObject(subview.component, 'Components', this.FILE)
         else if subview.view
             if _.isString(subview.view)
-                Lanes.u.getPath(subview.view, this.subviewPrefix() )
+                this.findSubView(subview.view)
             else
                 subview.view
         Lanes.warn( "Unable to obtain view for %o", subview) if ! klass
         klass
 
-    # ## subviewPrefix
-    # returns the namespace that the views should be in
-    # is needed so views can be specified by only thier name, rather than complete path
-    subviewPrefix: ->
-        Lanes.u.objectPath(this.FILE)
+    # ## findSubView
+    # searches for the named subview in the appropriate location
+    # normal view will search the Views namespace, screens under the screen
+    findSubView: (name)->
+        Lanes.u.findRelative(name, this.FILE) ||
+            @FILE.namespace['Views']?[name] ||
+            Lanes.u.getPath(name)
 
     # ## _parseSubview
     # helper for parsing out the subview declaration and registering
@@ -370,7 +372,7 @@ class ViewBase
         return if prev == @model
         this._unbindFromObject(prev, @modelEvents) if prev
         this._bindToObject(@model, @modelEvents) if @model
-        this.onModelChange?()
+        this.onModelChange?(prev)
         true
 
     _onCollectionChange: ->
