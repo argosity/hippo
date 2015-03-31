@@ -12,7 +12,7 @@ class Lanes.Workspace.Pages extends Lanes.Views.Base
 
     subviews:
         menu:
-            view: 'ScreensMenu'
+            view: 'Lanes.Workspace.ScreensMenu'
 
     ui:
         screen: '.screen'

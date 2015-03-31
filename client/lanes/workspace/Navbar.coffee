@@ -12,7 +12,7 @@ class Lanes.Workspace.Navbar extends Lanes.Views.Base
     subviews:
         screens:
             hook: 'screens-container'
-            view: 'ActiveScreenSwitcher'
+            view: 'Lanes.Workspace.ActiveScreenSwitcher'
             model: 'model'
 
     bindings:
