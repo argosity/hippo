@@ -37,20 +37,23 @@ class Lanes.Components.RecordFinder extends Lanes.Components.Base
             dlg.remove().record
         ).then( (record)=>
             if record
-                if @withAssociations then record.withAssociations(@withAssociations...) else record
+                if _.isEmpty(@withAssociations)
+                    record.fetch()
+                else
+                    record.withAssociations(@withAssociations...)
             else
                 null
-        ).then( (record)=>
-            @.$el.trigger("display-record", record) if record
+        ).then( (reply)=>
+            @.$el.trigger("display-record", reply.record) if reply?.record
         , (e)->Lanes.warn(e) )
 
     onKey: (ev)->
         if 13 == ev.keyCode
-            this.runQuery(ev)
+            code = this.$(ev.target).val()
+            this.loadCode(code)
         else if @invalid_chars && @ui.input.val().match( @invalid_chars )
             @ui.input.val( @ui.input.val().replace( @invalid_chars, '' ) )
 
-    runQuery: (ev)->
-        code = this.$(ev.target).val()
+    loadCode: (code)->
         @recordQuery.loadSingle(code.toUpperCase(),{ include: @withAssociations })
             .then( (reply)=> this.$el.trigger("display-record", reply.record) if reply.record )

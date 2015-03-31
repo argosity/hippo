@@ -89,15 +89,15 @@ class BaseModel
         if _.isString(options)
             names.push(options); options={}
         scope = options.scope || this
-        needed = this.associations.nonLoaded(this,names)
+        needed = this.associations?.nonLoaded(this,names)
         if _.isEmpty( needed )
             options.success.call(scope, this  ) if options.success
             options.complete.call(scope,this  ) if options.complete
-            return _.Promise.resolve(this)
+            return _.Promise.resolve({record:this,reply:{}})
         else
             options['include']=needed
             this.fetch(options)
-                .then (req)-> req.record
+#                .then (req)-> req.record
 
     # Searches the PubSub idenity map for a record of the same type and matching id
     # If one is found, it will update it with the given attributes and return it
@@ -209,7 +209,7 @@ class BaseModel
         data
 
 
-    # True if the model has "name" as eitehr a prop or session attribute
+    # True if the model has "name" as either a prop or session attribute
     hasAttribute: (name)->
         !! (this._definition[name] || this._derived[name])
 
@@ -268,6 +268,10 @@ class BasicModel
     # subviews may override this to provide a custom implementation
     setFromView: (key,value)->
         this.set(key,value)
+
+    # True if the model has "name" as eitehr a prop or session attribute
+    hasAttribute: (name)->
+        !! (this._definition[name] || this._derived[name])
 
 Lanes.Models.BasicModel = State.extend( BasicModel )
 
