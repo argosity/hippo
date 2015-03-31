@@ -9,4 +9,3 @@ module AppyApp
 end
 
 require_relative "appy-app/model"
-require_rel "appy-app/models"
