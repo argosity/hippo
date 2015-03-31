@@ -28,7 +28,7 @@ module Lanes
                 template "config/routes.rb"
                 template "config/lanes.rb"
                 template "gitignore",".gitignore"
-                create_file "lib/#{identifier}/models/empty.rb",""
+
                 create_file "log/.gitkeep",""
                 create_file "tmp/.gitkeep",""
                 create_file "db/.gitkeep", ""

@@ -51,6 +51,12 @@ module Lanes
                 end
             end
 
+            def add_autoload
+                insert_into_file "lib/#{identifier}/model.rb", before: /^end\n/ do
+                    "    autoload :#{class_name}, \"#{identifier}/models/#{file_name}\"\n"
+                end
+            end
+
           private
 
             def fields_with_index

@@ -9,4 +9,3 @@ module <%= namespace %>
 end
 
 require_relative "<%= identifier %>/model"
-require_rel "<%= identifier %>/models"
