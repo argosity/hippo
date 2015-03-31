@@ -27,7 +27,7 @@ describe Lanes::Command do
             generated = generated_path.join(relative)
             assert generated.exist?, "File was not created: #{relative}"
             next unless path.file?
-            diff = Diffy::Diff.new(generated.to_s, path.to_s, source: 'files', context: 1)
+            diff = Diffy::Diff.new(path.to_s, generated.to_s, source: 'files', context: 1)
             assert diff.to_s.empty?, "#{relative}\n #{diff}"
         end
     end
