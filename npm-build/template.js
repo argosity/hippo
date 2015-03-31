@@ -16,6 +16,7 @@ Lanes.Vendor.KeyMaster                = require("keymaster");
 Lanes.Vendor.Moment                   = require("moment");
 Lanes.Vendor.RSVP                     = require('rsvp');
 Lanes.Vendor.domify                   = require('domify');
+Lanes.Vendor.interact                 = require('interact.js');
 Lanes.Vendor.BBEvents                 = require('backbone-events-standalone');
 Lanes.dom    = require('ampersand-dom');
 var u        = require('underscore');
