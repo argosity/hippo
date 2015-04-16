@@ -23,7 +23,7 @@ class Lanes.Models.AssocationMap
             _.extend(options, Lanes.u.resultsFor(model,definition.options))
         options
 
-    # will be called in the scope of the model
+    # will be called in the scope of the parent model
     createModel: (association, name, definition, fk, pk, target_class)->
         target_class ||= association.getClassFor(name)
         options = association.getOptions(name,definition,this)
@@ -33,7 +33,7 @@ class Lanes.Models.AssocationMap
         else
             target_class.findOrCreate(options)
 
-    # will be called in the scope of the model
+    # will be called in the scope of the parent model
     createCollection: (association, name, definition, fk, pk, target_class)->
         target_class ||= association.getClassFor(name)
         options = association.getOptions(name,definition,this)
@@ -47,11 +47,13 @@ class Lanes.Models.AssocationMap
             new Lanes.Models.AssociationCollection(options.models||[],options)
     # returns the definition for the derived property
     derivedDefinition: (name,definition)->
-        createFn = _.partial(
-            if definition.model then this.createModel else this.createCollection,
-            this, name, definition, this.fk(name), this.pk(name)
-        )
-        { deps: [this.pk(name)], fn: createFn }
+        defaultCreator=if definition.model then this.createModel else this.createCollection
+        args = [ this, name, definition, this.fk(name), this.pk(name) ]
+        createFn = if definition.default
+            -> definition.default.apply(this,args) || defaultCreator.apply(this,args)
+        else
+            defaultCreator
+        { deps: [this.pk(name)], fn: _.partial(createFn, args...) }
 
 
     # Sets the assocations for "model"
@@ -68,8 +70,9 @@ class Lanes.Models.AssocationMap
                 association = model[name]
                 association[fn_name]( attributes )
                 # if we're replaceing the model's contents with another, copy the dirty status as well
-                if association.isModel && value.isModel
-                    association.isDirty = value.isDirty
+                if association.isModel
+                    model.set(this.pk(name), association.id)
+                    association.isDirty = value.isDirty if value.isModel
 
     pk: (name)->
         def = @definitions[name]
