@@ -18,9 +18,9 @@ module Lanes
             end
 
             def js_files
-                [ '/assets/lanes/testing' ] +
                 urlpath(Jasmine::Core.js_files)   +
                 urlpath(Jasmine::Core.boot_files) +
+                [ '/assets/lanes/testing' ] +
                 urlpath(spec_files(extension.identifier))
             end
 

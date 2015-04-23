@@ -65,15 +65,15 @@ describe "Lanes.Models.Base", ->
         expect(model.isDirty).toBe(true)
         expect(model.unsavedAttributes()).toEqual( foo: 'one, two, three' )
         model.save()
-        expect(model.sync).toHaveBeenCalledWith('create', model, jasmine.any(Object))
+        expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('create', model, jasmine.any(Object))
         model.id=11
         expect(model.isNew()).toBe(false)
-        model.sync.calls.reset()
+        Lanes.Models.Sync.perform.calls.reset()
         syncSucceedWith({
             foo: 'a new foo value'
         })
         model.save().then ->
-            expect(model.sync).toHaveBeenCalledWith('patch', model, jasmine.any(Object))
+            expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('patch', model, jasmine.any(Object))
             expect(model.foo).toEqual('a new foo value')
             done()
 
@@ -86,9 +86,9 @@ describe "Lanes.Models.Base", ->
             foo: 'foo value'
         })
         model.fetch().then ->
-            expect(model.sync).toHaveBeenCalledWith('read', model, jasmine.any(Object))
+            expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', model, jasmine.any(Object))
             expect(model.foo).toEqual('foo value')
-            options = model.sync.lastOptions()
+            options = Lanes.Models.Sync.perform.lastOptions()
             expect(options).toHaveTrue('ignoreUnsaved')
             expect(options).toHaveNumberWithinRange('limit',1,1)
             done()
@@ -111,7 +111,7 @@ describe "Lanes.Models.Base", ->
             { id: 2, title: 'second value' }
         ])
         Model.where(title: 'first value').whenLoaded (collection)->
-            options = Model::sync.lastOptions()
+            options = Lanes.Models.Sync.perform.lastOptions()
             expect(options.query).toEqual({title:'first value'})
             expect(collection.length).toEqual(2)
             done()
@@ -120,12 +120,10 @@ describe "Lanes.Models.Base", ->
         model = Lanes.Test.makeModel({
             props: { id: 'integer' }
         },{ id: 1 })
-        collection = model.collection
-        expect(collection.length).toEqual(1)
+        collection = model.constructor.Collection
         model.destroy().then ->
-            expect(model.sync)
+            expect(Lanes.Models.Sync.perform)
                 .toHaveBeenCalledWith('delete', model, jasmine.any(Object))
-            expect(collection.length).toEqual(0)
             done()
 
     it "sets associations", ->

@@ -1,4 +1,6 @@
 //=require_self
+//=require ./TestModels
 //=require ./ModelSaver
+//=require ./BeforeEach
 
-Lanes.Testing = ( Lanes.Testing || {} )
+Lanes.Test = ( Lanes.Test || {} );

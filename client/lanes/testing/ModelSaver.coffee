@@ -1,10 +1,10 @@
-class Lanes.Testing.ModelSaver
+class Lanes.Test.ModelSaver
 
     @setUser: (login)->
-        Lanes.Testing.ModelSaver::headers['X_TESTING_USER']= login
+        Lanes.Test.ModelSaver::headers['X_TESTING_USER']= login
 
     @perform: (model,completion)->
-        saver = new Lanes.Testing.ModelSaver(completion)
+        saver = new Lanes.Test.ModelSaver(completion)
         saver.save(model)
 
     headers:
@@ -15,7 +15,6 @@ class Lanes.Testing.ModelSaver
         spyOn(this, 'success').and.callThrough()
         spyOn(this, 'error').and.callThrough()
 
-
     success: ->
         this.notification.resolve(this)
         _.defer(@completion) if @completion
@@ -25,10 +24,10 @@ class Lanes.Testing.ModelSaver
         _.defer(@completion) if @completion
 
     save: (model)->
-        model.save(this.toOptions()).then(Lanes.emptyFn, Lanes.emptyFn)
+        Lanes.Models.Sync.callOriginal =>
+            model.save(@toOptions()).then(Lanes.emptyFn, Lanes.emptyFn)
         this.notification = new _.DeferredPromise
         this.notification.promise
-
 
     toOptions: ->
         _.pick(this,'headers','success','error')
