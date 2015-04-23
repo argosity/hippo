@@ -67,20 +67,18 @@ class ViewBase
         this._onCollectionChange() if @collection
         this._parsedBindings = Lanes.Vendor.Ampersand.Bindings(this.bindings, this)
         this._initializeBindings();
-        if attrs.el && !this.autoRender
+        if options.el && !this.autoRender
             this._onElementChange();
 
         this._initializeSubviews();
-
-        this.set(_.pick(attrs, 'model', 'collection', 'el'))
 
         this.render() if this.autoRender && this.template
 
         if !this.pubSub? # if it's unset, not true/false; default to parent or true
             this.pubSub = if this.parent?.pubSub? then this.parent.pubSub else true
 
-        if @formBindings || @parent?.formBindings
-            @formBindings = new Lanes.Views.FormBindings(this, @formBindings)
+        if @formBindings || options.formBindings || @parent?.formBindings
+            @formBindings = new Lanes.Views.FormBindings(this, @formBindings||options.formBindings)
 
         if @keyBindings
             Lanes.Views.Keys.add(this, @keyBindings, @keyScope)

@@ -10,7 +10,7 @@ class ScreenBase
     mixins:[
         Lanes.Screens.ChangeListener
     ]
-
+    formBindings: true
     reset: Lanes.emptyFn
 
     templateName: 'layout'
