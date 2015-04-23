@@ -36,7 +36,7 @@ module Lanes
         include Lanes
 
         include ActiveRecord::TestFixtures
-        self.fixture_path =  Pathname.new(__FILE__).dirname.join('fixtures')
+         self.fixture_path = Lanes::Extensions.controlling.root_path.join('spec','fixtures')
 
         self.use_transactional_fixtures = true
         fixtures :all
@@ -138,3 +138,6 @@ module MiniTest
         end
     end
 end
+
+
+require_relative 'access/test_fixture_extensions'
