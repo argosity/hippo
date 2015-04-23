@@ -14,7 +14,9 @@ class Lanes.Views.FormBindings
         return unless @view.model?.hasAttribute(name)
         val = el.val()
         unless false == this.view.trigger("update:#{val}", val)
-            el[0].binding_is_setting=true; @view.model.setFromView(name, val); delete el[0].binding_is_setting
+            el[0].binding_is_setting=true
+            @view.model.setFromView(name, val)
+            delete el[0].binding_is_setting
         msg = @view.model.checkValid(name,val)
         this.setError( el, msg )
         return true
