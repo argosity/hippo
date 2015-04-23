@@ -27,10 +27,7 @@ module Lanes
             end
             def roles_for_client
                 Lanes::Access::Role.all_available.map do |role|
-                    {
-                      id: role.to_s.demodulize.underscore,
-                      name: role.to_s.demodulize
-                    }
+                    { id: role.to_s.demodulize.underscore, name: role.to_s.demodulize }
                 end
             end
             def client_bootstrap_data(view)
