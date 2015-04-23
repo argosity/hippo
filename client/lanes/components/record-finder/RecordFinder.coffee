@@ -56,4 +56,6 @@ class Lanes.Components.RecordFinder extends Lanes.Components.Base
 
     loadCode: (code)->
         @recordQuery.loadSingle(code.toUpperCase(),{ include: @withAssociations })
-            .then( (reply)=> this.$el.trigger("display-record", reply.record) if reply.record )
+            .then( (reply)=>
+                this.$el.trigger("display-record", reply.record) if reply.record
+            )

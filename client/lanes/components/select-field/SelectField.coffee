@@ -17,7 +17,6 @@ class SelectOption extends Lanes.Views.Base
 
 class Lanes.Components.SelectField extends Lanes.Components.MultiSelect
 
-
     subviews:
         fields:
             hook: 'choices-input'
@@ -39,10 +38,8 @@ class Lanes.Components.SelectField extends Lanes.Components.MultiSelect
 
     onSelectChange: (ev)->
         if @model && @association
-            @model.set(@association, this.selectionForID( this.ui.select.val() ))
-
-    constructor: (options={})->
-        super
+            selection = this.selectionForID(parseInt(this.ui.select.val()))
+            @model.set(@association, selection) if selection
 
     writeTemplate: ->
         multiple = if this.multiple then "multiple" else ""
@@ -51,13 +48,16 @@ class Lanes.Components.SelectField extends Lanes.Components.MultiSelect
     readTemplate: ->
         "<div class='ro-input' name='#{this.field_name}'></div>"
 
-
     select: (option)->
         if this.readOnly
-            this.$el.text( if option then option.code else "" )
+            this.$el.text( if option then option[@mappings.title] else "" )
         else if option
             id = option.get(@mappings.id)
             option = this.query("option[value=\"#{id}\"]")
-            option.selected = true
+            if option
+                if option.selected
+                    this.onSelectChange() # force event to fire
+                else
+                    option.selected = true
         else
             this.unSelectAll()
