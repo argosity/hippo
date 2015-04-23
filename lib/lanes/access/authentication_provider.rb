@@ -46,14 +46,14 @@ module Lanes
                 end
             end
 
-
             def wrap_reply(model, req)
                 if allowed_access_to?(model)
                     ::Lanes::User.scoped_to(current_user) do | user |
                         yield
                     end
                 else
-                    Lanes.logger.warn "Unauthorized access attempted to #{req}"
+                    Lanes.logger.warn request.env['HTTP_X_TESTING_USER']
+                    Lanes.logger.warn "Unauthorized access attempted to #{req.url}"
                     req.halt( 401, Oj.dump({
                       success:false, errors: {user: "Access Denied"}, message: "Access Denied"
                     }))
