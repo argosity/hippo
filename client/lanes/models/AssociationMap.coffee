@@ -71,7 +71,7 @@ class Lanes.Models.AssocationMap
                 association[fn_name]( attributes )
                 # if we're replaceing the model's contents with another, copy the dirty status as well
                 if association.isModel
-                    model.set(this.pk(name), association.id)
+                    model.set(this.pk(name), association.id) unless association.isNew
                     association.isDirty = value.isDirty if value.isModel
 
     pk: (name)->
