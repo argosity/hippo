@@ -15,19 +15,17 @@ getValue = (object, prop)->
 
 
 
-
-paramsMap = {
-    fields  : 'f'
-    with    : 'w'
-    query   : 'q'
-    include : 'i'
-    order   : 'o'
-    limit   : 'l'
-    start   : 's'
-    format  : 'df'
-}
-
 Lanes.Models.Sync = {
+    paramsMap:
+        fields  : 'f'
+        with    : 'w'
+        query   : 'q'
+        include : 'i'
+        order   : 'o'
+        limit   : 'l'
+        start   : 's'
+        format  : 'df'
+
     urlError: ->
         throw new Error('A "url" property or function must be specified')
 
@@ -65,7 +63,7 @@ Lanes.Models.Sync = {
     perform: (method, model, options={})->
         query = {}
         for key, value of options
-            query[ paramsMap[key] ] = value if paramsMap[key]
+            query[ this.paramsMap[key] ] = value if this.paramsMap[key]
 
         # Default JSON-request options.
         params = {
