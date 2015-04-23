@@ -31,7 +31,7 @@ module Lanes
                 def make_handler(model, controller, parent_attribute)
                     lambda do
                         authentication = Lanes::API::AuthenticationProvider.new(request)
-                        authentication.wrap_reply(model,self) do
+                        authentication.wrap_reply(model, self) do
                             if parent_attribute
                               params[:nested_attribute] = Hash[ parent_attribute,
                                                                params[parent_attribute] ]
@@ -46,6 +46,7 @@ module Lanes
 
             def log_request
                 Lanes.logger.info "UserID: #{session['user_id']}, Params: #{request.params}"
+                Lanes.logger.debug JSON.pretty_generate(data) unless Lanes.env.production?
             end
 
             def wrap_reply(with_transaction=true)
@@ -53,7 +54,7 @@ module Lanes
                 log_request
                 if with_transaction
                     Lanes::Model.transaction do
-                         response = yield
+                        response = yield
                         # This is quite possibly a horrible idea.
                         # It enables test specs to reset the db state after a request
                         if Lanes.env.test? && request.env['HTTP_X_ROLLBACK_AFTER_REQUEST']
