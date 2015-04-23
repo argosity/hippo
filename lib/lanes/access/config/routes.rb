@@ -2,7 +2,7 @@ module Lanes
     API.routes.draw do
 
         post "/user-session.json" do
-            wrap_json_reply do
+            wrap_reply do
                 user = User.where(login: data['login']).first
                 if user && user.authenticate(data['password'])
                     session[:user_id] = user.id
