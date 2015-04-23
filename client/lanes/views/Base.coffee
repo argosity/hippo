@@ -49,16 +49,16 @@ class ViewBase
                 this.root_view?.viewport
 
 
-    constructor: (attrs={})->
+    constructor: (options={})->
 
         this.cid = _.uniqueId('view');
-        attrs || (attrs = {});
-        parent = attrs.parent;
-        delete attrs.parent;
+        options || (options = {});
+        parent = options.parent;
+        delete options.parent;
 
         this._substituteEventUI()
 
-        Lanes.Vendor.Ampersand.State.call(this, attrs, {init: false, parent: parent})
+        Lanes.Vendor.Ampersand.State.call(this, options, {init: false, parent: parent})
 
         this.on('change:$el',   this._onElementChange, this)
         this.on('change:model', this._onModelChange, this)
