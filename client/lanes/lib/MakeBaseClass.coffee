@@ -1,3 +1,15 @@
+# Hack in support for Function.name for IE
+if Function::name == undefined && Object.defineProperty != undefined
+    Object.defineProperty(Function.prototype, 'name', {
+        get: ->
+            funcNameRegex = /function\s([^(]{1,})\(/;
+            results = (funcNameRegex).exec((this).toString())
+            return if (results && results.length > 1) then results[1].trim() else ""
+
+        set: Lanes.emptyFn
+    })
+
+
 mixinModules = (klass)->
     Lanes.lib.ModuleSupport.includeInto(klass)
     if klass::mixins
