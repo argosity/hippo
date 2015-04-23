@@ -52,7 +52,7 @@ module Lanes
         config_option :table_prefix, ''
 
         # The configuration environment to use, test, development, production
-        config_option :environment, (ENV['LANES_ENV'] || ENV['RAILS_ENV'] || 'development').to_sym
+        config_option :environment, (ENV['LANES_ENV'] || ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'development').to_sym
 
         # The secret key to use for session cookies.
         config_option :session_secret_key_base,  '1234', silent: true
