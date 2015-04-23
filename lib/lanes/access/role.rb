@@ -2,28 +2,33 @@ module Lanes
     module Access
 
         class Role
-            class_attribute :read, :write, :delete
+            class_attribute :read_types, :write_types, :delete_types
 
             def initialize(user)
                 @user = user
             end
 
             def can_read?(model)
-                read.include?(model)
+                read_types.include?(model)
             end
 
             def can_write?(model)
-                write.include?(model)
+                write_types.include?(model)
             end
 
             def can_delete?(model)
-                delete.include?(model)
+                delete_types.include?(model)
             end
 
             class << self
                 ALL=Array.new
 
-                def grant_global_access(types=[:read,:write,:delete], *klass)
+                def grant_global_access(types=:all, *klass)
+                    unless types.is_a?(Symbol)
+                        klass.unshift(types)
+                        types=:all
+                    end
+                    types = [:read,:write,:delete] if :all == types
                     types = [*types]
                     ALL.each do | child |
                         types.each{ |type| child.send(type).concat(klass) }
@@ -32,33 +37,33 @@ module Lanes
 
                 def inherited(subklass)
                     ALL << subklass
-                    subklass.read = []; subklass.write = []; subklass.delete = []
+                    subklass.read_types = []; subklass.write_types = []; subklass.delete_types = []
                 end
 
                 def grant( *klasses )
-                    self.read.push( *klasses )
-                    write.push( *klasses )
-                    delete.push( *klasses )
+                    read_types.push(*klasses)
+                    write_types.push(*klasses)
+                    delete_types.push(*klasses)
                 end
 
                 def read( *klasses )
-                    self.read.push( *klasses )
+                    read_types.push(*klasses)
                 end
 
                 def write( *klasses )
-                    self.write.push( *klasses )
+                    write_types.push(*klasses)
                 end
 
-                def delete( *klasses )
-                    self.delete.push( *klasses )
+                def delete(*klasses )
+                    delete_types.push(*klasses)
                 end
 
                 def lock(klass, attribute)
-                    LockedFields.lock( klass, attribute, self)
+                    LockedFields.lock(klass, attribute, self)
                 end
 
                 def lock_writes(klass, attribute)
-                    LockedFields.lock( klass, attribute, self, :write)
+                    LockedFields.lock(klass, attribute, self, :write)
                 end
 
                 def all_available

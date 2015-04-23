@@ -19,9 +19,9 @@ module Lanes
                     :roles => user.roles.map{ | role |
                         {
                             type: type_to_client_id(role),
-                            read: role.read.map{ |klass| type_to_client(klass) },
-                            write: role.write.map{ |klass| type_to_client(klass) },
-                            delete: role.delete.map{ |klass| type_to_client(klass) }
+                            read: role.read_types.map{ |klass| type_to_client(klass) },
+                            write: role.write_types.map{ |klass| type_to_client(klass) },
+                            delete: role.delete_types.map{ |klass| type_to_client(klass) }
                         }
                     },
                     :locked_fields => LockedFields.definitions.map{ | klass, locks |
