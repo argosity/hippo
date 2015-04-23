@@ -1,3 +1,9 @@
+# These prototype properties are also
+# set on any Collections that are created
+PROPERTIES_SHARED_WITH_DEFAULT_COLLECTION = [
+    'cacheDuration'
+]
+
 # Da Model. Handles all things dataish
 class BaseModel
     isModel: true
@@ -97,7 +103,7 @@ class BaseModel
         else
             options['include']=needed
             this.fetch(options)
-#                .then (req)-> req.record
+
 
     # Searches the PubSub idenity map for a record of the same type and matching id
     # If one is found, it will update it with the given attributes and return it
@@ -131,6 +137,7 @@ class BaseModel
     @fetchById: (id, options={})->
         record = new this(id: id)
         record.fetch(options)
+        record
 
     # Sets the attribute data from a server respose
     setFromServer: (data,options)->
@@ -160,11 +167,14 @@ class BaseModel
     # Fetch the model from the server. If the server's representation of the
     # model differs from its current attributes, they will be overridden,
     # triggering a `"change"` event.
-    fetch:  (options={}) ->
-        options = _.clone(options)
+    fetch:  (original_options={}) ->
+        options = _.clone(original_options)
         handlers = Lanes.Models.Sync.wrapRequest(this,options)
-        _.extend(options,{limit:1,ignoreUnsaved:true})
-        this.sync('read', this, options)
+        if this.cacheDuration && _.isEmpty(original_options)
+            Lanes.Models.ServerCache.fetchRecord(this, options)
+        else
+            _.extend(options,{limit:1,ignoreUnsaved:true})
+            this.sync('read', this, options)
         handlers.promise
 
     @fetch: (options={})->
@@ -200,7 +210,7 @@ class BaseModel
     # all data is returned.  Otherwise only unsaved attributes (and associations)
     # are returned.
     dataForSave: (options={})->
-        if options.saveAll
+        if options.saveAll || this.isNew()
             data = this.getAttributes(props:true, true)
         else
             data = this.unsavedAttributes()
@@ -231,11 +241,23 @@ class BaseModel
             klass::associations = new Lanes.Models.AssocationMap(klass)
 
     @afterExtended: (klass)->
-        if !klass::abstractClass && !klass.Collection
-            class DefaultCollection
-                constructor: -> super
-                model: klass
-            klass.Collection = Lanes.Models.Collection.extend(DefaultCollection)
+        return if klass::abstractClass
+        unless klass.Collection
+            @createDefaultCollectionFor(klass)
+
+        if klass::enums
+            klass::enums = new Lanes.Models.EnumMap(klass)
+
+
+    @createDefaultCollectionFor: (klass)->
+        name = "#{klass.name}Collection"
+        Collection = new Function("return function #{name}(){
+            #{name}.__super__.constructor.apply(this, arguments);
+        }")()
+        Collection::model = klass
+        for prop in PROPERTIES_SHARED_WITH_DEFAULT_COLLECTION
+            Collection::[prop] = klass::[prop] if klass::[prop]
+        klass.Collection = Lanes.Models.Collection.extend(Collection)
 
     Lanes.lib.ModuleSupport.includeInto(@)
     @include Lanes.lib.results

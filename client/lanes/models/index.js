@@ -1,6 +1,8 @@
 //= require_self
 //= require ./Sync
-//= require ./ModelAssociations
+//= require ./ServerCache
+//= require ./AssociationMap
+//= require ./EnumMap
 //= require ./Base
 //= require ./Collection
 //= require_tree ./mixins

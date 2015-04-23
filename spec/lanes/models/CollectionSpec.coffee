@@ -25,3 +25,23 @@ describe "Lanes.Models.Collection", ->
         spy.calls.reset()
         collection.reset([{ id:11, title: 'last'}])
         expect(spy).toHaveBeenCalled()
+
+
+    it "caches", (done)->
+        model = Lanes.Test.makeModel({
+            cacheDuration: [1,'day']
+            props: { id: 'integer', title: 'string' }
+        })
+        syncSucceedWith([
+            { id: 1, title: 'first value'  }
+            { id: 2, title: 'second value' }
+        ])
+        collection = new model.constructor.Collection
+        collection.fetch().then ->
+            expect(collection.length).toEqual 2
+            expect(Lanes.Models.Sync.perform).toHaveBeenCalled()
+            Lanes.Models.Sync.perform.calls.reset()
+            collection.fetch().then ->
+                expect(Lanes.Models.Sync.perform).not.toHaveBeenCalled()
+                expect(collection.length).toEqual 2
+                done()

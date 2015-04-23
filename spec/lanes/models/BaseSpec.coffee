@@ -147,6 +147,21 @@ describe "Lanes.Models.Base", ->
             props: { id: 'integer', foo: 'string' }
         },{ id: 1 })
         model.withAssociations('color')
-        expect(model.sync).toHaveBeenCalledWith('read', model, jasmine.any(Object))
-        options = model.sync.lastOptions()
+        expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', model, jasmine.any(Object))
+        options = Lanes.Models.Sync.perform.lastOptions()
         expect(options.include).toEqual(['color'])
+
+    it "reads from caches", (done)->
+        model = Lanes.Test.makeModel({
+            cacheDuration: [1,'day']
+            props: { id: 'integer', title: 'string' }
+        }, {id: 1})
+        syncSucceedWith([
+            { id: 1, title: 'first value'  }
+            { id: 2, title: 'second value' }
+        ])
+        collection = new model.constructor.Collection
+        collection.fetch().then ->
+            model.fetch().then ->
+                expect(model.title).toEqual('first value')
+                done()
