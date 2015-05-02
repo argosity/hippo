@@ -90,11 +90,9 @@ class Lanes.Models.AssocationMap
         options.saveDepth = ( if options.saveDepth then options.saveDepth+1 else 1 )
         return ret if options.saveDepth > 5
         for name, options of @definitions
-            unless options.readOnly
-                data = model[name].dataForSave(options)
-                unless _.isEmpty( data )
-                    ret[name] = data
-
+            break if options.readOnly
+            assoc = model[name]
+            ret[name] = assoc.dataForSave(options) if assoc.isDirty
         ret
 
     # return a list of assocations from "name" that are not loaded
