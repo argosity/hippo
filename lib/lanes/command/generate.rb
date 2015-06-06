@@ -11,9 +11,9 @@ module Lanes
             method_options( GenerateScreen::OPTIONS )
             register Command::GenerateScreen, 'screen', 'screen [NAME]', 'Creates a new Screen'
 
-            long_desc Command.usage_from_file("generate_view")
-            method_options( GenerateView::OPTIONS )
-            register Command::GenerateView, 'view', 'view [NAME]', 'Creates a new View'
+            long_desc Command.usage_from_file("generate_component")
+            method_options( GenerateComponent::OPTIONS )
+            register Command::GenerateComponent, 'component', 'component [NAME]', 'Creates a new Component to be shared between screens'
 
         end
 

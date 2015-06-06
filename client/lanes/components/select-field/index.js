@@ -1,1 +1,2 @@
-//= require_tree .
+//= require 'lanes/vendor/select'
+//= require './SelectField'

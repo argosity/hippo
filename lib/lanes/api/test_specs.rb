@@ -20,7 +20,7 @@ module Lanes
             def js_files
                 urlpath(Jasmine::Core.js_files)   +
                 urlpath(Jasmine::Core.boot_files) +
-                [ '/assets/lanes/testing' ] +
+                ['/assets/lanes/testing'] +
                 urlpath(spec_files(extension.identifier))
             end
 
@@ -29,8 +29,8 @@ module Lanes
             def spec_files(path)
                 dir = extension.root_path.join("spec")
                 regex = /^#{dir}\//
-                Dir.glob( dir.join(path,"**/*.{coffee,js}") ).map do |file|
-                    file.sub(regex,'').sub(/coffee$/,'js')
+                Dir.glob( dir.join(path,"**/*.{coffee,cjsx,js}") ).map do |file|
+                    file.sub(regex,'').sub(/(coffee|cjsx)$/,'js')
                 end
             end
 

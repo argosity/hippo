@@ -8,12 +8,10 @@ methodMap = {
     'read':   'GET'
 }
 
-getValue = (object, prop)->
+getValue = (object, prop) ->
     if !(object && object[prop])
-        return null;
-    return if _.isFunction(object[prop]) then object[prop]() else object[prop];
-
-
+        return null
+    return if _.isFunction(object[prop]) then object[prop]() else object[prop]
 
 Lanes.Models.Sync = {
     paramsMap:
@@ -29,63 +27,68 @@ Lanes.Models.Sync = {
     urlError: ->
         throw new Error('A "url" property or function must be specified')
 
-    copyServerReply: (record, reply)->
-        record.errors = reply?.errors
-        record.lastServerMessage = reply?.message
-        { record: record, reply: reply }
+    state: (method, model, options = {}) ->
+        options.url ||= _.result(model, "url")
+        if _.contains(['create', 'update', 'patch'], method)
+            options.data ||= model.dataForSave(options)
+        model.requestInProgress = true
+        model.trigger("request", model, options)
+        return new _.Promise (resolve, reject) ->
+            handler = (reply) ->
+                delete model.requestInProgress
+                model.errors = reply?.errors
+                model.trigger("error", model, options) if reply.errors
+                model.lastServerMessage = reply?.message
 
-    # Wraps a sync request's error and success functions
-    # Copies any errors onto the model and sets it's data on success
-    wrapRequest: (record, options)->
-        error   = options.error
-        success = options.success
-        options.promise = new _.Promise( (resolve,reject)->
-            options.resolvePromise = resolve
-            options.rejectPromise  = reject
-        )
-        options.error = (reply, status, req)->
-            options.rejectPromise(
-                Lanes.Models.Sync.copyServerReply( record,
-                    reply.responseJSON || {error: reply.responseText}
-                )
-            )
-            delete record.requestInProgress
-            error?.apply(options.scope, arguments)
+                model.setFromServer(reply.data, options, method)
+                model.trigger("sync", model, reply, options)
+                resolve(model)
 
-        options.success = (reply, status, req)->
-            record.setFromServer( reply.data, options ) if reply?.data?
-            record.trigger("sync", record, reply, status)
-            options.resolvePromise( Lanes.Models.Sync.copyServerReply(record,reply) )
-            delete record.requestInProgress
-            success?.apply(options.scope, arguments)
-        options
+            Lanes.Models.Sync.perform(method, options).then (reply) ->
+                handler(reply)
+            , (err) ->
+                reply = { errors: { http: err.error.message } }
+                try
+                    reply = JSON.parse(err.body) unless _.isEmpty(err?.body)
+                finally
+                    handler(reply)
 
-    perform: (method, model, options={})->
+
+
+    perform: (method, options = {}) ->
         query = {}
         for key, value of options
             query[ this.paramsMap[key] ] = value if this.paramsMap[key]
 
         # Default JSON-request options.
-        params = {
-            type: methodMap[method]
+        _.defaults(options, {
+            method: methodMap[method]
             dataType: "json"
             data: query
-        }
+        })
 
         # Ensure that we have a URL.
-        params.url = _.result(model, "url") or Lanes.Models.Sync.urlError() unless options.url
-        params.url += '.json'
-
-        params.headers = _.extend({}, _.result(options,'headers'))
-        params.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
-        params.contentType = "application/json"
-        if options.data || _.contains(['create','update','patch'], method)
-            params.data = JSON.stringify( options.data || model.dataForSave(options) )
-            delete options.data
+        url = options.url or Lanes.Models.Sync.urlError()
+        options.url += '.json'
+        unless _.isEmpty(query)
+            options.url += '?' + Lanes.lib.objToParam(query)
+        if options.data and !_.isString(options.data)
+            options.originalData = options.data
+            options.data = JSON.stringify( options.data )
+        options.headers ||= {}
+        options.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
+        options.contentType = "application/json"
 
         # Make the request, allowing the user to override any Ajax options.
-        xhr = options.xhr = Lanes.$.ajax(_.extend(params, options))
-        model.requestInProgress = true
-        model.trigger("request", model, xhr, options)
-        xhr
+        # xhr = options.xhr = Lanes.$.ajax(_.extend(params, options))
+        new _.Promise( (resolve, reject) ->
+            options.xhr = Lanes.Vendor.xhr(options, (err, resp, body) ->
+                if err
+                    reject(error:err, body:options.xhr.responseText)
+                else
+                    resolve(JSON.parse(body))
+            )
+        )
+
+
 }

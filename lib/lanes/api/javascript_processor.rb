@@ -27,78 +27,24 @@ module Lanes
                 # it's not an extension
                 if ns && ns != "Lanes"
                     ns = ns.underscore.camelize
-                    ref = "(window.Lanes ? window.Lanes['#{ns}'] : null)"
-                    "(function(Lanes, #{ns}, _, window, FILE, undefined)"\
-                      "{\n#{js}\n})(window.Lanes,#{ref},window._, window,"\
-                      "{namespace:#{ref},extensionName:'#{ns}',path:#{path}});"
+                    ns_name = "#{ns},"
+                    ns_ref = "(window.Lanes ? window.Lanes['#{ns}'] : null),"
+                    ns_file_ref = "window.Lanes['#{ns}']"
                 else
-                    "(function(Lanes, _, window, FILE, undefined)"\
-                      "{\n#{js}\n})(window.Lanes,window._, window,"\
-                      "{namespace:window.Lanes,extensionName:'Lanes',path:#{path}});"
+                    ns_name = ""
+                    ns_ref = ""
+                    ns_file_ref = "window.Lanes"
                 end
+                file="{namespace:#{ns_file_ref},extensionName:'#{ns}',path:#{path}}"
+                "(function(Lanes,#{ns_name}_,LC,React,BS,FILE,window,undefined)"\
+                    "{\n#{js}\n})"\
+                    "(window.Lanes,#{ns_ref}window.Lanes.Vendor.ld,"\
+                    "window.Lanes.Components,"\
+                    "window.Lanes.Vendor.React,"\
+                    "window.Lanes.Vendor.ReactBootstrap,"\
+                    "#{file}, window);"
             end
 
-        end
-
-        # class CoffeeScriptWrapper < JsAssetCompiler
-        #     self.registered_extension = '.coffee'
-
-        #     CONSTRUCTOR = /constructor\s*:/
-        #     CLASS_DEFINITION = /\s*class\s+([\w|\.]+)/
-        #     EXTENDING_CLASS = /class\s+([\w|\.]+)\s+extends\s+([\w|\.]+)\s*?\n/
-
-        #     # Coffeescript has two shortcomings with regards to Lanes
-        #     #
-        #     # The first is that it's extends format is incompatible with AmpersandState,
-        #     # State does quite a bit more via it's own .extend methods.
-        #     # Accordingly, we substitute our own "extend" call whenever we encounter a coffeescript extends
-        #     #
-        #     # The second issue is that if a constructor isn't present, coffeescript with generate it's own
-        #     # blank implementation that fails to call "super".  We add a constructor that does call super if one's missing.
-
-        #     def cleaned
-        #         contents = data.dup
-        #         data.scan(CLASS_DEFINITION) do |match|
-        #             (name, extends) = match
-        #             definition = get_definition(name)
-
-
-        #             # is it missing a constructor?
-        #             if definition !~ /constructor:/
-        #                 # figure out how much to indent, sigh.
-        #                 indent = definition[/\n(\s+)(\w+):/,1] || '    '
-        #                 contents.gsub!(/class #{name}\n/,"\\0#{indent}constructor: -> super\n")
-
-        #             end
-        #             contents.gsub!( /(class #{name}\n.*?)(\n\w|\Z)/m, "\\1\n#{extends}.extend(#{name})\n\\2" )
-
-        #             contents
-        #             #contents << "#{extends}.extend(#{name})\n"
-        #         end
-        #         contents
-        #     end
-
-        #     def evaluate(scope, locals, &block)
-        #         wrap_js scope, ::CoffeeScript.compile(cleaned, bare: true)
-        #     end
-
-        #     def get_definition(name)
-        #         contents.gsub!(/class\s+#{name}\s+.*?\n/,"class #{name}\n")
-        #                        definition = contents[/(class #{name}\n.*?)(\n\w|\Z)/m,1]
-        #     end
-        # end
-
-        class Es6Compiler < JsAssetCompiler
-            self.registered_extension = '.es6'
-            def evaluate(scope, locals, &block)
-                cmd = "#{Lanes.config.es6_transpiler_path} #{Lanes.config.es6_transpiler_options}"
-                stdout, stderr, _status = Open3.capture3(cmd, stdin_data: data)
-                if stderr.empty?
-                    wrap_js scope, stdout
-                else
-                    raise TranspileError, stderr
-                end
-            end
         end
 
         class JSWrapper < JsAssetCompiler

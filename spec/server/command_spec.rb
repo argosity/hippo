@@ -59,9 +59,9 @@ describe Lanes::Command do
         compare_generated(reference)
     end
 
-    it "generates a view" do
-        assert_executes "#{lanes} g view big-view"
-        reference = reference_path.join('view')
+    it "generates a component" do
+        assert_executes "#{lanes} g component big"
+        reference = reference_path.join('component')
         compare_generated(reference)
     end
 

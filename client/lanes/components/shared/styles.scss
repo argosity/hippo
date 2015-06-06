@@ -1,0 +1,32 @@
+@import "./fields";
+@import "./fieldset";
+
+.record-finder {
+    .icon { cursor: pointer; }
+}
+
+.alert {
+    .icon {
+        margin-right: 5px;
+    }
+}
+
+.badge.count {
+    &.super {
+        padding: 2px 2px 0;
+        position: relative;
+        font-size: 70%;
+        top: -6px;
+        right: 5px;
+    }
+}
+
+.requesting-spinner {
+    @extend .icon;
+    @extend .icon-spinner;
+    @extend .icon-spin;
+    display: none;
+    &.active {
+        display: inline;
+    }
+}

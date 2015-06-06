@@ -6,7 +6,7 @@ module Lanes
 
             identifier "lanes-access"
 
-            components 'modal', 'grid', 'select-field'
+            components 'grid', 'modal'
 
             root_path Pathname.new(__FILE__).dirname.expand_path
 
@@ -25,6 +25,7 @@ module Lanes
             def client_paths
                 []
             end
+
             def roles_for_client
                 Lanes::Access::Role.all_available.map do |role|
                     { id: role.to_s.demodulize.underscore, name: role.to_s.demodulize }

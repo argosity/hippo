@@ -1,5 +1,5 @@
 describe "AppyApp.Screens.ReadySetGo", ->
 
-    it "can be instantiated", ->
-        view = new AppyApp.Screens.ReadySetGo()
-        expect(view).toEqual(jasmine.any(AppyApp.Screens.ReadySetGo));
+    it "can be rendered", ->
+        screen = LT.renderComponent(AppyApp.Screens.ReadySetGo)
+        expect(screen.getDOMNode().textContent).toMatch("Hello")

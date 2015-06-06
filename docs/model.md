@@ -9,15 +9,12 @@ Lanes provides a Lanes.Models.Base class that all other models extend from.
 A Model is an extension of [Ampersand State](http://ampersandjs.com/docs#ampersand-state), and supports all the features that AmpersandState does.
 
 <aside class="note">
-Unlike the Models in Backbonejs, Lanes' Models track thier "dirty" state.  This allows them to perform true HTTP "patch" requests and only send the attributes that have been modified to the server.  They can also be interogated and only saved if they contain unsaved data.
+Unlike the Models in Backbonejs, Lanes' Models track their "dirty" state.  This allows them to perform true HTTP "patch" requests and only send the attributes that have been modified to the server.  They can also be interogated and only saved if they contain unsaved data.
 </aside>
 
-Models also have associations, which are lazily instanciated and can be optionally fetched along with the model/collection.
-
-Models and collections use an Identity Map that stores models that are bound to {% doc_link view title:Views %%}
+Models also have associations, which are lazily instantiated and can be optionally fetched along with the model/collection.
 
 Model methods that make requests to the server can specify options to control what data is returned.  An explanation of the options can be found under [Request Options](#request-options)
-
 
 
 ### API Reference

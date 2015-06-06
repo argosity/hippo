@@ -1,10 +1,8 @@
 //=require ./models/Base
-//=require ./views/Base
+//=require ./components/Base
 //=require_tree ./models
-//=require_tree ./views
 //=require_tree ./components
 //=require ./screens/Base
-//=require ./Router
 //=require ./Extension
 
 /*

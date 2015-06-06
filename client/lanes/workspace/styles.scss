@@ -8,13 +8,10 @@
   position: relative;
   min-height: 10px; // needs height for resizing sensor to function
 }
-
 @import "styles/layout";
 @import "styles/header";
 @import "styles/tabs";
 @import "styles/screens";
 @import "styles/toolbar";
 @import "styles/forms";
-@import "styles/changes-notification";
 @import "styles/keybindings";
-

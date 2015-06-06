@@ -13,6 +13,7 @@ module Lanes
                     if Lanes.env.test? && request.env['HTTP_X_TESTING_USER'].present?
                         Lanes::User.where(login: request.env['HTTP_X_TESTING_USER']).first
                     else
+                        return Lanes::User.first
                         Lanes::User.where(id: request.session['user_id']).first
                     end
                 )

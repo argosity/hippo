@@ -12,7 +12,7 @@ module Lanes
         def self.config_option( name, default, options={} )
             define_method( "#{name}=" ) do | value |
                 old_value = self.send( name )
-                if old_value && Lanes.logger && !options[:silent]
+                if old_value && !options[:silent]
                     Lanes.logger.info "Config option #{name} changed from '#{old_value.inspect}' to '#{value.inspect}'"
                 end
                 instance_variable_set( "@#{name}", value )
@@ -58,7 +58,8 @@ module Lanes
         config_option :session_secret_key_base,  '1234', silent: true
 
         # Configuration for Redis
-        config_option :redis, { path: "/tmp/redis.sock" }
+        config_option :redis, ENV.has_key?('REDISTOGO_URL') ?
+           {url: ENV["REDISTOGO_URL"]} : {path: "/tmp/redis.sock"}
 
         # Title of application
         config_option :app_title, "Lanes Test"

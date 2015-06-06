@@ -4,7 +4,16 @@ browserify = require 'browserify'
 fs         = require 'fs'
 path       = require 'path'
 
-browserify({ debug: false })
-    .require(require.resolve('./template.js'), { entry: true })
-    .bundle()
-    .pipe(fs.createWriteStream(path.join(__dirname, '../client/lanes/vendor/packaged.js'), 'utf8'))
+compile = (name) ->
+    console.log "compiling #{name}"
+    ignore = if name = 'base' then '' else 'react'
+    dest = path.join(__dirname, "../client/lanes/vendor/#{name}.js")
+    browserify({ debug: false })
+        .exclude(ignore)
+        .require(require.resolve("./#{name}"), { entry: true })
+        .bundle()
+        .pipe(fs.createWriteStream(dest, 'utf8'))
+
+
+for name in ['base', 'react-datagrid']
+    compile(name)

@@ -1,0 +1,29 @@
+fieldset.collapsible {
+    border: 1px solid $input-border;
+    padding: 10px;
+    border-radius: $border-radius-large;
+    transition: max-height 1.40s ease-in-out;
+    overflow: hidden;
+    legend {
+        border-bottom: 0;
+        margin-bottom: 0;
+        padding-left: 10px;
+        width: inherit;
+        cursor: pointer;
+        &:after {
+            @extend .icon;
+            padding: 0 10px;
+        }
+    }
+    &.collapsed {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    &.plus {
+        legend:after { @extend .icon-plus-square-o:before; }
+    }
+    &.minus {
+        legend:after { @extend .icon-minus-square-o:before; }
+    }
+
+}

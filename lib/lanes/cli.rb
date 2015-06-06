@@ -17,8 +17,13 @@ module Lanes
         desc "generate SUBCOMMAND ...ARGS", "Generate a component"
         subcommand "generate", Command::Generate
 
-        desc "update SUBCOMMAND ...ARGS", "Update a component"
+        desc "update SUBCOMMAND ...ARGS", "Update a model"
         subcommand "update", Command::Update
+
+        desc "version", "Display version of lanes"
+        def version
+            puts Lanes::VERSION
+        end
 
         long_desc Command.usage_from_file("server")
         register Command::Server,  'serve', 'serve', 'Run the app in development/testing mode'

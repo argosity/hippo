@@ -4,7 +4,7 @@
 
 .header-top {
 
-    
+
     .menu-container {
         position:absolute;
         left: 0;
@@ -20,6 +20,14 @@
         right: 35px;
     }
 
+    .screens-menu-toggle {
+        margin-left: 20px;
+        .icon {
+            @extend .icon;
+            @extend .icon-navicon;
+            @extend .icon-rotate-90;
+        }
+    }
     /* &.with-screen-menu { */
     /*   .menu-container { */
     /*     left: 0px; */
@@ -77,11 +85,11 @@
                     visibility: visible;
                 }
             }
-            
+
             .scroller-right{
                 float:right;
                 &:before {
-                    @extend .font-icon-display;
+                    @extend .icon;
                     @extend .icon-arrow-right:before;
                 }
             }
@@ -89,7 +97,7 @@
             .scroller-left {
                 float:left;
                 &:before {
-                    @extend .font-icon-display;
+                    @extend .icon;
                     @extend .icon-arrow-left:before;
                 }
             }
@@ -103,7 +111,7 @@
             overflow: hidden;
         }
         .screens-menu {
-            
+
         }
     }
 
@@ -121,7 +129,7 @@
     }
 
     .active-screens {
-        
+
         height: 45px;
         padding: 0 5px;
 
@@ -134,7 +142,7 @@
         .close {
             position: absolute;
             right: 7px;
-            top: 0px;    
+            top: 0px;
         }
 
         /* a { */

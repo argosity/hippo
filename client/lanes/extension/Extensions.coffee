@@ -2,27 +2,36 @@ Lanes.Extensions = {
 
     instances: {}
 
-    register: (klass)->
+    register: (klass) ->
         instance = new klass
         this.instances[klass.prototype.identifier] = instance
         instance.onRegistered?()
 
-    fireOnAvailable: (application)->
-        instance.onAvailable?(application) for identifier, instance of @instances
+    fireOnInitialized: (viewport) ->
+        instance.onInitialized?(viewport) for identifier, instance of @instances
 
-    setBootstrapData: (bootstrap_data)->
+    fireOnAvailable: (viewport) ->
+        instance.onAvailable?(viewport) for identifier, instance of @instances
+
+    getViews: ->
+        _.Promise.all _.invoke(@instances, 'getView')
+
+    setBootstrapData: (bootstrap_data) ->
         @controlling_id = bootstrap_data.controlling_extension
-        for identifier,data of bootstrap_data
-            instance = this.instances[identifier]
-            instance?.setBootstrapData?(data)
+        for identifier, instance of @instances
+            instance.setBootstrapData?(bootstrap_data[identifier])
 
-    makeNamespace: (identifier)->
-        for ns in ['Models','Views','Controllers','Screens','Components']
+    makeNamespace: (identifier) ->
+        for ns in ['Models', 'Controllers', 'Screens', 'Components']
             Lanes.namespace("#{identifier}.#{ns}.Mixins")
 
     controlling: ->
         this.get( @controlling_id )
 
-    get: (identifier)->
+    routes: ->
+        _.flatten _.map @instances, (instance, id) ->
+            instance.getRoutes?()
+
+    get: (identifier) ->
         this.instances[identifier]
 }

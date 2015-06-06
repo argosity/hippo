@@ -27,16 +27,16 @@ Lanes.Screens.ChangeListener = {
             view: 'Lanes.Views.ModelUpdate'
             collection: 'changes'
 
-    onChange: (model,change)->
+    onChange: (model,change) ->
         @changes.add(change)
         @change_count += 1
 
-    bindModel: (model)->
+    bindModel: (model) ->
         Lanes.Views.Base.prototype.bindModel.call(this, model)
         @changes.reset([])
         @change_count = 0
 
-    onChangesShow: (ev)->
+    onChangesShow: (ev) ->
         this.changes.invoke('updateTimeAgo')
         this.$('.changes-notification .scroller').animate({ scrollTop: 0 })
 

@@ -1,9 +1,9 @@
 require 'active_record'
 
 require_relative "lanes/version"
-require_relative "lanes/logger"
 require_relative "lanes/environment"
 require_relative "lanes/configuration"
+require_relative "lanes/logger"
 if defined?(::Rails)
     require_relative "lanes/rails_engine"
 end

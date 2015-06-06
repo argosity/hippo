@@ -1,0 +1,10 @@
+/* FONT PATH
+ * -------------------------- */
+
+@font-face {
+  font-family: 'FontAwesome';
+  font-weight: normal;
+  font-style: normal;
+  src: url(font-path('fonts/fontawesome-webfont.woff2')) format('woff2'),
+       url(font-path('fonts/fontawesome-webfont.woff')) format('woff');
+}

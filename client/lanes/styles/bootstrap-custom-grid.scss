@@ -43,43 +43,73 @@
 }
 
 
-// Columns
-//
-// Common styles for small and large grid columns
+.page-content {
 
-@include make-grid-columns();
+    // Columns
+    //
+    // Common styles for small and large grid columns
 
-
-// Extra small grid
-//
-// Columns, offsets, pushes, and pulls for extra small devices like
-// smartphones.
-
-@include make-grid(xs);
+    @include make-grid-columns();
 
 
-// Small grid
-//
-// Columns, offsets, pushes, and pulls for the small device range, from phones
-// to tablets.
-.page-content.sm,.modal-dialog.sm, .modal-dialog.md, .popover-content {
-//@media (min-width: $screen-sm-min) {
-  @include make-grid(sm);
+    // Extra small grid
+    //
+    // Columns, offsets, pushes, and pulls for extra small devices like
+    // smartphones.
+    @include make-grid(xs);
+
+    // Small grid
+    //
+    // Columns, offsets, pushes, and pulls for the small device range, from phones
+    // to tablets.
+
+    &.sm {
+        @include make-grid(xs);
+        @include make-grid(sm);
+    }
+
+
+    // Medium grid
+    //
+    // Columns, offsets, pushes, and pulls for the desktop device range.
+    &.md {
+        @include make-grid(xs);
+        @include make-grid(sm);
+        @include make-grid(md);
+    }
+
+    // Large grid
+    //
+    // Columns, offsets, pushes, and pulls for the large desktop device range.
+
+    &.lg{
+        @include make-grid(xs);
+        @include make-grid(sm);
+        @include make-grid(md);
+        @include make-grid(lg);
+    }
 }
 
-
-// Medium grid
-//
-// Columns, offsets, pushes, and pulls for the desktop device range.
-.page-content.md, .modal-dialog.lg {
-//@media (min-width: $screen-md-min) {
-  @include make-grid(md);
-}
-
-// Large grid
-//
-// Columns, offsets, pushes, and pulls for the large desktop device range.
-.page-content.lg  {
-/* @media (min-width: $screen-lg-min) { */
-  @include make-grid(lg);
+.modal {
+    &.lg {
+        .modal-lg {
+            @include make-grid(xs);
+            @include make-grid(sm);
+            @include make-grid(md);
+            @include make-grid(lg);
+        }
+    }
+    &.md {
+        .modal-lg {
+            @include make-grid(xs);
+            @include make-grid(sm);
+            @include make-grid(md);
+        }
+    }
+    &.sm {
+        .modal-lg {
+            @include make-grid(xs);
+            @include make-grid(sm);
+        }
+    }
 }

@@ -1,12 +1,15 @@
 require_relative "../lanes"
 require 'guard/jasmine'
 require 'guard/minitest'
+require "net/http"
+require "uri"
+require_relative "hot_reload_plugin"
 
 module Lanes
     module GuardTasks
 
         class CustomMatchers
-            attr_reader :client_matches, :server_matches
+            attr_reader :client_matches, :server_matches, :hot_reload
 
             def client(&block)
                 @client_matches = block
@@ -14,7 +17,11 @@ module Lanes
             def server(&block)
                 @server_matches = block
             end
+            def hot_reload(&block)
+                @hot_reload = block
+            end
         end
+
 
         def self.run(dsl, options, &block)
             app_name = options[:name] || Pathname.getwd.basename.to_s
@@ -22,17 +29,27 @@ module Lanes
             yield matchers
 
             jasmine_options = options.merge({
-                port: 8888, server_mount: '/spec', server_env: 'test', server: :puma,
-                spec_dir: "spec/#{app_name}", console: :always, debug: false
+               port: 8888, server_mount: '/spec',
+               server_env: 'development',
+               server: :puma, spec_dir: "spec/#{app_name}",
+               console: :always, debug: false
             })
+
 
             minitest_options = {
               all_on_start: true, test_folders: 'spec/server'
             }
+            coffee_files = %r{^client/(.+?)\.(js|coffee|cjsx)$}
+
+            dsl.guard :hot_reload, port: jasmine_options[:port] do
+                dsl.watch(coffee_files)
+                dsl.watch(%r{\.scss$})
+                matchers.hot_reload.call if matchers.hot_reload
+            end
 
             dsl.guard :jasmine, jasmine_options do
-                dsl.watch(%r{^client/(.+?)\.(js|coffee)$}){ |m| "spec/#{m[1]}Spec.#{m[2]}" }
-                dsl.watch(%r{^spec/.*(?:_s|S)pec\.coffee$})
+                dsl.watch(coffee_files){ |m| "spec/#{m[0]}Spec.#{m[2]}" }
+                dsl.watch(%r{^spec/.*(?:_s|S)pec\.(?:js|coffee|cjsx)$}){|m| p m; m}
                 matchers.client_matches.call if matchers.client_matches
             end
 

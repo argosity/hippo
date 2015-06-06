@@ -1,10 +1,10 @@
 class Lanes.Models.User extends Lanes.Models.Base
 
-    constructor: (attributes,access)->
+    constructor: (attributes, access) ->
         super
         this.access_data = access
 
-    api_path: 'users'
+    api_path: -> 'users'
     derived:
         roles:
             deps: ['role_names', 'access_data']
@@ -16,7 +16,7 @@ class Lanes.Models.User extends Lanes.Models.Base
             fn: ->
                 role_data = Lanes.Models.Roles.all?.toJSON() || []
                 roles = new Lanes.Models.Roles( role_data )
-                _.each( this.role_names, (name)->
+                _.each( this.role_names, (name) ->
                     roles.get(name)?.member = true
                 )
                 roles
@@ -33,33 +33,33 @@ class Lanes.Models.User extends Lanes.Models.Base
         options:     'object'
         password:    'string'
 
-    canRead: (model,field)  -> this.roles.canRead(model,field)
-    canWrite: (model,field) -> this.roles.canWrite(model,field)
-    canDelete: (model)      -> this.roles.canDelete(model)
+    canRead: (model, field)  -> this.roles.canRead(model, field)
+    canWrite: (model, field) -> this.roles.canWrite(model, field)
+    canDelete: (model)       -> this.roles.canDelete(model)
 
     logout: ->
+        return unless @isLoggedIn
         session = new Session( id: this.id )
         session
             .destroy()
             .then =>
-                _.each(@attributes, (value,key)=> @set(key, null) )
+                @access_data = []
+                @role_names  = []
+                _.each(@attributes, (value, key) => @set(key, null) )
 
-    setLoginData: (attrs, access)->
+    setLoginData: (attrs, access) ->
         this.access_data = access
         this.set(attrs)
 
-    @attemptLogin: (login, password, options)->
+    @attemptLogin: (login, password, options) ->
         session = new Session( login: login, password: password )
         success = options.success
-        session.save(_.extend(options,{
-            success: (reply)->
+        session.save(_.extend(options, {
+            success: (reply) ->
                 Lanes.current_user.setLoginData(session.user, session.access)
                 success.apply(options.scope, arguments)
         }))
         session
-
-class Lanes.Models.UserCollection extends Lanes.Models.Collection
-    model: Lanes.Models.User
 
 
 class Session extends Lanes.Models.Base

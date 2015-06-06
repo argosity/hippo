@@ -1,0 +1,35 @@
+label.field {
+    display: block;
+}
+.field {
+
+    .display, .read-only {
+        font-weight: normal;
+        padding: 6px 0;
+        margin-top: 5px;
+        height: 34px;
+    }
+    .display {
+        border-bottom: 1px solid $input-border;
+    }
+    .read-only {
+        @extend .form-control;
+        padding: 6px 12px;
+        cursor: not-allowed;
+    }
+    .label {
+        padding: 0;
+        font-size: 85%;
+    }
+
+}
+
+.field, .form-group {
+    .changeset {
+        $color-rgba: rgba(255, 241, 72, .6);
+        border-color: $color-rgba;
+        outline: 0;
+        @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+    }
+
+}

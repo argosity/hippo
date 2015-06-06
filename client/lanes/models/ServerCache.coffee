@@ -1,16 +1,16 @@
 class CacheEntry
 
-    constructor: (@collection, @options, @key)->
+    constructor: (@collection, @options, @key) ->
         @duration = Lanes.Vendor.Moment.duration(@collection.cacheDuration...)
-        _.bindAll(this,'setFromServer')
+        _.bindAll(this, 'setFromServer')
         @successCallback = @options.success
         @options.success = this.setFromServer
         Lanes.Models.Sync.perform('read', this, @options)
 
     url: ->
-        _.result(@collection,'url')
+        _.result(@collection, 'url')
 
-    setFromServer: (reply, status, req)->
+    setFromServer: (reply, status, req) ->
         if reply?.data?
             Lanes.Models.ServerCache.store(@key, reply.data, @duration.asMilliseconds())
         @successCallback?.apply(@options.scope, arguments)
@@ -23,23 +23,23 @@ class CacheEntry
 Lanes.Models.ServerCache = {
     CACHE: {}
 
-    store: (key, data, ms)->
+    store: (key, data, ms) ->
         this.CACHE[key] = data
         setTimeout(->
             delete Lanes.Models.ServerCache.CACHE[key]
         , ms)
 
-    computeCacheKey: (collection, options)->
+    computeCacheKey: (collection, options) ->
         url = _.result(collection, "url")
         query = {}
         for key, value of options
             query[ Lanes.Models.Sync.paramsMap[key] ] = value if Lanes.Models.Sync.paramsMap[key]
-        url + Lanes.$.param(query)
+        url + Lanes.lib.objToParam(query)
 
-    fetchRecord: (record, options)->
+    fetchRecord: (record, options) ->
         key = record.urlRoot()
 
-        if data_set=this.CACHE[key]
+        if data_set = this.CACHE[key]
             found = false
             for data in data_set
                 if record.id == data.id
@@ -52,12 +52,12 @@ Lanes.Models.ServerCache = {
 
         false
 
-    fetchCollection: (collection, options)->
+    fetchCollection: (collection, options) ->
         key = this.computeCacheKey(collection, options)
         if this.CACHE[key]
             collection.setFromServer(this.CACHE[key], options)
-            options.success.call(options.scope, {data: this.CACHE[key]}, "sucess", {})
         else
-            new CacheEntry(collection,options, key)
+            new CacheEntry(collection, options, key)
+        return _.Promise.resolve(collection)
 
 }

@@ -7,7 +7,13 @@
     margin-left: 240px;
     padding: 0px;
 
-
+    .screen {
+        display: none;
+        &.active {
+            display: block
+        }
+    }
+    
 }
 
 
@@ -26,6 +32,7 @@
 
     background-color: $navbar-inverse-bg;
 
+    
     .navigation {
         border-bottom: 1px solid $navbar-inverse-border;
         list-style: none outside none;
@@ -65,7 +72,7 @@
                     background-color: $navbar-inverse-link-active-bg;
                     span {
                         &:after {
-                            font-family: 'lanes-icon';
+                            font-family: $lanes-icon-font;
                             color: #339900;
                             content: "\00a0\00a0\f067";
                         }

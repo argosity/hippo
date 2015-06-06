@@ -4,99 +4,114 @@
 # and contains utility functions to operate on them                  #
 # ------------------------------------------------------------------ #
 class Lanes.Models.AssocationMap
-    constructor: (@klass)->
+    constructor: (@klass) ->
         @klass::derived ||= {}
         @definitions = @klass::associations
         @definitions['created_by'] ||= { model: 'Lanes.Models.User', readOnly: true }
         @definitions['updated_by'] ||= { model: 'Lanes.Models.User', readOnly: true }
         for name, options of @definitions
-            @klass::derived[name] = this.derivedDefinition(name,options)
+            @klass::derived[name] = this.derivedDefinition(name, options)
 
-    getClassFor: (name)->
+    getClassFor: (name) ->
         definition = @definitions[name]
         object = definition.model || definition.collection
         Lanes.u.findObject(object, 'Models', @klass::FILE)
 
-    getOptions: (name, definition, model)->
+    getOptions: (name, definition, model) ->
         options = { parent: model }
         if definition.options
-            _.extend(options, Lanes.u.resultsFor(model,definition.options))
+            _.extend(options, Lanes.u.resultsFor(model, definition.options))
         options
 
     # will be called in the scope of the parent model
-    createModel: (association, name, definition, fk, pk, target_class)->
+    createModel: (association, name, definition, fk, pk, target_class) ->
         target_class ||= association.getClassFor(name)
-        options = association.getOptions(name,definition,this)
+        options = association.getOptions(name, definition, this)
         model_id = this.get(pk)
         if model_id && model_id == this._cache[name]?.id
             this._cache[name]
         else
-            target_class.findOrCreate(options)
+            new target_class(options)
+
+    # returns a collection for the given association.
+    collectionFor: (name) ->
+        klass = @getClassFor(name)
+        if klass::isModel
+            klass.Collection
+        else
+            klass
+
 
     # will be called in the scope of the parent model
-    createCollection: (association, name, definition, fk, pk, target_class)->
+    createCollection: (association, name, definition, fk, pk, target_class) ->
         target_class ||= association.getClassFor(name)
-        options = association.getOptions(name,definition,this)
+        options = association.getOptions(name, definition, this)
         options.filter ||= {}
-        options.filter[fk]=this.get(pk)
+        options.filter[fk] = this.get(pk)
 
         if target_class::isCollection
-            new target_class(options.models||[],options)
+            new target_class(options.models || [], options)
         else
-            options.model=target_class
-            new Lanes.Models.AssociationCollection(options.models||[],options)
+            options.model = target_class
+            new Lanes.Models.AssociationCollection(options. models || [], options)
     # returns the definition for the derived property
-    derivedDefinition: (name,definition)->
-        defaultCreator=if definition.model then this.createModel else this.createCollection
+    derivedDefinition: (name, definition) ->
+        defaultCreator = if definition.model then this.createModel else this.createCollection
         args = [ this, name, definition, this.fk(name), this.pk(name) ]
         createFn = if definition.default
-            -> definition.default.apply(this,args) || defaultCreator.apply(this,args)
+            -> definition.default.apply(this, args) || defaultCreator.apply(this, args)
         else
             defaultCreator
         { deps: [this.pk(name)], fn: _.partial(createFn, args...) }
 
 
     # Sets the assocations for "model"
-    set: (model, data)->
+    set: (model, data) ->
         this._set(model, data, 'set')
+        for name, value of data
+            if @definitions[name] && value?.isModel && !value.isNew()
+                model[@pk(name)] = if value then value.getId() else null
 
-    setFromServer: (model, data)->
+    setFromServer: (model, data) ->
         this._set(model, data, 'setFromServer')
 
-    _set: (model, data, fn_name)->
+    _set: (model, data, fn_name) ->
         for name, value of data
-            if @definitions[name]
-                attributes = if _.isFunction(value.serialize) then value.serialize() else value
-                association = model[name]
-                association[fn_name]( attributes )
-                # if we're replaceing the model's contents with another, copy the dirty status as well
-                if association.isModel
-                    model.set(this.pk(name), association.id) unless association.isNew
-                    association.isDirty = value.isDirty if value.isModel
+            continue unless @definitions[name]
+            association = model[name]
+            unless _.isObject(value)
+                association.clear()
+                continue
+            attributes = if _.isFunction(value.serialize) then value.serialize() else value
+            association[fn_name]( attributes )
+            # if we're replaceing the model's contents with another, copy the dirty status as well
+            if association.isModel
+                model.set(this.pk(name), association.id) unless association.isNew
+                association.isDirty = value.isDirty if value.isModel
 
-    pk: (name)->
+    pk: (name) ->
         def = @definitions[name]
         return null unless name
         def.pk || ( if def.model then "#{name}_id" else "id" )
 
-    fk: (name)->
+    fk: (name) ->
         def = @definitions[name]
         return null unless name
         def.fk || ( if def.model then "id" else "#{name}_id" )
 
     # returns the data from all assocations for saving
-    dataForSave: (model,options)->
+    dataForSave: (model, options) ->
         ret = {}
-        options.saveDepth = ( if options.saveDepth then options.saveDepth+1 else 1 )
+        options.saveDepth = ( if options.saveDepth then options.saveDepth + 1 else 1 )
         return ret if options.saveDepth > 5
         for name, options of @definitions
             break if options.readOnly
             assoc = model[name]
-            ret[name] = assoc.dataForSave(options) if assoc.isDirty
+            ret[name] = assoc.dataForSave(options) if _.result(assoc, 'isDirty')
         ret
 
     # return a list of assocations from "name" that are not loaded
-    nonLoaded: (model, names)->
+    nonLoaded: (model, names) ->
         list = []
         for name in names
             if _.has(@definitions, name) && model[name].isNew()

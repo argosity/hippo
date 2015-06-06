@@ -1,27 +1,14 @@
-.font-icon-display {
-    font-family: 'lanes-icon';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
+$fa-css-prefix: "icon";
 
-    position: relative;
-    top: 1px;
-    display: inline-block;
+$lanes-icon-font: 'FontAwesome';
 
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+@import "./fonts/font-awesome";
 
-[class^="icon-"], [class*=" icon-"] {
-  @extend .font-icon-display;
-}
-
-@import "./font-definitions";
-
-.icon-reset:before {
-    @extend .icon-refresh:before;
+button, a.btn {
+    .icon {
+        margin-right: 0.5em;
+    }
+    &.icon:before{
+        font-family: $lanes-icon-font;
+    }
 }

@@ -50,7 +50,7 @@ Bar.extend(Foo)
 EOS
 
 JS=<<-EOS
-(function(Lanes, Foo, _, window, FILE, undefined){
+(function(Lanes,Foo,_,LC,React,BS,FILE,window,undefined){
 var Foo;
 
 NS.Baz = (function() {
@@ -101,7 +101,7 @@ Foo = (function() {
 
 Bar.extend(Foo);
 
-})(window.Lanes,(window.Lanes ? window.Lanes['Foo'] : null),window._, window,{namespace:(window.Lanes ? window.Lanes['Foo'] : null),extensionName:'Foo',path:["foo","bar","baz"]});
+})(window.Lanes,(window.Lanes ? window.Lanes['Foo'] : null),window.Lanes.Vendor.ld,window.Lanes.Components,window.Lanes.Vendor.React,window.Lanes.Vendor.ReactBootstrap,{namespace:window.Lanes['Foo'],extensionName:'Foo',path:[\"foo\",\"bar\",\"baz\"]}, window);
 EOS
 
 Scope = Struct.new(:logical_path)

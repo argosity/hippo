@@ -22,24 +22,17 @@ module Lanes
                 self.controlling_locked=true
             end
 
-            def load_after(extension)
-                self.after = extension
-            end
-
-            def load_before(extension)
-                self.before = extension
+            def add(klass)
+                @cached_instances = nil
+                if Extensions.controlling_locked
+                    ALL.unshift(klass)
+                else
+                    ALL << klass
+                end
             end
 
             def all
                 ALL
-            end
-
-            def require_workspace?
-                all.any?{|ext| ext.uses_workspace }
-            end
-
-            def require_pub_sub?
-                all.any?{|ext| ext.uses_pub_sub }
             end
 
             def each_asset(phase: :early, type: :js)
@@ -80,13 +73,14 @@ module Lanes
             end
 
             def each
-                sorted.map{ |klass| yield klass.new }
+                @cached_instances ||= sorted.map{ |klass| klass.new }
+                @cached_instances.each{ |ext| yield ext }
             end
 
             def controlling
                 last = ALL.last
                 each{|ext| return ext if ext.is_a?(last) }
-                LanesExtension.new # fallback if can't find an extension
+                Lanes.logger.error "Unable to find controlling extension. #{sorted} are loaded"
             end
 
             def client_bootstrap_data(view)
@@ -98,10 +92,10 @@ module Lanes
                   api_path: Lanes.config.mounted_at,
                   environment: Lanes.config.environment,
                   initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id,
-                  pub_sub: require_pub_sub?
                 }
                 each do | ext |
-                    data[ext.identifier] = ext.client_bootstrap_data(view)
+                    ext_data  = ext.client_bootstrap_data(view)
+                    data[ext.identifier] = ext_data unless ext_data.nil?
                 end
                 return data
             end

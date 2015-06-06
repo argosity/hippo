@@ -8,23 +8,29 @@ class ModelType extends Lanes.Models.State
         id: 'string'
         records: 'object'
 
-    subscribe: (model)->
-        channel = "/#{_.result(model,'api_path')}/#{model.id}"
-        Lanes.Vendor.MessageBus.subscribe(channel,(changes)->
-            model.addChangeSet(changes)
+    subscribe: (config) ->
+        model = config.models[0]
+        channel = "/#{_.result(model, 'api_path')}/#{model.id}"
+        Lanes.Vendor.MessageBus.subscribe(channel, (changes) ->
+            for model in config.models
+                model.addChangeSet(changes)
         )
         channel
 
-    add: (model)->
+    add: (model) ->
         if (config = @records[model.id])
-            config.model = model
+            config.models.push(model) unless _.include(config.models, model)
         else
-            @records[model.id] = { model: model, channel: this.subscribe(model) }
+            config = { models: [model] }
+            config.channel = this.subscribe(config)
+            @records[model.id] = config
 
-    remove: (model)->
+    remove: (model) ->
         if ( config = @records[model.id] )
-            Lanes.Vendor.MessageBus.unsubscribe( config.channel )
-        delete @records[model.id]
+            _.remove(config.models, (m) -> m == model)
+            if _.isEmpty(config.models)
+                Lanes.Vendor.MessageBus.unsubscribe( config.channel )
+                delete @records[model.id]
 
 
 class ModelTypesCollection extends Lanes.Models.BasicCollection
@@ -32,8 +38,8 @@ class ModelTypesCollection extends Lanes.Models.BasicCollection
     constructor: -> super
     model: ModelType
 
-    forModel: (model)->
-        path = _.result(model,'api_path')
+    forModel: (model) ->
+        path = _.result(model, 'api_path')
         models = this.get(path) || this.add(id: path)
 
 
@@ -41,24 +47,27 @@ Lanes.Models.PubSub = {
 
     types: new ModelTypesCollection
 
-    forModel: (model)->
+    # forModel: (model) ->
 
-    add: (model)->
+    add: (model) ->
         return unless model.isPersistent?()
         @types.forModel(model).add(model)
 
-    remove: (model)->
+    remove: (model) ->
         return unless model && model.isPersistent?()
         @types.forModel(model).remove(model)
 
-    instanceFor: ( model_klass, id )->
-        @types.get(_.result(model_klass.prototype,'api_path'))?.records[id]?.model
+    instanceFor: ( model_klass, id ) ->
+        path = _.result(model_klass.prototype, 'api_path')
+        @types.get(path)?.records[id]?.models[0]
 
     clear: ->
         @types = new ModelTypesCollection
 
     initialize: ->
         Lanes.Vendor.MessageBus.start()
-        Lanes.Vendor.MessageBus.callbackInterval = 500
-
+        Lanes.Vendor.MessageBus.callbackInterval = 2000
+        Lanes.Vendor.MessageBus.subscribe("/file-change", (changes) ->
+            Lanes.lib.HotReload.initiate(changes)
+        )
 }

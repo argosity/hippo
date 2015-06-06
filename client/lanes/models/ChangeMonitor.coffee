@@ -4,29 +4,29 @@
 # ------------------------------------------------------------------ #
 
 class Lanes.Models.ChangeMonitor
-    constructor: (model)->
+    constructor: (model) ->
         model.on('change', this.onChange, this)
-        model.on('change:isDirty', this.onDirtyChange, this)
 
-    onChange: (record,options)->
+    onChange: (record, options) ->
         attrs = record.changedAttributes()
         return if _.isEmpty(attrs)
-        @_unsaved ||= {}
-        this.recordChanges(record,_.keys(attrs))
+        if attrs.isDirty == false
+            delete @_unsaved
+        else
+            @_unsaved ||= {}
+            this.recordChanges(record, _.keys(attrs))
 
 
-    recordChanges: (record,names) ->
+    recordChanges: (record, names) ->
+        # console.log "Change: #{names}"
+        #console.log record.getAttributes(props:true, session: true)
         for name in names
             if name != record.idAttribute && record._definition[name] && !record._definition[name].session
                 record.isDirty = true
                 @_unsaved[ name ] = true
 
-    onDirtyChange: (record,isDirty)->
-        delete @_unsaved if !isDirty
-
     changedAttributes: ->
         _.keys(@_unsaved)
-
 
     isDirty: ->
         !_.isEmpty(@_unsaved)

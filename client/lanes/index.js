@@ -1,13 +1,11 @@
-//= require ./lib/noConflict
-//= require ./vendor/modern-stack
+//= require ./vendor/index
 //= require ./lib
 //= require ./extension
 //= require ./models
 //= require ./Config
 //= require ./plugins
-//= require ./views
-//= require ./components/Base
-//= require ./components/enabled
+//= require ./react
+//= require ./components
 //= require ./screens
 //= require ./extension/LateLoaded
 //= require ./Boot

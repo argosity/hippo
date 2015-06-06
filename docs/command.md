@@ -60,13 +60,13 @@ Notable directories created are:
 
 # lanes generate
 
-Constructs either a model, view or screen.
+Constructs either a model, component or screen.
 
-## View
+## Component
 
-`lanes generate view <name>`
+`lanes generate component <name>`
 
-Will create a new view file, template and an accompanying spec.  By default the view will have no content, and it's template is composed of a single DIV.
+Will create a new component file along with an accompanying spec.  By default the content will only render a simple [I am a {class_name} component] message.
 
 
 ## Model
@@ -87,11 +87,9 @@ For instance, `lanes generate model comment user:references title:string{80} con
 
 `lanes generate screen <name>`
 
-In the Lanes lexicon, a screen is a View that has a few extra properties, "title" and "specification".  It is capable of being dynamically loaded and also consolidates pubsub events for all it's client views.
+In the Lanes lexicon, a screen is a Component that is able to be loaded on demand.  By default, the styles and Javascript code that make up a screen are not loaded as part of the applications main bundles.  Instead the screen is loaded on demand when the user clicks on a menu.
 
-The specification contains attributes that are checked to see if the logged in user can access the screen or not.  If they are not allowed access, then the screen will not be listed as available and they will not be able to load it or it's data.
-
-Remote data events for all subviews are applied by the view, and then bubble up to the screen.  This allows the screen to display a notification to the user alerting them that another user edited the data that is being currently displayed.
+Remote data events for all sub components bubble up to the screen.  This allows the screen to display a notification to the user alerting them that another user edited data that is being currently displayed somewhere on the view.
 
 # lanes update
 
@@ -109,3 +107,8 @@ When developing a data driven application, the data model usually undergoes seve
 
 Calls rake db:migrate for each extension that is loaded.  Since lanes extensions ship with migrations, this provides an easy way to install their data structures as well as keep them up to date.
 
+## Seed
+
+`lanes db seed`
+
+Calls rake db:seed for each extension that is loaded.  Often an extension will need to ship with certain default records.  This provides a way to provision them on install.  Commands can be placed in db/seeds.rb to be executed.

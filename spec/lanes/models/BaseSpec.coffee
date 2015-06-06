@@ -11,13 +11,15 @@ describe "Lanes.Models.Base", ->
                 bar: 'integer'
             props:
                 saved: 'string'
-        }, {bar: 'baz'})
+        }, {bar: 'baz'}, {xhr: {}}) # it comes from xhr
         expect(model.isDirty).toBe(false)
         model.foo = 'baz' # session prop
         expect(model.isDirty).toBe(false)
         expect(model.unsavedAttributes()).toBeEmptyObject()
-        model.set( saved: 'true' )
+        model.saved = 'bar'
         expect(model.isDirty).toBe(true)
+        model.setFromServer( foo: 'bar' )
+        expect(model.isDirty).toBe(false)
 
 
     it "can tell if it has attributes", ->
@@ -49,12 +51,11 @@ describe "Lanes.Models.Base", ->
         })
         model.set( id: 10, foo:'bar', unsaved: 'falsify', color: { rgb: '99FFFF' } )
         expect(id: 10, foo:'bar', color: { rgb: '99FFFF' }).toEqual( model.dataForSave()  )
-
         model.foo = 'a value'
-        a=model.changeMonitor.changedAttributes()
+        a = model.changeMonitor.changedAttributes()
         expect( model.dataForSave() ).toEqual( id: 10, foo: 'a value', color: { rgb: '99FFFF' } )
 
-    it "can be saved", (done)->
+    it "can be saved", (done) ->
         model = Lanes.Test.makeModel({
             props:
                 id: 'integer'
@@ -65,19 +66,19 @@ describe "Lanes.Models.Base", ->
         expect(model.isDirty).toBe(true)
         expect(model.unsavedAttributes()).toEqual( foo: 'one, two, three' )
         model.save()
-        expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('create', model, jasmine.any(Object))
-        model.id=11
+        expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('create', jasmine.any(Object))
+        model.id = 11
         expect(model.isNew()).toBe(false)
         Lanes.Models.Sync.perform.calls.reset()
         syncSucceedWith({
             foo: 'a new foo value'
         })
         model.save().then ->
-            expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('patch', model, jasmine.any(Object))
+            expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('patch', jasmine.any(Object))
             expect(model.foo).toEqual('a new foo value')
             done()
 
-    it "can be fetched", (done)->
+    it "can be fetched", (done) ->
         model = Lanes.Test.makeModel({
             props:
                 { id: 'integer', foo: 'string' }
@@ -86,11 +87,11 @@ describe "Lanes.Models.Base", ->
             foo: 'foo value'
         })
         model.fetch().then ->
-            expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', model, jasmine.any(Object))
+            expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', jasmine.any(Object))
             expect(model.foo).toEqual('foo value')
             options = Lanes.Models.Sync.perform.lastOptions()
             expect(options).toHaveTrue('ignoreUnsaved')
-            expect(options).toHaveNumberWithinRange('limit',1,1)
+            expect(options).toHaveNumberWithinRange('limit', 1, 1)
             done()
 
     it "creates a Collection property even when the base is abstract", ->
@@ -104,26 +105,29 @@ describe "Lanes.Models.Base", ->
         expect(Model.Collection::model).toEqual(Model)
 
 
-    it "loads using where", (done)->
-        Model = Lanes.Test.DummyModel
+    it "loads using where", (done) ->
         syncSucceedWith([
             { id: 1, title: 'first value'  }
             { id: 2, title: 'second value' }
         ])
-        Model.where(title: 'first value').whenLoaded (collection)->
+
+        Model = LT.defineModel
+            props: { id: 'integer', title: 'string' }
+
+        Model.where(title: 'first value').whenLoaded (collection) ->
             options = Lanes.Models.Sync.perform.lastOptions()
             expect(options.query).toEqual({title:'first value'})
             expect(collection.length).toEqual(2)
             done()
 
-    it "can be destroyed", (done)->
+    it "can be destroyed", (done) ->
         model = Lanes.Test.makeModel({
             props: { id: 'integer' }
-        },{ id: 1 })
+        }, { id: 1 })
         collection = model.constructor.Collection
         model.destroy().then ->
             expect(Lanes.Models.Sync.perform)
-                .toHaveBeenCalledWith('delete', model, jasmine.any(Object))
+                .toHaveBeenCalledWith('delete', jasmine.any(Object))
             done()
 
     it "sets associations", ->
@@ -131,7 +135,7 @@ describe "Lanes.Models.Base", ->
             associations:
                 color:{ model: Color }
             props: { id: 'integer', foo: 'string' }
-        },{ id: 1 })
+        }, { id: 1 })
         expect(model.color).toBeObject()
         model.set(color: { rgb: '99FFFF' })
         expect(model.color.rgb).toEqual('99FFFF')
@@ -143,23 +147,8 @@ describe "Lanes.Models.Base", ->
             associations:
                 color:{ model: Color }
             props: { id: 'integer', foo: 'string' }
-        },{ id: 1 })
+        }, { id: 1 })
         model.withAssociations('color')
-        expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', model, jasmine.any(Object))
+        expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', jasmine.any(Object))
         options = Lanes.Models.Sync.perform.lastOptions()
         expect(options.include).toEqual(['color'])
-
-    it "reads from caches", (done)->
-        model = Lanes.Test.makeModel({
-            cacheDuration: [1,'day']
-            props: { id: 'integer', title: 'string' }
-        }, {id: 1})
-        syncSucceedWith([
-            { id: 1, title: 'first value'  }
-            { id: 2, title: 'second value' }
-        ])
-        collection = new model.constructor.Collection
-        collection.fetch().then ->
-            model.fetch().then ->
-                expect(model.title).toEqual('first value')
-                done()

@@ -4,10 +4,10 @@ GECKO = /Gecko\//.test(navigator.userAgent)
 
 class Loader
 
-    constructor: (urls,cb)->
-        finished=0
+    constructor: (urls, cb) ->
+        finished = 0
         completed = {}
-        onComplete = (url,success,error=false)->
+        onComplete = (url, success, error = false) ->
             finished += 1
             completed[url] = { success: success == true, error: error }
             cb(completed) if finished == urls.length
@@ -15,28 +15,29 @@ class Loader
         this.head = document.querySelector('head')
         this.body = document.body
 
-        _.each(urls, (url)->
-          if /.css$/.test(url)
-            this.loadCSS(url, onComplete)
-          else
-            this.loadJS(url, onComplete)
-        ,this)
+        _.each(urls, (url) ->
+            url += "?#{parseInt(Math.random() * 100000)}"
+            if /.css($|\?)/.test(url)
+                this.loadCSS(url, onComplete)
+            else
+                this.loadJS(url, onComplete)
+        , this)
 
 
     loadCSS: (url, fn) ->
         getStylesheet = ->
-          Array::filter.call(document.styleSheets, (stylesheet) ->
-            stylesheet.ownerNode is node
-          ).shift()
+            Array::filter.call(document.styleSheets, (stylesheet) ->
+                stylesheet.ownerNode is node
+            ).shift()
         poll = ->
-          return  if called
-          stylesheet = getStylesheet()
-          return setTimeout(poll, 250)  if not stylesheet or not stylesheet.cssRules
-          return setTimeout(poll, 250)  if not stylesheet or not stylesheet.rules or not stylesheet.rules.length
-          called = true
-          fn(url, true)
+            return if called
+            stylesheet = getStylesheet()
+            return setTimeout(poll, 250)  if not stylesheet or not stylesheet.cssRules
+            return setTimeout(poll, 250)  if not stylesheet or not stylesheet.rules or not stylesheet.rules.length
+            called = true
+            fn(url, true)
         exists = Array::some.call(document.styleSheets, (stylesheet) ->
-          stylesheet.href is url
+            stylesheet.href is url
         )
         return fn(url, true)  if exists
         called = false
@@ -48,19 +49,19 @@ class Loader
            rel: "stylesheet"
         )
 
-        onloaded=(success,err)->
+        onloaded = (success, err) ->
             return if called
             called = true
             fn(url, success, err)
-        node.onload  = ()->    onloaded(true,false)
-        node.onerror = (err)-> onloaded(false,err)
+        node.onload  =  ->      onloaded(true, false)
+        node.onerror = (err) -> onloaded(false, err)
         node.onreadystatechange = ->
             return if not (/loaded|complete/.test(node.readyState)) or called
-            called=true
+            called = true
             fn(url, true)
         @head.appendChild node
         # GECKO cannot query the node immediatly after it's created
-        if GECKO then _.delay(poll,250) else poll()
+        if GECKO then _.delay(poll, 250) else poll()
 
 
 
@@ -72,27 +73,26 @@ class Loader
           charset: "utf-8"
           async: false
         )
-        onloaded=(success,err)->
+        onloaded = (success, err) ->
             return if called
             called = true
             fn(url, success, err)
-        node.onload  = ()->    onloaded(true,false)
-        node.onerror = (err)-> onloaded(false,err)
-
+        node.onload  = ->       onloaded(true, false)
+        node.onerror = (err) -> onloaded(false, err)
         node.onreadystatechange = ->
             return if not (/loaded|complete/.test(node.readyState)) or called
             called = true
-            fn(url,true)
+            fn(url, true)
         this.body.appendChild(node)
 
 
-Lanes.lib.RequestAssets = (urls...)->
+Lanes.lib.RequestAssets = (urls...) ->
     urls = urls[0] if urls.length == 1 && _.isArray(urls[0])
-    for url,i in urls
+    for url, i in urls
         urls[i] = Lanes.config.assets_path_prefix.concat( '/', urls[i] )
-    new _.Promise(  (resolve,reject)->
-        new Loader(urls, (completed)->
-            failures = _.pick(completed, (status,url)-> !status.success )
+    new _.Promise(  (resolve, reject) ->
+        new Loader(urls, (completed) ->
+            failures = _.pick(completed, (status, url) -> !status.success )
             if _.isEmpty(failures)
                 resolve(completed)
             else

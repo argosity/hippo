@@ -1,0 +1,11 @@
+Stubs out a new Component. 
+
+When executed inside a project called "Blog":
+
+`lanes generate component comment`
+
+Lanes will create:
+····················
+
+  * Component: client/components/Comment.coffee
+  * Spec: spec/<app>/components/CommentSpec.coffee

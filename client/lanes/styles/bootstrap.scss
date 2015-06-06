@@ -55,13 +55,13 @@ $popover-max-width: 320px;
 @import "bootstrap/close";
 
 // Components w/ JavaScript
-/* @import "bootstrap/modals"; */
-@import "bootstrap-custom-modals";
+@import "bootstrap/modals";
+//@import "bootstrap-custom-modals";
 
 @import "bootstrap/tooltip";
 
 // popover is only included by the popover component
-//@import "bootstrap/popovers";
+@import "bootstrap/popovers";
 
 @import "bootstrap/carousel";
 

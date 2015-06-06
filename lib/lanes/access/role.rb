@@ -58,12 +58,16 @@ module Lanes
                     delete_types.push(*klasses)
                 end
 
-                def lock(klass, attribute)
-                    LockedFields.lock(klass, attribute, self)
+                def lock(klass, *attributes)
+                    attributes.each do | attr |
+                        LockedFields.lock(klass, attr, self)
+                    end
                 end
 
-                def lock_writes(klass, attribute)
-                    LockedFields.lock(klass, attribute, self, :write)
+                def lock_writes(klass, *attributes)
+                    attributes.each do | attr |
+                        LockedFields.lock(klass, attr, self, :write)
+                    end
                 end
 
                 def all_available

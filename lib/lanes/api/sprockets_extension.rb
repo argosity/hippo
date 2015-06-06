@@ -21,9 +21,12 @@ module Lanes
                         end
                     end
                     Screen.each do | screen |
-                        assets = screen.assets
-                        manifest.compile(assets) unless assets.empty?
+                        [:js,:css].each do | type |
+                            asset = screen.url_path_for(type)
+                            manifest.compile( asset ) unless asset.blank?
+                        end
                     end
+
                 end
 
                 def configure(env, compress:false)
@@ -36,7 +39,9 @@ module Lanes
 
                     Lanes::Extensions.each do | ext |
                         ext.on_boot
-                        ext.client_paths.each{ |path| env.append_path(path) }
+                        ext.client_paths.each{ |path|
+                            env.append_path(path)
+                        }
                     end
 
                     if compress
@@ -57,11 +62,12 @@ module Lanes
                         ::Sprockets::Helpers.configure do |config|
                             config.environment = app.sprockets
                             config.prefix      = Lanes.config.assets_path_prefix
+
                             config.public_path = app.public_folder
                             config.debug = !app.production?
                             if app.production?
                                 config.manifest = Sprockets::Manifest.new(app.sprockets,
-                                                      "public/assets/manifest.json")
+                                                                          "public/assets/manifest.json")
                             end
                         end
                     end

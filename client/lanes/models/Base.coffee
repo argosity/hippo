@@ -19,31 +19,41 @@ class BaseModel
             deps:['errors'], fn: ->
                 if !@errors then ''
                 else if @errors.exception then @errors.exception
-                else  _.toSentence( _.map(@errrors, (value,key)-> "#{key}: #{value}" ) )
+                else  _.toSentence( _.map(@errors, (value, key) ->
+                    _.titleize(_.humanize(key)) + ' ' + value
+                ))
     dataTypes:
+        code:
+            set: (newVal) ->
+                if _.isString(newVal)
+                    val: newVal.toUpperCase(), type: 'code'
+                else
+                    throw new TypeError('code must be a string')
+            default: -> ''
         # Big decimal for attributes that need precision math
         bigdec:
-            set: (newVal)->
+            set: (newVal) ->
                 val: new _.bigDecimal(newVal)
                 type: 'bigdec'
             default: -> new _.bigDecimal(0)
+
         integer:
-            set: (newVal)->
+            set: (newVal) ->
                 val: parseInt(newVal)
                 type: 'integer'
         # Uses the "moment" lib to parse dates and coerce strings into the date type.
         date:
-            get: (val)-> new Date(val)
+            get: (val) -> new Date(val)
             default: -> return new Date()
-            set: (newVal)->
+            set: (newVal) ->
                 if _.isDate(newVal)
-                    newType='date'
-                    newVal = newVal.valueOf();
+                    newType = 'date'
+                    newVal = newVal.valueOf()
                 else
-                    m=Lanes.Vendor.Moment(newVal)
+                    m = Lanes.Vendor.Moment(newVal)
                     if m.isValid()
-                        newType='date'
-                        newVal=m.toDate()
+                        newType = 'date'
+                        newVal = m.toDate()
                     else
                         newType = typeof newVal;
                 return {
@@ -51,7 +61,7 @@ class BaseModel
                     type: newType
                 }
 
-    constructor: (attrs,options={})->
+    constructor: (attrs, options = {}) ->
         super
         @changeMonitor = new Lanes.Models.ChangeMonitor(this)
         # The model was created with attributes and it did not originate from a XHR request
@@ -65,171 +75,154 @@ class BaseModel
 
     # is the record saved
     isPersistent: ->
-        !!( _.result(this,'api_path') && !this.isNew() )
+        !!( _.result(this, 'api_path') && !this.isNew() )
 
     # used by PubSub to record a remote change to the model
-    addChangeSet: (change)->
-        this.changes ||= new Lanes.Models.ChangeSetCollection( parent: this )
-        change.record = this
-        change = this.changes.add(change)
-        this.set( change.value() )
+    addChangeSet: (change) ->
+        change = new Lanes.Models.ChangeSet(change)
+        this.set( change.value(), silent: true )
+        for name, value of change.value()
+            this.trigger("remote-update:#{name}", "changeset", this, change)
+        this.triggerChangeSet(this, change)
+
+    triggerChangeSet: (triggered, change) ->
+        this.changes ||= new Lanes.Models.ChangeSet.Collection( parent: this )
+        this.changes.add(change)
+        this.trigger('remote-update', triggered, change)
+        @parent?.triggerChangeSet?(triggered, change)
 
     api_path: ->
         path = if this.FILE then _.last(this.FILE.path) else ''
         _.pluralize(_.dasherize(path))
 
     urlRoot: ->
-        Lanes.config.api_path + '/' + _.result(this,'api_path')
+        Lanes.config.api_path + '/' + _.result(this, 'api_path')
 
     # Default URL for the model's representation on the server
     url: ->
-        base = _.result(this, 'urlRoot') || _.result(this.collection, 'url') || Lanes.Models.Sync.urlError();
-        if this.isNew() then return base;
+        base = _.result(this, 'urlRoot') || _.result(this.collection, 'url') || Lanes.Models.Sync.urlError()
+        if this.isNew() then return base
         if base.charAt(base.length - 1) != '/'
-             base += "/"
+            base += "/"
         return base + encodeURIComponent(this.getId())
 
 
-    # Ensures the assocations given in "needed" are loaded
-    withAssociations: (names...,options={})->
+    # Ensures the assocations given in "names" are loaded
+    withAssociations: (names..., options = {}) ->
         if _.isString(options)
-            names.push(options); options={}
+            names.push(options); options = {}
         scope = options.scope || this
-        needed = this.associations?.nonLoaded(this,names)
+        needed = this.associations?.nonLoaded(this, names)
         if _.isEmpty( needed )
-            options.success.call(scope, this  ) if options.success
-            options.complete.call(scope,this  ) if options.complete
-            return _.Promise.resolve({record:this,reply:{}})
+            return _.Promise.resolve(this)
         else
-            options['include']=needed
+            options['include'] = needed
             this.fetch(options)
 
 
-    # Searches the PubSub idenity map for a record of the same type and matching id
-    # If one is found, it will update it with the given attributes and return it
-    # When not found, it will create a new record and return it.
-    # The newly created record will not be stored in the PubSub map,
-    # as only records bound to a view are stored there
-    @findOrCreate: (attrs, options={})->
-        if attrs.id && ( record = Lanes.Models.PubSub.instanceFor(this, attrs.id) )
-            record.set(attrs)
-        else
-            new this(attrs,options)
-
     # Calls Ampersand State's set method, then sets any associations that are present as well
-    set: (key, value, options)->
+    set: (key, value, options) ->
         # Handle both `"key", value` and `{key: value}` -style arguments.
         if _.isObject(key) || key == null
-            attrs = key;
-            options = value;
+            attrs = key
+            options = value
         else
             attrs = {}
             attrs[key] = value
         super
-        this.associations.set(this,attrs) if this.associations
+        this.associations.set(this, attrs) if this.associations
         this
 
     # Loads records from the server that match query, returns a collection
-    @where: (query, options)->
+    @where: (query, options) ->
         this.Collection.fetch( _.extend({query: query}, options) )
 
     # Load a single record using an ID and the query options
-    @fetchById: (id, options={})->
+    @fetchById: (id, options = {}) ->
         record = new this(id: id)
         record.fetch(options)
         record
 
     # Sets the attribute data from a server respose
-    setFromServer: (data,options)->
-        BaseModel.__super__.set.call(this, if _.isArray(data) then data[0] else data )
-        this.associations.setFromServer(this,data) if this.associations
+    setFromServer: (data, options) ->
+        data = if _.isArray(data) then data[0] else data
+        BaseModel.__super__.set.call(this, data )
+        this.associations.setFromServer(this, data) if this.associations
         this.isDirty = false
 
     # save the model's data to the server
     # Only unsaved attributes will be sent unless
     # the saveAll options is set to true
-    save: (options={})->
+    save: (options = {}) ->
         options = _.clone(options)
-
-        options.saving=true
-
-        handlers = Lanes.Models.Sync.wrapRequest(this,options)
+        options.saving = true
 
         method = if this.isNew()
             'create'
         else
             if options.saveAll then 'update' else 'patch'
 
-        sync = this.sync(method, this, options);
+        this.sync(method, this, options)
 
-        handlers.promise
 
     # Fetch the model from the server. If the server's representation of the
     # model differs from its current attributes, they will be overridden,
     # triggering a `"change"` event.
-    fetch:  (original_options={}) ->
+    fetch:  (original_options = {}) ->
         options = _.clone(original_options)
-        handlers = Lanes.Models.Sync.wrapRequest(this,options)
+
         if this.cacheDuration && _.isEmpty(original_options)
             Lanes.Models.ServerCache.fetchRecord(this, options)
         else
-            _.extend(options,{limit:1,ignoreUnsaved:true})
+            _.extend(options, {limit:1, ignoreUnsaved:true})
             this.sync('read', this, options)
-        handlers.promise
 
-    @fetch: (options={})->
+
+    @fetch: (options = {}) ->
         record = new this()
         record.fetch(options)
 
     # Removes the model's record from the server (if it is persistent)
     # and then fires the "destroy" event
-    destroy: (options={})->
-        handlers = Lanes.Models.Sync.wrapRequest(this,options)
-        model    = this
-        success  = options.success
-        options.success = (reply, msg, options)->
-            model.trigger('destroy', model, model.collection, options)
-            if success then success(model, reply, options)
-
+    destroy: (options = {}) ->
         if this.isNew()
-            options.success()
-            return false
-        this.sync('delete', this, options)
-        handlers.promise
+            _.Promise.resolve(this)
+        this.sync('delete', this, options).then (model) ->
+            model.trigger('destroy', model, model.collection, options)
+            model
 
     # returns any attributes that have been set and not saved
     unsavedAttributes: ->
-        attrs = {} #if this.isNew() then {} else { id: this.getId() }
+        attrs = {}
         _.extend(attrs, _.pick( this.getAttributes(props:true, true),
             @changeMonitor.changedAttributes() ) )
-        unless _.isEmpty(attrs) or this.isNew()
-            attrs.id = this.getId()
         attrs
 
     # returns data to save to server.  If options.saveAll is true,
     # all data is returned.  Otherwise only unsaved attributes (and associations)
     # are returned.
-    dataForSave: (options={})->
+    dataForSave: (options = {}) ->
         if options.saveAll || this.isNew()
             data = this.getAttributes(props:true, true)
         else
             data = this.unsavedAttributes()
         if this.associations && (!_.isEmpty(data) || !this.isNew())
+            data.id = this.getId() unless this.isNew()
             _.extend(data, this.associations.dataForSave(this, options))
         data
 
 
     # True if the model has "name" as either a prop or session attribute
-    hasAttribute: (name)->
+    hasAttribute: (name) ->
         !! (this._definition[name] || this._derived[name])
 
     # Uses Lanes.Models.Sync by default
-    sync: (options...)->
-        Lanes.Models.Sync.perform(options...)
+    sync: (options...) ->
+        Lanes.Models.Sync.state(options...)
 
     # When the model is extended it auto-creates the created_at and updated_at
     # and sets up the AssociationMap
-    @extended: (klass)->
+    @extended: (klass) ->
         return if klass::abstractClass
         klass::props   ||= {}
         klass::session ||= {}
@@ -240,7 +233,7 @@ class BaseModel
         if klass::associations
             klass::associations = new Lanes.Models.AssocationMap(klass)
 
-    @afterExtended: (klass)->
+    @afterExtended: (klass) ->
         return if klass::abstractClass
         unless klass.Collection
             @createDefaultCollectionFor(klass)
@@ -249,7 +242,7 @@ class BaseModel
             klass::enums = new Lanes.Models.EnumMap(klass)
 
 
-    @createDefaultCollectionFor: (klass)->
+    @createDefaultCollectionFor: (klass) ->
         name = "#{klass.name}Collection"
         Collection = new Function("return function #{name}(){
             #{name}.__super__.constructor.apply(this, arguments);
@@ -265,6 +258,15 @@ class BaseModel
 
 class State
     constructor: -> super
+    isState: true
+
+    # ## listenToAndRun
+    # Shortcut for registering a listener for a model
+    # and also triggering it right away.
+    listenToAndRun: (object, events, handler) ->
+        bound = _.bind(handler, this)
+        this.listenTo(object, events, bound)
+        bound()
 
 Lanes.Models.State = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, State )
 
@@ -279,7 +281,7 @@ class BasicModel
 
     # Check if an attribute named "name" can be set to "value"
     # Returns an empty string if value, and an appropriate error message if not
-    checkValid: (name, value)->
+    checkValid: (name, value) ->
         return '' unless def = this._definition[name]
         if def.required && _.isEmpty(value)
             "Cannot be empty"
@@ -288,11 +290,11 @@ class BasicModel
 
     # sets the model from a user interaction
     # subviews may override this to provide a custom implementation
-    setFromView: (key,value)->
-        this.set(key,value)
+    setFromView: (key, value) ->
+        this.set(key, value)
 
     # True if the model has "name" as eitehr a prop or session attribute
-    hasAttribute: (name)->
+    hasAttribute: (name) ->
         !! (this._definition[name] || this._derived[name])
 
 Lanes.Models.BasicModel = State.extend( BasicModel )

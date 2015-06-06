@@ -25,6 +25,9 @@ module Lanes
                 template "lib/namespace/version.rb", "lib/#{identifier}/version.rb"
                 template "lib/namespace/extension.rb", "lib/#{identifier}/extension.rb"
                 template "lib/namespace/base_model.rb", "lib/#{identifier}/model.rb"
+                template "../coffeelint.json", "coffeelint.json"
+                template "../.rubocop.yml", ".rubocop.yml"
+                template "config/screens.rb"
                 template "config/routes.rb"
                 template "config/lanes.rb"
                 template "gitignore",".gitignore"
@@ -32,7 +35,7 @@ module Lanes
                 create_file "log/.gitkeep",""
                 create_file "tmp/.gitkeep",""
                 create_file "db/.gitkeep", ""
-                create_file "config/screens.rb"
+
             end
 
             def create_client_files
@@ -42,10 +45,9 @@ module Lanes
                     create_file "#{client_dir}/#{path.basename}/.gitkeep"
                 end
                 template "client/models/BaseModel.coffee", "#{client_dir}/models/Base.coffee"
-                template "client/views/BaseView.coffee",   "#{client_dir}/views/Base.coffee"
+                template "client/components/BaseComponent.coffee",   "#{client_dir}/components/Base.coffee"
                 template "client/index.js",                "#{client_dir}/index.js"
                 template "client/Extension.coffee",        "#{client_dir}/Extension.coffee"
-                template "client/Router.coffee",           "#{client_dir}/Router.coffee"
                 template "client/styles.scss",             "#{client_dir}/styles.scss"
             end
 
@@ -56,15 +58,9 @@ module Lanes
                          "spec/server/spec_helpers.rb"
             end
 
-            def create_first_screen
+            def create_screen_base
                 options = self.options.dup
-                @class_name = "Base"
-                @template = "<div><h1>Base Screen</h1></div>"
-                options[:description] = "Base Screen for #{namespace.titleize}"
-                options[:fileless] = true
-                template "client/screens/Base.coffee", "#{client_dir}/screens/Base.coffee"
-                template "spec/client/Screen.coffee",    "#{spec_dir}/screens/Base.coffee"
-                create_file "config/screens.rb", ""
+                template "client/screens/BaseScreen.coffee", "#{client_dir}/screens/Base.coffee"
             end
 
         end

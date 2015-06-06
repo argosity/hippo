@@ -81,7 +81,7 @@ module Lanes
                     end
                 end
                 options = build_reply_options.merge(success: success)
-                build_reply(records, :update, options)
+                build_reply(records, :destroy, options)
             end
 
             def perform_multiple_updates
@@ -151,13 +151,14 @@ module Lanes
                 json.merge(
                   success: success,
                   message: options[:messsage] || json_status_str(query, type.to_s.capitalize, success),
-                  data:    success ? records_for_reply(query, options) : []
+                  data:    success ? records_for_reply(query, type, options) : []
                 )
             end
 
 
             # @return Array<Array> returns either an array of fields
-            def records_for_reply(query,options)
+            def records_for_reply(query, type, options)
+                return [] if :destroy == type
                 if reply_with_array?
                     query.pluck( *requested_fields )
                 else

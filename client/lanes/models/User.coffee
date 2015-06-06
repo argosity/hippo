@@ -13,11 +13,12 @@ unless Lanes.Models.Roles
 unless Lanes.Models.User
     class Lanes.Models.User extends Lanes.Models.Base
 
-        constructor: (attributes,access)->
+        constructor: (attributes, access) ->
             super
             this.access_data = access
 
-        api_path: 'users'
+        api_path: -> 'users'
+
         derived:
             roles:
                 fn: -> []
@@ -28,9 +29,7 @@ unless Lanes.Models.User
 
         session:
             access_data: 'object'
-
-        session:
-            id:          "integer"
+            id:          'integer'
             login:       'string'
             name:        'string'
             email:       'string'
@@ -38,9 +37,28 @@ unless Lanes.Models.User
             options:     'object'
             password:    'string'
 
-        canRead: (model,field)  -> true
-        canWrite: (model,field) -> true
-        canDelete: (model)      -> true
+        canRead:   (model, field) -> true
+        canWrite:  (model, field) -> true
+        canDelete: (model)        -> true
 
-unless Lanes.current_user
-    Lanes.current_user = new Lanes.Models.User
+CURRENT_USER = null
+
+Object.defineProperty(Lanes, 'current_user', {
+
+    set: (user) ->
+        events = null
+        if CURRENT_USER
+            events = CURRENT_USER._events
+        if _.any(events)
+            for key, callbacks of events
+                if user._events[key]
+                    user._events[key] = user._events[key].concat(callbacks)
+                else
+                    user._events[key] = callbacks
+        CURRENT_USER = user
+
+    get: ->
+        CURRENT_USER
+})
+
+Lanes.current_user = new Lanes.Models.User

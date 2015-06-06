@@ -13,11 +13,14 @@ require 'mocha/mini_test'
 
 LANES_ENV = "test"
 I18n.enforce_available_locales = true
-Lanes::DB.establish_connection('test')
-Lanes.logger=Logger.new( File.open('log/test.log', File::WRONLY | File::APPEND | File::CREAT ))
+Lanes::DB.establish_connection
+Lanes.logger = Logger.new(
+    File.open('log/test.log', File::WRONLY | File::APPEND | File::CREAT )
+)
 ActiveRecord::Base.logger = Lanes.logger
 ActiveSupport::Dependencies.mechanism = :require
 ActiveSupport.test_order = :random
+
 module Lanes
 
     class DummyUser
@@ -36,7 +39,7 @@ module Lanes
         include Lanes
 
         include ActiveRecord::TestFixtures
-         self.fixture_path = Lanes::Extensions.controlling.root_path.join('spec','fixtures')
+        self.fixture_path = Lanes::Extensions.controlling.root_path.join('spec','fixtures')
 
         self.use_transactional_fixtures = true
         fixtures :all

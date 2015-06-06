@@ -1,60 +1,61 @@
 {
-    "name": "lanes-vendor-modules",
-    "author": "Nathan Stitt",
-    "description": "Build for deploy",
-    "version": "0.0.0",
-    "main": "vendor.js",
-    "dependencies": {
-        "events-mixin":"git://github.com/nathanstitt/events.git#cb-as-func",
-        "ampersand-state": "~4.4.2",
-        "ampersand-dom": "~1.2",
-        "ampersand-model": "~4.0",
-        "ampersand-collection-view": "~1.1",
-        "ampersand-rest-collection": "~2.0",
-        "ampersand-collection-underscore-mixin": "~1.0",
-        "ampersand-collection": "~1.4",
-        "ampersand-subcollection": "~2.0",
-        "ampersand-router": "~1.0",
-        "ampersand-dom-bindings": "~3.3",
-        "underscore.inflections": "~0.2.1",
-        "domify": "~1.3",
-        "interact.js": "~1.2",
-        "big.js": "~2.5",
-        "rsvp": "~3.0",
-        "get-object-path": "~0.0.2",
-        "jquery": "^2.1.1",
-        "xhr": "^1.10.0",
-        "keymaster": "~1.6",
-        "sprintf-js": ">=0",
-        "moment": "~2.8",
-        "underscore": "~1.6"
-    },
-    "devDependencies": {
-        "aliasify": "~1.4.0",
-        "remapify": "~1.3"
-    },
-    "jshintConfig": {
-        "asi": false,
-        "browser": true,
-        "curly": false,
-        "expr": true,
-        "indent": 4,
-        "loopfunc": true,
-        "node": true,
-        "trailing": true,
-        "undef": true,
-        "white": true
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/argosity/stockor-worspace"
-    },
-    "browser": {
-
-    },
-    "browserify": {
-
-    },
-    "aliasify": {
-    }
+  "name": "lanes-vendor-modules",
+  "author": "Nathan Stitt",
+  "description": "Build for deploy",
+  "version": "0.0.0",
+  "main": "vendor.js",
+  "dependencies": {
+    "ampersand-collection": "~1.4",
+    "ampersand-collection-underscore-mixin": "~1.0",
+    "ampersand-dom": "~1.4",
+    "ampersand-rest-collection": "~2.0",
+    "ampersand-state": "~4.5",
+    "ampersand-subcollection": "~2.0",
+    "backbone-events-standalone": "~0.2",
+    "big.js": "~2.5",
+    "classnames": "~2.1",
+    "css-loader": "^0.14.2",
+    "extract-text-webpack-plugin": "^0.8.0",
+    "get-object-path": "~0.0.2",
+    "lodash": "~3.8.0",
+    "moment": "~2.8",
+    "node-libs-browser": "^0.5.2",
+    "object-assign": "^2.0.0",
+    "react": "~0.13.2",
+    "react-bootstrap": "^0.21.2",
+    "react-datagrid": "nathanstitt/react-datagrid.git#devel",
+    "react-hot-api": "^0.4.4",
+    "react-router": "^0.13.3",
+    "react-select": "^0.4.9",
+    "rsvp": "~3.0",
+    "sorty": "^1.2.0",
+    "style-loader": "^0.12.3",
+    "underscore.inflection": "~1.2",
+    "underscore.string": "^3.0.3",
+    "webpack": "^1.9.9",
+    "xhr": "^1.17.1"
+  },
+  "devDependencies": {
+    "aliasify": "~1.4.0",
+    "remapify": "~1.3"
+  },
+  "jshintConfig": {
+    "asi": false,
+    "browser": true,
+    "curly": false,
+    "expr": true,
+    "indent": 4,
+    "loopfunc": true,
+    "node": true,
+    "trailing": true,
+    "undef": true,
+    "white": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/argosity/stockor-worspace"
+  },
+  "browser": {},
+  "browserify": {},
+  "aliasify": {}
 }

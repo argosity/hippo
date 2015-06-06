@@ -1,8 +1,2 @@
-//= require ./template
-//= require ./row-editor
-//= require ./popover-editor
-//= require ./vendor
+//= require 'lanes/vendor/grid'
 //= require ./Grid
-//= require ./Editor
-//= require ./PopOverEditor
-//= require ./RowEditor

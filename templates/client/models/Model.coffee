@@ -1,6 +1,5 @@
 class <%= namespace %>.Models.<%= class_name %> extends <%= namespace %>.Models.Base
 
-
     props:
 <% fields.each do |field| -%>
 <% if field.reference? -%>

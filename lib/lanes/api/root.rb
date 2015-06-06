@@ -21,24 +21,12 @@ module Lanes
                 Oj.dump({ message: "endpoint not found", success: false  })
             end
             error do
+                Lanes.logger.warn request.env['sinatra.error']
                 Oj.dump({
                     success: false,
                     errors:  { exception: request.env['sinatra.error'].message },
                     message: request.env['sinatra.error'].message
                 })
-            end
-
-            configure do
-                set :views, Pathname.new(__FILE__).dirname.join("../../../views")
-                set :show_exceptions, false
-                DB.establish_connection
-                PubSub.initialize(self)
-                Extensions.load_controlling_config
-                # late load in case an extension has provided an alternative implementation
-                unless API.const_defined?(:AuthenticationProvider)
-                    require "lanes/api/null_authentication_provider"
-                end
-                # use Rack::Csrf, :skip=>['GET:/'], :raise => true
             end
 
             def self.resources(model, options = {})
@@ -72,6 +60,21 @@ module Lanes
 
                 end
 
+            end
+
+            configure do
+                set :views, Pathname.new(__FILE__).dirname.join("../../../views")
+                set :show_exceptions, false
+                require_relative 'routing'
+
+                DB.establish_connection
+                PubSub.initialize(self)
+                Extensions.load_controlling_config
+                # late load in case an extension has provided an alternative implementation
+                unless API.const_defined?(:AuthenticationProvider)
+                    require "lanes/api/null_authentication_provider"
+                end
+                # use Rack::Csrf, :skip=>['GET:/'], :raise => true
             end
 
         end

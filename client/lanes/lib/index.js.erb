@@ -1,0 +1,16 @@
+//= require ./noConflict
+//= require ./namespace
+//= require ./utilFunctions
+//= require ./objToParam
+//= require ./ModuleSupport
+//= require ./loader
+//= require ./MakeBaseClass
+//= require ./el
+//= require ./dom
+//= require ./promise_helpers
+//= require ./results
+<% if Lanes.env.development?
+    require_asset "./development"
+else
+    require_asset "./production"
+end %>

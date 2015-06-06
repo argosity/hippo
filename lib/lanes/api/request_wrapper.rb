@@ -46,7 +46,7 @@ module Lanes
 
             def log_request
                 Lanes.logger.info "UserID: #{session['user_id']}, Params: #{request.params}"
-                Lanes.logger.debug JSON.pretty_generate(data) unless Lanes.env.production?
+                Lanes.logger.debug JSON.pretty_generate(data) unless Lanes.env.production? or data.nil?
             end
 
             def wrap_reply(with_transaction=true)
@@ -57,7 +57,7 @@ module Lanes
                         response = yield
                         # This is quite possibly a horrible idea.
                         # It enables test specs to reset the db state after a request
-                        if Lanes.env.test? && request.env['HTTP_X_ROLLBACK_AFTER_REQUEST']
+                        if !Lanes.env.production? && request.env['HTTP_X_ROLLBACK_AFTER_REQUEST']
                             Lanes::Model.connection.rollback_db_transaction
                         end
                     end

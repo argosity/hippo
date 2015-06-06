@@ -7,7 +7,7 @@ BREAKPOINTS = {
     lg: 1170
 }
 
-class Lanes.Workspace.UIState extends Lanes.Views.Base
+class Lanes.Workspace.UIState extends Lanes.Models.State
 
     session:
         screen_menu_preference: {
@@ -17,8 +17,11 @@ class Lanes.Workspace.UIState extends Lanes.Views.Base
         root:       'element'
         menu_view:  'any'
         width:      'number'
+        height:     'number'
         screen_menu_shown: 'boolean'
         layout: 'state'
+        modalDialog: 'react'
+        viewport:    'object'
 
     derived:
         menu_width:
@@ -29,7 +32,7 @@ class Lanes.Workspace.UIState extends Lanes.Views.Base
                     else 0
 
         layout_size:
-            deps: ['screens_width'], fn:->
+            deps: ['screens_width'], fn: ->
                 switch
                     when @screens_width < BREAKPOINTS.sm then 'xs'
                     when @screens_width < BREAKPOINTS.md then 'sm'
@@ -37,42 +40,40 @@ class Lanes.Workspace.UIState extends Lanes.Views.Base
                     else 'lg'
 
         popover_menu:
-            deps: ['width'], fn:->
+            deps: ['width'], fn: ->
                 # same as the below menu-hidden value on screen_menu_size
                 @width < BREAKPOINTS.md + MENU_NARROW_WIDTH
 
         screen_menu_size:
-            deps: ['width','screen_menu_preference'], fn: ->
+            deps: ['width', 'screen_menu_preference'], fn: ->
                 return @screen_menu_preference if @screen_menu_preference
-                width = this.width
                 switch
-                    when width < BREAKPOINTS.md + MENU_NARROW_WIDTH then 'menu-hidden'
-                    when width < BREAKPOINTS.lg + MENU_WIDE_WIDTH   then 'menu-narrow'
+                    when @width < BREAKPOINTS.md + MENU_NARROW_WIDTH then 'menu-hidden'
+                    when @width < BREAKPOINTS.lg + MENU_WIDE_WIDTH   then 'menu-narrow'
                     else 'menu-wide'
 
         screens_width:
-            deps: ['width','screen_menu_size'], fn: ->
+            deps: ['width', 'screen_menu_size'], fn: ->
                 @width - @menu_width
 
         screens_height:
             deps: ['height'], fn: ->
                 @height - NAVBAR_HEIGHT
 
-    modelEvents:
-        'change:width': 'setWidth'
-
-    constructor: ->
+    constructor:  ->
         super
-        this.setWidth(@model,@model.width)
+
+    onBoot: (@viewport) ->
+        this.listenToAndRun(@viewport, 'change:width change:height', @setSize)
         this.screen_menu_shown = false if this.tiny_screen
 
-    setWidth: (model,width)->
-        this.width = width
+    setSize: ->
+        this.set(_.pick(@viewport, 'width', 'height'))
 
     nextSidebarState: ->
         if ! @screen_menu_preference
             @screen_menu_preference = @screen_menu_size
         if @popover_menu
-            @screen_menu_preference = if @screen_menu_preference=="menu-wide" then "menu-hidden" else "menu-wide"
+            @screen_menu_preference = if @screen_menu_preference == "menu-wide" then "menu-hidden" else "menu-wide"
         else
             this.toggle('screen_menu_preference')

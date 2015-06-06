@@ -14,7 +14,7 @@ describe "Lanes.Models.EnumMap", ->
 
         },{ id: 123 })
 
-    xit "sets up enums", ->
+    it "sets up enums", ->
         expect(model.is_open).toEqual(false)
         model.state = 1
         expect(model.is_open).toEqual(true)

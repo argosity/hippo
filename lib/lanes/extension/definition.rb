@@ -5,11 +5,7 @@ module Lanes
             include ::Lanes::Concerns::AttrAccessorWithDefault
 
             def self.inherited(klass)
-                if Extensions.controlling_locked
-                    ALL.unshift(klass)
-                else
-                    ALL << klass
-                end
+                Extensions.add(klass)
             end
 
             attr_reader :context
@@ -23,15 +19,25 @@ module Lanes
 
             attr_accessor_with_default :db_table_prefix
 
-            # Does the extension use PubSub functionality
-            class_attribute  :uses_pub_sub
-
             # Load extension before/after the named extensions
             class_attribute :before
             class_attribute :after
 
+
             def self.components(*names)
                 Components.enable(*names)
+            end
+
+            def initialize
+                self.add_to_load_path
+            end
+
+            def load_after(extension)
+                self.after = extension
+            end
+
+            def load_before(extension)
+                self.before = extension
             end
 
             def client_bootstrap_data(view)
@@ -80,6 +86,12 @@ module Lanes
             def on_boot
             end
 
+            def add_to_load_path
+                @in_load_path_set ||= (
+                    lib = root_path.join('lib').to_s
+                    $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+                )
+            end
         end
 
         class Base < Definition

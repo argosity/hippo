@@ -1,2 +1,7 @@
-//= require ./WorkspaceView
-//= require_tree .
+//=require ./Extension
+//=require ./UIState
+//=require ./ScreensMenu
+//=require ./ActiveScreenSwitcher
+//=require ./ScreenView
+//=require ./Navbar
+//=require ./Layout
