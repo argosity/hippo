@@ -111,7 +111,6 @@ class BaseModel
     withAssociations: (names..., options = {}) ->
         if _.isString(options)
             names.push(options); options = {}
-        scope = options.scope || this
         needed = this.associations?.nonLoaded(this, names)
         if _.isEmpty( needed )
             return _.Promise.resolve(this)
