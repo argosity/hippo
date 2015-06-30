@@ -6,6 +6,11 @@ class Lanes.Screens.Commands
         )
         _.bindAll(this, _.functions(this))
 
+    resetModel: ->
+        model = @getModel()
+        @setModel( new model.constructor )
+        undefined
+
     getModel: ->
         @screen[@options.modelName]
 

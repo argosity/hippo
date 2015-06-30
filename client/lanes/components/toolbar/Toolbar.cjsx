@@ -12,17 +12,24 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         changedModel: 'remote-update'
 
     renderSaveButton: ->
-        <BS.Button
-            navItem
-            componentClass="button"
-            onClick={@props.commands.saveModel}
-            className="save navbar-btn"
-        >
+        <BS.Button navItem componentClass="button" disabled={!@isSavable()}
+            onClick={@props.commands.saveModel} className="save navbar-btn control">
             <i className="icon icon-cloud-upload" />Save
         </BS.Button>
 
+    renderResetButton: ->
+        <BS.Button navItem componentClass="button"
+            onClick={@props.commands.resetModel} className="save navbar-btn control">
+            <i className="icon icon-undo" />Reset
+        </BS.Button>
+        # <BS.Button navItem
+        #     disabled={true}
+        #     onClick={@props.commands.resetModel} className="save navbar-btn control">
+        #     <i className="icon icon-undo" />Reset
+        # </BS.Button>
+
     renderEditToggle: ->
-        <form className="navbar-form navbar-left" role="search">
+        <form className="control navbar-form navbar-left" role="search">
             <div className="form-group">
                 <label>
                     <input type="checkbox" className="form-control"
@@ -42,11 +49,15 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         else
             false
 
+    renderSpacer: ->
+        <span className="control spacer" />
+
     render: ->
         <BS.Navbar className="lanes-toolbar">
           <BS.Nav>
+            {@renderSaveButton()}
+            {@renderResetButton()}
             {@renderEditToggle() if @props.commands.toggleEdit}
-            {@renderSaveButton() if @isSavable()}
           </BS.Nav>
           <LC.Toolbar.RemoteChangeSets model=@changedModel />
         </BS.Navbar>
