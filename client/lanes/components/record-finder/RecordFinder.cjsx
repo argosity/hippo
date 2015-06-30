@@ -13,7 +13,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
         @context.uistate.modalDialog = =>
             React.createElement LC.RecordFinder.Dialog,
                 query: @props.query
-                onRecordSelect: @props.onRecordSelect
+                onRecordSelect: @props.commands.setModel
 
     loadCurrentSelection: ->
         @props.query.loadSingle(@refs.input.getValue()).then (model) =>
@@ -21,6 +21,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
 
     onKeyPress: (ev) ->
         if "Enter" == ev.key
+            ev.stopPropagation()
             this.loadCurrentSelection()
         null
 

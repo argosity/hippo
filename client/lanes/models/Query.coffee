@@ -276,6 +276,9 @@ class Lanes.Models.Query extends Lanes.Models.Base
     isValid: ->
         ! @clauses.findWhere( isValid: false )
 
+    loadModelWithAssociations: (model) ->
+        model.withAssociations(@loadAssociations...)
+
     loadSingle: (code, options = {}) ->
         options.query = {}
         options.query[ @initialField.id ] = code

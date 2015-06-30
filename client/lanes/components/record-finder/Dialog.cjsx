@@ -20,7 +20,8 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.React.Component
         </BS.Alert>
 
     onRecordSelect: (model) ->
-        @props.onRecordSelect(model)
+        return unless model
+        @props.query.loadModelWithAssociations(model).then @props.onRecordSelect
         _.delay( =>
             @onCancel()
         , 300)
