@@ -10,6 +10,13 @@ class Session extends Lanes.Models.Base
 
 class Lanes.Access.LoginDialog extends Lanes.React.Component
 
+    mixins: [
+        Lanes.React.Mixins.RelayEditingState
+    ]
+
+    getDefaultProps: ->
+        writable: true, editOnly: true
+
     dataObjects: ->
         model: new Session
 
