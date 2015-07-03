@@ -3,8 +3,8 @@ class Lanes.Access.Extension extends Lanes.Extensions.Base
     identifier: "lanes-access"
 
     setBootstrapData: (data) ->
+        Lanes.Models.Role.all = new Lanes.Models.Role.Collection( data.roles )
         Lanes.current_user = new Lanes.Models.User
-        Lanes.Models.Roles.all = new Lanes.Models.Roles( data.roles )
         if data.user
             Lanes.current_user.set(data.user)
         if data.access

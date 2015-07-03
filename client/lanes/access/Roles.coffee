@@ -1,14 +1,8 @@
-class Role extends Lanes.Models.BasicModel
+class Lanes.Models.Role extends Lanes.Models.Base
     props:
         id:     'string'
         name:   'string'
         member: { type: 'boolean', default: false }
-
-
-class Lanes.Models.Roles extends Lanes.Models.BasicCollection
-    model: Role
-    comparator: 'name'
-
 
 class UserRole
     constructor: (config = {}) ->

@@ -1,3 +1,2 @@
 //= require ./UserManagement
-// require ./GridUserEditor
-// require_tree .
+//= require_tree .

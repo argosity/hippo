@@ -23,6 +23,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
     session:
         id:          'string'
         title:       'string'
+        url_prefix:  'string'
         description: 'string'
         view:        'string'
         icon:        'string'
@@ -45,7 +46,11 @@ class ScreenDefinition extends Lanes.Models.BasicModel
                     Lanes.u.findObject(@model, "Models", namespace: Lanes[this.extension])
         asset_paths:
             deps: ['assets'], fn: ->
-                @assets.map (asset) => "#{@extension.toLowerCase()}/screens/#{asset}"
+                prefix = if @url_prefix
+                    @url_prefix
+                else
+                    "#{@extension.toLowerCase()}/screens"
+                @assets.map (asset) -> "#{prefix}/#{asset}"
 
         extension_path:
             deps: ['extension', 'model'], fn: ->

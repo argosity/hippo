@@ -14,6 +14,7 @@ Lanes.Components.Form.FieldMixin = {
         model: Lanes.PropTypes.State.isRequired
         name:  React.PropTypes.string.isRequired
         label: React.PropTypes.string
+        unstyled: React.PropTypes.bool
 
     unsetChangeSet: ->
         @setState(changeset: false) if @isMounted()
@@ -35,17 +36,21 @@ Lanes.Components.Form.FieldMixin = {
         <span>{value}</span>
 
     _mixinRenderValue: (label, className) ->
-        className = _.classnames(className, "value", changeset: @state.changeset)
-        <BS.Col {...@props}>
-            <div className="form-group">
-                <label className='field read-only'>
-                    <div className="title">{label}</div>
-                    <div className={className} name={@props.name}>
-                        {(@renderDisplayValue|| @renderMixinDisplayValue)?()}
-                    </div>
-                </label>
-            </div>
-        </BS.Col>
+        value = (@renderDisplayValue || @renderMixinDisplayValue)?()
+        if @props.unstyled
+            value
+        else
+            className = _.classnames(className, "value", changeset: @state.changeset)
+            <BS.Col {...@props}>
+                <div className="form-group">
+                    <label className='field read-only'>
+                        <div className="title">{label}</div>
+                        <div className={className} name={@props.name}>
+                            {value}
+                        </div>
+                    </label>
+                </div>
+            </BS.Col>
 
     render: ->
         unless @props.unlabeled

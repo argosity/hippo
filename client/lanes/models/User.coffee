@@ -1,14 +1,10 @@
-unless Lanes.Models.Roles
+unless Lanes.Models.Role
 
-    class Lanes.Models.Role extends Lanes.Models.BasicModel
+    class Lanes.Models.Role extends Lanes.Models.Base
         props:
             id:     'string'
             name:   'string'
             member: { type: 'boolean', default: false }
-
-    class Lanes.Models.Roles extends Lanes.Models.BasicCollection
-        model: Lanes.Models.Role
-
 
 unless Lanes.Models.User
     class Lanes.Models.User extends Lanes.Models.Base
@@ -25,7 +21,7 @@ unless Lanes.Models.User
             isLoggedIn:
                 fn: -> false
             allRoles:
-                fn: -> new Lanes.Models.Roles
+                fn: -> new Lanes.Models.Role.Collection
 
         session:
             access_data: 'object'

@@ -14,8 +14,8 @@ class Lanes.Models.User extends Lanes.Models.Base
         allRoles:
             deps: ['role_names', 'access_data']
             fn: ->
-                role_data = Lanes.Models.Roles.all?.toJSON() || []
-                roles = new Lanes.Models.Roles( role_data )
+                role_data = Lanes.Models.Role.all?.toJSON() || []
+                roles = new Lanes.Models.Role.Collection( role_data )
                 _.each( this.role_names, (name) ->
                     roles.get(name)?.member = true
                 )

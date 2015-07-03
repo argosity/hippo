@@ -14,27 +14,49 @@ Lanes.Components.Grid.Editing = {
     topOffset: ->
         @props.topOffset + (@props.rowIndex * @props.rowHeight)
 
+#    getRowHeight: -> @props.rowHeight + 3
+
     renderControls: ->
         <div className="controls">
             <div className="buttons">
                 <button type="button" className="btn cancel" onClick={@props.hideEditor}>
-                    <i className="icon-cancel-circle">Cancel</i>
+                    <i className="icon icon-refresh" /> Cancel
                 </button>
                 <button type="button" className="btn save" onClick={@saveRecord}>
-                    <i className="icon-save">Save</i>
+                    <i className="icon icon-save" />Save
                 </button>
             </div>
         </div>
 
+    getFieldValue: (column) ->
+        @props.model[column.id]
+
+    onFieldChange: (column, ev) ->
+        @props.model[column.id] = ev.target.value
+
+    renderFields: ->
+        _.map @props.columns, @renderField
+
+    renderBody: ->
+        <div className="body">
+            <div className="fields">
+                {@renderFields()}
+            </div>
+            {@renderControls()}
+        </div>
+
     renderField: (column) ->
         return null unless column.visible
-        if @props.editors[column.id]
-            @props.editors[column.id]
+        control = if @props.editors[column.id]
+            @props.editors[column.id](model: @props.model)
         else
-            <LC.TextField key={column.id}
-                label={column.title}
-                model={@model}
-                id={column.id}/>
+            <input type="text"
+                value={@getFieldValue(column)}
+                onChange={_.partial(@onFieldChange, column)} />
+        <div key={column.id} className="field">
+            <label>{column.title}</label>
+            {control}
+        </div>
 
     saveRecord: ->
         @props.model.save().then (model) =>

@@ -21,15 +21,19 @@ class Lanes.Components.Grid extends Lanes.React.Component
             @refs.grid?.reload()
 
     propTypes:
-        query:  React.PropTypes.object.isRequired
+        query:  Lanes.PropTypes.State.isRequired
         width:  React.PropTypes.number
         height: React.PropTypes.number
-        editor: React.PropTypes.object
-        allowCreate: React.PropTypes.bool
+        editor: React.PropTypes.oneOfType([
+            React.PropTypes.func
+            React.PropTypes.bool
+        ])
+        allowCreate:  React.PropTypes.bool
+        columEditors: React.PropTypes.object
         onSelectionChange: React.PropTypes.func
 
     getDefaultProps: ->
-        rowHeight: 30
+        rowHeight: 30, editorProps: {}
 
     getInitialState: ->
         width: 800, height: 500
@@ -75,6 +79,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
             {@renderEditor() if @props.editor and @state.selIndex?}
             <Lanes.Vendor.Grid
                 ref="grid"
+
                 rowHeight={@props.rowHeight}
                 dataSource={@dataSource}
                 paginationFactory = {@makeToolBar}
@@ -101,16 +106,16 @@ class Lanes.Components.Grid extends Lanes.React.Component
             Lanes.Components.Grid.RowEditor
         else
             @props.editor
-        React.createElement(@props.editor,
-            topOffset  : 100
+        React.createElement(editor, _.extend({
+            topOffset  : 40
             model      : @state.data.modelForRow(@getSelected())
             hideEditor : @hideEditor
             onSave     : @onEditSave
-            editors    : @props.editors
+            editors    : @props.columEditors
             columns    : @state.columns
             rowHeight  : @props.rowHeight
             rowIndex   : @state.selIndex
-        )
+        }, @props.editorProps))
 
     makeToolBar: (props) ->
         if @props.allowCreate

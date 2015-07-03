@@ -133,21 +133,6 @@ Lanes.React.Mixins.Data = {
         else
             @data = new DataWrapper(this, newState)
 
-        # for name, state of newProps
-        #     if @data.states[name]
-        #
-
-        # # if any of the states that are being listened to have changed,
-        # # delete the data and start a new one
-        # if this.constructor.displayName == "Skr.Components.Address"
-        #     debugger
-        # for name, state of newState
-        #     if @data.states[name] != state
-        #         @data.destroy()
-        #         break
-
-        # @data = new DataWrapper(this, newState) unless @data
-
     listenTo: (state, events, fn) ->
         @data.listenTo(state, events, fn)
 

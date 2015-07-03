@@ -9,8 +9,8 @@ class Lanes.Components.Grid.PopoverEditor extends Lanes.React.Component
                 positionLeft ={200}
                 positionTop={@topOffset() - 100}
                 arrowOffsetTop={100 + @props.rowHeight / 2}
-                title        ="Edit #{@model.name || 'Record'}">
-                    {_.map @props.columns, @renderField}
-                    {@renderControls()}
+                title = "Edit #{@model.name || 'Record'}"
+            >
+                {@renderBody()}
             </BS.Popover>
         </div>

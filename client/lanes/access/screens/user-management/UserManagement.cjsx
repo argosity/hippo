@@ -1,10 +1,3 @@
-Foptions = [
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' }
-    { value: 'three', label: 'Three' }
-    { value: 'four', label: 'Four' }
-]
-
 class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
 
     getInitialState: ->
@@ -16,23 +9,33 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
             fields: fields, modelClass: Lanes.Models.User
         })
 
+    rolesForUser: (user) ->
+        {value: user.role_names, roles: _.map(user.role_names, _.field2title)}
+
+    setRolesForUser: (model, roles) ->
+        model.role_names = _.pluck(roles, 'id')
+
     editors: (props) ->
-        role_names:
+        role_names: ({model}) =>
             <LC.SelectField
                 id="role_names"
                 key="row-select"
-                multi=true
-                name="form-field-name"
-                value="one"
-                options={Foptions}
+                editOnly multi writable unstyled
+                model={model}
+                name="roles"
+                getSelection={@rolesForUser}
+                setSelection={@setRolesForUser}
+                collection={Lanes.Models.Role.all}
+                name="role_names"
             />
 
     render: ->
         <div>
             <h1>Users Management</h1>
-            <input type="text" defaultValue={@props.cid}/>
             <LC.Grid
                 query={@state.query}
-                editors={@editors()}
+                allowCreate
+                editor={Lanes.Access.Screens.UserManagement.Editor}
+                columEditors={@editors()}
                 ref="grid"/>
         </div>

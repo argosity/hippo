@@ -7,6 +7,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     propTypes:
         collection: Lanes.PropTypes.Collection
         labelField: React.PropTypes.string
+        getSelection: React.PropTypes.func
+        setSelection: React.PropTypes.func
 
     getInitialState: ->
         collection = @props.collection || (
@@ -17,38 +19,54 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     getOptions: (input, cb) ->
         store = @state.collection
         labelField = @props.labelField
+
         store.ensureLoaded().then ->
             data = store.map (model) ->
                 {value: model.id, label: _.result(model, labelField)}
             cb(null, options: data, complete: true)
 
-    onChange: (val) ->
-        val = @state.collection.get(val) if val
-        @model.set(@props.name, val)
+    onChange: (label, selections) ->
+        records = _.map selections, (selection) =>
+            @state.collection.get(selection.value)
+
+        value = if @props.multi then records else _.first(records)
+        if @props.setSelection
+            @props.setSelection(@model, value, selections)
+        else
+            @model.set(@props.name, value)
         true
 
-    stringValue: ->
+    getCurrentSelection: ->
+        return @props.getSelection(@model) if @props.getSelection
+
         pk = @model.associations.pk(@props.name)
         selected = @state.collection.get( @model[pk] )
-        value = selected?[@props.labelField]
+        return {} unless selected
+        value = selected[@props.labelField]
+        id = selected[@props.idField]
         value = String(value) if _.isObject(value)
-        value
+        {id, value}
 
     renderDisplayValue: ->
-        <span>{@stringValue()}</span>
+        <span>{@getCurrentSelection().value}</span>
 
     renderEdit: (label) ->
-        colProps = _.omit(@props, 'name')
-        <BS.Col {...colProps}>
-            <div className="form-group">
-                <label className="control-label">{label}</label>
-                <div className="value">
-                    <Lanes.Vendor.Select
-                        asyncOptions={@getOptions}
-                        onChange={@onChange}
-                        name={@props.name}
-                        value={@stringValue()}
-                        {...@props} />
+        select = <Lanes.Vendor.Select
+            asyncOptions={@getOptions}
+            onChange={@onChange}
+            name={@props.name}
+            value={@getCurrentSelection().value}
+            {...@props} />
+
+        if @props.unstyled
+            select
+        else
+            colProps = _.omit(@props, 'name')
+            <BS.Col {...colProps}>
+                <div className="form-group">
+                    <label className="control-label">{label}</label>
+                    <div className="value">
+                        {select}
+                    </div>
                 </div>
-            </div>
-        </BS.Col>
+            </BS.Col>
