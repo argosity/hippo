@@ -1,6 +1,5 @@
 ##= require_self
 ##= require ./Toolbar
-##= require ./Editing
 ##= require ./RowEditor
 ##= require ./PopoverEditor
 
@@ -14,11 +13,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         query: 'props'
 
     bindDataEvents:
-        query: 'change execute'
-
-    setDataState: (newstate) ->
-        if newstate.query
-            @refs.grid?.reload()
+        query: 'change execute load'
 
     propTypes:
         query:  Lanes.PropTypes.State.isRequired
@@ -33,73 +28,71 @@ class Lanes.Components.Grid extends Lanes.React.Component
         onSelectionChange: React.PropTypes.func
 
     getDefaultProps: ->
-        rowHeight: 30, editorProps: {}
+        headerHeight: 50, rowHeight: 30, editorProps: {}
 
     getInitialState: ->
-        width: 800, height: 500
-        sortInfo: []
-        rowHeight: 30
-        fieldIds: @query.fields.pluck('id')
-        columns:  @query.fields.map (f, i) ->
-            _.extend(
-                _.pick(f, 'id', 'title', 'flex', 'visible', 'textAlign')
-            , name: "#{i}")
+        columnWidths: {}, toolbar: !!@props.allowCreate
 
-    dataSource: (q) ->
-        return @query.results.ensureLoaded({
-            start: q.skip || 0, limit: q.pageSize || 100
-        }).then (result) =>
-            @setState(data: result)
-            count: result.total, data: result.rows
+    componentWillMount: ->
+        @query.results.ensureLoaded()
 
-    addRecord: ->
-        @query.results.addBlankRow()
-        @setState(selIndex: 0)
+    renderColumns: ->
+        @query.fields.visible.map (f, i) =>
+            <Lanes.Vendor.Grid.Column
+                dataKey={i}
+                columnData={f}
+                align={f.textAlign}
+                isResizable={true}
+                flexGrow={f.flex}
+                label={f.title}
+                width={@state.columnWidths[i] || 10}
+                key={i}
+            />
 
-    onSelectionChange: (selectedId, data, index) ->
+    onRowClick: (ev, index) ->
         newIndex = (if @state.selIndex == index then null else index)
-        @setState(selIndex: newIndex)
+        el = Lanes.u.closestEl(ev.target, 'public_fixedDataTableCell_main')
+        @setState(selIndex: newIndex, editingEl: el)
         @props.onSelectionChange?(
-            if newIndex? then @state.data.modelForRow(data) else null
+            if newIndex? then @query.results.modelAt(newIndex) else null
         )
 
-    onColumnResize: (firstCol, firstSize, secondCol, secondSize) ->
-        firstCol.width = firstSize
-        this.setState({})
+    headerHeight: ->
+        @props.headerHeight + ( if @state.toolbar then @props.headerHeight else 0 )
 
     onSortChange: (sortInfo) ->
         @refs.grid.data = _.sorty(sortInfo, @refs.grid.data)
         @setState(sortInfo: sortInfo, selIndex: undefined)
 
     getSelected: ->
-        @refs.grid.data[@state.selIndex] if @state.selIndex? && @refs.grid
+        @query.results.modelAt(@state.selIndex) if @state.selIndex?
 
-    render: ->
-        <div className="grid-component">
-            {@renderEditor() if @props.editor and @state.selIndex?}
-            <Lanes.Vendor.Grid
-                ref="grid"
+    rowGetter: (rowIndex) ->
+        @query.results.rowAt(rowIndex, visibleOnly:true)
 
-                rowHeight={@props.rowHeight}
-                dataSource={@dataSource}
-                paginationFactory = {@makeToolBar}
-                selected={@getSelected()?.id}
-                sortInfo={@state.sortInfo}
-                onSortChange={@onSortChange}
-                onSelectionChange={@onSelectionChange}
-                idProperty='0'
-                pagination={true}
-                onColumnResize={@onColumnResize}
-                paginationToolbarProps = { position: 'top' }
-                style={{height: 400}}
-                columns={@state.columns}/>
-        </div>
+    width: ->
+        @props.width  || @state.size?.width  || 500
+
+    height: ->
+        @props.height || @state.size?.height || 300
+
+    onColumnResizeEnd: (width, index) ->
+        columnWidths = @state.columnWidths || {}
+        columnWidths[index] = width
+        @setState({columnWidths})
 
     hideEditor: -> @setState(selIndex: null)
 
     onEditSave: (model) ->
-        @state.data.saveModelChanges(model)
+        @query.results.saveModelChanges(model)
         this.hideEditor()
+
+    renderToolbar: ->
+        props = _.clone(@props)
+        props.onAddRecord = =>
+            @query.results.addBlankRow()
+            @setState(selIndex: 0)
+        <Lanes.Components.Grid.Toolbar {...props} />
 
     renderEditor: ->
         editor = if true == @props.editor
@@ -107,19 +100,40 @@ class Lanes.Components.Grid extends Lanes.React.Component
         else
             @props.editor
         React.createElement(editor, _.extend({
-            topOffset  : 40
-            model      : @state.data.modelForRow(@getSelected())
+            topOffset  : @headerHeight()
+            grid       : this
+            query      : @query
+            model      : @getSelected()
             hideEditor : @hideEditor
             onSave     : @onEditSave
+            editingEl  : @state.editingEl
             editors    : @props.columEditors
-            columns    : @state.columns
             rowHeight  : @props.rowHeight
             rowIndex   : @state.selIndex
         }, @props.editorProps))
 
-    makeToolBar: (props) ->
-        if @props.allowCreate
-            props.addRecord = @addRecord
-            <Lanes.Components.Grid.Toolbar {...props}/>
-        else
-            null
+    renderLoading: ->
+        <div className="grid-component">
+            <div className="loading">Loading ...</div>
+        </div>
+
+    render: ->
+        <LC.Resize onResize={(size) => @setState(size:size)}>
+            <div className="grid-component">
+                {@renderToolbar() if @state.toolbar }
+                {@renderEditor() if @props.editor and @state.selIndex?}
+                <Lanes.Vendor.Grid
+                    ref="grid"
+                    rowsCount={@query.results.length}
+                    rowGetter={@rowGetter}
+                    onRowClick={@onRowClick}
+                    onColumnResizeEndCallback={@onColumnResizeEnd}
+                    rowHeight={@props.rowHeight}
+                    headerHeight={@props.headerHeight}
+                    width={@width()}
+                    height={@height()}
+                >
+                    {@renderColumns()}
+                </Lanes.Vendor.Grid>
+            </div>
+        </LC.Resize>

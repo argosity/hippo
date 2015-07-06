@@ -76,6 +76,16 @@ Lanes.u = {
             method.apply(scope, args)
         else
             method
+
+    closestEl: (el, name) ->
+        # Traverse the DOM up with a while loop
+        while ! _.dom(el).hasClass(name)
+            # Increment the loop to the parent node
+            el = el.parentNode
+            return null unless el
+
+        return el
+
 }
 
 # Can be called one of two ways:

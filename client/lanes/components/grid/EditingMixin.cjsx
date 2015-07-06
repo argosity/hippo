@@ -1,20 +1,17 @@
-Lanes.Components.Grid ||= {}
-Lanes.Components.Grid.Editing = {
+Lanes.Components.Grid.EditingMixin = {
 
     propTypes:
         topOffset: React.PropTypes.number.isRequired
         rowIndex:  React.PropTypes.number.isRequired
         rowHeight: React.PropTypes.number.isRequired
-        columns:   React.PropTypes.arrayOf(React.PropTypes.object).isRequired
         onSave:    React.PropTypes.func.isRequired
         model:     Lanes.PropTypes.State.isRequired
+        query:     Lanes.PropTypes.State.isRequired
         editors:   React.PropTypes.object
         hideEditor:  React.PropTypes.func.isRequired
 
     topOffset: ->
         @props.topOffset + (@props.rowIndex * @props.rowHeight)
-
-#    getRowHeight: -> @props.rowHeight + 3
 
     renderControls: ->
         <div className="controls">
@@ -35,15 +32,18 @@ Lanes.Components.Grid.Editing = {
         @props.model[column.id] = ev.target.value
 
     renderFields: ->
-        _.map @props.columns, @renderField
+        @props.query.fields.visible.map @renderField
 
-    renderBody: ->
-        <div className="body">
-            <div className="fields">
-                {@renderFields()}
+    renderEditingBody: ->
+        if _.isFunction(@renderBody)
+            @renderBody()
+        else
+            <div className="body">
+                <div className="fields">
+                    {@renderFields()}
+                </div>
+                {@renderControls()}
             </div>
-            {@renderControls()}
-        </div>
 
     renderField: (column) ->
         return null unless column.visible

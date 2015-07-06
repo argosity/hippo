@@ -22,11 +22,6 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
             onClick={@props.commands.resetModel} className="save navbar-btn control">
             <i className="icon icon-undo" />Reset
         </BS.Button>
-        # <BS.Button navItem
-        #     disabled={true}
-        #     onClick={@props.commands.resetModel} className="save navbar-btn control">
-        #     <i className="icon icon-undo" />Reset
-        # </BS.Button>
 
     renderEditToggle: ->
         <form className="control navbar-form navbar-left" role="search">

@@ -4,4 +4,8 @@ if (! Object.assign){
     Object.assign = require('object-assign');
 }
 Lanes.Vendor.React = require("react");
-Lanes.Vendor.Grid  = require("react-datagrid");
+var FDT = require('fixed-data-table');
+Lanes.Vendor.Grid  = FDT.Table;
+Lanes.Vendor.Grid.Column  = FDT.Column;
+
+require("fixed-data-table/dist/fixed-data-table.css");

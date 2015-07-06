@@ -1,939 +1,387 @@
-.loadmask .loader .loadbar {
-  border-radius: 50px;
-  box-shadow: 0 0 3px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0 0 3px rgba(0,0,0,0.2);
-  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.2);
-  -ms-box-shadow: 0 0 3px rgba(0,0,0,0.2);
+/**
+ * FixedDataTable v0.3.0 
+ *
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule Scrollbar
+ */
+
+.public_Scrollbar_main {
+  box-sizing: border-box;
+  outline: none;
+  overflow: hidden;
   position: absolute;
-  left: 44.5%;
-  top: 37%;
-  width: 12%;
-  height: 26%;
-  background: #000;
-  -webkit-animation: loader-fade 1s linear infinite;
-  -moz-animation: loader-fade 1s linear infinite;
-  -ms-animation: loader-fade 1s linear infinite;
-  animation: loader-fade 1s linear infinite;
-  opacity: 0;
-}
-.loadmask .loader .loadbar-1 {
-  transform: rotate(0deg) translate(0, -142%);
-  -webkit-transform: rotate(0deg) translate(0, -142%);
-  -moz-transform: rotate(0deg) translate(0, -142%);
-  -ms-transform: rotate(0deg) translate(0, -142%);
-  -webkit-animation-delay: 0s;
-  -moz-animation-delay: 0s;
-  -ms-animation-delay: 0s;
-  animation-delay: 0s;
-}
-.loadmask .loader .loadbar-2 {
-  transform: rotate(30deg) translate(0, -142%);
-  -webkit-transform: rotate(30deg) translate(0, -142%);
-  -moz-transform: rotate(30deg) translate(0, -142%);
-  -ms-transform: rotate(30deg) translate(0, -142%);
-  -webkit-animation-delay: -0.9167s;
-  -moz-animation-delay: -0.9167s;
-  -ms-animation-delay: -0.9167s;
-  animation-delay: -0.9167s;
-}
-.loadmask .loader .loadbar-3 {
-  transform: rotate(60deg) translate(0, -142%);
-  -webkit-transform: rotate(60deg) translate(0, -142%);
-  -moz-transform: rotate(60deg) translate(0, -142%);
-  -ms-transform: rotate(60deg) translate(0, -142%);
-  -webkit-animation-delay: -1.8333s;
-  -moz-animation-delay: -1.8333s;
-  -ms-animation-delay: -1.8333s;
-  animation-delay: -1.8333s;
-}
-.loadmask .loader .loadbar-4 {
-  transform: rotate(90deg) translate(0, -142%);
-  -webkit-transform: rotate(90deg) translate(0, -142%);
-  -moz-transform: rotate(90deg) translate(0, -142%);
-  -ms-transform: rotate(90deg) translate(0, -142%);
-  -webkit-animation-delay: -2.75s;
-  -moz-animation-delay: -2.75s;
-  -ms-animation-delay: -2.75s;
-  animation-delay: -2.75s;
-}
-.loadmask .loader .loadbar-5 {
-  transform: rotate(120deg) translate(0, -142%);
-  -webkit-transform: rotate(120deg) translate(0, -142%);
-  -moz-transform: rotate(120deg) translate(0, -142%);
-  -ms-transform: rotate(120deg) translate(0, -142%);
-  -webkit-animation-delay: -3.6667s;
-  -moz-animation-delay: -3.6667s;
-  -ms-animation-delay: -3.6667s;
-  animation-delay: -3.6667s;
-}
-.loadmask .loader .loadbar-6 {
-  transform: rotate(150deg) translate(0, -142%);
-  -webkit-transform: rotate(150deg) translate(0, -142%);
-  -moz-transform: rotate(150deg) translate(0, -142%);
-  -ms-transform: rotate(150deg) translate(0, -142%);
-  -webkit-animation-delay: -4.5833s;
-  -moz-animation-delay: -4.5833s;
-  -ms-animation-delay: -4.5833s;
-  animation-delay: -4.5833s;
-}
-.loadmask .loader .loadbar-7 {
-  transform: rotate(180deg) translate(0, -142%);
-  -webkit-transform: rotate(180deg) translate(0, -142%);
-  -moz-transform: rotate(180deg) translate(0, -142%);
-  -ms-transform: rotate(180deg) translate(0, -142%);
-  -webkit-animation-delay: -5.5s;
-  -moz-animation-delay: -5.5s;
-  -ms-animation-delay: -5.5s;
-  animation-delay: -5.5s;
-}
-.loadmask .loader .loadbar-8 {
-  transform: rotate(210deg) translate(0, -142%);
-  -webkit-transform: rotate(210deg) translate(0, -142%);
-  -moz-transform: rotate(210deg) translate(0, -142%);
-  -ms-transform: rotate(210deg) translate(0, -142%);
-  -webkit-animation-delay: -6.4167s;
-  -moz-animation-delay: -6.4167s;
-  -ms-animation-delay: -6.4167s;
-  animation-delay: -6.4167s;
-}
-.loadmask .loader .loadbar-9 {
-  transform: rotate(240deg) translate(0, -142%);
-  -webkit-transform: rotate(240deg) translate(0, -142%);
-  -moz-transform: rotate(240deg) translate(0, -142%);
-  -ms-transform: rotate(240deg) translate(0, -142%);
-  -webkit-animation-delay: -7.3333s;
-  -moz-animation-delay: -7.3333s;
-  -ms-animation-delay: -7.3333s;
-  animation-delay: -7.3333s;
-}
-.loadmask .loader .loadbar-10 {
-  transform: rotate(270deg) translate(0, -142%);
-  -webkit-transform: rotate(270deg) translate(0, -142%);
-  -moz-transform: rotate(270deg) translate(0, -142%);
-  -ms-transform: rotate(270deg) translate(0, -142%);
-  -webkit-animation-delay: -8.25s;
-  -moz-animation-delay: -8.25s;
-  -ms-animation-delay: -8.25s;
-  animation-delay: -8.25s;
-}
-.loadmask .loader .loadbar-11 {
-  transform: rotate(300deg) translate(0, -142%);
-  -webkit-transform: rotate(300deg) translate(0, -142%);
-  -moz-transform: rotate(300deg) translate(0, -142%);
-  -ms-transform: rotate(300deg) translate(0, -142%);
-  -webkit-animation-delay: -9.1667s;
-  -moz-animation-delay: -9.1667s;
-  -ms-animation-delay: -9.1667s;
-  animation-delay: -9.1667s;
-}
-.loadmask .loader .loadbar-12 {
-  transform: rotate(330deg) translate(0, -142%);
-  -webkit-transform: rotate(330deg) translate(0, -142%);
-  -moz-transform: rotate(330deg) translate(0, -142%);
-  -ms-transform: rotate(330deg) translate(0, -142%);
-  -webkit-animation-delay: -10.0833s;
-  -moz-animation-delay: -10.0833s;
-  -ms-animation-delay: -10.0833s;
-  animation-delay: -10.0833s;
-}
-.u-flex {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-.u-flex-flow-row,
-.u-flex-row {
-  flex-direction: row;
-  -webkit-flex-flow: row;
-  -moz-flex-flow: row;
-  -ms-flex-flow: row;
-  -o-flex-flow: row;
-  flex-flow: row;
-  flex-flow: row;
-  box-orient: horizontal;
-  flex-direction: row;
-  box-orient: horizontal;
-}
-.u-flex-flow-column,
-.u-flex-column,
-.react-datagrid,
-.react-datagrid.z-empty .z-table-wrapper {
-  flex-direction: column;
-  -webkit-flex-flow: column;
-  -moz-flex-flow: column;
-  -ms-flex-flow: column;
-  -o-flex-flow: column;
-  flex-flow: column;
-  flex-flow: column;
-  box-orient: vertical;
-  box-orient: vertical;
-}
-.u-flex-row {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-.u-flex-column,
-.react-datagrid,
-.react-datagrid.z-empty .z-table-wrapper {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-.u-flex-centered {
-  box-align: center;
-  box-pack: center;
-  align-items: center;
-}
-.u-inflexible,
-.u-flex-0 {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  -ms-box-flex: 0;
-  -ms-flex: 0;
-  -webkit-flex: 0;
-  flex: 0;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-1 {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -ms-box-flex: 1;
-  -ms-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-2 {
-  -webkit-box-flex: 2;
-  -moz-box-flex: 2;
-  -ms-box-flex: 2;
-  -ms-flex: 2;
-  -webkit-flex: 2;
-  flex: 2;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-3 {
-  -webkit-box-flex: 3;
-  -moz-box-flex: 3;
-  -ms-box-flex: 3;
-  -ms-flex: 3;
-  -webkit-flex: 3;
-  flex: 3;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-4 {
-  -webkit-box-flex: 4;
-  -moz-box-flex: 4;
-  -ms-box-flex: 4;
-  -ms-flex: 4;
-  -webkit-flex: 4;
-  flex: 4;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-5 {
-  -webkit-box-flex: 5;
-  -moz-box-flex: 5;
-  -ms-box-flex: 5;
-  -ms-flex: 5;
-  -webkit-flex: 5;
-  flex: 5;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-6 {
-  -webkit-box-flex: 6;
-  -moz-box-flex: 6;
-  -ms-box-flex: 6;
-  -ms-flex: 6;
-  -webkit-flex: 6;
-  flex: 6;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-7 {
-  -webkit-box-flex: 7;
-  -moz-box-flex: 7;
-  -ms-box-flex: 7;
-  -ms-flex: 7;
-  -webkit-flex: 7;
-  flex: 7;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-8 {
-  -webkit-box-flex: 8;
-  -moz-box-flex: 8;
-  -ms-box-flex: 8;
-  -ms-flex: 8;
-  -webkit-flex: 8;
-  flex: 8;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-9 {
-  -webkit-box-flex: 9;
-  -moz-box-flex: 9;
-  -ms-box-flex: 9;
-  -ms-flex: 9;
-  -webkit-flex: 9;
-  flex: 9;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-flex-10 {
-  -webkit-box-flex: 10;
-  -moz-box-flex: 10;
-  -ms-box-flex: 10;
-  -ms-flex: 10;
-  -webkit-flex: 10;
-  flex: 10;
-  flex-shrink: 1;
-  flex-basis: 1;
-}
-.u-bold {
-  font-weight: bold;
-}
-.u-nowrap {
-  white-space: nowrap;
-}
-.u-nonav,
-.u-unselectable {
-  touch-callout: none;
-}
-.u-unselectable {
+  -webkit-transition-duration: 250ms;
+          transition-duration: 250ms;
+  -webkit-transition-timing-function: ease;
+          transition-timing-function: ease;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
-.u-height-auto {
-  height: auto;
-}
-.u-width-auto {
-  width: auto;
-}
-.u-height-fill,
-.u-fill,
-html.u-app,
-html.u-app body {
-  height: 100%;
-}
-.u-width-fill,
-.u-fill,
-html.u-app,
-html.u-app body {
-  width: 100%;
-}
-.u-margin-auto {
-  margin: auto;
-}
-.u-border-box {
-  box-sizing: border-box;
-}
-.u-border-box * {
-  box-sizing: border-box;
-}
-.u-ellipsis,
-.react-datagrid .z-column-header .z-text,
-.react-datagrid.z-cell-ellipsis .z-row .z-cell .z-text,
-.react-datagrid .z-summary .z-cell .z-text {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.u-absolute {
-  position: absolute;
-}
-.u-relative {
-  position: relative;
-}
-html.u-app,
-html.u-app body {
-  overflow: hidden;
-  box-sizing: border-box;
-}
-html.u-app *,
-html.u-app body * {
-  box-sizing: border-box;
-}
-.z-scroller {
-  overflow: auto;
-  position: relative;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: column;
-  -webkit-flex-flow: column;
-  -moz-flex-flow: column;
-  -ms-flex-flow: column;
-  -o-flex-flow: column;
-  flex-flow: column;
-  flex-flow: column;
-  box-orient: vertical;
-  -webkit-box-flex: 1 1 auto;
-  -moz-box-flex: 1 1 auto;
-  -ms-box-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  -webkit-flex: 1 1 auto;
-  flex: 1 1 auto;
-}
-.z-scroller .z-content-wrapper {
-  -webkit-box-flex: 1 1 auto;
-  -moz-box-flex: 1 1 auto;
-  -ms-box-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  -webkit-flex: 1 1 auto;
-  flex: 1 1 auto;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  align-items: stretch;
-  -webkit-align-items: stretch;
-  align-content: flex-start;
-  -webkit-align-content: flex-start;
-  justify-content: flex-start;
-  -webkit-justify-content: flex-start;
-  flex-pack: start;
-  -ms-flex-pack: start;
-  flex-direction: row;
-  -webkit-flex-flow: row;
-  -moz-flex-flow: row;
-  -ms-flex-flow: row;
-  -o-flex-flow: row;
-  flex-flow: row;
-  flex-flow: row;
-  box-orient: horizontal;
-  position: relative;
-  overflow: hidden;
-  z-index: 10;
-}
-.z-scroller .z-content-wrapper-fix {
-  z-index: -1;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -ms-box-flex: 1;
-  -ms-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
-}
-.z-vertical-scroller {
-  overflow: hidden;
-  overflow-y: auto;
-  right: 0px;
-  top: 0px;
-  width: 1px;
-  -webkit-box-flex: none;
-  -moz-box-flex: none;
-  -ms-box-flex: none;
-  -ms-flex: none;
-  -webkit-flex: none;
-  flex: none;
-  visibility: hidden;
-}
-.z-horizontal-scroller {
-  height: 1px;
-  visibility: hidden;
-}
-.z-vertical-scrollbar {
-  overflow: hidden;
-  position: absolute;
-  height: 100%;
-  right: 0px;
-  top: 0px;
-}
-.z-horizontal-scrollbar {
-  transform: translate3d(0px, 0px, 1px);
-  -webkit-box-flex: 0 0 auto;
-  -moz-box-flex: 0 0 auto;
-  -ms-box-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  -webkit-flex: 0 0 auto;
-  flex: 0 0 auto;
-  height: auto;
-  width: 100%;
-  position: relative;
-  left: 0px;
-  bottom: 0px;
-  overflow: auto;
-  z-index: 100;
-}
-.z-horizontal-scrollbar.mac-fix {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: row;
-  -webkit-flex-flow: row;
-  -moz-flex-flow: row;
-  -ms-flex-flow: row;
-  -o-flex-flow: row;
-  flex-flow: row;
-  flex-flow: row;
-  box-orient: horizontal;
-  align-items: stretch;
-  -webkit-align-items: stretch;
-  align-content: flex-start;
-  -webkit-align-content: flex-start;
-  justify-content: stretch;
-  -webkit-justify-content: stretch;
-  flex-pack: justify;
-  -ms-flex-pack: justify;
-}
-.z-horizontal-scrollbar-fix {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -ms-box-flex: 1;
-  -ms-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
-  overflow: auto;
-}
-.loadmask {
-  z-index: 100;
-}
-.z-unselectable,
-.react-datagrid .z-header-menu-column .menu-row {
-  touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-}
-.react-datagrid,
-.react-datagrid * {
-  box-sizing: border-box;
-}
-.react-datagrid .z-resize-proxy {
-  position: absolute;
-  height: 100%;
-  top: 0px;
-  display: none;
-  width: 3px;
-  z-index: 1000;
-  border-left: 1px solid #868686;
-}
-.react-datagrid.z-columns-resizable .z-resize-proxy {
-  display: block;
-}
-.react-datagrid {
-  align-items: stretch;
-  -webkit-align-items: stretch;
-}
-.react-datagrid .z-row,
-.react-datagrid .react-datagrid-pagination-toolbar {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-}
-.react-datagrid .loadmask {
-  z-index: 100;
-}
-.react-datagrid .z-header-menu-column {
-  z-index: 100;
-}
-.react-datagrid > .z-inner {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -ms-box-flex: 1;
-  -ms-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  position: relative;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: column;
-  -webkit-flex-flow: column;
-  -moz-flex-flow: column;
-  -ms-flex-flow: column;
-  -o-flex-flow: column;
-  flex-flow: column;
-  flex-flow: column;
-  box-orient: vertical;
-}
-.react-datagrid > .z-inner .z-wrapper {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: column;
-  -webkit-flex-flow: column;
-  -moz-flex-flow: column;
-  -ms-flex-flow: column;
-  -o-flex-flow: column;
-  flex-flow: column;
-  flex-flow: column;
-  box-orient: vertical;
-  -webkit-box-flex: 1 1 auto;
-  -moz-box-flex: 1 1 auto;
-  -ms-box-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  -webkit-flex: 1 1 auto;
-  flex: 1 1 auto;
-  overflow: hidden;
-}
-.react-datagrid .z-header-wrapper,
-.react-datagrid .z-footer-wrapper {
-  width: 100%;
-}
-.react-datagrid .z-table {
-  display: block;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -ms-box-flex: 1;
-  -ms-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
-/** 2 RULES FOR SAFARI VERTICAL SCROLLBAR */
-  transform: translate3d(0px, 0px, 0px);
-  position: relative;
-  z-index: 10;
-}
-.react-datagrid .z-header,
-.react-datagrid .z-summary,
-.react-datagrid .z-table .z-row {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: row;
-  -webkit-flex-flow: row;
-  -moz-flex-flow: row;
-  -ms-flex-flow: row;
-  -o-flex-flow: row;
-  flex-flow: row;
-  flex-flow: row;
-  box-orient: horizontal;
-  z-index: 1;
-}
-.react-datagrid .z-mask-wrapper {
-  bottom: 0px;
-  width: 100%;
-  position: absolute;
-  display: none;
-}
-.react-datagrid.z-loading .z-mask-wrapper {
-  display: block;
-}
-.react-datagrid.z-empty .z-content-wrapper-fix {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-.react-datagrid.z-empty .z-table-wrapper {
-  justify-content: center;
-  -webkit-justify-content: center;
-  flex-pack: center;
-  -ms-flex-pack: center;
-  align-items: center;
-  -webkit-align-items: center;
-}
-.react-datagrid.z-empty .z-empty-text {
-  width: 100%;
-  justify-content: center;
-  -webkit-justify-content: center;
-  flex-pack: center;
-  -ms-flex-pack: center;
-  align-items: center;
-  -webkit-align-items: center;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  font-style: italic;
-  color: #808080;
-}
-.react-datagrid .z-header-menu-column {
-  background: #fff;
-  position: absolute;
-  top: 0px;
-}
-.react-datagrid .z-header-menu-column .menu-row.over {
-  background: #d7e7ff;
-}
-.react-datagrid .z-header {
-  align-items: stretch;
-  -webkit-align-items: stretch;
-}
-.react-datagrid.z-with-column-menu .z-column-header .z-show-filter,
-.react-datagrid.z-with-column-menu .z-column-header .z-show-menu {
-  display: none;
-  position: absolute;
-  cursor: pointer;
-  right: 0px;
-  top: 0px;
+
+.public_Scrollbar_mainVertical {
+  bottom: 0;
+  right: 0;
+  top: 0;
+  -webkit-transition-property: background-color width;
+          transition-property: background-color width;
   width: 15px;
+}
+
+/* Touching the scroll-track directly makes the scroll-track bolder */
+.public_Scrollbar_mainVertical.Scrollbar_mainActive,
+.public_Scrollbar_mainVertical:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 17px;
+}
+
+.public_Scrollbar_mainHorizontal {
+  bottom: 0;
+  height: 15px;
+  left: 0;
+  -webkit-transition-property: background-color height;
+          transition-property: background-color height;
+}
+
+/* Touching the scroll-track directly makes the scroll-track bolder */
+.public_Scrollbar_mainHorizontal.Scrollbar_mainActive,
+.public_Scrollbar_mainHorizontal:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  height: 17px;
+}
+
+.Scrollbar_mainOpaque,
+.Scrollbar_mainOpaque.Scrollbar_mainActive,
+.Scrollbar_mainOpaque:hover {
+  background-color: #fff;
+}
+
+.Scrollbar_face {
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+}
+
+/**
+ * This selector renders the "nub" of the scrollface. The nub must
+ * be rendered as pseudo-element so that it won't receive any UI events then
+ * we can get the correct `event.offsetX` and `event.offsetY` from the
+ * scrollface element while dragging it.
+ */
+.Scrollbar_face:after {
+  background-color: #c2c2c2;
+  border-radius: 6px;
+  content: '';
+  display: block;
+  position: absolute;
+  -webkit-transition: background-color 250ms ease;
+          transition: background-color 250ms ease;
+}
+
+.public_Scrollbar_main:hover .Scrollbar_face:after,
+.Scrollbar_mainActive .Scrollbar_face:after,
+.Scrollbar_faceActive:after {
+  background-color: #7d7d7d;
+}
+
+.Scrollbar_faceHorizontal {
+  bottom: 0;
+  left: 0;
+  top: 0;
+}
+
+.Scrollbar_faceHorizontal:after {
+  bottom: 4px;
+  left: 0;
+  top: 4px;
+  width: 100%;
+}
+
+.Scrollbar_faceVertical {
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.Scrollbar_faceVertical:after {
   height: 100%;
-  border-left: 1px solid #a8a8a8;
+  left: 4px;
+  right: 4px;
+  top: 0;
 }
-.react-datagrid.z-with-column-menu .z-column-header .z-show-filter {
-  right: 15px;
-  background: #fff;
-}
-.react-datagrid.z-with-column-menu .z-column-header.z-filterable .z-show-filter.z-active,
-.react-datagrid.z-with-column-menu .z-column-header.z-filterable .z-show-filter:hover,
-.react-datagrid.z-with-column-menu .z-column-header .z-show-menu.z-active,
-.react-datagrid.z-with-column-menu .z-column-header .z-show-menu:hover {
-  background: #fff;
-}
-.react-datagrid.z-with-column-menu .z-column-header.z-active .z-show-menu,
-.react-datagrid.z-with-column-menu .z-column-header.z-active.z-filterable .z-show-filter,
-.react-datagrid.z-with-column-menu .z-column-header.z-over .z-show-menu {
-  display: block;
-}
-.react-datagrid.z-with-column-menu .z-column-header.z-over.z-filterable .z-show-filter {
-  display: block;
-}
-.react-datagrid.z-with-column-menu .z-column-header.z-filtered {
-  font-style: italic;
-}
-.react-datagrid .z-header-wrapper {
-  -webkit-box-flex: 0 0 auto;
-  -moz-box-flex: 0 0 auto;
-  -ms-box-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  -webkit-flex: 0 0 auto;
-  flex: 0 0 auto;
-  background: linear-gradient(to bottom, #f7f7f7 0%, #efefef 13%, #e6e6e6 100%);
-  border-bottom: 1px solid #a8a8a8;
-}
-.react-datagrid .z-header-wrapper.z-dragging .z-column-header:not(.z-drag) {
-  transition: left 0.4s;
-}
-.react-datagrid .z-column-header {
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTable
+ */
+
+.public_fixedDataTable_main {
+  border: solid 1px #d3d3d3;
+  box-sizing: border-box;
+  overflow: hidden;
   position: relative;
+}
+
+.public_fixedDataTable_header,
+.fixedDataTable_hasBottomBorder {
+  border-bottom: solid 1px #d3d3d3;
+}
+
+.public_fixedDataTableRow_main.fixedDataTable_hasBottomBorder {
+  box-sizing: content-box;
+}
+
+.public_fixedDataTable_header .public_fixedDataTableCell_main {
   font-weight: bold;
 }
-.react-datagrid .z-column-header .z-inner {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  -webkit-align-items: center;
-  align-content: flex-start;
-  -webkit-align-content: flex-start;
-  flex-direction: row;
-  -webkit-flex-flow: row;
-  -moz-flex-flow: row;
-  -ms-flex-flow: row;
-  -o-flex-flow: row;
-  flex-flow: row;
-  flex-flow: row;
-  box-orient: horizontal;
-  height: 100%;
+
+.public_fixedDataTable_header,
+.public_fixedDataTable_header .public_fixedDataTableCell_main {
+  background-color: #f6f7f8;
+  background-image: -webkit-linear-gradient(#fff, #efefef);
+  background-image: linear-gradient(#fff, #efefef);
 }
-.react-datagrid .z-column-header .z-text {
-  cursor: default;
+
+.public_fixedDataTable_footer .public_fixedDataTableCell_main {
+  background-color: #f6f7f8;
+  border-top: solid 1px #d3d3d3;
 }
-.react-datagrid .z-column-header.z-sortable .z-inner {
-  cursor: pointer;
-}
-.react-datagrid .z-column-header.z-over {
-  background: linear-gradient(to bottom, #fbfbfb 0%, #f8f8f8 13%, #f4f4f4 100%);
-}
-.react-datagrid .z-column-header .z-icon-sort-info {
-  display: inline-block;
-  width: 0px;
-  height: 0px;
-  margin-left: 10px;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-}
-.react-datagrid .z-column-header.z-asc .z-icon-sort-info {
-  border-bottom: 8px solid #6eb8f1;
-}
-.react-datagrid .z-column-header.z-desc .z-icon-sort-info {
-  border-top: 8px solid #6eb8f1;
-}
-.react-datagrid .z-column-header.z-drag {
+
+.fixedDataTable_topShadow,
+.fixedDataTable_bottomShadow {
+  height: 4px;
+  left: 0;
+  position: absolute;
+  right: 0;
   z-index: 1;
-  background: linear-gradient(to bottom, #fbfbfb 0%, #f8f8f8 13%, #f4f4f4 100%);
-  border-right: 1px solid #a8a8a8;
-  border-left: 1px solid #a8a8a8;
 }
-.react-datagrid .z-column-header .z-column-resize {
-  display: inline-block;
-  height: 100%;
-  width: 3px;
+
+.fixedDataTable_topShadow {
+  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAF0lEQVR4AWPUkNeSBhHCjJoK2twgFisAFagCCp3pJlAAAAAASUVORK5CYII=) repeat-x;
+}
+
+.fixedDataTable_bottomShadow {
+  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAHElEQVQI12MwNjZmZdAT1+Nm0JDWEGZQk1GTBgAWkwIeAEp52AAAAABJRU5ErkJggg==) repeat-x;
+  margin-top: -4px;
+}
+
+.fixedDataTable_rowsContainer {
+  overflow: hidden;
+  position: relative;
+}
+
+.fixedDataTable_horizontalScrollbar {
+  bottom: 0;
+  position: absolute;
+}
+
+.fixedDataTable_horizontalScrollbar .public_Scrollbar_mainHorizontal {
+  background: #fff;
+}
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableCell
+ */
+
+.public_fixedDataTableCell_main {
+  background-color: #fff;
+  border: solid 1px #d3d3d3;
+  border-width: 0 1px 0 0;
+  box-sizing: border-box;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  white-space: normal;
+}
+
+.public_fixedDataTableCell_lastChild {
+  border-width: 0 1px 1px 0;
+}
+
+.public_fixedDataTableCell_highlighted {
+  background-color: #f4f4f4;
+}
+
+.public_fixedDataTableCell_alignRight {
+  text-align: right;
+}
+
+.public_fixedDataTableCell_alignCenter {
+  text-align: center;
+}
+
+.public_fixedDataTableCell_wrap1 {
+  display: table;
+}
+
+.public_fixedDataTableCell_wrap2 {
+  display: table-row;
+}
+
+.public_fixedDataTableCell_wrap3 {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.public_fixedDataTableCell_cellContent {
+  padding: 8px;
+}
+
+.fixedDataTableCell_columnResizerContainer {
+  position: absolute;
   right: 0px;
-  cursor: e-resize;
-  top: 0px;
+  width: 6px;
+  z-index: 1;
+}
+
+.fixedDataTableCell_columnResizerContainer:hover {
+  cursor: ew-resize;
+}
+
+.fixedDataTableCell_columnResizerContainer:hover .fixedDataTableCell_columnResizerKnob {
+  visibility: visible;
+}
+
+.fixedDataTableCell_columnResizerKnob {
+  background-color: #0284ff;
+  position: absolute;
+  right: 0px;
+  visibility: hidden;
+  width: 4px;
+}
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableCellGroup
+ */
+
+.fixedDataTableCellGroup_cellGroup {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.fixedDataTableCellGroup_cellGroup > .public_fixedDataTableCell_main {
+  display: inline-block;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.fixedDataTableCellGroup_cellGroupWrapper {
+  position: absolute;
+  top: 0;
+}
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableColumnResizerLine
+ */
+
+.fixedDataTableColumnResizerLine_mouseArea {
+  cursor: ew-resize;
+  position: absolute;
+  right: -5px;
+  width: 12px;
+}
+
+.fixedDataTableColumnResizerLine_main {
+  border-right: 1px solid #0284ff;
+  box-sizing: border-box;
   position: absolute;
   z-index: 10;
 }
-.react-datagrid .z-column-header.z-last .z-inner .z-column-resize {
+
+.fixedDataTableColumnResizerLine_hiddenElem {
   display: none !important;
 }
-.react-datagrid .z-header .z-column-header.z-cell:not(.z-first) {
-  border-left: 1px solid #a8a8a8;
-}
-.react-datagrid .z-header .z-column-header.z-cell.z-last {
-  border-right: 1px solid #a8a8a8;
-}
-.react-datagrid.z-style-alternate .z-odd .z-cell {
-  background: #f2f7ff;
-}
-.react-datagrid .z-column-content {
-  overflow: visible;
-}
-.react-datagrid .z-row.z-over .z-cell {
-  background: #d7e7ff;
-}
-.react-datagrid .z-row.z-selected .z-cell {
-  background: #c4dbfc;
-}
-.react-datagrid .z-row .z-cell {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  white-space: nowrap;
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableRow
+ */
+
+.public_fixedDataTableRow_main {
+  background-color: #fff;
+  box-sizing: border-box;
   overflow: hidden;
-  cursor: default;
-  position: relative;
-}
-.react-datagrid .z-row .z-cell .z-inner {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  -webkit-align-items: center;
-  width: 100%;
-  height: 100%;
   position: absolute;
-  margin: auto 0;
-  overflow: hidden;
+  top: 0;
 }
-.react-datagrid .z-row .z-cell .z-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+.fixedDataTableRow_body {
+  left: 0;
+  position: absolute;
+  top: 0;
 }
-.react-datagrid .z-group-row.z-over .z-cell {
-  background: #cfcfcf;
+
+.public_fixedDataTableRow_highlighted,
+.public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
+  background-color: #f6f7f8;
 }
-.react-datagrid .z-group-cell {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -ms-box-flex: 1;
-  -ms-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
+
+.fixedDataTableRow_fixedColumnsDivider {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border-left: solid 1px #d3d3d3;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 0;
 }
-.react-datagrid .z-group-row .z-cell {
-  background: #e6e6e6;
+
+.fixedDataTableRow_columnsShadow {
+  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==) repeat-y;
+  width: 4px;
 }
-.react-datagrid.z-cell-borders-horizontal .z-cell:not(.z-column-header) {
-  border-bottom: 1px dotted #a8a8a8;
-}
-.react-datagrid.z-cell-borders-vertical .z-group-row .z-cell:not(.z-column-header),
-.react-datagrid.z-cell-borders-vertical .z-cell.z-last:not(.z-column-header) {
-  border-right: 1px dotted #a8a8a8;
-}
-.react-datagrid.z-cell-borders-vertical .z-cell:not(.z-first):not(.z-column-header) {
-  border-left: 1px dotted #a8a8a8;
-}
-.react-datagrid .z-footer-wrapper {
-  background: linear-gradient(to bottom, #f7f7f7 0%, #efefef 13%, #e6e6e6 100%);
-}
-.react-datagrid .z-summary {
-  border-top: 1px solid #a8a8a8;
-  align-items: stretch;
-  -webkit-align-items: stretch;
-}
-.react-datagrid .z-summary .z-cell {
-  position: relative;
-  border-bottom: 1px solid #a8a8a8;
-}
-.react-datagrid .z-summary .z-cell .z-inner {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  -webkit-align-items: center;
-  align-content: flex-start;
-  -webkit-align-content: flex-start;
-  flex-direction: row;
-  -webkit-flex-flow: row;
-  -moz-flex-flow: row;
-  -ms-flex-flow: row;
-  -o-flex-flow: row;
-  flex-flow: row;
-  flex-flow: row;
-  box-orient: horizontal;
-  height: 100%;
-}
-.react-datagrid .z-summary .z-cell.z-last {
-  border-right: 1px solid #a8a8a8;
-}
-.react-datagrid .z-summary .z-cell:not(.z-first) {
-  border-left: 1px solid #a8a8a8;
-}
-@-moz-keyframes loader-fade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.25;
-  }
-}
-@-webkit-keyframes loader-fade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.25;
-  }
-}
-@-o-keyframes loader-fade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.25;
-  }
-}
-@keyframes loader-fade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.25;
-  }
+
+.fixedDataTableRow_rowWrapper {
+  position: absolute;
+  top: 0;
 }

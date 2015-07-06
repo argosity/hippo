@@ -35,6 +35,8 @@ class Field extends Lanes.Models.Base
 
 class AvailableFields extends Lanes.Models.Collection
 
+    model: Field
+
     constructor: (models, options) ->
         @query = options.query
         this.on('change', (changing) ->
@@ -43,8 +45,7 @@ class AvailableFields extends Lanes.Models.Collection
                 model.selected = false unless model == changing
         )
         super
-
-    model: Field
+        @visible = @subcollection(where: {visible: true})
 
 
 class Operator extends Lanes.Models.Base
@@ -160,73 +161,6 @@ class Clauses extends Lanes.Models.Collection
         @query = options.query
         @fields = options.query.fields
 
-class QueryResult
-
-    constructor: (q) ->
-        @cid = _.uniqueId()
-        @query = q
-
-    reset: ->
-        delete @rows
-        delete @idCache
-        delete @modelCache
-
-    ensureLoaded: (options) ->
-        if @rows then _.Promise.resolve(this) else @fetch(options)
-
-    get: (id) ->
-        index = @query.idIndex
-        @_calculateCache() unless @idCache
-        @idCache[id]
-
-    _calculateCache: ->
-        @idCache = {}
-        for row in @rows
-            @idCache[ this.idForRow(row) ] = row
-
-    idForRow: (row) ->
-        row[@query.idIndex]
-
-    fetch: (options = {}) ->
-        query = {}
-        @query.clauses.each (clause) ->
-            _.extend( query, clause.toParam() ) if clause.isValid
-        _.defaults(options,
-            format: 'array', total_count: 't'
-            start: 0, limit: 100, url: @query.url
-            query: query
-            fields: @query.fields.pluck('id')
-        )
-        Lanes.Models.Sync
-            .perform( 'GET', options)
-            .then (resp) =>
-                @total = resp.total
-                @rows  = resp.data
-                return @
-
-    addBlankRow: ->
-        model = new @query.modelClass()
-        row = []
-        for field, i in @query.fields.models
-            row[i] = model[field.id]
-        @rows.unshift row
-
-    saveModelChanges: (model) ->
-        @_calculateCache() unless @idCache
-        row = @idCache[model.id]
-        for field, i in @query.fields.models
-            row[i] = model[field.id]
-        model
-
-    modelForRow: (row) ->
-        @modelCache ||= {}
-        @modelCache[this.idForRow(row)] ||= (
-            attrs = {}
-            for field, i in @query.fields.models
-                attrs[field.id] = row[i]
-            new @query.modelClass(attrs)
-        )
-
 class Lanes.Models.Query extends Lanes.Models.Base
 
     session:
@@ -236,10 +170,11 @@ class Lanes.Models.Query extends Lanes.Models.Base
         initialField: 'state'
         idIndex: 'number'
         initialFieldIndex: 'number'
+        pageSize: 'number'
 
     derived:
         results:
-            fn: -> new QueryResult(this)
+            fn: -> new Lanes.Models.QueryResults(this, pageSize: @pageSize)
         collection_class:
             deps:['modelClass'], fn: -> @modelClass?.Collection
         url:

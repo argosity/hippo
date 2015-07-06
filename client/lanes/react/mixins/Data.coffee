@@ -115,12 +115,6 @@ Lanes.React.Mixins.Data = {
         @data = new DataWrapper(this, defaults) unless _.isEmpty(defaults)
         {}
 
-    # When the component mounts, instance a `DataWrapper` to take care
-    # of models and collections binding with `this.state`.
-    # componentWillMount: ->
-    #     defaults = readDataObjects(this)
-    #     @data = new DataWrapper(this, defaults) unless _.isEmpty(defaults)
-
     # When the component unmounts, dispose listeners and delete @data reference.
     componentWillUnmount: ->
         @data.destroy() if @data

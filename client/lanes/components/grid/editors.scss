@@ -42,10 +42,9 @@ $editor-border: 1px solid $editor-border-color;
     // The row editor
     &.row {
         position: absolute;
-
+        width: 100%;
         right: 25px;
         left: 5px;
-
         z-index:11;
         min-height: 10px;
 
