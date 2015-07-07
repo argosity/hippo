@@ -1,0 +1,35 @@
+@dir: "./node_modules/react-widgets/lib/less";
+
+@import "@{dir}/variables.less";
+@import "@{dir}/bootstrap-theme.less";
+
+@import "@{dir}/mixins.less";
+@import "@{dir}/normalize.less";
+// @import "@{dir}/icons.less";
+
+.@{rw-css-prefix} {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1em;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.@{rw-css-prefix}-caret-down:before { content: '\f0d7'; }
+.@{rw-css-prefix}-caret-up:before { content: '\f0d8'; }
+.@{rw-css-prefix}-caret-left:before { content: '\f0d9';  }
+.@{rw-css-prefix}-caret-right:before { content: '\f0da'; }
+
+.@{rw-css-prefix}-clock-o:before { content:'\f017'; }
+.@{rw-css-prefix}-calendar:before { content: '\f073'; }
+.@{rw-css-prefix}-search:before { content: '\f002'; }
+
+@import "@{dir}/core.less";
+@import "@{dir}/popup.less";
+@import "@{dir}/datepicker.less";
+@import "@{dir}/selectlist.less";
+@import "@{dir}/multiselect.less";

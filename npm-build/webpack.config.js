@@ -11,7 +11,7 @@ module.exports = {
     entry: {
         base: "./base.js",
         grid: "./grid.js",
-        select: "./select.js",
+        widgets: "./react-widgets.js",
         development: "./development.js"
     },
     'resolve': {
@@ -29,7 +29,11 @@ module.exports = {
     ],
     module: {
         loaders: [
-            { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") }
+            { test: /\.gif$/, loader: "url-loader?mimetype=image/png" },
+            { test: /\.(png|woff|woff2|eot|ttf|svg)/, loader: "file-loader?name=[name].[ext]"  },
+            { test: /\.less$/, loader: ExtractTextPlugin.extract("style-loader",
+                                                                 "css-loader!less-loader") },
+            { test: /\.css$/,  loader: ExtractTextPlugin.extract("style-loader", "css-loader") }
         ]
     }
 };

@@ -2,7 +2,7 @@ Lanes.Components.Form || = {}
 
 Lanes.Components.Form.FieldMixin = {
     bindDataEvents: ->
-         model: "change:#{@props.name} remote-update:#{@props.name}"
+        model: "change:#{@props.name} remote-update:#{@props.name}"
 
     mixins: [
         Lanes.React.Mixins.Access

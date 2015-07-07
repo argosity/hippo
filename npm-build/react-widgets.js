@@ -1,5 +1,5 @@
 var Lanes = ( global.Lanes || (global.Lanes = {}) );
 Lanes.Vendor = ( Lanes.Vendor || {} );
 
-Lanes.Vendor.Select = require("react-select");
-require("react-select/dist/default.css");
+Lanes.Vendor.ReactWidgets = require('react-widgets')
+require("./react-widgets.less");

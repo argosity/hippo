@@ -86,7 +86,6 @@ class Lanes.Models.QueryResults
         return null
 
     onPageLoad: (page) ->
-        console.log 'page load'
         @query.trigger('load', @query)
 
 

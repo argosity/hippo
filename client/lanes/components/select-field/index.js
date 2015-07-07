@@ -1,2 +1,2 @@
-//= require 'lanes/vendor/select'
+//= require 'lanes/vendor/widgets'
 //= require './SelectField'
