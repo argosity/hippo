@@ -16,7 +16,7 @@
         transition: all 0.15s ease-in-out 0s;
         overflow-x: visible;
         overflow-y: auto;
-        left: 200px;
+        left: 215px;
         right: 35px;
     }
 
@@ -28,12 +28,6 @@
             @extend .icon-rotate-90;
         }
     }
-    /* &.with-screen-menu { */
-    /*   .menu-container { */
-    /*     left: 0px; */
-    /*   } */
-    /* } */
-
 
     .active-screens {
         display: inline-block;
@@ -55,7 +49,6 @@
                 left:0px;
                 top: 1px;
                 min-width:3000px;
-                /* margin-left:12px; */
                 margin-top:0px;
 
                 li {
