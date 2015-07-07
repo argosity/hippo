@@ -6,7 +6,6 @@ class ScreenView extends Lanes.Models.BasicModel
         id: type: 'number', setOnce: true, required: true, default: ->
             _.uniqueId('screen')
 
-
     component: ->
         @screen.getScreen()
 
@@ -56,9 +55,6 @@ class ScreenDefinition extends Lanes.Models.BasicModel
             deps: ['extension', 'model'], fn: ->
                 _.classify(@extension) + ".Screens." + @view
 
-    _setDisplaying: ->
-        new ScreenView( screen: this )
-
     getScreen: ->
         Lanes.u.getPath(@extension_path)
 
@@ -87,7 +83,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
     display: ->
         this.ensureLoaded().then =>
-            @_setDisplaying()
+            new ScreenView( screen: @ )
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection
@@ -98,7 +94,7 @@ class ScreenViewSet extends Lanes.Models.BasicCollection
         @findWhere( active: true )
 
     initialize: (models, options = {}) ->
-        this.on( 'change:active', this.onActiveChange )
+        this.on( 'change:active add', this.onActiveChange )
 
     remove: (model) ->
         index = this.indexOf(model)
@@ -109,7 +105,7 @@ class ScreenViewSet extends Lanes.Models.BasicCollection
         this
 
     onActiveChange: (changed, active) ->
-        return unless active
+        return unless changed.active
         this.each (screen) ->
             screen.set( active: false ) unless screen == changed
 
