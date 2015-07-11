@@ -69,7 +69,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         else
             colProps = _.omit(@props, 'name')
             <BS.Col {...colProps}>
-                <div className="form-group">
+                <div className={@formGroupClasseNames()}>
                     <label className="control-label">{label}</label>
                     <div className="value">
                         {select}

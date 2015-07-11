@@ -108,11 +108,9 @@ class BaseModel
 
 
     # Ensures the assocations given in "names" are loaded
-    withAssociations: (names..., options = {}) ->
-        if _.isString(options)
-            names.push(options); options = {}
+    withAssociations: (names, options = {}) ->
         needed = this.associations?.nonLoaded(this, names)
-        if _.isEmpty( needed )
+        if _.isEmpty( needed ) and not options.force
             return _.Promise.resolve(this)
         else
             options['include'] = needed
@@ -169,11 +167,11 @@ class BaseModel
     # triggering a `"change"` event.
     fetch:  (original_options = {}) ->
         options = _.clone(original_options)
+         options = _.extend(options, {limit:1, ignoreUnsaved:true})
 
         if this.cacheDuration && _.isEmpty(original_options)
             Lanes.Models.ServerCache.fetchRecord(this, options)
         else
-            _.extend(options, {limit:1, ignoreUnsaved:true})
             this.sync('read', this, options)
 
 

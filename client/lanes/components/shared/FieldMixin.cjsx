@@ -35,14 +35,21 @@ Lanes.Components.Form.FieldMixin = {
         value = String(value) if _.isObject(value) or not value
         <span>{value}</span>
 
+    formGroupClasseNames: ->
+        _.classnames('form-group',
+            _.result(this, 'formGroupClass')
+            editing: @isEditingRecord()
+        )
+
     _mixinRenderValue: (label, className) ->
         value = (@renderDisplayValue || @renderMixinDisplayValue)?()
         if @props.unstyled
             value
         else
             className = _.classnames(className, "value", changeset: @state.changeset)
-            <BS.Col {...@props}>
-                <div className="form-group">
+            colProps = _.omit(@props, 'name', 'label')
+            <BS.Col {...colProps}>
+                <div className={@formGroupClasseNames()}>
                     <label className='field read-only'>
                         <div className="title">{label}</div>
                         <div className={className} name={@props.name}>
