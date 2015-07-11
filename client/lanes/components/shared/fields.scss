@@ -31,5 +31,10 @@ label.field {
         outline: 0;
         @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
     }
+    &.toggle {
+        .field .display { border-bottom: 0; }
+
+        &.editing .react-toggle { margin-top: 5px; }
+    }
 
 }

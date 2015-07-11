@@ -1,6 +1,7 @@
 {
   "name": "lanes-vendor-modules",
   "author": "Nathan Stitt",
+  "license": "MIT",
   "description": "Build for deploy",
   "version": "0.0.0",
   "main": "vendor.js",
@@ -29,6 +30,7 @@
     "react-bootstrap": "^0.21.2",
     "react-hot-api": "^0.4.4",
     "react-router": "^0.13.3",
+    "react-toggle": "^1.2.3",
     "react-widgets": "^2.7.2",
     "rsvp": "~3.0",
     "sorty": "^1.2.0",

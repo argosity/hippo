@@ -24,15 +24,14 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         </BS.Button>
 
     renderEditToggle: ->
-        <form className="control navbar-form navbar-left" role="search">
-            <div className="form-group">
-                <label>
-                    <input type="checkbox" className="form-control"
-                        checked={@props.commands.isEditing()}
-                        onChange={@props.commands.toggleEdit} />
-                    Edit
-                </label>
-            </div>
+        <form className="control navbar-form navbar-left">
+           <label>
+               <Lanes.Vendor.ReactToggle
+               aria-labelledby="Editing"
+               onChange={@props.commands.toggleEdit}
+               defaultChecked={@props.commands.isEditing()} />
+               <span className="label-text">Edit</span>
+           </label>
         </form>
 
     isSavable: ->

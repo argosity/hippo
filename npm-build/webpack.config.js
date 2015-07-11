@@ -12,6 +12,7 @@ module.exports = {
         base: "./base.js",
         grid: "./grid.js",
         widgets: "./react-widgets.js",
+        toggle: "./react-toggle.js",
         development: "./development.js"
     },
     'resolve': {

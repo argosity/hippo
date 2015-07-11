@@ -26,7 +26,7 @@
         border-right-color: transparent;
 
         border-bottom-color: $popover-title-bg;
-        border-top-color: $popover-title-bg !important; 
+        border-top-color: $popover-title-bg !important;
 
         border-width: 0 9px 9px;
         height: 0;
@@ -46,6 +46,9 @@
     input {
         margin: 0 0.25rem 0 0;
     }
-
+    .react-toggle {
+        margin-right: 5px;
+        vertical-align: middle;
+    }
     @import "./changes-notification";
 }

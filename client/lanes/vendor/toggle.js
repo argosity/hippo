@@ -1,15 +1,13 @@
-webpackJsonp([1],{
+webpackJsonp([0],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
-	var React = __webpack_require__(3);
-	Lanes.Vendor.ReactTestUtils = React.addons.TestUtils;
-	Lanes.Vendor.hotRL = __webpack_require__(34)(function () {
-	    return __webpack_require__(4)._instancesByReactRootID;
-	});
+
+	Lanes.Vendor.ReactToggle = __webpack_require__(5)
+	__webpack_require__(29);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
@@ -23,12 +21,135 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 34:
+/***/ 5:
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	module.exports = __webpack_require__(189);
+	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var React = _interopRequire(__webpack_require__(13));
+
+	var classNames = _interopRequire(__webpack_require__(211));
+
+	var Check = _interopRequire(__webpack_require__(38));
+
+	var X = _interopRequire(__webpack_require__(39));
+
+	var addons = __webpack_require__(3).addons;
+
+	var PureRenderMixin = addons.PureRenderMixin;
+
+	module.exports = React.createClass({
+	  mixins: [PureRenderMixin],
+
+	  displayName: "Toggle",
+
+	  propTypes: {
+	    checked: React.PropTypes.bool,
+	    defaultChecked: React.PropTypes.bool,
+	    onChange: React.PropTypes.func,
+	    name: React.PropTypes.string,
+	    value: React.PropTypes.string,
+	    id: React.PropTypes.string,
+	    "aria-labelledby": React.PropTypes.string,
+	    "aria-label": React.PropTypes.string
+	  },
+
+	  getInitialState: function getInitialState() {
+	    var checked = false;
+	    if ("checked" in this.props) {
+	      checked = this.props.checked;
+	    } else if ("defaultChecked" in this.props) {
+	      checked = this.props.defaultChecked;
+	    }
+	    return {
+	      checked: !!checked,
+	      hasFocus: false
+	    };
+	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if ("checked" in nextProps) {
+	      this.setState({ checked: !!nextProps.checked });
+	    }
+	  },
+
+	  handleClick: function handleClick(event) {
+	    var checkbox = React.findDOMNode(this.refs.input);
+	    if (event.target !== checkbox) {
+	      event.preventDefault();
+	      checkbox.focus();
+	      checkbox.click();
+	      return;
+	    }
+
+	    if (!("checked" in this.props)) {
+	      this.setState({ checked: checkbox.checked });
+	    }
+	  },
+
+	  handleFocus: function handleFocus() {
+	    this.setState({ hasFocus: true });
+	  },
+
+	  handleBlur: function handleBlur() {
+	    this.setState({ hasFocus: false });
+	  },
+
+	  render: function render() {
+	    var classes = classNames("react-toggle", {
+	      "react-toggle--checked": this.state.checked,
+	      "react-toggle--focus": this.state.hasFocus,
+	      "react-toggle--disabled": this.props.disabled
+	    });
+
+	    return React.createElement(
+	      "div",
+	      { className: classes, onClick: this.handleClick },
+	      React.createElement(
+	        "div",
+	        { className: "react-toggle-track" },
+	        React.createElement(
+	          "div",
+	          { className: "react-toggle-track-check" },
+	          React.createElement(Check, null)
+	        ),
+	        React.createElement(
+	          "div",
+	          { className: "react-toggle-track-x" },
+	          React.createElement(X, null)
+	        )
+	      ),
+	      React.createElement("div", { className: "react-toggle-thumb" }),
+	      React.createElement("input", _extends({
+	        ref: "input",
+	        onFocus: this.handleFocus,
+	        onBlur: this.handleBlur,
+	        className: "react-toggle-screenreader-only",
+	        type: "checkbox"
+	      }, this.props))
+	    );
+	  }
+	});
+
+
+/***/ },
+
+/***/ 13:
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(123);
+
+
+/***/ },
+
+/***/ 29:
+/***/ function(module, exports, __webpack_require__) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ },
 
@@ -92,44 +213,111 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 189:
+/***/ 38:
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	var makePatchReactClass = __webpack_require__(443);
+	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-	/**
-	 * Returns a function that, when invoked, patches a React class with a new
-	 * version of itself. To patch different classes, pass different IDs.
-	 */
-	module.exports = function makeMakeHot(getRootInstances, React) {
-	  if (typeof getRootInstances !== 'function') {
-	    throw new Error('Expected getRootInstances to be a function.');
+	var React = _interopRequire(__webpack_require__(13));
+
+	module.exports = React.createClass({
+	  displayName: "check.es6",
+
+	  render: function render() {
+	    return React.createElement(
+	      "svg",
+	      { width: "14", height: "11", viewBox: "0 0 14 11", xmlns: "http://www.w3.org/2000/svg" },
+	      React.createElement(
+	        "title",
+	        null,
+	        "switch-check"
+	      ),
+	      React.createElement("path", { d: "M11.264 0L5.26 6.004 2.103 2.847 0 4.95l5.26 5.26 8.108-8.107L11.264 0", fill: "#fff", "fill-rule": "evenodd" })
+	    );
 	  }
+	});
 
-	  var patchers = {};
 
-	  return function makeHot(NextClass, persistentId) {
-	    persistentId = persistentId || NextClass.displayName || NextClass.name;
+/***/ },
 
-	    if (!persistentId) {
-	      console.error(
-	        'Hot reload is disabled for one of your types. To enable it, pass a ' +
-	        'string uniquely identifying this class within this current module ' +
-	        'as a second parameter to makeHot.'
-	      );
-	      return NextClass;
-	    }
+/***/ 39:
+/***/ function(module, exports, __webpack_require__) {
 
-	    if (!patchers[persistentId]) {
-	      patchers[persistentId] = makePatchReactClass(getRootInstances, React);
-	    }
+	"use strict";
 
-	    var patchReactClass = patchers[persistentId];
-	    return patchReactClass(NextClass);
-	  };
-	};
+	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+	var React = _interopRequire(__webpack_require__(13));
+
+	module.exports = React.createClass({
+	  displayName: "x.es6",
+
+	  render: function render() {
+	    return React.createElement(
+	      "svg",
+	      { width: "10", height: "10", viewBox: "0 0 10 10", xmlns: "http://www.w3.org/2000/svg" },
+	      React.createElement(
+	        "title",
+	        null,
+	        "switch-x"
+	      ),
+	      React.createElement("path", { d: "M9.9 2.12L7.78 0 4.95 2.828 2.12 0 0 2.12l2.83 2.83L0 7.776 2.123 9.9 4.95 7.07 7.78 9.9 9.9 7.776 7.072 4.95 9.9 2.12", fill: "#fff", "fill-rule": "evenodd" })
+	    );
+	  }
+	});
+
+
+/***/ },
+
+/***/ 211:
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2015 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+
+	function classNames() {
+		var classes = '';
+		var arg;
+
+		for (var i = 0; i < arguments.length; i++) {
+			arg = arguments[i];
+			if (!arg) {
+				continue;
+			}
+
+			if ('string' === typeof arg || 'number' === typeof arg) {
+				classes += ' ' + arg;
+			} else if (Object.prototype.toString.call(arg) === '[object Array]') {
+				classes += ' ' + classNames.apply(null, arg);
+			} else if ('object' === typeof arg) {
+				for (var key in arg) {
+					if (!arg.hasOwnProperty(key) || !arg[key]) {
+						continue;
+					}
+					classes += ' ' + key;
+				}
+			}
+		}
+		return classes.substr(1);
+	}
+
+	// safely export classNames for node / browserify
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	}
+
+	// safely export classNames for RequireJS
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+			return classNames;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}
+
 
 /***/ },
 
@@ -1472,60 +1660,6 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 443:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var makeAssimilatePrototype = __webpack_require__(536),
-	    requestForceUpdateAll = __webpack_require__(537);
-
-	function hasNonStubTypeProperty(ReactClass) {
-	  if (!ReactClass.hasOwnProperty('type')) {
-	    return false;
-	  }
-
-	  var descriptor = Object.getOwnPropertyDescriptor(ReactClass, 'type');
-	  if (typeof descriptor.get === 'function') {
-	    return false;
-	  }
-
-	  return true;
-	}
-
-	function getPrototype(ReactClass) {
-	  var prototype = ReactClass.prototype,
-	      seemsLegit = prototype && typeof prototype.render === 'function';
-
-	  if (!seemsLegit && hasNonStubTypeProperty(ReactClass)) {
-	    prototype = ReactClass.type.prototype;
-	  }
-
-	  return prototype;
-	}
-
-	/**
-	 * Returns a function that will patch React class with new versions of itself
-	 * on subsequent invocations. Both legacy and ES6 style classes are supported.
-	 */
-	module.exports = function makePatchReactClass(getRootInstances, React) {
-	  var assimilatePrototype = makeAssimilatePrototype(),
-	      FirstClass = null;
-
-	  return function patchReactClass(NextClass) {
-	    var nextPrototype = getPrototype(NextClass);
-	    assimilatePrototype(nextPrototype);
-
-	    if (FirstClass) {
-	      requestForceUpdateAll(getRootInstances, React);
-	    }
-
-	    return FirstClass || (FirstClass = NextClass);
-	  };
-	};
-
-/***/ },
-
 /***/ 456:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2092,117 +2226,6 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 536:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	/**
-	 * Returns a function that establishes the first prototype passed to it
-	 * as the "source of truth" and patches its methods on subsequent invocations,
-	 * also patching current and previous prototypes to forward calls to it.
-	 */
-	module.exports = function makeAssimilatePrototype() {
-	  var storedPrototype,
-	      knownPrototypes = [];
-
-	  function wrapMethod(key) {
-	    return function () {
-	      if (storedPrototype[key]) {
-	        return storedPrototype[key].apply(this, arguments);
-	      }
-	    };
-	  }
-
-	  function patchProperty(proto, key) {
-	    proto[key] = storedPrototype[key];
-
-	    if (typeof proto[key] !== 'function' ||
-	      key === 'type' ||
-	      key === 'constructor') {
-	      return;
-	    }
-
-	    proto[key] = wrapMethod(key);
-
-	    if (storedPrototype[key].isReactClassApproved) {
-	      proto[key].isReactClassApproved = storedPrototype[key].isReactClassApproved;
-	    }
-
-	    if (proto.__reactAutoBindMap && proto.__reactAutoBindMap[key]) {
-	      proto.__reactAutoBindMap[key] = proto[key];
-	    }
-	  }
-
-	  function updateStoredPrototype(freshPrototype) {
-	    storedPrototype = {};
-
-	    Object.getOwnPropertyNames(freshPrototype).forEach(function (key) {
-	      storedPrototype[key] = freshPrototype[key];
-	    });
-	  }
-
-	  function reconcileWithStoredPrototypes(freshPrototype) {
-	    knownPrototypes.push(freshPrototype);
-	    knownPrototypes.forEach(function (proto) {
-	      Object.getOwnPropertyNames(storedPrototype).forEach(function (key) {
-	        patchProperty(proto, key);
-	      });
-	    });
-	  }
-
-	  return function assimilatePrototype(freshPrototype) {
-	    if (Object.prototype.hasOwnProperty.call(freshPrototype, '__isAssimilatedByReactHotAPI')) {
-	      return;
-	    }
-
-	    updateStoredPrototype(freshPrototype);
-	    reconcileWithStoredPrototypes(freshPrototype);
-	    freshPrototype.__isAssimilatedByReactHotAPI = true;
-	  };
-	};
-
-/***/ },
-
-/***/ 537:
-/***/ function(module, exports, __webpack_require__) {
-
-	var deepForceUpdate = __webpack_require__(713);
-
-	var isRequestPending = false;
-
-	module.exports = function requestForceUpdateAll(getRootInstances, React) {
-	  if (isRequestPending) {
-	    return;
-	  }
-
-	  /**
-	   * Forces deep re-render of all mounted React components.
-	   * Hat's off to Omar Skalli (@Chetane) for suggesting this approach:
-	   * https://gist.github.com/Chetane/9a230a9fdcdca21a4e29
-	   */
-	  function forceUpdateAll() {
-	    isRequestPending = false;
-
-	    var rootInstances = getRootInstances(),
-	        rootInstance;
-
-	    for (var key in rootInstances) {
-	      if (rootInstances.hasOwnProperty(key)) {
-	        rootInstance = rootInstances[key];
-
-	        // `|| rootInstance` for React 0.12 and earlier
-	        rootInstance = rootInstance._reactInternalInstance || rootInstance;
-	        deepForceUpdate(rootInstance, React);
-	      }
-	    }
-	  }
-
-	  setTimeout(forceUpdateAll);
-	};
-
-/***/ },
-
 /***/ 618:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2361,149 +2384,6 @@ webpackJsonp([1],{
 	}
 
 	module.exports = joinClasses;
-
-
-/***/ },
-
-/***/ 713:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var bindAutoBindMethods = __webpack_require__(788);
-	var traverseRenderedChildren = __webpack_require__(789);
-
-	function setPendingForceUpdate(internalInstance) {
-	  if (internalInstance._pendingForceUpdate === false) {
-	    internalInstance._pendingForceUpdate = true;
-	  }
-	}
-
-	function forceUpdateIfPending(internalInstance, React) {
-	  if (internalInstance._pendingForceUpdate === true) {
-	    // `|| internalInstance` for React 0.12 and earlier
-	    var instance = internalInstance._instance || internalInstance;
-
-	    if (instance.forceUpdate) {
-	      instance.forceUpdate();
-	    } else if (React && React.Component) {
-	      React.Component.prototype.forceUpdate.call(instance);
-	    }
-	  }
-	}
-
-	/**
-	 * Updates a React component recursively, so even if children define funky
-	 * `shouldComponentUpdate`, they are forced to re-render.
-	 * Makes sure that any newly added methods are properly auto-bound.
-	 */
-	function deepForceUpdate(internalInstance, React) {
-	  traverseRenderedChildren(internalInstance, bindAutoBindMethods);
-	  traverseRenderedChildren(internalInstance, setPendingForceUpdate);
-	  traverseRenderedChildren(internalInstance, forceUpdateIfPending, React);
-	}
-
-	module.exports = deepForceUpdate;
-
-
-/***/ },
-
-/***/ 788:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	function bindAutoBindMethod(component, method) {
-	  var boundMethod = method.bind(component);
-
-	  boundMethod.__reactBoundContext = component;
-	  boundMethod.__reactBoundMethod = method;
-	  boundMethod.__reactBoundArguments = null;
-
-	  var componentName = component.constructor.displayName,
-	      _bind = boundMethod.bind;
-
-	  boundMethod.bind = function (newThis) {
-	    var args = Array.prototype.slice.call(arguments, 1);
-	    if (newThis !== component && newThis !== null) {
-	      console.warn(
-	        'bind(): React component methods may only be bound to the ' +
-	        'component instance. See ' + componentName
-	      );
-	    } else if (!args.length) {
-	      console.warn(
-	        'bind(): You are binding a component method to the component. ' +
-	        'React does this for you automatically in a high-performance ' +
-	        'way, so you can safely remove this call. See ' + componentName
-	      );
-	      return boundMethod;
-	    }
-
-	    var reboundMethod = _bind.apply(boundMethod, arguments);
-	    reboundMethod.__reactBoundContext = component;
-	    reboundMethod.__reactBoundMethod = method;
-	    reboundMethod.__reactBoundArguments = args;
-
-	    return reboundMethod;
-	  };
-
-	  return boundMethod;
-	}
-
-	/**
-	 * Performs auto-binding similar to how React does it.
-	 * Skips already auto-bound methods.
-	 * Based on https://github.com/facebook/react/blob/b264372e2b3ad0b0c0c0cc95a2f383e4a1325c3d/src/classic/class/ReactClass.js#L639-L705
-	 */
-	module.exports = function bindAutoBindMethods(internalInstance) {
-	  var component = typeof internalInstance.getPublicInstance === 'function' ?
-	    internalInstance.getPublicInstance() :
-	    internalInstance;
-
-	  for (var autoBindKey in component.__reactAutoBindMap) {
-	    if (!component.__reactAutoBindMap.hasOwnProperty(autoBindKey)) {
-	      continue;
-	    }
-
-	    // Skip already bound methods
-	    if (component.hasOwnProperty(autoBindKey) &&
-	        component[autoBindKey].__reactBoundContext === component) {
-	      continue;
-	    }
-
-	    var method = component.__reactAutoBindMap[autoBindKey];
-	    component[autoBindKey] = bindAutoBindMethod(component, method);
-	  }
-	};
-
-/***/ },
-
-/***/ 789:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	function traverseRenderedChildren(internalInstance, callback, argument) {
-	  callback(internalInstance, argument);
-
-	  if (internalInstance._renderedComponent) {
-	    traverseRenderedChildren(
-	      internalInstance._renderedComponent,
-	      callback,
-	      argument
-	    );
-	  } else {
-	    for (var key in internalInstance._renderedChildren) {
-	      traverseRenderedChildren(
-	        internalInstance._renderedChildren[key],
-	        callback,
-	        argument
-	      );
-	    }
-	  }
-	}
-
-	module.exports = traverseRenderedChildren;
 
 
 /***/ }
