@@ -42,7 +42,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
                 <BS.Row>
                     <BS.Col mdOffset={2} xs={12} md={8}>
 
-                        <LC.TextField
+                        <LC.Input
                             model={@model}
                             autoFocus writable
                             name="login"
@@ -50,7 +50,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
                             placeholder='Enter Login'
                         />
 
-                        <LC.TextField
+                        <LC.Input
                             writable
                             model={@model}
                             name="password"

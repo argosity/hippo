@@ -27,7 +27,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
 
     render: ->
         findIcon = <button className="btn btn-primary icon icon-search icon-lg" onClick={@showFinder}/>
-        <LC.TextField
+        <LC.Input
             ref="input"
             {...@props}
             groupClassName="record-finder"
