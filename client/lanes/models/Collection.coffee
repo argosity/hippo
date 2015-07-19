@@ -1,5 +1,5 @@
 CommonMethods = {
-    findIndexWhere: (attrs)->
+    findIndexWhere: (attrs) ->
         found = -1
         for index, model of @models
             found = parseInt(index)

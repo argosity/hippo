@@ -3,9 +3,7 @@ window.syncSucceedWith = (data) ->
     syncReply.data = data
 
 syncResponse = (method, options) ->
-    new _.Promise( (resolve, reject) ->
-        _.defer -> resolve(syncReply)
-    )
+    _.Promise.resolve(syncReply)
 
 
 syncReply = {}
@@ -28,7 +26,7 @@ beforeEach ->
     originalFn = Lanes.Models.Sync.perform
     spyOn(Lanes.Models.Sync, 'perform').and.callFake(syncResponse)
     Lanes.Models.Sync.perform.lastOptions = ->
-        this.calls.mostRecent().args[1]
+        this.calls.mostRecent()?.args[1]
     Lanes.Models.Sync.restorePerform = (fn) ->
         spy = Lanes.Models.Sync.perform
         Lanes.Models.Sync.perform = originalFn
