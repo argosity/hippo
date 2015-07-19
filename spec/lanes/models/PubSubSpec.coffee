@@ -8,7 +8,7 @@ describe "Lanes.Model.PubSub", ->
         }, { id: 1, foo: 'bar' })
         component = Lanes.Test.makeComponent({}, model: model)
         expect(Lanes.Models.PubSub.add).toHaveBeenCalledWith(model)
-        component.wrapper.destroy()
+        component.data.destroy()
         expect(Lanes.Models.PubSub.remove).toHaveBeenCalledWith(model)
 
     it "can retrieve a model after checkin", ->
