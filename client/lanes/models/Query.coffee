@@ -10,6 +10,7 @@ class Field extends Lanes.Models.Base
         title:    'string'
         visible:  type: 'boolean', default: true
         selected: 'boolean'
+        queryAs:  type: 'string', default: 'field'
         flex:     type: 'number',  default: 1
         textAlign: type: 'string', default: 'left'
 

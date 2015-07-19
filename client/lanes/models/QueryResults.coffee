@@ -5,12 +5,15 @@ class Page
         @rows = []
         @result.query.clauses.each (clause) ->
             _.extend( query, clause.toParam() ) if clause.isValid
+
         options = {
             format: 'array', total_count: 't'
             start: @pageNum * @result.pageSize, limit: @result.pageSize,
             query: query, url: @result.query.url,
-            fields: @result.query.fields.pluck('id')
         }
+        types = @result.query.fields.groupBy('queryAs')
+        options.fields = _.pluck(types.field, 'id')    unless _.isEmpty types.field
+        options.with   = _.pluck(types.optional, 'id') unless _.isEmpty types.optional
 
         Lanes.Models.Sync.perform('GET', options).then (resp) =>
             @result.total = resp.total
