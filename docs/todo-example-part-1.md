@@ -15,7 +15,7 @@ lanes new todo
 
 This will create a new directory with a skeleton Lanes application.  Read more about the directories and what their purposes are at {% doc_link command heading:'lanes new' %}.
 
-[Our example app at this point](https://github.com/argosity/lanes-todo-demo/tree/a0909c52d63d3c8e577bdb4338c91ba74e4b1dfa)
+[Our example app at this point](https://github.com/argosity/lanes-todo-demo/tree/c5ee64a5e932055470bf2d13d417f118b89114d6)
 
 # Setup
 
@@ -23,40 +23,40 @@ A sample database configuration file is located in `config/database.yml` which w
 
 Fire up the lanes testing server: `lanes serve`.  The test server will start the app and you can view it at: `http://localhost:8888/`.   You should see a simple "Todo" message.  You can also view the Jasmine specs at `http://localhost:8888/spec`
 
+Next we'll create a data model `lanes generate model task title:string{80} completed:boolean` [commit](https://github.com/argosity/lanes-todo-demo/commit/e22d058d49c482f9be0167068adab1e37be868bc)
+
+Since a task should default to being non-completed, we'll edit the migration to default that field to `false` and add a validation to the model [commit](https://github.com/argosity/lanes-todo-demo/commit/4fda061c13d399062850173eff7bb616563a82bf)
+
+Lanes uses the concept of **Screens** to dynamically load a React component and all it's dependencies.  In this case, the Todo app will have only one screen which we can create by running: `lanes generate screen main` [commit](https://github.com/argosity/lanes-todo-demo/commit/f8614fd7d2e29987639ed7c6141e35c5e51e035f)
+
+Looking at the Todo app, it has four distinct areas. A `sidebar`, `header`, `footer` and `listing` components. We can create views for them by executing `lanes generate component <name>`, where '< name >' is the view to create. [commit](https://github.com/argosity/lanes-todo-demo/commit/cdd63af42efada9d3c9a05658337e44141a0500a)
+
 We'll copy the styles from the [TodoMVC template](https://github.com/tastejs/todomvc/tree/master/template).
 
-Looking at the Todo app, it has four distinct areas. A `sidebar`, `header`, `footer` and `listing` views. We can create views for them by executing `lanes generate view <name>`, where '< name >' is the view to create. [commit](https://github.com/argosity/lanes-todo-demo/commit/6d34c981637f75a182bf708290a146fdc72c77f2)
-
-First we take the TodoMVC html template and break it apart into sections and copy them to each view.  We're then able to plug each view's reference into the Screen as subviews. [commit](https://github.com/argosity/lanes-todo-demo/commit/33d3d56b7a03e403276e894cc9233d4d2aa353e8)
-
-Next we'll create a data model `lanes generate model task title:string{80} completed:boolean` [commit](https://github.com/argosity/lanes-todo-demo/commit/c157f43fbf13a431e9ea08c67d65026c1b96e6dd)
-
-Since a task should default to being non-completed, we'll edit the migration to default that field to `false` and add a validation to the model [commit](https://github.com/argosity/lanes-todo-demo/commit/6ab50c30eee4b11a4406eacc53b1f5e63de76b45)
+First we take the TodoMVC html template and break it apart into sections and copy them to each view.  We're then able to plug each component's into the Screen. [commit](https://github.com/argosity/lanes-todo-demo/commit/cb2651fc3c7bfc0d2f093023056241b93c9b0597)
 
 Run migration: `lanes db migrate`
 
-We'll also create a TaskSummary model that is in charge of summarizing the state of the tasks.  It will listen to the tasks collection and perform calculations when events occur. [commit](https://github.com/argosity/lanes-todo-demo/commit/c3372a0d76b5aafb4921b98c10f91d34c86ab86f)
+We'll also create a TaskSummary model that is in charge of summarizing the state of the tasks.  It will listen to the tasks collection and perform calculations when events occur. [commit](https://github.com/argosity/lanes-todo-demo/commit/61a9cb6a6101816becf7f0aa556dd6506f9ffed4)
 
 # Data and events
 
-## Header View
-It's responsible for interaction with the "What needs to be done?" input.  When text is present and the "enter" key is pressed, it should save a record and add it to the collection.  We're able to do so in [just a few lines of code](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/views/Header.coffee#L22-L25)
+## Header
+It's responsible for interaction with the "What needs to be done?" input.  When text is present and the "enter" key is pressed, it should save a record and add it to the collection.  We're able to do so in [just a few lines of code](https://github.com/argosity/lanes-todo-demo/commit/bbdf8c8a95ddea8285615d4a7898d9054b22c4b4)
 
-We can easily test that it performs as it should by [adding a few specs](https://github.com/argosity/lanes-todo-demo/blob/master/spec/todo/views/HeaderSpec.coffee). 
+## Listing
+This component is a bit more complex.  It's split into two components, a parent which handles toggling all todo's between being complete and pending, and a collection of task components that model each individual task. [Listing](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/components/Listing.cjsx)
 
-## Listing View
-This view is a bit more complex.  It has a parent view which handles toggling all todo's between being complete and pending, and a collection of subviews that model each individual task. [ListingView](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/views/Listing.coffee)
+Each Task component is responsible for handling it's own editing state and saving value to it's model. [TaskComponent](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/components/Task.cjsx)
 
-Each TaskView is responsible for handling it's own editing state and saving value to it's model.
+## Footer
+The only action this component takes is to delete any tasks that are marked as complete when the "Clear Completed" button is clicked.  It also displays quite a few values from our TasksSummary.  Lane's data-bindings make these easy to wire up. [Footer](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/components/Footer.cjsx)
 
-## Footer View
-The only action this view takes is to delete any tasks that are marked as complete when the "Clear Completed" button is clicked.  It also displays quite a few values from our TasksSummary.  Lane's declarative bindings make these easy to wire up. [FooterView](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/views/Footer.coffee)
-
-You might notice that Lanes makes it super easy to batch update or delete a collection.  The footer simply calls destroyAll on the "completed" sub-collection provided by the TaskSummary.  Since that sub-collection filters the main collection to only contain "completed" tasks, it's safe to just destroy all the model's in one go.  It's so easy in fact that the FooterView demonstrates an alternative use of events.  The function is directly given to the "events" property, rather than a method reference. [Save Call](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/views/Footer.coffee#L27)
+You might notice that Lanes makes it super easy to batch update or delete a collection.  The footer simply calls destroyAll on the "completed" sub-collection provided by the TaskSummary.  Since that sub-collection filters the main collection to only contain "completed" tasks, it's safe to just destroy all the model's in one go.
 
 # Routing
 
-For a simple app like the this one, it's easiest to just allow the URL change to trigger what the filtered collection is displaying.  We set that up when the screen is initialized. [Routing](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/Router.coffee)
+For a simple app like the this one, it's easiest to just allow the URL change to trigger what the filtered collection is displaying. [Routing](https://github.com/argosity/lanes-todo-demo/blob/master/client/todo/Routes.cjsx)
 
 # Deploying
 
@@ -67,5 +67,3 @@ Simply commit the source and add a remote per Heroku's instructions: [https://de
 When you `git push heroku`, Heroku will notice that Lanes uses sprockets and will automatically run `rake assets:precompile`, and then run the application using the puma webserver.
 
 On first deploy and when your db schema has changed, you will have to provision and migrate the database on Heroku by running: `heroku run rake db:migrate`
-
-
