@@ -1,63 +1,65 @@
 class CacheEntry
 
-    constructor: (@collection, @options, @key) ->
-        @duration = Lanes.Vendor.Moment.duration(@collection.cacheDuration...)
-        _.bindAll(this, 'setFromServer')
-        @successCallback = @options.success
-        @options.success = this.setFromServer
-        Lanes.Models.Sync.perform('read', this, @options)
+    constructor: (timeout) ->
+        @duration = Lanes.Vendor.Moment.duration(timeout...)
+        @cache = {}
 
-    url: ->
-        _.result(@collection, 'url')
+    store: (record, key) ->
+        @cache[key] = {
+            data: record
+            at: Lanes.Vendor.Moment(new Date)
+        }
 
-    setFromServer: (reply, status, req) ->
-        if reply?.data?
-            Lanes.Models.ServerCache.store(@key, reply.data, @duration.asMilliseconds())
-        @successCallback?.apply(@options.scope, arguments)
+    get: (key) ->
+        entry = @cache[key]
+        if entry
+            if entry.at.add(this.duration).isAfter(new Date)
+                return entry.data
+            else
+                delete @cache[key]
+        null
 
-    # # needed to
-    # trigger: (type, model, xhr, options)->
-    #     @collection.trigger(type, @collection, xhr, options)
-
+computeCollectionCacheKey = (collection, options) ->
+    url = _.result(collection, "url")
+    query = {}
+    for key, value of options
+        query[ Lanes.Models.Sync.paramsMap[key] ] = value if Lanes.Models.Sync.paramsMap[key]
+    url + Lanes.lib.objToParam(query)
 
 Lanes.Models.ServerCache = {
-    CACHE: {}
+    MODELS: {}
+    COLLECTIONS: {}
 
-    store: (key, data, ms) ->
-        this.CACHE[key] = data
-        setTimeout(->
-            delete Lanes.Models.ServerCache.CACHE[key]
-        , ms)
+    storeRecordData: (key, records, timeout, pk) ->
+        cache = this.MODELS[key] ||= new CacheEntry(timeout)
+        for record in records
+            cache.store(record, record[pk])
 
-    computeCacheKey: (collection, options) ->
-        url = _.result(collection, "url")
-        query = {}
-        for key, value of options
-            query[ Lanes.Models.Sync.paramsMap[key] ] = value if Lanes.Models.Sync.paramsMap[key]
-        url + Lanes.lib.objToParam(query)
-
-    fetchRecord: (record, options) ->
+    fetchRecord: (record, options = {}) ->
         key = record.urlRoot()
+        if (cache = this.MODELS[key])
+            if (data = cache.get(record.getId()))
+                record.setFromServer(data, options)
+                return _.Promise.resolve(record)
 
-        if data_set = this.CACHE[key]
-            found = false
-            for data in data_set
-                if record.id == data.id
-                    found = data
-                    break
-        if data_set && found
-            options.success.call(options.scope, {data: found}, "sucess", {})
-        else
-            this.sync('read', this, options)
+        record.sync('read', record, options).then (record) ->
+            Lanes.Models.ServerCache.storeRecordData(
+                key, [record.toJSON()], record.cacheDuration, record.idAttribute
+            )
+            record
 
-        false
+    fetchCollection: (collection, options = {}) ->
+        key = computeCollectionCacheKey(collection, options)
+        if (cache = this.COLLECTIONS[collection.url()])
 
-    fetchCollection: (collection, options) ->
-        key = this.computeCacheKey(collection, options)
-        if this.CACHE[key]
-            collection.setFromServer(this.CACHE[key], options)
-        else
-            new CacheEntry(collection, options, key)
-        return _.Promise.resolve(collection)
+            if (data = cache.get(key))
+                collection.setFromServer(data, options)
+                return _.Promise.resolve(collection)
+
+        collection.sync('read', collection, options).then (collection) ->
+            ce = Lanes.Models.ServerCache.COLLECTIONS[key] ||= new CacheEntry(collection.cacheDuration)
+            ce.store( collection.toJSON(), key)
+            ce.get( key )
+            collection
 
 }

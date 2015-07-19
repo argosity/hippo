@@ -15,7 +15,8 @@ afterEach ->
 
 beforeEach ->
     @__user_events = Lanes.current_user._events
-    Lanes.Models.ServerCache.CACHE = {}
+    Lanes.Models.ServerCache.MODELS = {}
+    Lanes.Models.ServerCache.COLLECTIONS = {}
     window.LT = Lanes.Test
 
     syncReply = {
