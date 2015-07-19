@@ -148,7 +148,7 @@ describe "Lanes.Models.Base", ->
                 color:{ model: Color }
             props: { id: 'integer', foo: 'string' }
         }, { id: 1 })
-        model.withAssociations('color')
+        model.withAssociations(['color'])
         expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', jasmine.any(Object))
         options = Lanes.Models.Sync.perform.lastOptions()
         expect(options.include).toEqual(['color'])

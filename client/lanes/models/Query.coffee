@@ -212,7 +212,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
         ! @clauses.findWhere( isValid: false )
 
     loadModelWithAssociations: (model) ->
-        model.withAssociations(@loadAssociations...)
+        model.withAssociations(@loadAssociations || [], force:true)
 
     loadSingle: (code, options = {}) ->
         options.query = {}
