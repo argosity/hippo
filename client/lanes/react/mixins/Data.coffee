@@ -18,6 +18,9 @@ class DataWrapper
                 Lanes.warn "#{name} is not set on #{@componentName()}"
                 continue
             prevState = @states[name]
+            # onto next if the object is the same
+            continue if prevState == state
+
             @states[name] = state
             this.stopListening(prevState) if prevState
 
@@ -25,8 +28,9 @@ class DataWrapper
 
             if state.isModel and not ( false == @component.pubsub or false == @component?.pubsub?[name] )
 
-                Lanes.Models.PubSub.remove(prevState) if prevState
-                Lanes.Models.PubSub.add(state)
+                if !prevState? or prevState.getId() != state.getId()
+                    Lanes.Models.PubSub.remove(prevState) if prevState
+                    Lanes.Models.PubSub.add(state)
 
                 @listenTo(state, 'remote-update', @onPubSubChangeSet)
                 @listenToNetworkEvents() if state.listenNetworkEvents
