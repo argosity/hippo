@@ -8,12 +8,12 @@ webpackJsonp([2],{
 	if (! Object.assign){
 	    Object.assign = __webpack_require__(2);
 	}
-	Lanes.Vendor.React = __webpack_require__(13);
-	var FDT = __webpack_require__(14);
+	Lanes.Vendor.React = __webpack_require__(19);
+	var FDT = __webpack_require__(20);
 	Lanes.Vendor.Grid  = FDT.Table;
 	Lanes.Vendor.Grid.Column  = FDT.Column;
 
-	__webpack_require__(27);
+	__webpack_require__(13);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
@@ -55,12 +55,11 @@ webpackJsonp([2],{
 /***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(123);
-
+	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 14:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(124);
@@ -68,14 +67,15 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 27:
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
-	// removed by extract-text-webpack-plugin
+	module.exports = __webpack_require__(125);
+
 
 /***/ },
 
-/***/ 124:
+/***/ 125:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -177,11 +177,11 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var ReactElement = __webpack_require__(43);
-	var ReactPropTransferer = __webpack_require__(461);
+	var ReactElement = __webpack_require__(41);
+	var ReactPropTransferer = __webpack_require__(460);
 
-	var keyOf = __webpack_require__(462);
-	var warning = __webpack_require__(60);
+	var keyOf = __webpack_require__(461);
+	var warning = __webpack_require__(58);
 
 	var CHILDREN_PROP = keyOf({children: null});
 
@@ -1498,7 +1498,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 461:
+/***/ 460:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2060,7 +2060,7 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	module.exports = __webpack_require__(13);
+	module.exports = __webpack_require__(19);
 
 /***/ },
 
@@ -2212,13 +2212,13 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var DOMMouseMoveTracker = __webpack_require__(688);
-	var Keys = __webpack_require__(689);
+	var DOMMouseMoveTracker = __webpack_require__(690);
+	var Keys = __webpack_require__(691);
 	var React = __webpack_require__(511);
 	var ReactComponentWithPureRenderMixin = __webpack_require__(512);
 	var ReactWheelHandler = __webpack_require__(513);
 
-	var cssVar = __webpack_require__(690);
+	var cssVar = __webpack_require__(692);
 	var cx = __webpack_require__(520);
 	var emptyFunction = __webpack_require__(522);
 	var translateDOMPositionXY = __webpack_require__(525);
@@ -2651,12 +2651,12 @@ webpackJsonp([2],{
 	'use strict';
 
 	var React = __webpack_require__(511);
-	var FixedDataTableRowBuffer = __webpack_require__(693);
+	var FixedDataTableRowBuffer = __webpack_require__(688);
 	var FixedDataTableRow = __webpack_require__(517);
 
 	var cx = __webpack_require__(520);
 	var emptyFunction = __webpack_require__(522);
-	var joinClasses = __webpack_require__(692);
+	var joinClasses = __webpack_require__(689);
 	var translateDOMPositionXY = __webpack_require__(525);
 
 	var PropTypes = React.PropTypes;
@@ -2807,7 +2807,7 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var DOMMouseMoveTracker = __webpack_require__(688);
+	var DOMMouseMoveTracker = __webpack_require__(690);
 	var Locale = __webpack_require__(510);
 	var React = __webpack_require__(511);
 	var ReactComponentWithPureRenderMixin = __webpack_require__(512);
@@ -2970,10 +2970,10 @@ webpackJsonp([2],{
 	var FixedDataTableHelper = __webpack_require__(509);
 	var React = __webpack_require__(511);
 	var ReactComponentWithPureRenderMixin = __webpack_require__(512);
-	var FixedDataTableCellGroup = __webpack_require__(691);
+	var FixedDataTableCellGroup = __webpack_require__(693);
 
 	var cx = __webpack_require__(520);
-	var joinClasses = __webpack_require__(692);
+	var joinClasses = __webpack_require__(689);
 	var translateDOMPositionXY = __webpack_require__(525);
 
 	var DIR_SIGN = FixedDataTableHelper.DIR_SIGN;
@@ -3983,9 +3983,9 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var UserAgent_DEPRECATED = __webpack_require__(730);
+	var UserAgent_DEPRECATED = __webpack_require__(732);
 
-	var isEventSupported = __webpack_require__(731);
+	var isEventSupported = __webpack_require__(733);
 
 	// Reasonable defaults
 	var PIXEL_STEP = 10;
@@ -4185,7 +4185,7 @@ webpackJsonp([2],{
 	'use strict';
 
 	var emptyFunction = __webpack_require__(522);
-	var nativeRequestAnimationFrame = __webpack_require__(732);
+	var nativeRequestAnimationFrame = __webpack_require__(730);
 
 	var lastTime = 0;
 
@@ -4221,6 +4221,180 @@ webpackJsonp([2],{
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * @providesModule FixedDataTableRowBuffer
+	 * @typechecks
+	 */
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var IntegerBufferSet = __webpack_require__(731);
+
+	var clamp = __webpack_require__(685);
+	var invariant = __webpack_require__(523);
+	var MIN_BUFFER_ROWS = 3;
+	var MAX_BUFFER_ROWS = 6;
+
+	// FixedDataTableRowBuffer is a helper class that executes row buffering
+	// logic for FixedDataTable. It figures out which rows should be rendered
+	// and in which positions.
+
+	var FixedDataTableRowBuffer = (function () {
+	  function FixedDataTableRowBuffer(
+	  /*number*/rowsCount,
+	  /*number*/defaultRowHeight,
+	  /*number*/viewportHeight,
+	  /*?function*/rowHeightGetter) {
+	    _classCallCheck(this, FixedDataTableRowBuffer);
+
+	    invariant(defaultRowHeight !== 0, 'defaultRowHeight musn\'t be equal 0 in FixedDataTableRowBuffer');
+
+	    this._bufferSet = new IntegerBufferSet();
+	    this._defaultRowHeight = defaultRowHeight;
+	    this._viewportRowsBegin = 0;
+	    this._viewportRowsEnd = 0;
+	    this._maxVisibleRowCount = Math.ceil(viewportHeight / defaultRowHeight) + 1;
+	    this._bufferRowsCount = clamp(MIN_BUFFER_ROWS, Math.floor(this._maxVisibleRowCount / 2), MAX_BUFFER_ROWS);
+	    this._rowsCount = rowsCount;
+	    this._rowHeightGetter = rowHeightGetter;
+	    this._rows = [];
+	    this._viewportHeight = viewportHeight;
+
+	    this.getRows = this.getRows.bind(this);
+	    this.getRowsWithUpdatedBuffer = this.getRowsWithUpdatedBuffer.bind(this);
+	  }
+
+	  _createClass(FixedDataTableRowBuffer, [{
+	    key: 'getRowsWithUpdatedBuffer',
+	    value: function getRowsWithUpdatedBuffer() /*array*/{
+	      var remainingBufferRows = 2 * this._bufferRowsCount;
+	      var bufferRowIndex = Math.max(this._viewportRowsBegin - this._bufferRowsCount, 0);
+	      while (bufferRowIndex < this._viewportRowsBegin) {
+	        this._addRowToBuffer(bufferRowIndex, this._viewportRowsBegin, this._viewportRowsEnd - 1);
+	        bufferRowIndex++;
+	        remainingBufferRows--;
+	      }
+	      bufferRowIndex = this._viewportRowsEnd;
+	      while (bufferRowIndex < this._rowsCount && remainingBufferRows > 0) {
+	        this._addRowToBuffer(bufferRowIndex, this._viewportRowsBegin, this._viewportRowsEnd - 1);
+	        bufferRowIndex++;
+	        remainingBufferRows--;
+	      }
+	      return this._rows;
+	    }
+	  }, {
+	    key: 'getRows',
+	    value: function getRows(
+	    /*number*/firstRowIndex,
+	    /*number*/firstRowOffset) /*array*/{
+	      var top = firstRowOffset;
+	      var totalHeight = top;
+	      var rowIndex = firstRowIndex;
+	      var endIndex = Math.min(firstRowIndex + this._maxVisibleRowCount, this._rowsCount);
+
+	      this._viewportRowsBegin = firstRowIndex;
+	      while (rowIndex < endIndex || totalHeight < this._viewportHeight && rowIndex < this._rowsCount) {
+	        this._addRowToBuffer(rowIndex, firstRowIndex, endIndex - 1);
+	        totalHeight += this._rowHeightGetter(rowIndex);
+	        ++rowIndex;
+	        // Store index after the last viewport row as end, to be able to
+	        // distinguish when there are no rows rendered in viewport
+	        this._viewportRowsEnd = rowIndex;
+	      }
+
+	      return this._rows;
+	    }
+	  }, {
+	    key: '_addRowToBuffer',
+	    value: function _addRowToBuffer(
+	    /*number*/rowIndex,
+	    /*number*/firstViewportRowIndex,
+	    /*number*/lastViewportRowIndex) {
+	      var rowPosition = this._bufferSet.getValuePosition(rowIndex);
+	      var viewportRowsCount = lastViewportRowIndex - firstViewportRowIndex + 1;
+	      var allowedRowsCount = viewportRowsCount + this._bufferRowsCount * 2;
+	      if (rowPosition === null && this._bufferSet.getSize() >= allowedRowsCount) {
+	        rowPosition = this._bufferSet.replaceFurthestValuePosition(firstViewportRowIndex, lastViewportRowIndex, rowIndex);
+	      }
+	      if (rowPosition === null) {
+	        // We can't reuse any of existing positions for this row. We have to
+	        // create new position
+	        rowPosition = this._bufferSet.getNewPositionForValue(rowIndex);
+	        this._rows[rowPosition] = rowIndex;
+	      } else {
+	        // This row already is in the table with rowPosition position or it
+	        // can replace row that is in that position
+	        this._rows[rowPosition] = rowIndex;
+	      }
+	    }
+	  }]);
+
+	  return FixedDataTableRowBuffer;
+	})();
+
+	module.exports = FixedDataTableRowBuffer;
+
+/***/ },
+
+/***/ 689:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule joinClasses
+	 * @typechecks static-only
+	 */
+
+	'use strict';
+
+	/**
+	 * Combines multiple className strings into one.
+	 * http://jsperf.com/joinclasses-args-vs-array
+	 *
+	 * @param {...?string} classes
+	 * @return {string}
+	 */
+	function joinClasses(className /*, ... */) {
+	  if (!className) {
+	    className = '';
+	  }
+	  var nextClass;
+	  var argLength = arguments.length;
+	  if (argLength > 1) {
+	    for (var ii = 1; ii < argLength; ii++) {
+	      nextClass = arguments[ii];
+	      if (nextClass) {
+	        className = (className ? className + ' ' : '') + nextClass;
+	      }
+	    }
+	  }
+	  return className;
+	}
+
+	module.exports = joinClasses;
+
+/***/ },
+
+/***/ 690:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
 	 * This class listens to events on the document and then updates a react
 	 * component through callbacks.
 	 * Please note that captureMouseMove must be called in
@@ -4238,9 +4412,9 @@ webpackJsonp([2],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var EventListener = __webpack_require__(733);
+	var EventListener = __webpack_require__(734);
 
-	var cancelAnimationFramePolyfill = __webpack_require__(734);
+	var cancelAnimationFramePolyfill = __webpack_require__(735);
 	var requestAnimationFramePolyfill = __webpack_require__(687);
 
 	var DOMMouseMoveTracker = (function () {
@@ -4375,7 +4549,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 689:
+/***/ 691:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4418,7 +4592,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 690:
+/***/ 692:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4461,7 +4635,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 691:
+/***/ 693:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4669,180 +4843,6 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 692:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule joinClasses
-	 * @typechecks static-only
-	 */
-
-	'use strict';
-
-	/**
-	 * Combines multiple className strings into one.
-	 * http://jsperf.com/joinclasses-args-vs-array
-	 *
-	 * @param {...?string} classes
-	 * @return {string}
-	 */
-	function joinClasses(className /*, ... */) {
-	  if (!className) {
-	    className = '';
-	  }
-	  var nextClass;
-	  var argLength = arguments.length;
-	  if (argLength > 1) {
-	    for (var ii = 1; ii < argLength; ii++) {
-	      nextClass = arguments[ii];
-	      if (nextClass) {
-	        className = (className ? className + ' ' : '') + nextClass;
-	      }
-	    }
-	  }
-	  return className;
-	}
-
-	module.exports = joinClasses;
-
-/***/ },
-
-/***/ 693:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule FixedDataTableRowBuffer
-	 * @typechecks
-	 */
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var IntegerBufferSet = __webpack_require__(735);
-
-	var clamp = __webpack_require__(685);
-	var invariant = __webpack_require__(523);
-	var MIN_BUFFER_ROWS = 3;
-	var MAX_BUFFER_ROWS = 6;
-
-	// FixedDataTableRowBuffer is a helper class that executes row buffering
-	// logic for FixedDataTable. It figures out which rows should be rendered
-	// and in which positions.
-
-	var FixedDataTableRowBuffer = (function () {
-	  function FixedDataTableRowBuffer(
-	  /*number*/rowsCount,
-	  /*number*/defaultRowHeight,
-	  /*number*/viewportHeight,
-	  /*?function*/rowHeightGetter) {
-	    _classCallCheck(this, FixedDataTableRowBuffer);
-
-	    invariant(defaultRowHeight !== 0, 'defaultRowHeight musn\'t be equal 0 in FixedDataTableRowBuffer');
-
-	    this._bufferSet = new IntegerBufferSet();
-	    this._defaultRowHeight = defaultRowHeight;
-	    this._viewportRowsBegin = 0;
-	    this._viewportRowsEnd = 0;
-	    this._maxVisibleRowCount = Math.ceil(viewportHeight / defaultRowHeight) + 1;
-	    this._bufferRowsCount = clamp(MIN_BUFFER_ROWS, Math.floor(this._maxVisibleRowCount / 2), MAX_BUFFER_ROWS);
-	    this._rowsCount = rowsCount;
-	    this._rowHeightGetter = rowHeightGetter;
-	    this._rows = [];
-	    this._viewportHeight = viewportHeight;
-
-	    this.getRows = this.getRows.bind(this);
-	    this.getRowsWithUpdatedBuffer = this.getRowsWithUpdatedBuffer.bind(this);
-	  }
-
-	  _createClass(FixedDataTableRowBuffer, [{
-	    key: 'getRowsWithUpdatedBuffer',
-	    value: function getRowsWithUpdatedBuffer() /*array*/{
-	      var remainingBufferRows = 2 * this._bufferRowsCount;
-	      var bufferRowIndex = Math.max(this._viewportRowsBegin - this._bufferRowsCount, 0);
-	      while (bufferRowIndex < this._viewportRowsBegin) {
-	        this._addRowToBuffer(bufferRowIndex, this._viewportRowsBegin, this._viewportRowsEnd - 1);
-	        bufferRowIndex++;
-	        remainingBufferRows--;
-	      }
-	      bufferRowIndex = this._viewportRowsEnd;
-	      while (bufferRowIndex < this._rowsCount && remainingBufferRows > 0) {
-	        this._addRowToBuffer(bufferRowIndex, this._viewportRowsBegin, this._viewportRowsEnd - 1);
-	        bufferRowIndex++;
-	        remainingBufferRows--;
-	      }
-	      return this._rows;
-	    }
-	  }, {
-	    key: 'getRows',
-	    value: function getRows(
-	    /*number*/firstRowIndex,
-	    /*number*/firstRowOffset) /*array*/{
-	      var top = firstRowOffset;
-	      var totalHeight = top;
-	      var rowIndex = firstRowIndex;
-	      var endIndex = Math.min(firstRowIndex + this._maxVisibleRowCount, this._rowsCount);
-
-	      this._viewportRowsBegin = firstRowIndex;
-	      while (rowIndex < endIndex || totalHeight < this._viewportHeight && rowIndex < this._rowsCount) {
-	        this._addRowToBuffer(rowIndex, firstRowIndex, endIndex - 1);
-	        totalHeight += this._rowHeightGetter(rowIndex);
-	        ++rowIndex;
-	        // Store index after the last viewport row as end, to be able to
-	        // distinguish when there are no rows rendered in viewport
-	        this._viewportRowsEnd = rowIndex;
-	      }
-
-	      return this._rows;
-	    }
-	  }, {
-	    key: '_addRowToBuffer',
-	    value: function _addRowToBuffer(
-	    /*number*/rowIndex,
-	    /*number*/firstViewportRowIndex,
-	    /*number*/lastViewportRowIndex) {
-	      var rowPosition = this._bufferSet.getValuePosition(rowIndex);
-	      var viewportRowsCount = lastViewportRowIndex - firstViewportRowIndex + 1;
-	      var allowedRowsCount = viewportRowsCount + this._bufferRowsCount * 2;
-	      if (rowPosition === null && this._bufferSet.getSize() >= allowedRowsCount) {
-	        rowPosition = this._bufferSet.replaceFurthestValuePosition(firstViewportRowIndex, lastViewportRowIndex, rowIndex);
-	      }
-	      if (rowPosition === null) {
-	        // We can't reuse any of existing positions for this row. We have to
-	        // create new position
-	        rowPosition = this._bufferSet.getNewPositionForValue(rowIndex);
-	        this._rows[rowPosition] = rowIndex;
-	      } else {
-	        // This row already is in the table with rowPosition position or it
-	        // can replace row that is in that position
-	        this._rows[rowPosition] = rowIndex;
-	      }
-	    }
-	  }]);
-
-	  return FixedDataTableRowBuffer;
-	})();
-
-	module.exports = FixedDataTableRowBuffer;
-
-/***/ },
-
 /***/ 694:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4953,6 +4953,214 @@ webpackJsonp([2],{
 /***/ },
 
 /***/ 730:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {/**
+	 * Copyright (c) 2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule nativeRequestAnimationFrame
+	 */
+
+	"use strict";
+
+	var nativeRequestAnimationFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame;
+
+	module.exports = nativeRequestAnimationFrame;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+
+/***/ 731:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule IntegerBufferSet
+	 * @typechecks
+	 */
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var Heap = __webpack_require__(881);
+
+	var invariant = __webpack_require__(523);
+
+	// Data structure that allows to store values and assign positions to them
+	// in a way to minimize changing positions of stored values when new ones are
+	// added or when some values are replaced. Stored elements are alwasy assigned
+	// a consecutive set of positoins startin from 0 up to count of elements less 1
+	// Following actions can be executed
+	// * get position assigned to given value (null if value is not stored)
+	// * create new entry for new value and get assigned position back
+	// * replace value that is furthest from specified value range with new value
+	//   and get it's position back
+	// All operations take amortized log(n) time where n is number of elements in
+	// the set.
+
+	var IntegerBufferSet = (function () {
+	  function IntegerBufferSet() {
+	    _classCallCheck(this, IntegerBufferSet);
+
+	    this._valueToPositionMap = {};
+	    this._size = 0;
+	    this._smallValues = new Heap([], // Initial data in the heap
+	    this._smallerComparator);
+	    this._largeValues = new Heap([], // Initial data in the heap
+	    this._greaterComparator);
+
+	    this.getNewPositionForValue = this.getNewPositionForValue.bind(this);
+	    this.getValuePosition = this.getValuePosition.bind(this);
+	    this.getSize = this.getSize.bind(this);
+	    this.replaceFurthestValuePosition = this.replaceFurthestValuePosition.bind(this);
+	  }
+
+	  _createClass(IntegerBufferSet, [{
+	    key: 'getSize',
+	    value: function getSize() /*number*/{
+	      return this._size;
+	    }
+	  }, {
+	    key: 'getValuePosition',
+	    value: function getValuePosition( /*number*/value) /*?number*/{
+	      if (this._valueToPositionMap[value] === undefined) {
+	        return null;
+	      }
+	      return this._valueToPositionMap[value];
+	    }
+	  }, {
+	    key: 'getNewPositionForValue',
+	    value: function getNewPositionForValue( /*number*/value) /*number*/{
+	      invariant(this._valueToPositionMap[value] === undefined, 'Shouldn\'t try to find new position for value already stored in BufferSet');
+	      var newPosition = this._size;
+	      this._size++;
+	      this._pushToHeaps(newPosition, value);
+	      this._valueToPositionMap[value] = newPosition;
+	      return newPosition;
+	    }
+	  }, {
+	    key: 'replaceFurthestValuePosition',
+	    value: function replaceFurthestValuePosition(
+	    /*number*/lowValue,
+	    /*number*/highValue,
+	    /*number*/newValue) /*?number*/{
+	      invariant(this._valueToPositionMap[newValue] === undefined, 'Shouldn\'t try to replace values with value already stored value in ' + 'BufferSet');
+
+	      this._cleanHeaps();
+	      if (this._smallValues.empty() || this._largeValues.empty()) {
+	        // Threre are currently no values stored. We will have to create new
+	        // position for this value.
+	        return null;
+	      }
+
+	      var minValue = this._smallValues.peek().value;
+	      var maxValue = this._largeValues.peek().value;
+	      if (minValue >= lowValue && maxValue <= highValue) {
+	        // All values currently stored are necessary, we can't reuse any of them.
+	        return null;
+	      }
+
+	      var valueToReplace;
+	      if (lowValue - minValue > maxValue - highValue) {
+	        // minValue is further from provided range. We will reuse it's position.
+	        valueToReplace = minValue;
+	        this._smallValues.pop();
+	      } else {
+	        valueToReplace = maxValue;
+	        this._largeValues.pop();
+	      }
+	      var position = this._valueToPositionMap[valueToReplace];
+	      delete this._valueToPositionMap[valueToReplace];
+	      this._valueToPositionMap[newValue] = position;
+	      this._pushToHeaps(position, newValue);
+
+	      return position;
+	    }
+	  }, {
+	    key: '_pushToHeaps',
+	    value: function _pushToHeaps( /*number*/position, /*number*/value) {
+	      var element = {
+	        position: position,
+	        value: value };
+	      // We can reuse the same object in both heaps, because we don't mutate them
+	      this._smallValues.push(element);
+	      this._largeValues.push(element);
+	    }
+	  }, {
+	    key: '_cleanHeaps',
+	    value: function _cleanHeaps() {
+	      // We not usually only remove object from one heap while moving value.
+	      // Here we make sure that there is no stale data on top of heaps.
+	      this._cleanHeap(this._smallValues);
+	      this._cleanHeap(this._largeValues);
+	      var minHeapSize = Math.min(this._smallValues.size(), this._largeValues.size());
+	      var maxHeapSize = Math.max(this._smallValues.size(), this._largeValues.size());
+	      if (maxHeapSize > 10 * minHeapSize) {
+	        // There are many old values in one of heaps. We nned to get rid of them
+	        // to not use too avoid memory leaks
+	        this._recreateHeaps();
+	      }
+	    }
+	  }, {
+	    key: '_recreateHeaps',
+	    value: function _recreateHeaps() {
+	      var sourceHeap = this._smallValues.size() < this._largeValues.size() ? this._smallValues : this._largeValues;
+	      var newSmallValues = new Heap([], // Initial data in the heap
+	      this._smallerComparator);
+	      var newLargeValues = new Heap([], // Initial datat in the heap
+	      this._greaterComparator);
+	      while (!sourceHeap.empty()) {
+	        var element = sourceHeap.pop();
+	        // Push all stil valid elements to new heaps
+	        if (this._valueToPositionMap[element.value] !== undefined) {
+	          newSmallValues.push(element);
+	          newLargeValues.push(element);
+	        }
+	      }
+	      this._smallValues = newSmallValues;
+	      this._largeValues = newLargeValues;
+	    }
+	  }, {
+	    key: '_cleanHeap',
+	    value: function _cleanHeap( /*object*/heap) {
+	      while (!heap.empty() && this._valueToPositionMap[heap.peek().value] === undefined) {
+	        heap.pop();
+	      }
+	    }
+	  }, {
+	    key: '_smallerComparator',
+	    value: function _smallerComparator( /*object*/lhs, /*object*/rhs) /*boolean*/{
+	      return lhs.value < rhs.value;
+	    }
+	  }, {
+	    key: '_greaterComparator',
+	    value: function _greaterComparator( /*object*/lhs, /*object*/rhs) /*boolean*/{
+	      return lhs.value > rhs.value;
+	    }
+	  }]);
+
+	  return IntegerBufferSet;
+	})();
+
+	module.exports = IntegerBufferSet;
+
+/***/ },
+
+/***/ 732:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5241,7 +5449,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 731:
+/***/ 733:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5307,30 +5515,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 732:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {/**
-	 * Copyright (c) 2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule nativeRequestAnimationFrame
-	 */
-
-	"use strict";
-
-	var nativeRequestAnimationFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame || global.msRequestAnimationFrame;
-
-	module.exports = nativeRequestAnimationFrame;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-
-/***/ 733:
+/***/ 734:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -5414,7 +5599,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 734:
+/***/ 735:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -5438,191 +5623,6 @@ webpackJsonp([2],{
 
 	module.exports = cancelAnimationFrame;
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-
-/***/ 735:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule IntegerBufferSet
-	 * @typechecks
-	 */
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var Heap = __webpack_require__(881);
-
-	var invariant = __webpack_require__(523);
-
-	// Data structure that allows to store values and assign positions to them
-	// in a way to minimize changing positions of stored values when new ones are
-	// added or when some values are replaced. Stored elements are alwasy assigned
-	// a consecutive set of positoins startin from 0 up to count of elements less 1
-	// Following actions can be executed
-	// * get position assigned to given value (null if value is not stored)
-	// * create new entry for new value and get assigned position back
-	// * replace value that is furthest from specified value range with new value
-	//   and get it's position back
-	// All operations take amortized log(n) time where n is number of elements in
-	// the set.
-
-	var IntegerBufferSet = (function () {
-	  function IntegerBufferSet() {
-	    _classCallCheck(this, IntegerBufferSet);
-
-	    this._valueToPositionMap = {};
-	    this._size = 0;
-	    this._smallValues = new Heap([], // Initial data in the heap
-	    this._smallerComparator);
-	    this._largeValues = new Heap([], // Initial data in the heap
-	    this._greaterComparator);
-
-	    this.getNewPositionForValue = this.getNewPositionForValue.bind(this);
-	    this.getValuePosition = this.getValuePosition.bind(this);
-	    this.getSize = this.getSize.bind(this);
-	    this.replaceFurthestValuePosition = this.replaceFurthestValuePosition.bind(this);
-	  }
-
-	  _createClass(IntegerBufferSet, [{
-	    key: 'getSize',
-	    value: function getSize() /*number*/{
-	      return this._size;
-	    }
-	  }, {
-	    key: 'getValuePosition',
-	    value: function getValuePosition( /*number*/value) /*?number*/{
-	      if (this._valueToPositionMap[value] === undefined) {
-	        return null;
-	      }
-	      return this._valueToPositionMap[value];
-	    }
-	  }, {
-	    key: 'getNewPositionForValue',
-	    value: function getNewPositionForValue( /*number*/value) /*number*/{
-	      invariant(this._valueToPositionMap[value] === undefined, 'Shouldn\'t try to find new position for value already stored in BufferSet');
-	      var newPosition = this._size;
-	      this._size++;
-	      this._pushToHeaps(newPosition, value);
-	      this._valueToPositionMap[value] = newPosition;
-	      return newPosition;
-	    }
-	  }, {
-	    key: 'replaceFurthestValuePosition',
-	    value: function replaceFurthestValuePosition(
-	    /*number*/lowValue,
-	    /*number*/highValue,
-	    /*number*/newValue) /*?number*/{
-	      invariant(this._valueToPositionMap[newValue] === undefined, 'Shouldn\'t try to replace values with value already stored value in ' + 'BufferSet');
-
-	      this._cleanHeaps();
-	      if (this._smallValues.empty() || this._largeValues.empty()) {
-	        // Threre are currently no values stored. We will have to create new
-	        // position for this value.
-	        return null;
-	      }
-
-	      var minValue = this._smallValues.peek().value;
-	      var maxValue = this._largeValues.peek().value;
-	      if (minValue >= lowValue && maxValue <= highValue) {
-	        // All values currently stored are necessary, we can't reuse any of them.
-	        return null;
-	      }
-
-	      var valueToReplace;
-	      if (lowValue - minValue > maxValue - highValue) {
-	        // minValue is further from provided range. We will reuse it's position.
-	        valueToReplace = minValue;
-	        this._smallValues.pop();
-	      } else {
-	        valueToReplace = maxValue;
-	        this._largeValues.pop();
-	      }
-	      var position = this._valueToPositionMap[valueToReplace];
-	      delete this._valueToPositionMap[valueToReplace];
-	      this._valueToPositionMap[newValue] = position;
-	      this._pushToHeaps(position, newValue);
-
-	      return position;
-	    }
-	  }, {
-	    key: '_pushToHeaps',
-	    value: function _pushToHeaps( /*number*/position, /*number*/value) {
-	      var element = {
-	        position: position,
-	        value: value };
-	      // We can reuse the same object in both heaps, because we don't mutate them
-	      this._smallValues.push(element);
-	      this._largeValues.push(element);
-	    }
-	  }, {
-	    key: '_cleanHeaps',
-	    value: function _cleanHeaps() {
-	      // We not usually only remove object from one heap while moving value.
-	      // Here we make sure that there is no stale data on top of heaps.
-	      this._cleanHeap(this._smallValues);
-	      this._cleanHeap(this._largeValues);
-	      var minHeapSize = Math.min(this._smallValues.size(), this._largeValues.size());
-	      var maxHeapSize = Math.max(this._smallValues.size(), this._largeValues.size());
-	      if (maxHeapSize > 10 * minHeapSize) {
-	        // There are many old values in one of heaps. We nned to get rid of them
-	        // to not use too avoid memory leaks
-	        this._recreateHeaps();
-	      }
-	    }
-	  }, {
-	    key: '_recreateHeaps',
-	    value: function _recreateHeaps() {
-	      var sourceHeap = this._smallValues.size() < this._largeValues.size() ? this._smallValues : this._largeValues;
-	      var newSmallValues = new Heap([], // Initial data in the heap
-	      this._smallerComparator);
-	      var newLargeValues = new Heap([], // Initial datat in the heap
-	      this._greaterComparator);
-	      while (!sourceHeap.empty()) {
-	        var element = sourceHeap.pop();
-	        // Push all stil valid elements to new heaps
-	        if (this._valueToPositionMap[element.value] !== undefined) {
-	          newSmallValues.push(element);
-	          newLargeValues.push(element);
-	        }
-	      }
-	      this._smallValues = newSmallValues;
-	      this._largeValues = newLargeValues;
-	    }
-	  }, {
-	    key: '_cleanHeap',
-	    value: function _cleanHeap( /*object*/heap) {
-	      while (!heap.empty() && this._valueToPositionMap[heap.peek().value] === undefined) {
-	        heap.pop();
-	      }
-	    }
-	  }, {
-	    key: '_smallerComparator',
-	    value: function _smallerComparator( /*object*/lhs, /*object*/rhs) /*boolean*/{
-	      return lhs.value < rhs.value;
-	    }
-	  }, {
-	    key: '_greaterComparator',
-	    value: function _greaterComparator( /*object*/lhs, /*object*/rhs) /*boolean*/{
-	      return lhs.value > rhs.value;
-	    }
-	  }]);
-
-	  return IntegerBufferSet;
-	})();
-
-	module.exports = IntegerBufferSet;
 
 /***/ },
 
@@ -5856,7 +5856,7 @@ webpackJsonp([2],{
 	var ReactComponentWithPureRenderMixin = __webpack_require__(512);
 	var cloneWithProps = __webpack_require__(519);
 	var cx = __webpack_require__(520);
-	var joinClasses = __webpack_require__(692);
+	var joinClasses = __webpack_require__(689);
 
 	var PropTypes = React.PropTypes;
 
@@ -6497,7 +6497,7 @@ webpackJsonp([2],{
 	'use strict';
 
 	var invariant = __webpack_require__(523);
-	var keyMirror = __webpack_require__(899);
+	var keyMirror = __webpack_require__(900);
 
 	/**
 	 * Maximum number of levels to traverse. Will catch circular structures.
@@ -6632,7 +6632,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 899:
+/***/ 900:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
