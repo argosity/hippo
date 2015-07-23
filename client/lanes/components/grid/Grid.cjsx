@@ -16,7 +16,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         query: 'load'
 
     propTypes:
-        query:  Lanes.PropTypes.State.isRequired
+        query:  React.PropTypes.instanceOf(Lanes.Models.Query).isRequired
         width:  React.PropTypes.number
         height: React.PropTypes.number
         editor: React.PropTypes.oneOfType([
