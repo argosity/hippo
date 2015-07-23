@@ -172,6 +172,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
         idIndex: 'number'
         initialFieldIndex: 'number'
         pageSize: 'number'
+        autoRetrieve: ['bool', true, true]
 
     derived:
         results:
@@ -194,9 +195,9 @@ class Lanes.Models.Query extends Lanes.Models.Base
             @idIndex = @fields.length
             @fields.add(id: idName)
         @clauses = new Clauses([], query: this )
-        this.listenTo(@clauses, 'change remove reset', ->
+        this.listenTo(@clauses, 'change remove reset', =>
             @results.reset()
-            this.trigger('change', arguments...)
+            @results.ensureLoaded() if this.autoRetrieve
         )
         if @initialFieldIndex
             @initialField = this.fields.at(@initialFieldIndex)
@@ -205,9 +206,6 @@ class Lanes.Models.Query extends Lanes.Models.Base
             this.fields.first()
         this.addNewClause()
         this
-
-    execute: ->
-        this.trigger('execute')
 
     isValid: ->
         ! @clauses.findWhere( isValid: false )
