@@ -13,7 +13,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         query: 'props'
 
     bindDataEvents:
-        query: 'change execute load'
+        query: 'load'
 
     propTypes:
         query:  Lanes.PropTypes.State.isRequired
@@ -26,6 +26,11 @@ class Lanes.Components.Grid extends Lanes.React.Component
         allowCreate:  React.PropTypes.bool
         columEditors: React.PropTypes.object
         onSelectionChange: React.PropTypes.func
+
+    componentWillReceiveProps: (nextProps) ->
+        nextProps.query?.autoRetrieve = true
+    componentDidMount: ->
+        @props.query.autoRetrieve = true
 
     getDefaultProps: ->
         headerHeight: 50, rowHeight: 30, editorProps: {}
