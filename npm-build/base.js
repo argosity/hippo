@@ -15,6 +15,7 @@ Lanes.Vendor.Moment                   = require("moment");
 Lanes.Vendor.RSVP                     = require('rsvp');
 Lanes.Vendor.BBEvents                 = require('backbone-events-standalone');
 Lanes.Vendor.xhr                      = require('xhr');
+Lanes.Vendor.ComponentResize          = require('react-component-resizable');
 
 
 Lanes.Vendor.ld = require('lodash');

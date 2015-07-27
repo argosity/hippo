@@ -21,16 +21,16 @@ class Lanes.Components.Modal extends Lanes.React.Component
         animation: React.PropTypes.bool,
         onRequestHide: React.PropTypes.func
 
-    onRequestHide: ->
+    onHide: ->
         @context.uistate.modalDialog = null
+        @props.onRequestHide?()
 
     render: ->
-        <BS.Modal
+        <BS.Modal.Dialog
             className={@context.uistate.layout_size}
             bsSize="large"
-            onRequestHide={@onRequestHide}
+            show={true}
+            onHide={@onHide}
             {...@props} >
-
             {@props.children}
-
-        </BS.Modal>
+        </BS.Modal.Dialog>

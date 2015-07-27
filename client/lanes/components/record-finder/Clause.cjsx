@@ -29,8 +29,7 @@ class Lanes.Components.RecordFinder.Clause extends Lanes.React.Component
     setValue: (ev) ->
         @model.value = ev.target.value
 
-    runQuery: ->
-        @model.query.execute()
+    runQuery: -> @model.query.results.ensureLoaded()
 
     render: ->
         <BS.Row className="clause">

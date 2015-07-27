@@ -20,8 +20,9 @@
     "lodash": "~3.10.0",
     "moment": "~2.10",
     "object-assign": "^3.0.0",
-    "react": "~0.13.3",
-    "react-bootstrap": "^0.24.0",
+    "react": "^0.13.3",
+    "react-bootstrap": "^0.24.2",
+    "react-component-resizable": "^0.2.3",
     "react-hot-api": "^0.4.5",
     "react-router": "^0.13.3",
     "react-toggle": "^1.2.3",
@@ -34,9 +35,9 @@
     "xhr": "^2.0.3"
   },
   "devDependencies": {
-    "webpack": "^1.10.3",
+    "webpack": "^1.10.5",
     "extract-text-webpack-plugin": "^0.8.2",
-    "css-loader": "^0.15.5",
+    "css-loader": "^0.15.6",
     "file-loader": "^0.8.4",
     "less-loader": "^2.2.0",
     "less": "^2.5.1"

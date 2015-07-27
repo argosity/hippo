@@ -123,7 +123,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         </div>
 
     render: ->
-        <LC.Resize onResize={(size) => @setState(size:size)}>
+        <Lanes.Vendor.ComponentResize onResize={(size) => @setState(size:size)}>
             <div className="grid-component">
                 {@renderToolbar() if @state.toolbar }
                 {@renderEditor() if @props.editor and @state.selIndex?}
@@ -141,4 +141,4 @@ class Lanes.Components.Grid extends Lanes.React.Component
                     {@renderColumns()}
                 </Lanes.Vendor.Grid>
             </div>
-        </LC.Resize>
+        </Lanes.Vendor.ComponentResize>

@@ -1,4 +1,4 @@
-webpackJsonp([0],{
+webpackJsonp([3],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -6,154 +6,30 @@ webpackJsonp([0],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.ReactToggle = __webpack_require__(12)
-	__webpack_require__(15);
+	Lanes.Vendor.ReactToggle = __webpack_require__(1288)
+	__webpack_require__(1292);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 3:
+/***/ 110:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(37);
+	module.exports = __webpack_require__(111);
 
 
 /***/ },
 
-/***/ 12:
+/***/ 1206:
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
-	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var React = _interopRequire(__webpack_require__(19));
-
-	var classNames = _interopRequire(__webpack_require__(214));
-
-	var Check = _interopRequire(__webpack_require__(120));
-
-	var X = _interopRequire(__webpack_require__(121));
-
-	var addons = __webpack_require__(3).addons;
-
-	var PureRenderMixin = addons.PureRenderMixin;
-
-	module.exports = React.createClass({
-	  mixins: [PureRenderMixin],
-
-	  displayName: "Toggle",
-
-	  propTypes: {
-	    checked: React.PropTypes.bool,
-	    defaultChecked: React.PropTypes.bool,
-	    onChange: React.PropTypes.func,
-	    name: React.PropTypes.string,
-	    value: React.PropTypes.string,
-	    id: React.PropTypes.string,
-	    "aria-labelledby": React.PropTypes.string,
-	    "aria-label": React.PropTypes.string
-	  },
-
-	  getInitialState: function getInitialState() {
-	    var checked = false;
-	    if ("checked" in this.props) {
-	      checked = this.props.checked;
-	    } else if ("defaultChecked" in this.props) {
-	      checked = this.props.defaultChecked;
-	    }
-	    return {
-	      checked: !!checked,
-	      hasFocus: false
-	    };
-	  },
-
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if ("checked" in nextProps) {
-	      this.setState({ checked: !!nextProps.checked });
-	    }
-	  },
-
-	  handleClick: function handleClick(event) {
-	    var checkbox = React.findDOMNode(this.refs.input);
-	    if (event.target !== checkbox) {
-	      event.preventDefault();
-	      checkbox.focus();
-	      checkbox.click();
-	      return;
-	    }
-
-	    if (!("checked" in this.props)) {
-	      this.setState({ checked: checkbox.checked });
-	    }
-	  },
-
-	  handleFocus: function handleFocus() {
-	    this.setState({ hasFocus: true });
-	  },
-
-	  handleBlur: function handleBlur() {
-	    this.setState({ hasFocus: false });
-	  },
-
-	  render: function render() {
-	    var classes = classNames("react-toggle", {
-	      "react-toggle--checked": this.state.checked,
-	      "react-toggle--focus": this.state.hasFocus,
-	      "react-toggle--disabled": this.props.disabled
-	    });
-
-	    return React.createElement(
-	      "div",
-	      { className: classes, onClick: this.handleClick },
-	      React.createElement(
-	        "div",
-	        { className: "react-toggle-track" },
-	        React.createElement(
-	          "div",
-	          { className: "react-toggle-track-check" },
-	          React.createElement(Check, null)
-	        ),
-	        React.createElement(
-	          "div",
-	          { className: "react-toggle-track-x" },
-	          React.createElement(X, null)
-	        )
-	      ),
-	      React.createElement("div", { className: "react-toggle-thumb" }),
-	      React.createElement("input", _extends({
-	        ref: "input",
-	        onFocus: this.handleFocus,
-	        onBlur: this.handleBlur,
-	        className: "react-toggle-screenreader-only",
-	        type: "checkbox"
-	      }, this.props))
-	    );
-	  }
-	});
+	module.exports = __webpack_require__(1207);
 
 
 /***/ },
 
-/***/ 15:
-/***/ function(module, exports, __webpack_require__) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-
-/***/ 19:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(124);
-
-
-/***/ },
-
-/***/ 37:
+/***/ 1207:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -176,18 +52,18 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var LinkedStateMixin = __webpack_require__(295);
-	var React = __webpack_require__(124);
+	var LinkedStateMixin = __webpack_require__(1208);
+	var React = __webpack_require__(111);
 	var ReactComponentWithPureRenderMixin =
-	  __webpack_require__(296);
-	var ReactCSSTransitionGroup = __webpack_require__(297);
-	var ReactFragment = __webpack_require__(298);
-	var ReactTransitionGroup = __webpack_require__(299);
-	var ReactUpdates = __webpack_require__(50);
+	  __webpack_require__(1211);
+	var ReactCSSTransitionGroup = __webpack_require__(1212);
+	var ReactFragment = __webpack_require__(119);
+	var ReactTransitionGroup = __webpack_require__(1213);
+	var ReactUpdates = __webpack_require__(133);
 
-	var cx = __webpack_require__(300);
-	var cloneWithProps = __webpack_require__(301);
-	var update = __webpack_require__(302);
+	var cx = __webpack_require__(1221);
+	var cloneWithProps = __webpack_require__(1215);
+	var update = __webpack_require__(1222);
 
 	React.addons = {
 	  CSSTransitionGroup: ReactCSSTransitionGroup,
@@ -203,125 +79,17 @@ webpackJsonp([0],{
 	};
 
 	if ("production" !== process.env.NODE_ENV) {
-	  React.addons.Perf = __webpack_require__(303);
-	  React.addons.TestUtils = __webpack_require__(304);
+	  React.addons.Perf = __webpack_require__(259);
+	  React.addons.TestUtils = __webpack_require__(1223);
 	}
 
 	module.exports = React;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(190)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(112)))
 
 /***/ },
 
-/***/ 120:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
-
-	var React = _interopRequire(__webpack_require__(19));
-
-	module.exports = React.createClass({
-	  displayName: "check.es6",
-
-	  render: function render() {
-	    return React.createElement(
-	      "svg",
-	      { width: "14", height: "11", viewBox: "0 0 14 11", xmlns: "http://www.w3.org/2000/svg" },
-	      React.createElement(
-	        "title",
-	        null,
-	        "switch-check"
-	      ),
-	      React.createElement("path", { d: "M11.264 0L5.26 6.004 2.103 2.847 0 4.95l5.26 5.26 8.108-8.107L11.264 0", fill: "#fff", "fill-rule": "evenodd" })
-	    );
-	  }
-	});
-
-
-/***/ },
-
-/***/ 121:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
-
-	var React = _interopRequire(__webpack_require__(19));
-
-	module.exports = React.createClass({
-	  displayName: "x.es6",
-
-	  render: function render() {
-	    return React.createElement(
-	      "svg",
-	      { width: "10", height: "10", viewBox: "0 0 10 10", xmlns: "http://www.w3.org/2000/svg" },
-	      React.createElement(
-	        "title",
-	        null,
-	        "switch-x"
-	      ),
-	      React.createElement("path", { d: "M9.9 2.12L7.78 0 4.95 2.828 2.12 0 0 2.12l2.83 2.83L0 7.776 2.123 9.9 4.95 7.07 7.78 9.9 9.9 7.776 7.072 4.95 9.9 2.12", fill: "#fff", "fill-rule": "evenodd" })
-	    );
-	  }
-	});
-
-
-/***/ },
-
-/***/ 214:
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2015 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-
-	function classNames() {
-		var classes = '';
-		var arg;
-
-		for (var i = 0; i < arguments.length; i++) {
-			arg = arguments[i];
-			if (!arg) {
-				continue;
-			}
-
-			if ('string' === typeof arg || 'number' === typeof arg) {
-				classes += ' ' + arg;
-			} else if (Object.prototype.toString.call(arg) === '[object Array]') {
-				classes += ' ' + classNames.apply(null, arg);
-			} else if ('object' === typeof arg) {
-				for (var key in arg) {
-					if (!arg.hasOwnProperty(key) || !arg[key]) {
-						continue;
-					}
-					classes += ' ' + key;
-				}
-			}
-		}
-		return classes.substr(1);
-	}
-
-	// safely export classNames for node / browserify
-	if (typeof module !== 'undefined' && module.exports) {
-		module.exports = classNames;
-	}
-
-	// safely export classNames for RequireJS
-	if (true) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
-			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-
-
-/***/ },
-
-/***/ 295:
+/***/ 1208:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -338,8 +106,8 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(458);
-	var ReactStateSetters = __webpack_require__(457);
+	var ReactLink = __webpack_require__(1209);
+	var ReactStateSetters = __webpack_require__(1210);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -367,7 +135,196 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 296:
+/***/ 1209:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactLink
+	 * @typechecks static-only
+	 */
+
+	'use strict';
+
+	/**
+	 * ReactLink encapsulates a common pattern in which a component wants to modify
+	 * a prop received from its parent. ReactLink allows the parent to pass down a
+	 * value coupled with a callback that, when invoked, expresses an intent to
+	 * modify that value. For example:
+	 *
+	 * React.createClass({
+	 *   getInitialState: function() {
+	 *     return {value: ''};
+	 *   },
+	 *   render: function() {
+	 *     var valueLink = new ReactLink(this.state.value, this._handleValueChange);
+	 *     return <input valueLink={valueLink} />;
+	 *   },
+	 *   this._handleValueChange: function(newValue) {
+	 *     this.setState({value: newValue});
+	 *   }
+	 * });
+	 *
+	 * We have provided some sugary mixins to make the creation and
+	 * consumption of ReactLink easier; see LinkedValueUtils and LinkedStateMixin.
+	 */
+
+	var React = __webpack_require__(111);
+
+	/**
+	 * @param {*} value current value of the link
+	 * @param {function} requestChange callback to request a change
+	 */
+	function ReactLink(value, requestChange) {
+	  this.value = value;
+	  this.requestChange = requestChange;
+	}
+
+	/**
+	 * Creates a PropType that enforces the ReactLink API and optionally checks the
+	 * type of the value being passed inside the link. Example:
+	 *
+	 * MyComponent.propTypes = {
+	 *   tabIndexLink: ReactLink.PropTypes.link(React.PropTypes.number)
+	 * }
+	 */
+	function createLinkTypeChecker(linkType) {
+	  var shapes = {
+	    value: typeof linkType === 'undefined' ?
+	      React.PropTypes.any.isRequired :
+	      linkType.isRequired,
+	    requestChange: React.PropTypes.func.isRequired
+	  };
+	  return React.PropTypes.shape(shapes);
+	}
+
+	ReactLink.PropTypes = {
+	  link: createLinkTypeChecker
+	};
+
+	module.exports = ReactLink;
+
+
+/***/ },
+
+/***/ 1210:
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactStateSetters
+	 */
+
+	'use strict';
+
+	var ReactStateSetters = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function(component, funcReturningState) {
+	    return function(a, b, c, d, e, f) {
+	      var partialState = funcReturningState.call(component, a, b, c, d, e, f);
+	      if (partialState) {
+	        component.setState(partialState);
+	      }
+	    };
+	  },
+
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function(component, key) {
+	    // Memoize the setters.
+	    var cache = component.__keySetters || (component.__keySetters = {});
+	    return cache[key] || (cache[key] = createStateKeySetter(component, key));
+	  }
+	};
+
+	function createStateKeySetter(component, key) {
+	  // Partial state is allocated outside of the function closure so it can be
+	  // reused with every call, avoiding memory allocation when this function
+	  // is called.
+	  var partialState = {};
+	  return function stateKeySetter(value) {
+	    partialState[key] = value;
+	    component.setState(partialState);
+	  };
+	}
+
+	ReactStateSetters.Mixin = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateSetter(function(xValue) {
+	   *     return {x: xValue};
+	   *   })(1);
+	   *
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function(funcReturningState) {
+	    return ReactStateSetters.createStateSetter(this, funcReturningState);
+	  },
+
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateKeySetter('x')(1);
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function(key) {
+	    return ReactStateSetters.createStateKeySetter(this, key);
+	  }
+	};
+
+	module.exports = ReactStateSetters;
+
+
+/***/ },
+
+/***/ 1211:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -383,7 +340,7 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var shallowEqual = __webpack_require__(459);
+	var shallowEqual = __webpack_require__(246);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -421,7 +378,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 297:
+/***/ 1212:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -438,15 +395,15 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var React = __webpack_require__(124);
+	var React = __webpack_require__(111);
 
-	var assign = __webpack_require__(310);
+	var assign = __webpack_require__(122);
 
 	var ReactTransitionGroup = React.createFactory(
-	  __webpack_require__(299)
+	  __webpack_require__(1213)
 	);
 	var ReactCSSTransitionGroupChild = React.createFactory(
-	  __webpack_require__(456)
+	  __webpack_require__(1218)
 	);
 
 	var ReactCSSTransitionGroup = React.createClass({
@@ -496,7 +453,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 299:
+/***/ 1213:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -512,12 +469,12 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var React = __webpack_require__(124);
-	var ReactTransitionChildMapping = __webpack_require__(462);
+	var React = __webpack_require__(111);
+	var ReactTransitionChildMapping = __webpack_require__(1214);
 
-	var assign = __webpack_require__(310);
-	var cloneWithProps = __webpack_require__(301);
-	var emptyFunction = __webpack_require__(327);
+	var assign = __webpack_require__(122);
+	var cloneWithProps = __webpack_require__(1215);
+	var emptyFunction = __webpack_require__(125);
 
 	var ReactTransitionGroup = React.createClass({
 	  displayName: 'ReactTransitionGroup',
@@ -731,10 +688,10 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 300:
+/***/ 1214:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {/**
+	/**
 	 * Copyright 2013-2015, Facebook, Inc.
 	 * All rights reserved.
 	 *
@@ -742,56 +699,106 @@ webpackJsonp([0],{
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule cx
-	 */
-
-	/**
-	 * This function is used to mark string literals representing CSS class names
-	 * so that they can be transformed statically. This allows for modularization
-	 * and minification of CSS class names.
-	 *
-	 * In static_upstream, this function is actually implemented, but it should
-	 * eventually be replaced with something more descriptive, and the transform
-	 * that is used in the main stack should be ported for use elsewhere.
-	 *
-	 * @param string|object className to modularize, or an object of key/values.
-	 *                      In the object case, the values are conditions that
-	 *                      determine if the className keys should be included.
-	 * @param [string ...]  Variable list of classNames in the string case.
-	 * @return string       Renderable space-separated CSS className.
+	 * @typechecks static-only
+	 * @providesModule ReactTransitionChildMapping
 	 */
 
 	'use strict';
-	var warning = __webpack_require__(58);
 
-	var warned = false;
+	var ReactChildren = __webpack_require__(117);
+	var ReactFragment = __webpack_require__(119);
 
-	function cx(classNames) {
-	  if ("production" !== process.env.NODE_ENV) {
-	    ("production" !== process.env.NODE_ENV ? warning(
-	      warned,
-	      'React.addons.classSet will be deprecated in a future version. See ' +
-	      'http://fb.me/react-addons-classset'
-	    ) : null);
-	    warned = true;
+	var ReactTransitionChildMapping = {
+	  /**
+	   * Given `this.props.children`, return an object mapping key to child. Just
+	   * simple syntactic sugar around ReactChildren.map().
+	   *
+	   * @param {*} children `this.props.children`
+	   * @return {object} Mapping of key to child
+	   */
+	  getChildMapping: function(children) {
+	    if (!children) {
+	      return children;
+	    }
+	    return ReactFragment.extract(ReactChildren.map(children, function(child) {
+	      return child;
+	    }));
+	  },
+
+	  /**
+	   * When you're adding or removing children some may be added or removed in the
+	   * same render pass. We want to show *both* since we want to simultaneously
+	   * animate elements in and out. This function takes a previous set of keys
+	   * and a new set of keys and merges them with its best guess of the correct
+	   * ordering. In the future we may expose some of the utilities in
+	   * ReactMultiChild to make this easy, but for now React itself does not
+	   * directly have this concept of the union of prevChildren and nextChildren
+	   * so we implement it here.
+	   *
+	   * @param {object} prev prev children as returned from
+	   * `ReactTransitionChildMapping.getChildMapping()`.
+	   * @param {object} next next children as returned from
+	   * `ReactTransitionChildMapping.getChildMapping()`.
+	   * @return {object} a key set that contains all keys in `prev` and all keys
+	   * in `next` in a reasonable order.
+	   */
+	  mergeChildMappings: function(prev, next) {
+	    prev = prev || {};
+	    next = next || {};
+
+	    function getValueForKey(key) {
+	      if (next.hasOwnProperty(key)) {
+	        return next[key];
+	      } else {
+	        return prev[key];
+	      }
+	    }
+
+	    // For each key of `next`, the list of keys to insert before that key in
+	    // the combined list
+	    var nextKeysPending = {};
+
+	    var pendingKeys = [];
+	    for (var prevKey in prev) {
+	      if (next.hasOwnProperty(prevKey)) {
+	        if (pendingKeys.length) {
+	          nextKeysPending[prevKey] = pendingKeys;
+	          pendingKeys = [];
+	        }
+	      } else {
+	        pendingKeys.push(prevKey);
+	      }
+	    }
+
+	    var i;
+	    var childMapping = {};
+	    for (var nextKey in next) {
+	      if (nextKeysPending.hasOwnProperty(nextKey)) {
+	        for (i = 0; i < nextKeysPending[nextKey].length; i++) {
+	          var pendingNextKey = nextKeysPending[nextKey][i];
+	          childMapping[nextKeysPending[nextKey][i]] = getValueForKey(
+	            pendingNextKey
+	          );
+	        }
+	      }
+	      childMapping[nextKey] = getValueForKey(nextKey);
+	    }
+
+	    // Finally, add the keys which didn't appear before any key in `next`
+	    for (i = 0; i < pendingKeys.length; i++) {
+	      childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
+	    }
+
+	    return childMapping;
 	  }
+	};
 
-	  if (typeof classNames == 'object') {
-	    return Object.keys(classNames).filter(function(className) {
-	      return classNames[className];
-	    }).join(' ');
-	  } else {
-	    return Array.prototype.join.call(arguments, ' ');
-	  }
-	}
+	module.exports = ReactTransitionChildMapping;
 
-	module.exports = cx;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(190)))
 
 /***/ },
 
-/***/ 301:
+/***/ 1215:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -808,11 +815,11 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var ReactElement = __webpack_require__(41);
-	var ReactPropTransferer = __webpack_require__(460);
+	var ReactElement = __webpack_require__(120);
+	var ReactPropTransferer = __webpack_require__(1216);
 
-	var keyOf = __webpack_require__(461);
-	var warning = __webpack_require__(58);
+	var keyOf = __webpack_require__(148);
+	var warning = __webpack_require__(124);
 
 	var CHILDREN_PROP = keyOf({children: null});
 
@@ -850,11 +857,616 @@ webpackJsonp([0],{
 
 	module.exports = cloneWithProps;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(190)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(112)))
 
 /***/ },
 
-/***/ 302:
+/***/ 1216:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactPropTransferer
+	 */
+
+	'use strict';
+
+	var assign = __webpack_require__(122);
+	var emptyFunction = __webpack_require__(125);
+	var joinClasses = __webpack_require__(1217);
+
+	/**
+	 * Creates a transfer strategy that will merge prop values using the supplied
+	 * `mergeStrategy`. If a prop was previously unset, this just sets it.
+	 *
+	 * @param {function} mergeStrategy
+	 * @return {function}
+	 */
+	function createTransferStrategy(mergeStrategy) {
+	  return function(props, key, value) {
+	    if (!props.hasOwnProperty(key)) {
+	      props[key] = value;
+	    } else {
+	      props[key] = mergeStrategy(props[key], value);
+	    }
+	  };
+	}
+
+	var transferStrategyMerge = createTransferStrategy(function(a, b) {
+	  // `merge` overrides the first object's (`props[key]` above) keys using the
+	  // second object's (`value`) keys. An object's style's existing `propA` would
+	  // get overridden. Flip the order here.
+	  return assign({}, b, a);
+	});
+
+	/**
+	 * Transfer strategies dictate how props are transferred by `transferPropsTo`.
+	 * NOTE: if you add any more exceptions to this list you should be sure to
+	 * update `cloneWithProps()` accordingly.
+	 */
+	var TransferStrategies = {
+	  /**
+	   * Never transfer `children`.
+	   */
+	  children: emptyFunction,
+	  /**
+	   * Transfer the `className` prop by merging them.
+	   */
+	  className: createTransferStrategy(joinClasses),
+	  /**
+	   * Transfer the `style` prop (which is an object) by merging them.
+	   */
+	  style: transferStrategyMerge
+	};
+
+	/**
+	 * Mutates the first argument by transferring the properties from the second
+	 * argument.
+	 *
+	 * @param {object} props
+	 * @param {object} newProps
+	 * @return {object}
+	 */
+	function transferInto(props, newProps) {
+	  for (var thisKey in newProps) {
+	    if (!newProps.hasOwnProperty(thisKey)) {
+	      continue;
+	    }
+
+	    var transferStrategy = TransferStrategies[thisKey];
+
+	    if (transferStrategy && TransferStrategies.hasOwnProperty(thisKey)) {
+	      transferStrategy(props, thisKey, newProps[thisKey]);
+	    } else if (!props.hasOwnProperty(thisKey)) {
+	      props[thisKey] = newProps[thisKey];
+	    }
+	  }
+	  return props;
+	}
+
+	/**
+	 * ReactPropTransferer are capable of transferring props to another component
+	 * using a `transferPropsTo` method.
+	 *
+	 * @class ReactPropTransferer
+	 */
+	var ReactPropTransferer = {
+
+	  /**
+	   * Merge two props objects using TransferStrategies.
+	   *
+	   * @param {object} oldProps original props (they take precedence)
+	   * @param {object} newProps new props to merge in
+	   * @return {object} a new object containing both sets of props merged.
+	   */
+	  mergeProps: function(oldProps, newProps) {
+	    return transferInto(assign({}, oldProps), newProps);
+	  }
+
+	};
+
+	module.exports = ReactPropTransferer;
+
+
+/***/ },
+
+/***/ 1217:
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule joinClasses
+	 * @typechecks static-only
+	 */
+
+	'use strict';
+
+	/**
+	 * Combines multiple className strings into one.
+	 * http://jsperf.com/joinclasses-args-vs-array
+	 *
+	 * @param {...?string} classes
+	 * @return {string}
+	 */
+	function joinClasses(className/*, ... */) {
+	  if (!className) {
+	    className = '';
+	  }
+	  var nextClass;
+	  var argLength = arguments.length;
+	  if (argLength > 1) {
+	    for (var ii = 1; ii < argLength; ii++) {
+	      nextClass = arguments[ii];
+	      if (nextClass) {
+	        className = (className ? className + ' ' : '') + nextClass;
+	      }
+	    }
+	  }
+	  return className;
+	}
+
+	module.exports = joinClasses;
+
+
+/***/ },
+
+/***/ 1218:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 * @providesModule ReactCSSTransitionGroupChild
+	 */
+
+	'use strict';
+
+	var React = __webpack_require__(111);
+
+	var CSSCore = __webpack_require__(1219);
+	var ReactTransitionEvents = __webpack_require__(1220);
+
+	var onlyChild = __webpack_require__(265);
+	var warning = __webpack_require__(124);
+
+	// We don't remove the element from the DOM until we receive an animationend or
+	// transitionend event. If the user screws up and forgets to add an animation
+	// their node will be stuck in the DOM forever, so we detect if an animation
+	// does not start and if it doesn't, we just call the end listener immediately.
+	var TICK = 17;
+	var NO_EVENT_TIMEOUT = 5000;
+
+	var noEventListener = null;
+
+
+	if ("production" !== process.env.NODE_ENV) {
+	  noEventListener = function() {
+	    ("production" !== process.env.NODE_ENV ? warning(
+	      false,
+	      'transition(): tried to perform an animation without ' +
+	      'an animationend or transitionend event after timeout (' +
+	      '%sms). You should either disable this ' +
+	      'transition in JS or add a CSS animation/transition.',
+	      NO_EVENT_TIMEOUT
+	    ) : null);
+	  };
+	}
+
+	var ReactCSSTransitionGroupChild = React.createClass({
+	  displayName: 'ReactCSSTransitionGroupChild',
+
+	  transition: function(animationType, finishCallback) {
+	    var node = this.getDOMNode();
+	    var className = this.props.name + '-' + animationType;
+	    var activeClassName = className + '-active';
+	    var noEventTimeout = null;
+
+	    var endListener = function(e) {
+	      if (e && e.target !== node) {
+	        return;
+	      }
+	      if ("production" !== process.env.NODE_ENV) {
+	        clearTimeout(noEventTimeout);
+	      }
+
+	      CSSCore.removeClass(node, className);
+	      CSSCore.removeClass(node, activeClassName);
+
+	      ReactTransitionEvents.removeEndEventListener(node, endListener);
+
+	      // Usually this optional callback is used for informing an owner of
+	      // a leave animation and telling it to remove the child.
+	      if (finishCallback) {
+	        finishCallback();
+	      }
+	    };
+
+	    ReactTransitionEvents.addEndEventListener(node, endListener);
+
+	    CSSCore.addClass(node, className);
+
+	    // Need to do this to actually trigger a transition.
+	    this.queueClass(activeClassName);
+
+	    if ("production" !== process.env.NODE_ENV) {
+	      noEventTimeout = setTimeout(noEventListener, NO_EVENT_TIMEOUT);
+	    }
+	  },
+
+	  queueClass: function(className) {
+	    this.classNameQueue.push(className);
+
+	    if (!this.timeout) {
+	      this.timeout = setTimeout(this.flushClassNameQueue, TICK);
+	    }
+	  },
+
+	  flushClassNameQueue: function() {
+	    if (this.isMounted()) {
+	      this.classNameQueue.forEach(
+	        CSSCore.addClass.bind(CSSCore, this.getDOMNode())
+	      );
+	    }
+	    this.classNameQueue.length = 0;
+	    this.timeout = null;
+	  },
+
+	  componentWillMount: function() {
+	    this.classNameQueue = [];
+	  },
+
+	  componentWillUnmount: function() {
+	    if (this.timeout) {
+	      clearTimeout(this.timeout);
+	    }
+	  },
+
+	  componentWillAppear: function(done) {
+	    if (this.props.appear) {
+	      this.transition('appear', done);
+	    } else {
+	      done();
+	    }
+	  },
+
+	  componentWillEnter: function(done) {
+	    if (this.props.enter) {
+	      this.transition('enter', done);
+	    } else {
+	      done();
+	    }
+	  },
+
+	  componentWillLeave: function(done) {
+	    if (this.props.leave) {
+	      this.transition('leave', done);
+	    } else {
+	      done();
+	    }
+	  },
+
+	  render: function() {
+	    return onlyChild(this.props.children);
+	  }
+	});
+
+	module.exports = ReactCSSTransitionGroupChild;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(112)))
+
+/***/ },
+
+/***/ 1219:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule CSSCore
+	 * @typechecks
+	 */
+
+	var invariant = __webpack_require__(116);
+
+	/**
+	 * The CSSCore module specifies the API (and implements most of the methods)
+	 * that should be used when dealing with the display of elements (via their
+	 * CSS classes and visibility on screen. It is an API focused on mutating the
+	 * display and not reading it as no logical state should be encoded in the
+	 * display of elements.
+	 */
+
+	var CSSCore = {
+
+	  /**
+	   * Adds the class passed in to the element if it doesn't already have it.
+	   *
+	   * @param {DOMElement} element the element to set the class on
+	   * @param {string} className the CSS className
+	   * @return {DOMElement} the element passed in
+	   */
+	  addClass: function(element, className) {
+	    ("production" !== process.env.NODE_ENV ? invariant(
+	      !/\s/.test(className),
+	      'CSSCore.addClass takes only a single class name. "%s" contains ' +
+	      'multiple classes.', className
+	    ) : invariant(!/\s/.test(className)));
+
+	    if (className) {
+	      if (element.classList) {
+	        element.classList.add(className);
+	      } else if (!CSSCore.hasClass(element, className)) {
+	        element.className = element.className + ' ' + className;
+	      }
+	    }
+	    return element;
+	  },
+
+	  /**
+	   * Removes the class passed in from the element
+	   *
+	   * @param {DOMElement} element the element to set the class on
+	   * @param {string} className the CSS className
+	   * @return {DOMElement} the element passed in
+	   */
+	  removeClass: function(element, className) {
+	    ("production" !== process.env.NODE_ENV ? invariant(
+	      !/\s/.test(className),
+	      'CSSCore.removeClass takes only a single class name. "%s" contains ' +
+	      'multiple classes.', className
+	    ) : invariant(!/\s/.test(className)));
+
+	    if (className) {
+	      if (element.classList) {
+	        element.classList.remove(className);
+	      } else if (CSSCore.hasClass(element, className)) {
+	        element.className = element.className
+	          .replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1')
+	          .replace(/\s+/g, ' ') // multiple spaces to one
+	          .replace(/^\s*|\s*$/g, ''); // trim the ends
+	      }
+	    }
+	    return element;
+	  },
+
+	  /**
+	   * Helper to add or remove a class from an element based on a condition.
+	   *
+	   * @param {DOMElement} element the element to set the class on
+	   * @param {string} className the CSS className
+	   * @param {*} bool condition to whether to add or remove the class
+	   * @return {DOMElement} the element passed in
+	   */
+	  conditionClass: function(element, className, bool) {
+	    return (bool ? CSSCore.addClass : CSSCore.removeClass)(element, className);
+	  },
+
+	  /**
+	   * Tests whether the element has the class specified.
+	   *
+	   * @param {DOMNode|DOMWindow} element the element to set the class on
+	   * @param {string} className the CSS className
+	   * @return {boolean} true if the element has the class, false if not
+	   */
+	  hasClass: function(element, className) {
+	    ("production" !== process.env.NODE_ENV ? invariant(
+	      !/\s/.test(className),
+	      'CSS.hasClass takes only a single class name.'
+	    ) : invariant(!/\s/.test(className)));
+	    if (element.classList) {
+	      return !!className && element.classList.contains(className);
+	    }
+	    return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
+	  }
+
+	};
+
+	module.exports = CSSCore;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(112)))
+
+/***/ },
+
+/***/ 1220:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactTransitionEvents
+	 */
+
+	'use strict';
+
+	var ExecutionEnvironment = __webpack_require__(160);
+
+	/**
+	 * EVENT_NAME_MAP is used to determine which event fired when a
+	 * transition/animation ends, based on the style property used to
+	 * define that event.
+	 */
+	var EVENT_NAME_MAP = {
+	  transitionend: {
+	    'transition': 'transitionend',
+	    'WebkitTransition': 'webkitTransitionEnd',
+	    'MozTransition': 'mozTransitionEnd',
+	    'OTransition': 'oTransitionEnd',
+	    'msTransition': 'MSTransitionEnd'
+	  },
+
+	  animationend: {
+	    'animation': 'animationend',
+	    'WebkitAnimation': 'webkitAnimationEnd',
+	    'MozAnimation': 'mozAnimationEnd',
+	    'OAnimation': 'oAnimationEnd',
+	    'msAnimation': 'MSAnimationEnd'
+	  }
+	};
+
+	var endEvents = [];
+
+	function detectEvents() {
+	  var testEl = document.createElement('div');
+	  var style = testEl.style;
+
+	  // On some platforms, in particular some releases of Android 4.x,
+	  // the un-prefixed "animation" and "transition" properties are defined on the
+	  // style object but the events that fire will still be prefixed, so we need
+	  // to check if the un-prefixed events are useable, and if not remove them
+	  // from the map
+	  if (!('AnimationEvent' in window)) {
+	    delete EVENT_NAME_MAP.animationend.animation;
+	  }
+
+	  if (!('TransitionEvent' in window)) {
+	    delete EVENT_NAME_MAP.transitionend.transition;
+	  }
+
+	  for (var baseEventName in EVENT_NAME_MAP) {
+	    var baseEvents = EVENT_NAME_MAP[baseEventName];
+	    for (var styleName in baseEvents) {
+	      if (styleName in style) {
+	        endEvents.push(baseEvents[styleName]);
+	        break;
+	      }
+	    }
+	  }
+	}
+
+	if (ExecutionEnvironment.canUseDOM) {
+	  detectEvents();
+	}
+
+	// We use the raw {add|remove}EventListener() call because EventListener
+	// does not know how to remove event listeners and we really should
+	// clean up. Also, these events are not triggered in older browsers
+	// so we should be A-OK here.
+
+	function addEventListener(node, eventName, eventListener) {
+	  node.addEventListener(eventName, eventListener, false);
+	}
+
+	function removeEventListener(node, eventName, eventListener) {
+	  node.removeEventListener(eventName, eventListener, false);
+	}
+
+	var ReactTransitionEvents = {
+	  addEndEventListener: function(node, eventListener) {
+	    if (endEvents.length === 0) {
+	      // If CSS transitions are not supported, trigger an "end animation"
+	      // event immediately.
+	      window.setTimeout(eventListener, 0);
+	      return;
+	    }
+	    endEvents.forEach(function(endEvent) {
+	      addEventListener(node, endEvent, eventListener);
+	    });
+	  },
+
+	  removeEndEventListener: function(node, eventListener) {
+	    if (endEvents.length === 0) {
+	      return;
+	    }
+	    endEvents.forEach(function(endEvent) {
+	      removeEventListener(node, endEvent, eventListener);
+	    });
+	  }
+	};
+
+	module.exports = ReactTransitionEvents;
+
+
+/***/ },
+
+/***/ 1221:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule cx
+	 */
+
+	/**
+	 * This function is used to mark string literals representing CSS class names
+	 * so that they can be transformed statically. This allows for modularization
+	 * and minification of CSS class names.
+	 *
+	 * In static_upstream, this function is actually implemented, but it should
+	 * eventually be replaced with something more descriptive, and the transform
+	 * that is used in the main stack should be ported for use elsewhere.
+	 *
+	 * @param string|object className to modularize, or an object of key/values.
+	 *                      In the object case, the values are conditions that
+	 *                      determine if the className keys should be included.
+	 * @param [string ...]  Variable list of classNames in the string case.
+	 * @return string       Renderable space-separated CSS className.
+	 */
+
+	'use strict';
+	var warning = __webpack_require__(124);
+
+	var warned = false;
+
+	function cx(classNames) {
+	  if ("production" !== process.env.NODE_ENV) {
+	    ("production" !== process.env.NODE_ENV ? warning(
+	      warned,
+	      'React.addons.classSet will be deprecated in a future version. See ' +
+	      'http://fb.me/react-addons-classset'
+	    ) : null);
+	    warned = true;
+	  }
+
+	  if (typeof classNames == 'object') {
+	    return Object.keys(classNames).filter(function(className) {
+	      return classNames[className];
+	    }).join(' ');
+	  } else {
+	    return Array.prototype.join.call(arguments, ' ');
+	  }
+	}
+
+	module.exports = cx;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(112)))
+
+/***/ },
+
+/***/ 1222:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -872,9 +1484,9 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var assign = __webpack_require__(310);
-	var keyOf = __webpack_require__(461);
-	var invariant = __webpack_require__(55);
+	var assign = __webpack_require__(122);
+	var keyOf = __webpack_require__(148);
+	var invariant = __webpack_require__(116);
 	var hasOwnProperty = {}.hasOwnProperty;
 
 	function shallowCopy(x) {
@@ -1025,11 +1637,11 @@ webpackJsonp([0],{
 
 	module.exports = update;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(190)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(112)))
 
 /***/ },
 
-/***/ 304:
+/***/ 1223:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1045,21 +1657,22 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(305);
-	var EventPluginHub = __webpack_require__(306);
-	var EventPropagators = __webpack_require__(465);
-	var React = __webpack_require__(124);
-	var ReactElement = __webpack_require__(41);
-	var ReactEmptyComponent = __webpack_require__(43);
-	var ReactBrowserEventEmitter = __webpack_require__(39);
-	var ReactCompositeComponent = __webpack_require__(324);
-	var ReactInstanceHandles = __webpack_require__(44);
-	var ReactInstanceMap = __webpack_require__(45);
-	var ReactMount = __webpack_require__(4);
-	var ReactUpdates = __webpack_require__(50);
-	var SyntheticEvent = __webpack_require__(466);
+	var EventConstants = __webpack_require__(114);
+	var EventPluginHub = __webpack_require__(178);
+	var EventPropagators = __webpack_require__(202);
+	var React = __webpack_require__(111);
+	var ReactElement = __webpack_require__(120);
+	var ReactEmptyComponent = __webpack_require__(185);
+	var ReactBrowserEventEmitter = __webpack_require__(177);
+	var ReactCompositeComponent = __webpack_require__(193);
+	var ReactInstanceHandles = __webpack_require__(129);
+	var ReactInstanceMap = __webpack_require__(145);
+	var ReactMount = __webpack_require__(176);
+	var ReactUpdates = __webpack_require__(133);
+	var SyntheticEvent = __webpack_require__(206);
 
-	var assign = __webpack_require__(310);
+	var assign = __webpack_require__(122);
+	var emptyObject = __webpack_require__(123);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -1401,6 +2014,9 @@ webpackJsonp([0],{
 	);
 
 	ReactShallowRenderer.prototype.render = function(element, context) {
+	  if (!context) {
+	    context = emptyObject;
+	  }
 	  var transaction = ReactUpdates.ReactReconcileTransaction.getPooled();
 	  this._render(element, transaction, context);
 	  ReactUpdates.ReactReconcileTransaction.release(transaction);
@@ -1544,847 +2160,235 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 404:
+/***/ 1288:
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactTransitionEvents
-	 */
+	"use strict";
 
-	'use strict';
+	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-	var ExecutionEnvironment = __webpack_require__(326);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	/**
-	 * EVENT_NAME_MAP is used to determine which event fired when a
-	 * transition/animation ends, based on the style property used to
-	 * define that event.
-	 */
-	var EVENT_NAME_MAP = {
-	  transitionend: {
-	    'transition': 'transitionend',
-	    'WebkitTransition': 'webkitTransitionEnd',
-	    'MozTransition': 'mozTransitionEnd',
-	    'OTransition': 'oTransitionEnd',
-	    'msTransition': 'MSTransitionEnd'
+	var React = _interopRequire(__webpack_require__(110));
+
+	var classNames = _interopRequire(__webpack_require__(1289));
+
+	var Check = _interopRequire(__webpack_require__(1290));
+
+	var X = _interopRequire(__webpack_require__(1291));
+
+	var addons = __webpack_require__(1206).addons;
+
+	var PureRenderMixin = addons.PureRenderMixin;
+
+	module.exports = React.createClass({
+	  mixins: [PureRenderMixin],
+
+	  displayName: "Toggle",
+
+	  propTypes: {
+	    checked: React.PropTypes.bool,
+	    defaultChecked: React.PropTypes.bool,
+	    onChange: React.PropTypes.func,
+	    name: React.PropTypes.string,
+	    value: React.PropTypes.string,
+	    id: React.PropTypes.string,
+	    "aria-labelledby": React.PropTypes.string,
+	    "aria-label": React.PropTypes.string
 	  },
 
-	  animationend: {
-	    'animation': 'animationend',
-	    'WebkitAnimation': 'webkitAnimationEnd',
-	    'MozAnimation': 'mozAnimationEnd',
-	    'OAnimation': 'oAnimationEnd',
-	    'msAnimation': 'MSAnimationEnd'
-	  }
-	};
-
-	var endEvents = [];
-
-	function detectEvents() {
-	  var testEl = document.createElement('div');
-	  var style = testEl.style;
-
-	  // On some platforms, in particular some releases of Android 4.x,
-	  // the un-prefixed "animation" and "transition" properties are defined on the
-	  // style object but the events that fire will still be prefixed, so we need
-	  // to check if the un-prefixed events are useable, and if not remove them
-	  // from the map
-	  if (!('AnimationEvent' in window)) {
-	    delete EVENT_NAME_MAP.animationend.animation;
-	  }
-
-	  if (!('TransitionEvent' in window)) {
-	    delete EVENT_NAME_MAP.transitionend.transition;
-	  }
-
-	  for (var baseEventName in EVENT_NAME_MAP) {
-	    var baseEvents = EVENT_NAME_MAP[baseEventName];
-	    for (var styleName in baseEvents) {
-	      if (styleName in style) {
-	        endEvents.push(baseEvents[styleName]);
-	        break;
-	      }
+	  getInitialState: function getInitialState() {
+	    var checked = false;
+	    if ("checked" in this.props) {
+	      checked = this.props.checked;
+	    } else if ("defaultChecked" in this.props) {
+	      checked = this.props.defaultChecked;
 	    }
-	  }
-	}
-
-	if (ExecutionEnvironment.canUseDOM) {
-	  detectEvents();
-	}
-
-	// We use the raw {add|remove}EventListener() call because EventListener
-	// does not know how to remove event listeners and we really should
-	// clean up. Also, these events are not triggered in older browsers
-	// so we should be A-OK here.
-
-	function addEventListener(node, eventName, eventListener) {
-	  node.addEventListener(eventName, eventListener, false);
-	}
-
-	function removeEventListener(node, eventName, eventListener) {
-	  node.removeEventListener(eventName, eventListener, false);
-	}
-
-	var ReactTransitionEvents = {
-	  addEndEventListener: function(node, eventListener) {
-	    if (endEvents.length === 0) {
-	      // If CSS transitions are not supported, trigger an "end animation"
-	      // event immediately.
-	      window.setTimeout(eventListener, 0);
-	      return;
-	    }
-	    endEvents.forEach(function(endEvent) {
-	      addEventListener(node, endEvent, eventListener);
-	    });
-	  },
-
-	  removeEndEventListener: function(node, eventListener) {
-	    if (endEvents.length === 0) {
-	      return;
-	    }
-	    endEvents.forEach(function(endEvent) {
-	      removeEventListener(node, endEvent, eventListener);
-	    });
-	  }
-	};
-
-	module.exports = ReactTransitionEvents;
-
-
-/***/ },
-
-/***/ 456:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @typechecks
-	 * @providesModule ReactCSSTransitionGroupChild
-	 */
-
-	'use strict';
-
-	var React = __webpack_require__(124);
-
-	var CSSCore = __webpack_require__(618);
-	var ReactTransitionEvents = __webpack_require__(404);
-
-	var onlyChild = __webpack_require__(383);
-	var warning = __webpack_require__(58);
-
-	// We don't remove the element from the DOM until we receive an animationend or
-	// transitionend event. If the user screws up and forgets to add an animation
-	// their node will be stuck in the DOM forever, so we detect if an animation
-	// does not start and if it doesn't, we just call the end listener immediately.
-	var TICK = 17;
-	var NO_EVENT_TIMEOUT = 5000;
-
-	var noEventListener = null;
-
-
-	if ("production" !== process.env.NODE_ENV) {
-	  noEventListener = function() {
-	    ("production" !== process.env.NODE_ENV ? warning(
-	      false,
-	      'transition(): tried to perform an animation without ' +
-	      'an animationend or transitionend event after timeout (' +
-	      '%sms). You should either disable this ' +
-	      'transition in JS or add a CSS animation/transition.',
-	      NO_EVENT_TIMEOUT
-	    ) : null);
-	  };
-	}
-
-	var ReactCSSTransitionGroupChild = React.createClass({
-	  displayName: 'ReactCSSTransitionGroupChild',
-
-	  transition: function(animationType, finishCallback) {
-	    var node = this.getDOMNode();
-	    var className = this.props.name + '-' + animationType;
-	    var activeClassName = className + '-active';
-	    var noEventTimeout = null;
-
-	    var endListener = function(e) {
-	      if (e && e.target !== node) {
-	        return;
-	      }
-	      if ("production" !== process.env.NODE_ENV) {
-	        clearTimeout(noEventTimeout);
-	      }
-
-	      CSSCore.removeClass(node, className);
-	      CSSCore.removeClass(node, activeClassName);
-
-	      ReactTransitionEvents.removeEndEventListener(node, endListener);
-
-	      // Usually this optional callback is used for informing an owner of
-	      // a leave animation and telling it to remove the child.
-	      if (finishCallback) {
-	        finishCallback();
-	      }
-	    };
-
-	    ReactTransitionEvents.addEndEventListener(node, endListener);
-
-	    CSSCore.addClass(node, className);
-
-	    // Need to do this to actually trigger a transition.
-	    this.queueClass(activeClassName);
-
-	    if ("production" !== process.env.NODE_ENV) {
-	      noEventTimeout = setTimeout(noEventListener, NO_EVENT_TIMEOUT);
-	    }
-	  },
-
-	  queueClass: function(className) {
-	    this.classNameQueue.push(className);
-
-	    if (!this.timeout) {
-	      this.timeout = setTimeout(this.flushClassNameQueue, TICK);
-	    }
-	  },
-
-	  flushClassNameQueue: function() {
-	    if (this.isMounted()) {
-	      this.classNameQueue.forEach(
-	        CSSCore.addClass.bind(CSSCore, this.getDOMNode())
-	      );
-	    }
-	    this.classNameQueue.length = 0;
-	    this.timeout = null;
-	  },
-
-	  componentWillMount: function() {
-	    this.classNameQueue = [];
-	  },
-
-	  componentWillUnmount: function() {
-	    if (this.timeout) {
-	      clearTimeout(this.timeout);
-	    }
-	  },
-
-	  componentWillAppear: function(done) {
-	    if (this.props.appear) {
-	      this.transition('appear', done);
-	    } else {
-	      done();
-	    }
-	  },
-
-	  componentWillEnter: function(done) {
-	    if (this.props.enter) {
-	      this.transition('enter', done);
-	    } else {
-	      done();
-	    }
-	  },
-
-	  componentWillLeave: function(done) {
-	    if (this.props.leave) {
-	      this.transition('leave', done);
-	    } else {
-	      done();
-	    }
-	  },
-
-	  render: function() {
-	    return onlyChild(this.props.children);
-	  }
-	});
-
-	module.exports = ReactCSSTransitionGroupChild;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(190)))
-
-/***/ },
-
-/***/ 457:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactStateSetters
-	 */
-
-	'use strict';
-
-	var ReactStateSetters = {
-	  /**
-	   * Returns a function that calls the provided function, and uses the result
-	   * of that to set the component's state.
-	   *
-	   * @param {ReactCompositeComponent} component
-	   * @param {function} funcReturningState Returned callback uses this to
-	   *                                      determine how to update state.
-	   * @return {function} callback that when invoked uses funcReturningState to
-	   *                    determined the object literal to setState.
-	   */
-	  createStateSetter: function(component, funcReturningState) {
-	    return function(a, b, c, d, e, f) {
-	      var partialState = funcReturningState.call(component, a, b, c, d, e, f);
-	      if (partialState) {
-	        component.setState(partialState);
-	      }
+	    return {
+	      checked: !!checked,
+	      hasFocus: false
 	    };
 	  },
 
-	  /**
-	   * Returns a single-argument callback that can be used to update a single
-	   * key in the component's state.
-	   *
-	   * Note: this is memoized function, which makes it inexpensive to call.
-	   *
-	   * @param {ReactCompositeComponent} component
-	   * @param {string} key The key in the state that you should update.
-	   * @return {function} callback of 1 argument which calls setState() with
-	   *                    the provided keyName and callback argument.
-	   */
-	  createStateKeySetter: function(component, key) {
-	    // Memoize the setters.
-	    var cache = component.__keySetters || (component.__keySetters = {});
-	    return cache[key] || (cache[key] = createStateKeySetter(component, key));
-	  }
-	};
-
-	function createStateKeySetter(component, key) {
-	  // Partial state is allocated outside of the function closure so it can be
-	  // reused with every call, avoiding memory allocation when this function
-	  // is called.
-	  var partialState = {};
-	  return function stateKeySetter(value) {
-	    partialState[key] = value;
-	    component.setState(partialState);
-	  };
-	}
-
-	ReactStateSetters.Mixin = {
-	  /**
-	   * Returns a function that calls the provided function, and uses the result
-	   * of that to set the component's state.
-	   *
-	   * For example, these statements are equivalent:
-	   *
-	   *   this.setState({x: 1});
-	   *   this.createStateSetter(function(xValue) {
-	   *     return {x: xValue};
-	   *   })(1);
-	   *
-	   * @param {function} funcReturningState Returned callback uses this to
-	   *                                      determine how to update state.
-	   * @return {function} callback that when invoked uses funcReturningState to
-	   *                    determined the object literal to setState.
-	   */
-	  createStateSetter: function(funcReturningState) {
-	    return ReactStateSetters.createStateSetter(this, funcReturningState);
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if ("checked" in nextProps) {
+	      this.setState({ checked: !!nextProps.checked });
+	    }
 	  },
 
-	  /**
-	   * Returns a single-argument callback that can be used to update a single
-	   * key in the component's state.
-	   *
-	   * For example, these statements are equivalent:
-	   *
-	   *   this.setState({x: 1});
-	   *   this.createStateKeySetter('x')(1);
-	   *
-	   * Note: this is memoized function, which makes it inexpensive to call.
-	   *
-	   * @param {string} key The key in the state that you should update.
-	   * @return {function} callback of 1 argument which calls setState() with
-	   *                    the provided keyName and callback argument.
-	   */
-	  createStateKeySetter: function(key) {
-	    return ReactStateSetters.createStateKeySetter(this, key);
-	  }
-	};
-
-	module.exports = ReactStateSetters;
-
-
-/***/ },
-
-/***/ 458:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactLink
-	 * @typechecks static-only
-	 */
-
-	'use strict';
-
-	/**
-	 * ReactLink encapsulates a common pattern in which a component wants to modify
-	 * a prop received from its parent. ReactLink allows the parent to pass down a
-	 * value coupled with a callback that, when invoked, expresses an intent to
-	 * modify that value. For example:
-	 *
-	 * React.createClass({
-	 *   getInitialState: function() {
-	 *     return {value: ''};
-	 *   },
-	 *   render: function() {
-	 *     var valueLink = new ReactLink(this.state.value, this._handleValueChange);
-	 *     return <input valueLink={valueLink} />;
-	 *   },
-	 *   this._handleValueChange: function(newValue) {
-	 *     this.setState({value: newValue});
-	 *   }
-	 * });
-	 *
-	 * We have provided some sugary mixins to make the creation and
-	 * consumption of ReactLink easier; see LinkedValueUtils and LinkedStateMixin.
-	 */
-
-	var React = __webpack_require__(124);
-
-	/**
-	 * @param {*} value current value of the link
-	 * @param {function} requestChange callback to request a change
-	 */
-	function ReactLink(value, requestChange) {
-	  this.value = value;
-	  this.requestChange = requestChange;
-	}
-
-	/**
-	 * Creates a PropType that enforces the ReactLink API and optionally checks the
-	 * type of the value being passed inside the link. Example:
-	 *
-	 * MyComponent.propTypes = {
-	 *   tabIndexLink: ReactLink.PropTypes.link(React.PropTypes.number)
-	 * }
-	 */
-	function createLinkTypeChecker(linkType) {
-	  var shapes = {
-	    value: typeof linkType === 'undefined' ?
-	      React.PropTypes.any.isRequired :
-	      linkType.isRequired,
-	    requestChange: React.PropTypes.func.isRequired
-	  };
-	  return React.PropTypes.shape(shapes);
-	}
-
-	ReactLink.PropTypes = {
-	  link: createLinkTypeChecker
-	};
-
-	module.exports = ReactLink;
-
-
-/***/ },
-
-/***/ 460:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactPropTransferer
-	 */
-
-	'use strict';
-
-	var assign = __webpack_require__(310);
-	var emptyFunction = __webpack_require__(327);
-	var joinClasses = __webpack_require__(619);
-
-	/**
-	 * Creates a transfer strategy that will merge prop values using the supplied
-	 * `mergeStrategy`. If a prop was previously unset, this just sets it.
-	 *
-	 * @param {function} mergeStrategy
-	 * @return {function}
-	 */
-	function createTransferStrategy(mergeStrategy) {
-	  return function(props, key, value) {
-	    if (!props.hasOwnProperty(key)) {
-	      props[key] = value;
-	    } else {
-	      props[key] = mergeStrategy(props[key], value);
+	  handleClick: function handleClick(event) {
+	    var checkbox = React.findDOMNode(this.refs.input);
+	    if (event.target !== checkbox) {
+	      event.preventDefault();
+	      checkbox.focus();
+	      checkbox.click();
+	      return;
 	    }
-	  };
-	}
 
-	var transferStrategyMerge = createTransferStrategy(function(a, b) {
-	  // `merge` overrides the first object's (`props[key]` above) keys using the
-	  // second object's (`value`) keys. An object's style's existing `propA` would
-	  // get overridden. Flip the order here.
-	  return assign({}, b, a);
+	    if (!("checked" in this.props)) {
+	      this.setState({ checked: checkbox.checked });
+	    }
+	  },
+
+	  handleFocus: function handleFocus() {
+	    this.setState({ hasFocus: true });
+	  },
+
+	  handleBlur: function handleBlur() {
+	    this.setState({ hasFocus: false });
+	  },
+
+	  render: function render() {
+	    var classes = classNames("react-toggle", {
+	      "react-toggle--checked": this.state.checked,
+	      "react-toggle--focus": this.state.hasFocus,
+	      "react-toggle--disabled": this.props.disabled
+	    });
+
+	    return React.createElement(
+	      "div",
+	      { className: classes, onClick: this.handleClick },
+	      React.createElement(
+	        "div",
+	        { className: "react-toggle-track" },
+	        React.createElement(
+	          "div",
+	          { className: "react-toggle-track-check" },
+	          React.createElement(Check, null)
+	        ),
+	        React.createElement(
+	          "div",
+	          { className: "react-toggle-track-x" },
+	          React.createElement(X, null)
+	        )
+	      ),
+	      React.createElement("div", { className: "react-toggle-thumb" }),
+	      React.createElement("input", _extends({
+	        ref: "input",
+	        onFocus: this.handleFocus,
+	        onBlur: this.handleBlur,
+	        className: "react-toggle-screenreader-only",
+	        type: "checkbox"
+	      }, this.props))
+	    );
+	  }
 	});
 
-	/**
-	 * Transfer strategies dictate how props are transferred by `transferPropsTo`.
-	 * NOTE: if you add any more exceptions to this list you should be sure to
-	 * update `cloneWithProps()` accordingly.
-	 */
-	var TransferStrategies = {
-	  /**
-	   * Never transfer `children`.
-	   */
-	  children: emptyFunction,
-	  /**
-	   * Transfer the `className` prop by merging them.
-	   */
-	  className: createTransferStrategy(joinClasses),
-	  /**
-	   * Transfer the `style` prop (which is an object) by merging them.
-	   */
-	  style: transferStrategyMerge
-	};
 
-	/**
-	 * Mutates the first argument by transferring the properties from the second
-	 * argument.
-	 *
-	 * @param {object} props
-	 * @param {object} newProps
-	 * @return {object}
-	 */
-	function transferInto(props, newProps) {
-	  for (var thisKey in newProps) {
-	    if (!newProps.hasOwnProperty(thisKey)) {
-	      continue;
-	    }
+/***/ },
 
-	    var transferStrategy = TransferStrategies[thisKey];
+/***/ 1289:
+/***/ function(module, exports, __webpack_require__) {
 
-	    if (transferStrategy && TransferStrategies.hasOwnProperty(thisKey)) {
-	      transferStrategy(props, thisKey, newProps[thisKey]);
-	    } else if (!props.hasOwnProperty(thisKey)) {
-	      props[thisKey] = newProps[thisKey];
-	    }
-	  }
-	  return props;
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2015 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+
+	function classNames() {
+		var classes = '';
+		var arg;
+
+		for (var i = 0; i < arguments.length; i++) {
+			arg = arguments[i];
+			if (!arg) {
+				continue;
+			}
+
+			if ('string' === typeof arg || 'number' === typeof arg) {
+				classes += ' ' + arg;
+			} else if (Object.prototype.toString.call(arg) === '[object Array]') {
+				classes += ' ' + classNames.apply(null, arg);
+			} else if ('object' === typeof arg) {
+				for (var key in arg) {
+					if (!arg.hasOwnProperty(key) || !arg[key]) {
+						continue;
+					}
+					classes += ' ' + key;
+				}
+			}
+		}
+		return classes.substr(1);
 	}
 
-	/**
-	 * ReactPropTransferer are capable of transferring props to another component
-	 * using a `transferPropsTo` method.
-	 *
-	 * @class ReactPropTransferer
-	 */
-	var ReactPropTransferer = {
-
-	  /**
-	   * Merge two props objects using TransferStrategies.
-	   *
-	   * @param {object} oldProps original props (they take precedence)
-	   * @param {object} newProps new props to merge in
-	   * @return {object} a new object containing both sets of props merged.
-	   */
-	  mergeProps: function(oldProps, newProps) {
-	    return transferInto(assign({}, oldProps), newProps);
-	  }
-
-	};
-
-	module.exports = ReactPropTransferer;
-
-
-/***/ },
-
-/***/ 462:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @typechecks static-only
-	 * @providesModule ReactTransitionChildMapping
-	 */
-
-	'use strict';
-
-	var ReactChildren = __webpack_require__(374);
-	var ReactFragment = __webpack_require__(298);
-
-	var ReactTransitionChildMapping = {
-	  /**
-	   * Given `this.props.children`, return an object mapping key to child. Just
-	   * simple syntactic sugar around ReactChildren.map().
-	   *
-	   * @param {*} children `this.props.children`
-	   * @return {object} Mapping of key to child
-	   */
-	  getChildMapping: function(children) {
-	    if (!children) {
-	      return children;
-	    }
-	    return ReactFragment.extract(ReactChildren.map(children, function(child) {
-	      return child;
-	    }));
-	  },
-
-	  /**
-	   * When you're adding or removing children some may be added or removed in the
-	   * same render pass. We want to show *both* since we want to simultaneously
-	   * animate elements in and out. This function takes a previous set of keys
-	   * and a new set of keys and merges them with its best guess of the correct
-	   * ordering. In the future we may expose some of the utilities in
-	   * ReactMultiChild to make this easy, but for now React itself does not
-	   * directly have this concept of the union of prevChildren and nextChildren
-	   * so we implement it here.
-	   *
-	   * @param {object} prev prev children as returned from
-	   * `ReactTransitionChildMapping.getChildMapping()`.
-	   * @param {object} next next children as returned from
-	   * `ReactTransitionChildMapping.getChildMapping()`.
-	   * @return {object} a key set that contains all keys in `prev` and all keys
-	   * in `next` in a reasonable order.
-	   */
-	  mergeChildMappings: function(prev, next) {
-	    prev = prev || {};
-	    next = next || {};
-
-	    function getValueForKey(key) {
-	      if (next.hasOwnProperty(key)) {
-	        return next[key];
-	      } else {
-	        return prev[key];
-	      }
-	    }
-
-	    // For each key of `next`, the list of keys to insert before that key in
-	    // the combined list
-	    var nextKeysPending = {};
-
-	    var pendingKeys = [];
-	    for (var prevKey in prev) {
-	      if (next.hasOwnProperty(prevKey)) {
-	        if (pendingKeys.length) {
-	          nextKeysPending[prevKey] = pendingKeys;
-	          pendingKeys = [];
-	        }
-	      } else {
-	        pendingKeys.push(prevKey);
-	      }
-	    }
-
-	    var i;
-	    var childMapping = {};
-	    for (var nextKey in next) {
-	      if (nextKeysPending.hasOwnProperty(nextKey)) {
-	        for (i = 0; i < nextKeysPending[nextKey].length; i++) {
-	          var pendingNextKey = nextKeysPending[nextKey][i];
-	          childMapping[nextKeysPending[nextKey][i]] = getValueForKey(
-	            pendingNextKey
-	          );
-	        }
-	      }
-	      childMapping[nextKey] = getValueForKey(nextKey);
-	    }
-
-	    // Finally, add the keys which didn't appear before any key in `next`
-	    for (i = 0; i < pendingKeys.length; i++) {
-	      childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
-	    }
-
-	    return childMapping;
-	  }
-	};
-
-	module.exports = ReactTransitionChildMapping;
-
-
-/***/ },
-
-/***/ 618:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule CSSCore
-	 * @typechecks
-	 */
-
-	var invariant = __webpack_require__(55);
-
-	/**
-	 * The CSSCore module specifies the API (and implements most of the methods)
-	 * that should be used when dealing with the display of elements (via their
-	 * CSS classes and visibility on screen. It is an API focused on mutating the
-	 * display and not reading it as no logical state should be encoded in the
-	 * display of elements.
-	 */
-
-	var CSSCore = {
-
-	  /**
-	   * Adds the class passed in to the element if it doesn't already have it.
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @return {DOMElement} the element passed in
-	   */
-	  addClass: function(element, className) {
-	    ("production" !== process.env.NODE_ENV ? invariant(
-	      !/\s/.test(className),
-	      'CSSCore.addClass takes only a single class name. "%s" contains ' +
-	      'multiple classes.', className
-	    ) : invariant(!/\s/.test(className)));
-
-	    if (className) {
-	      if (element.classList) {
-	        element.classList.add(className);
-	      } else if (!CSSCore.hasClass(element, className)) {
-	        element.className = element.className + ' ' + className;
-	      }
-	    }
-	    return element;
-	  },
-
-	  /**
-	   * Removes the class passed in from the element
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @return {DOMElement} the element passed in
-	   */
-	  removeClass: function(element, className) {
-	    ("production" !== process.env.NODE_ENV ? invariant(
-	      !/\s/.test(className),
-	      'CSSCore.removeClass takes only a single class name. "%s" contains ' +
-	      'multiple classes.', className
-	    ) : invariant(!/\s/.test(className)));
-
-	    if (className) {
-	      if (element.classList) {
-	        element.classList.remove(className);
-	      } else if (CSSCore.hasClass(element, className)) {
-	        element.className = element.className
-	          .replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1')
-	          .replace(/\s+/g, ' ') // multiple spaces to one
-	          .replace(/^\s*|\s*$/g, ''); // trim the ends
-	      }
-	    }
-	    return element;
-	  },
-
-	  /**
-	   * Helper to add or remove a class from an element based on a condition.
-	   *
-	   * @param {DOMElement} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @param {*} bool condition to whether to add or remove the class
-	   * @return {DOMElement} the element passed in
-	   */
-	  conditionClass: function(element, className, bool) {
-	    return (bool ? CSSCore.addClass : CSSCore.removeClass)(element, className);
-	  },
-
-	  /**
-	   * Tests whether the element has the class specified.
-	   *
-	   * @param {DOMNode|DOMWindow} element the element to set the class on
-	   * @param {string} className the CSS className
-	   * @return {boolean} true if the element has the class, false if not
-	   */
-	  hasClass: function(element, className) {
-	    ("production" !== process.env.NODE_ENV ? invariant(
-	      !/\s/.test(className),
-	      'CSS.hasClass takes only a single class name.'
-	    ) : invariant(!/\s/.test(className)));
-	    if (element.classList) {
-	      return !!className && element.classList.contains(className);
-	    }
-	    return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
-	  }
-
-	};
-
-	module.exports = CSSCore;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(190)))
-
-/***/ },
-
-/***/ 619:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule joinClasses
-	 * @typechecks static-only
-	 */
-
-	'use strict';
-
-	/**
-	 * Combines multiple className strings into one.
-	 * http://jsperf.com/joinclasses-args-vs-array
-	 *
-	 * @param {...?string} classes
-	 * @return {string}
-	 */
-	function joinClasses(className/*, ... */) {
-	  if (!className) {
-	    className = '';
-	  }
-	  var nextClass;
-	  var argLength = arguments.length;
-	  if (argLength > 1) {
-	    for (var ii = 1; ii < argLength; ii++) {
-	      nextClass = arguments[ii];
-	      if (nextClass) {
-	        className = (className ? className + ' ' : '') + nextClass;
-	      }
-	    }
-	  }
-	  return className;
+	// safely export classNames for node / browserify
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
 	}
 
-	module.exports = joinClasses;
+	// safely export classNames for RequireJS
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+			return classNames;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}
 
+
+/***/ },
+
+/***/ 1290:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+	var React = _interopRequire(__webpack_require__(110));
+
+	module.exports = React.createClass({
+	  displayName: "check.es6",
+
+	  render: function render() {
+	    return React.createElement(
+	      "svg",
+	      { width: "14", height: "11", viewBox: "0 0 14 11", xmlns: "http://www.w3.org/2000/svg" },
+	      React.createElement(
+	        "title",
+	        null,
+	        "switch-check"
+	      ),
+	      React.createElement("path", { d: "M11.264 0L5.26 6.004 2.103 2.847 0 4.95l5.26 5.26 8.108-8.107L11.264 0", fill: "#fff", "fill-rule": "evenodd" })
+	    );
+	  }
+	});
+
+
+/***/ },
+
+/***/ 1291:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+	var React = _interopRequire(__webpack_require__(110));
+
+	module.exports = React.createClass({
+	  displayName: "x.es6",
+
+	  render: function render() {
+	    return React.createElement(
+	      "svg",
+	      { width: "10", height: "10", viewBox: "0 0 10 10", xmlns: "http://www.w3.org/2000/svg" },
+	      React.createElement(
+	        "title",
+	        null,
+	        "switch-x"
+	      ),
+	      React.createElement("path", { d: "M9.9 2.12L7.78 0 4.95 2.828 2.12 0 0 2.12l2.83 2.83L0 7.776 2.123 9.9 4.95 7.07 7.78 9.9 9.9 7.776 7.072 4.95 9.9 2.12", fill: "#fff", "fill-rule": "evenodd" })
+	    );
+	  }
+	});
+
+
+/***/ },
+
+/***/ 1292:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 

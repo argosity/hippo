@@ -27,7 +27,7 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.React.Component
         , 300)
 
     onCancel: ->
-        @refs.modal.onRequestHide()
+        @refs.modal.onHide()
 
     addClause: ->
         @props.query.addNewClause()
