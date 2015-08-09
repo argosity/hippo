@@ -15,14 +15,12 @@ fieldset.collapsible {
             padding: 0 10px;
         }
     }
+    &.expanded {
+        legend:after { @extend .icon-plus-square-o:before; }
+    }
     &.collapsed {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-    }
-    &.plus {
-        legend:after { @extend .icon-plus-square-o:before; }
-    }
-    &.minus {
         legend:after { @extend .icon-minus-square-o:before; }
     }
 
