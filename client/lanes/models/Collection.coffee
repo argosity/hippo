@@ -54,6 +54,13 @@ class ModelsCollection
         else
             this.sync('read', this, options)
 
+    # Fetch a single model with the given id
+    fetchId: (id, options = {}) ->
+        this.sync('read', this, _.extend({
+            limit: 1, query: {"#{@model::idAttribute}": id}
+        }, options))
+
+    # Load the collection unless it's already loaded
     ensureLoaded: (options = {}) ->
         if options.force || (!@_isLoaded && !this.length )
             this.fetch(options)
@@ -146,6 +153,7 @@ Lanes.Models.SubCollection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.Sub
 
 Lanes.Models.BasicCollection = Lanes.lib.MakeBaseClass(
     Lanes.Vendor.Ampersand.Collection.extend(Lanes.Vendor.Ampersand.USCollection), BasicCollection
+
 )
 
 Lanes.Models.Collection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.RestCollection, ModelsCollection )
