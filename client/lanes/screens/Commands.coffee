@@ -15,7 +15,9 @@ class Lanes.Screens.Commands
         @screen[@options.modelName]
 
     setModel: (model) ->
+        @options.modelWillRebind?(model)
         @screen.data.rebind("#{@options.modelName}": model)
+        @options.modelDidRebind?(model)
 
     saveModel: ->
         @getModel().save()
