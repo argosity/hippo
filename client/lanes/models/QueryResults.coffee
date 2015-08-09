@@ -10,10 +10,10 @@ class Page
             format: 'array', total_count: 't'
             start: @pageNum * @result.pageSize, limit: @result.pageSize,
             query: query, url: @result.query.url,
+            fields: _.pluck( @result.query.fields.where(query: true), 'id')
         }
-        types = @result.query.fields.groupBy('queryAs')
-        options.fields = _.pluck(types.field, 'id')    unless _.isEmpty types.field
-        options.with   = _.pluck(types.optional, 'id') unless _.isEmpty types.optional
+
+        _.extend(options, Lanes.u.invokeOrReturn(@result.query.syncOptions))
 
         Lanes.Models.Sync.perform('GET', options).then (resp) =>
             @result.total = resp.total
@@ -34,7 +34,7 @@ class Page
             attrs = {}
             for field, i in @result.query.fields.models
                 attrs[field.id] = row[i]
-            new @result.query.modelClass(attrs)
+            new @result.query.src(attrs)
         )
 
     idForRow: (row) ->
@@ -68,7 +68,6 @@ class Lanes.Models.QueryResults
     modelAt: (index) ->
         @pageForIndex(index).modelAt(index)
 
-
     saveModelChanges: (model) ->
         page = @pageForIndex
         @_calculateCache() unless @idCache
@@ -78,7 +77,7 @@ class Lanes.Models.QueryResults
         model
 
     addBlankRow: ->
-        model = new @query.modelClass()
+        model = new @query.model
         row = []
         for field, i in @query.fields.models
             row[i] = model[field.id]
