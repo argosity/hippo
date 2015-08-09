@@ -27,19 +27,13 @@ class Lanes.Components.Grid extends Lanes.React.Component
         columEditors: React.PropTypes.object
         onSelectionChange: React.PropTypes.func
 
-    componentWillReceiveProps: (nextProps) ->
-        nextProps.query?.autoRetrieve = true
-    componentDidMount: ->
-        @props.query.autoRetrieve = true
-
     getDefaultProps: ->
         headerHeight: 50, rowHeight: 30, editorProps: {}
 
     getInitialState: ->
         columnWidths: {}, toolbar: !!@props.allowCreate
 
-    componentWillMount: ->
-        @query.results.ensureLoaded()
+    componentWillMount: -> @query.results.ensureLoaded()
 
     renderColumns: ->
         @query.fields.visible.map (f, i) =>
