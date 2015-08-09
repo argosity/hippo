@@ -80,7 +80,7 @@ class ModelsCollection
             )
             this.remove(models)
         else
-            update = if options.reset then 'reset' else 'set'
+            update = if options?.reset then 'reset' else 'set'
             this[update](data, options)
         if this._loaded_callbacks
             cb(this) for cb in this._loaded_callbacks
