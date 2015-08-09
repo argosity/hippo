@@ -6,7 +6,7 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
             'login', 'name', 'email', {id:'role_names', title:'Role Names'}
         ]
         query: new Lanes.Models.Query({
-            fields: fields, modelClass: Lanes.Models.User
+            fields: fields, src: Lanes.Models.User
         })
 
     rolesForUser: (user) ->

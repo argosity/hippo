@@ -10,7 +10,7 @@ class Field extends Lanes.Models.Base
         title:    'string'
         visible:  type: 'boolean', default: true
         selected: 'boolean'
-        queryAs:  type: 'string', default: 'field'
+        query:    type: 'boolean', default: true
         flex:     type: 'number',  default: 1
         textAlign: type: 'string', default: 'left'
 
@@ -21,7 +21,7 @@ class Field extends Lanes.Models.Base
                 else ''
         model_field:
             deps: ['id'], fn: ->
-                this.collection.query.modelClass::_definition[@id]
+                this.collection.query.src::_definition[@id]
         type:
             deps: ['model_field'], fn: ->
                 type = @model_field?.type || 'string'
@@ -165,26 +165,32 @@ class Clauses extends Lanes.Models.Collection
 class Lanes.Models.Query extends Lanes.Models.Base
 
     session:
+        src:  'function'
         fields:  'collection'
         clauses: 'collection'
-        modelClass:  'function'
         initialField: 'state'
         idIndex: 'number'
         initialFieldIndex: 'number'
         pageSize: 'number'
+        syncOptions: 'any'
         autoRetrieve: ['bool', true, true]
 
     derived:
+        model:
+            deps: ['src'], fn: ->
+                return null unless @src
+                if Lanes.u.isCollection(@src) then @src.model else @src
         results:
             fn: -> new Lanes.Models.QueryResults(this, pageSize: @pageSize)
-        collection_class:
-            deps:['modelClass'], fn: -> @modelClass?.Collection
         url:
-            deps:['modelClass'], fn: -> @modelClass?::urlRoot()
+            deps:['src'], fn: ->
+                if Lanes.u.isCollection(@src) then @src.url() else @src?::urlRoot()
+        # collection_class:
+        #     deps:['src'], fn: -> @src?.Collection
 
     constructor: (options = {}) ->
         super
-        idName = @modelClass::idAttribute
+        idName = @src::idAttribute
         @loadAssociations = options.loadAssociations
         @fields = new AvailableFields([], query: this)
         for col, i in options.fields
@@ -207,6 +213,8 @@ class Lanes.Models.Query extends Lanes.Models.Base
         this.addNewClause()
         this
 
+    ensureLoaded: -> @results.ensureLoaded()
+
     isValid: ->
         ! @clauses.findWhere( isValid: false )
 
@@ -217,7 +225,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
         options.query = {}
         options.query[ @initialField.id ] = code
         options.include = @loadAssociations
-        @modelClass.fetch(options)
+        @src.fetch(options)
 
     defaultField: ->
         @fields.findWhere( field: @initialField )
