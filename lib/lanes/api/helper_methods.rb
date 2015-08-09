@@ -22,7 +22,14 @@ module Lanes
             def lanes_api_url
                 Lanes.config.mounted_at
             end
-
+            def error_as_json
+                Lanes.logger.warn request.env['sinatra.error']
+                Oj.dump({
+                    success: false,
+                    errors:  { exception: request.env['sinatra.error'].message },
+                    message: request.env['sinatra.error'].message
+                })
+            end
             def data
                 @json_data ||= Oj.load( request.body.read )
             end

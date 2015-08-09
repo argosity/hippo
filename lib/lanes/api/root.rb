@@ -9,6 +9,7 @@ require_relative 'pub_sub'
 module Lanes
     module API
         class Root < Sinatra::Application
+
             Lanes.config.get(:environment) do | env |
                 set :environment, env
             end
@@ -20,20 +21,16 @@ module Lanes
             not_found do
                 Oj.dump({ message: "endpoint not found", success: false  })
             end
+            error ActiveRecord::RecordNotFound do
+                halt 404, error_as_json
+            end
             error do
-                Lanes.logger.warn request.env['sinatra.error']
-                Oj.dump({
-                    success: false,
-                    errors:  { exception: request.env['sinatra.error'].message },
-                    message: request.env['sinatra.error'].message
-                })
+                error_as_json
             end
 
             def self.resources(model, options = {})
-
                 path = options[:path] || model.api_path
                 controller = options[:controller] || Lanes::API::Controller
-
                 parent_attribute = false
                 prefix = if options[:under]
                              parent_attribute = options[:parent_attribute] || options[:under].underscore.singularize+'_id'
