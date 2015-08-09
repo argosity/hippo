@@ -16,6 +16,7 @@ module Lanes
         include Concerns::ApiPath
         include Concerns::CodeIdentifier
         include Concerns::SanitizeFields
+        include Concerns::Queries
 
     end
 
