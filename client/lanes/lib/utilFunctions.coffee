@@ -52,6 +52,17 @@ Lanes.u = {
         obj = _.reduce( parts, ( ( memo, val ) -> return if memo then memo[ val ] else null ), Lanes )
         obj?[name]
 
+    isModel: (object) ->
+        object instanceof Lanes.Models.BasicModel
+
+    isCollection: (object) ->
+        object instanceof Lanes.Models.Collection ||
+            object instanceof Lanes.Models.BasicCollection ||
+            object instanceof Lanes.Models.SubCollection
+
+    isState: (object) ->
+        object instanceof Lanes.Models.State
+
     # Can be called one of two ways:
     # With ns being a string, which will attempt to deref it then deref name inside it
     # or with ns being an object, which will dref name inside it
@@ -85,6 +96,13 @@ Lanes.u = {
             return null unless el
 
         return el
+
+    invokeOrReturn: (func, scope = this) ->
+        if _.isFunction(func)
+            func.apply(scope)
+        else
+            func
+
 
 }
 

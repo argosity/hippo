@@ -7,15 +7,15 @@ checkerFor = (name, checker, isRequired) ->
 
 checkerFor 'Model', (props, propName, componentName) ->
     val = props[propName]
-    if val and (!_.isObject(val) or !val.isModel)
+    if val and (!_.isObject(val) or not Lanes.u.isModel(val))
         return new Error("#{propName} is not a Lanes Model")
 
 checkerFor 'State', (props, propName, componentName) ->
     val = props[propName]
-    if val and (!_.isObject(val) or !val.isState)
+    if val and (!_.isObject(val) or not Lanes.u.isState(val))
         return new Error("#{propName} is not a state object")
 
 checkerFor 'Collection', (props, propName, componentName) ->
     val = props[propName]
-    if val and (!_.isObject(val) or !val.isCollection)
+    if val and (!_.isObject(val) or not Lanes.u.isCollection(val))
         return new Error("#{propName} is not a Lanes Collection")

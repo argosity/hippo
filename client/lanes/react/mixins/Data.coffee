@@ -26,22 +26,19 @@ class DataWrapper
 
             this.bindEvents(name, state, customEvents[name]) if state
 
-            if state.isModel and not ( false == @component.pubsub or false == @component?.pubsub?[name] )
-
+            if Lanes.u.isModel(state) and not ( false == @component.pubsub or false == @component?.pubsub?[name] )
                 if !prevState? or prevState.getId() != state.getId()
                     Lanes.Models.PubSub.remove(prevState) if prevState
                     Lanes.Models.PubSub.add(state)
 
                 @listenTo(state, 'remote-update', @onPubSubChangeSet)
-                @listenToNetworkEvents() if state.listenNetworkEvents
-
-
+                @listenToNetworkEvents(state) if @component.listenNetworkEvents
         this.setComponentState({}) unless _.isEmpty(objects) or options.silent
 
-    listenToNetworkEvents: ->
-        @listenTo(collection,     'error',   @onError)
-            .listenTo(collection, 'request', @onRequest)
-            .listenTo(collection, 'sync',    @onSync)
+    listenToNetworkEvents: (state) ->
+        @listenTo(state,     'error',   @onError)
+            .listenTo(state, 'request', @onRequest)
+            .listenTo(state, 'sync',    @onSync)
 
     onPubSubChangeSet: (model, cs) ->
         screen = @component.context?.screen || @component.getChildContext?()?.screen
@@ -54,7 +51,7 @@ class DataWrapper
         if !events
             if state.isState
                 events ||= 'change'
-            else if state.isCollection
+            else if Lanes.u.isCollection(state)
                 events ||= 'add remove change sort reset'
             else
                 Lanes.warn "Unable to listen to unknown type #{name}"
@@ -94,7 +91,7 @@ class DataWrapper
 
     destroy: (state, events, fn) ->
         for name, state of @states
-            Lanes.Models.PubSub.remove(state) if state?.isModel
+            Lanes.Models.PubSub.remove(state) if Lanes.u.isModel(state)
         this.stopListening()
         delete @component.data
 
