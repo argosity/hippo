@@ -48,9 +48,6 @@ module Lanes
         # we don't care about AttrReaderWithDefault sharing values between instances
         # Therefore all the values are given directly and not enclosed in Procs/lambdas.
 
-        # Database tables will have this prefix applied to them
-        config_option :table_prefix, ''
-
         # The configuration environment to use, test, development, production
         config_option :environment, (ENV['LANES_ENV'] || ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'development').to_sym
 
