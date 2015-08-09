@@ -13,6 +13,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
     mixins: [
         Lanes.React.Mixins.RelayEditingState
     ]
+    listenNetworkEvents: true
 
     getDefaultProps: ->
         writable: true, editOnly: true
@@ -26,7 +27,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
 
     warning: ->
         <BS.Alert bsStyle='warning'>
-             <strong>{@model.lastServerMessage}</strong>
+            <strong>{@model.lastServerMessage}</strong>
         </BS.Alert>
 
     render: ->
