@@ -112,7 +112,7 @@ module Lanes
                 params[:df] == 'array'
             end
             def query_scopes
-                params[:w]
+                [*params[:w]]
             end
             def query_params
                 params[:q]
