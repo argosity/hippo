@@ -1,7 +1,8 @@
 # ------------------------------------------------------------------ #
 # Handles Association definitions.                                   #
 # It creates a derived definition for each one                       #
-# and contains utility functions to operate on them                  #
+# Note!  An AssociationMap is created for each type of Model, and    #
+# is shared between all instances                                    #
 # ------------------------------------------------------------------ #
 class Lanes.Models.AssocationMap
     constructor: (@klass) ->
@@ -9,6 +10,7 @@ class Lanes.Models.AssocationMap
         @definitions = @klass::associations
         @definitions['created_by'] ||= { model: 'Lanes.Models.User', readOnly: true }
         @definitions['updated_by'] ||= { model: 'Lanes.Models.User', readOnly: true }
+        @collections = {}
         for name, options of @definitions
             @klass::derived[name] = this.derivedDefinition(name, options)
 
@@ -35,12 +37,22 @@ class Lanes.Models.AssocationMap
 
     # returns a collection for the given association.
     collectionFor: (name) ->
-        klass = @getClassFor(name)
-        if klass::isModel
-            klass.Collection
-        else
-            klass
+        @collections[name] ||= (
+            klass = @getClassFor(name)
+            klass = klass.Collection if true == klass::isModel
+            new klass
+        )
 
+    # set from collection
+    getModelFromCollection: (model, name, collection) ->
+        throw("#{name} isn't an association") unless _.has(@definitions, name)
+        if not model[name].isNew()
+            return model[name]
+        else
+            id = model[@pk(name)]
+            model = collection.get(id)
+            collection.fetchId(id) if id and not model
+            model
 
     # will be called in the scope of the parent model
     createCollection: (association, name, definition, fk, pk, target_class) ->
@@ -49,7 +61,7 @@ class Lanes.Models.AssocationMap
         options.filter ||= {}
         options.filter[fk] = this.get(pk)
 
-        if target_class::isCollection
+        if true == target_class::isCollection
             new target_class(options.models || [], options)
         else
             options.model = target_class
@@ -69,7 +81,7 @@ class Lanes.Models.AssocationMap
     set: (model, data) ->
         this._set(model, data, 'set')
         for name, value of data
-            if @definitions[name] && value?.isModel && !value.isNew()
+            if @definitions[name] && Lanes.u.isModel(value) && !value.isNew()
                 model[@pk(name)] = if value then value.getId() else null
 
     setFromServer: (model, data) ->
@@ -79,15 +91,15 @@ class Lanes.Models.AssocationMap
         for name, value of data
             continue unless @definitions[name]
             association = model[name]
-            unless _.isObject(value)
-                association.clear()
-                continue
             attributes = if _.isFunction(value.serialize) then value.serialize() else value
             association[fn_name]( attributes )
             # if we're replaceing the model's contents with another, copy the dirty status as well
-            if association.isModel
+            if Lanes.u.isModel(association)
                 model.set(this.pk(name), association.id) unless association.isNew
-                association.isDirty = value.isDirty if value.isModel
+                association.isDirty = value.isDirty
+                unless _.isObject(value)
+                    association.clear()
+                    continue
 
     pk: (name) ->
         def = @definitions[name]
@@ -114,6 +126,6 @@ class Lanes.Models.AssocationMap
     nonLoaded: (model, names) ->
         list = []
         for name in names
-            if _.has(@definitions, name) && model[name].isNew()
+            if _.has(@definitions, name) && (Lanes.u.isCollection(model[name]) || model[name].isNew())
                 list.push(name)
         list
