@@ -10,6 +10,26 @@ class Session extends Lanes.Models.Base
 
 class Lanes.Access.LoginDialog extends Lanes.React.Component
 
+    statics:
+        show: (viewport, props = {}) ->
+            session = new Session
+            handler = new _.Promise( (onOk, onCancel) ->
+                viewport.modalProps = _.extend({}, props,
+                    title: 'Please Login'
+                    onCancel: onCancel, onOk: onOk, show: true,
+                    buttons: [{ title: 'Ok', style: 'primary'}]
+                    body: Lanes.u.withReactContext({viewport: viewport}, ->
+                        <Lanes.Access.LoginDialog model={session} />
+                    )
+                )
+            )
+            handler.then (dlg) ->
+                session.save(ignoreErrors: true).then ->
+                    if session.user
+                        Lanes.current_user.setLoginData(session.user, session.access)
+                    else
+                        dlg.setState(show:true)
+
     mixins: [
         Lanes.React.Mixins.RelayEditingState
     ]
@@ -19,11 +39,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
         writable: true, editOnly: true
 
     dataObjects: ->
-        model: new Session
-
-    login: ->
-        @model.save().then =>
-            Lanes.current_user.setLoginData(@model.user, @model.access) if @model.user
+        model: 'props'
 
     warning: ->
         <BS.Alert bsStyle='warning'>
@@ -31,49 +47,35 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
         </BS.Alert>
 
     render: ->
-        <LC.Modal title='Please log in'
-            backdrop={false}
-            closeButton=false
-            animation={false}>
+        <div>
+            {@warning() if @state?.hasError}
+            <BS.Row>
+                <BS.Col mdOffset={2} xs={12} md={8}>
 
-            <div className='modal-body'>
+                    <LC.Input
+                        model={@model}
+                        autoFocus writable
+                        name="login"
+                        label='Username'
+                        placeholder='Enter Login'
+                    />
 
-                {@warning() if @state?.hasError}
+                    <LC.Input
+                        writable
+                        model={@model}
+                        name="password"
+                        type='password'
+                        label='Password'
+                        placeholder='Enter Password'
+                    />
 
-                <BS.Row>
-                    <BS.Col mdOffset={2} xs={12} md={8}>
-
-                        <LC.Input
-                            model={@model}
-                            autoFocus writable
-                            name="login"
-                            label='Username'
-                            placeholder='Enter Login'
-                        />
-
-                        <LC.Input
-                            writable
-                            model={@model}
-                            name="password"
-                            type='password'
-                            label='Password'
-                            placeholder='Enter Password'
-                        />
-
-                    </BS.Col>
-                </BS.Row>
-            </div>
-
-
-            <div className='modal-footer'>
-                <BS.Button onClick={@login} bsStyle='primary'>Login</BS.Button>
-            </div>
-
-        </LC.Modal>
+                </BS.Col>
+            </BS.Row>
+        </div>
 
 
 
 # Function that returns a factory (or function) for the LoginDialog.
 # Intended as an extension point for other users to override if needed
 Lanes.Access.LoginDialog.instance = ->
-    @cache ||= React.createFactory(Lanes.Access.LoginDialog)
+    Lanes.Access.LoginDialog

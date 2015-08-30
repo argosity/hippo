@@ -18,10 +18,9 @@ class Lanes.Workspace.UIState extends Lanes.Models.State
         menu_view:  'any'
         width:      'number'
         height:     'number'
+        layout:   'state'
+        viewport: 'object'
         screen_menu_shown: 'boolean'
-        layout: 'state'
-        modalDialog: 'react'
-        viewport:    'object'
 
     derived:
         menu_width:

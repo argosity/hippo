@@ -1,7 +1,8 @@
 class Lanes.Workspace.Layout extends Lanes.React.Component
 
     dataObjects:
-        uistate: -> Lanes.Workspace.Extension.uistate
+        uistate:  -> Lanes.Workspace.Extension.uistate
+        viewport: -> @context.viewport
 
     childContextTypes:
         uistate:  Lanes.PropTypes.State
@@ -19,7 +20,7 @@ class Lanes.Workspace.Layout extends Lanes.React.Component
 
     render: ->
         <div className="layout">
-            {@uistate.modalDialog?()}
+            <LC.Modal {...@context.viewport.modalProps} />
             <Lanes.Workspace.Navbar/>
             <div className={@pageClasses()}>
                 <Lanes.Workspace.ScreensMenu/>

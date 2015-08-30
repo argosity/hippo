@@ -10,13 +10,18 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
         uistate: Lanes.PropTypes.State.isRequired
 
     showFinder: ->
-        @context.uistate.modalDialog = =>
-            React.createElement LC.RecordFinder.Dialog,
-                query: @props.query
-                onRecordSelect: @props.commands.setModel
+        body = Lanes.u.withReactContext @context, =>
+            <LC.RecordFinder.Dialog query={@props.query} onRecordSelect={@props.commands.setModel} />
+
+        @context.viewport.displayModal(
+            body: body
+            title: "Find #{@props.query.title}"
+            buttons: [{title: 'Cancel'}]
+        )
 
     loadCurrentSelection: ->
-        @props.query.loadSingle(@refs.input.getValue()).then (model) =>
+        value = @props.model[@props.query.initialField.id]
+        @props.query.loadSingle(value).then (model) =>
             @props.commands.setModel(model)
 
     onKeyPress: (ev) ->

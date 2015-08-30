@@ -1,36 +1,65 @@
 class Lanes.Components.Modal extends Lanes.React.Component
 
-    contextTypes:
-        uistate: Lanes.PropTypes.State.isRequired
-
-    dataObjects: ->
-        model: ->
-            @context.uistate
-
-    bindDataEvents: ->
-        model: "change:width"
-
-    componentWillUnmount: ->
-        @context.uistate.modalDialog = null
-
     propTypes:
-        title: React.PropTypes.node,
-        backdrop: React.PropTypes.oneOf(['static', true, false]),
-        keyboard: React.PropTypes.bool,
-        closeButton: React.PropTypes.bool,
-        animation: React.PropTypes.bool,
-        onRequestHide: React.PropTypes.func
+        title:     React.PropTypes.string
+        onOk:      React.PropTypes.func
+        onCancel:  React.PropTypes.func
+        body:      React.PropTypes.element
+        show:      React.PropTypes.bool
+        buttons:   React.PropTypes.array
+        className: React.PropTypes.string
+        size:      React.PropTypes.string
 
-    onHide: ->
-        @context.uistate.modalDialog = null
-        @props.onRequestHide?()
+    contextTypes:
+        uistate: Lanes.PropTypes.State
+
+    getDefaultProps: ->
+        size: 'large'
+        buttons: [
+            { title: 'Cancel' }
+            { title: 'OK', style: 'primary' }
+        ]
+
+    getInitialState: ->
+        show: false
+
+    onButton: (btn) ->
+        @selected = btn
+        if btn.eventKey is 'ok'
+            @props.onOk?(this)
+        else
+            @props.onCancel?(this)
+        @_hide()
+
+    componentWillReceiveProps: (nextProps) ->
+        @setState(show: nextProps.show) if nextProps.show?
+
+    _hide: ->
+        @setState(show: false)
+
+    hide: ->
+        @_hide()
+        @props.onCancel()
 
     render: ->
-        <BS.Modal.Dialog
-            className={@context.uistate.layout_size}
-            bsSize="large"
-            show={true}
-            onHide={@onHide}
-            {...@props} >
-            {@props.children}
+        return null unless @state.show
+
+        buttons = for button in @props.buttons
+            if _.isString(button) then button = {title: button}
+            button.eventKey ||= (button.key or button.title).toLowerCase()
+            <BS.Button key={button.title}
+                bsStyle={button.style || 'default'} className={name}
+                onClick={_.partial(@onButton, button)}>{button.title}</BS.Button>
+
+        cls = _.classnames('lanes-dialog', @props.className, @context.uistate?.layout_size)
+
+        <BS.Modal.Dialog className={cls} bsSize={@props.size} onHide={@_hide}>
+            <BS.Modal.Header closeButton>
+                <BS.Modal.Title>{@props.title}</BS.Modal.Title>
+            </BS.Modal.Header>
+
+            <BS.Modal.Body>{@props.body}</BS.Modal.Body>
+
+            <BS.Modal.Footer>{buttons}</BS.Modal.Footer>
+
         </BS.Modal.Dialog>

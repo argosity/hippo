@@ -11,7 +11,7 @@ class Lanes.Access.Extension extends Lanes.Extensions.Base
             Lanes.current_user.access_data = data.access
 
     showLogin: ->
-        Lanes.Workspace.Extension.uistate.modalDialog = Lanes.Access.LoginDialog.instance()
+        Lanes.Access.LoginDialog.instance().show(@viewport)
 
     hideLogin: ->
         Lanes.Workspace.Extension.uistate.modalDialog = null
