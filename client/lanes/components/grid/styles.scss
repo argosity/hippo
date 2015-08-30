@@ -1,6 +1,32 @@
 @import "lanes/vendor/grid";
 
 .grid-component {
+    min-height: 350px;
+
+    &.flex-row-expand {
+        @include flex-grow(1);
+        @include flexbox();
+        @include flex-direction(column);
+
+        .wrapper {
+            @include flexbox();
+            @include flex-direction(column);
+            @include flex-grow(1);
+        }
+
+        .fixedDataTableLayout_main {
+            height: inherit !important; // override fixed data table height
+            @include flexbox();
+            @include flex-direction(column);
+            @include flex-grow(1);
+
+            .fixedDataTableLayout_rowsContainer{
+                height: inherit !important;
+                @include flex-grow(1);
+            }
+        }
+    }
+
     position: relative;
 
     .toolbar {
@@ -11,5 +37,6 @@
 
     @import "./editors";
 
-
+    &.flex-row-expand {
+    }
 }

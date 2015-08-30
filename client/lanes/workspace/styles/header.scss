@@ -3,7 +3,7 @@
     @extend .navbar-inverse;
     @extend .navbar-fixed-top;
     z-index: 20;
-    height: 50px;
+    height: $workspace-header-height;
     border-radius: 0;
     margin: 0;
     border: 0;

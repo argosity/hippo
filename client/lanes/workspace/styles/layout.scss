@@ -1,23 +1,7 @@
-
-.page-content {
-    @extend .container-fluid;
-    position: relative;
-    min-height: 500px;
-    transition: all 0.15s ease-in-out 0s;
-    margin-left: 240px;
-    padding: 0px;
-
-    .screen {
-        display: none;
-        &.active {
-            display: block
-        }
-    }
-    
-}
-
+.layout { height: 100%; }
 
 .page-container {
+    height: calc(100% - #{$workspace-header-height});
     .screens-menu {
         width: 240px;
         z-index: 26;
@@ -28,11 +12,30 @@
     }
 }
 
+.page-content {
+    @extend .container-fluid;
+    position: relative;
+    min-height: 500px;
+    transition: all 0.15s ease-in-out 0s;
+    margin-left: 240px;
+    padding: 0px;
+    height: 100%;
+    .screen {
+        height: 100%;
+        display: none;
+        > div { height: 100%; }
+        &.active {
+            display: block
+        }
+    }
+
+}
+
 .screens-menu {
 
     background-color: $navbar-inverse-bg;
 
-    
+
     .navigation {
         border-bottom: 1px solid $navbar-inverse-border;
         list-style: none outside none;
@@ -212,5 +215,5 @@
     .screens-menu {
 
     }
-    
+
 }
