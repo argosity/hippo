@@ -23,6 +23,14 @@ distillTypes = (type, ns) ->
 
 Lanes.u = {
 
+    withReactContext: (newContext, fn) ->
+        previousContext = Lanes.Vendor.ReactContext.current
+        Lanes.Vendor.ReactContext.current = _.clone newContext
+        ret = fn()
+        Lanes.Vendor.ReactContext.current = previousContext
+        ret
+
+
     objectForPath: (path) ->
         parts = path.replace(/\.js$/, '').split('/')
         last = null
