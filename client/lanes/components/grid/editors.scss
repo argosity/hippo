@@ -10,10 +10,10 @@ $editor-border: 1px solid $editor-border-color;
         position: relative;
         overflow: visible;
         .buttons {
-            width: 200px;
+            display: inline-block;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
+            //display: flex;
+            //justify-content: space-between;
         }
     }
     // common styles shared between row, popover and other editors
@@ -56,11 +56,17 @@ $editor-border: 1px solid $editor-border-color;
         }
         .controls .buttons {
             background: $editor-background;
-            padding: 2px 8px 8px;
+            padding: 2px 8px 8px 8px;
             position: relative;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
 
+            button {
+                margin-left: 20px;
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
             // http://css-tricks.com/better-tabs-with-round-out-borders/
             &:before,
             &:after {

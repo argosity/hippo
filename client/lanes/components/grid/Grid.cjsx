@@ -24,16 +24,18 @@ class Lanes.Components.Grid extends Lanes.React.Component
             React.PropTypes.bool
         ])
         allowCreate:  React.PropTypes.bool
+        expandY:      React.PropTypes.bool
         columEditors: React.PropTypes.object
         onSelectionChange: React.PropTypes.func
+        autoLoadQuery: React.PropTypes.bool
 
     getDefaultProps: ->
-        headerHeight: 50, rowHeight: 30, editorProps: {}
+        headerHeight: 50, rowHeight: 30, editorProps: {}, autoLoadQuery: true
 
     getInitialState: ->
         columnWidths: {}, toolbar: !!@props.allowCreate
 
-    componentWillMount: -> @query.results.ensureLoaded()
+    componentWillMount: -> @query.results.ensureLoaded() if @props.autoLoadQuery
 
     renderColumns: ->
         @query.fields.visible.map (f, i) =>
@@ -69,12 +71,6 @@ class Lanes.Components.Grid extends Lanes.React.Component
     rowGetter: (rowIndex) ->
         @query.results.rowAt(rowIndex, visibleOnly:true)
 
-    width: ->
-        @props.width  || @state.size?.width  || 500
-
-    height: ->
-        @props.height || @state.size?.height || 300
-
     onColumnResizeEnd: (width, index) ->
         columnWidths = @state.columnWidths || {}
         columnWidths[index] = width
@@ -83,10 +79,11 @@ class Lanes.Components.Grid extends Lanes.React.Component
     hideEditor: -> @setState(selIndex: null)
 
     onEditSave: (model) ->
-        @query.results.saveModelChanges(model)
+        @query.results.saveModelChanges(model, @state.selIndex)
         this.hideEditor()
 
     renderToolbar: ->
+        return null if not @state.toolbar or false is @props.commands?.isEditing()
         props = _.clone(@props)
         props.onAddRecord = =>
             @query.results.addBlankRow()
@@ -107,8 +104,9 @@ class Lanes.Components.Grid extends Lanes.React.Component
             onSave     : @onEditSave
             editingEl  : @state.editingEl
             editors    : @props.columEditors
-            rowHeight  : @props.rowHeight
             rowIndex   : @state.selIndex
+            rowHeight  : @props.rowHeight
+            allowDelete: @props.allowDelete and @props.commands?.isEditing()
         }, @props.editorProps))
 
     renderLoading: ->
@@ -116,11 +114,31 @@ class Lanes.Components.Grid extends Lanes.React.Component
             <div className="loading">Loading ...</div>
         </div>
 
+    columnWidths: ->
+        width = @width()
+        each = width / @query.fields.visible.length
+        @query.fields.visible.map( (field, i) =>
+            fixed = @state.columnWidths[i] || (each * (field.flex || 1))
+        )
+
+    onResize: _.debounce( (size) ->
+        @setState({size})
+    , 300)
+
+    height:  -> (@state.size?.height || 300) - (if @state.toolbar then 50 else 0)
+    width:   -> (@props.width  || @state.size?.width  || 500 )
+    canEdit: -> @props.editor and (not @props.commands or @props.commands?.isEditing())
+
     render: ->
-        <Lanes.Vendor.ComponentResize onResize={(size) => @setState(size:size)}>
-            <div className="grid-component">
-                {@renderToolbar() if @state.toolbar }
-                {@renderEditor() if @props.editor and @state.selIndex?}
+        <LC.ResizeSensor onResize={@onResize}
+            className={_.classnames('grid-component', 'flex-row-expand': @props.expandY)} >
+
+            <div className='wrapper'>
+
+                {@renderToolbar()}
+
+                {@renderEditor() if @canEdit() and @state.selIndex?}
+
                 <Lanes.Vendor.Grid
                     ref="grid"
                     rowsCount={@query.results.length}
@@ -134,5 +152,6 @@ class Lanes.Components.Grid extends Lanes.React.Component
                 >
                     {@renderColumns()}
                 </Lanes.Vendor.Grid>
+
             </div>
-        </Lanes.Vendor.ComponentResize>
+        </LC.ResizeSensor>

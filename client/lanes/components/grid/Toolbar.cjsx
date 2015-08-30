@@ -4,7 +4,7 @@ class Lanes.Components.Grid.Toolbar extends Lanes.React.Component
         addRecord: React.PropTypes.func
 
     addButton: ->
-        <BS.Button className="navbar-btn" onClick={@props.onAddRecord} bsSize='small'>
+        <BS.Button className="navbar-btn pull-right" onClick={@props.onAddRecord} bsSize='small'>
             Add Row
         </BS.Button>
 
