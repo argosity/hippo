@@ -16,12 +16,12 @@ fieldset.collapsible {
         }
     }
     &.expanded {
-        legend:after { @extend .icon-plus-square-o:before; }
+        legend:after { @extend .icon-minus-square-o:before; }
     }
     &.collapsed {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        legend:after { @extend .icon-minus-square-o:before; }
+        legend:after { @extend .icon-plus-square-o:before; }
     }
 
 }
