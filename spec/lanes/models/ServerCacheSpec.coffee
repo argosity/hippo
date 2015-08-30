@@ -6,7 +6,7 @@ describe "Lanes.Models.ServerCache", ->
             props: { id: 'integer', name: 'string' }
         }, { id: 123 })
 
-        syncSucceedWith(name: 'bob')
+        LT.syncSucceedWith(name: 'bob')
 
         Lanes.Models.ServerCache.fetchRecord(record).then ->
             expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', jasmine.any(Object))
@@ -33,7 +33,7 @@ describe "Lanes.Models.ServerCache", ->
             model: LT.defineModel
                 props: { id: 'integer', name: 'string' }
 
-        syncSucceedWith([{id:1, name: 'bob'}, {id:2, name: 'joe'}])
+        LT.syncSucceedWith([{id:1, name: 'bob'}, {id:2, name: 'joe'}])
 
         Lanes.Models.ServerCache.fetchCollection(collection).then ->
             expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', jasmine.any(Object))
@@ -49,7 +49,7 @@ describe "Lanes.Models.ServerCache", ->
             props: { id: 'integer', name: 'string' }
         }, { id: 123 })
 
-        syncSucceedWith(name: 'bob')
+        LT.syncSucceedWith(name: 'bob')
 
         Lanes.Models.ServerCache.fetchRecord(record).then ->
             expect(Lanes.Models.Sync.perform).toHaveBeenCalled()

@@ -70,7 +70,7 @@ describe "Lanes.Models.Base", ->
         model.id = 11
         expect(model.isNew()).toBe(false)
         Lanes.Models.Sync.perform.calls.reset()
-        syncSucceedWith({
+        LT.syncSucceedWith({
             foo: 'a new foo value'
         })
         model.save().then ->
@@ -83,7 +83,7 @@ describe "Lanes.Models.Base", ->
             props:
                 { id: 'integer', foo: 'string' }
         })
-        syncSucceedWith({
+        LT.syncSucceedWith({
             foo: 'foo value'
         })
         model.fetch().then ->
@@ -106,7 +106,7 @@ describe "Lanes.Models.Base", ->
 
 
     it "loads using where", (done) ->
-        syncSucceedWith([
+        LT.syncSucceedWith([
             { id: 1, title: 'first value'  }
             { id: 2, title: 'second value' }
         ])
@@ -152,3 +152,15 @@ describe "Lanes.Models.Base", ->
         expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', jasmine.any(Object))
         options = Lanes.Models.Sync.perform.lastOptions()
         expect(options.include).toEqual(['color'])
+
+    it "can copy attributes from another model", ->
+        Model = LT.defineModel
+            props: { id: 'integer', title: 'string' }
+            associations:
+                color:{ model: Color }
+        a = new Model({ id: 23, title: 'Foo', color: { rgb: '123456' } })
+        b = new Model()
+        b.copyFrom(a)
+        expect( b.id ).toEqual(23)
+        expect( b.title ).toEqual('Foo')
+        expect( b.color.rgb ).toEqual('123456')

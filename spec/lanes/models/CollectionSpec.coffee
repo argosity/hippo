@@ -5,14 +5,14 @@ describe "Lanes.Models.Collection", ->
         Model = Lanes.Test.defineModel
             props: { id: 'integer', title: 'string' }
 
-        syncSucceedWith([
+        LT.syncSucceedWith([
             { id: 1, title: 'first value'  }
             { id: 2, title: 'second value' }
         ])
         collection = Model.where(name: 'foo')
-        expect(collection.requestInProgress).toBe(true)
+        expect(collection.requestInProgress).toBeDefined()
         collection.whenLoaded ->
-            expect( collection.isLoaded() ).toEqual( true )
+            expect( collection.isLoaded() ).toBe(true)
             done()
 
     it "triggers length when changed", ->
