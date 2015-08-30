@@ -1,31 +1,42 @@
-# # require lanes/components/grid
-# # require lanes/access/User
+#= require lanes/components/grid
 
-# describe "Lanes.Components.Grid", ->
 
-#     DATA = {total:1,success:true,message:"Retrieve succeeded",data:[
-#         [1,"TEST","Nathan Stitt",null,"0.0"]
-#     ]}
-#     RESPONSE = {
-#         status:200,
-#         contentType: "application/json"
-#         responseText: JSON.stringify(DATA)
-#     }
+DATA = {total:2, success:true, message:"Retrieve succeeded", data:[
+    [1, "TEST1", "Nathan Stitt", "swell guy"]
+    [2, "TEST2", "Nathan Stitt", "Dupe of id #1"]
+]}
 
-#     beforeEach ->
-#         jasmine.Ajax.install()
-#     afterEach ->
-#         jasmine.Ajax.uninstall()
+Model = Lanes.Test.defineModel(
+    props: {id: 'integer', code: 'string', name: 'string', notes: 'string'}
+)
 
-#     it "loads", ->
-#         query = new Lanes.Models.Query(
-#             fields: [ 'code', 'name', 'notes' ]
-#             modelClass: Lanes.Models.User
-#         )
-#         grid = new Lanes.Components.Grid(recordQuery:query)
-#         expect( grid.render() ).toBe( grid )
-#         request = jasmine.Ajax.requests.mostRecent()
-#         expect(request.url).toMatch(/^\/users.json/)
+describe "Lanes.Components.Grid", ->
 
-#         request.respondWith(RESPONSE)
-#         expect( grid.dt_api.rows().length ).toEqual(1)
+    beforeEach (done) ->
+        LT.syncRespondWith(DATA)
+        @query = new Lanes.Models.Query(
+            src: Model, fields: [ 'id', 'code', 'name', 'notes' ]
+        )
+        @collection = new Model.Collection
+        @query.ensureLoaded().then => @collection.ensureLoaded().then -> done()
+
+    it "loads from a result set", (done) ->
+        renderGrid = (q) ->
+            loaded = spyOn(q.results, 'ensureLoaded').and.callThrough()
+            grid = LT.renderComponent(LC.Grid, props: query: q)
+            _.defer (done)
+            expect(loaded).toHaveBeenCalled()
+            expect(_.dom(grid).qsa('.fixedDataTableRowLayout_rowWrapper').length)
+                .toEqual( q.results.length + 1 )
+        renderGrid(@query)
+        @query.src = @collection
+        renderGrid(@query)
+
+    it 'can be edited', ->
+        spy = jasmine.createSpy('selection')
+        grid = LT.renderComponent(LC.Grid, props: {
+            query: @query, editor: true, onSelectionChange: spy
+        })
+        expect(_.dom(grid).qsa('.fixedDataTableRowLayout_rowWrapper').length).toEqual(3)
+        _.dom(grid).qs('.fixedDataTableRowLayout_rowWrapper:last-child .public_fixedDataTableCell_cellContent').click()
+        expect(spy).toHaveBeenCalled()
