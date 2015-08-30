@@ -9,13 +9,13 @@ class Page
         options = {
             format: 'array', total_count: 't'
             start: @pageNum * @result.pageSize, limit: @result.pageSize,
-            query: query, url: @result.query.url,
+            query: query, url: @result.query.src::urlRoot(),
             fields: _.pluck( @result.query.fields.where(query: true), 'id')
         }
 
         _.extend(options, Lanes.u.invokeOrReturn(@result.query.syncOptions))
 
-        Lanes.Models.Sync.perform('GET', options).then (resp) =>
+        @pendingLoad = Lanes.Models.Sync.perform('GET', options).then (resp) =>
             @result.total = resp.total
             @rows  = resp.data
             delete @pending
@@ -23,12 +23,17 @@ class Page
 
     # N.B. for convenience the index for the methods below is the absolute index for all results
     # not the index just for this page.  It's converted and the appropriate row returned
-    rowAt: (index) ->
+    _rowAt: (index) ->
         index = index % @result.pageSize
-        @rows[index] || []
+        row = @rows[index] || []
+
+    rowAt: (index) ->
+        row = @_rowAt(index)
+        @result.query.fields.map (field, i) ->
+            field.format?(row[i], row, @result.query) or row[i]
 
     modelAt: (index) ->
-        row = @rowAt(index)
+        row = @_rowAt(index)
         @modelCache ||= {}
         @modelCache[ @idForRow(row)] ||= (
             attrs = {}
@@ -37,15 +42,22 @@ class Page
             new @result.query.src(attrs)
         )
 
+    saveModelChanges: (model, index) ->
+        row = @_rowAt(index)
+        cachedModel = @modelCache[ @idForRow(row)] if @modelCache
+        if cachedModel
+            cachedModel.copyFrom(model)
+        for field, i in @result.query.fields.models
+            row[i] = model[field.id]
+
     idForRow: (row) ->
         row[@result.query.idIndex]
 
 
 
-class Lanes.Models.QueryResults
+class Lanes.Models.Query.SyncedResult
 
     constructor: (q, options = {}) ->
-        @cid = _.uniqueId()
         @query = q
         @pageSize = options.pageSize || 20
         @pages = {}
@@ -68,13 +80,8 @@ class Lanes.Models.QueryResults
     modelAt: (index) ->
         @pageForIndex(index).modelAt(index)
 
-    saveModelChanges: (model) ->
-        page = @pageForIndex
-        @_calculateCache() unless @idCache
-        row = @idCache[model.id]
-        for field, i in @query.fields.models
-            row[i] = model[field.id]
-        model
+    saveModelChanges: (model, index) ->
+        @pageForIndex(index).saveModelChanges(model, index)
 
     addBlankRow: ->
         model = new @query.model
@@ -84,12 +91,14 @@ class Lanes.Models.QueryResults
         @rows.unshift row
 
     ensureLoaded: ->
-        @pageForIndex(0) if _.isEmpty(@pages)
-        return null
+        if _.isEmpty(@pages)
+            @pageForIndex(0).pendingLoad
+        else
+            _.Promise.resolve(@)
 
     onPageLoad: (page) ->
         @query.trigger('load', @query)
 
 
-Object.defineProperty Lanes.Models.QueryResults.prototype, 'length',
+Object.defineProperty Lanes.Models.Query.SyncedResult.prototype, 'length',
     get: -> @total || 0

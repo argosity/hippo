@@ -11,6 +11,7 @@ class Field extends Lanes.Models.Base
         visible:  type: 'boolean', default: true
         selected: 'boolean'
         query:    type: 'boolean', default: true
+        format:   type: 'function'
         flex:     type: 'number',  default: 1
         textAlign: type: 'string', default: 'left'
 
@@ -121,9 +122,12 @@ class Clause extends Lanes.Models.Base
         @operators.field = @fields.first()
         @fields.on('change:selected',    this.setField,    this)
         @operators.on('change:selected', this.setOperator, this)
-
-        @fields.findWhere(visible: true)?.selected = true
-        @operators.at(0).selected = true
+        field = @fields.findWhere(visible: true)
+        if field
+            field.selected = true
+            @setField(field)
+            operator = @operators.find (o) -> o.valid
+            operator?.selected = true
 
     setFromView: (type, val) ->
         if type == "fields" || type == "operators"
@@ -162,7 +166,7 @@ class Clauses extends Lanes.Models.Collection
         @query = options.query
         @fields = options.query.fields
 
-class Lanes.Models.Query extends Lanes.Models.Base
+class Lanes.Models.Query extends Lanes.Models.State #Base
 
     session:
         src:  'function'
@@ -174,32 +178,46 @@ class Lanes.Models.Query extends Lanes.Models.Base
         pageSize: 'number'
         syncOptions: 'any'
         autoRetrieve: ['bool', true, true]
+        title: { type: 'string', default: 'Find Record' }
 
     derived:
+        isCollection:
+            deps: ['src'], fn: -> Lanes.u.isCollection(@src)
+
         model:
             deps: ['src'], fn: ->
                 return null unless @src
-                if Lanes.u.isCollection(@src) then @src.model else @src
+                if @isCollection then @src.model else @src
+
+        idAttribute:
+            deps: ['model'], fn: -> @model::idAttribute
+
         results:
-            fn: -> new Lanes.Models.QueryResults(this, pageSize: @pageSize)
-        url:
-            deps:['src'], fn: ->
-                if Lanes.u.isCollection(@src) then @src.url() else @src?::urlRoot()
+            deps: ['src'], fn: ->
+                if @isCollection
+                    new Lanes.Models.Query.CollectionResult(this)
+                else
+                    new Lanes.Models.Query.SyncedResult(this, pageSize: @pageSize)
+
+        # url:
+        #     deps:['src'], fn: ->
+        #         if @Lanes.u.isCollection(@src) then @src.url() else @src?::urlRoot()
+
         # collection_class:
         #     deps:['src'], fn: -> @src?.Collection
 
     constructor: (options = {}) ->
         super
-        idName = @src::idAttribute
-        @loadAssociations = options.loadAssociations
+#        idName = @src::idAttribute
+
         @fields = new AvailableFields([], query: this)
         for col, i in options.fields
             rec = if _.isObject(col) then col else { id: col }
             @fields.add rec
-            @idIndex = i if rec.id == idName
+            @idIndex = i if rec.id == @idAttribute
         unless @idIndex?
             @idIndex = @fields.length
-            @fields.add(id: idName)
+            @fields.add(id: @idAttribute)
         @clauses = new Clauses([], query: this )
         this.listenTo(@clauses, 'change remove reset', =>
             @results.reset()
@@ -218,13 +236,16 @@ class Lanes.Models.Query extends Lanes.Models.Base
     isValid: ->
         ! @clauses.findWhere( isValid: false )
 
-    loadModelWithAssociations: (model) ->
-        model.withAssociations(@loadAssociations || [], force:true)
+    loadModel: (model, options = {}) ->
+        _.extend(options, _.result(this, 'syncOptions'))
+        model.withAssociations(options.include || [], options)
+
 
     loadSingle: (code, options = {}) ->
         options.query = {}
         options.query[ @initialField.id ] = code
-        options.include = @loadAssociations
+
+        _.extend(options, _.result(this, 'syncOptions'))
         @src.fetch(options)
 
     defaultField: ->
