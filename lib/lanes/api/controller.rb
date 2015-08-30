@@ -233,9 +233,6 @@ module Lanes
                 if params[:nested_attribute]
                     query = query.where(params[:nested_attribute])
                 end
-                if query_scopes.present?
-                    query = add_scope_to_query(query)
-                end
                 if query_params.present?
                     query = add_params_to_query(query)
                 end
@@ -243,9 +240,11 @@ module Lanes
             end
 
             def add_modifiers_to_query(query)
+                if query_scopes.present?
+                    query = add_scope_to_query(query)
+                end
                 query = query.limit(query_limit_size)
                 query = query.offset(query_offset.to_i) if query_offset.present?
-
                 if include_associations.any?
                     allowed_includes = include_associations.each_with_object([]) do |desired, results|
                         if desired.is_a?(Hash)
@@ -266,7 +265,6 @@ module Lanes
                     end
                 end
                 query
-
             end
 
 
