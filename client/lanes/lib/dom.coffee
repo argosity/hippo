@@ -14,6 +14,7 @@ class Lanes.lib.Dom
 wrap = (fn) ->
     return ->
         fn(this.el, arguments...)
+        return this
 
 for name, func of Lanes.Vendor.dom
     Lanes.lib.Dom::[name] = wrap(func)
@@ -41,7 +42,9 @@ _.dom = (unknown, query) ->
         unknown
     else if _.isFunction(unknown.getDOMNode)
         unknown.getDOMNode()
-    else
+    else if unknown.nodeType is 9 # body tag
+        unknown
+    else if unknown
         throw new TypeError("Unable to obtain dom reference to #{unknown}")
 
     if query
