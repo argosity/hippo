@@ -33,8 +33,8 @@ class BaseModel
         # Big decimal for attributes that need precision math
         bigdec:
             set: (newVal) ->
-                val: new _.bigDecimal(newVal)
-                type: 'bigdec'
+                val = _.bigDecimal(newVal) unless _.isUndefined(newVal) or _.isNull(newVal)
+                { val, type: 'bigdec' }
             default: -> new _.bigDecimal(0)
 
         integer:
@@ -116,6 +116,19 @@ class BaseModel
             options['include'] = needed
             this.fetch(options)
 
+    # replace this model's attributes with data from other model
+    copyFrom: (model) ->
+        attributes = if _.isFunction(model.serialize) then model.serialize() else model
+        this.set(attributes)
+
+    # duplicate the model.  Copies only attributes, not bound events
+    clone: ->
+        new @constructor(@attributes)
+
+    serialize: ->
+        data = super
+        _.extend(data, this.associations?.serialize(this))
+        data
 
     # Calls Ampersand State's set method, then sets any associations that are present as well
     set: (key, value, options) ->
@@ -127,7 +140,7 @@ class BaseModel
             attrs = {}
             attrs[key] = value
         super
-        this.associations.set(this, attrs) if this.associations
+        this.associations.set(this, attrs, options) if this.associations
         this
 
     # Loads records from the server that match query, returns a collection
@@ -144,7 +157,7 @@ class BaseModel
     setFromServer: (data, options) ->
         data = if _.isArray(data) then data[0] else data
         BaseModel.__super__.set.call(this, data )
-        this.associations.setFromServer(this, data) if this.associations
+        this.associations.setFromServer(this, data, options) if this.associations
         this.isDirty = false
 
     # save the model's data to the server
