@@ -1,6 +1,15 @@
 @import "styles/fonts";
+@import "styles/mixins/all";
+
+html { height: 100%;     }
+body { margin: 0; height: 100%; }
+.lanes-root {
+    height: 100%;
+    .lanes > div { height: 100%; }
+}
 
 .lanes {
+  height: 100%;
   @import "styles/global";
 
 <% Lanes::Extensions.each_asset(phase: :all, type: :css) do | asset | %>
