@@ -1,24 +1,27 @@
 class Lanes.Components.SelectField extends Lanes.React.Component
     mixins: [ Lanes.Components.Form.FieldMixin ]
     getDefaultProps: ->
-        labelField: 'name', idField: 'id', displayLimit: 30
+        labelField: 'name', idField: 'id', displayLimit: 30, syncOptions: {}
 
     propTypes:
-        collection: Lanes.PropTypes.Collection
-        labelField: React.PropTypes.string
+        collection:   Lanes.PropTypes.Collection
+        model:        Lanes.PropTypes.Model
+        labelField:   React.PropTypes.string
         getSelection: React.PropTypes.func
         setSelection: React.PropTypes.func
         displayLimit: React.PropTypes.number
+        syncOptions:  React.PropTypes.any
 
     dataObjects:
         collection: ->
             @props.collection || (
-                @props.model?.associations.collectionFor(@props.name)
+                @props.model?.associations.collectionFor(@props.name, @props.model)
             )
 
     onChange: (selection) ->
         return unless  _.isString(selection)
-        options = { limit: @props.displayLimit, order: { "#{@props.labelField}": 'desc' } }
+        order = @props.queryOrder || { "#{@props.labelField}": 'desc' }
+        options = { limit: @props.displayLimit, order}
         unless _.isEmpty(selection)
             options.query = {
                 "#{@props.labelField}": { op: 'like', value: selection }
@@ -38,13 +41,23 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         true
 
     getCurrentModel: ->
-        @model.associations.getModelFromCollection(@model, @props.name, @collection)
+        if @model[@props.name].isNew()
+            pk = @model.associations.pk(@props.name)
+            id = @model[pk]
+            if id
+                @collection.getOrFetch(id,
+                    _.extend({}, Lanes.u.invokeOrReturn(@props.syncOptions)))
+            else
+                null
+        else
+            @model[@props.name]
 
     getCurrentSelection: ->
-        return @props.getSelection(@model) if @props.getSelection
+        if @props.getSelection
+            selection = @props.getSelection(@model)
+            return selection if selection
 
         selected = @getCurrentModel()
-
         if selected
             {id: selected[@props.idField], label: selected[@props.labelField]}
         else
@@ -55,17 +68,23 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         <span>{@getCurrentSelection()?.label}</span>
 
     _getChoices: ->
+        selection = @getCurrentSelection()
         if @state.isOpen
             if _.isFunction(@getChoices) then @getChoices() else
                 labelField = @props.labelField
-                @collection.map (model) ->
+                rows = @collection.map (model) ->
                     {id: model.id, label: _.result(model, labelField)}
+                # # add the current selection if the rows from the collection don't include it
+                # unless @collection.get( selection.id )
+                #     rows.push(selection)
+                if _.isEmpty(rows) then [@getCurrentSelection()] else rows
         else
-            selection = @getCurrentSelection()
             if selection then [selection] else []
 
     onToggle: (isOpen) ->
-        @collection.fetch(limit: @props.displayLimit) if isOpen
+        @collection.fetch(
+            _.extend(limit: @props.displayLimit, Lanes.u.invokeOrReturn(@props.syncOptions))
+        ) if isOpen
         @setState({isOpen})
 
     renderEdit: (label) ->
