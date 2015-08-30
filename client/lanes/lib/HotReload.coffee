@@ -1,4 +1,4 @@
-REACT_CACHE = {}
+REACT_CACHE = Object.create(null)
 
 Lanes.lib.HotReload =
 
@@ -15,7 +15,7 @@ Lanes.lib.HotReload =
             link.parentElement.removeChild(link)
 
     replaceProps: (asset) ->
-        klass = Lanes.u.objectForPath(asset.path) # Lanes.StockorDemo.LoginDialog
+        klass = Lanes.u.objectForPath(asset.path)
         Lanes.Vendor.hotRL(klass, asset.path) if klass
 
         # Need to copy new proto over the old one
