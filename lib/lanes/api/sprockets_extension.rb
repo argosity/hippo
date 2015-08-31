@@ -4,6 +4,8 @@ require 'sinatra/sprockets-helpers'
 require_relative 'javascript_processor'
 require 'compass/import-once/activate'
 require 'sprockets-helpers'
+require 'tilt/erb'
+require 'compass/import-once/activate'
 
 module Lanes
     module API
