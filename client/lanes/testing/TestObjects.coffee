@@ -3,7 +3,7 @@ Lanes.Test.makeComponent = (props = {}, args = {}) ->
         render: -> React.createElement('div', 'hello')
     _.extend(TestComponent.prototype, props)
     Component = Lanes.React.Component.extend(TestComponent)
-    Lanes.Test.renderComponent(Component, args)
+    Lanes.Test.renderComponent(Component, props: args)
 
 Lanes.Test.defineModel = (props = {}) ->
     class TestModel
