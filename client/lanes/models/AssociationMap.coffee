@@ -105,7 +105,7 @@ class Lanes.Models.AssocationMap
     fk: (name) ->
         def = @definitions[name]
         return null unless name and def
-        _.result(def,'fk', ( if def.model then "id" else "#{name}_id" ) )
+        _.result(def, 'fk', ( if def.model then "id" else "#{name}_id" ) )
 
     # returns the data from all assocations for saving
     dataForSave: (model, options) ->
