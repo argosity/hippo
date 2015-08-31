@@ -10,6 +10,11 @@ CommonMethods = {
             break if found != -1
         found
 
+    sum: ->
+        args = _.toArray(arguments)
+        args.unshift(this.models)
+        return _.sum.apply(_, args)
+
     # convenience method to create a new subCollection
     subcollection: (options) ->
         new Lanes.Models.SubCollection(this, options)
@@ -25,6 +30,11 @@ CommonMethods = {
             )
             return this
         )
+
+    # replace these models from other collection
+    copyFrom: (collection) ->
+        this.set(collection)
+
 
 }
 
@@ -54,8 +64,12 @@ class ModelsCollection
         else
             this.sync('read', this, options)
 
+    getOrFetch: (id, options) ->
+        @get(id) || @fetchId(id, options)
+
     # Fetch a single model with the given id
     fetchId: (id, options = {}) ->
+        return if id == @requestInProgress?.query?[@model::idAttribute]
         this.sync('read', this, _.extend({
             limit: 1, query: {"#{@model::idAttribute}": id}
         }, options))
@@ -163,17 +177,17 @@ Lanes.Models.Collection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.RestCo
 ## Override a few methods on the standard collection to ensure that
 # models are fetched correctly and have the fk set when they're created
 class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
-    constructor: (models, options) ->
-        @model = options.model
-        @associationFilter = options.filter
+    constructor: (models, @options) ->
+        @model = @options.model
+        @associationFilter = @options.filter
         super
 
     _prepareModel: (attrs, options = {}) ->
-        model = super
-        model.set(@associationFilter)
-        model
+        _.extend(attrs, @associationFilter)
+        super
 
     fetch: (options) ->
         options.query ||= {}
         _.extend(options.query, @associationFilter)
+        _.extend(options, @options)
         super(options)
