@@ -95,28 +95,19 @@ module Lanes::Concerns
                         target = send(name) || association.build
                         result[name] = target.set_attribute_data(value, user)
                     elsif value.is_a?(Array) && :has_many == association.reflection.macro
-                        result[name] = _set_attribute_data_from_collection(association, value, user)
+                        result[name] = _set_attribute_data_from_collection(association, name, value, user)
                     end
                 end
             end
         end
 
-        def _set_attribute_data_from_collection(association, value, user)
-
-            records = if association.loaded?
-                                   association.target
-                               else
-                                   attribute_ids = value.map {|a| a['id'] || a[:id] }.compact
-                                   attribute_ids.empty? ? [] : association.scope.where(
-                                     association.klass.primary_key => attribute_ids
-                                   )
-                               end
-
+        def _set_attribute_data_from_collection(association, name, value, user)
+            records = public_send(name, value)
             value.map do | association_data |
                 record = if association_data['id'].blank?
                              association.build
                          else
-                             records.detect{ |r| r.id.to_s == value['id'].to_s }
+                             records.detect{ |r| r.id.to_s == association_data['id'].to_s }
                          end
                 record.set_attribute_data(association_data, user) if record
             end
