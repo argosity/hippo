@@ -31,15 +31,17 @@ Lanes.Models.Sync = {
         options.url ||= _.result(model, "url")
         if _.contains(['create', 'update', 'patch'], method)
             options.data ||= model.dataForSave(options)
-        model.requestInProgress = true
+        model.requestInProgress = options
         model.trigger("request", model, options)
         return new _.Promise (resolve, reject) ->
             handler = (reply) ->
                 delete model.requestInProgress
-                model.errors = reply?.errors
-                model.trigger("error", model, options) if reply.errors
-                model.lastServerMessage = reply?.message
-
+                model.lastServerMessage = reply.message
+                if reply.errors
+                    Lanes.warn reply.errors
+                    model.errors = reply.errors
+                    model.trigger("error", model, options)
+                    Lanes.React.Viewport.displayError(reply.message) unless options.onError or options.ignoreErrors
                 model.setFromServer(reply.data, options, method)
                 model.trigger("sync", model, reply, options)
                 resolve(model)
