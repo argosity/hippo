@@ -4,6 +4,7 @@ Lanes.Vendor = ( Lanes.Vendor || {} );
 Lanes.Vendor.Ampersand                = ( Lanes.Ampersand || {} );
 Lanes.Vendor.Ampersand.State          = require("ampersand-state");
 Lanes.Vendor.React                    = require("react");
+Lanes.Vendor.ReactContext             = require('react/lib/ReactContext');
 
 Lanes.Vendor.Ampersand.SubCollection  = require("ampersand-subcollection");
 Lanes.Vendor.Ampersand.RestCollection = require("ampersand-rest-collection");
@@ -16,7 +17,6 @@ Lanes.Vendor.RSVP                     = require('rsvp');
 Lanes.Vendor.BBEvents                 = require('backbone-events-standalone');
 Lanes.Vendor.xhr                      = require('xhr');
 Lanes.Vendor.ComponentResize          = require('react-component-resizable');
-
 
 Lanes.Vendor.ld = require('lodash');
 var spf = require('sprintf-js');
