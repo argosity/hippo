@@ -29,11 +29,16 @@ computeCollectionCacheKey = (collection, options) ->
 Lanes.Models.ServerCache = {
     MODELS: {}
     COLLECTIONS: {}
+    PENDING: {}
 
     storeRecordData: (key, records, timeout, pk) ->
         cache = this.MODELS[key] ||= new CacheEntry(timeout)
         for record in records
             cache.store(record, record[pk])
+
+        ce = @COLLECTIONS[key] ||= new CacheEntry(timeout)
+        ce.store(records, key)
+
 
     fetchRecord: (record, options = {}) ->
         key = record.urlRoot()
@@ -49,17 +54,25 @@ Lanes.Models.ServerCache = {
             record
 
     fetchCollection: (collection, options = {}) ->
+
         key = computeCollectionCacheKey(collection, options)
         if (cache = this.COLLECTIONS[collection.url()])
 
             if (data = cache.get(key))
                 collection.setFromServer(data, options)
                 return _.Promise.resolve(collection)
-
-        collection.sync('read', collection, options).then (collection) ->
-            ce = Lanes.Models.ServerCache.COLLECTIONS[key] ||= new CacheEntry(collection.cacheDuration)
-            ce.store( collection.toJSON(), key)
-            ce.get( key )
+        @PENDING[key] ||= collection.sync('read', collection, options).then (collection) ->
+            Lanes.Models.ServerCache.storeRecordData(key,
+                collection.toJSON(),
+                collection.cacheDuration,
+                collection.model::idAttribute
+            )
+            delete Lanes.Models.ServerCache.PENDING[key]
             collection
+
+            # ce = Lanes.Models.ServerCache.COLLECTIONS[key] ||= new CacheEntry(collection.cacheDuration)
+            # ce.store( collection.toJSON(), key)
+            # #ce.get( key )
+            # collection
 
 }
