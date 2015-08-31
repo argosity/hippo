@@ -29,3 +29,10 @@ Lanes.React.Component = {
         comp
 
 }
+
+Lanes.React.BaseComponent = {
+    extend: (klass, mixins = @defaultMixins) ->
+        comp = React.createClass(klass.prototype)
+        Lanes.lib.HotReload?.rememberReact(comp)
+        comp
+}
