@@ -1,4 +1,8 @@
+#=require lanes/access/User
+#=require lanes/access/Roles
+
 describe "Lanes.Models.AssociationMap", ->
+
     class Color
         constructor: -> super
         api_path: -> 'test'
@@ -49,3 +53,24 @@ describe "Lanes.Models.AssociationMap", ->
         expect(model.color).toEqual(jasmine.any(Color))
 
         expect(model.color.rgb).toEqual('red')
+
+
+    it "serializes associations", ->
+        modelData = {
+            id: 123, title: 'Colors', color: { rgb: 'red' },
+            colors: [
+                { id: 1, rgb: '123' }
+                { id: 2, rgb: '1234' }
+                { id: 3, rgb: '12345' }
+            ]
+        }
+        model = LT.makeModel({
+            props: { id: 'integer', title: 'string' }
+            associations:
+                color:{ model: Color }
+                colors: { collection: Color, fk: 'model_fk_id' }
+        }, modelData)
+
+        expect(model.serialize()).toEqual(
+            _.extend({}, modelData, created_by: {role_names: []}, updated_by: {role_names:[]})
+        )
