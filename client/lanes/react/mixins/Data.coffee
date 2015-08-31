@@ -99,9 +99,9 @@ class DataWrapper
 _.extend(DataWrapper.prototype, Lanes.Vendor.BBEvents)
 
 readDataObjects = (comp, newProps) ->
-    bound = _.result(comp, 'dataObjects') || {}
-    bound.model = 'props' if comp.props.model
-    bound.collection = 'props' if comp.props.collection
+    bound = _.clone _.result(comp, 'dataObjects') || {}
+    bound.model ||= 'props' if comp.props.model
+    bound.collection ||= 'props' if comp.props.collection
     _.mapValues(bound, (value, name) ->
         if _.isFunction(value) then value.call(comp)
         else if 'props' == value then newProps?[name] or @props[name]
