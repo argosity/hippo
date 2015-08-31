@@ -19,7 +19,8 @@ class Lanes.Models.AssocationMap
         object = definition.model || definition.collection
         Lanes.u.findObject(object, 'Models', @klass::FILE)
 
-    getOptions: (name, definition, model) ->
+    getOptions: (name, model) ->
+        definition = @definitions[name]
         options = { parent: model }
         if definition.options
             _.extend(options, Lanes.u.resultsFor(model, definition.options))
@@ -28,7 +29,7 @@ class Lanes.Models.AssocationMap
     # will be called in the scope of the parent model
     createModel: (association, name, definition, fk, pk, target_class) ->
         target_class ||= association.getClassFor(name)
-        options = association.getOptions(name, definition, this)
+        options = association.getOptions(name, this)
         model_id = this.get(pk)
         if model_id && model_id == this._cache[name]?.id
             this._cache[name]
@@ -36,28 +37,22 @@ class Lanes.Models.AssocationMap
             new target_class(options)
 
     # returns a collection for the given association.
-    collectionFor: (name) ->
+    collectionFor: (name, model, options = {}) ->
+        options = _.extend({}, this.getOptions(name, model), options)
         @collections[name] ||= (
-            klass = @getClassFor(name)
-            klass = klass.Collection if true == klass::isModel
-            new klass
+            Klass = @getClassFor(name)
+            if true == Klass::isModel
+                new Lanes.Models.AssociationCollection(options.models || [],
+                    _.extend({}, options, model: Klass)
+                )
+            else
+                new Klass(options.models || [], options)
         )
-
-    # set from collection
-    getModelFromCollection: (model, name, collection) ->
-        throw("#{name} isn't an association") unless _.has(@definitions, name)
-        if not model[name].isNew()
-            return model[name]
-        else
-            id = model[@pk(name)]
-            model = collection.get(id)
-            collection.fetchId(id) if id and not model
-            model
 
     # will be called in the scope of the parent model
     createCollection: (association, name, definition, fk, pk, target_class) ->
         target_class ||= association.getClassFor(name)
-        options = association.getOptions(name, definition, this)
+        options = association.getOptions(name, this)
         options.filter ||= {}
         options.filter[fk] = this.get(pk)
 
@@ -65,7 +60,8 @@ class Lanes.Models.AssocationMap
             new target_class(options.models || [], options)
         else
             options.model = target_class
-            new Lanes.Models.AssociationCollection(options. models || [], options)
+            new Lanes.Models.AssociationCollection(options.models || [], options)
+
     # returns the definition for the derived property
     derivedDefinition: (name, definition) ->
         defaultCreator = if definition.model then this.createModel else this.createCollection
@@ -74,42 +70,42 @@ class Lanes.Models.AssocationMap
             -> definition.default.apply(this, args) || defaultCreator.apply(this, args)
         else
             defaultCreator
-        { deps: [this.pk(name)], fn: _.partial(createFn, args...) }
+        { fn: _.partial(createFn, args...) }
 
 
     # Sets the assocations for "model"
-    set: (model, data) ->
-        this._set(model, data, 'set')
+    set: (model, data, options) ->
+        this._set(model, data, options, 'set')
         for name, value of data
             if @definitions[name] && Lanes.u.isModel(value) && !value.isNew()
                 model[@pk(name)] = if value then value.getId() else null
 
-    setFromServer: (model, data) ->
-        this._set(model, data, 'setFromServer')
+    setFromServer: (model, data, options) ->
+        this._set(model, data, options, 'setFromServer')
 
-    _set: (model, data, fn_name) ->
+    _set: (model, data, options, fn_name) ->
         for name, value of data
             continue unless @definitions[name]
             association = model[name]
             attributes = if _.isFunction(value.serialize) then value.serialize() else value
             association[fn_name]( attributes )
-            # if we're replaceing the model's contents with another, copy the dirty status as well
             if Lanes.u.isModel(association)
-                model.set(this.pk(name), association.id) unless association.isNew
-                association.isDirty = value.isDirty
+                model.set(this.pk(name), association.id) unless association.isNew()
+                model.trigger("change:#{name}", value) unless options?.silent
+                association.isDirty = if value.isDirty? then value.isDirty else true
                 unless _.isObject(value)
                     association.clear()
                     continue
 
     pk: (name) ->
         def = @definitions[name]
-        return null unless name
-        def.pk || ( if def.model then "#{name}_id" else "id" )
+        return null unless name and def
+        _.result(def, 'pk', ( if def.model then "#{name}_id" else "id" ) )
 
     fk: (name) ->
         def = @definitions[name]
-        return null unless name
-        def.fk || ( if def.model then "id" else "#{name}_id" )
+        return null unless name and def
+        _.result(def,'fk', ( if def.model then "id" else "#{name}_id" ) )
 
     # returns the data from all assocations for saving
     dataForSave: (model, options) ->
@@ -117,9 +113,16 @@ class Lanes.Models.AssocationMap
         options.saveDepth = ( if options.saveDepth then options.saveDepth + 1 else 1 )
         return ret if options.saveDepth > 5
         for name, options of @definitions
-            break if options.readOnly
+            continue if options.readOnly
             assoc = model[name]
             ret[name] = assoc.dataForSave(options) if _.result(assoc, 'isDirty')
+        ret
+
+    serialize: (model, options = {depth: 1}) ->
+        ret = {}
+        return ret if options.depth > 5
+        for name, options of @definitions
+            ret[name] = model[name].serialize()
         ret
 
     # return a list of assocations from "name" that are not loaded
