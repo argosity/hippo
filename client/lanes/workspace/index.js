@@ -1,3 +1,4 @@
+//=require ./mixins
 //=require ./Extension
 //=require ./UIState
 //=require ./ScreensMenu
