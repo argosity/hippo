@@ -12,7 +12,7 @@ Model = Lanes.Test.defineModel(
 )
 LAST_ROW_SELECTOR = '.fixedDataTableRowLayout_rowWrapper:last-child .public_fixedDataTableCell_cellContent'
 
-SetCode = (q, value) ->
+RenderEdit = (q, value) ->
     grid = LT.renderComponent(LC.Grid, props: {
         query: q, editor: true
     })
@@ -45,22 +45,21 @@ describe "Lanes.Components.Grid.RowEditor", ->
         expect(editor.props.model.id).toEqual(2)
 
     it 'can edit both rows and collections', ->
-        {editor} = SetCode(@query, 'BOB')
+        {editor} = RenderEdit(@query, 'BOB')
         _.dom(editor).qs('.btn.save').click()
         expect( @query.results.rowAt(1)[1] ).toEqual('BOB')
 
         @query.src = @collection
-        {editor} = SetCode(@query, 'BOB')
+        {editor} = RenderEdit(@query, 'BOB')
         _.dom(editor).qs('.btn.save').click()
         expect(@collection.at(1).code).toEqual('BOB')
 
     it 'does not update when edit is canceled', ->
-        {editor} = SetCode(@query, 'CANCKED')
+        {editor} = RenderEdit(@query, 'CANCKED')
         _.dom(editor).qs('.btn.cancel').click()
         expect( @query.results.rowAt(1)[1] ).toEqual('TEST2')
-
         @query.src = @collection
-        {editor} = SetCode(@query, 'CANCELED')
+        {editor} = RenderEdit(@query, 'CANCELED')
         _.dom(editor).qs('.btn.cancel').click()
 
         expect( @collection.at(1).code ).toEqual('TEST2')
