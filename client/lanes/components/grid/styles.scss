@@ -1,7 +1,7 @@
 @import "lanes/vendor/grid";
 
 .grid-component {
-    min-height: 350px;
+    min-height: 250px;
 
     &.flex-row-expand {
         @include flex-grow(1);
