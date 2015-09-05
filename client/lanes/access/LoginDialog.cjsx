@@ -19,7 +19,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
                     onCancel: onCancel, onOk: onOk, show: true,
                     buttons: [{ title: 'Ok', style: 'primary'}]
                     body: Lanes.u.withReactContext({viewport: viewport}, ->
-                        <Lanes.Access.LoginDialog model={session} />
+                        <Lanes.Access.LoginDialog model={session} attemptLogin={onOk} />
                     )
                 )
             )
@@ -27,8 +27,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
                 session.save(ignoreErrors: true).then ->
                     if session.user
                         Lanes.current_user.setLoginData(session.user, session.access)
-                    else
-                        dlg.setState(show:true)
+                    _.extend(viewport.modalProps, {show: !session.user})
 
     mixins: [
         Lanes.React.Mixins.RelayEditingState
@@ -54,6 +53,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
 
                     <LC.Input
                         model={@model}
+                        onEnter={@props.attemptLogin}
                         autoFocus writable
                         name="login"
                         label='Username'
@@ -63,6 +63,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
                     <LC.Input
                         writable
                         model={@model}
+                        onEnter={@props.attemptLogin}
                         name="password"
                         type='password'
                         label='Password'
