@@ -11,6 +11,9 @@ class Lanes.Components.Input extends Lanes.React.Component
     getValue: ->
         @refs.input.getValue()
 
+    handleKeyDown: (ev) ->
+        @props.onEnter() if ev.key is 'Enter'
+
     renderEdit: (label) ->
         colProps = _.omit(@props, 'name')
         value = @props.model[@props.name] or ''
@@ -21,6 +24,7 @@ class Lanes.Components.Input extends Lanes.React.Component
                 type='text'
                 label={label}
                 value={value}
+                onKeyDown={@handleKeyDown if @props.onEnter}
                 onChange={@handleChange}
                 {...@props}
             />
