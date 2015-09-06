@@ -33,14 +33,14 @@ class BaseModel
         # Big decimal for attributes that need precision math
         bigdec:
             set: (newVal) ->
-                val = _.bigDecimal(newVal) unless _.isUndefined(newVal) or _.isNull(newVal)
+                val = _.bigDecimal(newVal) unless _.isBlank(newVal)
                 { val, type: 'bigdec' }
             default: -> new _.bigDecimal(0)
 
         integer:
             set: (newVal) ->
-                val: parseInt(newVal)
-                type: 'integer'
+                val = parseInt(newVal, 10) unless _.isBlank(newVal)
+                {val, type: 'integer'}
         # Uses the "moment" lib to parse dates and coerce strings into the date type.
         date:
             get: (val) -> new Date(val)
@@ -126,9 +126,10 @@ class BaseModel
         new @constructor(@attributes)
 
     serialize: ->
-        data = super
-        _.extend(data, this.associations?.serialize(this))
-        data
+        _.extend(super,
+            this.getAttributes(session: true)
+            this.associations?.serialize(this)
+        )
 
     # Calls Ampersand State's set method, then sets any associations that are present as well
     set: (key, value, options) ->
