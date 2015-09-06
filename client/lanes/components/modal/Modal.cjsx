@@ -11,7 +11,8 @@ class Lanes.Components.Modal extends Lanes.React.Component
         size:      React.PropTypes.string
 
     contextTypes:
-        uistate: Lanes.PropTypes.State
+        viewport: Lanes.PropTypes.State
+        uistate:  Lanes.PropTypes.State
 
     getDefaultProps: ->
         size: 'large'
@@ -35,6 +36,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
         @setState(show: nextProps.show) if nextProps.show?
 
     _hide: ->
+        @context.viewport.modalProps.show = false
         @setState(show: false)
 
     hide: ->
@@ -54,7 +56,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
         cls = _.classnames('lanes-dialog', @props.className, @context.uistate?.layout_size)
 
         <BS.Modal.Dialog className={cls} bsSize={@props.size} onHide={@_hide}>
-            <BS.Modal.Header closeButton>
+            <BS.Modal.Header>
                 <BS.Modal.Title>{@props.title}</BS.Modal.Title>
             </BS.Modal.Header>
 
