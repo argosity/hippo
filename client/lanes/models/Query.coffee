@@ -22,7 +22,7 @@ class Field extends Lanes.Models.Base
                 else ''
         model_field:
             deps: ['id'], fn: ->
-                this.collection.query.src::_definition[@id]
+                this.collection.query.model::_definition[@id]
         type:
             deps: ['model_field'], fn: ->
                 type = @model_field?.type || 'string'
