@@ -104,7 +104,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
             topOffset  : @headerHeight()
             grid       : this
             query      : @query
-            model      : @getSelected()
+            model      : @getSelected().clone()
             onCancel   : @onEditCancel
             onSave     : @onEditSave
             editingEl  : @state.editingEl
