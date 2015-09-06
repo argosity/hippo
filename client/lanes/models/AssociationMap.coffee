@@ -91,6 +91,7 @@ class Lanes.Models.AssocationMap
             association[fn_name]( attributes )
             if Lanes.u.isModel(association)
                 model.set(this.pk(name), association.id) unless association.isNew()
+                model.trigger("change:#{name}", association, {}) unless options?.silent
                 association.isDirty = if value.isDirty? then value.isDirty else true
                 unless _.isObject(value)
                     association.clear()
