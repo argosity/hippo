@@ -6,11 +6,11 @@ Lanes.Components.Grid.EditingMixin = {
         rowIndex:  React.PropTypes.number.isRequired
         rowHeight: React.PropTypes.number.isRequired
         onSave:    React.PropTypes.func.isRequired
+        onCancel:  React.PropTypes.func.isRequired
         model:     Lanes.PropTypes.State.isRequired
         query:     Lanes.PropTypes.State.isRequired
         editors:   React.PropTypes.object
         allowDelete: React.PropTypes.bool
-        hideEditor:  React.PropTypes.func.isRequired
         syncImmediatly: React.PropTypes.bool
 
     listenNetworkEvents: true
@@ -71,9 +71,11 @@ Lanes.Components.Grid.EditingMixin = {
         </div>
 
     onCancel: ->
-        if @props.model.isNew()
-            @props.model.trigger('destroy', @props.model)
-        @props.hideEditor()
+        @props.onCancel(@props.model)
+
+        # if @props.model.isNew()
+        #     @props.model.trigger('destroy', @props.model)
+        # @props.hideEditor()
 
     saveRecord: ->
         if @props.syncImmediatly

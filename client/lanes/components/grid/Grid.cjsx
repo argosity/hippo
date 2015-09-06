@@ -78,6 +78,11 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
     hideEditor: -> @setState(selIndex: null)
 
+    onEditCancel: (model) ->
+        if model.isNew()
+            @query.results.removeRow(@state.selIndex)
+        this.hideEditor()
+
     onEditSave: (model) ->
         @query.results.saveModelChanges(model, @state.selIndex)
         this.hideEditor()
@@ -100,7 +105,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
             grid       : this
             query      : @query
             model      : @getSelected()
-            hideEditor : @hideEditor
+            onCancel   : @onEditCancel
             onSave     : @onEditSave
             editingEl  : @state.editingEl
             editors    : @props.columEditors
