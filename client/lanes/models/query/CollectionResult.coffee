@@ -6,16 +6,21 @@ class Lanes.Models.Query.CollectionResult
     rowAt: (index, options = {}) ->
         model = @collection.at(index)
         for field, i in @query.fields.models when (not options.visibleOnly or field.visible)
-            field.format?(model[field.id], model, @query) or model[field.id]
+            if field.format then field.format(model[field.id], model, @query) else model[field.id]
 
     modelAt: (index) ->
-        @collection.at(index).clone()
+        @collection.at(index)
 
     saveModelChanges: (model, index) ->
         @collection.at(index).copyFrom(model)
 
-    addBlankRow: ->
-        @collection.add({}, at: 0)
+    addBlankRow: (index) ->
+        @collection.add({}, at: index)
+
+    removeRow: (index = 0) ->
+        @collection.remove(
+            @collection.at(index)
+        )
 
     ensureLoaded: ->
         @collection.ensureLoaded()

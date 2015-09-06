@@ -21,11 +21,19 @@ class Page
             delete @pending
             @result.onPageLoad(@)
 
+    _normalizedIndex: (index) ->
+        index = index % @result.pageSize
+
     # N.B. for convenience the index for the methods below is the absolute index for all results
     # not the index just for this page.  It's converted and the appropriate row returned
     _rowAt: (index) ->
-        index = index % @result.pageSize
-        row = @rows[index] || []
+        row = @rows[ @_normalizedIndex(index) ] || []
+
+    _rowToModel: (row) ->
+        attrs = {}
+        for field, i in @result.query.fields.models
+            attrs[field.id] = row[i]
+        new @result.query.src(attrs)
 
     rowAt: (index) ->
         row = @_rowAt(index)
@@ -35,12 +43,11 @@ class Page
     modelAt: (index) ->
         row = @_rowAt(index)
         @modelCache ||= {}
-        @modelCache[ @idForRow(row)] ||= (
-            attrs = {}
-            for field, i in @result.query.fields.models
-                attrs[field.id] = row[i]
-            new @result.query.src(attrs)
-        )
+        id = @idForRow(row)
+        if _.isBlank(id)
+            @_rowToModel(row)
+        else
+            @modelCache[id] ||= @_rowToModel(row)
 
     saveModelChanges: (model, index) ->
         row = @_rowAt(index)
@@ -53,7 +60,15 @@ class Page
     idForRow: (row) ->
         row[@result.query.idIndex]
 
+    addBlankRow: (index) ->
+        model = new @result.query.model
+        row = []
+        for field, i in @result.query.fields.models
+            row[i] = model[field.id]
+        @rows.splice(@_normalizedIndex(index), 0, row)
 
+    removeRow: (index = 0) ->
+        @rows.splice(@_normalizedIndex(index), 1)
 
 class Lanes.Models.Query.SyncedResult
 
@@ -83,12 +98,13 @@ class Lanes.Models.Query.SyncedResult
     saveModelChanges: (model, index) ->
         @pageForIndex(index).saveModelChanges(model, index)
 
-    addBlankRow: ->
-        model = new @query.model
-        row = []
-        for field, i in @query.fields.models
-            row[i] = model[field.id]
-        @rows.unshift row
+    removeRow: (index = 0) ->
+        @total -= 1
+        @pageForIndex(index).removeRow(index)
+
+    addBlankRow: (index = 0) ->
+        @total += 1
+        @pageForIndex(index).addBlankRow(index)
 
     ensureLoaded: ->
         if _.isEmpty(@pages)
