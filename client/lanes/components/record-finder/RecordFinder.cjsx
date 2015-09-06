@@ -7,7 +7,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
 
 
     contextTypes:
-        uistate: Lanes.PropTypes.State.isRequired
+        viewport: Lanes.PropTypes.State.isRequired
 
     showFinder: ->
         body = Lanes.u.withReactContext @context, =>
@@ -17,7 +17,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             body: body
             title: "Find #{@props.query.title}"
             buttons: [{title: 'Cancel'}]
-        )
+        ).then(Lanes.emptyFn, Lanes.emptyFn)
 
     loadCurrentSelection: ->
         value = @props.model[@props.query.initialField.id]
