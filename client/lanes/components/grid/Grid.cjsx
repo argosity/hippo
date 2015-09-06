@@ -91,7 +91,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         return null if not @state.toolbar or false is @props.commands?.isEditing()
         props = _.clone(@props)
         props.onAddRecord = =>
-            @query.results.addBlankRow()
+            @query.results.addBlankRow(0)
             @setState(selIndex: 0)
         <Lanes.Components.Grid.Toolbar {...props} />
 
