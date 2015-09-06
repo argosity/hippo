@@ -83,6 +83,10 @@ class Lanes.Models.AssocationMap
     setFromServer: (model, data, options) ->
         this._set(model, data, options, 'setFromServer')
 
+    onIdChange: (model) ->
+        for name, def of @definitions when def.collection and model[name]?.associationFilter
+            model[name]?.associationFilter[ @fk(name) ] = model[ @pk(name) ]
+
     _set: (model, data, options, fn_name) ->
         for name, value of data
             continue unless @definitions[name]

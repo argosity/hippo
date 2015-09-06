@@ -11,6 +11,8 @@ class Lanes.Models.ChangeMonitor
     onChange: (record, options) ->
         attrs = record.changedAttributes()
         return if _.isEmpty(attrs)
+        if attrs[record.idAttribute] and record.associations
+            record.associations.onIdChange(record)
         if attrs.isDirty == false
             @_unsaved = {}
         else
