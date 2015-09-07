@@ -7,7 +7,10 @@ $gray-darker: lighten(#000, 13.5%) !default;
 
 .overlay {
   position: absolute;
-  z-index: 31;
+  z-index: 11;
+  height: 100%;
+  width: 100%;
+
   .mask {
     background-color: white;
     height: 100%;
@@ -17,24 +20,27 @@ $gray-darker: lighten(#000, 13.5%) !default;
     top: 0;
     width: 100%;
   }
+
   .message {
-    min-width: 100px;
+    width: 250px;
     min-height: 65px;
-    line-height: 1.35;
+    line-height: 3rem;
     border: 2px solid $well-border;
     margin-left: auto;
     margin-right: auto;
+    font-size: 2rem;
     position: relative;
     top: 25%;
     border-radius: $border-radius-large;
     padding: 10px;
     box-shadow: 6px 7px 5px $gray-light;
     background-color: $body-bg;
-    width: 70%;
+
     i {
       display: inline-block;
       font-size: 3.2rem;
       float: left;
+      margin-right: 0.5rem;
       &.loading-spinner {
         background:url(image-path('images/lanes/ajax-loader.gif')) no-repeat;
         height: 32px;
