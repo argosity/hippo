@@ -5,12 +5,10 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
             {id:'id', visible: false}
             'login', 'name', 'email', {id:'role_names', title:'Role Names'}
         ]
-        query: new Lanes.Models.Query({
-            fields: fields, src: Lanes.Models.User
-        })
+        query: new Lanes.Models.Query(fields: fields, src: Lanes.Models.User)
 
     rolesForUser: (user) ->
-        {value: user.role_names, roles: _.map(user.role_names, _.field2title)}
+        _.map user.role_names, (rn) -> {id: rn, label: _.field2title(rn) }
 
     setRolesForUser: (model, roles) ->
         model.role_names = _.pluck(roles, 'id')
@@ -23,9 +21,11 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
                 editOnly multi writable unstyled
                 model={model}
                 name="roles"
+                labelField='name'
                 getSelection={@rolesForUser}
                 setSelection={@setRolesForUser}
                 collection={Lanes.Models.Role.all}
+                fetchWhenOpen={false}
                 name="role_names"
             />
 
