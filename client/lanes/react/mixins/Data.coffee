@@ -62,17 +62,17 @@ class DataWrapper
         unless options.silent
             @setComponentState
                 isRequesting: false
-                hasError: true
+                hasError: modelOrCollection?.errorMessage or true
                 error: modelOrCollection.errors
 
     onInvalid: (model, res, options) ->
         @setComponentState(isInvalid: true) unless options.silent
 
-    onRequest: (modelOrCollection, options) ->
+    onRequest: (modelOrCollection, type, options) ->
         # Set `state` only if there's no silent option
         unless options.silent
             @setComponentState
-                isRequesting: true
+                isRequesting: type
                 hasError: false
                 isInvalid: false
 

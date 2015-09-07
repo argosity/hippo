@@ -32,7 +32,7 @@ Lanes.Models.Sync = {
         if _.contains(['create', 'update', 'patch'], method)
             options.data ||= model.dataForSave(options)
         model.requestInProgress = options
-        model.trigger("request", model, options)
+        model.trigger("request", model, method, options)
         return new _.Promise (resolve, reject) ->
             handler = (reply) ->
                 delete model.requestInProgress
