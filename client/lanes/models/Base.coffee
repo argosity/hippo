@@ -119,6 +119,7 @@ class BaseModel
     # replace this model's attributes with data from other model
     copyFrom: (model) ->
         attributes = if _.isFunction(model.serialize) then model.serialize() else model
+        _.extend(attributes, model.getAttributes(session: true) ) if Lanes.u.isState(model)
         this.set(attributes)
 
     # duplicate the model.  Copies only attributes, not bound events
@@ -127,7 +128,6 @@ class BaseModel
 
     serialize: ->
         _.extend(super,
-            this.getAttributes(session: true)
             this.associations?.serialize(this)
         )
 
