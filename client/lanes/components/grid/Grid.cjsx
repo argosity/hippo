@@ -127,7 +127,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         )
 
     onResize: _.debounce( (size) ->
-        @setState({size})
+        @setState(size: {height: size.height - 2, width: size.width - 2})
     , 300)
 
     height:  -> (@state.size?.height || 300) - (if @state.toolbar then 50 else 0)
