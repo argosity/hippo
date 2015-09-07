@@ -6,7 +6,7 @@ class ScreenList extends Lanes.React.Component
     render: ->
         <li>
             <a href="#" onClick={@activateScreen}>
-                <span>{@model.title}</span><i className={"icon icon-#{@model.icon}"}></i>
+                <span>{@model.title}</span><LC.Icon type={@model.icon} />
             </a>
         </li>
 
@@ -50,7 +50,7 @@ class Lanes.Workspace.ScreensMenu extends Lanes.React.Component
                 <li className="group logout" data-tooltip-message="Log Out" data-placement="right">
                     <a href="#" name="LogOut" onClick={@logOut}>
                         <span>Log Out</span>
-                        <i className="icon icon-times"></i>
+                        <LC.Icon type='times' />
                     </a>
                 </li>
             </ul>
