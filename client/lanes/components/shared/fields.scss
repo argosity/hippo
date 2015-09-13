@@ -1,3 +1,6 @@
+@import "lanes/styles/bootstrap/variables";
+@import "lanes/styles/bootstrap/mixins";
+
 label.field {
     display: block;
 }
@@ -13,7 +16,7 @@ label.field {
         border-bottom: 1px solid $input-border;
     }
     .read-only {
-        @extend .form-control;
+        @extend .form-control !optional;
         padding: 6px 12px;
         cursor: not-allowed;
     }
