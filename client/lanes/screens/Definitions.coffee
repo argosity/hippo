@@ -134,7 +134,8 @@ class ScreenSet extends Lanes.Models.BasicCollection
         screen = this.add( screen )
         screen.set(active:true)
 
-
+    isLoading: ->
+        !!Lanes.Screens.Definitions.all.findWhere({loading: true})
 
 class MenuGroup extends Lanes.Models.BasicModel
 
