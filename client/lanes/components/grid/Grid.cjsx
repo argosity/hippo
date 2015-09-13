@@ -51,6 +51,9 @@ class Lanes.Components.Grid extends Lanes.React.Component
         @props.headerHeight + ( if @state.toolbar then @props.headerHeight else 0 )
 
     onSortChange: (sortInfo) ->
+        for sortConfig in sortInfo
+            sort = @query.fields.at(sortConfig.name).sortBy
+            sortConfig.fn = sort if sort
         @refs.grid.data = _.sorty(sortInfo, @refs.grid.data)
         @setState(sortInfo: sortInfo, selIndex: undefined)
 
