@@ -15,7 +15,6 @@ Lanes.Components.Grid.EditingMixin = {
 
     listenNetworkEvents: true
     getDefaultProps: -> editors: {}
-    getInitialState: -> widths: @props.grid.columnWidths()
     topOffset:       -> @props.topOffset + (@props.rowIndex * @props.rowHeight)
 
     renderControls: ->
