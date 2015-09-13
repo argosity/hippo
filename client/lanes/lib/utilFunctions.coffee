@@ -30,6 +30,11 @@ Lanes.u = {
         Lanes.Vendor.ReactContext.current = previousContext
         ret
 
+    makeComparatorUsing: (method) ->
+        (a, b) -> Lanes.u.comparator(a[method], b[method])
+
+    comparator: (a, b) ->
+        if a < b then 1 else if a > b then -1 else 0
 
     objectForPath: (path) ->
         parts = path.replace(/\.js$/, '').split('/')
