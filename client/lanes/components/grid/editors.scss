@@ -48,11 +48,18 @@ $editor-border: 1px solid $editor-border-color;
         z-index:11;
         min-height: 10px;
 
+        pointer-events: none;
+        .body     { pointer-events: none; }
+        .fields   { pointer-events: all;  }
+        .controls { pointer-events: none; }
+        .buttons  { pointer-events: all;  }
+
         label { display: none; }
 
         .fields {
             flex-direction: row;
             background: $editor-background;
+            padding-right: 15px;
         }
         .controls .buttons {
             background: $editor-background;
