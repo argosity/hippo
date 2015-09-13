@@ -14,12 +14,12 @@ class Lanes.Workspace.UIState extends Lanes.Models.State
             type: 'string',
             values: [ 'menu-wide', 'menu-narrow', 'menu-hidden' ]
         }
-        root:       'element'
-        menu_view:  'any'
-        width:      'number'
-        height:     'number'
-        layout:   'state'
-        viewport: 'object'
+        root:      'element'
+        menu_view: 'any'
+        width:     'number'
+        height:    'number'
+        layout:    'state'
+        viewport:  'object'
         screen_menu_shown: 'boolean'
 
     derived:
