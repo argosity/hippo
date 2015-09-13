@@ -11,25 +11,33 @@ class Lanes.React.Viewport extends Lanes.Models.State
         el:         'element'
         selector:   'string'
         root:       'element'
+        lanes:      'element'
         modalProps: 'object'
 
     constructor: ->
         super
         ALL_INSTANCES.push(this)
-        root = document.body.querySelector(@selector)
-        _.dom(root).addClass('lanes-root')
+        @root = document.body.querySelector(@selector)
+        _.dom(@root).addClass('lanes-root')
         Lanes.fatal("Root selector #{@selector} not found") unless root
-        _.dom(root).html = "<div class='lanes'/>"
-        Lanes.lib.ResizeSensor(root, _.debounce( =>
+        _.dom(@root).html = "<div class='lanes'/>"
+        this.lanes = @root.querySelector('.lanes')
+        Lanes.lib.ResizeSensor(@root, _.debounce( =>
             @_updateDimensions()
         , 250))
-        this.root = root.querySelector('.lanes')
         this._updateDimensions()
+
+    onBoot: ->
+        prev = _.dom(this.root.previousElementSibling)
+        prev.addClass('complete') if prev.hasClass('loading')
+        _.delay(->
+            prev.remove()
+        , 1000)
 
     _updateDimensions: ->
         this.set
-            width:  this.root.clientWidth
-            height: this.root.clientHeight
+            width:  @lanes.clientWidth
+            height: @lanes.clientHeight
 
 
     displayError: (msg) ->

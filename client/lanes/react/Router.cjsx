@@ -14,5 +14,5 @@ Lanes.React.runRouter = (viewport) ->
         </Route>
 
     Lanes.React.Router.run(routes, Lanes.React.Router.HistoryLocation, (Handler) ->
-        React.render(<Handler viewport=viewport />, viewport.root)
+        React.render(<Handler viewport=viewport />, viewport.lanes)
     )

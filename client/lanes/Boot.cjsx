@@ -7,3 +7,4 @@ Lanes.renderScreenTo = (selector, options) ->
         Lanes.Extensions.fireOnInitialized(viewport)
         Lanes.React.runRouter(viewport)
         Lanes.Extensions.fireOnAvailable(viewport)
+        viewport.onBoot()
