@@ -175,7 +175,7 @@ class Lanes.Models.Query extends Lanes.Models.State #Base
         initialField: 'state'
         idIndex: 'number'
         initialFieldIndex: 'number'
-        pageSize: 'number'
+        pageSize: {type: 'number', default: 100}
         syncOptions: 'any'
         autoRetrieve: ['bool', true, true]
         title: { type: 'string', default: 'Find Record' }
