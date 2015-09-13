@@ -14,6 +14,7 @@ class Field extends Lanes.Models.Base
         format:   type: 'function'
         flex:     type: 'number',  default: 1
         textAlign: type: 'string', default: 'left'
+        comparator: type: 'function', default: -> Lanes.u.makeComparatorUsing('id')
 
     derived:
         default_value: deps: ['id'], fn: ->
