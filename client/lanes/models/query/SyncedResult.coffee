@@ -37,7 +37,7 @@ class Page
 
     rowAt: (index) ->
         row = @_rowAt(index)
-        @result.query.fields.map (field, i) ->
+        @result.query.fields.map (field, i) =>
             field.format?(row[i], row, @result.query) or row[i]
 
     modelAt: (index) ->
@@ -84,13 +84,23 @@ class Lanes.Models.Query.SyncedResult
         pageNum = Math.floor(index / @pageSize)
         @pages[pageNum] ||= new Page(pageNum, this)
 
+    visibleIndexes: ->
+        @_visibleIndexes ||= (
+            _.compact( @query.fields.map( (f, i) ->
+                if f.visible then i else null
+            ))
+        )
+
     rowAt: (index, options = {}) ->
         row = @pageForIndex(index).rowAt(index)
         if options.visibleOnly
-            @visibleIndexes ||= _.compact @query.fields.map (f, i) -> if f.visible then i else null
-            row[fieldIndex] for fieldIndex in @visibleIndexes
+            row[fieldIndex] for fieldIndex in @visibleIndexes()
         else
             row
+
+    allRows: (options) ->
+        rows = (@rowAt(i, options) for i in [0...@length])
+        _.Promise.resolve(rows)
 
     modelAt: (index) ->
         @pageForIndex(index).modelAt(index)
@@ -106,14 +116,12 @@ class Lanes.Models.Query.SyncedResult
         @total += 1
         @pageForIndex(index).addBlankRow(index)
 
-    ensureLoaded: ->
-        if _.isEmpty(@pages)
-            @pageForIndex(0).pendingLoad
-        else
-            _.Promise.resolve(@)
+    ensureLoaded: (options) ->
+        @pageForIndex(options.page || 0).pendingLoad or _.Promise.resolve(@)
 
     onPageLoad: (page) ->
         @query.trigger('load', @query)
+        @
 
 
 Object.defineProperty Lanes.Models.Query.SyncedResult.prototype, 'length',
