@@ -11,13 +11,23 @@ class Lanes.lib.Dom
     qsa: (selector) ->
         @el.querySelectorAll(selector)
 
-wrap = (fn) ->
+    remove: ->
+        @el.parentElement.removeChild(@el)
+
+wrapArg = (fn) ->
+    return ->
+        fn(this.el, arguments...)
+
+chain = (fn) ->
     return ->
         fn(this.el, arguments...)
         return this
 
 for name, func of Lanes.Vendor.dom
-    Lanes.lib.Dom::[name] = wrap(func)
+    Lanes.lib.Dom::[name] = if name.match(/^has/)
+        wrapArg
+    else
+        chain(func)
 
 Object.defineProperties(Lanes.lib.Dom.prototype, {
 
@@ -38,7 +48,9 @@ Object.defineProperties(Lanes.lib.Dom.prototype, {
 
 
 _.dom = (unknown, query) ->
-    el = if _.isElement(unknown)
+    el = if _.isBlank(unknown)
+        throw new TypeError("Selector / DOM node is not present")
+    else if _.isElement(unknown)
         unknown
     else if _.isFunction(unknown.getDOMNode)
         unknown.getDOMNode()
