@@ -223,6 +223,9 @@ class Lanes.Models.Query extends Lanes.Models.State #Base
             @results.reset()
             @results.ensureLoaded() if this.autoRetrieve
         )
+        this.on('change:src change:results', ->
+            this.trigger('load')
+        )
         if @initialFieldIndex
             @initialField = this.fields.at(@initialFieldIndex)
         @initialField ||= this.fields.findWhere(id: "code") ||
