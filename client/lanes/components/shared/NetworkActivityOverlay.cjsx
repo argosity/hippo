@@ -35,9 +35,6 @@ class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
 
     render: ->
         return null unless @state.isRequesting or @state.hasError
-
-        if @props.hasError and not @state.hasError
-            _.delay
         message = @props.message or (
             if @props.hasError
                 if _.isString(@props.hasError) then @props.hasError else "Error"
