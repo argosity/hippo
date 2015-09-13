@@ -28,14 +28,10 @@
             display: block
         }
     }
-
 }
 
 .screens-menu {
-
     background-color: $navbar-inverse-bg;
-
-
     .navigation {
         border-bottom: 1px solid $navbar-inverse-border;
         list-style: none outside none;
@@ -113,8 +109,6 @@
                 }
             }
         }
-
-
         .logout>a {
             border-bottom: 2px solid #49565d;
             i {
@@ -122,7 +116,6 @@
                 top: 6px;
             }
         }
-
     }
 }
 
@@ -208,7 +201,8 @@
     }
 }
 
-.popover-menu {
+
+.popover_menu {
     .page-content {
         margin-left: 0px;
     }
