@@ -2,6 +2,9 @@ module Lanes
     module API
 
         module HelperMethods
+            def lanes_application_title
+                Extensions.controlling.title
+            end
 
             def lanes_javascript_tag
                 javascript_tag( 'lanes' )

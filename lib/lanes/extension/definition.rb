@@ -10,6 +10,8 @@ module Lanes
 
             attr_reader :context
 
+            attr_accessor_with_default :title, ''
+
             attr_accessor_with_default :load_phase, :late
 
             attr_accessor_with_default :identifier
@@ -96,7 +98,7 @@ module Lanes
 
         class Base < Definition
             identifier "lanes"
-
+            title "Lanes Application"
             root_path Pathname.new(__FILE__).dirname.join("..","..","..").expand_path
             def stylesheet_include
                 nil

@@ -58,9 +58,6 @@ module Lanes
         config_option :redis, ENV.has_key?('REDISTOGO_URL') ?
            {url: ENV["REDISTOGO_URL"]} : {path: "/tmp/redis.sock"}
 
-        # Title of application
-        config_option :app_title, "Lanes Test"
-
         # url prefix to use for assets
         config_option :assets_path_prefix, "/assets"
 

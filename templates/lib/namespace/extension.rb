@@ -17,6 +17,8 @@ module <%= namespace %>
 
         identifier "<%= identifier %>"
 
+        title "<%= title %>"
+
         root_path Pathname.new(__FILE__).dirname.join("..","..").expand_path
 
         # If a data structure that can be represented as JSON

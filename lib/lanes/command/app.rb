@@ -4,9 +4,9 @@ module Lanes
         class App < NamedCommand
 
             class_options :force => :boolean
-
-            class_option  :directory, :type=>:string
-
+            class_option  :directory, type: :string
+            class_option  :title,     type: :string
+            attr_reader   :title
 
             def load_namespace # override
                 @namespace  = name.underscore.camelize
@@ -15,6 +15,7 @@ module Lanes
 
             def set_variables
                 super
+                @title = options[:title] || @namespace
                 self.destination_root = options[:directory] || name
             end
 
