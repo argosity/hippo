@@ -4,11 +4,11 @@ describe Lanes::Configuration do
 
     def test_changing_values_are_logged
         begin
-            assert_logs_matching( /table_prefix changed from / ) do
-                Lanes.config.table_prefix=:foo
+            assert_logs_matching( /environment changed from / ) do
+                Lanes.config.environment='foo'
             end
         ensure
-            Lanes.silence_logs {   Lanes.config.table_prefix='' }
+            Lanes.silence_logs {   Lanes.config.environment='foo' }
         end
     end
 
