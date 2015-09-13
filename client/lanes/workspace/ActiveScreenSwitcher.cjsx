@@ -18,9 +18,18 @@ class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.React.Component
 
     dataObjects:
         collection: -> Lanes.Screens.Definitions.displaying
+        allScreens: -> Lanes.Screens.Definitions.all
+
+    bindDataEvents: ->
+        allScreens: 'change:loading'
+
+    renderLoading: ->
+        screen = Lanes.Screens.Definitions.all.findWhere(loading: true)
+        <LC.NetworkActivityOverlay isRequesting message="Loading #{screen.title}…" />
 
     render: ->
         <div className="menu-container">
+            {@renderLoading() if Lanes.Screens.Definitions.all.isLoading()}
             <div className="active-screens">
                 <div className="scroller scroller-left">
                     <i className="glyphicon glyphicon-chevron-left"/>
