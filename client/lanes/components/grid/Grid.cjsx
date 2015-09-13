@@ -15,6 +15,9 @@ class Lanes.Components.Grid extends Lanes.React.Component
     bindDataEvents:
         query: 'load'
 
+    setDataState: (newstate) ->
+        @refs.grid?.reload() if newstate.query
+
     propTypes:
         query:  React.PropTypes.instanceOf(Lanes.Models.Query).isRequired
         width:  React.PropTypes.number
@@ -30,30 +33,16 @@ class Lanes.Components.Grid extends Lanes.React.Component
         autoLoadQuery: React.PropTypes.bool
 
     getDefaultProps: ->
-        headerHeight: 50, rowHeight: 30, editorProps: {}, autoLoadQuery: true
+        headerHeight: 40, rowHeight: 30, editorProps: {}, autoLoadQuery: true
 
     getInitialState: ->
-        columnWidths: {}, toolbar: !!@props.allowCreate
+        toolbar: !!@props.allowCreate
 
-    componentWillMount: -> @query.results.ensureLoaded() if @props.autoLoadQuery
+    componentWillMount: -> @query.results.ensureLoaded(0) if @props.autoLoadQuery
 
-    renderColumns: ->
-        @query.fields.visible.map (f, i) =>
-            <Lanes.Vendor.Grid.Column
-                dataKey={i}
-                columnData={f}
-                align={f.textAlign}
-                isResizable={true}
-                flexGrow={f.flex}
-                label={f.title}
-                width={@state.columnWidths[i] || 10}
-                key={i}
-            />
-
-    onRowClick: (ev, index) ->
+    onRowClick: (col, row, index) ->
         newIndex = (if @state.selIndex == index then null else index)
-        el = Lanes.u.closestEl(ev.target, 'public_fixedDataTableCell_main')
-        @setState(selIndex: newIndex, editingEl: el)
+        @setState(selIndex: newIndex)
         @props.onSelectionChange?(
             if newIndex? then @query.results.modelAt(newIndex) else null
         )
@@ -71,11 +60,6 @@ class Lanes.Components.Grid extends Lanes.React.Component
     rowGetter: (rowIndex) ->
         @query.results.rowAt(rowIndex, visibleOnly:true)
 
-    onColumnResizeEnd: (width, index) ->
-        columnWidths = @state.columnWidths || {}
-        columnWidths[index] = width
-        @setState({columnWidths})
-
     hideEditor: -> @setState(selIndex: null)
 
     onEditCancel: (model) ->
@@ -86,14 +70,6 @@ class Lanes.Components.Grid extends Lanes.React.Component
     onEditSave: (model) ->
         @query.results.saveModelChanges(model, @state.selIndex)
         this.hideEditor()
-
-    renderToolbar: ->
-        return null if not @state.toolbar or false is @props.commands?.isEditing()
-        props = _.clone(@props)
-        props.onAddRecord = =>
-            @query.results.addBlankRow(0)
-            @setState(selIndex: 0)
-        <Lanes.Components.Grid.Toolbar {...props} />
 
     renderEditor: ->
         editor = if true == @props.editor
@@ -107,7 +83,6 @@ class Lanes.Components.Grid extends Lanes.React.Component
             model      : @getSelected().clone()
             onCancel   : @onEditCancel
             onSave     : @onEditSave
-            editingEl  : @state.editingEl
             editors    : @props.columEditors
             rowIndex   : @state.selIndex
             rowHeight  : @props.rowHeight
@@ -119,20 +94,30 @@ class Lanes.Components.Grid extends Lanes.React.Component
             <div className="loading">Loading ...</div>
         </div>
 
-    columnWidths: ->
-        width = @width()
-        each = width / @query.fields.visible.length
-        @query.fields.visible.map( (field, i) =>
-            fixed = @state.columnWidths[i] || (each * (field.flex || 1))
-        )
-
     onResize: _.debounce( (size) ->
-        @setState(size: {height: size.height - 2, width: size.width - 2})
+        @setState(size: {height: size.height, width: size.width})
     , 300)
 
-    height:  -> (@state.size?.height || 300) - (if @state.toolbar then 50 else 0)
+    height:  -> (@state.size?.height || 300)
     width:   -> (@props.width  || @state.size?.width  || 500 )
     canEdit: -> @props.editor and (not @props.commands or @props.commands?.isEditing())
+
+    computedColumns: ->
+        @query.fields.visible.map (f, i) ->
+            _.extend( _.pick( f,  'id', 'title', 'flex', 'visible', 'textAlign' ), name: "#{i}" )
+
+    makeToolBar: ->
+        return null if not @state.toolbar or false is @props.commands?.isEditing()
+        props = _.extend {}, @props,
+            position: 'top',
+            onAddRecord: =>
+                @query.results.addBlankRow(0)
+                @setState(selIndex: 0)
+        <Lanes.Components.Grid.Toolbar key="toolbar" {...props} />
+
+    dataSource: (q) ->
+        @query.results.allRows(page: q.page, visibleOnly: true).then (rows) ->
+            count: rows.length, data: rows
 
     render: ->
         <LC.ResizeSensor onResize={@onResize}
@@ -140,23 +125,24 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
             <div className='wrapper'>
 
-                {@renderToolbar()}
-
                 {@renderEditor() if @canEdit() and @state.selIndex?}
 
                 <Lanes.Vendor.Grid
                     ref="grid"
-                    rowsCount={@query.results.length}
-                    rowGetter={@rowGetter}
-                    onRowClick={@onRowClick}
-                    onColumnResizeEndCallback={@onColumnResizeEnd}
+                    emptyText={"No #{@query.title} found"}
                     rowHeight={@props.rowHeight}
-                    headerHeight={@props.headerHeight}
-                    width={@width()}
-                    height={@height()}
-                >
-                    {@renderColumns()}
-                </Lanes.Vendor.Grid>
+                    dataSource={@dataSource}
+                    paginationFactory = {@makeToolBar}
+                    selected={@getSelected()?.id}
+                    sortInfo={@state.sortInfo}
+                    onSortChange={@onSortChange}
+                    onSelectionChange={@onRowClick}
+                    idProperty='0'
+                    pagination={true}
+                    onColumnResize={@onColumnResize}
+                    paginationToolbarProps = { position: 'top' }
+                    style={{height: @height()}}
+                    columns={@computedColumns()} />
 
             </div>
         </LC.ResizeSensor>
