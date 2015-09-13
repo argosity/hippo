@@ -53,7 +53,7 @@ class Lanes.Workspace.UIState extends Lanes.Models.State
 
         screens_width:
             deps: ['width', 'screen_menu_size'], fn: ->
-                @width - @menu_width
+                @width - ( if @popover_menu then 0 else @menu_width )
 
         screens_height:
             deps: ['height'], fn: ->
