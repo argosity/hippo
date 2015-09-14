@@ -200,16 +200,8 @@ class Lanes.Models.Query extends Lanes.Models.State #Base
                 else
                     new Lanes.Models.Query.SyncedResult(this, pageSize: @pageSize)
 
-        # url:
-        #     deps:['src'], fn: ->
-        #         if @Lanes.u.isCollection(@src) then @src.url() else @src?::urlRoot()
-
-        # collection_class:
-        #     deps:['src'], fn: -> @src?.Collection
-
     constructor: (options = {}) ->
         super
-#        idName = @src::idAttribute
 
         @fields = new AvailableFields([], query: this)
         for col, i in options.fields
