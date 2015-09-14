@@ -10,6 +10,15 @@ Model = Lanes.Test.defineModel(
     props: {id: 'integer', code: 'string', name: 'string', notes: 'string'}
 )
 
+renderGrid = (q, done) ->
+    loaded = spyOn(q.results, 'ensureLoaded').and.callThrough()
+    grid = LT.renderComponent(LC.Grid, props: query: q)
+    expect(loaded).toHaveBeenCalled()
+    _.defer ->
+        expect(_.dom(grid).qsa('.z-row').length)
+            .toEqual( q.results.length )
+        done()
+
 describe "Lanes.Components.Grid", ->
 
     beforeEach (done) ->
@@ -20,23 +29,31 @@ describe "Lanes.Components.Grid", ->
         @collection = new Model.Collection
         @query.ensureLoaded().then => @collection.ensureLoaded().then -> done()
 
-    it "loads from a result set", (done) ->
-        renderGrid = (q) ->
-            loaded = spyOn(q.results, 'ensureLoaded').and.callThrough()
-            grid = LT.renderComponent(LC.Grid, props: query: q)
-            _.defer (done)
-            expect(loaded).toHaveBeenCalled()
-            expect(_.dom(grid).qsa('.fixedDataTableRowLayout_rowWrapper').length)
-                .toEqual( q.results.length + 1 )
-        renderGrid(@query)
-        @query.src = @collection
-        renderGrid(@query)
+    describe "loading", ->
 
-    it 'can be edited', ->
+        it "from a result set", (d) ->
+            renderGrid(@query, d)
+
+        it "from a collection", (d) ->
+            @query.src = @collection
+            renderGrid(@query, d)
+
+    it 'renders toolbar', ->
+        jasmineReact.spyOnClass(LC.Grid, 'makeToolBar').and.callThrough()
+        grid = LT.renderComponent(LC.Grid, props: {
+            query: @query, editor: true, allowCreate: true
+        })
+        expect(
+            jasmineReact.classPrototype(LC.Grid).makeToolBar
+        ).toHaveBeenCalled()
+
+
+    it 'notifies when selection changes', (done) ->
         spy = jasmine.createSpy('selection')
         grid = LT.renderComponent(LC.Grid, props: {
             query: @query, editor: true, onSelectionChange: spy
         })
-        expect(_.dom(grid).qsa('.fixedDataTableRowLayout_rowWrapper').length).toEqual(3)
-        _.dom(grid).qs('.fixedDataTableRowLayout_rowWrapper:last-child .public_fixedDataTableCell_cellContent').click()
-        expect(spy).toHaveBeenCalled()
+        _.defer ->
+            _.dom(grid).qs('.z-table .z-cell').click()
+            expect(spy).toHaveBeenCalled()
+            done()
