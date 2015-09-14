@@ -18,6 +18,9 @@ class Lanes.Components.Grid extends Lanes.React.Component
     setDataState: (newstate) ->
         @refs.grid?.reload() if newstate.query
 
+    componentWillReceiveProps: (nextProps) ->
+        @refs.grid.reload() if nextProps.query
+
     propTypes:
         query:  React.PropTypes.instanceOf(Lanes.Models.Query).isRequired
         width:  React.PropTypes.number
