@@ -116,7 +116,7 @@ class Lanes.Models.Query.SyncedResult
         @total += 1
         @pageForIndex(index).addBlankRow(index)
 
-    ensureLoaded: (options) ->
+    ensureLoaded: (options = {}) ->
         @pageForIndex(options.page || 0).pendingLoad or _.Promise.resolve(@)
 
     onPageLoad: (page) ->
