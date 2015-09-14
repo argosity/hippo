@@ -114,7 +114,9 @@ class Lanes.Components.Grid extends Lanes.React.Component
         <Lanes.Components.Grid.Toolbar key="toolbar" {...props} />
 
     dataSource: (q) ->
-        @query.results.allRows(page: q.page, visibleOnly: true).then (rows) ->
+        @setState(is_loading: true)
+        @query.results.allRows(page: q.page, visibleOnly: true).then (rows) =>
+            @setState(is_loading: false)
             count: rows.length, data: rows
 
     render: ->
@@ -136,7 +138,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
                     onSortChange={@onSortChange}
                     onSelectionChange={@onRowClick}
                     idProperty='0'
-                    loading={true}
+                    loading={@state.is_loading}
                     pagination={true}
                     onColumnResize={@onColumnResize}
                     paginationToolbarProps = { position: 'top' }
