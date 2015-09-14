@@ -92,11 +92,6 @@ class Lanes.Components.Grid extends Lanes.React.Component
             allowDelete: @props.allowDelete and @props.commands?.isEditing()
         }, @props.editorProps))
 
-    renderLoading: ->
-        <div className="grid-component">
-            <div className="loading">Loading ...</div>
-        </div>
-
     onResize: _.debounce( (size) ->
         @setState(size: {height: size.height, width: size.width})
     , 300)
@@ -141,6 +136,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
                     onSortChange={@onSortChange}
                     onSelectionChange={@onRowClick}
                     idProperty='0'
+                    loading={true}
                     pagination={true}
                     onColumnResize={@onColumnResize}
                     paginationToolbarProps = { position: 'top' }
