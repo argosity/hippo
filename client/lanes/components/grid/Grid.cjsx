@@ -19,7 +19,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         @refs.grid?.reload() if newstate.query
 
     componentWillReceiveProps: (nextProps) ->
-        @refs.grid.reload() if nextProps.query
+        @refs.grid.reload() if nextProps.query isnt @props.query
 
     propTypes:
         query:  React.PropTypes.instanceOf(Lanes.Models.Query).isRequired
