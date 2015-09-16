@@ -64,24 +64,22 @@ class Lanes.Components.Grid extends Lanes.React.Component
         for sortConfig in sortInfo
             sort = @query.fields.at(sortConfig.name).sortBy
             sortConfig.fn = sort if sort
-        @refs.grid.data = _.sorty(sortInfo, @refs.grid.data)
-        @setState(sortInfo: sortInfo, selIndex: undefined)
 
-    getSelected: ->
-        @query.results.modelAt(@state.selIndex) if @state.selIndex?
+        @setState(sortInfo: sortInfo, selectedIndex: undefined, selectedModel: undefined)
 
-    rowGetter: (rowIndex) ->
-        @query.results.rowAt(rowIndex, visibleOnly:true)
-
-    hideEditor: -> @setState(selIndex: null)
+    hideEditor: -> @setState(selectedIndex: null)
 
     onEditCancel: (model) ->
         if model.isNew()
-            @query.results.removeRow(@state.selIndex)
+            @query.results.removeRow(@state.selectedIndex)
         this.hideEditor()
 
     onEditSave: (model) ->
-        @query.results.saveModelChanges(model, @state.selIndex)
+        @query.results.saveModelChanges(model, @state.selectedIndex)
+
+        this.refs.grid.data[this.state.selectedIndex] =
+            @query.results.rowAt( @state.selectedIndex, visibleOnly: true )
+
         this.hideEditor()
 
     renderEditor: ->
@@ -93,11 +91,11 @@ class Lanes.Components.Grid extends Lanes.React.Component
             topOffset  : @headerHeight()
             grid       : this
             query      : @query
-            model      : @getSelected().clone()
+            model      : @state.selectedModel
             onCancel   : @onEditCancel
             onSave     : @onEditSave
             editors    : @props.columEditors
-            rowIndex   : @state.selIndex
+            rowIndex   : @state.selectedIndex
             rowHeight  : @props.rowHeight
             allowDelete: @props.allowDelete and @props.commands?.isEditing()
         }, @props.editorProps))
@@ -119,8 +117,8 @@ class Lanes.Components.Grid extends Lanes.React.Component
         props = _.extend {}, @props,
             position: 'top',
             onAddRecord: =>
-                @query.results.addBlankRow(0)
-                @setState(selIndex: 0)
+                model = @query.results.addBlankRow(0)
+                @setState(selectedIndex: 0, selectedModel: model)
         <Lanes.Components.Grid.Toolbar key="toolbar" {...props} />
 
     dataSource: (q) ->
@@ -135,7 +133,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
             <div className='wrapper'>
 
-                {@renderEditor() if @canEdit() and @state.selIndex?}
+                {@renderEditor() if @canEdit() and @state.selectedIndex?}
 
                 <Lanes.Vendor.Grid
                     ref="grid"
@@ -143,7 +141,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
                     rowHeight={@props.rowHeight}
                     dataSource={@dataSource}
                     paginationFactory = {@makeToolBar}
-                    selected={@getSelected()?.id}
+                    selected={@state.selectedModel?.id}
                     sortInfo={@state.sortInfo}
                     onSortChange={@onSortChange}
                     onSelectionChange={@onRowClick}
