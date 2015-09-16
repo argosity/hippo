@@ -51,7 +51,6 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         if @props.getSelection
             selection = @props.getSelection(@model)
             return selection if selection
-
         selected = @getCurrentModel()
         if @props.multi
             selected
@@ -85,9 +84,6 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         ) if isOpen and @props.fetchWhenOpen
 
     renderEdit: (label) ->
-        # console.log "render edit: #{@props.model.brand.code}"
-        # console.log @getCurrentSelection()
-        # console.log @_getChoices()
         Component = if @props.multi
             Lanes.Vendor.ReactWidgets.Multiselect
         else
@@ -107,7 +103,6 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             value={@getCurrentSelection()}
             />
 
-            #onSelect={@onSelect}
 
         if @props.unstyled
             select
