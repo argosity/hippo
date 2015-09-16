@@ -38,7 +38,7 @@ CommonSpecs = ->
         })
         _.defer ->
             _.dom(grid).qs(LAST_ROW_SELECTOR).click()
-            editor = Lanes.Test.Utils.findRenderedComponentWithType(grid, Lanes.Components.Grid.RowEditor)
+            editor = Lanes.Test.Utils.findRenderedComponentWithType(grid, LC.Grid.RowEditor)
             expect(editor.props.rowIndex).toEqual(1)
             expect(editor.props.model).toEqual(jasmine.any(Model))
             expect(editor.props.model.id).toEqual(2)
