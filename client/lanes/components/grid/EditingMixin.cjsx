@@ -11,7 +11,9 @@ Lanes.Components.Grid.EditingMixin = {
         query:     Lanes.PropTypes.State.isRequired
         editors:   React.PropTypes.object
         allowDelete: React.PropTypes.bool
-        syncImmediatly: React.PropTypes.bool
+        syncImmediatly: React.PropTypes.oneOfType([
+            React.PropTypes.bool, React.PropTypes.func
+        ])
 
     listenNetworkEvents: true
     getDefaultProps: -> editors: {}
@@ -72,18 +74,17 @@ Lanes.Components.Grid.EditingMixin = {
     onCancel: ->
         @props.onCancel(@props.model)
 
-        # if @props.model.isNew()
-        #     @props.model.trigger('destroy', @props.model)
-        # @props.hideEditor()
+    shouldPerformSync: ->
+        !!Lanes.u.resultsFor(@props, 'syncImmediatly', @props.model)
 
     saveRecord: ->
-        if @props.syncImmediatly
+        if @shouldPerformSync()
             @props.model.save().then (model) => @props.onSave(model)
         else
             @props.onSave(@props.model)
 
     deleteRecord: ->
-        if @props.syncImmediatly
+        if @shouldPerformSync()
             @props.model.destroy().then (model) => @props.onSave(model)
         else
             @props.onSave(@props.model)
