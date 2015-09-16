@@ -20,7 +20,7 @@ beforeEach ->
     SYNC_RESPONSE = {
         success: true
         message: ''
-        data: {}
+        data: []
     }
 
     originalFn = Lanes.Models.Sync.perform
