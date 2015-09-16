@@ -1,6 +1,14 @@
+Lanes.Test.makeScreen = (props = {}, args = {}) ->
+    class TestScreen
+        render: -> React.createElement('div', 'hello screen')
+    _.extend(TestScreen.prototype, props)
+    Screen = Lanes.React.Screen.extend(TestScreen)
+    Lanes.Test.renderComponent(Screen, props: args)
+
+
 Lanes.Test.makeComponent = (props = {}, args = {}) ->
     class TestComponent
-        render: -> React.createElement('div', 'hello')
+        render: -> React.createElement('div', 'hello component')
     _.extend(TestComponent.prototype, props)
     Component = Lanes.React.Component.extend(TestComponent)
     Lanes.Test.renderComponent(Component, props: args)
