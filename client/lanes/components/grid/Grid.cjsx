@@ -44,11 +44,18 @@ class Lanes.Components.Grid extends Lanes.React.Component
     componentWillMount: -> @query.results.ensureLoaded(0) if @props.autoLoadQuery
 
     onRowClick: (col, row, index) ->
-        newIndex = (if @state.selIndex == index then null else index)
-        @setState(selIndex: newIndex)
-        @props.onSelectionChange?(
-            if newIndex? then @query.results.modelAt(newIndex) else null
-        )
+        selectedIndex = (if @state.selectedIndex == index then null else index)
+        selectedModel = if selectedIndex? then @query.results.modelAt(selectedIndex).clone() else null
+        set = (attrs = {} ) => @setState(_.extend(attrs, {selectedIndex, selectedModel}))
+        if @props.onSelectionChange
+            osc = @props.onSelectionChange(selectedModel)
+            if _.isPromise(osc)
+                @setState(is_loading: true)
+                osc.then -> set(is_loading: false)
+            else
+                set()
+        else
+            set()
 
     headerHeight: ->
         @props.headerHeight + ( if @state.toolbar then @props.headerHeight else 0 )
