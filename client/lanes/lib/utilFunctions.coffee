@@ -152,5 +152,6 @@ _.mixin({
                 last
         else
             ''
-
+    isPromise: (obj) ->
+        !!obj && (_.isObject(obj) || _.isFunction(obj)) && _.isFunction(obj.then)
 })
