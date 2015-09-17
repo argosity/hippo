@@ -67,6 +67,7 @@ Lanes.Components.Grid.EditingMixin = {
             @props.editors[column.id](model: @props.model)
         else
             <input type="text"
+                name={column.id}
                 style={textAlign: column.textAlign}
                 value={@getFieldValue(column)}
                 onChange={_.partial(@onFieldChange, column)} />
