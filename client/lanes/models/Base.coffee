@@ -217,7 +217,7 @@ class BaseModel
             data = this.getAttributes(props:true, true)
         else
             data = this.unsavedAttributes()
-        if this.associations && (!_.isEmpty(data) || !this.isNew())
+        if this.associations && (!_.isEmpty(data) || !this.isNew()) && !options.excludeAssociations
             data.id = this.getId() unless this.isNew()
             _.extend(data, this.associations.dataForSave(this, options))
         data
