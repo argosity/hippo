@@ -91,8 +91,8 @@ class Lanes.Models.AssocationMap
         for name, value of data
             continue unless @definitions[name]
             association = model[name]
-            attributes = if _.isFunction(value.serialize) then value.serialize() else value
-            association[fn_name]( attributes )
+            attributes = if _.isFunction(value?.serialize) then value.serialize() else value
+            if attributes then association[fn_name]( attributes ) else association.clear()
             if Lanes.u.isModel(association)
                 model.set(this.pk(name), association.id) unless association.isNew()
                 model.trigger("change:#{name}", association, {}) unless options?.silent
