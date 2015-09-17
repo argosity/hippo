@@ -72,6 +72,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
     onEditCancel: (model) ->
         if model.isNew()
             @query.results.removeRow(@state.selectedIndex)
+            this.refs.grid.data.splice(0, 1)
         this.hideEditor()
 
     onEditSave: (model) ->
@@ -118,6 +119,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
             position: 'top',
             onAddRecord: =>
                 model = @query.results.addBlankRow(0)
+                this.refs.grid.data.unshift([])
                 @setState(selectedIndex: 0, selectedModel: model)
         <Lanes.Components.Grid.Toolbar key="toolbar" {...props} />
 
