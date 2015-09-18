@@ -91,6 +91,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         props = _.omit(@props, 'label')
         select = <Component
             ref="select"
+            className={@props.className}
             open={@state.isOpen}
             onToggle={@onToggle}
             suggest={true}
@@ -109,7 +110,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         else
             colProps = _.omit(@props, 'name')
             <BS.Col {...colProps}>
-                <div className={@formGroupClasseNames()}>
+                <div className={@formGroupClassNames()}>
                     <label className="control-label">{label}</label>
                     <div className="value">
                         {select}

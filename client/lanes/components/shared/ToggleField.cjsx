@@ -26,7 +26,7 @@ class Lanes.Components.ToggleField extends Lanes.React.Component
         else
             colProps = _.omit(@props, 'name', 'label')
             <BS.Col {...colProps}>
-                <div className={@formGroupClasseNames()}>
+                <div className={@formGroupClassNames()}>
                     <label className="control-label">{label}</label>
                     <div className="value">
                         {toggle}
