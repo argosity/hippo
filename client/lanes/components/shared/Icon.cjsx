@@ -6,7 +6,7 @@ class Lanes.Components.Icon extends Lanes.React.Component
 
     render: ->
         classes = _.classnames(
-            'icon', "icon-#{@props.type}",
+            'icon', "icon-#{@props.type}", @props.className,
             {"icon-pulse": @props.animated}
         )
         <i className={classes} />
