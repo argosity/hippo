@@ -20,7 +20,6 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
                 key="row-select"
                 editOnly multi writable unstyled
                 model={model}
-                name="roles"
                 labelField='name'
                 getSelection={@rolesForUser}
                 setSelection={@setRolesForUser}
