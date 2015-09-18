@@ -60,13 +60,6 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             else
                 {id: null, label: ''}
 
-    renderDisplayValue: ->
-        value = if @props.multi
-            _.toSentence _.pluck(@getCurrentSelection(), @props.labelField)
-        else
-            @getCurrentSelection()?.label
-        <span>{value}</span>
-
     _getChoices: ->
         selection = @getCurrentSelection()
         if @state.isOpen
@@ -82,6 +75,13 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         @collection.fetch(
             _.extend(limit: @props.displayLimit, Lanes.u.invokeOrReturn(@props.syncOptions))
         ) if isOpen and @props.fetchWhenOpen
+
+    renderDisplayValue: ->
+        value = if @props.multi
+            _.toSentence _.pluck(@getCurrentSelection(), @props.labelField)
+        else
+            @getCurrentSelection()?.label
+        <span>{value}</span>
 
     renderEdit: (label) ->
         Component = if @props.multi
