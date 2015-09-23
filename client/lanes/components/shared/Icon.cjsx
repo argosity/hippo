@@ -5,8 +5,8 @@ class Lanes.Components.Icon extends Lanes.React.Component
         animated: React.PropTypes.bool
 
     render: ->
-        classes = _.classnames(
-            'icon', "icon-#{@props.type}", @props.className,
-            {"icon-pulse": @props.animated}
-        )
-        <i className={classes} />
+        classes = _.classnames 'icon', "icon-#{@props.type}", @props.className,
+            'cursor-pointer': @props.onClick,
+            'icon-pulse':     @props.animated
+
+        <i {...@props} className={classes} />
