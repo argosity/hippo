@@ -222,6 +222,8 @@ class BaseModel
             _.extend(data, this.associations.dataForSave(this, options))
         data
 
+    unCacheDerived: (name) ->
+        delete this._cache[name]
 
     # True if the model has "name" as either a prop or session attribute
     hasAttribute: (name) ->
