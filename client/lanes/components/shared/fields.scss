@@ -12,6 +12,10 @@ label.field {
     }
     .display {
         border-bottom: 1px solid $input-border;
+        &.value {
+            height: 40px;
+            line-height: 34px;
+        }
     }
     .read-only {
         @extend .form-control !optional;
