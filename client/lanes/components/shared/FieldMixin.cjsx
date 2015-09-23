@@ -14,6 +14,7 @@ Lanes.Components.Form.FieldMixin = {
         model: Lanes.PropTypes.State.isRequired
         name:  React.PropTypes.string.isRequired
         label: React.PropTypes.string
+        onChange: React.PropTypes.func
         unstyled: React.PropTypes.bool
 
     unsetChangeSet: ->
@@ -27,7 +28,10 @@ Lanes.Components.Form.FieldMixin = {
 
 
     handleChange: (ev) ->
-        @props.model[@props.name] = ev.target.value
+        if @props.onChange
+            @props.onChange(ev)
+        else
+            @props.model[@props.name] = ev.target.value
         null
 
     renderMixinDisplayValue: ->
