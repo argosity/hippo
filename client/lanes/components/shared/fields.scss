@@ -9,8 +9,6 @@ label.field {
     .display, .read-only {
         font-weight: normal;
         padding: 6px 0;
-        margin-top: 5px;
-        height: 34px;
     }
     .display {
         border-bottom: 1px solid $input-border;
@@ -24,7 +22,7 @@ label.field {
         padding: 0;
         font-size: 85%;
     }
-
+    &.read-only .title { margin-bottom: 5px; }
 }
 
 .field, .form-group {
@@ -36,7 +34,6 @@ label.field {
     }
     &.toggle {
         .field .display { border-bottom: 0; }
-
         &.editing .react-toggle { margin-top: 5px; }
     }
 
