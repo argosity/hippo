@@ -99,7 +99,7 @@ class Lanes.Models.Query.SyncedResult
             row
 
     allRows: (options) ->
-        rows = (@rowAt(i, options) for i in [0...@length])
+        rows = (@rowAt(i, options) for i in [0..@length])
         _.Promise.resolve(rows)
 
     modelAt: (index) ->
