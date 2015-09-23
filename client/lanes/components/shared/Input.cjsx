@@ -19,6 +19,7 @@ class Lanes.Components.Input extends Lanes.React.Component
 
     renderEdit: (label) ->
         value = @props.model[@props.name] or ''
+        label = @props.label or _.field2title(@props.name)
         props = _.extend({
             ref:       'input'
             className: _.classnames('value', changeset: @state.changeset)
