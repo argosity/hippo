@@ -33,8 +33,10 @@ CommonMethods = {
 
     # replace these models from other collection
     copyFrom: (collection) ->
-        this.set(collection)
+        this.set(collection.models)
 
+    clone: ->
+        new @constructor( @invoke( 'clone' ), @options )
 
 }
 
