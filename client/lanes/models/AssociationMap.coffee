@@ -56,6 +56,8 @@ class Lanes.Models.AssocationMap
         options.filter ||= {}
         options.filter[fk] = this.get(pk)
 
+        options.inverse_name = definition.inverse
+
         if true == target_class::isCollection
             new target_class(options.models || [], options)
         else
@@ -72,12 +74,11 @@ class Lanes.Models.AssocationMap
             defaultCreator
         { fn: _.partial(createFn, args...) }
 
-
     # Sets the assocations for "model"
     set: (model, data, options) ->
         this._set(model, data, options, 'set')
         for name, value of data
-            if @definitions[name] && Lanes.u.isModel(value) && !value.isNew()
+            if @exists(name) && Lanes.u.isModel(value) && !value.isNew()
                 model[@pk(name)] = if value then value.getId() else null
 
     setFromServer: (model, data, options) ->
@@ -89,7 +90,7 @@ class Lanes.Models.AssocationMap
 
     _set: (model, data, options, fn_name) ->
         for name, value of data
-            continue unless @definitions[name]
+            continue unless @exists(name)
             association = model[name]
             attributes = if _.isFunction(value?.serialize) then value.serialize() else value
             if attributes then association[fn_name]( attributes ) else association.clear()
@@ -134,6 +135,9 @@ class Lanes.Models.AssocationMap
     nonLoaded: (model, names) ->
         list = []
         for name in names
-            if _.has(@definitions, name) && (Lanes.u.isCollection(model[name]) || model[name].isNew())
+            if @exists(name) && (Lanes.u.isCollection(model[name]) || model[name].isNew())
                 list.push(name)
         list
+
+    exists: (name) ->
+        _.has(@definitions, name)
