@@ -183,8 +183,11 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
         super
 
     _prepareModel: (attrs, options = {}) ->
-        _.extend(attrs, @associationFilter)
-        super
+        _.extend(attrs, @associationFilter) if @associationFilter
+        model = super
+        if @options.inverse_name
+            model.set(@options.inverse_name, this.parent)
+        model
 
     fetch: (options) ->
         options.query ||= {}
