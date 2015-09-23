@@ -5,6 +5,9 @@ class Lanes.Components.Input extends Lanes.React.Component
     ]
     formGroupClass: 'input'
 
+    getDefaultProps: ->
+        type: 'text'
+
     propTypes:
         unlabled:  React.PropTypes.bool
 
@@ -15,17 +18,23 @@ class Lanes.Components.Input extends Lanes.React.Component
         @props.onEnter() if ev.key is 'Enter'
 
     renderEdit: (label) ->
-        colProps = _.omit(@props, 'name')
         value = @props.model[@props.name] or ''
+        props = _.extend({
+            ref:       'input'
+            className: _.classnames('value', changeset: @state.changeset)
+            label:     if @props.unlabeled then label else false
+            value:     value
+            onKeyDown: @handleKeyDown if @props.onEnter
+            onChange:  @handleChange
+        }, @props)
+
+        if @props.inputOnly then @renderPlain(props) else @renderStyled(props, label)
+
+    renderPlain: (props) ->
+        <input {...props}/>
+
+    renderStyled: (props, label) ->
+        colProps = _.omit(props, 'name')
         <BS.Col {...colProps} >
-            <BS.Input
-                ref="input"
-                className={_.classnames('value', changeset: @state.changeset)}
-                type='text'
-                label={label}
-                value={value}
-                onKeyDown={@handleKeyDown if @props.onEnter}
-                onChange={@handleChange}
-                {...@props}
-            />
+            <BS.Input {...props} />
         </BS.Col>
