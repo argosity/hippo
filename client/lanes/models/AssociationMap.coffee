@@ -14,6 +14,7 @@ class Lanes.Models.AssocationMap
         for name, options of @definitions
             @klass::derived[name] = this.derivedDefinition(name, options)
 
+    # finds the correct class for association
     getClassFor: (name) ->
         definition = @definitions[name]
         object = definition.model || definition.collection
@@ -36,19 +37,6 @@ class Lanes.Models.AssocationMap
         else
             new target_class(options)
 
-    # returns a collection for the given association.
-    collectionFor: (name, model, options = {}) ->
-        options = _.extend({}, this.getOptions(name, model), options)
-        @collections[name] ||= (
-            Klass = @getClassFor(name)
-            if true == Klass::isModel
-                new Lanes.Models.AssociationCollection(options.models || [],
-                    _.extend({}, options, model: Klass)
-                )
-            else
-                new Klass(options.models || [], options)
-        )
-
     # will be called in the scope of the parent model
     createCollection: (association, name, definition, fk, pk, target_class) ->
         target_class ||= association.getClassFor(name)
@@ -63,6 +51,19 @@ class Lanes.Models.AssocationMap
         else
             options.model = target_class
             new Lanes.Models.AssociationCollection(options.models || [], options)
+
+    # returns a collection for the given association.
+    collectionFor: (name, model, options = {}) ->
+        options = _.extend({}, this.getOptions(name, model), options)
+        @collections[name] ||= (
+            Klass = @getClassFor(name)
+            if true == Klass::isModel
+                new Lanes.Models.AssociationCollection(options.models || [],
+                    _.extend({}, options, model: Klass)
+                )
+            else
+                new Klass(options.models || [], options)
+        )
 
     # returns the definition for the derived property
     derivedDefinition: (name, definition) ->
@@ -91,8 +92,10 @@ class Lanes.Models.AssocationMap
     _set: (model, data, options, fn_name) ->
         for name, value of data
             continue unless @exists(name)
-            association = model[name]
             attributes = if _.isFunction(value?.serialize) then value.serialize() else value
+            # we're done if we're not setting the association to anything and it's not yet created
+            continue if _.isEmpty(attributes) and not @isCreated(model, name)
+            association = model[name]
             if attributes then association[fn_name]( attributes ) else association.clear()
             if Lanes.u.isModel(association)
                 model.set(this.pk(name), association.id) unless association.isNew()
@@ -141,3 +144,6 @@ class Lanes.Models.AssocationMap
 
     exists: (name) ->
         _.has(@definitions, name)
+
+    isCreated: (model, name) ->
+        !!(@exists(name) and model._cache[name])

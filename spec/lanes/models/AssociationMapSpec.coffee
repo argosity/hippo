@@ -29,7 +29,12 @@ describe "Lanes.Models.AssociationMap", ->
                 colors: { collection: Color, fk: 'model_fk_id' }
             props: { id: 'integer', foo: 'string' }
         }, { id: 123 })
+
+        expect(model.associations.isCreated(model, 'colors')).toBe(false)
+
         color = model.colors.add({ rgb:'#ffffff' })
+
+        expect(model.associations.isCreated(model, 'colors')).toBe(true)
         expect(color).toEqual(jasmine.any(Color))
         expect(color.model_fk_id).toEqual(123)
 
@@ -48,10 +53,12 @@ describe "Lanes.Models.AssociationMap", ->
             associations:
                 color:{ model: Color }
             props: { id: 'integer', foo: 'string', color_id: 'integer' }
-        }, { id: 123, color: { rgb: 'red' } })
+        }, { id: 123, color: {} })
+        expect(model.associations.isCreated(model, 'color')).toBe(false)
         color = model.color
+        expect(model.associations.isCreated(model, 'color')).toBe(true)
         expect(model.color).toEqual(jasmine.any(Color))
-
+        model.set(color: {rgb: 'red'})
         expect(model.color.rgb).toEqual('red')
 
 
