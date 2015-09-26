@@ -66,6 +66,7 @@ class Page
         for field, i in @result.query.fields.models
             row[i] = model[field.id]
         @rows.splice(@_normalizedIndex(index), 0, row)
+        @_rowToModel(row)
 
     removeRow: (index = 0) ->
         @rows.splice(@_normalizedIndex(index), 1)
@@ -99,7 +100,7 @@ class Lanes.Models.Query.SyncedResult
             row
 
     allRows: (options) ->
-        rows = (@rowAt(i, options) for i in [0..@length])
+        rows = (@rowAt(i, options) for i in [0...@length])
         _.Promise.resolve(rows)
 
     modelAt: (index) ->
