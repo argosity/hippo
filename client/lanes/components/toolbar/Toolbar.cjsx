@@ -23,6 +23,12 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
             <i className="icon icon-undo" />Reset
         </BS.Button>
 
+    renderPrintButton: ->
+        <BS.Button navItem componentClass="button"
+            onClick={@props.commands.printModel} className="print navbar-btn control">
+            <i className="icon icon-print" />Print
+        </BS.Button>
+
     renderEditToggle: ->
         <form className="control navbar-form navbar-left">
            <label>
@@ -51,7 +57,8 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
           <BS.Nav>
             {@renderSaveButton()}
             {@renderResetButton()}
-            {@renderEditToggle() if @props.commands.toggleEdit}
+            {@renderPrintButton() if @props.commands.canPrint()}
+            {@renderEditToggle()  if @props.commands.toggleEdit}
           </BS.Nav>
           <LC.Toolbar.RemoteChangeSets model=@changedModel />
         </BS.Navbar>

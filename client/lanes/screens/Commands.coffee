@@ -11,8 +11,15 @@ class Lanes.Screens.Commands
         @setModel( new model.constructor )
         undefined
 
-    getModel: ->
-        @screen[@options.modelName]
+    canPrint: ->
+        model = @getModel()
+        not model.isNew() and model?.pdfDownloadUrl
+
+    printModel: ->
+        model = @getModel()
+        window.open(_.result(model, 'pdfDownloadUrl'), 'print')
+
+    getModel: -> @screen[@options.modelName]
 
     setModel: (model) ->
         @options.modelWillRebind?(model)
