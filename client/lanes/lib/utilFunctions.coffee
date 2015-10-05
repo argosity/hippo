@@ -66,7 +66,7 @@ Lanes.u = {
         obj?[name]
 
     isModel: (object) ->
-        object instanceof Lanes.Models.BasicModel
+        _.isObject(object) and object.isProxy or object instanceof Lanes.Models.BasicModel
 
     isCollection: (object) ->
         object instanceof Lanes.Models.Collection ||
