@@ -50,6 +50,7 @@ describe "Lanes.Models.Base", ->
                     fn: -> 'blarg'
         })
         model.set( id: 10, foo:'bar', unsaved: 'falsify', color: { rgb: '99FFFF' } )
+        expect(model.color.rgb).toEqual('99FFFF')
         expect(id: 10, foo:'bar', color: { rgb: '99FFFF' }).toEqual( model.dataForSave()  )
         model.foo = 'a value'
         a = model.changeMonitor.changedAttributes()
