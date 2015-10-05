@@ -31,11 +31,11 @@ Lanes.Components.Form.FieldMixin = {
         if @props.onChange
             @props.onChange(ev)
         else
-            @props.model[@props.name] = ev.target.value
+            @model[@props.name] = ev.target.value
         null
 
     renderMixinDisplayValue: ->
-        value = @props.model[@props.name] || ""
+        value = @model[@props.name] || ""
         value = String(value) if _.isObject(value) or not value
         <span>{value}</span>
 
