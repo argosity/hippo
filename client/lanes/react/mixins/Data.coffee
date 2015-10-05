@@ -49,7 +49,6 @@ class DataWrapper
 
     onProxyReplace: (name, model) ->
         @states[name] = model
-        console.log 'proxy replace', name, model
         @setComponentState(name, model)
 
     bindEvents: (name, state, events) ->
