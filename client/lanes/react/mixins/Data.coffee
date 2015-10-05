@@ -47,9 +47,16 @@ class DataWrapper
     componentName: ->
         @component.constructor.displayName
 
+    onProxyReplace: (name, model) ->
+        @states[name] = model
+        console.log 'proxy replace', name, model
+        @setComponentState(name, model)
+
     bindEvents: (name, state, events) ->
+        if state.isProxy
+            @listenTo(state, 'proxyreplace', _.partial(@onProxyReplace, name))
         if !events
-            if state.isState
+            if state.isState or state.isProxy
                 events ||= 'change'
             else if Lanes.u.isCollection(state)
                 events ||= 'add remove change sort reset'
