@@ -1,12 +1,16 @@
 class Lanes.Models.Query.CollectionResult
 
     constructor: (@query) ->
+        @collection.on('add remove reset', =>
+            @query.trigger('change')
+        )
         this
 
     rowAt: (index, options = {}) ->
         model = @collection.at(index)
         for field, i in @query.fields.models when (not options.visibleOnly or field.visible)
             if field.format then field.format(model[field.id], model, @query) else model[field.id]
+
     allRows: (options) ->
         rows = (@rowAt(i, options) for i in [0...@length])
         _.Promise.resolve(rows)
