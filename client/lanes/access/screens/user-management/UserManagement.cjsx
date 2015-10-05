@@ -32,6 +32,7 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
         <div>
             <h1>Users Management</h1>
             <LC.Grid
+                editorProps={{syncImmediatly: true}}
                 query={@state.query}
                 allowCreate
                 editor={Lanes.Access.Screens.UserManagement.Editor}
