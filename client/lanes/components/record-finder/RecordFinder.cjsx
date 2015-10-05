@@ -3,15 +3,19 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
     propTypes:
         query:    Lanes.PropTypes.State.isRequired
         model:    Lanes.PropTypes.State.isRequired
-        commands: React.PropTypes.object.isRequired
-
+        commands: React.PropTypes.object
+        onModelSet: React.PropTypes.func
 
     contextTypes:
         viewport: Lanes.PropTypes.State.isRequired
 
+    mixins: [
+        Lanes.Components.Form.FieldMixin
+    ]
+
     showFinder: ->
         body = Lanes.u.withReactContext @context, =>
-            <LC.RecordFinder.Dialog query={@props.query} onRecordSelect={@props.commands.setModel} />
+            <LC.RecordFinder.Dialog query={@props.query} onRecordSelect={@setModel} />
 
         @context.viewport.displayModal(
             body: body
@@ -19,10 +23,14 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             buttons: [{title: 'Cancel'}]
         ).then(Lanes.emptyFn, Lanes.emptyFn)
 
+    setModel: (model) ->
+        @props.commands?.setModel(model)
+        @props.onModelSet?(model)
+
     loadCurrentSelection: ->
         value = @props.model[@props.query.initialField.id]
         @props.query.loadSingle(value).then (model) =>
-            @props.commands.setModel(model)
+            @setModel(model)
 
     onKeyPress: (ev) ->
         if "Enter" == ev.key
@@ -30,8 +38,9 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             this.loadCurrentSelection()
         null
 
-    render: ->
-        findIcon = <button className="btn btn-primary icon icon-search icon-lg" onClick={@showFinder}/>
+    renderEdit: ->
+        findIcon = <button className="btn btn-primary icon icon-search icon-lg"
+            onClick={@showFinder}/>
         <LC.Input
             ref="input"
             {...@props}
