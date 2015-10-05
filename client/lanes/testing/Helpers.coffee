@@ -1,5 +1,6 @@
-Lanes.Test.renderComponent = (component, {props, options}) ->
-    options ||= {}
+Lanes.Test.renderComponent = (component, args = {}) ->
+    props   = args.props || {}
+    options = args.options || {}
     wrapper = React.createClass
         makePath: Lanes.emptyFn
         childContextTypes:
