@@ -18,17 +18,16 @@ class Lanes.Components.Input extends Lanes.React.Component
         @props.onEnter() if ev.key is 'Enter'
 
     renderEdit: (label) ->
-        value = @props.model[@props.name] or ''
-        label = @props.label or _.field2title(@props.name)
+        value = @model[@props.name] or ''
+        label ||= @props.label or _.field2title(@props.name)
         props = _.extend({
             ref:       'input'
             className: _.classnames('value', changeset: @state.changeset)
-            label:     if @props.unlabeled then label else false
+            label:     if @props.unlabeled then false else label
             value:     value
             onKeyDown: @handleKeyDown if @props.onEnter
             onChange:  @handleChange
         }, @props)
-
         if @props.inputOnly then @renderPlain(props) else @renderStyled(props, label)
 
     renderPlain: (props) ->
