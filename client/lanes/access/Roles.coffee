@@ -51,9 +51,8 @@ class Lanes.Models.UserRoleSet
             @locked_fields = role.decodeLockedFields(access.locked_fields, @locked_fields)
 
     can: (method, model, field) ->
-        if model instanceof Lanes.Models.Base
+        if model.constructor and not model.prototype
             model = model.constructor
-
         if field && ( locks = @locked_fields[model::api_path()] ) && ( grants = locks[field] )
             for grant in grants
                 if grant.only && grant.only != method

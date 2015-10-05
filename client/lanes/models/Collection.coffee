@@ -33,7 +33,8 @@ CommonMethods = {
 
     # replace these models from other collection
     copyFrom: (collection) ->
-        this.set(collection.models)
+        this.reset( collection.map (model) => ( new @model() ).copyFrom(model) )
+        @
 
     clone: ->
         new @constructor( @invoke( 'clone' ), @options )
@@ -196,3 +197,9 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
         _.extend(options.query, @associationFilter)
         _.extend(options, @options)
         super(options)
+
+    copyFrom: (other) ->
+        super
+        if @options.inverse_name and @parent
+            @each (m) => m.set(@options.inverse_name, @parent)
+        @
