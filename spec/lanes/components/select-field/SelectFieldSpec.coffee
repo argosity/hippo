@@ -26,11 +26,13 @@ describe "Lanes.Components.SelectField", ->
         @brands = new Brand.Collection
         @brands.ensureLoaded().then(done)
 
-    it "renders read only", ->
+    it "renders read only", (done) ->
         sf = LT.renderComponent(LC.SelectField, props:{model: @car, name: 'brand', labelField: 'name'})
         expect(_.dom(sf).qs('.display').text).toBe('')
         @car.set(brand: @brands.at(0))
-        expect(_.dom(sf).qs('.display').text).toBe('General Motors')
+        _.defer ->
+            expect(_.dom(sf).qs('.display').text).toBe('General Motors')
+            done()
 
 
     it "renders as edit", ->
