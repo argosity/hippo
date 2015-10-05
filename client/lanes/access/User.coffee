@@ -25,7 +25,7 @@ class Lanes.Models.User extends Lanes.Models.Base
         access_data: 'object'
 
     props:
-        id:         { type: "integer", required:true }
+        id:          'integer'
         login:       'string'
         name:        'string'
         email:       'string'
