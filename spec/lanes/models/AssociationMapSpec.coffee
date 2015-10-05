@@ -54,10 +54,12 @@ describe "Lanes.Models.AssociationMap", ->
                 color:{ model: Color }
             props: { id: 'integer', foo: 'string', color_id: 'integer' }
         }, { id: 123, color: {} })
+
         expect(model.associations.isCreated(model, 'color')).toBe(false)
         color = model.color
         expect(model.associations.isCreated(model, 'color')).toBe(true)
-        expect(model.color).toEqual(jasmine.any(Color))
+
+
         model.set(color: {rgb: 'red'})
         expect(model.color.rgb).toEqual('red')
 
@@ -79,5 +81,5 @@ describe "Lanes.Models.AssociationMap", ->
         }, modelData)
 
         expect(model.serialize()).toEqual(
-            _.extend({}, modelData, created_by: {role_names: []}, updated_by: {role_names:[]})
+            modelData
         )
