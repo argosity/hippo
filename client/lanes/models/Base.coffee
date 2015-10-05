@@ -116,6 +116,15 @@ class BaseModel
             options['include'] = needed
             this.fetch(options)
 
+    # ensures associations are loaded, then copies them from another model
+    copyAssociationsFrom: (model, associations) ->
+        new _.Promise (res, rej) =>
+            model.withAssociations(associations).then =>
+                for name in associations
+                    @[name].copyFrom(model[name])
+                res(@)
+
+
     # replace this model's attributes with data from other model
     copyFrom: (model) ->
         attributes = if _.isFunction(model.serialize) then model.serialize() else model

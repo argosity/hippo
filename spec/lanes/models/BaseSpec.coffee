@@ -165,3 +165,23 @@ describe "Lanes.Models.Base", ->
         expect( b.id ).toEqual(23)
         expect( b.title ).toEqual('Foo')
         expect( b.color.rgb ).toEqual('123456')
+
+    it 'can copy associations', (done) ->
+        Model = LT.defineModel
+            props: { id: 'integer', title: 'string' }
+            associations:
+                color:{ model: Color }
+                colors: { collection: Color, fk: 'model_fk_id' }
+
+        model = new Model(id: 1, title: 'Foo')
+        model.color.rgb = 'mycolor'
+        color = model.colors.add({ rgb:'1' })
+        color = model.colors.add({ rgb:'2' })
+        color = model.colors.add({ rgb:'3' })
+
+        copy = new Model
+        copy.copyAssociationsFrom(model, ['color', 'colors']).then ->
+            expect(copy.color.rgb).toEqual('mycolor')
+            expect(copy.colors.length).toEqual(3)
+            expect(copy.colors.pluck('rgb')).toEqual(['1', '2', '3'])
+            done()
