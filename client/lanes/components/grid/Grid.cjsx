@@ -13,7 +13,10 @@ class Lanes.Components.Grid extends Lanes.React.Component
         query: 'props'
 
     bindDataEvents:
-        query: 'load'
+        query: 'load change'
+
+    getInitialState: ->
+        selectedIndex: null, toolbar: !!@props.allowCreate
 
     setDataState: (newstate) ->
         @refs.grid?.reload() if newstate.query
@@ -37,9 +40,6 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
     getDefaultProps: ->
         headerHeight: 40, rowHeight: 30, editorProps: {}, autoLoadQuery: true
-
-    getInitialState: ->
-        toolbar: !!@props.allowCreate
 
     componentWillMount: -> @query.results.ensureLoaded(0) if @props.autoLoadQuery
 
