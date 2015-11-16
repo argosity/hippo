@@ -18,9 +18,8 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
                     title: 'Please Login'
                     onCancel: onCancel, onOk: onOk, show: true,
                     buttons: [{ title: 'Ok', style: 'primary'}]
-                    body: Lanes.u.withReactContext({viewport: viewport}, ->
+                    body: ->
                         <Lanes.Access.LoginDialog model={session} attemptLogin={onOk} />
-                    )
                 )
             )
             handler.then (dlg) ->

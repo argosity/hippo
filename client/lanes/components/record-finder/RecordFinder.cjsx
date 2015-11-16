@@ -14,13 +14,11 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
     ]
 
     showFinder: ->
-        body = Lanes.u.withReactContext @context, =>
-            <LC.RecordFinder.Dialog query={@props.query} onRecordSelect={@setModel} />
-
         @context.viewport.displayModal(
-            body: body
             title: "Find #{@props.query.title}"
             buttons: [{title: 'Cancel'}]
+            body: =>
+                <LC.RecordFinder.Dialog query={@props.query} onRecordSelect={@setModel} />
         ).then(Lanes.emptyFn, Lanes.emptyFn)
 
     setModel: (model) ->

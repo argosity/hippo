@@ -4,7 +4,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
         title:     React.PropTypes.string
         onOk:      React.PropTypes.func
         onCancel:  React.PropTypes.func
-        body:      React.PropTypes.element
+        body:      React.PropTypes.func
         show:      React.PropTypes.bool
         buttons:   React.PropTypes.array
         className: React.PropTypes.string
@@ -53,14 +53,16 @@ class Lanes.Components.Modal extends Lanes.React.Component
                 bsStyle={button.style || 'default'} className={name}
                 onClick={_.partial(@onButton, button)}>{button.title}</BS.Button>
 
-        cls = _.classnames('lanes-dialog', @props.className, @context.uistate?.layout_size)
-
+        cls = _.classnames('lanes-modal', @props.className, @context.uistate?.layout_size)
+        Body = @props.body
         <BS.Modal.Dialog className={cls} bsSize={@props.size} onHide={@_hide}>
             <BS.Modal.Header>
                 <BS.Modal.Title>{@props.title}</BS.Modal.Title>
             </BS.Modal.Header>
 
-            <BS.Modal.Body>{@props.body}</BS.Modal.Body>
+            <BS.Modal.Body>
+                <Body />
+            </BS.Modal.Body>
 
             <BS.Modal.Footer>{buttons}</BS.Modal.Footer>
 
