@@ -1,23 +1,34 @@
 Lanes.Components.Grid.EditingMixin = {
 
     propTypes:
-        grid:      React.PropTypes.object.isRequired
-        topOffset: React.PropTypes.number.isRequired
+        #topOffset: React.PropTypes.number.isRequired
         rowIndex:  React.PropTypes.number.isRequired
-        rowHeight: React.PropTypes.number.isRequired
+#        rowHeight: React.PropTypes.number.isRequired
         onSave:    React.PropTypes.func.isRequired
         onCancel:  React.PropTypes.func.isRequired
         model:     Lanes.PropTypes.State.isRequired
         query:     Lanes.PropTypes.State.isRequired
         editors:   React.PropTypes.object
+        beforeSave: React.PropTypes.func
+        afterSave: React.PropTypes.func
         allowDelete: React.PropTypes.bool
         syncImmediatly: React.PropTypes.oneOfType([
             React.PropTypes.bool, React.PropTypes.func
         ])
+    editorTypes:
+        text: (props) ->
+            <input type="text"
+                name={props.field.id}
+                value={props.value}
+                onChange={_.partial(@onFieldChange, _, props.field)} />
+        date: (props) ->
+            <LC.DateTime inputOnly step={15}
+                model={props.model} name={props.field.id}
+                onChange={_.partial(@onDateFieldChange, _, props.field)} />
 
     listenNetworkEvents: true
     getDefaultProps: -> editors: {}
-    topOffset:       -> @props.topOffset + (@props.rowIndex * @props.rowHeight)
+    #topOffset:       -> @props.topOffset + (@props.rowIndex * @props.rowHeight)
 
     renderControls: ->
         if @props.allowDelete
@@ -38,41 +49,46 @@ Lanes.Components.Grid.EditingMixin = {
             </div>
         </div>
 
-    getFieldValue: (column) ->
-        if column.format
-            column.format(@props.model[column.id], @props.model)
+    getFieldValue: (field) ->
+        if field.format
+            field.format(@props.model[field.id], @props.model)
         else
-            @props.model[column.id]
+            @props.model[field.id]
 
-    onFieldChange: (column, ev) ->
-        @props.model[column.id] = ev.target.value
+    onDateFieldChange: (date, field) ->
+        @props.model[field.id] = date
+    onFieldChange: (ev, field) ->
+        @props.model[field.id] = ev.target.value
 
     renderFields: ->
-        @props.query.fields.visible.map @renderField
+        for field, index in @props.query.fields.models when field.visible
+            @renderField(field, index)
 
     renderEditingBody: ->
         if _.isFunction(@renderBody)
             @renderBody()
         else
-            <div className="body">
+            <div className="editing-body">
                 <div className="fields">
                     {@renderFields()}
                 </div>
                 {@renderControls()}
             </div>
 
-    renderField: (column, index) ->
-        return null unless column.visible
-        control = if @props.editors[column.id]
-            @props.editors[column.id](model: @props.model)
+    renderField: (field, index) ->
+        control = if field.editable
+            props = _.extend( {index, field, value: @getFieldValue(field)},
+                _.pick(@props, 'model', 'query', 'rowIndex')
+            )
+            (@props.editors[field.id] || @editorTypes[field.type] || @editorTypes['text']).call(this, props)
         else
-            <input type="text"
-                name={column.id}
-                style={textAlign: column.textAlign}
-                value={@getFieldValue(column)}
-                onChange={_.partial(@onFieldChange, column)} />
-        <div key={column.id} style={flex: column.flex} className="field">
-            <label>{column.title}</label>
+            <span>{@getFieldValue(field)}</span>
+
+        <div key={field.id}
+            style = {@props.cellStyles.styles[index]}
+            className = {_.classnames('field', @props.cellStyles.classes[index])}
+        >
+            <label>{field.title}</label>
             {control}
         </div>
 
@@ -83,10 +99,14 @@ Lanes.Components.Grid.EditingMixin = {
         !!Lanes.u.resultsFor(@props, 'syncImmediatly', @props.model)
 
     saveRecord: ->
+        return if false == @props.beforeSave?(@props.model, @props.rowIndex)
         if @shouldPerformSync()
-            @props.model.save().then (model) => @props.onSave(model)
+            @props.model.save().then (model) =>
+                @props.onSave(model)
+                @props.afterEdit?(model, @props.rowIndex)
         else
             @props.onSave(@props.model)
+            @props.afterEdit?(@props.model, @props.rowIndex)
 
     deleteRecord: ->
         if @shouldPerformSync()

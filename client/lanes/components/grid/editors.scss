@@ -3,6 +3,13 @@
 $editor-background: #e6e6e6;
 $editor-border-color: #a8a8a8;
 $editor-border: 1px solid $editor-border-color;
+
+.grid-body {
+    &.is-editing {
+        overflow: visible;
+    }
+}
+
 .editor {
 
     .controls {
@@ -32,71 +39,17 @@ $editor-border: 1px solid $editor-border-color;
                 height: 35px;
                 border-radius: 5px;
             }
+            &.center { justify-content: center;   }
+            &.right  { justify-content: flex-end; }
         }
         input {
             padding: 0 5px;
         }
-
-    }
-
-    // The row editor
-    &.row {
-        position: absolute;
-        width: 100%;
-        right: 25px;
-        left: 5px;
-        z-index:11;
-        min-height: 10px;
-
-        pointer-events: none;
-        .body     { pointer-events: none; }
-        .fields   { pointer-events: all;  }
-        .controls { pointer-events: none; }
-        .buttons  { pointer-events: all;  }
-
-        label { display: none; }
-
-        .fields {
-            flex-direction: row;
-            background: $editor-background;
-            padding-right: 15px;
-        }
-        .controls .buttons {
-            background: $editor-background;
-            padding: 2px 8px 8px 8px;
-            position: relative;
-            border-bottom-left-radius: 7px;
-            border-bottom-right-radius: 7px;
-
-            button {
-                margin-left: 20px;
-                &:first-child {
-                    margin-left: 0;
-                }
-            }
-            // http://css-tricks.com/better-tabs-with-round-out-borders/
-            &:before,
-            &:after {
-                position: absolute;
-                top: -1px;
-                width: 7px;
-                height: 6px;
-                content: " ";
-            }
-            &:before {
-                left: -7px;
-                border-top-right-radius: 6px;
-                border-width: 1px 1px 0px 0px;
-                box-shadow: 3px 0px 0px $editor-background;
-            }
-            &:after {
-                right: -7px;
-                border-top-left-radius: 6px;
-                border-width: 1px 0px 0px 1px;
-                box-shadow: -3px 0px 0px $editor-background;
-            }
+        input[type=checkbox] {
+            width: inherit;
         }
     }
+
     //Popover editor
     .popover {
 
@@ -117,3 +70,5 @@ $editor-border: 1px solid $editor-border-color;
         }
     }
 }
+
+@import "./row-editor";

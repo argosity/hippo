@@ -5,6 +5,6 @@ class Lanes.Components.Grid.RowEditor extends Lanes.React.Component
     mixins: [Lanes.Components.Grid.EditingMixin]
 
     render: ->
-        <div className="editor row" style={top: @topOffset() + 5}>
+        <div className="editor row" style={top: @props.topOffset}>
             {@renderEditingBody()}
         </div>

@@ -1,33 +1,59 @@
-@import "lanes/vendor/grid";
-
 .grid-component {
+
     min-height: 250px;
+    width: 100%;
+    border: 1px solid $table-border-color;
+    position: relative;
 
-    &.flex-row-expand {
-        @include flex-grow(1);
-        @include flexbox();
-        @include flex-direction(column);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 
-        .wrapper {
-            @include flexbox();
-            @include flex-direction(column);
-            @include flex-grow(1);
+
+    // styles shared between header and row
+    .header, .r {
+        display: flex;
+        flex-direction: row;
+
+        display: flex;
+        flex-direction: row;
+        .c {
+            padding: $table-cell-padding;
+            line-height: $line-height-base;
+
+            display: flex;
+            flex-direction: row;
+
+            &.center { justify-content: center;   }
+            &.right  { justify-content: flex-end; }
+
         }
-
-        .fixedDataTableLayout_main {
-            height: inherit !important; // override fixed data table height
-            @include flexbox();
-            @include flex-direction(column);
-            @include flex-grow(1);
-
-            .fixedDataTableLayout_rowsContainer{
-                height: inherit !important;
-                @include flex-grow(1);
-            }
+        &:first-child {
+            border-top: 0;
         }
     }
 
-    position: relative;
+    .header {
+        .c {
+            border: 1px solid $table-border-color;
+
+            align-items: flex-end;
+        }
+    }
+
+    .grid-body {
+        border-top: 1px solid $table-border-color;
+        overflow: auto;
+        position: relative; // for absolutely positioned row editor
+        flex-grow: 1;
+
+        .r:nth-child(odd) {
+            background-color: $table-bg-accent;
+        }
+        .c {
+            align-items: center;
+        }
+    }
 
     .toolbar {
         margin-bottom: 0;
@@ -37,6 +63,4 @@
 
     @import "./editors";
 
-    &.flex-row-expand {
-    }
 }
