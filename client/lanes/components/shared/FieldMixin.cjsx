@@ -16,6 +16,14 @@ Lanes.Components.Form.FieldMixin = {
         label: React.PropTypes.string
         onChange: React.PropTypes.func
         unstyled: React.PropTypes.bool
+        getValue: React.PropTypes.func
+        setValue: React.PropTypes.func
+
+    _getValue: ->
+        if @props.getValue then @props.getValue() else @model[@props.name]
+
+    _setValue: (value) ->
+        if @props.setValue then @props.setValue(value) else @model[@props.name] = value
 
     unsetChangeSet: ->
         @setState(changeset: false) if @isMounted()
@@ -26,16 +34,15 @@ Lanes.Components.Form.FieldMixin = {
             _.delay(@unsetChangeSet, 2000)
         @setState  _.extend(state, {changeset: changeset})
 
-
     handleChange: (ev) ->
         if @props.onChange
             @props.onChange(ev)
         else
-            @model[@props.name] = ev.target.value
+            @_setValue(ev.target.value)
         null
 
     renderMixinDisplayValue: ->
-        value = @model[@props.name] || ""
+        value = @_getValue() || ""
         value = String(value) if _.isObject(value) or not value
         <span>{value}</span>
 

@@ -113,7 +113,6 @@ module Lanes::Concerns
         def fire_pubsub_event(name, *arguments)
             return if self.class._event_listeners.nil? ||
                       !self.class._event_listeners.has_key?(name.to_sym)
-            arguments = arguments.dup.unshift(self)
             self.class._event_listeners[ name.to_sym ].each{ | block |
                 block.call(*arguments)
             }

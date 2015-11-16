@@ -103,7 +103,7 @@ Lanes.u = {
 
     closestEl: (el, name) ->
         # Traverse the DOM up with a while loop
-        while ! _.dom(el).hasClass(name)
+        while el.nodeType isnt 9 and !el.classList.contains(name)
             # Increment the loop to the parent node
             el = el.parentNode
             return null unless el

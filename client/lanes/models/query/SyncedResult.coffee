@@ -32,13 +32,15 @@ class Page
     _rowToModel: (row) ->
         attrs = {}
         for field, i in @result.query.fields.models
-            attrs[field.id] = row[i]
+            attrs[field.id] = row[field.fetchIndex]
         new @result.query.src(attrs)
 
     rowAt: (index) ->
-        row = @_rowAt(index)
-        @result.query.fields.map (field, i) =>
-            field.format?(row[i], row, @result.query) or row[i]
+        @_rowAt(index)
+        # row = @_rowAt(index)
+        # @result.query.fields.map (field) =>
+        #     value = row[field.fetchIndex]
+        #     field.format?(value, row, @result.query) or value
 
     modelAt: (index) ->
         row = @_rowAt(index)
@@ -54,8 +56,9 @@ class Page
         cachedModel = @modelCache[ @idForRow(row)] if @modelCache
         if cachedModel
             cachedModel.copyFrom(model)
+        data = model.serialize()
         for field, i in @result.query.fields.models
-            row[i] = model[field.id]
+            row[field.fetchIndex] = data[field.id]
 
     idForRow: (row) ->
         row[@result.query.idIndex]
@@ -64,7 +67,7 @@ class Page
         model = new @result.query.model
         row = []
         for field, i in @result.query.fields.models
-            row[i] = model[field.id]
+            row[field.fetechIndex] = model[field.id]
         @rows.splice(@_normalizedIndex(index), 0, row)
         @_rowToModel(row)
 
@@ -75,6 +78,7 @@ class Lanes.Models.Query.SyncedResult
 
     constructor: (q, options = {}) ->
         @query = q
+        @xDataColumn = @query.fields.where(query: true).length + 1
         @pageSize = options.pageSize || 20
         @pages = {}
 
@@ -92,16 +96,29 @@ class Lanes.Models.Query.SyncedResult
             ))
         )
 
-    rowAt: (index, options = {}) ->
+    xtraData: (index, options) ->
         row = @pageForIndex(index).rowAt(index)
-        if options.visibleOnly
-            row[fieldIndex] for fieldIndex in @visibleIndexes()
-        else
-            row
+        row[@xDataColumn] ||= {}
+        _.extend(row[@xDataColumn], options) if options
+        row[@xDataColumn]
+
+    rowAt: (index, options = {}) ->
+        @pageForIndex(index).rowAt(index)
 
     allRows: (options) ->
         rows = (@rowAt(i, options) for i in [0...@length])
         _.Promise.resolve(rows)
+
+    eachRow: (fn) ->
+        for i in [0...@length]
+            row = @rowAt(i)
+            fn(row, row[@xDataColumn])
+
+    filteredRows: (fn) ->
+        found = []
+        @eachRow (row, xd) ->
+            found.push(row) if fn(row, xd)
+        found
 
     modelAt: (index) ->
         @pageForIndex(index).modelAt(index)
@@ -120,9 +137,19 @@ class Lanes.Models.Query.SyncedResult
     ensureLoaded: (options = {}) ->
         @pageForIndex(options.page || 0).pendingLoad or _.Promise.resolve(@)
 
+    reload: (options = {}) ->
+        @pages = []
+        @ensureLoaded(options)
+
     onPageLoad: (page) ->
         @query.trigger('load', @query)
         @
+
+    rowRepresentation: (rowNum) ->
+        @pageForIndex(rowNum).rowAt(rowNum)
+
+    valueForField: (rowNum, field) ->
+        @rowAt(rowNum)[ field.fetchIndex ]
 
 
 Object.defineProperty Lanes.Models.Query.SyncedResult.prototype, 'length',

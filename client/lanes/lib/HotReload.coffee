@@ -2,12 +2,14 @@ REACT_CACHE = Object.create(null)
 
 Lanes.lib.HotReload =
 
-    rememberReact: (klass) ->
-        return unless klass::FILE
+    remember: (klass) ->
+        return klass unless klass::FILE
         path = klass::FILE.path.join("/") + ".js"
-        unless REACT_CACHE[path]
-            REACT_CACHE[path] = klass
-            Lanes.Vendor.hotRL(klass, path)
+        if REACT_CACHE[path]
+            return klass
+        else
+            REACT_CACHE[path] = Lanes.Vendor.ReactProxy(klass)
+            return REACT_CACHE[path].get()
 
     replaceCss: (asset) ->
         styles = document.head.querySelectorAll("link[rel='stylesheet'][href*='#{asset.path}']")
@@ -16,16 +18,12 @@ Lanes.lib.HotReload =
 
     replaceProps: (asset) ->
         klass = Lanes.u.objectForPath(asset.path)
-        Lanes.Vendor.hotRL(klass, asset.path) if klass
-
-        # Need to copy new proto over the old one
-        # unsure how to identify new and old one's though
-        # else
-        #     for klass in prev
+        if klass and REACT_CACHE[asset.path]
+            REACT_CACHE[asset.path].update(klass)
+            for viewport in Lanes.React.Viewport.all()
+                Lanes.Vendor.deepForceUpdate(viewport.reactRoot)
 
     initiate: (assets) ->
-        console.log _.pluck(assets, 'path')
-
         Lanes.lib.RequestAssets (_.pluck(assets, 'path'))...
             .then (a) =>
                 for asset in assets

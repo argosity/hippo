@@ -34,7 +34,6 @@ describe "Lanes.Components.SelectField", ->
             expect(_.dom(sf).qs('.display').text).toBe('General Motors')
             done()
 
-
     it "renders as edit", ->
         @car.set(brand: @brands.at(1))
         sf = LT.renderComponent(LC.SelectField, props:{
@@ -80,3 +79,20 @@ describe "Lanes.Components.SelectField", ->
             labelField: 'name', collection: @brands
         })
         expect(_.dom(sf).qs('.display').text).toEqual('General Motors and Chrysler/Dodge')
+
+    it "renders all choices", ->
+        sf = LT.renderComponent(LC.SelectField, props:{
+            model: @car, name: 'brand', labelField: 'name', editOnly: true, collection: @brands
+        })
+        _.dom(sf).qs('.rw-select').click()
+        labels = _.pluck _.dom(sf).qsa('li.rw-list-option'), 'textContent'
+        expect(labels).toEqual(["General Motors", "Ford Motor Co.", "Chrysler/Dodge"])
+
+    it "can render a blank row", ->
+        sf = LT.renderComponent(LC.SelectField, props:{
+            includeBlankRow: true, model: @car, name: 'brand',
+            labelField: 'name', editOnly: true, collection: @brands
+        })
+        _.dom(sf).qs('.rw-select').click()
+        labels = _.pluck _.dom(sf).qsa('li.rw-list-option'), 'textContent'
+        expect(labels).toEqual(["---------", "General Motors", "Ford Motor Co.", "Chrysler/Dodge"])

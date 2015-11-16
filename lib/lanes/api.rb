@@ -1,6 +1,7 @@
 require_relative '../lanes'
 require_relative 'api/request_wrapper'
 require_relative 'api/error_formatter'
+require_relative 'api/formatted_reply'
 require_relative 'api/controller'
 require_relative 'api/root'
 

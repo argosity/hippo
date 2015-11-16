@@ -35,6 +35,11 @@ module Lanes
                 ALL
             end
 
+            def for_identifier(identifier)
+                each{|ext| return ext if ext.identifier == identifier }
+                nil
+            end
+
             def each_asset(phase: :early, type: :js)
                 each do |ext|
                     if phase == :all || ext.load_phase == phase

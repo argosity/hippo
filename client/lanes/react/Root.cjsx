@@ -3,12 +3,9 @@ Lanes.React.Root = React.createClass
         viewport: Lanes.PropTypes.State.isRequired
 
     getChildContext: ->
-        viewport: @props.viewport
-
-    propTypes:
-        viewport: Lanes.PropTypes.State.isRequired
+        viewport: @props.route.viewport
 
     render: ->
         <div classNames="root">
-            <Lanes.React.Router.RouteHandler/>
+            {this.props.children}
         </div>

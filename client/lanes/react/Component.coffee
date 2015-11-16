@@ -1,7 +1,7 @@
 createHelper = (component, name) ->
     unless component.prototype[name]
         Object.defineProperty(component.prototype, name,
-            configurable: true, enumerable: false
+            configurable: true, enumerable: true
             get: -> @data?.states[name]
             set: (val) ->
                 @data?.rebind("#{name}": val)
@@ -25,14 +25,11 @@ Lanes.React.Component = {
         klass::mixins = _.unique(klass::mixins.concat(mixins))
         comp = React.createClass(klass.prototype)
         extendComponent(comp)
-        Lanes.lib.HotReload?.rememberReact(comp)
-        comp
-
+        return Lanes.lib.HotReload.remember(comp)
 }
 
 Lanes.React.BaseComponent = {
     extend: (klass, mixins = @defaultMixins) ->
         comp = React.createClass(klass.prototype)
-        Lanes.lib.HotReload?.rememberReact(comp)
-        comp
+        return Lanes.lib.HotReload.remember(comp)
 }

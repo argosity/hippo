@@ -40,9 +40,17 @@ class Lanes.Models.AssocationMap
 
     # will be called in the scope of the parent model
     createModel: (association, name, definition, fk, pk, target_class) ->
-        #target_class ||= association.getClassFor(name)
-        Proxy = association.getProxyFor(name)
-        new Proxy( association, association.getOptions(name, @)  )
+        if definition.autoCreate
+            target_class ||= association.getClassFor(name)
+            options = association.getOptions(name, this)
+            model_id = this.get(pk)
+            if model_id && model_id == this._cache[name]?.id
+                this._cache[name]
+            else
+                new target_class(options)
+        else
+            Proxy = association.getProxyFor(name)
+            new Proxy( association, association.getOptions(name, @)  )
 
     # will be called in the scope of the parent model
     createCollection: (association, name, definition, fk, pk, target_class) ->
@@ -110,16 +118,18 @@ class Lanes.Models.AssocationMap
             else if Lanes.u.isModel(association)
                 continue if association is value
 
-                model.set(this.pk(name), value.id) unless value.isNew?()
-                if Lanes.u.isModel(value)
-                    association.copyFrom( value )
+                if !value
+                    association.clear()
                 else
-                    association[fn_name]( value )
+                    model.set(this.pk(name), value.id) if value.id
+                    if Lanes.u.isModel(value)
+                        association.copyFrom( value )
+                    else
+                        association[fn_name]( value )
+                    association.isDirty = if value.isDirty? then value.isDirty else true
 
-                if options?.silent isnt true and association isnt value
+                if options?.silent isnt true
                     model.trigger("change:#{name}", value, {})
-
-                association.isDirty = if value.isDirty? then value.isDirty else true
             else
                 if value then association[fn_name]( value ) else association.clear()
 

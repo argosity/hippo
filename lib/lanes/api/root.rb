@@ -16,6 +16,7 @@ module Lanes
             register SprocketsExtension
             helpers RequestWrapper
             helpers HelperMethods
+            helpers FormattedReply
             use Rack::Session::Cookie, :key => 'lanes.session', :secret => Lanes.config.session_secret_key_base
             use ActiveRecord::ConnectionAdapters::ConnectionManagement
             not_found do

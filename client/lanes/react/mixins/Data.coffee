@@ -36,9 +36,9 @@ class DataWrapper
         this.setComponentState({}) unless _.isEmpty(objects) or options.silent
 
     listenToNetworkEvents: (state) ->
-        @listenTo(state,     'error',   @onError)
-            .listenTo(state, 'request', @onRequest)
-            .listenTo(state, 'sync',    @onSync)
+        @listenTo(state,     'error',     @onError)
+            .listenTo(state, 'request',   @onRequest)
+            .listenTo(state, 'load sync', @onSync)
 
     onPubSubChangeSet: (model, cs) ->
         screen = @component.context?.screen || @component.getChildContext?()?.screen
@@ -82,7 +82,7 @@ class DataWrapper
                 hasError: false
                 isInvalid: false
 
-    onSync: (modelOrCollection, res, options) ->
+    onSync: (modelOrCollection, res, options = {}) ->
         # Calls `setReactState` only if there's no silent option
         this.setComponentState(isRequesting: false) unless options.silent
 

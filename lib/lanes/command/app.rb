@@ -55,8 +55,8 @@ module Lanes
             def create_spec_helpers
                 template "spec/client/helpers/ClientHelpers.coffee",
                          "#{spec_dir}/helpers/#{namespace}Helpers.coffee"
-                template "spec/server/spec_helpers.rb",
-                         "spec/server/spec_helpers.rb"
+                template "spec/server/spec_helper.rb",
+                         "spec/server/spec_helper.rb"
             end
 
             def create_screen_base

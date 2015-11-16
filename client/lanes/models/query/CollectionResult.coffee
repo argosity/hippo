@@ -8,8 +8,8 @@ class Lanes.Models.Query.CollectionResult
 
     rowAt: (index, options = {}) ->
         model = @collection.at(index)
-        for field, i in @query.fields.models when (not options.visibleOnly or field.visible)
-            if field.format then field.format(model[field.id], model, @query) else model[field.id]
+        for field, i in @query.fields.models
+            model[field.id]
 
     allRows: (options) ->
         rows = (@rowAt(i, options) for i in [0...@length])
@@ -29,6 +29,9 @@ class Lanes.Models.Query.CollectionResult
             @collection.at(index)
         )
 
+    reload: ->
+        @collection.reload().then(@)
+
     ensureLoaded: ->
         @collection.ensureLoaded().then(@)
 
@@ -41,6 +44,12 @@ class Lanes.Models.Query.CollectionResult
             if asc then sort else sort * -1
         @query.trigger('sort')
         @collection.sort()
+
+    rowRepresentation: (rowNum) ->
+        @modelAt(rowNum)
+
+    valueForField: (rowNum, field) ->
+        @modelAt(rowNum)[field.id]
 
 Object.defineProperties Lanes.Models.Query.CollectionResult.prototype,
     length:

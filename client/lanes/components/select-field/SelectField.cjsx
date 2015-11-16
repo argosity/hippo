@@ -10,6 +10,9 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         displayLimit: React.PropTypes.number
         syncOptions:  React.PropTypes.any
         fetchWhenOpen: React.PropTypes.bool
+        allowFreeForm: React.PropTypes.bool
+        includeBlankRow: React.PropTypes.bool
+        displayFallback: React.PropTypes.string
 
     getDefaultProps: ->
         labelField: 'label', idField: 'id', displayLimit: 30, syncOptions: {}, fetchWhenOpen: true
@@ -26,6 +29,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         records = _.map selections, (selection) =>
             @collection.get(selection.id)
         value = if @props.multi then records else _.first(records)
+        if @props.allowFreeForm and not value
+            value = _.first selections
         if @props.setSelection
             @props.setSelection(@model, value, selections)
         else
@@ -36,7 +41,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         value = @model[@props.name]
         return null unless value
 
-        if not @props.multi and value.isNew()
+        if not @props.multi and Lanes.u.isModel(value) and not value.isNew()
             pk = @model.associations.pk(@props.name)
             id = @model[pk]
             if id
@@ -55,10 +60,16 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         if @props.multi
             selected
         else
-            if selected
+            if selected and Lanes.u.isModel(selected)
                 {id: selected[@props.idField], label: selected[@props.labelField]}
             else
-                {id: null, label: ''}
+                if @props.allowFreeForm
+                    {id: selected, label: selected}
+                else
+                    @blankRecord()
+    blankRecord: ->
+
+        {id: null, label: @props.displayFallback || '---------'}
 
     _getChoices: ->
         selection = @getCurrentSelection()
@@ -66,6 +77,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             labelField = @props.labelField
             rows = @collection.map (model) ->
                 {id: model.id, label: _.result(model, labelField)}
+            if @props.includeBlankRow
+                rows.unshift @blankRecord()
             if _.isEmpty(rows) then [@getCurrentSelection()] else rows
         else
             if selection then [selection] else []

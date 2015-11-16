@@ -91,14 +91,6 @@ module Lanes
                 end
             end
 
-            # def client_parent
-            #     if options[:parent] == 'Lanes::Model'
-            #         "Lanes.Models.Base"
-            #     else
-            #         "#{namespace.camelize}.Models.#{options[:parent]}"
-            #     end
-            # end
-
             def max_field_length
                 @max_field_length ||= fields.map{|field|
                     field.name.length + ( field.reference? ? 3 : 0 )

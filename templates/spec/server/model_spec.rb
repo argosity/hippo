@@ -1,4 +1,4 @@
-require_relative 'spec_helpers'
+require_relative 'spec_helper'
 
 class <%= class_name %>Spec < <%= namespace %>::TestCase
 

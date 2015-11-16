@@ -6,15 +6,19 @@ class Field extends Lanes.Models.Base
         }))
 
     session:
-        id:       'string'
-        title:    'string'
-        visible:  type: 'boolean', default: true
-        selected: 'boolean'
-        query:    type: 'boolean', default: true
-        format:   type: 'function'
-        flex:     type: 'number',  default: 1
-        textAlign: type: 'string', default: 'left'
-        sortBy: type: 'function'
+        id:         type: 'string'
+        title:      type: 'string'
+        selected:   type: 'boolean'
+        visible:    type: 'boolean', default: true
+        query:      type: 'boolean', default: true
+        editable:   type: 'boolean', default: true
+        format:     type: 'function'
+        render:     type: 'function'
+        flex:       type: 'number',  default: 1
+        fixedWidth: type: 'number'
+        textAlign:  type: 'string', default: 'left'
+        sortBy:     type: 'function'
+        onColumnClick: type: 'function'
 
     derived:
         default_value: deps: ['id'], fn: ->
@@ -28,6 +32,12 @@ class Field extends Lanes.Models.Base
             deps: ['model_field'], fn: ->
                 type = @model_field?.type || 'string'
                 if type == "code" then "string" else type
+        fetchIndex:
+            fn: ->
+                fetchIndex = 0
+                for field, index in this.collection.models
+                    return fetchIndex if this == field
+                    fetchIndex += 1 if field.query
 
     validValue: (value) ->
         if this.type == 'n'
@@ -167,7 +177,7 @@ class Clauses extends Lanes.Models.Collection
         @query = options.query
         @fields = options.query.fields
 
-class Lanes.Models.Query extends Lanes.Models.State #Base
+class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network events will be listened to
 
     session:
         src:  'function'
@@ -178,7 +188,7 @@ class Lanes.Models.Query extends Lanes.Models.State #Base
         initialFieldIndex: 'number'
         pageSize: {type: 'number', default: 100}
         syncOptions: 'any'
-        autoRetrieve: ['bool', true, true]
+        autoRetrieve: ['boolean', true, true]
         title: { type: 'string', default: 'Find Record' }
 
     derived:
@@ -202,7 +212,6 @@ class Lanes.Models.Query extends Lanes.Models.State #Base
 
     constructor: (options = {}) ->
         super
-
         @fields = new AvailableFields([], query: this)
         for col, i in options.fields
             rec = if _.isObject(col) then col else { id: col }
@@ -235,7 +244,6 @@ class Lanes.Models.Query extends Lanes.Models.State #Base
     loadModel: (model, options = {}) ->
         _.extend(options, _.result(this, 'syncOptions'))
         model.withAssociations(options.include || [], options)
-
 
     loadSingle: (code, options = {}) ->
         options.query = {}

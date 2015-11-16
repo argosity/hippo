@@ -39,7 +39,7 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.React.Component
             { for c in @clauses.models
                 <LC.RecordFinder.Clause key={c.cid} onAddClause={@addClause} model=c /> }
             </div>
-            <LC.Grid query={@props.query} height=200
+            <LC.Grid query={@props.query} height=200 autoLoadQuery
                 onSelectionChange=@onRecordSelect
             />
         </div>

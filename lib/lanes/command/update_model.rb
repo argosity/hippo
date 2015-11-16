@@ -7,6 +7,11 @@ module Lanes
 
             attr_reader :namespaced_name
 
+            def set_variables
+                super
+                @file_name  = name.underscore
+            end
+
             def read_class
                 if name=~/::/
                     (@namespace,@name) = name.split("::")
@@ -14,7 +19,7 @@ module Lanes
                     ext = Command.load_current_extension(raise_on_fail:true)
                     @namespace = ext.identifier
                 end
-                class_name = name.camelize
+
                 namespaced_name = "#{namespace.classify}::#{class_name}"
                 @klass = namespaced_name.safe_constantize
                 if !@klass
@@ -80,9 +85,13 @@ module Lanes
                 else
                     type = { type: type_for_column(column), required: true }
                     if column.default
-                        type[:default] = column.default
+                        type[:default] = case column.default
+                                         when 'true' then true
+                                         when 'false' then false
+                                         else column.default
+                                         end
                     end
-                    type.to_json
+                    type.to_json.gsub(%r{,"}, ', "')
                 end
             end
 
@@ -104,10 +113,10 @@ module Lanes
                     when :datetime then 'date'
                     when :integer  then 'integer'
                     when :float    then 'number'
-                    when :text     then 'string'
-                    when :string   then 'string'
                     when :boolean  then 'boolean'
                     when :decimal  then 'bigdec'
+                    when :text, :string then 'string'
+                    when :jsonb, :json, :hstore then 'object'
                     else 'any'
                     end
                 end

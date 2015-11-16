@@ -19,7 +19,6 @@ module Lanes
             #
             # @return [Extension] extension that was loaded, nil if none was found
             def load_current_extension(raise_on_fail:false)
-                previous = Extensions.all
                 ext = Dir.glob("./lib/*/extension.rb").first
                 if ext
                     begin

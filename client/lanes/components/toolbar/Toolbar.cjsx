@@ -14,19 +14,19 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
     renderSaveButton: ->
         <BS.Button navItem componentClass="button" disabled={!@isSavable()}
             onClick={@props.commands.saveModel} className="save navbar-btn control">
-            <i className="icon icon-cloud-upload" />Save
+            <LC.Icon type="cloud-upload" />{@props.saveButtonText || 'Save'}
         </BS.Button>
 
     renderResetButton: ->
         <BS.Button navItem componentClass="button"
             onClick={@props.commands.resetModel} className="save navbar-btn control">
-            <i className="icon icon-undo" />Reset
+            <LC.Icon type="undo" />Reset
         </BS.Button>
 
     renderPrintButton: ->
         <BS.Button navItem componentClass="button"
             onClick={@props.commands.printModel} className="print navbar-btn control">
-            <i className="icon icon-print" />Print
+            <LC.Icon type="print" />Print
         </BS.Button>
 
     renderEditToggle: ->
@@ -54,11 +54,12 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
 
     render: ->
         <BS.Navbar className="lanes-toolbar">
-          <BS.Nav>
-            {@renderSaveButton()}
-            {@renderResetButton()}
-            {@renderPrintButton() if @props.commands.canPrint()}
-            {@renderEditToggle()  if @props.commands.toggleEdit}
-          </BS.Nav>
-          <LC.Toolbar.RemoteChangeSets model=@changedModel />
+            <BS.Nav>
+                {@renderSaveButton()}
+                {@renderResetButton()}
+                {@renderPrintButton() if @props.commands.canPrint()}
+                {@renderEditToggle()  if @props.commands.toggleEdit}
+            </BS.Nav>
+            <LC.Toolbar.RemoteChangeSets model=@changedModel />
+            {@props.children}
         </BS.Navbar>

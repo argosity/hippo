@@ -22,6 +22,7 @@ module Lanes
         class Controller
 
             attr_reader :model, :user, :params, :data
+            include FormattedReply
 
             def initialize(model, authentication, params, data={})
                 @user   = authentication.current_user
@@ -39,13 +40,13 @@ module Lanes
                 if params[:id]
                     query  = query.first!
                 end
-                build_reply(query, :retrieve, options)
+                std_api_reply(:retrieve, query, options)
             end
 
             def perform_creation
                 record  = model.from_attribute_data(data, user)
                 options = build_reply_options.merge(success: record.save)
-                build_reply(record, :create, options)
+                std_api_reply(:create, record, options)
             end
 
             def perform_update
@@ -64,12 +65,12 @@ module Lanes
                 end
             end
 
-          protected
+            protected
 
             def perform_single_destroy
                 record = model.find(params[:id])
                 record.destroy
-                build_reply(record, :destroy, {})
+                std_api_reply(:destroy, record, {})
             end
 
             def perform_multiple_destroy
@@ -81,7 +82,7 @@ module Lanes
                     end
                 end
                 options = build_reply_options.merge(success: success)
-                build_reply(records, :destroy, options)
+                std_api_reply(:destroy, records, options)
             end
 
             def perform_multiple_updates
@@ -95,13 +96,13 @@ module Lanes
                     end
                 end
                 options = build_reply_options.merge(success: success)
-                build_reply(records, :update, options)
+                std_api_reply(:update, records, options)
             end
 
             def perform_single_update(record)
                 record.set_attribute_data(data, user)
                 options = build_reply_options.merge(success: record.save)
-                build_reply(record, :update, options)
+                std_api_reply(:update, record, options)
             end
 
             # @return [Array<String>] The fields to include in query.  May represent either an attribute or a method
@@ -131,51 +132,6 @@ module Lanes
                 params[:s]
             end
 
-            # json methods
-            # constructs a Hash with success, messages, and data keys and
-            # populates them appropriately
-
-            def build_reply(query, type, options)
-                success = options[:success].nil? ? true : options[:success]
-                json = {}
-                if query.is_a?(ActiveRecord::Base) && query.errors.any?
-                    json[:errors] = {}
-                    success = false
-                    query.errors.each{ | attr, message |
-                        json[:errors][attr] = message
-                    }
-                end
-                if options[:total_count]
-                    json[:total] = options.delete(:total_count)
-                end
-                json.merge(
-                  success: success,
-                  message: options[:messsage] || json_status_str(query, type.to_s.capitalize, success),
-                  data:    success ? records_for_reply(query, type, options) : []
-                )
-            end
-
-
-            # @return Array<Array> returns either an array of fields
-            def records_for_reply(query, type, options)
-                return [] if :destroy == type
-                if reply_with_array?
-                    query.pluck( *requested_fields )
-                else
-                    query.as_json(options)
-                end
-            end
-
-            def json_status_str(record, type, success)
-                if success
-                    return type + " succeeded"
-                elsif record
-                    return type + " failed: " + record.errors.full_messages.join("; ")
-                else
-                    return "Record not found"
-                end
-            end
-
             # reply options
 
             # Should the result include the total number of available records
@@ -195,6 +151,7 @@ module Lanes
                 if requested_fields.any?
                     options[:methods] = requested_fields.select{|f| model.has_exported_method?(f,user) }
                 end
+                options[:format] = reply_with_array? ? 'array' : 'object'
                 options
             end
 

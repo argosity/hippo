@@ -10,25 +10,26 @@ class Lanes.React.Viewport extends Lanes.Models.State
         height:     'number'
         el:         'element'
         selector:   'string'
-        root:       'element'
+        domRoot:    'element'
+        reactRoot:  'object'
         lanes:      'element'
         modalProps: 'object'
 
     constructor: ->
         super
         ALL_INSTANCES.push(this)
-        @root = document.body.querySelector(@selector)
-        _.dom(@root).addClass('lanes-root')
+        @domRoot = document.body.querySelector(@selector)
+        _.dom(@domRoot).addClass('lanes-root')
         Lanes.fatal("Root selector #{@selector} not found") unless root
-        _.dom(@root).html = "<div class='lanes'/>"
-        this.lanes = @root.querySelector('.lanes')
-        Lanes.lib.ResizeSensor(@root, _.debounce( =>
+        _.dom(@domRoot).html = "<div class='lanes'/>"
+        this.lanes = @domRoot.querySelector('.lanes')
+        Lanes.lib.ResizeSensor(@domRoot, _.debounce( =>
             @_updateDimensions()
         , 250))
         this._updateDimensions()
 
     onBoot: ->
-        prev = _.dom(this.root.previousElementSibling)
+        prev = _.dom(this.domRoot.previousElementSibling)
         prev.addClass('complete') if prev.hasClass('loading')
         _.delay(->
             prev.remove()
@@ -42,7 +43,8 @@ class Lanes.React.Viewport extends Lanes.Models.State
 
     displayError: (msg) ->
         @modalProps = {
-            show: true, buttons: ['OK'], title: 'Error', body: React.createElement('h3', {}, msg)
+            show: true, buttons: ['OK'], title: 'Error',
+            body: -> React.createElement('h3', {}, msg)
         }
 
     hideModal: ->

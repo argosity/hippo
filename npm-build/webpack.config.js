@@ -10,9 +10,9 @@ module.exports = {
     cache: false,
     entry: {
         base: "./base.js",
-        grid: "./grid.js",
         widgets: "./react-widgets.js",
         toggle: "./react-toggle.js",
+        calendar: "./calendar.js",
         development: "./development.js"
     },
     'resolve': {
@@ -26,7 +26,8 @@ module.exports = {
     },
     plugins: [
         new CommonsChunkPlugin("commons.js"),
-        new ExtractTextPlugin("[name].scss")
+        new ExtractTextPlugin("[name].scss"),
+        new webpack.optimize.DedupePlugin()
     ],
     module: {
         loaders: [
@@ -34,6 +35,7 @@ module.exports = {
             { test: /\.(png|woff|woff2|eot|ttf|svg)/, loader: "file-loader?name=[name].[ext]"  },
             { test: /\.less$/, loader: ExtractTextPlugin.extract("style-loader",
                                                                  "css-loader!less-loader") },
+
             { test: /\.css$/,  loader: ExtractTextPlugin.extract("style-loader", "css-loader") }
         ]
     }

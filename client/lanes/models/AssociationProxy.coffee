@@ -40,8 +40,9 @@ ProxyMethods = {
         else
             return null
     dataForSave: (options = {}) -> @serialize(options)
-
+    isPersistent: -> false
     api_path: -> @_proxied_model::api_path()
+    getId: -> undefined
 
     on: (ev, rest...) ->
         rememberEvents( @_proxied_events ||= {}, ev, rest )

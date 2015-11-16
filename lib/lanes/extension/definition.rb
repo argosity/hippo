@@ -10,6 +10,8 @@ module Lanes
 
             attr_reader :context
 
+            attr_accessor_with_default :client_js_aliases, lambda{ Hash.new }
+
             attr_accessor_with_default :title, ''
 
             attr_accessor_with_default :load_phase, :late
@@ -24,7 +26,6 @@ module Lanes
             # Load extension before/after the named extensions
             class_attribute :before
             class_attribute :after
-
 
             def self.components(*names)
                 Components.enable(*names)

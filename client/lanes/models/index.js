@@ -3,6 +3,7 @@
 //= require ./ServerCache
 //= require ./AssociationMap
 //= require ./EnumMap
+//= require ./State
 //= require ./Base
 //= require ./Collection
 //= require_tree ./mixins

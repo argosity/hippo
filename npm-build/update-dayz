@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+cd ~/code/dayz
+
+npm run build
+
+cd -
+
+cp -r ~/code/dayz/lib/* ./node_modules/dayz/lib/
+cp -r ~/code/dayz/style/* ./node_modules/dayz/style/
+
+webpack

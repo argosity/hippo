@@ -22,45 +22,6 @@ class BaseModel
                 else  _.toSentence( _.map(@errors, (value, key) ->
                     _.titleize(_.humanize(key)) + ' ' + value
                 ))
-    dataTypes:
-        code:
-            set: (newVal) ->
-                if _.isString(newVal)
-                    val: newVal.toUpperCase(), type: 'code'
-                else
-                    throw new TypeError('code must be a string')
-            default: -> ''
-        # Big decimal for attributes that need precision math
-        bigdec:
-            set: (newVal) ->
-                val = _.bigDecimal(newVal) unless _.isBlank(newVal)
-                { val, type: 'bigdec' }
-            default: -> new _.bigDecimal(0)
-
-        integer:
-            set: (newVal) ->
-                val = parseInt(newVal, 10) unless _.isBlank(newVal)
-                {val, type: 'integer'}
-        # Uses the "moment" lib to parse dates and coerce strings into the date type.
-        date:
-            get: (val) -> new Date(val)
-            default: -> return new Date()
-            set: (newVal) ->
-                if _.isDate(newVal)
-                    newType = 'date'
-                    newVal = newVal.valueOf()
-                else
-                    m = Lanes.Vendor.Moment(newVal)
-                    if m.isValid()
-                        newType = 'date'
-                        newVal = m.toDate()
-                    else
-                        newType = typeof newVal;
-                return {
-                    val: newVal,
-                    type: newType
-                }
-
     constructor: (attrs, options = {}) ->
         super
         @changeMonitor = new Lanes.Models.ChangeMonitor(this)
@@ -135,9 +96,10 @@ class BaseModel
     clone: ->
         new @constructor(@attributes)
 
-    serialize: ->
+    serialize: (options = {}) ->
+        options.depth ||= 1
         _.extend(super,
-            this.associations?.serialize(this)
+            this.associations?.serialize(this, options)
         )
 
     # Calls Ampersand State's set method, then sets any associations that are present as well
@@ -278,20 +240,6 @@ class BaseModel
     @include Lanes.lib.results
 
 
-class State
-    constructor: -> super
-    isState: true
-
-    # ## listenToAndRun
-    # Shortcut for registering a listener for a model
-    # and also triggering it right away.
-    listenToAndRun: (object, events, handler) ->
-        bound = _.bind(handler, this)
-        this.listenTo(object, events, bound)
-        bound()
-
-Lanes.Models.State = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, State )
-
 # ------------------------------------------------------------------ #
 # The BasicModel is just a very thin layer over State                #
 # ------------------------------------------------------------------ #
@@ -319,6 +267,6 @@ class BasicModel
     hasAttribute: (name) ->
         !! (this._definition[name] || this._derived[name])
 
-Lanes.Models.BasicModel = State.extend( BasicModel )
+Lanes.Models.BasicModel = Lanes.Models.State.extend( BasicModel )
 
 Lanes.Models.Base = BasicModel.extend( BaseModel )

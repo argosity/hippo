@@ -1,3 +1,9 @@
+.record-finder-dialog {
+    max-height: 500px;
+    @include flexbox();
+    @include flex-direction(column);
+}
+
 
 .record-finder-query-string {
   text-transform: uppercase;
@@ -5,11 +11,12 @@
 
 .record-finder {
   .form-control {
-    
+
   }
 }
 
 .query-clauses {
+
   .row {
     margin-bottom: 5px;
   }
@@ -31,7 +38,7 @@
     }
   }
   &.multiple {
-    
+
   }
 
   .query-field {
@@ -40,7 +47,7 @@
       label {
           display: block;
       }
-      
+
       .operators {
           label {
               display: block;
@@ -61,9 +68,6 @@
 
 
 .modal-dialog.tiny {
-  .skr-grid thead > tr > th {
-    font-size: unset;
-  }
   .action {
     text-align: center;
     .btn.run-query span {

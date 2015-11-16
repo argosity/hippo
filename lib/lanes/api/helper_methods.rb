@@ -25,6 +25,7 @@ module Lanes
             def lanes_api_url
                 Lanes.config.mounted_at
             end
+
             def error_as_json
                 Lanes.logger.warn request.env['sinatra.error']
                 Oj.dump({
@@ -33,9 +34,17 @@ module Lanes
                     message: request.env['sinatra.error'].message
                 })
             end
+
             def data
                 @json_data ||= Oj.load( request.body.read )
             end
+
+            def json_reply( response )
+                content_type 'application/json'
+                Oj.dump(response, mode: :compat)
+            end
+
+
         end
 
     end

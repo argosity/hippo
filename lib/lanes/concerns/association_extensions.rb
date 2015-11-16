@@ -63,7 +63,7 @@ module Lanes::Concerns
                 end
                 begin
                     klass = association.klass # This will throw if the class hasn't been loaded yet
-                    targets.each{ | name, proc | klass._add_event_listener( name, &proc ) }
+                    targets.each{ | name, proc | klass.send :_add_event_listener, name, &proc }
                 rescue NameError
                     pending = Lanes::Concerns::PubSub::PendingListeners.add(association.class_name)
                     targets.each do | name, proc |
