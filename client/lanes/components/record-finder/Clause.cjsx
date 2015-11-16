@@ -37,7 +37,7 @@ class Lanes.Components.RecordFinder.Clause extends Lanes.React.Component
                 <div className="input-group">
 
                     <div className="input-group-btn">
-                        <BS.DropdownButton title={@model.description}>
+                        <BS.DropdownButton id={@model.field.title} title={@model.description}>
                             <form>
                               <div className="col-xs-6">
                                 <div className="fields">
