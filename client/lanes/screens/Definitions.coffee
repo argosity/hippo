@@ -1,6 +1,7 @@
 class ScreenView extends Lanes.Models.BasicModel
 
     session:
+        props:  'object'
         screen: 'object'
         active: ['boolean', true, true]
         id: type: 'number', setOnce: true, required: true, default: ->
@@ -81,9 +82,9 @@ class ScreenDefinition extends Lanes.Models.BasicModel
         )
 
 
-    display: ->
+    display: (props) ->
         this.ensureLoaded().then =>
-            new ScreenView( screen: @ )
+            new ScreenView({props, screen: @})
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection

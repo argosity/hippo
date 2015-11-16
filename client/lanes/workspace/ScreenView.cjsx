@@ -4,7 +4,7 @@ Screen = React.createClass
         false
 
     render: ->
-        React.createElement(@props.component)
+        React.createElement(@props.screen.component(), @props.screen.props)
 
 class Lanes.Workspace.ScreenView extends Lanes.React.Component
     contextTypes:
@@ -20,7 +20,7 @@ class Lanes.Workspace.ScreenView extends Lanes.React.Component
 
     renderScreen: (screen) ->
         <div key={screen.id} className={_.classnames("screen", active:screen.active)}>
-            <Screen component={screen.component()} />
+            <Screen screen={screen} />
         </div>
 
     renderLoading: ->
