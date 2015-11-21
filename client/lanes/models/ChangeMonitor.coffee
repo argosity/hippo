@@ -18,6 +18,8 @@ class Lanes.Models.ChangeMonitor
         else
             this.recordChanges(record, _.keys(attrs))
 
+    reset: ->
+        @_unsaved = {}
 
     recordChanges: (record, names) ->
         # console.log "Change: #{names}"
