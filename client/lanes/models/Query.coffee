@@ -179,8 +179,14 @@ class Clauses extends Lanes.Models.Collection
 
 class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network events will be listened to
 
+    @mergedSyncOptions: (args...) ->
+        _.merge {}, args..., (a, b) ->
+            if _.isArray(a)
+                return a.concat(b)
+
+
     session:
-        src:  'function'
+        src:     'any'
         fields:  'collection'
         clauses: 'collection'
         initialField: 'state'
