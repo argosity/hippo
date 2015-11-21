@@ -1,9 +1,7 @@
 Lanes.Components.Grid.EditingMixin = {
 
     propTypes:
-        #topOffset: React.PropTypes.number.isRequired
         rowIndex:  React.PropTypes.number.isRequired
-#        rowHeight: React.PropTypes.number.isRequired
         onSave:    React.PropTypes.func.isRequired
         onCancel:  React.PropTypes.func.isRequired
         model:     Lanes.PropTypes.State.isRequired
@@ -17,18 +15,16 @@ Lanes.Components.Grid.EditingMixin = {
         ])
     editorTypes:
         text: (props) ->
-            <input type="text"
-                name={props.field.id}
-                value={props.value}
+            <input type="text" {...props}
                 onChange={_.partial(@onFieldChange, _, props.field)} />
+        bigdec: (props) ->
+            <LC.Input onlyNumeric inputOnly {...props} />
         date: (props) ->
-            <LC.DateTime inputOnly step={15}
-                model={props.model} name={props.field.id}
+            <LC.DateTime {...props} inputOnly step={15}
                 onChange={_.partial(@onDateFieldChange, _, props.field)} />
 
     listenNetworkEvents: true
     getDefaultProps: -> editors: {}
-    #topOffset:       -> @props.topOffset + (@props.rowIndex * @props.rowHeight)
 
     renderControls: ->
         if @props.allowDelete
@@ -50,10 +46,7 @@ Lanes.Components.Grid.EditingMixin = {
         </div>
 
     getFieldValue: (field) ->
-        if field.format
-            field.format(@props.model[field.id], @props.model)
-        else
-            @props.model[field.id]
+        @props.model[field.id]
 
     onDateFieldChange: (date, field) ->
         @props.model[field.id] = date
@@ -77,9 +70,14 @@ Lanes.Components.Grid.EditingMixin = {
 
     renderField: (field, index) ->
         control = if field.editable
-            props = _.extend( {index, field, value: @getFieldValue(field)},
-                _.pick(@props, 'model', 'query', 'rowIndex')
-            )
+            props = _.extend( {
+                index, field,
+                props: @props,
+                name: field.id,
+                value: @getFieldValue(field)
+
+            }, _.pick(@props, 'model', 'query', 'rowIndex') )
+
             (@props.editors[field.id] || @editorTypes[field.type] || @editorTypes['text']).call(this, props)
         else
             <span>{@getFieldValue(field)}</span>
@@ -110,8 +108,9 @@ Lanes.Components.Grid.EditingMixin = {
 
     deleteRecord: ->
         if @shouldPerformSync()
-            @props.model.destroy().then (model) => @props.onSave(model)
+            @props.model.destroy().then (model) =>
+                @props.onSave(model, true)
         else
-            @props.onSave(@props.model)
+            @props.onSave(@props.model, true)
 
 }
