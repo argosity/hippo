@@ -1,10 +1,11 @@
 class Lanes.Components.RecordFinder extends Lanes.React.Component
 
     propTypes:
-        query:    Lanes.PropTypes.State.isRequired
-        model:    Lanes.PropTypes.State.isRequired
-        commands: React.PropTypes.object
-        onModelSet: React.PropTypes.func
+        query:       Lanes.PropTypes.State.isRequired
+        model:       Lanes.PropTypes.State
+        parentModel: Lanes.PropTypes.State
+        commands:    React.PropTypes.object
+        onModelSet:  React.PropTypes.func
 
     contextTypes:
         viewport: Lanes.PropTypes.State.isRequired
@@ -12,6 +13,11 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
     mixins: [
         Lanes.Components.Form.FieldMixin
     ]
+    modelForAccess: ->
+        if @props.parentModel
+            @props.parentModel[@props.associationName]
+        else
+            @props.model
 
     showFinder: ->
         @context.viewport.displayModal(
@@ -22,6 +28,8 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
         ).then(Lanes.emptyFn, Lanes.emptyFn)
 
     setModel: (model) ->
+        if @props.parentModel
+            @props.parentModel.set(@props.associationName, model)
         @props.commands?.setModel(model)
         @props.onModelSet?(model)
 
@@ -39,6 +47,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
     renderEdit: ->
         findIcon = <button className="btn btn-primary icon icon-search icon-lg"
             onClick={@showFinder}/>
+
         <LC.Input
             ref="input"
             {...@props}
@@ -46,5 +55,5 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             editOnly writable
             name={@props.query.initialField.id}
             onKeyPress={@onKeyPress}
-            model={@props.model}
+            model={@modelForAccess()}
             buttonAfter={findIcon} />
