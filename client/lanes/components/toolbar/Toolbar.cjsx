@@ -30,15 +30,15 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         </BS.Button>
 
     renderEditToggle: ->
-        <form className="control navbar-form navbar-left">
+        <li navItem className="toggle control">
            <label>
                <Lanes.Vendor.ReactToggle
                aria-labelledby="Editing"
                onChange={@props.commands.toggleEdit}
                defaultChecked={@props.commands.isEditing()} />
-               <span className="label-text">Edit</span>
-           </label>
-        </form>
+               <span>Edit</span>
+            </label>
+        </li>
 
     isSavable: ->
         if @props.commands.saveModel
@@ -53,13 +53,12 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         <span className="control spacer" />
 
     render: ->
-        <BS.Navbar className="lanes-toolbar">
-            <BS.Nav>
-                {@renderSaveButton()}
-                {@renderResetButton()}
-                {@renderPrintButton() if @props.commands.canPrint()}
-                {@renderEditToggle()  if @props.commands.toggleEdit}
-            </BS.Nav>
-            <LC.Toolbar.RemoteChangeSets model=@changedModel />
+        <BS.Nav bsStyle="pills" className="lanes-toolbar">
+            {@renderSaveButton()}
+            {@renderResetButton()}
+            {@renderPrintButton() if @props.commands.canPrint()}
             {@props.children}
-        </BS.Navbar>
+            <div className="spacer"/>
+            {@renderEditToggle()  if @props.commands.toggleEdit}
+            <LC.Toolbar.RemoteChangeSets model=@changedModel />
+        </BS.Nav>

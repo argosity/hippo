@@ -1,19 +1,26 @@
 .lanes-toolbar {
 
-    padding-left: $navbar-padding-horizontal;
+
+    background-color: $navbar-default-bg;
+
+    border: 1px solid transparent;
+    border-radius: $border-radius-base;
+    border-color: $navbar-default-border;
+    margin-bottom: $navbar-margin-bottom;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
 
     .btn {
         &.save {
             @extend .btn-primary;
         }
     }
-    // not sure why bootstrap doesn't set this properly?
-    .navbar-form  { margin-top: 15px; }
-    .form-control { height: inherit;  }
     .spacer {
-        height: 50px;
-        display: block;
-        float: left;
+        flex: 1;
     }
     .control {
         width: 100px;
@@ -46,9 +53,13 @@
     input {
         margin: 0 0.25rem 0 0;
     }
-    .react-toggle {
-        margin-right: 5px;
-        vertical-align: middle;
+    .toggle {
+        label {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+        }
     }
     @import "./changes-notification";
 }
