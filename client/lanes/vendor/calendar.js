@@ -6,9 +6,9 @@ webpackJsonp([1],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.Dayz = __webpack_require__(1320);
+	Lanes.Vendor.Dayz = __webpack_require__(1309);
 
-	__webpack_require__(1395);
+	__webpack_require__(1384);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
@@ -41,7 +41,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1130:
+/***/ 1124:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -312,7 +312,7 @@ webpackJsonp([1],{
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(1131)("./" + name);
+	                __webpack_require__(1125)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -3243,180 +3243,180 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1131:
+/***/ 1125:
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 1132,
-		"./af.js": 1132,
-		"./ar": 1133,
-		"./ar-ma": 1134,
-		"./ar-ma.js": 1134,
-		"./ar-sa": 1135,
-		"./ar-sa.js": 1135,
-		"./ar-tn": 1136,
-		"./ar-tn.js": 1136,
-		"./ar.js": 1133,
-		"./az": 1137,
-		"./az.js": 1137,
-		"./be": 1138,
-		"./be.js": 1138,
-		"./bg": 1139,
-		"./bg.js": 1139,
-		"./bn": 1140,
-		"./bn.js": 1140,
-		"./bo": 1141,
-		"./bo.js": 1141,
-		"./br": 1142,
-		"./br.js": 1142,
-		"./bs": 1143,
-		"./bs.js": 1143,
-		"./ca": 1144,
-		"./ca.js": 1144,
-		"./cs": 1145,
-		"./cs.js": 1145,
-		"./cv": 1146,
-		"./cv.js": 1146,
-		"./cy": 1147,
-		"./cy.js": 1147,
-		"./da": 1148,
-		"./da.js": 1148,
-		"./de": 1149,
-		"./de-at": 1150,
-		"./de-at.js": 1150,
-		"./de.js": 1149,
-		"./el": 1151,
-		"./el.js": 1151,
-		"./en-au": 1152,
-		"./en-au.js": 1152,
-		"./en-ca": 1153,
-		"./en-ca.js": 1153,
-		"./en-gb": 1154,
-		"./en-gb.js": 1154,
-		"./eo": 1155,
-		"./eo.js": 1155,
-		"./es": 1156,
-		"./es.js": 1156,
-		"./et": 1157,
-		"./et.js": 1157,
-		"./eu": 1158,
-		"./eu.js": 1158,
-		"./fa": 1159,
-		"./fa.js": 1159,
-		"./fi": 1160,
-		"./fi.js": 1160,
-		"./fo": 1161,
-		"./fo.js": 1161,
-		"./fr": 1162,
-		"./fr-ca": 1163,
-		"./fr-ca.js": 1163,
-		"./fr.js": 1162,
-		"./fy": 1164,
-		"./fy.js": 1164,
-		"./gl": 1165,
-		"./gl.js": 1165,
-		"./he": 1166,
-		"./he.js": 1166,
-		"./hi": 1167,
-		"./hi.js": 1167,
-		"./hr": 1168,
-		"./hr.js": 1168,
-		"./hu": 1169,
-		"./hu.js": 1169,
-		"./hy-am": 1170,
-		"./hy-am.js": 1170,
-		"./id": 1171,
-		"./id.js": 1171,
-		"./is": 1172,
-		"./is.js": 1172,
-		"./it": 1173,
-		"./it.js": 1173,
-		"./ja": 1174,
-		"./ja.js": 1174,
-		"./jv": 1175,
-		"./jv.js": 1175,
-		"./ka": 1176,
-		"./ka.js": 1176,
-		"./km": 1177,
-		"./km.js": 1177,
-		"./ko": 1178,
-		"./ko.js": 1178,
-		"./lb": 1179,
-		"./lb.js": 1179,
-		"./lt": 1180,
-		"./lt.js": 1180,
-		"./lv": 1181,
-		"./lv.js": 1181,
-		"./me": 1182,
-		"./me.js": 1182,
-		"./mk": 1183,
-		"./mk.js": 1183,
-		"./ml": 1184,
-		"./ml.js": 1184,
-		"./mr": 1185,
-		"./mr.js": 1185,
-		"./ms": 1186,
-		"./ms-my": 1187,
-		"./ms-my.js": 1187,
-		"./ms.js": 1186,
-		"./my": 1188,
-		"./my.js": 1188,
-		"./nb": 1189,
-		"./nb.js": 1189,
-		"./ne": 1190,
-		"./ne.js": 1190,
-		"./nl": 1191,
-		"./nl.js": 1191,
-		"./nn": 1192,
-		"./nn.js": 1192,
-		"./pl": 1193,
-		"./pl.js": 1193,
-		"./pt": 1194,
-		"./pt-br": 1195,
-		"./pt-br.js": 1195,
-		"./pt.js": 1194,
-		"./ro": 1196,
-		"./ro.js": 1196,
-		"./ru": 1197,
-		"./ru.js": 1197,
-		"./si": 1198,
-		"./si.js": 1198,
-		"./sk": 1199,
-		"./sk.js": 1199,
-		"./sl": 1200,
-		"./sl.js": 1200,
-		"./sq": 1201,
-		"./sq.js": 1201,
-		"./sr": 1202,
-		"./sr-cyrl": 1203,
-		"./sr-cyrl.js": 1203,
-		"./sr.js": 1202,
-		"./sv": 1204,
-		"./sv.js": 1204,
-		"./ta": 1205,
-		"./ta.js": 1205,
-		"./th": 1206,
-		"./th.js": 1206,
-		"./tl-ph": 1207,
-		"./tl-ph.js": 1207,
-		"./tr": 1208,
-		"./tr.js": 1208,
-		"./tzl": 1209,
-		"./tzl.js": 1209,
-		"./tzm": 1210,
-		"./tzm-latn": 1211,
-		"./tzm-latn.js": 1211,
-		"./tzm.js": 1210,
-		"./uk": 1212,
-		"./uk.js": 1212,
-		"./uz": 1213,
-		"./uz.js": 1213,
-		"./vi": 1214,
-		"./vi.js": 1214,
-		"./zh-cn": 1215,
-		"./zh-cn.js": 1215,
-		"./zh-tw": 1216,
-		"./zh-tw.js": 1216
+		"./af": 1126,
+		"./af.js": 1126,
+		"./ar": 1127,
+		"./ar-ma": 1128,
+		"./ar-ma.js": 1128,
+		"./ar-sa": 1129,
+		"./ar-sa.js": 1129,
+		"./ar-tn": 1130,
+		"./ar-tn.js": 1130,
+		"./ar.js": 1127,
+		"./az": 1131,
+		"./az.js": 1131,
+		"./be": 1132,
+		"./be.js": 1132,
+		"./bg": 1133,
+		"./bg.js": 1133,
+		"./bn": 1134,
+		"./bn.js": 1134,
+		"./bo": 1135,
+		"./bo.js": 1135,
+		"./br": 1136,
+		"./br.js": 1136,
+		"./bs": 1137,
+		"./bs.js": 1137,
+		"./ca": 1138,
+		"./ca.js": 1138,
+		"./cs": 1139,
+		"./cs.js": 1139,
+		"./cv": 1140,
+		"./cv.js": 1140,
+		"./cy": 1141,
+		"./cy.js": 1141,
+		"./da": 1142,
+		"./da.js": 1142,
+		"./de": 1143,
+		"./de-at": 1144,
+		"./de-at.js": 1144,
+		"./de.js": 1143,
+		"./el": 1145,
+		"./el.js": 1145,
+		"./en-au": 1146,
+		"./en-au.js": 1146,
+		"./en-ca": 1147,
+		"./en-ca.js": 1147,
+		"./en-gb": 1148,
+		"./en-gb.js": 1148,
+		"./eo": 1149,
+		"./eo.js": 1149,
+		"./es": 1150,
+		"./es.js": 1150,
+		"./et": 1151,
+		"./et.js": 1151,
+		"./eu": 1152,
+		"./eu.js": 1152,
+		"./fa": 1153,
+		"./fa.js": 1153,
+		"./fi": 1154,
+		"./fi.js": 1154,
+		"./fo": 1155,
+		"./fo.js": 1155,
+		"./fr": 1156,
+		"./fr-ca": 1157,
+		"./fr-ca.js": 1157,
+		"./fr.js": 1156,
+		"./fy": 1158,
+		"./fy.js": 1158,
+		"./gl": 1159,
+		"./gl.js": 1159,
+		"./he": 1160,
+		"./he.js": 1160,
+		"./hi": 1161,
+		"./hi.js": 1161,
+		"./hr": 1162,
+		"./hr.js": 1162,
+		"./hu": 1163,
+		"./hu.js": 1163,
+		"./hy-am": 1164,
+		"./hy-am.js": 1164,
+		"./id": 1165,
+		"./id.js": 1165,
+		"./is": 1166,
+		"./is.js": 1166,
+		"./it": 1167,
+		"./it.js": 1167,
+		"./ja": 1168,
+		"./ja.js": 1168,
+		"./jv": 1169,
+		"./jv.js": 1169,
+		"./ka": 1170,
+		"./ka.js": 1170,
+		"./km": 1171,
+		"./km.js": 1171,
+		"./ko": 1172,
+		"./ko.js": 1172,
+		"./lb": 1173,
+		"./lb.js": 1173,
+		"./lt": 1174,
+		"./lt.js": 1174,
+		"./lv": 1175,
+		"./lv.js": 1175,
+		"./me": 1176,
+		"./me.js": 1176,
+		"./mk": 1177,
+		"./mk.js": 1177,
+		"./ml": 1178,
+		"./ml.js": 1178,
+		"./mr": 1179,
+		"./mr.js": 1179,
+		"./ms": 1180,
+		"./ms-my": 1181,
+		"./ms-my.js": 1181,
+		"./ms.js": 1180,
+		"./my": 1182,
+		"./my.js": 1182,
+		"./nb": 1183,
+		"./nb.js": 1183,
+		"./ne": 1184,
+		"./ne.js": 1184,
+		"./nl": 1185,
+		"./nl.js": 1185,
+		"./nn": 1186,
+		"./nn.js": 1186,
+		"./pl": 1187,
+		"./pl.js": 1187,
+		"./pt": 1188,
+		"./pt-br": 1189,
+		"./pt-br.js": 1189,
+		"./pt.js": 1188,
+		"./ro": 1190,
+		"./ro.js": 1190,
+		"./ru": 1191,
+		"./ru.js": 1191,
+		"./si": 1192,
+		"./si.js": 1192,
+		"./sk": 1193,
+		"./sk.js": 1193,
+		"./sl": 1194,
+		"./sl.js": 1194,
+		"./sq": 1195,
+		"./sq.js": 1195,
+		"./sr": 1196,
+		"./sr-cyrl": 1197,
+		"./sr-cyrl.js": 1197,
+		"./sr.js": 1196,
+		"./sv": 1198,
+		"./sv.js": 1198,
+		"./ta": 1199,
+		"./ta.js": 1199,
+		"./th": 1200,
+		"./th.js": 1200,
+		"./tl-ph": 1201,
+		"./tl-ph.js": 1201,
+		"./tr": 1202,
+		"./tr.js": 1202,
+		"./tzl": 1203,
+		"./tzl.js": 1203,
+		"./tzm": 1204,
+		"./tzm-latn": 1205,
+		"./tzm-latn.js": 1205,
+		"./tzm.js": 1204,
+		"./uk": 1206,
+		"./uk.js": 1206,
+		"./uz": 1207,
+		"./uz.js": 1207,
+		"./vi": 1208,
+		"./vi.js": 1208,
+		"./zh-cn": 1209,
+		"./zh-cn.js": 1209,
+		"./zh-tw": 1210,
+		"./zh-tw.js": 1210
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -3429,12 +3429,12 @@ webpackJsonp([1],{
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 1131;
+	webpackContext.id = 1125;
 
 
 /***/ },
 
-/***/ 1132:
+/***/ 1126:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -3442,7 +3442,7 @@ webpackJsonp([1],{
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -3512,7 +3512,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1133:
+/***/ 1127:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -3522,7 +3522,7 @@ webpackJsonp([1],{
 	//! Native plural forms: forabi https://github.com/forabi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -3653,7 +3653,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1134:
+/***/ 1128:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -3662,7 +3662,7 @@ webpackJsonp([1],{
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -3717,7 +3717,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1135:
+/***/ 1129:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -3725,7 +3725,7 @@ webpackJsonp([1],{
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -3825,14 +3825,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1136:
+/***/ 1130:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale  : Tunisian Arabic (ar-tn)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -3887,7 +3887,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1137:
+/***/ 1131:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -3895,7 +3895,7 @@ webpackJsonp([1],{
 	//! author : topchiyev : https://github.com/topchiyev
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -3996,7 +3996,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1138:
+/***/ 1132:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4006,7 +4006,7 @@ webpackJsonp([1],{
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -4148,7 +4148,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1139:
+/***/ 1133:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4156,7 +4156,7 @@ webpackJsonp([1],{
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -4243,7 +4243,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1140:
+/***/ 1134:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4251,7 +4251,7 @@ webpackJsonp([1],{
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -4361,7 +4361,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1141:
+/***/ 1135:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4369,7 +4369,7 @@ webpackJsonp([1],{
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -4476,7 +4476,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1142:
+/***/ 1136:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4484,7 +4484,7 @@ webpackJsonp([1],{
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -4588,7 +4588,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1143:
+/***/ 1137:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4597,7 +4597,7 @@ webpackJsonp([1],{
 	//! based on (hr) translation by Bojan Marković
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -4734,7 +4734,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1144:
+/***/ 1138:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4742,7 +4742,7 @@ webpackJsonp([1],{
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -4818,7 +4818,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1145:
+/***/ 1139:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4826,7 +4826,7 @@ webpackJsonp([1],{
 	//! author : petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -4980,7 +4980,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1146:
+/***/ 1140:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -4988,7 +4988,7 @@ webpackJsonp([1],{
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5048,7 +5048,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1147:
+/***/ 1141:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5056,7 +5056,7 @@ webpackJsonp([1],{
 	//! author : Robert Allen
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5132,7 +5132,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1148:
+/***/ 1142:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5140,7 +5140,7 @@ webpackJsonp([1],{
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5197,7 +5197,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1149:
+/***/ 1143:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5206,7 +5206,7 @@ webpackJsonp([1],{
 	//! author: Menelion Elensúle: https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5277,7 +5277,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1150:
+/***/ 1144:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5287,7 +5287,7 @@ webpackJsonp([1],{
 	//! author : Martin Groller : https://github.com/MadMG
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5358,7 +5358,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1151:
+/***/ 1145:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5366,7 +5366,7 @@ webpackJsonp([1],{
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5457,14 +5457,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1152:
+/***/ 1146:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : australian english (en-au)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5528,7 +5528,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1153:
+/***/ 1147:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5536,7 +5536,7 @@ webpackJsonp([1],{
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5596,7 +5596,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1154:
+/***/ 1148:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5604,7 +5604,7 @@ webpackJsonp([1],{
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5668,7 +5668,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1155:
+/***/ 1149:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5678,7 +5678,7 @@ webpackJsonp([1],{
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5746,7 +5746,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1156:
+/***/ 1150:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5754,7 +5754,7 @@ webpackJsonp([1],{
 	//! author : Julio Napurí : https://github.com/julionc
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5830,7 +5830,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1157:
+/***/ 1151:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5839,7 +5839,7 @@ webpackJsonp([1],{
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5915,7 +5915,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1158:
+/***/ 1152:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5923,7 +5923,7 @@ webpackJsonp([1],{
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -5984,7 +5984,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1159:
+/***/ 1153:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -5992,7 +5992,7 @@ webpackJsonp([1],{
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6094,7 +6094,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1160:
+/***/ 1154:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6102,7 +6102,7 @@ webpackJsonp([1],{
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6206,7 +6206,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1161:
+/***/ 1155:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6214,7 +6214,7 @@ webpackJsonp([1],{
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6271,7 +6271,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1162:
+/***/ 1156:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6279,7 +6279,7 @@ webpackJsonp([1],{
 	//! author : John Fischer : https://github.com/jfroffice
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6338,7 +6338,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1163:
+/***/ 1157:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6346,7 +6346,7 @@ webpackJsonp([1],{
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6401,7 +6401,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1164:
+/***/ 1158:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6409,7 +6409,7 @@ webpackJsonp([1],{
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6477,7 +6477,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1165:
+/***/ 1159:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6485,7 +6485,7 @@ webpackJsonp([1],{
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6557,7 +6557,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1166:
+/***/ 1160:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6567,7 +6567,7 @@ webpackJsonp([1],{
 	//! author : Tal Ater : https://github.com/TalAter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6644,7 +6644,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1167:
+/***/ 1161:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6652,7 +6652,7 @@ webpackJsonp([1],{
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6772,7 +6772,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1168:
+/***/ 1162:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6780,7 +6780,7 @@ webpackJsonp([1],{
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -6917,7 +6917,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1169:
+/***/ 1163:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6925,7 +6925,7 @@ webpackJsonp([1],{
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7031,7 +7031,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1170:
+/***/ 1164:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7039,7 +7039,7 @@ webpackJsonp([1],{
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7147,7 +7147,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1171:
+/***/ 1165:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7156,7 +7156,7 @@ webpackJsonp([1],{
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7235,7 +7235,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1172:
+/***/ 1166:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7243,7 +7243,7 @@ webpackJsonp([1],{
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7367,7 +7367,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1173:
+/***/ 1167:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7376,7 +7376,7 @@ webpackJsonp([1],{
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7442,7 +7442,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1174:
+/***/ 1168:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7450,7 +7450,7 @@ webpackJsonp([1],{
 	//! author : LI Long : https://github.com/baryon
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7512,7 +7512,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1175:
+/***/ 1169:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7521,7 +7521,7 @@ webpackJsonp([1],{
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7600,7 +7600,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1176:
+/***/ 1170:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7608,7 +7608,7 @@ webpackJsonp([1],{
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7708,7 +7708,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1177:
+/***/ 1171:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7716,7 +7716,7 @@ webpackJsonp([1],{
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7771,7 +7771,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1178:
+/***/ 1172:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7783,7 +7783,7 @@ webpackJsonp([1],{
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7844,7 +7844,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1179:
+/***/ 1173:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7852,7 +7852,7 @@ webpackJsonp([1],{
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -7983,7 +7983,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1180:
+/***/ 1174:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7991,7 +7991,7 @@ webpackJsonp([1],{
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8113,7 +8113,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1181:
+/***/ 1175:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8122,7 +8122,7 @@ webpackJsonp([1],{
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8214,7 +8214,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1182:
+/***/ 1176:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8222,7 +8222,7 @@ webpackJsonp([1],{
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8328,7 +8328,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1183:
+/***/ 1177:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8336,7 +8336,7 @@ webpackJsonp([1],{
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8423,7 +8423,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1184:
+/***/ 1178:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8431,7 +8431,7 @@ webpackJsonp([1],{
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8499,7 +8499,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1185:
+/***/ 1179:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8507,7 +8507,7 @@ webpackJsonp([1],{
 	//! author : Harshad Kale : https://github.com/kalehv
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8625,7 +8625,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1186:
+/***/ 1180:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8633,7 +8633,7 @@ webpackJsonp([1],{
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8712,7 +8712,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1187:
+/***/ 1181:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8720,7 +8720,7 @@ webpackJsonp([1],{
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8799,7 +8799,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1188:
+/***/ 1182:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8807,7 +8807,7 @@ webpackJsonp([1],{
 	//! author : Squar team, mysquar.com
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8897,7 +8897,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1189:
+/***/ 1183:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8906,7 +8906,7 @@ webpackJsonp([1],{
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -8963,7 +8963,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1190:
+/***/ 1184:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8971,7 +8971,7 @@ webpackJsonp([1],{
 	//! author : suvash : https://github.com/suvash
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9091,7 +9091,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1191:
+/***/ 1185:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9099,7 +9099,7 @@ webpackJsonp([1],{
 	//! author : Joris Röling : https://github.com/jjupiter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9167,7 +9167,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1192:
+/***/ 1186:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9175,7 +9175,7 @@ webpackJsonp([1],{
 	//! author : https://github.com/mechuwind
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9232,7 +9232,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1193:
+/***/ 1187:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9240,7 +9240,7 @@ webpackJsonp([1],{
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9342,7 +9342,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1194:
+/***/ 1188:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9350,7 +9350,7 @@ webpackJsonp([1],{
 	//! author : Jefferson : https://github.com/jalex79
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9411,7 +9411,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1195:
+/***/ 1189:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9419,7 +9419,7 @@ webpackJsonp([1],{
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9476,7 +9476,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1196:
+/***/ 1190:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9485,7 +9485,7 @@ webpackJsonp([1],{
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9555,7 +9555,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1197:
+/***/ 1191:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9564,7 +9564,7 @@ webpackJsonp([1],{
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9724,7 +9724,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1198:
+/***/ 1192:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9732,7 +9732,7 @@ webpackJsonp([1],{
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9794,7 +9794,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1199:
+/***/ 1193:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9803,7 +9803,7 @@ webpackJsonp([1],{
 	//! based on work of petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -9957,7 +9957,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1200:
+/***/ 1194:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9965,7 +9965,7 @@ webpackJsonp([1],{
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10122,7 +10122,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1201:
+/***/ 1195:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10132,7 +10132,7 @@ webpackJsonp([1],{
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10196,7 +10196,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1202:
+/***/ 1196:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10204,7 +10204,7 @@ webpackJsonp([1],{
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10309,7 +10309,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1203:
+/***/ 1197:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10317,7 +10317,7 @@ webpackJsonp([1],{
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10422,7 +10422,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1204:
+/***/ 1198:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10430,7 +10430,7 @@ webpackJsonp([1],{
 	//! author : Jens Alm : https://github.com/ulmus
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10494,7 +10494,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1205:
+/***/ 1199:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10502,7 +10502,7 @@ webpackJsonp([1],{
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10594,7 +10594,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1206:
+/***/ 1200:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10602,7 +10602,7 @@ webpackJsonp([1],{
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10664,7 +10664,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1207:
+/***/ 1201:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10672,7 +10672,7 @@ webpackJsonp([1],{
 	//! author : Dan Hagman
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10731,7 +10731,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1208:
+/***/ 1202:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10740,7 +10740,7 @@ webpackJsonp([1],{
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10826,7 +10826,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1209:
+/***/ 1203:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10834,7 +10834,7 @@ webpackJsonp([1],{
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v with the help of Iustì Canun
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10916,7 +10916,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1210:
+/***/ 1204:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10924,7 +10924,7 @@ webpackJsonp([1],{
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -10979,7 +10979,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1211:
+/***/ 1205:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10987,7 +10987,7 @@ webpackJsonp([1],{
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -11042,7 +11042,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1212:
+/***/ 1206:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11051,7 +11051,7 @@ webpackJsonp([1],{
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -11200,7 +11200,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1213:
+/***/ 1207:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11208,7 +11208,7 @@ webpackJsonp([1],{
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -11263,7 +11263,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1214:
+/***/ 1208:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11271,7 +11271,7 @@ webpackJsonp([1],{
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -11334,7 +11334,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1215:
+/***/ 1209:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11343,7 +11343,7 @@ webpackJsonp([1],{
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -11466,7 +11466,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1216:
+/***/ 1210:
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11474,7 +11474,7 @@ webpackJsonp([1],{
 	//! author : Ben : https://github.com/ben-lin
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(1130)) :
+	    true ? factory(__webpack_require__(1124)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -11572,13 +11572,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1312:
+/***/ 1301:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
 	  if (true) {
 	    // AMD. Register as an anonymous module unless amdModuleId is set
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1130)], __WEBPACK_AMD_DEFINE_RESULT__ = function (a0) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1124)], __WEBPACK_AMD_DEFINE_RESULT__ = function (a0) {
 	      return (root['DateRange'] = factory(a0));
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports === 'object') {
@@ -11958,7 +11958,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1320:
+/***/ 1309:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11975,59 +11975,55 @@ webpackJsonp([1],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _moment = __webpack_require__(1130);
+	var _moment = __webpack_require__(1124);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _dataLayout = __webpack_require__(1321);
+	var _dataLayout = __webpack_require__(1310);
 
 	var _dataLayout2 = _interopRequireDefault(_dataLayout);
 
-	var _day = __webpack_require__(1348);
+	var _day = __webpack_require__(1337);
 
 	var _day2 = _interopRequireDefault(_day);
 
-	var _label = __webpack_require__(1350);
+	var _label = __webpack_require__(1339);
 
 	var _label2 = _interopRequireDefault(_label);
 
-	var _xLabels = __webpack_require__(1351);
+	var _xLabels = __webpack_require__(1340);
 
 	var _xLabels2 = _interopRequireDefault(_xLabels);
 
-	var _yLabels = __webpack_require__(1383);
+	var _yLabels = __webpack_require__(1372);
 
 	var _yLabels2 = _interopRequireDefault(_yLabels);
 
 	// needed in order to for range to install itself
 
-	var _dataEventsCollection = __webpack_require__(1384);
+	var _dataEventsCollection = __webpack_require__(1373);
 
 	var _dataEventsCollection2 = _interopRequireDefault(_dataEventsCollection);
 
-	__webpack_require__(1312);
+	__webpack_require__(1301);
 
 	var Dayz = _react2['default'].createClass({
 	    displayName: 'Dayz',
 
 	    propTypes: {
+	        editComponent: _react2['default'].PropTypes.func,
 	        display: _react2['default'].PropTypes.oneOf(['month', 'week', 'day']),
 	        date: _react2['default'].PropTypes.object.isRequired,
 	        displayHours: _react2['default'].PropTypes.array,
-	        dayComponent: _react2['default'].PropTypes.func,
-	        editComponent: _react2['default'].PropTypes.func,
 	        events: _react2['default'].PropTypes.instanceOf(_dataEventsCollection2['default']),
-	        dayLabelComponent: _react2['default'].PropTypes.func,
 	        onDayClick: _react2['default'].PropTypes.func,
+	        onDayDoubleClick: _react2['default'].PropTypes.func,
 	        onEventClick: _react2['default'].PropTypes.func,
 	        onEventResize: _react2['default'].PropTypes.func
 	    },
 
 	    getDefaultProps: function getDefaultProps() {
 	        return {
-	            displayHours: [0, 24],
-	            dayLabelComponent: _label2['default'],
-	            dayComponent: _day2['default'],
 	            display: 'month'
 	        };
 	    },
@@ -12073,18 +12069,18 @@ webpackJsonp([1],{
 	    render: function render() {
 	        var _this = this;
 
-	        var DayComp = this.props.dayComponent;
 	        var classes = ["dayz", this.props.display];
 	        var days = [];
 	        this.state.range.by('days', function (day) {
-	            return days.push(_react2['default'].createElement(DayComp, { key: day.format('YYYYMMDD'),
+	            return days.push(_react2['default'].createElement(_day2['default'], { key: day.format('YYYYMMDD'),
 	                day: day,
 	                layout: _this.state.layout,
 	                editComponent: _this.props.editComponent,
 	                onClick: _this.props.onDayClick,
+	                onDoubleClick: _this.props.onDayDoubleClick,
 	                onEventClick: _this.props.onEventClick,
-	                onEventResize: _this.props.onEventResize,
-	                labelComponent: _this.props.dayLabelComponent
+	                onEventResize: _this.props.onEventResize
+
 	            }));
 	        });
 	        return _react2['default'].createElement(
@@ -12117,7 +12113,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1321:
+/***/ 1310:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12132,19 +12128,19 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _moment = __webpack_require__(1130);
+	var _moment = __webpack_require__(1124);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _lodashObjectAssign = __webpack_require__(1322);
+	var _lodashObjectAssign = __webpack_require__(1311);
 
 	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
 
-	var _eventLayout = __webpack_require__(1346);
+	var _eventLayout = __webpack_require__(1335);
 
 	var _eventLayout2 = _interopRequireDefault(_eventLayout);
 
-	var _constants = __webpack_require__(1347);
+	var _constants = __webpack_require__(1336);
 
 	var _constants2 = _interopRequireDefault(_constants);
 
@@ -12176,6 +12172,11 @@ webpackJsonp([1],{
 	        }, this);
 	        this.multiDayCount = multiDayCount;
 	        this.calculateStacking();
+	        if (!this.isDisplayingAsMonth() && !this.displayHours) {
+	            this.displayHours = this.hourRange();
+	        } else {
+	            this.displayHours = [0, 24];
+	        }
 	    }
 
 	    _createClass(Layout, [{
@@ -12190,15 +12191,19 @@ webpackJsonp([1],{
 	            return { className: 'all-day', style: style };
 	        }
 	    }, {
-	        key: 'hourRangeForWeek',
-	        value: function hourRangeForWeek(firstDay) {
-	            var day = firstDay.clone();
+	        key: 'hourRange',
+	        value: function hourRange() {
+	            var day = this.range.start.clone();
 	            var range = [7, 19];
 	            for (var d = 0; d < 7; d++) {
 	                var layouts = this.forDay(day);
 	                for (var i = 0; i < layouts.length; i++) {
-	                    range[0] = Math.min(layouts[i].event.start().hour(), range[0]);
-	                    range[1] = Math.max(layouts[i].event.end().hour(), range[1]);
+	                    var layout = layouts[i];
+	                    if (!layout.event.isSingleDay()) {
+	                        continue;
+	                    }
+	                    range[0] = Math.min(layout.event.start().hour(), range[0]);
+	                    range[1] = Math.max(layout.event.end().hour(), range[1]);
 	                }
 	                day.add(1, 'day');
 	            }
@@ -12364,12 +12369,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1322:
+/***/ 1311:
 /***/ function(module, exports, __webpack_require__) {
 
-	var assignWith = __webpack_require__(1323),
-	    baseAssign = __webpack_require__(1339),
-	    createAssigner = __webpack_require__(1341);
+	var assignWith = __webpack_require__(1312),
+	    baseAssign = __webpack_require__(1328),
+	    createAssigner = __webpack_require__(1330);
 
 	/**
 	 * Assigns own enumerable properties of source object(s) to the destination
@@ -12414,10 +12419,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1323:
+/***/ 1312:
 /***/ function(module, exports, __webpack_require__) {
 
-	var keys = __webpack_require__(1324);
+	var keys = __webpack_require__(1313);
 
 	/**
 	 * A specialized version of `_.assign` for customizing assigned values without
@@ -12453,13 +12458,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1324:
+/***/ 1313:
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(1325),
-	    isArrayLike = __webpack_require__(1330),
-	    isObject = __webpack_require__(1328),
-	    shimKeys = __webpack_require__(1334);
+	var getNative = __webpack_require__(1314),
+	    isArrayLike = __webpack_require__(1319),
+	    isObject = __webpack_require__(1317),
+	    shimKeys = __webpack_require__(1323);
 
 	/* Native method references for those with the same name as other `lodash` methods. */
 	var nativeKeys = getNative(Object, 'keys');
@@ -12505,10 +12510,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1325:
+/***/ 1314:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isNative = __webpack_require__(1326);
+	var isNative = __webpack_require__(1315);
 
 	/**
 	 * Gets the native function at `key` of `object`.
@@ -12528,11 +12533,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1326:
+/***/ 1315:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(1327),
-	    isObjectLike = __webpack_require__(1329);
+	var isFunction = __webpack_require__(1316),
+	    isObjectLike = __webpack_require__(1318);
 
 	/** Used to detect host constructors (Safari > 5). */
 	var reIsHostCtor = /^\[object .+?Constructor\]$/;
@@ -12583,10 +12588,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1327:
+/***/ 1316:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(1328);
+	var isObject = __webpack_require__(1317);
 
 	/** `Object#toString` result references. */
 	var funcTag = '[object Function]';
@@ -12628,7 +12633,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1328:
+/***/ 1317:
 /***/ function(module, exports) {
 
 	/**
@@ -12663,7 +12668,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1329:
+/***/ 1318:
 /***/ function(module, exports) {
 
 	/**
@@ -12682,11 +12687,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1330:
+/***/ 1319:
 /***/ function(module, exports, __webpack_require__) {
 
-	var getLength = __webpack_require__(1331),
-	    isLength = __webpack_require__(1333);
+	var getLength = __webpack_require__(1320),
+	    isLength = __webpack_require__(1322);
 
 	/**
 	 * Checks if `value` is array-like.
@@ -12704,10 +12709,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1331:
+/***/ 1320:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseProperty = __webpack_require__(1332);
+	var baseProperty = __webpack_require__(1321);
 
 	/**
 	 * Gets the "length" property value of `object`.
@@ -12726,7 +12731,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1332:
+/***/ 1321:
 /***/ function(module, exports) {
 
 	/**
@@ -12747,7 +12752,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1333:
+/***/ 1322:
 /***/ function(module, exports) {
 
 	/**
@@ -12774,14 +12779,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1334:
+/***/ 1323:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArguments = __webpack_require__(1335),
-	    isArray = __webpack_require__(1336),
-	    isIndex = __webpack_require__(1337),
-	    isLength = __webpack_require__(1333),
-	    keysIn = __webpack_require__(1338);
+	var isArguments = __webpack_require__(1324),
+	    isArray = __webpack_require__(1325),
+	    isIndex = __webpack_require__(1326),
+	    isLength = __webpack_require__(1322),
+	    keysIn = __webpack_require__(1327);
 
 	/** Used for native method references. */
 	var objectProto = Object.prototype;
@@ -12822,11 +12827,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1335:
+/***/ 1324:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLike = __webpack_require__(1330),
-	    isObjectLike = __webpack_require__(1329);
+	var isArrayLike = __webpack_require__(1319),
+	    isObjectLike = __webpack_require__(1318);
 
 	/** Used for native method references. */
 	var objectProto = Object.prototype;
@@ -12863,12 +12868,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1336:
+/***/ 1325:
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(1325),
-	    isLength = __webpack_require__(1333),
-	    isObjectLike = __webpack_require__(1329);
+	var getNative = __webpack_require__(1314),
+	    isLength = __webpack_require__(1322),
+	    isObjectLike = __webpack_require__(1318);
 
 	/** `Object#toString` result references. */
 	var arrayTag = '[object Array]';
@@ -12910,7 +12915,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1337:
+/***/ 1326:
 /***/ function(module, exports) {
 
 	/** Used to detect unsigned integer values. */
@@ -12941,14 +12946,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1338:
+/***/ 1327:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArguments = __webpack_require__(1335),
-	    isArray = __webpack_require__(1336),
-	    isIndex = __webpack_require__(1337),
-	    isLength = __webpack_require__(1333),
-	    isObject = __webpack_require__(1328);
+	var isArguments = __webpack_require__(1324),
+	    isArray = __webpack_require__(1325),
+	    isIndex = __webpack_require__(1326),
+	    isLength = __webpack_require__(1322),
+	    isObject = __webpack_require__(1317);
 
 	/** Used for native method references. */
 	var objectProto = Object.prototype;
@@ -13012,11 +13017,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1339:
+/***/ 1328:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCopy = __webpack_require__(1340),
-	    keys = __webpack_require__(1324);
+	var baseCopy = __webpack_require__(1329),
+	    keys = __webpack_require__(1313);
 
 	/**
 	 * The base implementation of `_.assign` without support for argument juggling,
@@ -13038,7 +13043,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1340:
+/***/ 1329:
 /***/ function(module, exports) {
 
 	/**
@@ -13068,12 +13073,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1341:
+/***/ 1330:
 /***/ function(module, exports, __webpack_require__) {
 
-	var bindCallback = __webpack_require__(1342),
-	    isIterateeCall = __webpack_require__(1344),
-	    restParam = __webpack_require__(1345);
+	var bindCallback = __webpack_require__(1331),
+	    isIterateeCall = __webpack_require__(1333),
+	    restParam = __webpack_require__(1334);
 
 	/**
 	 * Creates a `_.assign`, `_.defaults`, or `_.merge` function.
@@ -13116,10 +13121,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1342:
+/***/ 1331:
 /***/ function(module, exports, __webpack_require__) {
 
-	var identity = __webpack_require__(1343);
+	var identity = __webpack_require__(1332);
 
 	/**
 	 * A specialized version of `baseCallback` which only supports `this` binding
@@ -13162,7 +13167,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1343:
+/***/ 1332:
 /***/ function(module, exports) {
 
 	/**
@@ -13189,12 +13194,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1344:
+/***/ 1333:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLike = __webpack_require__(1330),
-	    isIndex = __webpack_require__(1337),
-	    isObject = __webpack_require__(1328);
+	var isArrayLike = __webpack_require__(1319),
+	    isIndex = __webpack_require__(1326),
+	    isObject = __webpack_require__(1317);
 
 	/**
 	 * Checks if the provided arguments are from an iteratee call.
@@ -13224,7 +13229,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1345:
+/***/ 1334:
 /***/ function(module, exports) {
 
 	/** Used as the `TypeError` message for "Functions" methods. */
@@ -13289,7 +13294,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1346:
+/***/ 1335:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13304,7 +13309,7 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _moment = __webpack_require__(1130);
+	var _moment = __webpack_require__(1124);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -13378,7 +13383,7 @@ webpackJsonp([1],{
 	    }, {
 	        key: 'classNames',
 	        value: function classNames() {
-	            var classes = ['event', 'span-' + this.span];
+	            var classes = ['event', 'span-' + this.span, 'color-' + this.event.colorIndex()];
 
 	            if (this.startsBefore) classes.push('is-continuation');
 	            if (this.endsAfter) classes.push('is-continued');
@@ -13398,7 +13403,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1347:
+/***/ 1336:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -13415,7 +13420,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1348:
+/***/ 1337:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13430,15 +13435,19 @@ webpackJsonp([1],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _dataLayout = __webpack_require__(1321);
+	var _dataLayout = __webpack_require__(1310);
 
 	var _dataLayout2 = _interopRequireDefault(_dataLayout);
 
-	var _event2 = __webpack_require__(1349);
+	var _event2 = __webpack_require__(1338);
 
 	var _event3 = _interopRequireDefault(_event2);
 
-	var _lodashObjectAssign = __webpack_require__(1322);
+	var _label = __webpack_require__(1339);
+
+	var _label2 = _interopRequireDefault(_label);
+
+	var _lodashObjectAssign = __webpack_require__(1311);
 
 	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
 
@@ -13448,26 +13457,34 @@ webpackJsonp([1],{
 	    displayName: 'Day',
 
 	    propTypes: {
-	        editComponent: _react2['default'].PropTypes.func,
-	        labelComponent: _react2['default'].PropTypes.func,
 	        day: _react2['default'].PropTypes.object.isRequired,
 	        layout: _react2['default'].PropTypes.instanceOf(_dataLayout2['default']).isRequired,
 	        onClick: _react2['default'].PropTypes.func,
+	        onDoubleClick: _react2['default'].PropTypes.func,
 	        onEventClick: _react2['default'].PropTypes.func,
-	        onEventResize: _react2['default'].PropTypes.func
+	        onEventResize: _react2['default'].PropTypes.func,
+	        editComponent: _react2['default'].PropTypes.func,
+	        onEventDoubleClick: _react2['default'].PropTypes.func
 	    },
 
 	    getInitialState: function getInitialState() {
 	        return { resize: false };
 	    },
 
-	    onClick: function onClick(ev) {
-	        if (!this.props.onClick || this.state.resize || !IsDayClass.test(ev.target.className)) {
+	    _onClickHandler: function _onClickHandler(ev, handler) {
+	        if (!handler || !IsDayClass.test(ev.target.className)) {
 	            return;
 	        }
 	        var bounds = this.refs.events.getBoundingClientRect();
-	        var hours = 24 * ((ev.clientY - bounds.top) / ev.target.offsetHeight);
-	        this.props.onClick(ev, this.props.day.clone().startOf('day').add(hours, 'hour'));
+	        var perc = (ev.clientY - bounds.top) / ev.target.offsetHeight;
+	        var hours = this.props.layout.displayHours[0] + this.props.layout.minutesInDay() * perc / 60;
+	        handler.call(this, ev, this.props.day.clone().startOf('day').add(hours, 'hour'));
+	    },
+	    onClick: function onClick(ev) {
+	        this._onClickHandler(ev, this.props.onClick);
+	    },
+	    onDoubleClick: function onDoubleClick(ev) {
+	        this._onClickHandler(ev, this.props.onDoubleClick);
 	    },
 
 	    onDragStart: function onDragStart(resize, eventLayout) {
@@ -13500,7 +13517,6 @@ webpackJsonp([1],{
 	    },
 
 	    render: function render() {
-	        var Label = this.props.labelComponent;
 	        var classes = ['day'];
 	        if (this.props.layout.isDateOutsideRange(this.props.day)) {
 	            classes.push('outside');
@@ -13517,12 +13533,13 @@ webpackJsonp([1],{
 	                var layout = _step.value;
 
 	                var _event = _react2['default'].createElement(_event3['default'], {
-	                    onDragStart: this.onDragStart,
+	                    layout: layout,
 	                    key: layout.key(),
-	                    editComponent: this.props.editComponent,
-	                    onClick: this.props.onEventClick,
 	                    day: this.props.day,
-	                    layout: layout
+	                    onDragStart: this.onDragStart,
+	                    onClick: this.props.onEventClick,
+	                    editComponent: this.props.editComponent,
+	                    onDoubleClick: this.props.onEventDoubleClick
 	                });
 	                (layout.event.isSingleDay() ? singleDayEvents : allDayEvents).push(_event);
 	            }
@@ -13543,9 +13560,13 @@ webpackJsonp([1],{
 
 	        return _react2['default'].createElement(
 	            'div',
-	            { onClick: this.onClick, className: classes.join(' ') },
+	            {
+	                onClick: this.onClick,
+	                className: classes.join(' '),
+	                onDoubleClick: this.onDoubleClick
+	            },
 	            _react2['default'].createElement(
-	                Label,
+	                _label2['default'],
 	                { day: this.props.day, className: 'label' },
 	                this.props.day.format('D')
 	            ),
@@ -13573,7 +13594,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1349:
+/***/ 1338:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13588,7 +13609,7 @@ webpackJsonp([1],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _dataEventLayout = __webpack_require__(1346);
+	var _dataEventLayout = __webpack_require__(1335);
 
 	var _dataEventLayout2 = _interopRequireDefault(_dataEventLayout);
 
@@ -13600,7 +13621,8 @@ webpackJsonp([1],{
 	    propTypes: {
 	        layout: _react2['default'].PropTypes.instanceOf(_dataEventLayout2['default']),
 	        editComponent: _react2['default'].PropTypes.func,
-	        onClick: _react2['default'].PropTypes.func
+	        onClick: _react2['default'].PropTypes.func,
+	        onDoubleClick: _react2['default'].PropTypes.func
 	    },
 
 	    onClick: function onClick(ev) {
@@ -13608,6 +13630,14 @@ webpackJsonp([1],{
 	            return;
 	        }
 	        this.props.onClick(ev, this.props.layout.event);
+	        ev.stopPropagation();
+	    },
+
+	    onDoubleClick: function onDoubleClick(ev) {
+	        if (!this.props.onDoubleClick) {
+	            return;
+	        }
+	        this.props.onDoubleClick(ev, this.props.layout.event);
 	        ev.stopPropagation();
 	    },
 
@@ -13625,8 +13655,6 @@ webpackJsonp([1],{
 	            return;
 	        }
 	        this.props.onDragStart(resize, this.props.layout);
-	        /* debugger
-	           const hours = ((ev.clientY - bounds.top) / ev.target.offsetHeight ) */
 	    },
 
 	    onDragStop: function onDragStop() {
@@ -13663,7 +13691,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1350:
+/***/ 1339:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13700,7 +13728,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1351:
+/***/ 1340:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13715,7 +13743,7 @@ webpackJsonp([1],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _lodashCollectionMap = __webpack_require__(1352);
+	var _lodashCollectionMap = __webpack_require__(1341);
 
 	var _lodashCollectionMap2 = _interopRequireDefault(_lodashCollectionMap);
 
@@ -13760,13 +13788,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1352:
+/***/ 1341:
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayMap = __webpack_require__(1353),
-	    baseCallback = __webpack_require__(1354),
-	    baseMap = __webpack_require__(1377),
-	    isArray = __webpack_require__(1336);
+	var arrayMap = __webpack_require__(1342),
+	    baseCallback = __webpack_require__(1343),
+	    baseMap = __webpack_require__(1366),
+	    isArray = __webpack_require__(1325);
 
 	/**
 	 * Creates an array of values by running each element in `collection` through
@@ -13835,7 +13863,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1353:
+/***/ 1342:
 /***/ function(module, exports) {
 
 	/**
@@ -13863,14 +13891,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1354:
+/***/ 1343:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMatches = __webpack_require__(1355),
-	    baseMatchesProperty = __webpack_require__(1368),
-	    bindCallback = __webpack_require__(1342),
-	    identity = __webpack_require__(1343),
-	    property = __webpack_require__(1375);
+	var baseMatches = __webpack_require__(1344),
+	    baseMatchesProperty = __webpack_require__(1357),
+	    bindCallback = __webpack_require__(1331),
+	    identity = __webpack_require__(1332),
+	    property = __webpack_require__(1364);
 
 	/**
 	 * The base implementation of `_.callback` which supports specifying the
@@ -13905,12 +13933,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1355:
+/***/ 1344:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsMatch = __webpack_require__(1356),
-	    getMatchData = __webpack_require__(1365),
-	    toObject = __webpack_require__(1364);
+	var baseIsMatch = __webpack_require__(1345),
+	    getMatchData = __webpack_require__(1354),
+	    toObject = __webpack_require__(1353);
 
 	/**
 	 * The base implementation of `_.matches` which does not clone `source`.
@@ -13942,11 +13970,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1356:
+/***/ 1345:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqual = __webpack_require__(1357),
-	    toObject = __webpack_require__(1364);
+	var baseIsEqual = __webpack_require__(1346),
+	    toObject = __webpack_require__(1353);
 
 	/**
 	 * The base implementation of `_.isMatch` without support for callback
@@ -14001,12 +14029,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1357:
+/***/ 1346:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqualDeep = __webpack_require__(1358),
-	    isObject = __webpack_require__(1328),
-	    isObjectLike = __webpack_require__(1329);
+	var baseIsEqualDeep = __webpack_require__(1347),
+	    isObject = __webpack_require__(1317),
+	    isObjectLike = __webpack_require__(1318);
 
 	/**
 	 * The base implementation of `_.isEqual` without support for `this` binding
@@ -14036,14 +14064,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1358:
+/***/ 1347:
 /***/ function(module, exports, __webpack_require__) {
 
-	var equalArrays = __webpack_require__(1359),
-	    equalByTag = __webpack_require__(1361),
-	    equalObjects = __webpack_require__(1362),
-	    isArray = __webpack_require__(1336),
-	    isTypedArray = __webpack_require__(1363);
+	var equalArrays = __webpack_require__(1348),
+	    equalByTag = __webpack_require__(1350),
+	    equalObjects = __webpack_require__(1351),
+	    isArray = __webpack_require__(1325),
+	    isTypedArray = __webpack_require__(1352);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -14145,10 +14173,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1359:
+/***/ 1348:
 /***/ function(module, exports, __webpack_require__) {
 
-	var arraySome = __webpack_require__(1360);
+	var arraySome = __webpack_require__(1349);
 
 	/**
 	 * A specialized version of `baseIsEqualDeep` for arrays with support for
@@ -14203,7 +14231,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1360:
+/***/ 1349:
 /***/ function(module, exports) {
 
 	/**
@@ -14233,7 +14261,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1361:
+/***/ 1350:
 /***/ function(module, exports) {
 
 	/** `Object#toString` result references. */
@@ -14288,10 +14316,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1362:
+/***/ 1351:
 /***/ function(module, exports, __webpack_require__) {
 
-	var keys = __webpack_require__(1324);
+	var keys = __webpack_require__(1313);
 
 	/** Used for native method references. */
 	var objectProto = Object.prototype;
@@ -14362,11 +14390,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1363:
+/***/ 1352:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isLength = __webpack_require__(1333),
-	    isObjectLike = __webpack_require__(1329);
+	var isLength = __webpack_require__(1322),
+	    isObjectLike = __webpack_require__(1318);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -14443,10 +14471,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1364:
+/***/ 1353:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(1328);
+	var isObject = __webpack_require__(1317);
 
 	/**
 	 * Converts `value` to an object if it's not one.
@@ -14464,11 +14492,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1365:
+/***/ 1354:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isStrictComparable = __webpack_require__(1366),
-	    pairs = __webpack_require__(1367);
+	var isStrictComparable = __webpack_require__(1355),
+	    pairs = __webpack_require__(1356);
 
 	/**
 	 * Gets the propery names, values, and compare flags of `object`.
@@ -14492,10 +14520,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1366:
+/***/ 1355:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(1328);
+	var isObject = __webpack_require__(1317);
 
 	/**
 	 * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -14514,11 +14542,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1367:
+/***/ 1356:
 /***/ function(module, exports, __webpack_require__) {
 
-	var keys = __webpack_require__(1324),
-	    toObject = __webpack_require__(1364);
+	var keys = __webpack_require__(1313),
+	    toObject = __webpack_require__(1353);
 
 	/**
 	 * Creates a two dimensional array of the key-value pairs for `object`,
@@ -14554,18 +14582,18 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1368:
+/***/ 1357:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(1369),
-	    baseIsEqual = __webpack_require__(1357),
-	    baseSlice = __webpack_require__(1370),
-	    isArray = __webpack_require__(1336),
-	    isKey = __webpack_require__(1371),
-	    isStrictComparable = __webpack_require__(1366),
-	    last = __webpack_require__(1372),
-	    toObject = __webpack_require__(1364),
-	    toPath = __webpack_require__(1373);
+	var baseGet = __webpack_require__(1358),
+	    baseIsEqual = __webpack_require__(1346),
+	    baseSlice = __webpack_require__(1359),
+	    isArray = __webpack_require__(1325),
+	    isKey = __webpack_require__(1360),
+	    isStrictComparable = __webpack_require__(1355),
+	    last = __webpack_require__(1361),
+	    toObject = __webpack_require__(1353),
+	    toPath = __webpack_require__(1362);
 
 	/**
 	 * The base implementation of `_.matchesProperty` which does not clone `srcValue`.
@@ -14606,10 +14634,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1369:
+/***/ 1358:
 /***/ function(module, exports, __webpack_require__) {
 
-	var toObject = __webpack_require__(1364);
+	var toObject = __webpack_require__(1353);
 
 	/**
 	 * The base implementation of `get` without support for string paths
@@ -14642,7 +14670,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1370:
+/***/ 1359:
 /***/ function(module, exports) {
 
 	/**
@@ -14681,11 +14709,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1371:
+/***/ 1360:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(1336),
-	    toObject = __webpack_require__(1364);
+	var isArray = __webpack_require__(1325),
+	    toObject = __webpack_require__(1353);
 
 	/** Used to match property names within property paths. */
 	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\n\\]|\\.)*?\1)\]/,
@@ -14716,7 +14744,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1372:
+/***/ 1361:
 /***/ function(module, exports) {
 
 	/**
@@ -14742,11 +14770,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1373:
+/***/ 1362:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseToString = __webpack_require__(1374),
-	    isArray = __webpack_require__(1336);
+	var baseToString = __webpack_require__(1363),
+	    isArray = __webpack_require__(1325);
 
 	/** Used to match property names within property paths. */
 	var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
@@ -14777,7 +14805,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1374:
+/***/ 1363:
 /***/ function(module, exports) {
 
 	/**
@@ -14797,12 +14825,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1375:
+/***/ 1364:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseProperty = __webpack_require__(1332),
-	    basePropertyDeep = __webpack_require__(1376),
-	    isKey = __webpack_require__(1371);
+	var baseProperty = __webpack_require__(1321),
+	    basePropertyDeep = __webpack_require__(1365),
+	    isKey = __webpack_require__(1360);
 
 	/**
 	 * Creates a function that returns the property value at `path` on a
@@ -14835,11 +14863,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1376:
+/***/ 1365:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(1369),
-	    toPath = __webpack_require__(1373);
+	var baseGet = __webpack_require__(1358),
+	    toPath = __webpack_require__(1362);
 
 	/**
 	 * A specialized version of `baseProperty` which supports deep paths.
@@ -14861,11 +14889,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1377:
+/***/ 1366:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseEach = __webpack_require__(1378),
-	    isArrayLike = __webpack_require__(1330);
+	var baseEach = __webpack_require__(1367),
+	    isArrayLike = __webpack_require__(1319);
 
 	/**
 	 * The base implementation of `_.map` without support for callback shorthands
@@ -14891,11 +14919,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1378:
+/***/ 1367:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(1379),
-	    createBaseEach = __webpack_require__(1382);
+	var baseForOwn = __webpack_require__(1368),
+	    createBaseEach = __webpack_require__(1371);
 
 	/**
 	 * The base implementation of `_.forEach` without support for callback
@@ -14913,11 +14941,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1379:
+/***/ 1368:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(1380),
-	    keys = __webpack_require__(1324);
+	var baseFor = __webpack_require__(1369),
+	    keys = __webpack_require__(1313);
 
 	/**
 	 * The base implementation of `_.forOwn` without support for callback
@@ -14937,10 +14965,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1380:
+/***/ 1369:
 /***/ function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(1381);
+	var createBaseFor = __webpack_require__(1370);
 
 	/**
 	 * The base implementation of `baseForIn` and `baseForOwn` which iterates
@@ -14961,10 +14989,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1381:
+/***/ 1370:
 /***/ function(module, exports, __webpack_require__) {
 
-	var toObject = __webpack_require__(1364);
+	var toObject = __webpack_require__(1353);
 
 	/**
 	 * Creates a base function for `_.forIn` or `_.forInRight`.
@@ -14995,12 +15023,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1382:
+/***/ 1371:
 /***/ function(module, exports, __webpack_require__) {
 
-	var getLength = __webpack_require__(1331),
-	    isLength = __webpack_require__(1333),
-	    toObject = __webpack_require__(1364);
+	var getLength = __webpack_require__(1320),
+	    isLength = __webpack_require__(1322),
+	    toObject = __webpack_require__(1353);
 
 	/**
 	 * Creates a `baseEach` or `baseEachRight` function.
@@ -15033,7 +15061,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1383:
+/***/ 1372:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15050,11 +15078,11 @@ webpackJsonp([1],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _moment = __webpack_require__(1130);
+	var _moment = __webpack_require__(1124);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _dataLayout = __webpack_require__(1321);
+	var _dataLayout = __webpack_require__(1310);
 
 	var _dataLayout2 = _interopRequireDefault(_dataLayout);
 
@@ -15113,7 +15141,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1384:
+/***/ 1373:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15128,23 +15156,23 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _event = __webpack_require__(1385);
+	var _event = __webpack_require__(1374);
 
 	var _event2 = _interopRequireDefault(_event);
 
-	var _tinyEmitter = __webpack_require__(1386);
+	var _tinyEmitter = __webpack_require__(1375);
 
 	var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
-	var _lodashCollectionEach = __webpack_require__(1387);
+	var _lodashCollectionEach = __webpack_require__(1376);
 
 	var _lodashCollectionEach2 = _interopRequireDefault(_lodashCollectionEach);
 
-	var _lodashObjectAssign = __webpack_require__(1322);
+	var _lodashObjectAssign = __webpack_require__(1311);
 
 	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
 
-	var _lodashCollectionSortBy = __webpack_require__(1391);
+	var _lodashCollectionSortBy = __webpack_require__(1380);
 
 	var _lodashCollectionSortBy2 = _interopRequireDefault(_lodashCollectionSortBy);
 
@@ -15191,6 +15219,15 @@ webpackJsonp([1],{
 	        value: function length() {
 	            return this.events.length;
 	        }
+	    }, {
+	        key: 'remove',
+	        value: function remove(event) {
+	            var index = this.events.indexOf(event);
+	            if (-1 !== index) {
+	                this.events.splice(index, 1);
+	                this.emit('change');
+	            }
+	        }
 	    }]);
 
 	    return EventsCollection;
@@ -15203,7 +15240,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1385:
+/***/ 1374:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15222,11 +15259,11 @@ webpackJsonp([1],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _lodashObjectAssign = __webpack_require__(1322);
+	var _lodashObjectAssign = __webpack_require__(1311);
 
 	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
 
-	var _tinyEmitter = __webpack_require__(1386);
+	var _tinyEmitter = __webpack_require__(1375);
 
 	var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
@@ -15241,6 +15278,9 @@ webpackJsonp([1],{
 	        this.key = EVENT_COUNTER++;
 	        if (!this.attributes.range) {
 	            throw new Error("Must provide range");
+	        }
+	        if (!this.attributes.colorIndex) {
+	            this.attributes.colorIndex = EVENT_COUNTER % 10 + 1;
 	        }
 	    }
 
@@ -15311,6 +15351,18 @@ webpackJsonp([1],{
 	        value: function end() {
 	            return this.attributes.range.end;
 	        }
+	    }, {
+	        key: 'colorIndex',
+	        value: function colorIndex() {
+	            return this.attributes.colorIndex;
+	        }
+	    }, {
+	        key: 'remove',
+	        value: function remove() {
+	            this.collection.remove(this);
+	            this.isDeleted = true;
+	            this.emit('change');
+	        }
 	    }]);
 
 	    return Event;
@@ -15323,7 +15375,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1386:
+/***/ 1375:
 /***/ function(module, exports) {
 
 	function E () {
@@ -15396,20 +15448,20 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1387:
+/***/ 1376:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1388);
+	module.exports = __webpack_require__(1377);
 
 
 /***/ },
 
-/***/ 1388:
+/***/ 1377:
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayEach = __webpack_require__(1389),
-	    baseEach = __webpack_require__(1378),
-	    createForEach = __webpack_require__(1390);
+	var arrayEach = __webpack_require__(1378),
+	    baseEach = __webpack_require__(1367),
+	    createForEach = __webpack_require__(1379);
 
 	/**
 	 * Iterates over elements of `collection` invoking `iteratee` for each element.
@@ -15448,7 +15500,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1389:
+/***/ 1378:
 /***/ function(module, exports) {
 
 	/**
@@ -15477,11 +15529,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1390:
+/***/ 1379:
 /***/ function(module, exports, __webpack_require__) {
 
-	var bindCallback = __webpack_require__(1342),
-	    isArray = __webpack_require__(1336);
+	var bindCallback = __webpack_require__(1331),
+	    isArray = __webpack_require__(1325);
 
 	/**
 	 * Creates a function for `_.forEach` or `_.forEachRight`.
@@ -15504,14 +15556,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1391:
+/***/ 1380:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCallback = __webpack_require__(1354),
-	    baseMap = __webpack_require__(1377),
-	    baseSortBy = __webpack_require__(1392),
-	    compareAscending = __webpack_require__(1393),
-	    isIterateeCall = __webpack_require__(1344);
+	var baseCallback = __webpack_require__(1343),
+	    baseMap = __webpack_require__(1366),
+	    baseSortBy = __webpack_require__(1381),
+	    compareAscending = __webpack_require__(1382),
+	    isIterateeCall = __webpack_require__(1333);
 
 	/**
 	 * Creates an array of elements, sorted in ascending order by the results of
@@ -15582,7 +15634,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1392:
+/***/ 1381:
 /***/ function(module, exports) {
 
 	/**
@@ -15610,10 +15662,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1393:
+/***/ 1382:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCompareAscending = __webpack_require__(1394);
+	var baseCompareAscending = __webpack_require__(1383);
 
 	/**
 	 * Used by `_.sortBy` to compare transformed elements of a collection and stable
@@ -15633,7 +15685,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1394:
+/***/ 1383:
 /***/ function(module, exports) {
 
 	/**
@@ -15674,7 +15726,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1395:
+/***/ 1384:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "calendar.scss"
