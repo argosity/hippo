@@ -2,7 +2,7 @@ class Lanes.Models.Query.CollectionResult
 
     constructor: (@query) ->
         @collection.on('add remove reset', =>
-            @query.trigger('change')
+            @query.trigger('change', @query)
         )
         this
 
