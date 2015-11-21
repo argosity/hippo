@@ -41,8 +41,9 @@ ProxyMethods = {
             return null
     dataForSave: (options = {}) -> @serialize(options)
     isPersistent: -> false
-    api_path: -> @_proxied_model::api_path()
-    getId: -> undefined
+    api_path:     -> @_proxied_model::api_path()
+    getId:        -> @_proxied_options.parent[@_proxied_config.association_pk]
+    isNew:        -> _.isBlank(@getId())
 
     on: (ev, rest...) ->
         rememberEvents( @_proxied_events ||= {}, ev, rest )
@@ -95,18 +96,23 @@ Lanes.Models.AssocationProxy = {
         AssociationProxy = (parent, options) ->
             @_proxied_parent  = parent
             @_proxied_options = options
+            @_proxied_config  = config
             undefined
 
 
         _.extend(AssociationProxy.prototype, ProxyMethods)
+
+        AssociationProxy.Collection = klass.Collection
 
         AssociationProxy::_proxied_model = klass
 
         definedProps = {
             isProxy: { value: true, enumerable: true, writable: false }
         }
-
         if klass::associations?
+            definedProps.associations =
+                enumerable: true
+                get: -> klass::associations
             for name, definition of klass::associations?.definitions
                 definedProps[name] = @associationDefinition(name, definition, config)
 

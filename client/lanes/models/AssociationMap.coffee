@@ -24,12 +24,15 @@ class Lanes.Models.AssocationMap
     getProxyFor: (name) ->
         @proxy[name] ||= (
             Lanes.Models.AssocationProxy.construct( @getClassFor(name),
+                association_pk: @pk(name)
                 association_name: name
             )
         )
 
     replaceProxy: (name, model, options) ->
         options.parent._cache[name] = model
+        options.parent.trigger("change", options.parent, {})
+        options.parent.trigger("change:#{name}", model, {})
 
     getOptions: (name, model) ->
         definition = @definitions[name]
@@ -109,19 +112,21 @@ class Lanes.Models.AssocationMap
         for name, value of data
             # we're done if we're not setting the association to anything
             # and it's not yet created
-            continue if not @exists(name) or (_.isEmpty(value) and not @isCreated(model, name))
+            continue if not @exists(name) or
+                (_.isEmpty(value) and not @isCreated(model, name))
 
             association = model[name]
 
             if association.isProxy
                 association.replaceWithModel(value, association_name: name)
+
             else if Lanes.u.isModel(association)
                 continue if association is value
 
                 if !value
                     association.clear()
                 else
-                    model.set(this.pk(name), value.id) if value.id
+                    model.set(this.pk(name), value.id, options) if value.id
                     if Lanes.u.isModel(value)
                         association.copyFrom( value )
                     else
@@ -131,7 +136,7 @@ class Lanes.Models.AssocationMap
                 if options?.silent isnt true
                     model.trigger("change:#{name}", value, {})
             else
-                if value then association[fn_name]( value ) else association.clear()
+                if value then association[fn_name]( value, options ) else association.clear()
 
     pk: (name) ->
         def = @definitions[name]
@@ -161,15 +166,19 @@ class Lanes.Models.AssocationMap
         ret = {}
         options.depth ||= 1
         return ret if options.depth > 5
-        for name, opts of @definitions when @isCreated(model, name)
-            ret[name] = model[name].serialize(options)
+        for name, opts of @definitions
+            if @isCreated(model, name) and name isnt 'parent'
+                ret[name] = model[name].serialize(options)
         ret
 
     # return a list of assocations from "name" that are not loaded
     nonLoaded: (model, names) ->
         list = []
         for name in names
-            if @exists(name) && (Lanes.u.isCollection(model[name]) || model[name].isNew())
+            if @exists(name) &&
+                (Lanes.u.isCollection(model[name]) ||
+                    model[name].isProxy ||
+                    model[name].isNew())
                 list.push(name)
         list
 
