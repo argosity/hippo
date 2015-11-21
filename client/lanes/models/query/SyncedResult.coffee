@@ -13,7 +13,7 @@ class Page
             fields: _.pluck( @result.query.fields.where(query: true), 'id')
         }
 
-        _.extend(options, Lanes.u.invokeOrReturn(@result.query.syncOptions))
+        _.extend(options, _.omit(@result.query.syncOptions, 'include'))
 
         @pendingLoad = Lanes.Models.Sync.perform('GET', options).then (resp) =>
             @result.total = resp.total
