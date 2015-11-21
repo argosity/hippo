@@ -40,10 +40,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     getCurrentModel: ->
         value = @model[@props.name]
         return null unless value
-
         if not @props.multi and Lanes.u.isModel(value) and not value.isNew()
-            pk = @model.associations.pk(@props.name)
-            id = @model[pk]
+            id = @model[@props.name].getId()
             if id
                 @collection.getOrFetch(id,
                     _.extend({}, Lanes.u.invokeOrReturn(@props.syncOptions)))
@@ -76,7 +74,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         if @state.isOpen
             labelField = @props.labelField
             rows = @collection.map (model) ->
-                {id: model.id, label: _.result(model, labelField)}
+                {id: model.getId(), label: _.result(model, labelField)}
             if @props.includeBlankRow
                 rows.unshift @blankRecord()
             if _.isEmpty(rows) then [@getCurrentSelection()] else rows
