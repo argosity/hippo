@@ -96,8 +96,13 @@ class BaseModel
     clone: ->
         new @constructor(@attributes)
 
+    attributeType: (name) ->
+        @_definition[name].type
+
     serialize: (options = {}) ->
         options.depth ||= 1
+        options.depth += 1
+        return if options.depth > 5
         _.extend(super,
             this.associations?.serialize(this, options)
         )
@@ -177,7 +182,7 @@ class BaseModel
     unsavedAttributes: ->
         attrs = {}
         _.extend(attrs, _.pick( this.getAttributes(props:true, true),
-            @changeMonitor.changedAttributes() ) )
+            @changeMonitor?.changedAttributes() || {} ) )
         attrs
 
     # returns data to save to server.  If options.saveAll is true,
