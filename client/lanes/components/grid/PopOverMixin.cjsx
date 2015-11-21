@@ -18,8 +18,9 @@ Lanes.Components.Grid.PopoverMixin = {
         <div className="editor po">
             <BS.Popover
                 {...props}
-                positionTop={@topOffset() - 100}
-                arrowOffsetTop={100 + @props.rowHeight / 2}
+                id="editing-form"
+                positionTop={-120}
+                arrowOffsetTop={135}
                 title = "Edit #{@model.name || 'Record'}"
             >
                 {@renderEditingBody()}
