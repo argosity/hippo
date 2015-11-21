@@ -4,6 +4,8 @@ module Lanes
     module Command
 
         class GenerateModel < NamedCommand
+            include MigrationSupport
+
             RESERVED_YAML_KEYWORDS = %w(y yes n no true false on off null)
             OPTIONS ||= {
                 timestamps: true,
@@ -23,11 +25,8 @@ module Lanes
                 @table_name = prefix ? "#{prefix}_#{name.tableize}" : name.tableize
             end
 
-            def create_migration
-                migration = exising_migration ||
-                  migration_timestamp + "_create_#{table_name}.rb"
-                self.fields = fields.map{ |field| ModelAttribute.parse(field) }
-                template "db/create_table_migration.rb", "db/migrate/#{migration}"
+            def generate_migration
+                create_migration
             end
 
             def create_model
@@ -58,19 +57,6 @@ module Lanes
             end
 
           private
-
-            def fields_with_index
-                fields.select { |a| !a.reference? && a.has_index? }
-            end
-
-            def exising_migration
-                migrations = Pathname.glob("#{destination_root}/db/migrate/[0-9]*_create_#{table_name}.rb")
-                migrations.any? ? migrations.first.basename.to_s : nil
-            end
-
-            def migration_timestamp
-                ENV['MIGRATION_TIMESTAMP'] || Time.now.utc.strftime("%Y%m%d%H%M%S")
-            end
 
             def computed_namespace
                 # find a file and directory with the same basename
