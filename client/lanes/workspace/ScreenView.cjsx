@@ -1,8 +1,7 @@
 Screen = React.createClass
-
+    displayName: 'Screen'
     shouldComponentUpdate: ->
         false
-
     render: ->
         React.createElement(@props.screen.component(), @props.screen.props)
 
