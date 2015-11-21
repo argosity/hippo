@@ -5,6 +5,7 @@
 ##= require ./CellStyles
 ##= require ./Header
 ##= require ./Body
+##= require ./Selections
 
 class Lanes.Components.Grid extends Lanes.React.Component
 
