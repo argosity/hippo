@@ -16,7 +16,7 @@ class Lanes.Components.Grid.Toolbar extends Lanes.React.BaseComponent
         </BS.Button>
 
     render: ->
-        return null if false == @props.commands?.isEditing()
+        return null if false == @props.commands?.isEditing() or not @props.allowCreate
 
         props = _.extend {}, @props,
         <Lanes.Components.Grid.Toolbar key="toolbar" {...props} />
