@@ -39,6 +39,15 @@ CommonMethods = {
     clone: ->
         new @constructor( @invoke( 'clone' ), @options )
 
+    serialize: (options = {depth: 1}) ->
+        options.depth += 1
+        this.map (model) ->
+            if model.serialize
+                model.serialize(options)
+            else
+                out = _.extend({}, model)
+                delete out.collection
+                out
 }
 
 class ModelsCollection
@@ -186,10 +195,13 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
         super
 
     _prepareModel: (attrs, options = {}) ->
-        _.extend(attrs, @associationFilter) if @associationFilter
+        if @associationFilter
+#            needsReset =  _.isEmpty(attrs)
+            _.extend(attrs, @associationFilter)
         model = super
         if @options.inverse_name
-            model.set(@options.inverse_name, this.parent)
+            model.set(@options.inverse_name, this.parent, options)
+#        model.changeMonitor.reset() if needsReset
         model
 
     fetch: (options) ->
