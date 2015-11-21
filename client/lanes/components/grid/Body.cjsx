@@ -10,14 +10,17 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
     onEditCancel: (model) ->
         if model.isNew()
             @props.query.results.removeRow(@state.selectedIndex)
-            this.refs.grid.data.splice(0, 1)
         this.hideEditor()
 
     hideEditor: ->
-        @setState(selectedIndex: null, selectedModel: null)
+        # BUG? Without the defer, render is called with old state
+        _.defer => @setState(selectedIndex: null, selectedModel: null)
 
-    onEditSave: (model) ->
-        @props.query.results.saveModelChanges(model, @state.selectedIndex)
+    onEditSave: (model, isDeleted = false) ->
+        if (isDeleted)
+            @props.query.results.removeRow(@state.selectedIndex)
+        else
+            @props.query.results.saveModelChanges(model, @state.selectedIndex)
         this.hideEditor()
 
     componentWillReceiveProps: (nextProps) ->
@@ -70,15 +73,14 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         results = @props.query.results
         row = results.rowRepresentation(rowNum)
         for field, index in @props.query.fields.models when field.visible
-            fields.push @renderColumn(rowNum, index, field, results)
+            fields.push @renderColumn(rowNum, index, field, results, row)
 
         onClick = _.partial(@onRowClick, _, row, rowNum)
         <div key={rowNum} ref={ref} className="r" onClick={onClick} >
             {fields}
         </div>
 
-    Editor: ->
-        return null unless @isEditing()
+    renderEditor: ->
         editor = if true == @props.editor
             Lanes.Components.Grid.RowEditor
         else
@@ -102,7 +104,7 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
 
     render: ->
         <div className={_.classnames('grid-body', 'is-editing': @isEditing())}>
-            <@Editor />
+            {@renderEditor() if @isEditing()}
             <Lanes.Vendor.List
                 useTranslate3d={true}
                 isEditing={!!@state.selectedModel}
