@@ -6,7 +6,7 @@ webpackJsonp([1],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.Dayz = __webpack_require__(1309);
+	Lanes.Vendor.Dayz = __webpack_require__(1309).default;
 
 	__webpack_require__(1384);
 
