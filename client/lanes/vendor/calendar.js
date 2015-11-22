@@ -6,7 +6,7 @@ webpackJsonp([1],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.Dayz = __webpack_require__(1309).default;
+	Lanes.Vendor.Dayz = __webpack_require__(1309);
 
 	__webpack_require__(1384);
 
@@ -11965,10 +11965,6 @@ webpackJsonp([1],{
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
 	var _react = __webpack_require__(67);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -12098,7 +12094,7 @@ webpackJsonp([1],{
 
 	Dayz.EventsCollection = _eventsCollection2.default;
 
-	exports.default = Dayz;
+	module.exports = Dayz;
 
 /***/ },
 
