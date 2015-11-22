@@ -24,7 +24,7 @@ class Lanes.Workspace.ScreenView extends Lanes.React.Component
 
     renderLoading: ->
         screen = Lanes.Screens.Definitions.all.findWhere(loading: true)
-        <LC.NetworkActivityOverlay isRequesting message="Loading #{screen.title}…" />
+        <LC.NetworkActivityOverlay forceOn model={screen} message="Loading #{screen.title}…" />
 
     render: ->
         <div className={"page-content #{@context.uistate.layout_size}"}>
