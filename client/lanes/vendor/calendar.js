@@ -11963,13 +11963,11 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
 	var _react = __webpack_require__(67);
 
@@ -11979,9 +11977,9 @@ webpackJsonp([1],{
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _dataLayout = __webpack_require__(1310);
+	var _layout = __webpack_require__(1310);
 
-	var _dataLayout2 = _interopRequireDefault(_dataLayout);
+	var _layout2 = _interopRequireDefault(_layout);
 
 	var _day = __webpack_require__(1337);
 
@@ -11999,27 +11997,27 @@ webpackJsonp([1],{
 
 	var _yLabels2 = _interopRequireDefault(_yLabels);
 
-	// needed in order to for range to install itself
+	var _eventsCollection = __webpack_require__(1373);
 
-	var _dataEventsCollection = __webpack_require__(1373);
+	var _eventsCollection2 = _interopRequireDefault(_eventsCollection);
 
-	var _dataEventsCollection2 = _interopRequireDefault(_dataEventsCollection);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(1301);
+	__webpack_require__(1301); // needed in order to for range to install itself
 
-	var Dayz = _react2['default'].createClass({
+	var Dayz = _react2.default.createClass({
 	    displayName: 'Dayz',
 
 	    propTypes: {
-	        editComponent: _react2['default'].PropTypes.func,
-	        display: _react2['default'].PropTypes.oneOf(['month', 'week', 'day']),
-	        date: _react2['default'].PropTypes.object.isRequired,
-	        displayHours: _react2['default'].PropTypes.array,
-	        events: _react2['default'].PropTypes.instanceOf(_dataEventsCollection2['default']),
-	        onDayClick: _react2['default'].PropTypes.func,
-	        onDayDoubleClick: _react2['default'].PropTypes.func,
-	        onEventClick: _react2['default'].PropTypes.func,
-	        onEventResize: _react2['default'].PropTypes.func
+	        editComponent: _react2.default.PropTypes.func,
+	        display: _react2.default.PropTypes.oneOf(['month', 'week', 'day']),
+	        date: _react2.default.PropTypes.object.isRequired,
+	        displayHours: _react2.default.PropTypes.array,
+	        events: _react2.default.PropTypes.instanceOf(_eventsCollection2.default),
+	        onDayClick: _react2.default.PropTypes.func,
+	        onDayDoubleClick: _react2.default.PropTypes.func,
+	        onEventClick: _react2.default.PropTypes.func,
+	        onEventResize: _react2.default.PropTypes.func
 	    },
 
 	    getDefaultProps: function getDefaultProps() {
@@ -12027,31 +12025,25 @@ webpackJsonp([1],{
 	            display: 'month'
 	        };
 	    },
-
 	    componentWillMount: function componentWillMount() {
 	        this.calculateLayout(this.props);
 	    },
-
 	    componentWillUnmount: function componentWillUnmount() {
 	        this.detachEventBindings();
 	    },
-
 	    detachEventBindings: function detachEventBindings() {
 	        if (this.props.events) {
 	            this.props.events.off('change', this.onEventAdd);
 	        }
 	    },
-
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	        this.calculateLayout(nextProps);
 	    },
-
 	    onEventsChange: function onEventsChange() {
 	        this.calculateLayout(this.props);
 	    },
-
 	    calculateLayout: function calculateLayout(props) {
-	        var range = _moment2['default'].range(props.date.clone().startOf(props.display), props.date.clone().endOf(props.display));
+	        var range = _moment2.default.range(props.date.clone().startOf(props.display), props.date.clone().endOf(props.display));
 	        if (props.events) {
 	            this.detachEventBindings();
 	            props.events.on('change', this.onEventsChange, this);
@@ -12061,18 +12053,17 @@ webpackJsonp([1],{
 	            range.end.add(6 - range.end.weekday(), 'days');
 	        }
 
-	        var layout = new _dataLayout2['default'](_extends({}, props, { range: range }));
+	        var layout = new _layout2.default(_extends({}, props, { range: range }));
 
 	        this.setState({ range: range, layout: layout });
 	    },
-
 	    render: function render() {
 	        var _this = this;
 
 	        var classes = ["dayz", this.props.display];
 	        var days = [];
 	        this.state.range.by('days', function (day) {
-	            return days.push(_react2['default'].createElement(_day2['default'], { key: day.format('YYYYMMDD'),
+	            return days.push(_react2.default.createElement(_day2.default, { key: day.format('YYYYMMDD'),
 	                day: day,
 	                layout: _this.state.layout,
 	                editComponent: _this.props.editComponent,
@@ -12083,19 +12074,19 @@ webpackJsonp([1],{
 
 	            }));
 	        });
-	        return _react2['default'].createElement(
+	        return _react2.default.createElement(
 	            'div',
 	            { className: classes.join(' ') },
-	            _react2['default'].createElement(_xLabels2['default'], { date: this.props.date, display: this.props.display }),
-	            _react2['default'].createElement(
+	            _react2.default.createElement(_xLabels2.default, { date: this.props.date, display: this.props.display }),
+	            _react2.default.createElement(
 	                'div',
 	                { className: 'body' },
-	                _react2['default'].createElement(_yLabels2['default'], {
+	                _react2.default.createElement(_yLabels2.default, {
 	                    layout: this.state.layout,
 	                    display: this.props.display,
 	                    date: this.props.date
 	                }),
-	                _react2['default'].createElement(
+	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'days' },
 	                    days
@@ -12103,13 +12094,11 @@ webpackJsonp([1],{
 	            )
 	        );
 	    }
-
 	});
 
-	Dayz.EventsCollection = _dataEventsCollection2['default'];
+	Dayz.EventsCollection = _eventsCollection2.default;
 
-	exports['default'] = Dayz;
-	module.exports = exports['default'];
+	exports.default = Dayz;
 
 /***/ },
 
@@ -12118,23 +12107,19 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	var _moment = __webpack_require__(1124);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _lodashObjectAssign = __webpack_require__(1311);
+	var _assign = __webpack_require__(1311);
 
-	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
+	var _assign2 = _interopRequireDefault(_assign);
 
 	var _eventLayout = __webpack_require__(1335);
 
@@ -12144,6 +12129,10 @@ webpackJsonp([1],{
 
 	var _constants2 = _interopRequireDefault(_constants);
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	function cacheKey(day) {
 	    return day.format('YYYYMMDD');
 	}
@@ -12152,7 +12141,7 @@ webpackJsonp([1],{
 	    function Layout(options) {
 	        _classCallCheck(this, Layout);
 
-	        (0, _lodashObjectAssign2['default'])(this, options);
+	        (0, _assign2.default)(this, options);
 	        this.cache = Object.create(null);
 
 	        var multiDayCount = 0;
@@ -12175,7 +12164,7 @@ webpackJsonp([1],{
 	        if (!this.isDisplayingAsMonth() && !this.displayHours) {
 	            this.displayHours = this.hourRange();
 	        } else {
-	            this.displayHours = [0, 24];
+	            this.displayHours = this.displayHours || [0, 24];
 	        }
 	    }
 
@@ -12187,7 +12176,7 @@ webpackJsonp([1],{
 	    }, {
 	        key: 'propsForAllDayEventContainer',
 	        value: function propsForAllDayEventContainer() {
-	            var style = this.multiDayCount ? { flexBasis: this.multiDayCount * _constants2['default'].eventHeight } : { display: 'none' };
+	            var style = this.multiDayCount ? { flexBasis: this.multiDayCount * _constants2.default.eventHeight } : { display: 'none' };
 	            return { className: 'all-day', style: style };
 	        }
 	    }, {
@@ -12236,8 +12225,8 @@ webpackJsonp([1],{
 	                        _iteratorError = err;
 	                    } finally {
 	                        try {
-	                            if (!_iteratorNormalCompletion && _iterator['return']) {
-	                                _iterator['return']();
+	                            if (!_iteratorNormalCompletion && _iterator.return) {
+	                                _iterator.return();
 	                            }
 	                        } finally {
 	                            if (_didIteratorError) {
@@ -12286,22 +12275,24 @@ webpackJsonp([1],{
 	        }
 
 	        // a single day is easy, just add the event to that day
+
 	    }, {
 	        key: 'addtoDaysCache',
 	        value: function addtoDaysCache(event) {
-	            var layout = new _eventLayout2['default'](this, event, this.range);
+	            var layout = new _eventLayout2.default(this, event, this.range);
 	            this.addToCache(this.range.start, layout);
 	        }
 
 	        // other layouts must break at week boundaries, with indicators if they were/are continuing
+
 	    }, {
 	        key: 'calculateSpanningLayout',
 	        value: function calculateSpanningLayout(event) {
-	            var end = _moment2['default'].min(this.range.end, event.range().end);
-	            var start = _moment2['default'].max(this.range.start, event.range().start).clone();
+	            var end = _moment2.default.min(this.range.end, event.range().end);
+	            var start = _moment2.default.max(this.range.start, event.range().start).clone();
 	            do {
-	                var range = _moment2['default'].range(start, start.clone().endOf('week'));
-	                var layout = new _eventLayout2['default'](this, event, range);
+	                var range = _moment2.default.range(start, start.clone().endOf('week'));
+	                var layout = new _eventLayout2.default(this, event, range);
 	                this.addToCache(start, layout);
 	                // go to first day of next week
 	                start.add(7 - start.day(), 'day');
@@ -12332,8 +12323,8 @@ webpackJsonp([1],{
 	                        _iteratorError2 = err;
 	                    } finally {
 	                        try {
-	                            if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-	                                _iterator2['return']();
+	                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                                _iterator2.return();
 	                            }
 	                        } finally {
 	                            if (_didIteratorError2) {
@@ -12364,8 +12355,7 @@ webpackJsonp([1],{
 	    return Layout;
 	})();
 
-	exports['default'] = Layout;
-	module.exports = exports['default'];
+	exports.default = Layout;
 
 /***/ },
 
@@ -13299,19 +13289,19 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	var _moment = __webpack_require__(1124);
 
 	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var EventLayout = (function () {
 	    function EventLayout(layout, event, displayRange) {
@@ -13323,7 +13313,7 @@ webpackJsonp([1],{
 	        this.displayRange = displayRange;
 	        this.startsBefore = event.start().isBefore(displayRange.start);
 	        this.endsAfter = event.end().isAfter(displayRange.end);
-	        var latest = _moment2['default'].min(displayRange.end, event.end());
+	        var latest = _moment2.default.min(displayRange.end, event.end());
 	        this.span = Math.max(1, Math.round(latest.diff(displayRange.start, 'day', true)));
 	    }
 
@@ -13357,17 +13347,17 @@ webpackJsonp([1],{
 	            if (this.layout.displayingAs() === 'month' || !this.event.isSingleDay()) {
 	                return {};
 	            } else {
-	                var _event$daysMinuteRange = this.event.daysMinuteRange();
+	                var _event$daysMinuteRang = this.event.daysMinuteRange();
 
-	                var start = _event$daysMinuteRange.start;
-	                var end = _event$daysMinuteRange.end;
+	                var start = _event$daysMinuteRang.start;
+	                var end = _event$daysMinuteRang.end;
 
 	                start -= this.layout.displayHours[0] * 60;
 	                end -= this.layout.displayHours[0] * 60;
 	                var inday = this.layout.minutesInDay();
-	                var _top = (start / inday * 100).toFixed(2) + '%';
+	                var top = (start / inday * 100).toFixed(2) + '%';
 	                var bottom = (100 - end / inday * 100).toFixed(2) + '%';
-	                return { top: _top, bottom: bottom };
+	                return { top: top, bottom: bottom };
 	            }
 	        }
 	    }, {
@@ -13381,16 +13371,20 @@ webpackJsonp([1],{
 	            return this.displayRange.start.format('YYYYMMDD') + this.event.key;
 	        }
 	    }, {
+	        key: 'setIsResizing',
+	        value: function setIsResizing(val) {
+	            this.isResizing = val;
+	        }
+	    }, {
 	        key: 'classNames',
 	        value: function classNames() {
 	            var classes = ['event', 'span-' + this.span, 'color-' + this.event.colorIndex()];
-
+	            if (this.isResizing) classes.push('is-resizing');
 	            if (this.startsBefore) classes.push('is-continuation');
 	            if (this.endsAfter) classes.push('is-continued');
 	            if (this.stack) classes.push('stack-' + this.stack);
 	            if (this.isEditing()) classes.push('is-editing');
 	            if (this.isResizable()) classes.push('is-resizable');
-
 	            return classes.join(' ');
 	        }
 	    }]);
@@ -13398,8 +13392,7 @@ webpackJsonp([1],{
 	    return EventLayout;
 	})();
 
-	exports['default'] = EventLayout;
-	module.exports = exports['default'];
+	exports.default = EventLayout;
 
 /***/ },
 
@@ -13411,12 +13404,11 @@ webpackJsonp([1],{
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports["default"] = {
+	exports.default = {
 
 	    eventHeight: 20 // px
 
 	};
-	module.exports = exports["default"];
 
 /***/ },
 
@@ -13425,52 +13417,51 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(67);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _dataLayout = __webpack_require__(1310);
+	var _layout = __webpack_require__(1310);
 
-	var _dataLayout2 = _interopRequireDefault(_dataLayout);
+	var _layout2 = _interopRequireDefault(_layout);
 
-	var _event2 = __webpack_require__(1338);
+	var _event = __webpack_require__(1338);
 
-	var _event3 = _interopRequireDefault(_event2);
+	var _event2 = _interopRequireDefault(_event);
 
 	var _label = __webpack_require__(1339);
 
 	var _label2 = _interopRequireDefault(_label);
 
-	var _lodashObjectAssign = __webpack_require__(1311);
+	var _assign = __webpack_require__(1311);
 
-	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
+	var _assign2 = _interopRequireDefault(_assign);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var IsDayClass = new RegExp('(\\s|^)(events|day|label)(\\s|$)');
 
-	var Day = _react2['default'].createClass({
+	var Day = _react2.default.createClass({
 	    displayName: 'Day',
 
 	    propTypes: {
-	        day: _react2['default'].PropTypes.object.isRequired,
-	        layout: _react2['default'].PropTypes.instanceOf(_dataLayout2['default']).isRequired,
-	        onClick: _react2['default'].PropTypes.func,
-	        onDoubleClick: _react2['default'].PropTypes.func,
-	        onEventClick: _react2['default'].PropTypes.func,
-	        onEventResize: _react2['default'].PropTypes.func,
-	        editComponent: _react2['default'].PropTypes.func,
-	        onEventDoubleClick: _react2['default'].PropTypes.func
+	        day: _react2.default.PropTypes.object.isRequired,
+	        layout: _react2.default.PropTypes.instanceOf(_layout2.default).isRequired,
+	        onClick: _react2.default.PropTypes.func,
+	        onDoubleClick: _react2.default.PropTypes.func,
+	        onEventClick: _react2.default.PropTypes.func,
+	        onEventResize: _react2.default.PropTypes.func,
+	        editComponent: _react2.default.PropTypes.func,
+	        onEventDoubleClick: _react2.default.PropTypes.func
 	    },
 
 	    getInitialState: function getInitialState() {
 	        return { resize: false };
 	    },
-
 	    _onClickHandler: function _onClickHandler(ev, handler) {
 	        if (!handler || !IsDayClass.test(ev.target.className)) {
 	            return;
@@ -13486,13 +13477,12 @@ webpackJsonp([1],{
 	    onDoubleClick: function onDoubleClick(ev) {
 	        this._onClickHandler(ev, this.props.onDoubleClick);
 	    },
-
 	    onDragStart: function onDragStart(resize, eventLayout) {
+	        eventLayout.setIsResizing(true);
 	        var bounds = this.refs.events.getBoundingClientRect();
-	        (0, _lodashObjectAssign2['default'])(resize, { eventLayout: eventLayout, height: bounds.height, top: bounds.top });
+	        (0, _assign2.default)(resize, { eventLayout: eventLayout, height: bounds.height, top: bounds.top });
 	        this.setState({ resize: resize });
 	    },
-
 	    onMouseMove: function onMouseMove(ev) {
 	        if (!this.state.resize) {
 	            return;
@@ -13501,13 +13491,13 @@ webpackJsonp([1],{
 	        this.state.resize.eventLayout.adjustEventTime(this.state.resize.type, coord, this.state.resize.height);
 	        this.forceUpdate();
 	    },
-
 	    onMouseUp: function onMouseUp(ev) {
 	        var _this = this;
 
 	        if (!this.state.resize) {
 	            return;
 	        }
+	        this.state.resize.eventLayout.setIsResizing(false);
 	        setTimeout(function () {
 	            return _this.setState({ resize: false });
 	        }, 1);
@@ -13515,7 +13505,6 @@ webpackJsonp([1],{
 	            this.props.onEventResize(ev, this.state.resize.eventLayout.event);
 	        }
 	    },
-
 	    render: function render() {
 	        var classes = ['day'];
 	        if (this.props.layout.isDateOutsideRange(this.props.day)) {
@@ -13532,7 +13521,7 @@ webpackJsonp([1],{
 	            for (var _iterator = this.props.layout.forDay(this.props.day)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                var layout = _step.value;
 
-	                var _event = _react2['default'].createElement(_event3['default'], {
+	                var event = _react2.default.createElement(_event2.default, {
 	                    layout: layout,
 	                    key: layout.key(),
 	                    day: this.props.day,
@@ -13541,15 +13530,15 @@ webpackJsonp([1],{
 	                    editComponent: this.props.editComponent,
 	                    onDoubleClick: this.props.onEventDoubleClick
 	                });
-	                (layout.event.isSingleDay() ? singleDayEvents : allDayEvents).push(_event);
+	                (layout.event.isSingleDay() ? singleDayEvents : allDayEvents).push(event);
 	            }
 	        } catch (err) {
 	            _didIteratorError = true;
 	            _iteratorError = err;
 	        } finally {
 	            try {
-	                if (!_iteratorNormalCompletion && _iterator['return']) {
-	                    _iterator['return']();
+	                if (!_iteratorNormalCompletion && _iterator.return) {
+	                    _iterator.return();
 	                }
 	            } finally {
 	                if (_didIteratorError) {
@@ -13558,24 +13547,24 @@ webpackJsonp([1],{
 	            }
 	        }
 
-	        return _react2['default'].createElement(
+	        return _react2.default.createElement(
 	            'div',
 	            {
 	                onClick: this.onClick,
 	                className: classes.join(' '),
 	                onDoubleClick: this.onDoubleClick
 	            },
-	            _react2['default'].createElement(
-	                _label2['default'],
+	            _react2.default.createElement(
+	                _label2.default,
 	                { day: this.props.day, className: 'label' },
 	                this.props.day.format('D')
 	            ),
-	            _react2['default'].createElement(
+	            _react2.default.createElement(
 	                'div',
 	                this.props.layout.propsForAllDayEventContainer(),
 	                allDayEvents
 	            ),
-	            _react2['default'].createElement(
+	            _react2.default.createElement(
 	                'div',
 	                { ref: 'events',
 	                    className: 'events',
@@ -13586,11 +13575,9 @@ webpackJsonp([1],{
 	            )
 	        );
 	    }
-
 	});
 
-	exports['default'] = Day;
-	module.exports = exports['default'];
+	exports.default = Day;
 
 /***/ },
 
@@ -13599,30 +13586,30 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(67);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _dataEventLayout = __webpack_require__(1335);
+	var _eventLayout = __webpack_require__(1335);
 
-	var _dataEventLayout2 = _interopRequireDefault(_dataEventLayout);
+	var _eventLayout2 = _interopRequireDefault(_eventLayout);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var IsResizeClass = new RegExp('(\\s|^)event(\\s|$)');
 
-	var Event = _react2['default'].createClass({
+	var Event = _react2.default.createClass({
 	    displayName: 'Event',
 
 	    propTypes: {
-	        layout: _react2['default'].PropTypes.instanceOf(_dataEventLayout2['default']),
-	        editComponent: _react2['default'].PropTypes.func,
-	        onClick: _react2['default'].PropTypes.func,
-	        onDoubleClick: _react2['default'].PropTypes.func
+	        layout: _react2.default.PropTypes.instanceOf(_eventLayout2.default),
+	        editComponent: _react2.default.PropTypes.func,
+	        onClick: _react2.default.PropTypes.func,
+	        onDoubleClick: _react2.default.PropTypes.func
 	    },
 
 	    onClick: function onClick(ev) {
@@ -13632,7 +13619,6 @@ webpackJsonp([1],{
 	        this.props.onClick(ev, this.props.layout.event);
 	        ev.stopPropagation();
 	    },
-
 	    onDoubleClick: function onDoubleClick(ev) {
 	        if (!this.props.onDoubleClick) {
 	            return;
@@ -13640,7 +13626,6 @@ webpackJsonp([1],{
 	        this.props.onDoubleClick(ev, this.props.layout.event);
 	        ev.stopPropagation();
 	    },
-
 	    onDragStart: function onDragStart(ev) {
 	        if (!IsResizeClass.test(ev.target.className)) {
 	            return;
@@ -13656,18 +13641,13 @@ webpackJsonp([1],{
 	        }
 	        this.props.onDragStart(resize, this.props.layout);
 	    },
-
-	    onDragStop: function onDragStop() {
-	        this.setState({ resize: false });
-	    },
-
 	    render: function render() {
 
 	        var edit = undefined;
 	        if (this.props.layout.isEditing()) {
-	            edit = _react2['default'].createElement(this.props.editComponent, { parent: this, event: this.props.layout.event });
+	            edit = _react2.default.createElement(this.props.editComponent, { parent: this, event: this.props.layout.event });
 	        }
-	        return _react2['default'].createElement(
+	        return _react2.default.createElement(
 	            'div',
 	            {
 	                ref: 'element',
@@ -13675,7 +13655,7 @@ webpackJsonp([1],{
 	                style: this.props.layout.inlineStyles(),
 	                className: this.props.layout.classNames()
 	            },
-	            _react2['default'].createElement(
+	            _react2.default.createElement(
 	                'div',
 	                { className: 'evbody', onClick: this.onClick },
 	                this.props.layout.event.render()
@@ -13683,11 +13663,9 @@ webpackJsonp([1],{
 	            edit
 	        );
 	    }
-
 	});
 
-	exports['default'] = Event;
-	module.exports = exports['default'];
+	exports.default = Event;
 
 /***/ },
 
@@ -13696,35 +13674,33 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(67);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var Label = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Label = _react2.default.createClass({
 	    displayName: 'Label',
 
 	    propTypes: {
-	        day: _react2['default'].PropTypes.object.isRequired
+	        day: _react2.default.PropTypes.object.isRequired
 	    },
 
 	    render: function render() {
-	        return _react2['default'].createElement(
+	        return _react2.default.createElement(
 	            'div',
 	            { className: 'label' },
 	            this.props.day.format('D')
 	        );
 	    }
-
 	});
 
-	exports['default'] = Label;
-	module.exports = exports['default'];
+	exports.default = Label;
 
 /***/ },
 
@@ -13733,26 +13709,26 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(67);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _lodashCollectionMap = __webpack_require__(1341);
+	var _map = __webpack_require__(1341);
 
-	var _lodashCollectionMap2 = _interopRequireDefault(_lodashCollectionMap);
+	var _map2 = _interopRequireDefault(_map);
 
-	var XLabels = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var XLabels = _react2.default.createClass({
 	    displayName: 'XLabels',
 
 	    propTypes: {
-	        display: _react2['default'].PropTypes.oneOf(['month', 'week', 'day']),
-	        date: _react2['default'].PropTypes.object.isRequired
+	        display: _react2.default.PropTypes.oneOf(['month', 'week', 'day']),
+	        date: _react2.default.PropTypes.object.isRequired
 	    },
 
 	    render: function render() {
@@ -13766,25 +13742,23 @@ webpackJsonp([1],{
 	            }
 	        }
 	        var format = this.props.display === 'month' ? 'dddd' : 'ddd, MMM Do';
-	        var labels = (0, _lodashCollectionMap2['default'])(days, function (day) {
-	            return _react2['default'].createElement(
+	        var labels = (0, _map2.default)(days, function (day) {
+	            return _react2.default.createElement(
 	                'div',
 	                { key: day.format('YYYYMMDD'), className: 'day-label' },
 	                day.format(format)
 	            );
 	        });
 
-	        return _react2['default'].createElement(
+	        return _react2.default.createElement(
 	            'div',
 	            { className: 'x-labels' },
 	            labels
 	        );
 	    }
-
 	});
 
-	exports['default'] = XLabels;
-	module.exports = exports['default'];
+	exports.default = XLabels;
 
 /***/ },
 
@@ -15066,13 +15040,11 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
+
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(67);
 
@@ -15082,17 +15054,19 @@ webpackJsonp([1],{
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _dataLayout = __webpack_require__(1310);
+	var _layout = __webpack_require__(1310);
 
-	var _dataLayout2 = _interopRequireDefault(_dataLayout);
+	var _layout2 = _interopRequireDefault(_layout);
 
-	var YLabels = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var YLabels = _react2.default.createClass({
 	    displayName: 'YLabels',
 
 	    propTypes: {
-	        display: _react2['default'].PropTypes.oneOf(['month', 'week', 'day']),
-	        date: _react2['default'].PropTypes.object.isRequired,
-	        layout: _react2['default'].PropTypes.instanceOf(_dataLayout2['default']).isRequired
+	        display: _react2.default.PropTypes.oneOf(['month', 'week', 'day']),
+	        date: _react2.default.PropTypes.object.isRequired,
+	        layout: _react2.default.PropTypes.instanceOf(_layout2.default).isRequired
 	    },
 
 	    render: function render() {
@@ -15100,32 +15074,32 @@ webpackJsonp([1],{
 	            return null;
 	        }
 
-	        var day = (0, _moment2['default'])();
+	        var day = (0, _moment2.default)();
 	        var labels = [];
 
-	        var _props$layout$displayHours = _slicedToArray(this.props.layout.displayHours, 2);
+	        var _props$layout$display = _slicedToArray(this.props.layout.displayHours, 2);
 
-	        var start = _props$layout$displayHours[0];
-	        var end = _props$layout$displayHours[1];
+	        var start = _props$layout$display[0];
+	        var end = _props$layout$display[1];
 
 	        for (var hour = start; hour <= end; hour++) {
 	            day.hour(hour);
-	            labels.push(_react2['default'].createElement(
+	            labels.push(_react2.default.createElement(
 	                'div',
 	                { key: hour, className: 'hour' },
 	                day.format('ha')
 	            ));
 	        }
-	        var multiDay = _react2['default'].createElement(
+	        var multiDay = _react2.default.createElement(
 	            'div',
 	            this.props.layout.propsForAllDayEventContainer(),
 	            'All Day'
 	        );
 
-	        return _react2['default'].createElement(
+	        return _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2['default'].createElement(
+	            _react2.default.createElement(
 	                'div',
 	                { className: 'y-labels' },
 	                multiDay,
@@ -15133,11 +15107,9 @@ webpackJsonp([1],{
 	            )
 	        );
 	    }
-
 	});
 
-	exports['default'] = YLabels;
-	module.exports = exports['default'];
+	exports.default = YLabels;
 
 /***/ },
 
@@ -15146,15 +15118,11 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	var _event = __webpack_require__(1374);
 
@@ -15164,36 +15132,34 @@ webpackJsonp([1],{
 
 	var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
-	var _lodashCollectionEach = __webpack_require__(1376);
+	var _each2 = __webpack_require__(1376);
 
-	var _lodashCollectionEach2 = _interopRequireDefault(_lodashCollectionEach);
+	var _each3 = _interopRequireDefault(_each2);
 
-	var _lodashObjectAssign = __webpack_require__(1311);
+	var _assign = __webpack_require__(1311);
 
-	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
+	var _assign2 = _interopRequireDefault(_assign);
 
-	var _lodashCollectionSortBy = __webpack_require__(1380);
+	var _sortBy = __webpack_require__(1380);
 
-	var _lodashCollectionSortBy2 = _interopRequireDefault(_lodashCollectionSortBy);
+	var _sortBy2 = _interopRequireDefault(_sortBy);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function lengthCompare(event) {
 	    return event.attributes.range.start.diff(event.attributes.range.end);
 	}
 
 	var EventsCollection = (function () {
-	    _createClass(EventsCollection, null, [{
-	        key: 'Event',
-	        value: _event2['default'],
-	        enumerable: true
-	    }]);
-
 	    function EventsCollection() {
 	        var events = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 
 	        _classCallCheck(this, EventsCollection);
 
 	        this.events = [];
-	        for (var i = 0, _length = events.length; i < _length; i++) {
+	        for (var i = 0, length = events.length; i < length; i++) {
 	            this.add(events[i]);
 	        }
 	    }
@@ -15202,7 +15168,7 @@ webpackJsonp([1],{
 	        key: 'add',
 	        value: function add(event) {
 	            if (!event.isEvent) {
-	                event = new _event2['default'](event);
+	                event = new _event2.default(event);
 	            }
 	            event.collection = this;
 	            this.events.push(event);
@@ -15212,7 +15178,7 @@ webpackJsonp([1],{
 	    }, {
 	        key: 'each',
 	        value: function each(fn, scope) {
-	            (0, _lodashCollectionEach2['default'])((0, _lodashCollectionSortBy2['default'])(this.events, lengthCompare), fn, scope);
+	            (0, _each3.default)((0, _sortBy2.default)(this.events, lengthCompare), fn, scope);
 	        }
 	    }, {
 	        key: 'length',
@@ -15233,10 +15199,11 @@ webpackJsonp([1],{
 	    return EventsCollection;
 	})();
 
-	(0, _lodashObjectAssign2['default'])(EventsCollection.prototype, _tinyEmitter2['default'].prototype);
+	EventsCollection.Event = _event2.default;
 
-	exports['default'] = EventsCollection;
-	module.exports = exports['default'];
+	(0, _assign2.default)(EventsCollection.prototype, _tinyEmitter2.default.prototype);
+
+	exports.default = EventsCollection;
 
 /***/ },
 
@@ -15245,27 +15212,27 @@ webpackJsonp([1],{
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	var _react = __webpack_require__(67);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _lodashObjectAssign = __webpack_require__(1311);
+	var _assign = __webpack_require__(1311);
 
-	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
+	var _assign2 = _interopRequireDefault(_assign);
 
 	var _tinyEmitter = __webpack_require__(1375);
 
 	var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var EVENT_COUNTER = 1;
 
@@ -15296,7 +15263,7 @@ webpackJsonp([1],{
 	    }, {
 	        key: 'defaultRenderImplementation',
 	        value: function defaultRenderImplementation() {
-	            return _react2['default'].createElement('div', {}, this.attributes.content || this.attributes.range.start.format('MMM DD YYYY'));
+	            return _react2.default.createElement('div', {}, this.attributes.content || this.attributes.range.start.format('MMM DD YYYY'));
 	        }
 	    }, {
 	        key: 'get',
@@ -15306,7 +15273,7 @@ webpackJsonp([1],{
 	    }, {
 	        key: 'set',
 	        value: function set(attributes, options) {
-	            (0, _lodashObjectAssign2['default'])(this.attributes, attributes);
+	            (0, _assign2.default)(this.attributes, attributes);
 	            if (this.collection) {
 	                this.collection.emit('change');
 	            }
@@ -15368,10 +15335,9 @@ webpackJsonp([1],{
 	    return Event;
 	})();
 
-	(0, _lodashObjectAssign2['default'])(Event.prototype, _tinyEmitter2['default'].prototype);
+	(0, _assign2.default)(Event.prototype, _tinyEmitter2.default.prototype);
 
-	exports['default'] = Event;
-	module.exports = exports['default'];
+	exports.default = Event;
 
 /***/ },
 
