@@ -1,12 +1,13 @@
 .lanes-toolbar {
 
-
     background-color: $navbar-default-bg;
 
     border: 1px solid transparent;
     border-radius: $border-radius-base;
     border-color: $navbar-default-border;
     margin-bottom: $navbar-margin-bottom;
+    padding-right: $navbar-padding-horizontal;
+    padding-left:  $navbar-padding-horizontal;
 
     display: flex;
     flex-direction: row;
