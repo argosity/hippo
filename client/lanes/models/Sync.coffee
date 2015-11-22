@@ -41,7 +41,6 @@ Lanes.Models.Sync = {
                     Lanes.warn reply.errors
                     model.errors = reply.errors
                     model.trigger("error", model, options)
-                    Lanes.React.Viewport.displayError(reply.message) unless options.onError or options.ignoreErrors
                 model.setFromServer(reply.data, options, method)
                 model.trigger("sync", model, reply, options)
                 resolve(model)
