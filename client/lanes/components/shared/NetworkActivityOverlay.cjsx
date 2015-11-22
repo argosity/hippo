@@ -1,53 +1,59 @@
 class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
 
     propTypes:
+        model:   Lanes.PropTypes.Model.isRequired
         message: React.PropTypes.string
         timeout: React.PropTypes.number
+        forceOn: React.PropTypes.bool
         errorTimeout: React.PropTypes.number
-        hasError: React.PropTypes.oneOfType([
-            React.PropTypes.string, React.PropTypes.bool
-        ])
-        isRequesting: React.PropTypes.oneOfType([
-            React.PropTypes.string, React.PropTypes.bool
-        ])
 
     getDefaultProps: ->
-        timeout: 30000, errorTimeout: 3000
-
-    installRemoval: (props) ->
-        if props.hasError or props.isRequesting
-            clearTimeout(@state.removeHandler) if @state.removeHandler
-        @setState(removeHandler: _.delay(@removeMessage,
-            if props.hasError then @props.errorTimeout else @timeout
-        ))
-
-    componentWillMount: ->
-        @installRemoval(@props)
-        @setState(@props)
+        timeout: 30000, errorTimeout: 2000
 
     removeMessage: ->
         return unless @isMounted()
         @setState(isRequesting: false, hasError: false)
 
+    clearTimeout: ->
+        clearTimeout(@state.removeHandler) if @state.removeHandler
+
+    installRemoval: ->
+        @clearTimeout()
+        @setState(removeHandler: _.delay(@removeMessage,
+            if @state.hasError then @props.errorTimeout else @props.timeout
+        ))
+
+    listenNetworkEvents: true
+
+    setDataState: (state) ->
+        if state.isRequesting and !@state.isRequesting
+            @setState(isRequesting: true)
+        else if state.hasError and !@state.hasError
+            @setState(hasError: true)
+
+        if @state.hasError or @state.isRequesting
+            @installRemoval()
+
     componentWillReceiveProps: (nextProps) ->
         @installRemoval(nextProps)
-        @setState(nextProps)
 
     render: ->
-        return null unless @state.isRequesting or @state.hasError
+        return null unless @props.forceOn or @state.isRequesting or @state.hasError
         message = @props.message or (
-            if @props.hasError
-                if _.isString(@props.hasError) then @props.hasError else "Error"
-            else if _.contains(['create', 'update', 'patch'], @props.isRequesting)
-                'Saving…'
-            else
+            if @state.hasError
+                errorMsg = @model.errorMessage
+                if _.isString(errorMsg) then errorMsg else "Error"
+            else if @model.requestInProgress?.method is 'GET'
                 'Loading…'
+
+            else
+                'Saving…'
         )
-        icon = if @props.hasError then 'exclamation-circle' else 'spinner'
+        icon = if @state.hasError then 'exclamation-circle' else 'spinner'
         <div className="overlay">
             <div className="mask" />
             <div className="message">
-                <LC.Icon type={icon} animated={not @props.hasError} />
+                <LC.Icon type={icon} animated={not @state.hasError} />
                 {message}
             </div>
         </div>
