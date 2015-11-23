@@ -1,5 +1,16 @@
 class State
-    constructor: -> super
+    constructor: ->
+        super
+        @_bindEvent(eventSpec, fnName) for eventSpec, fnName of _.result(@, 'events', {})
+        @
+
+    _bindEvent: (eventSpec, fnName) ->
+        [kp, event] = eventSpec.split(' ')
+        unless event
+            event = kp; kp = ''
+        _.get(@, kp, @).on(event, @[fnName], @)
+
+
     isState: true
     dataTypes:
         function:
