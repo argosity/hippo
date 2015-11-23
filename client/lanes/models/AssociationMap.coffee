@@ -117,7 +117,7 @@ class Lanes.Models.AssocationMap
 
             association = model[name]
 
-            if association.isProxy
+            if association.isProxy and Lanes.u.isModel(value) and not value.isProxy
                 association.replaceWithModel(value, association_name: name)
 
             else if Lanes.u.isModel(association)
