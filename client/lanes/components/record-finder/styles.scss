@@ -1,5 +1,4 @@
 .record-finder-dialog {
-    max-height: 500px;
     @include flexbox();
     @include flex-direction(column);
 }
