@@ -1,6 +1,14 @@
 @import "lanes/vendor/widgets";
 
+
 .rw-combobox, .rw-datetimepicker, .rw-numberpicker, .rw-dropdownlist {
     padding-bottom: 1px; // push down so border isn't covered
     input { height: 32px; }
+}
+
+.rw-dropdownlist {
+    height: 35px;
+    .rw-input{
+        line-height: 34px;
+    }
 }
