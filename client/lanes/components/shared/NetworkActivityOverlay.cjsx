@@ -17,25 +17,20 @@ class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
     clearTimeout: ->
         clearTimeout(@state.removeHandler) if @state.removeHandler
 
-    installRemoval: ->
+    installRemoval: (state) ->
         @clearTimeout()
         @setState(removeHandler: _.delay(@removeMessage,
-            if @state.hasError then @props.errorTimeout else @props.timeout
+            if state.hasError then @props.errorTimeout else @props.timeout
         ))
 
     listenNetworkEvents: true
 
     setDataState: (state) ->
-        if state.isRequesting and !@state.isRequesting
-            @setState(isRequesting: true)
-        else if state.hasError and !@state.hasError
-            @setState(hasError: true)
-
-        if @state.hasError or @state.isRequesting
-            @installRemoval()
-
-    componentWillReceiveProps: (nextProps) ->
-        @installRemoval(nextProps)
+        if state.hasError or state.isRequesting
+            @installRemoval(state)
+        else if not @state.hasError
+            @removeMessage()
+        @setState(state)
 
     render: ->
         return null unless @props.forceOn or @state.isRequesting or @state.hasError
@@ -45,7 +40,6 @@ class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
                 if _.isString(errorMsg) then errorMsg else "Error"
             else if @model.requestInProgress?.method is 'GET'
                 'Loading…'
-
             else
                 'Saving…'
         )
