@@ -14,6 +14,8 @@ class DataWrapper
     rebind: (objects, options = {}) ->
         customEvents = _.result(@component, 'bindDataEvents') || {}
         for name, state of objects
+            if false == state
+                continue
             unless state
                 Lanes.warn "#{name} is not set on #{@componentName()}"
                 continue
