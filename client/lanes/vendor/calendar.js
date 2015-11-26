@@ -24,6 +24,16 @@ webpackJsonp([1],{
 
 /***/ },
 
+/***/ 224:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(69);
+
+
+/***/ },
+
 /***/ 832:
 /***/ function(module, exports) {
 
@@ -13413,6 +13423,8 @@ webpackJsonp([1],{
 
 	'use strict';
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -13437,6 +13449,10 @@ webpackJsonp([1],{
 
 	var _assign2 = _interopRequireDefault(_assign);
 
+	var _reactDom = __webpack_require__(224);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var IsDayClass = new RegExp('(\\s|^)(events|day|label)(\\s|$)');
@@ -13458,11 +13474,15 @@ webpackJsonp([1],{
 	    getInitialState: function getInitialState() {
 	        return { resize: false };
 	    },
+	    getBounds: function getBounds() {
+	        return _reactDom2.default.findDOMNode(this).getBoundingClientRect();
+	    },
 	    _onClickHandler: function _onClickHandler(ev, handler) {
-	        if (!handler || !IsDayClass.test(ev.target.className)) {
+	        if (!handler || !IsDayClass.test(ev.target.className) || this.lastMouseUp && this.lastMouseUp < new Date().getMilliseconds() + 100) {
 	            return;
 	        }
-	        var bounds = this.refs.events.getBoundingClientRect();
+	        this.lastMouseUp = 0;
+	        var bounds = this.getBounds();
 	        var perc = (ev.clientY - bounds.top) / ev.target.offsetHeight;
 	        var hours = this.props.layout.displayHours[0] + this.props.layout.minutesInDay() * perc / 60;
 	        handler.call(this, ev, this.props.day.clone().startOf('day').add(hours, 'hour'));
@@ -13475,7 +13495,7 @@ webpackJsonp([1],{
 	    },
 	    onDragStart: function onDragStart(resize, eventLayout) {
 	        eventLayout.setIsResizing(true);
-	        var bounds = this.refs.events.getBoundingClientRect();
+	        var bounds = this.getBounds();
 	        (0, _assign2.default)(resize, { eventLayout: eventLayout, height: bounds.height, top: bounds.top });
 	        this.setState({ resize: resize });
 	    },
@@ -13500,12 +13520,9 @@ webpackJsonp([1],{
 	        if (this.props.onEventResize) {
 	            this.props.onEventResize(ev, this.state.resize.eventLayout.event);
 	        }
+	        this.lastMouseUp = new Date().getMilliseconds();
 	    },
-	    render: function render() {
-	        var classes = ['day'];
-	        if (this.props.layout.isDateOutsideRange(this.props.day)) {
-	            classes.push('outside');
-	        }
+	    renderEvents: function renderEvents() {
 	        var singleDayEvents = [];
 	        var allDayEvents = [];
 	        var onMouseMove = this.props.layout.isDisplayingAsMonth() ? null : this.onMouseMove;
@@ -13521,6 +13538,7 @@ webpackJsonp([1],{
 	                    layout: layout,
 	                    key: layout.key(),
 	                    day: this.props.day,
+	                    parent: this,
 	                    onDragStart: this.onDragStart,
 	                    onClick: this.props.onEventClick,
 	                    editComponent: this.props.editComponent,
@@ -13543,6 +13561,30 @@ webpackJsonp([1],{
 	            }
 	        }
 
+	        var events = [];
+	        if (allDayEvents.length) {
+	            events.push(_react2.default.createElement(
+	                'div',
+	                _extends({ key: 'allday' }, this.props.layout.propsForAllDayEventContainer()),
+	                allDayEvents
+	            ));
+	        }
+	        if (singleDayEvents.length) {
+	            events.push(_react2.default.createElement(
+	                'div',
+	                { key: 'events', refs: 'events', className: 'events',
+	                    onMouseMove: onMouseMove, onMouseUp: this.onMouseUp },
+	                singleDayEvents
+	            ));
+	        }
+	        return events;
+	    },
+	    render: function render() {
+	        var classes = ['day'];
+	        if (this.props.layout.isDateOutsideRange(this.props.day)) {
+	            classes.push('outside');
+	        }
+
 	        return _react2.default.createElement(
 	            'div',
 	            {
@@ -13555,20 +13597,7 @@ webpackJsonp([1],{
 	                { day: this.props.day, className: 'label' },
 	                this.props.day.format('D')
 	            ),
-	            _react2.default.createElement(
-	                'div',
-	                this.props.layout.propsForAllDayEventContainer(),
-	                allDayEvents
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { ref: 'events',
-	                    className: 'events',
-	                    onMouseMove: onMouseMove,
-	                    onMouseUp: this.onMouseUp
-	                },
-	                singleDayEvents
-	            )
+	            this.renderEvents()
 	        );
 	    }
 	});
@@ -13638,11 +13667,17 @@ webpackJsonp([1],{
 	        this.props.onDragStart(resize, this.props.layout);
 	    },
 	    render: function render() {
-
-	        var edit = undefined;
-	        if (this.props.layout.isEditing()) {
-	            edit = _react2.default.createElement(this.props.editComponent, { parent: this, event: this.props.layout.event });
-	        }
+	        var body = _react2.default.createElement(
+	            'div',
+	            { className: 'evbody', onClick: this.onClick },
+	            this.props.layout.event.render()
+	        );
+	        var Edit = this.props.editComponent;
+	        var children = this.props.layout.isEditing() ? _react2.default.createElement(
+	            Edit,
+	            { event: this.props.layout.event },
+	            body
+	        ) : body;
 	        return _react2.default.createElement(
 	            'div',
 	            {
@@ -13651,12 +13686,7 @@ webpackJsonp([1],{
 	                style: this.props.layout.inlineStyles(),
 	                className: this.props.layout.classNames()
 	            },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'evbody', onClick: this.onClick },
-	                this.props.layout.event.render()
-	            ),
-	            edit
+	            children
 	        );
 	    }
 	});
