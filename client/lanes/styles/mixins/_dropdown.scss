@@ -1,0 +1,21 @@
+@mixin lanes-unpadded-dropdown() {
+    .rw-input {
+        padding: 0;
+        > div {
+            padding-left: 0.5rem;
+        }
+    }
+    ul.rw-list {
+        li.rw-list-option {
+            padding-left: 0;
+            padding-right: 0;
+            &:hover {
+                box-shadow: 0 0 5px rgba(0,0,0,0.5);
+            }
+            > div {
+                border-radius: 4px;
+                padding: 5px;
+            }
+        }
+    }
+}
