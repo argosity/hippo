@@ -6,18 +6,25 @@ label.field {
 }
 .field {
 
-    .display, .read-only {
-        font-weight: normal;
-        padding: 6px 0;
+    font-weight: normal;
+    .input-group {
+        width: 100%;
     }
-    .display {
-        border-bottom: 1px solid $input-border;
-        &.value {
-            height: $lanes-field-value-height;
-            line-height: 34px;
+
+    &.display {
+        .input-group {
+            display: block;
         }
+        .value {
+            padding-left: 6px;
+            display: block;
+            height: $lanes-field-value-height;
+            line-height:  $lanes-field-value-height;
+            border-bottom: 1px solid $input-border;
+        }
+
     }
-    .read-only {
+    &.read-only {
         @extend .form-control !optional;
         padding: 6px 12px;
         cursor: not-allowed;
