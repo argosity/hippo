@@ -47,28 +47,21 @@ Lanes.Components.Form.FieldMixin = {
         <span>{value}</span>
 
     formGroupClassNames: ->
-        _.classnames('form-group',
+        _.classnames(
             _.result(this, 'formGroupClass')
-            editing: @isEditingRecord()
         )
 
     _mixinRenderValue: (label, className) ->
         value = (@renderDisplayValue || @renderMixinDisplayValue)?()
+        className = _.classnames(@props.className, className)
         if @props.unstyled
             value
         else
-            className = _.classnames(className, "value", changeset: @state.changeset)
-            colProps = _.omit(@props, 'name', 'label')
-            <BS.Col {...colProps}>
-                <div className={@formGroupClassNames()}>
-                    <label className='field'>
-                        <div className="title">{label}</div>
-                        <div className={className} name={@props.name}>
-                            {value}
-                        </div>
-                    </label>
-                </div>
-            </BS.Col>
+            <LC.FormGroup display {...@props}
+                className={className} label={label}
+            >
+                {value}
+            </LC.FormGroup>
 
     render: ->
         unless @props.unlabeled
