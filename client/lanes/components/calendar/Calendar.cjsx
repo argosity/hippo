@@ -13,4 +13,4 @@ class Lanes.Components.Calendar extends Lanes.React.Component
         onEventClick:      React.PropTypes.func
 
     render: ->
-        <Lanes.Vendor.Dayz {...@props} />
+        <Lanes.Vendor.Dayz {...@props}>{@props.children}</Lanes.Vendor.Dayz>

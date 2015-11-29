@@ -11991,10 +11991,6 @@ webpackJsonp([1],{
 
 	var _day2 = _interopRequireDefault(_day);
 
-	var _label = __webpack_require__(1339);
-
-	var _label2 = _interopRequireDefault(_label);
-
 	var _xLabels = __webpack_require__(1340);
 
 	var _xLabels2 = _interopRequireDefault(_xLabels);
@@ -12071,6 +12067,7 @@ webpackJsonp([1],{
 	        this.state.range.by('days', function (day) {
 	            return days.push(_react2.default.createElement(_day2.default, { key: day.format('YYYYMMDD'),
 	                day: day,
+	                position: days.length,
 	                layout: _this.state.layout,
 	                editComponent: _this.props.editComponent,
 	                onClick: _this.props.onDayClick,
@@ -12095,7 +12092,8 @@ webpackJsonp([1],{
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'days' },
-	                    days
+	                    days,
+	                    this.props.children
 	                )
 	            )
 	        );
@@ -12272,7 +12270,7 @@ webpackJsonp([1],{
 	    }, {
 	        key: 'isDateOutsideRange',
 	        value: function isDateOutsideRange(date) {
-	            return this.isDisplayingAsMonth() && !this.range.contains(date);
+	            return this.isDisplayingAsMonth() && this.date.month() !== date.month();
 	        }
 	    }, {
 	        key: 'forDay',
@@ -13463,6 +13461,7 @@ webpackJsonp([1],{
 	    propTypes: {
 	        day: _react2.default.PropTypes.object.isRequired,
 	        layout: _react2.default.PropTypes.instanceOf(_layout2.default).isRequired,
+	        position: _react2.default.PropTypes.number.isRequired,
 	        onClick: _react2.default.PropTypes.func,
 	        onDoubleClick: _react2.default.PropTypes.func,
 	        onEventClick: _react2.default.PropTypes.func,
@@ -13589,6 +13588,7 @@ webpackJsonp([1],{
 	            'div',
 	            {
 	                onClick: this.onClick,
+	                style: { order: this.props.position },
 	                className: classes.join(' '),
 	                onDoubleClick: this.onDoubleClick
 	            },
