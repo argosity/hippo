@@ -57,8 +57,8 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
     render: ->
         cellStyles = new Lanes.Components.Grid.CellStyles(@query.fields)
-
         <div className='grid-component'>
+            <LC.NetworkActivityOverlay model={@query} />
             <Lanes.Components.Grid.Toolbar {...@props} startEdit={@startEdit} />
             <Lanes.Components.Grid.Header  {...@props} cellStyles={cellStyles} />
             <Lanes.Components.Grid.Body
