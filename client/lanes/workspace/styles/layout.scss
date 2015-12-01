@@ -1,4 +1,9 @@
-.layout { height: 100%; }
+.layout {
+    height: 100%;
+    .header-top, .screens-menu {
+        position: fixed;
+    }
+}
 
 .page-container {
     height: calc(100% - #{$workspace-header-height});
@@ -7,7 +12,6 @@
         z-index: 20;
         left: 0;
         top: 50px;
-        position: absolute;
         bottom: 0;
     }
 }
@@ -15,6 +19,7 @@
 .page-content {
     @extend .container-fluid;
     position: relative;
+    top: 50px;
     min-height: 500px;
     transition: all 0.15s ease-in-out 0s;
     margin-left: 240px;

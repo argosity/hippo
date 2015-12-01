@@ -12,7 +12,7 @@
         overflow-x: visible;
         overflow-y: auto;
         border: 0;
-        top: 5px;
+        top: 0;
         transition: all 0.15s ease-in-out 0s;
         overflow-x: visible;
         overflow-y: auto;
@@ -42,7 +42,7 @@
                 overflow:hidden;
                 padding:5px;
                 height:45px;
-
+                top: 5px;
             }
             .nav {
                 position:absolute;
@@ -123,7 +123,7 @@
 
     .active-screens {
 
-        height: 45px;
+        height: 50px;
         padding: 0 5px;
 
         .nav-tabs {
