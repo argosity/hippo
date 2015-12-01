@@ -38,7 +38,7 @@ class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
             if @state.hasError
                 errorMsg = @model.errorMessage
                 if _.isString(errorMsg) then errorMsg else "Error"
-            else if @model.requestInProgress?.method is 'GET'
+            else if @props.visible or @state.isRequesting is 'GET'
                 'Loading…'
             else
                 'Saving…'
