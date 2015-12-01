@@ -4,7 +4,7 @@ class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
         model:   Lanes.PropTypes.Model.isRequired
         message: React.PropTypes.string
         timeout: React.PropTypes.number
-        forceOn: React.PropTypes.bool
+        visible: React.PropTypes.bool
         errorTimeout: React.PropTypes.number
 
     getDefaultProps: ->
@@ -33,7 +33,7 @@ class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
         @setState(state)
 
     render: ->
-        return null unless @props.forceOn or @state.isRequesting or @state.hasError
+        return null unless @props.visible or @state.isRequesting or @state.hasError
         message = @props.message or (
             if @state.hasError
                 errorMsg = @model.errorMessage
