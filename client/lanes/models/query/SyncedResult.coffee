@@ -14,7 +14,7 @@ class Page
         }
 
         _.extend(options, _.omit(@result.query.syncOptions, 'include'))
-
+        @result.query.trigger('request', @result.query, 'GET', {})
         @pendingLoad = Lanes.Models.Sync.perform('GET', options).then (resp) =>
             @result.total = resp.total
             @rows  = resp.data
