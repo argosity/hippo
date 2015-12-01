@@ -28,13 +28,13 @@ class DataWrapper
 
             this.bindEvents(name, state, customEvents[name]) if state
 
-            if Lanes.u.isModel(state) and not ( false == @component.pubsub or false == @component?.pubsub?[name] )
-                if !prevState? or prevState.getId() != state.getId()
-                    Lanes.Models.PubSub.remove(prevState) if prevState
-                    Lanes.Models.PubSub.add(state)
-
-                @listenTo(state, 'remote-update', @onPubSubChangeSet)
+            if Lanes.u.isModel(state)
                 @listenToNetworkEvents(state) if @component.listenNetworkEvents
+                unless false == @component.pubsub or false == @component?.pubsub?[name]
+                    if !prevState? or prevState.getId() != state.getId()
+                        Lanes.Models.PubSub.remove(prevState) if prevState
+                        Lanes.Models.PubSub.add(state)
+                    @listenTo(state, 'remote-update', @onPubSubChangeSet)
         this.setComponentState({}) unless _.isEmpty(objects) or options.silent
 
     listenToNetworkEvents: (state) ->
