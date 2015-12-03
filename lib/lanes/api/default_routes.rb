@@ -7,10 +7,5 @@ module Lanes
         Extensions.each do | ext |
             ext.route(self)
         end
-
-        get '/*' do
-            content_type 'text/html'
-            erb :index
-        end
     end
 end
