@@ -69,7 +69,7 @@ Lanes.Models.Sync = {
         })
 
         # Ensure that we have a URL.
-        url = options.url or Lanes.Models.Sync.urlError()
+        options.url or Lanes.Models.Sync.urlError()
         options.url += '.json'
         unless _.isEmpty(query)
             options.url += '?' + Lanes.lib.objToParam(query)
