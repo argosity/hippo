@@ -3,7 +3,7 @@ module Lanes
         class Extension < Lanes::Extensions::Definition
 
             identifier "lanes-workspace"
-            components 'toolbar'
+            components 'toolbar', 'modal'
 
             root_path Pathname.new(__FILE__).dirname.expand_path
 
