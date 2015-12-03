@@ -62,7 +62,7 @@ module Lanes
         config_option :assets_path_prefix, "/assets"
 
         # prefix to use for all urls
-        config_option :mounted_at, ''
+        config_option :mounted_at, '/api'
 
         # The initial view class to display
         config_option :root_view, 'Lanes.Workspace.Layout'

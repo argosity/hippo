@@ -33,12 +33,12 @@ module Lanes
                 path = options[:path] || model.api_path
                 controller = options[:controller] || Lanes::API::Controller
                 parent_attribute = false
-                prefix = if options[:under]
-                             parent_attribute = options[:parent_attribute] || options[:under].underscore.singularize+'_id'
-                         else
-                             ''
-                         end
+                if options[:under]
+                    parent_attribute = options[:parent_attribute] || options[:under].underscore.singularize+'_id'
+                end
 
+                prefix = Lanes.config.mounted_at + (parent_attribute || '')
+                puts "#{prefix}/#{path}"
                 # index
                 get "#{prefix}/#{path}/?:id?.json", &RequestWrapper.get(model, controller, parent_attribute)
 

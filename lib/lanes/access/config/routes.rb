@@ -1,7 +1,8 @@
 module Lanes
     API.routes.draw do
+        prefix = Lanes.config.mounted_at
 
-        post "/user-session.json" do
+        post "#{prefix}/user-session.json" do
             wrap_reply do
                 user = User.where(login: data['login']).first
                 Lanes.logger.warn "Found User: #{user}"
@@ -15,7 +16,7 @@ module Lanes
             end
         end
 
-        delete "/user-session/:id.json" do
+        delete "#{prefix}/user-session/:id.json" do
             session.destroy
             wrap_reply do
                 { success: true, message: "Logout succeeded", data: {} }
