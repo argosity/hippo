@@ -30,7 +30,6 @@ class Lanes.Components.Modal extends Lanes.React.Component
             @props.onOk?(this)
         else
             @props.onCancel?(this)
-        @_hide()
 
     componentWillReceiveProps: (nextProps) ->
         @setState(show: nextProps.show) if nextProps.show?
@@ -38,6 +37,10 @@ class Lanes.Components.Modal extends Lanes.React.Component
     _hide: ->
         @context.viewport.modalProps.show = false
         @setState(show: false)
+
+    show: ->
+        @context.viewport.modalProps.show = true
+        @setState(show: true)
 
     hide: ->
         @_hide()
