@@ -7,6 +7,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
         body:      React.PropTypes.func
         show:      React.PropTypes.bool
         buttons:   React.PropTypes.array
+        autoHide:  React.PropTypes.bool
         className: React.PropTypes.string
         size:      React.PropTypes.string
 
@@ -15,7 +16,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
         uistate:  Lanes.PropTypes.State
 
     getDefaultProps: ->
-        size: 'large'
+        size: 'large', autoHide: false
         buttons: [
             { title: 'Cancel' }
             { title: 'OK', style: 'primary' }
@@ -26,13 +27,14 @@ class Lanes.Components.Modal extends Lanes.React.Component
 
     onButton: (btn) ->
         @selected = btn
+        @_hide() if @state.autoHide
         if btn.eventKey is 'ok'
-            @props.onOk?(this)
+            @state.onOk?(this)
         else
-            @props.onCancel?(this)
+            @state.onCancel?(this)
 
     componentWillReceiveProps: (nextProps) ->
-        @setState(show: nextProps.show) if nextProps.show?
+        @replaceState(nextProps)
 
     _hide: ->
         @context.viewport.modalProps.show = false
@@ -44,23 +46,23 @@ class Lanes.Components.Modal extends Lanes.React.Component
 
     hide: ->
         @_hide()
-        @props.onCancel()
+        @state.onCancel?()
 
     render: ->
         return null unless @state.show
 
-        buttons = for button in @props.buttons
+        buttons = for button in @state.buttons
             if _.isString(button) then button = {title: button}
             button.eventKey ||= (button.key or button.title).toLowerCase()
             <BS.Button key={button.title}
                 bsStyle={button.style || 'default'} className={name}
                 onClick={_.partial(@onButton, button)}>{button.title}</BS.Button>
 
-        cls = _.classnames('lanes-modal', @props.className, @context.uistate?.layout_size)
-        Body = @props.body
-        <BS.Modal.Dialog className={cls} bsSize={@props.size} onHide={@_hide}>
+        cls = _.classnames('lanes-modal', @state.className, @context.uistate?.layout_size)
+        Body = @state.body
+        <BS.Modal.Dialog className={cls} bsSize={@state.size} onHide={@_hide}>
             <BS.Modal.Header>
-                <BS.Modal.Title>{@props.title}</BS.Modal.Title>
+                <BS.Modal.Title>{@state.title}</BS.Modal.Title>
             </BS.Modal.Header>
 
             <BS.Modal.Body>
