@@ -11,10 +11,6 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.React.Component
     contextTypes:
         viewport: Lanes.PropTypes.State.isRequired
 
-    login: ->
-        @model.save().then =>
-            Lanes.current_user.setLoginData(@model.user, @model.access) if @model.user
-
     warning: ->
         <BS.Alert bsStyle='warning'>
              <strong>{@model.lastServerMessage}</strong>
