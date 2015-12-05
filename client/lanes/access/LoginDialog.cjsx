@@ -13,20 +13,23 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
     statics:
         show: (viewport, props = {}) ->
             session = new Session
-            handler = new _.Promise( (onOk, onCancel) ->
-                viewport.modalProps = _.extend({}, props,
-                    title: 'Please Login'
-                    onCancel: onCancel, onOk: onOk, show: true,
-                    buttons: [{ title: 'Ok', style: 'primary'}]
-                    body: ->
-                        <Lanes.Access.LoginDialog model={session} attemptLogin={onOk} />
-                )
-            )
-            handler.then (dlg) ->
+
+            attemptLogin = (dlg) ->
                 session.save(ignoreErrors: true).then ->
                     if session.user
                         Lanes.current_user.setLoginData(session.user, session.access)
+                        dlg.hide()
                     _.extend(viewport.modalProps, {show: !session.user})
+
+            viewport.modalProps = _.extend({}, props,
+                title: 'Please Login'
+                onCancel: null, onOk: attemptLogin, show: true,
+                buttons: [{ title: 'Login', style: 'primary', eventKey: 'ok'}]
+                body: ->
+                    <Lanes.Access.LoginDialog model={session} attemptLogin={attemptLogin} />
+            )
+
+
 
     mixins: [
         Lanes.React.Mixins.RelayEditingState
