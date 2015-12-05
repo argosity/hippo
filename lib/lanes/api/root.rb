@@ -38,7 +38,7 @@ module Lanes
                 end
 
                 prefix = Lanes.config.mounted_at + (parent_attribute || '')
-                puts "#{prefix}/#{path}"
+
                 # index
                 get "#{prefix}/#{path}/?:id?.json", &RequestWrapper.get(model, controller, parent_attribute)
 
