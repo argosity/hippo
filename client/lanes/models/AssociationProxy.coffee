@@ -28,8 +28,9 @@ ProxyMethods = {
         model
 
     _replaceAndCall: (options, fn) ->
-        model = @replaceWithModel({}, options)
+        model = new @_proxied_model()
         fn.call(model, fn)
+        @replaceWithModel(model, options)
 
     serialize: (options) ->
         if @_association_cache
