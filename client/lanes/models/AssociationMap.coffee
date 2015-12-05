@@ -30,6 +30,7 @@ class Lanes.Models.AssocationMap
         )
 
     replaceProxy: (name, model, options) ->
+        return unless options.parent._cache[name]?.isProxy
         options.parent._cache[name] = model
         options.parent.trigger("change", options.parent, {})
         options.parent.trigger("change:#{name}", model, {})
@@ -131,9 +132,8 @@ class Lanes.Models.AssocationMap
                         association.copyFrom( value )
                     else
                         association[fn_name]( value )
-                    association.isDirty = if value.isDirty? then value.isDirty else true
 
-                if options?.silent isnt true
+                if options?.silent isnt true and not association.isProxy
                     model.trigger("change:#{name}", value, {})
             else
                 if value then association[fn_name]( value, options ) else association.clear()
