@@ -25,8 +25,11 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
                 title: 'Please Login'
                 onCancel: null, onOk: attemptLogin, show: true,
                 buttons: [{ title: 'Login', style: 'primary', eventKey: 'ok'}]
-                body: ->
-                    <Lanes.Access.LoginDialog model={session} attemptLogin={attemptLogin} />
+                body: (props) ->
+                    <Lanes.Access.LoginDialog
+                        {...props}
+                        model={session}
+                        attemptLogin={attemptLogin} />
             )
 
 
@@ -55,7 +58,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
 
                     <LC.Input
                         model={@model}
-                        onEnter={@props.attemptLogin}
+                        onEnter={=> @props.attemptLogin(@props.modal)}
                         autoFocus writable
                         name="login"
                         label='Username'
@@ -65,7 +68,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
                     <LC.Input
                         writable
                         model={@model}
-                        onEnter={@props.attemptLogin}
+                        onEnter={=> @props.attemptLogin(@props.modal)}
                         name="password"
                         type='password'
                         label='Password'
