@@ -20,15 +20,13 @@ module Lanes
                 require 'message_bus'
                 api.use MessageBus::Rack::Middleware if api
 
-                # Use OJ - it encodes dates properly as ISO 8601
-                # https://github.com/moment/moment/issues/1407
-                Oj.mimic_JSON()
-                # # Requiring json here seems to stop conflicts when requiring json in other files.
-                begin
-                    require 'json'
-                rescue
-                    # ignore
+
+                if defined?(PhusionPassenger)
+                    PhusionPassenger.on_event(:starting_worker_process) do |forked|
+                        MessageBus.after_fork if forked
+                    end
                 end
+
                 ::MessageBus.redis_config = Lanes.config.redis
                 Updates.relay!
 
