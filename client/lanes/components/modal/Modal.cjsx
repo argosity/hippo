@@ -66,7 +66,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
             </BS.Modal.Header>
 
             <BS.Modal.Body>
-                <Body />
+                <Body modal={@} />
             </BS.Modal.Body>
 
             <BS.Modal.Footer>{buttons}</BS.Modal.Footer>
