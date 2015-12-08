@@ -69,16 +69,22 @@ class ScreenDefinition extends Lanes.Models.BasicModel
         me = this
         return new _.Promise( (resolve, reject) ->
             me.loading = true
-            Lanes.lib.RequestAssets(me.asset_paths...)
-                .then ->
-                    me.loading = false
-                    viewModel = me.getScreen()
-                    if viewModel then resolve(me)
-                    else reject("Screen #{me.view} not definied after file retrieval")
-                , (msg) ->
-                    Lanes.warn(msg)
-                    me.loading = false
-                    reject(msg)
+            attempt = 0
+            done = ->
+                me.loading = false
+                viewModel = me.getScreen()
+                if viewModel
+                    resolve(me)
+                else if attempt < 3
+                    attempt += 1
+                    _.delay(done, 500)
+                else
+                    reject("Screen #{me.view} not definied after file retrieval")
+            err = (msg) ->
+                Lanes.warn(msg)
+                me.loading = false
+                reject(msg)
+            Lanes.lib.RequestAssets(me.asset_paths...).then(done, err)
         )
 
 
