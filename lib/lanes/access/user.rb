@@ -16,7 +16,7 @@ module Lanes
 
         def workspace_data
             my_data = attributes.slice('id','login','name','email','created_at',
-              'created_by','updated_at','updated_by','role_names')
+              'created_by','updated_at','updated_by','role_names', 'options')
             { user: my_data, access: Access.for_user(self) }
         end
 
