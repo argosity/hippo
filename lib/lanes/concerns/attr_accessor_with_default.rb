@@ -52,7 +52,9 @@ module Lanes::Concerns
                         if instance_variable_defined?(instance_var)
                             instance_variable_get(instance_var)
                         else
-                            instance_variable_set(instance_var, default.is_a?(Proc) ? default.call : default )
+                            instance_variable_set(instance_var,
+                                                  default.is_a?(Proc) ?
+                                                      instance_exec(&default) : default )
                         end
                     end
                 end
