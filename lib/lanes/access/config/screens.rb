@@ -15,6 +15,7 @@ Lanes::Screen.for_extension 'access' do | screens |
         screen.view_class  = "UserPreferences"
         screen.url_prefix  = 'lanes/access/screens'
         screen.js  = 'user-preferences.js'
+        screen.css = ''
     end
 
     screens.define "user-management" do | screen |
