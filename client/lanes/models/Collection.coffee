@@ -10,6 +10,9 @@ CommonMethods = {
             break if found != -1
         found
 
+    pick: (keys...) ->
+        _.map(@models, _.partialRight(_.pick, keys...))
+
     sum: ->
         args = _.toArray(arguments)
         args.unshift(this.models)
