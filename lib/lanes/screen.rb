@@ -6,18 +6,16 @@ module Lanes
 
     module Screen
 
-
         GROUPS=Hash.new{|h,k| g=Group.new; g.identifier=k; h[k]=g }
-        DEFINITIONS=Hash.new{|h,k| d=Definition.new; d.identifier=k; h[k]=d }
+        DEFINITIONS=Hash.new #{|h,k| d=Definition.new; d.identifier=k; h[k]=d }
 
         class DefinitionList
-            def initialize(ext)
-                @ext = ext
+            def initialize(extension_id)
+                @extension_id = extension_id
             end
 
             def define(id)
-                definition = DEFINITIONS[id]
-                definition.extension = @ext
+                definition = ( DEFINITIONS[id] ||= Definition.new(id, @extension_id) )
                 yield definition
             end
         end
@@ -31,9 +29,8 @@ module Lanes
                 end
             end
 
-            def for_extension(name)
-                definitions = DefinitionList.new(name.underscore.camelize)
-                yield definitions
+            def for_extension(id)
+                yield DefinitionList.new(id)
             end
 
             def define_group(id)
@@ -89,18 +86,35 @@ module Lanes
             attr_accessor_with_default :group_id
             attr_accessor_with_default :extension
             attr_accessor_with_default :view_class
-            attr_accessor_with_default :url_prefix
+            attr_accessor_with_default :url_prefix, lambda {
+                "#{@extension_id}/screens"
+            }
             attr_accessor_with_default :model_class
-            attr_accessor_with_default :js
-            attr_accessor_with_default :css
+            attr_accessor_with_default :js, lambda {
+                has_file_matching?('index.{js,coffee,cjsx}') ? @identifier + '.js' : nil
+            }
+            attr_accessor_with_default :css, lambda {
+                has_file_matching?('index.{css,scss}') ? @identifier + '.css' : nil
+            }
+
+            def initialize(id, extension_id)
+                self.identifier = id
+                @extension_id = extension_id
+                @extension    = extension_id.underscore.camelize
+            end
+
+            def has_file_matching?(pattern)
+                Pathname.glob(root_path.join(pattern)).any?
+            end
+
+            def root_path
+                ext = Lanes::Extensions.for_identifier(@extension_id)
+                raise "Unable to find extension '#{@extension_id}' for screen group" unless ext
+                ext.root_path.join('client', url_prefix, identifier)
+            end
 
             def url_path_for(type)
-                file = self.send(type)
-                if url_prefix
-                    "#{url_prefix}/#{file}"
-                else
-                    "#{self.extension.underscore}/screens/#{file}"
-                end
+                "#{url_prefix}/#{self.send(type)}"
             end
 
             def to_json
