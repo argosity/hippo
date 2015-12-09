@@ -56,6 +56,10 @@ class ScreenDefinition extends Lanes.Models.BasicModel
             deps: ['extension', 'model'], fn: ->
                 _.classify(@extension) + ".Screens." + @view
 
+        label:
+            deps: ['id', 'title'], fn: ->
+                @title || _.field2title(@id)
+
     getScreen: ->
         Lanes.u.getPath(@extension_path)
 
