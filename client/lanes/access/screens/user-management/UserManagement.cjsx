@@ -29,7 +29,7 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
             />
 
     render: ->
-        <div>
+        <LC.ScreenWrapper identifier="user-management">
             <h1>Users Management</h1>
             <LC.Grid
                 editorProps={{syncImmediatly: true}}
@@ -38,4 +38,4 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
                 editor={Lanes.Access.Screens.UserManagement.Editor}
                 columEditors={@editors()}
                 ref="grid"/>
-        </div>
+        </LC.ScreenWrapper>
