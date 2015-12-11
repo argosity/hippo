@@ -105,6 +105,12 @@ class ScreenViewSet extends Lanes.Models.BasicCollection
         @findWhere( active: true )
 
     initialize: (models, options = {}) ->
+        Lanes.current_user.on "change:isLoggedIn", (user) =>
+            if user.isLoggedIn
+                for screen_id in Lanes.current_user.options?.initial_screens || []
+                    Lanes.Screens.Definitions.all.get(screen_id)?.display()
+            else
+                @reset()
         this.on( 'change:active add', this.onActiveChange )
 
     remove: (model) ->
