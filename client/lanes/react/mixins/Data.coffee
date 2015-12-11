@@ -111,7 +111,8 @@ readDataObjects = (comp, newProps) ->
     bound.model ||= 'props' if comp.props.model
     bound.collection ||= 'props' if comp.props.collection
     _.mapValues(bound, (value, name) ->
-        if _.isFunction(value) then value.call(comp)
+        if _.isFunction(value)
+            if _.isEmpty(comp.data?.states[name]) then value.call(comp) else false
         else if 'props' == value then newProps?[name] or @props[name]
         else value
     , comp)
