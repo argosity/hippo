@@ -1,9 +1,10 @@
-class Lanes.Access.Screens.UserPreferences extends Lanes.React.Screen
+class Lanes.Screens.UserPreferences extends Lanes.React.Screen
 
     dataObjects:
         user: -> Lanes.current_user
 
     getInitialState: ->
+        isEditing: true
         commands: new Lanes.Screens.Commands(this, modelName: 'user')
 
     setScreens: (model, screens) ->
@@ -29,4 +30,6 @@ class Lanes.Access.Screens.UserPreferences extends Lanes.React.Screen
                     getSelection={@getScreens}
                 />
             </BS.Row>
+            {for id, Ext of Lanes.Extensions.instances when Ext.preferenceElement
+                <Ext.preferenceElement key={id} /> }
         </LC.ScreenWrapper>

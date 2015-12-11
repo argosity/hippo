@@ -4,3 +4,4 @@
 //= require ./Commands
 //= require ./CommonComponents
 //= require ./mixins
+//= require ./UserPreferences

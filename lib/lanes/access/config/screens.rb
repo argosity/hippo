@@ -6,18 +6,6 @@ end
 
 Lanes::Screen.for_extension 'access' do | screens |
 
-    screens.define "user-preferences" do | screen |
-        screen.title       = "User Preferences"
-        screen.description = "Modify User Profile"
-        screen.icon        = "group"
-        screen.group_id    = "system-settings"
-        screen.model_class = "User"
-        screen.view_class  = "UserPreferences"
-        screen.url_prefix  = 'lanes/access/screens'
-        screen.js  = 'user-preferences.js'
-        screen.css = ''
-    end
-
     screens.define "user-management" do | screen |
         screen.title       = "User Management"
         screen.description = "Add/Remove/Modify User Accounts"
