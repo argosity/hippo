@@ -83,6 +83,7 @@ class Lanes.Models.Query.SyncedResult
         @pages = {}
 
     reset: ->
+        @total = 0
         @pages = {}
 
     pageForIndex: (index) ->
@@ -139,6 +140,7 @@ class Lanes.Models.Query.SyncedResult
 
     reload: (options = {}) ->
         @pages = []
+        @total = 0
         @ensureLoaded(options)
 
     onPageLoad: (page) ->
