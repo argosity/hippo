@@ -1,5 +1,8 @@
 Lanes.u.format ||= {}
 
+Lanes.u.format.shartDate = (d) ->
+    _.moment(d).format('L')
+
 Lanes.u.format.shartDateTime = (d) ->
     _.moment(d).format('lll')
 
