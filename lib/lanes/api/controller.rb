@@ -34,8 +34,8 @@ module Lanes
             def perform_retrieval
                 query   = build_query
                 options = build_reply_options
-                options[:total_count] = query.dup.count if should_include_total_count?
                 query   = add_modifiers_to_query(query)
+                options[:total_count] = query.dup.unscope(:select).count if should_include_total_count?
                 Lanes.logger.warn "ID: #{params[:id]}"
                 if params[:id]
                     query  = query.first!
