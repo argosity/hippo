@@ -36,8 +36,25 @@
     .header {
         .c {
             border: 1px solid $table-border-color;
-
             align-items: flex-end;
+            display: inline-block;
+            cursor: pointer;
+            &.sort {
+                &:after {
+                    content: $fa-var-sort;
+                    font-family: FontAwesome;
+                    float: right;
+                    color: lightgray;
+                }
+                &.asc:after {
+                    color: gray;
+                    content: $fa-var-sort-asc;
+                }
+                &.desc:after {
+                    color: gray;
+                    content: $fa-var-sort-desc;
+                }
+            }
         }
     }
 

@@ -12,6 +12,7 @@ class Field extends Lanes.Models.Base
         visible:    type: 'boolean', default: true
         query:      type: 'boolean', default: true
         editable:   type: 'boolean', default: true
+        sortable:   type: 'boolean', default: true
         format:     type: 'function'
         render:     type: 'function'
         flex:       type: 'number',  default: 1
@@ -192,10 +193,12 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
         initialField: 'state'
         idIndex: 'number'
         initialFieldIndex: 'number'
-        pageSize: {type: 'number', default: 100}
+        pageSize: { type: 'number', default: 100 }
         syncOptions: 'any'
         autoRetrieve: ['boolean', true, true]
         title: { type: 'string', default: 'Find Record' }
+        sortField: 'object'
+        sortAscending: ['boolean', true, true]
 
     derived:
         isCollection:
@@ -241,6 +244,10 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
             this.fields.first()
         this.addNewClause()
         this
+
+    setSortField: (field) ->
+        @sortAscending = if @sortField is field then !@sortAscending else true
+        @sortField = field
 
     ensureLoaded: -> @results.ensureLoaded()
 
