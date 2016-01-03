@@ -18,7 +18,7 @@ class Field extends Lanes.Models.Base
         flex:       type: 'number',  default: 1
         fixedWidth: type: 'number'
         textAlign:  type: 'string', default: 'left'
-        sortBy:     type: 'function'
+        sortBy:     type: 'any'
         onColumnClick: type: 'function'
 
     derived:
@@ -219,6 +219,10 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
                 else
                     new Lanes.Models.Query.SyncedResult(this, pageSize: @pageSize)
 
+    events:
+        'change:sortField':     '_updateSort'
+        'change:sortAscending': '_updateSort'
+
     constructor: (options = {}) ->
         super
         @fields = new AvailableFields([], query: this)
@@ -237,6 +241,8 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
         this.on('change:src change:results', ->
             this.trigger('load')
         )
+        if options.defaultSort
+            @setSortField( @fields.findWhere(id: options.defaultSort)  )
         if @initialFieldIndex
             @initialField = this.fields.at(@initialFieldIndex)
         @initialField ||= this.fields.findWhere(id: "code") ||
@@ -261,7 +267,6 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
     loadSingle: (code, options = {}) ->
         options.query = {}
         options.query[ @initialField.id ] = code
-
         _.extend(options, _.result(this, 'syncOptions'))
         @src.fetch(options)
 
@@ -270,3 +275,5 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
 
     addNewClause: ->
         @clauses.add(query: this, available_fields: @fields, field: @initialField)
+
+    _updateSort: -> @results._updateSort()
