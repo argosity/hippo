@@ -52,9 +52,11 @@ class BaseModel
         this.trigger('remote-update', triggered, change)
         @parent?.triggerChangeSet?(triggered, change)
 
+    modelTypeIdentifier: ->
+        _.dasherize(_.last(@FILE.path))
+
     api_path: ->
-        path = if this.FILE then _.last(this.FILE.path) else ''
-        _.pluralize(_.dasherize(path))
+        @FILE.extension.identifier + '/' + _.pluralize(@modelTypeIdentifier())
 
     urlRoot: ->
         Lanes.config.api_path + '/' + _.result(this, 'api_path')
