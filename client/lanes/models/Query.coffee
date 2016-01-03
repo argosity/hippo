@@ -242,7 +242,7 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
             this.trigger('load')
         )
         if options.defaultSort
-            @setSortField( @fields.findWhere(id: options.defaultSort)  )
+            @setSortField( @fields.findWhere(id: options.defaultSort), true )
         if @initialFieldIndex
             @initialField = this.fields.at(@initialFieldIndex)
         @initialField ||= this.fields.findWhere(id: "code") ||
@@ -251,9 +251,11 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
         this.addNewClause()
         this
 
-    setSortField: (field) ->
-        @sortAscending = if @sortField is field then !@sortAscending else true
-        @sortField = field
+    setSortField: (field, silent = false) ->
+        @set({
+            sortAscending: (if @sortField is field then !@sortAscending else true)
+            sortField: field
+        }, {silent})
 
     ensureLoaded: -> @results.ensureLoaded()
 
@@ -276,4 +278,5 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
     addNewClause: ->
         @clauses.add(query: this, available_fields: @fields, field: @initialField)
 
-    _updateSort: -> @results._updateSort()
+    _updateSort: _.debounce ->
+        @results._updateSort()
