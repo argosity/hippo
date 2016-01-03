@@ -12,6 +12,14 @@ class Page
             query: query, url: @result.query.src::urlRoot(),
             fields: _.pluck( @result.query.fields.where(query: true), 'id')
         }
+        if @result.query.sortField
+            options.order = {}
+            {sortBy} = @result.query.sortField
+            field_name = if sortBy
+                if _.isFunction(sortBy) then @result.query.sortField.id else sortBy
+            else
+                @result.query.sortField.id
+            options.order[field_name] = if @result.query.sortAscending then 'asc' else 'desc'
 
         _.extend(options, _.omit(@result.query.syncOptions, 'include'))
         @result.query.trigger('request', @result.query, 'GET', {})
@@ -153,6 +161,8 @@ class Lanes.Models.Query.SyncedResult
     valueForField: (rowNum, field) ->
         @rowAt(rowNum)[ field.fetchIndex ]
 
+    _updateSort: ->
+        @reload()
 
 Object.defineProperty Lanes.Models.Query.SyncedResult.prototype, 'length',
     get: -> @total || 0
