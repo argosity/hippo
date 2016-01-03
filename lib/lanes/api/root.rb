@@ -29,37 +29,6 @@ module Lanes
                 error_as_json
             end
 
-            def self.resources(model, options = {})
-                path = options[:path] || model.api_path
-                controller = options[:controller] || Lanes::API::Controller
-                parent_attribute = false
-                if options[:under]
-                    parent_attribute = options[:parent_attribute] || options[:under].underscore.singularize+'_id'
-                end
-
-                prefix = Lanes.config.mounted_at + (parent_attribute || '')
-
-                # index
-                get "#{prefix}/#{path}/?:id?.json", &RequestWrapper.get(model, controller, parent_attribute)
-
-                # create
-                post "#{prefix}/#{path}.json", &RequestWrapper.post(model, controller, parent_attribute)
-
-                unless options[:immutable]
-
-                    # update
-                    patch "#{prefix}/#{path}/?:id?.json", &RequestWrapper.update(model, controller, parent_attribute)
-                    put   "#{prefix}/#{path}/?:id?.json", &RequestWrapper.update(model, controller, parent_attribute)
-
-                    unless options[:indestructible]
-                        # destroy
-                        delete "#{prefix}/#{path}/?:id?.json", &RequestWrapper.delete(model, controller, parent_attribute)
-                    end
-
-                end
-
-            end
-
             configure do
                 set :views, Pathname.new(__FILE__).dirname.join("../../../views")
                 set :show_exceptions, false
