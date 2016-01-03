@@ -43,7 +43,6 @@ CommonMethods = {
         new @constructor( @invoke( 'clone' ), @options )
 
     serialize: (options = {depth: 1}) ->
-        options.depth += 1
         this.map (model) ->
             if model.serialize
                 model.serialize(options)
