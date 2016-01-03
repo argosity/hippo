@@ -2,7 +2,7 @@ class Lanes.Components.Grid.Selections
     id: 'selected'
     query: false
     textAlign: 'center'
-    fixedWidth: 80
+    fixedWidth: 90
     defaultClicked: true
     constructor: (options) ->
         @onChange = options.onChange
