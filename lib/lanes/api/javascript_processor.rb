@@ -20,7 +20,7 @@ module Lanes
             end
 
             def get_js_aliases(ns)
-                ext = Extensions.for_identifier(ns.downcase)
+                ext = Extensions.for_identifier(ns)
                 aliases = ext ? ext.client_js_aliases : {}
                 aliases.merge!({
                     'LC'    => 'window.Lanes.Components',
@@ -30,24 +30,34 @@ module Lanes
                 [ aliases.keys.join(','), aliases.values.join(',') ]
             end
 
-            def wrap_js(scope, js)
-                dirs = scope.logical_path.split(File::SEPARATOR)
-                ns   = dirs.many? ? dirs.first.camelize : nil
-                path = "[" + dirs.map{|d| "\"#{d}\"" }.join(",") + "]"
-                # if the file is being loaded under the "lanes" directory
-                # it's not an extension
-                (aliases, definitions) = get_js_aliases(ns)
-                if ns && ns != "Lanes"
-                    ns = ns.underscore.camelize
+            def get_wrapping_vars(identifier)
+                if identifier
+                    ns = identifier.underscore.camelize
+                else
+                    ns = ''
+                    identifier = ''
+                end
+                if identifier == "lanes"
+                    ns_file_ref = "window.Lanes"
+                    ns_ref = ''
+                    ns_name = ''
+                else
                     ns_name = "#{ns},"
                     ns_ref = "(window.Lanes ? window.Lanes['#{ns}'] : null),"
                     ns_file_ref = "window.Lanes['#{ns}']"
-                else
-                    ns_name = ""
-                    ns_ref = ""
-                    ns_file_ref = "window.Lanes"
                 end
-                file="{namespace:#{ns_file_ref},extensionName:'#{ns}',path:#{path}}"
+                return ns, ns_file_ref, ns_ref, ns_name
+            end
+
+            def wrap_js(scope, js)
+                dirs = scope.logical_path.split(File::SEPARATOR)
+                identifier   = dirs.many? ? dirs.first : nil
+                path = "[" + dirs.map{|d| "\"#{d}\"" }.join(",") + "]"
+                # if the file is being loaded under the "lanes" directory
+                # it's not an extension
+                (aliases, definitions) = get_js_aliases(identifier)
+                ns, ns_file_ref, ns_ref, ns_name = get_wrapping_vars(identifier)
+                file="{namespace:#{ns_file_ref},extension:{name:'#{ns}',identifier:'#{identifier}'},path:#{path}}"
                 "(function(Lanes,#{ns_name}_,#{aliases},FILE,window,undefined)"\
                     "{\n#{js}\n})"\
                     "(window.Lanes,#{ns_ref}window.Lanes.Vendor.ld,"\
