@@ -10,9 +10,6 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
     contextTypes:
         viewport: Lanes.PropTypes.State.isRequired
 
-    mixins: [
-        Lanes.Components.Form.FieldMixin
-    ]
     modelForAccess: ->
         if @props.parentModel
             @props.parentModel[@props.associationName]
@@ -45,16 +42,24 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             this.loadCurrentSelection()
         null
 
-    renderEdit: ->
+    getValue: ->
+        if @props.parentModel
+            @props.parentModel[@props.associationName][@props.name]
+        else
+            @props.model[@props.name]
+
+
+    render: ->
         findIcon = <button className="btn btn-primary icon icon-search icon-lg"
             onClick={@showFinder}/>
 
         <LC.Input
             ref="input"
-            {...@props}
             groupClassName="record-finder"
             editOnly writable
             name={@props.query.initialField.id}
             onKeyPress={@onKeyPress}
+            {...@props}
             model={@modelForAccess()}
+            getValue={@getValue}
             buttonAfter={findIcon} />
