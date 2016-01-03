@@ -4,7 +4,7 @@ class Lanes.Models.User extends Lanes.Models.Base
         super
         this.access_data = access
 
-    api_path: -> 'users'
+    api_path: -> 'lanes-access/users'
     derived:
         roles:
             deps: ['role_names', 'access_data']
