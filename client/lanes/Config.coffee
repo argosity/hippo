@@ -16,4 +16,8 @@ class Config extends Lanes.Models.State
                     production:  this.environment == 'production'
                 }
 
+    set: (options) ->
+        super(options)
+        Lanes.Extensions.setBootstrapData(options)
+
 Lanes.config = new Config
