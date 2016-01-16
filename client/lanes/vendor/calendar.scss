@@ -65,7 +65,7 @@ $dayz-event-text-colors: (
             position: absolute;
             width: 100%;
             height: 100%;
-            flex-basis: $dayz-y-label-width;
+            width: $dayz-y-label-width;
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -103,13 +103,23 @@ $dayz-event-text-colors: (
         }
     }
 
+    &.month, &.week .all-day, &.day .all-day {
+        .event {
+            $stack: 1;
+            @while $stack < 10 {
+                &.stack-#{$stack} { margin-top: ($stack) * 20px; }
+                $stack: $stack + 1;
+            }
+        }
+    }
+
     &.week, &.day {
         .x-labels{ padding-left: $dayz-y-label-width; }
         .days {
             margin-left: $dayz-y-label-width;
         }
         .day {
-            flex-basis: 100%;
+            width: 100%;
             display: flex;
             flex-direction: column;
             .all-day {
@@ -147,7 +157,7 @@ $dayz-event-text-colors: (
                     display: inline-block;
                     margin: 5px 0 0 5px;
                 }
-                flex-basis: $day-width;
+                width: $day-width;
                 .event {
                     height: $dayz-event-height;
                     &.span-1 .evbody > div {
@@ -179,29 +189,23 @@ $dayz-event-text-colors: (
         border: 1px solid $dayz-grid-line-color;
         border-radius: 4px;
 
-        $stack: 1;
-        @while $stack < 10 {
-            &.stack-#{$stack} { top: ($stack) * 20px; }
-            $stack: $stack + 1;
-        }
-
         $span: 0;
         @while $span < 7 {
             $span: $span + 1;
             &.span-#{$span} {
-                width: calc(#{$span * 100%} + #{$span * 2px - 2px});
+                width: calc(#{$span * 100%} + #{$span * 1px - 2px});
                 &.is-continued {
-                    width: calc(#{$span * 100%} + #{($span * 2px - 2px)-$dayz-event-arrow-width});
+                    width: calc(#{$span * 100%} + #{($span * 1px - 2px)-$dayz-event-arrow-width});
                     border-top-right-radius: 0;
                     border-bottom-right-radius: 0;
                 }
                 &.is-continuation {
-                    width: calc(#{$span * 100%} + #{($span * 2px - 2px)-$dayz-event-arrow-width});
+                    width: calc(#{$span * 100%} + #{($span * 1px - 2px)-$dayz-event-arrow-width});
                     border-top-left-radius: 0;
                     border-bottom-left-radius: 0;
                 }
                 &.is-continued.is-continuation {
-                    width: calc(#{$span * 100%} + #{($span * 2px - 2px)-$dayz-event-arrow-width*2});
+                    width: calc(#{$span * 100%} + #{($span * 1px - 2px)-$dayz-event-arrow-width*2});
                 }
             }
         }
