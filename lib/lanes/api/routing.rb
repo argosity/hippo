@@ -52,9 +52,7 @@ module Lanes
             private
 
             def make_path(path)
-                path = Lanes.config.mounted_at + '/' + @ext_id + '/' + path
-                Lanes.logger.debug "path: #{path}"
-                path
+                Lanes.config.mounted_at + '/' + @ext_id + '/' + path
             end
         end
 
