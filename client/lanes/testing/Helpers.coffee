@@ -4,9 +4,11 @@ Lanes.Test.renderComponent = (component, args = {}) ->
     wrapper = React.createClass
         makePath: Lanes.emptyFn
         childContextTypes:
-            router: React.PropTypes.func,
+            viewport: Lanes.PropTypes.State
+            router: React.PropTypes.func
             routeDepth: React.PropTypes.number
         getChildContext: ->
+            viewport: new Lanes.React.Viewport
             router: Lanes.Test.stubRouterContext(options.router)
             routeDepth: 0
         render: ->
