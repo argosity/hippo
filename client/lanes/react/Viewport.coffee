@@ -18,6 +18,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
     constructor: ->
         super
         ALL_INSTANCES.push(this)
+        return unless @selector
         @domRoot = document.body.querySelector(@selector)
         _.dom(@domRoot).addClass('lanes-root')
         Lanes.fatal("Root selector #{@selector} not found") unless root
