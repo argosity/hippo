@@ -55364,7 +55364,7 @@ webpackJsonp([0],[
 
 	  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	  var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	  var _get = function get(_x3, _x4, _x5) { var _again = true; _function: while (_again) { var object = _x3, property = _x4, receiver = _x5; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x3 = parent; _x4 = property; _x5 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -55397,6 +55397,8 @@ webpackJsonp([0],[
 	  var SCROLL_KEYS = { x: 'scrollLeft', y: 'scrollTop' };
 	  var SIZE_KEYS = { x: 'width', y: 'height' };
 
+	  var NOOP = function NOOP() {};
+
 	  var _default = (function (_Component) {
 	    _inherits(_default, _Component);
 
@@ -55414,6 +55416,7 @@ webpackJsonp([0],[
 	        itemsRenderer: _react.PropTypes.func,
 	        length: _react.PropTypes.number,
 	        pageSize: _react.PropTypes.number,
+	        scrollParentGetter: _react.PropTypes.func,
 	        threshold: _react.PropTypes.number,
 	        type: _react.PropTypes.oneOf(['simple', 'variable', 'uniform']),
 	        useTranslate3d: _react.PropTypes.bool
@@ -55441,6 +55444,7 @@ webpackJsonp([0],[
 	        },
 	        length: 0,
 	        pageSize: 10,
+	        scrollParentGetter: null,
 	        threshold: 100,
 	        type: 'simple',
 	        useTranslate3d: false
@@ -55481,15 +55485,9 @@ webpackJsonp([0],[
 	    }, {
 	      key: 'componentDidMount',
 	      value: function componentDidMount() {
-	        this.scrollParent = this.getScrollParent();
 	        this.updateFrame = this.updateFrame.bind(this);
 	        window.addEventListener('resize', this.updateFrame);
-	        this.scrollParent.addEventListener('scroll', this.updateFrame);
-	        this.updateFrame();
-	        var initialIndex = this.props.initialIndex;
-
-	        if (initialIndex == null) return;
-	        this.afId = requestAnimationFrame(this.scrollTo.bind(this, initialIndex));
+	        this.updateFrame(this.scrollTo.bind(this, this.props.initialIndex));
 	      }
 	    }, {
 	      key: 'shouldComponentUpdate',
@@ -55506,7 +55504,6 @@ webpackJsonp([0],[
 	      value: function componentWillUnmount() {
 	        window.removeEventListener('resize', this.updateFrame);
 	        this.scrollParent.removeEventListener('scroll', this.updateFrame);
-	        cancelAnimationFrame(this.afId);
 	      }
 	    }, {
 	      key: 'getOffset',
@@ -55521,8 +55518,13 @@ webpackJsonp([0],[
 	    }, {
 	      key: 'getScrollParent',
 	      value: function getScrollParent() {
+	        var _props2 = this.props;
+	        var axis = _props2.axis;
+	        var scrollParentGetter = _props2.scrollParentGetter;
+
+	        if (scrollParentGetter) return scrollParentGetter();
 	        var el = findDOMNode(this);
-	        var overflowKey = OVERFLOW_KEYS[this.props.axis];
+	        var overflowKey = OVERFLOW_KEYS[axis];
 	        while (el = el.parentElement) {
 	          switch (window.getComputedStyle(el)[overflowKey]) {
 	            case 'auto':case 'scroll':case 'overlay':
@@ -55603,19 +55605,30 @@ webpackJsonp([0],[
 	      }
 	    }, {
 	      key: 'updateFrame',
-	      value: function updateFrame() {
+	      value: function updateFrame(cb) {
+	        this.updateScrollParent();
+	        if (typeof cb != 'function') cb = NOOP;
 	        switch (this.props.type) {
 	          case 'simple':
-	            return this.updateSimpleFrame();
+	            return this.updateSimpleFrame(cb);
 	          case 'variable':
-	            return this.updateVariableFrame();
+	            return this.updateVariableFrame(cb);
 	          case 'uniform':
-	            return this.updateUniformFrame();
+	            return this.updateUniformFrame(cb);
 	        }
 	      }
 	    }, {
+	      key: 'updateScrollParent',
+	      value: function updateScrollParent() {
+	        var prev = this.scrollParent;
+	        this.scrollParent = this.getScrollParent();
+	        if (prev === this.scrollParent) return;
+	        if (prev) prev.removeEventListener('scroll', this.updateFrame);
+	        this.scrollParent.addEventListener('scroll', this.updateFrame);
+	      }
+	    }, {
 	      key: 'updateSimpleFrame',
-	      value: function updateSimpleFrame() {
+	      value: function updateSimpleFrame(cb) {
 	        var _getStartAndEnd = this.getStartAndEnd();
 
 	        var end = _getStartAndEnd.end;
@@ -55631,26 +55644,26 @@ webpackJsonp([0],[
 	          elEnd = this.getOffset(lastItemEl) + lastItemEl[OFFSET_SIZE_KEYS[axis]] - this.getOffset(firstItemEl);
 	        }
 
-	        if (elEnd > end) return;
+	        if (elEnd > end) return cb();
 
-	        var _props2 = this.props;
-	        var pageSize = _props2.pageSize;
-	        var length = _props2.length;
+	        var _props3 = this.props;
+	        var pageSize = _props3.pageSize;
+	        var length = _props3.length;
 
-	        this.setState({ size: Math.min(this.state.size + pageSize, length) });
+	        this.setState({ size: Math.min(this.state.size + pageSize, length) }, cb);
 	      }
 	    }, {
 	      key: 'updateVariableFrame',
-	      value: function updateVariableFrame() {
+	      value: function updateVariableFrame(cb) {
 	        if (!this.props.itemSizeGetter) this.cacheSizes();
 
 	        var _getStartAndEnd2 = this.getStartAndEnd();
 
 	        var start = _getStartAndEnd2.start;
 	        var end = _getStartAndEnd2.end;
-	        var _props3 = this.props;
-	        var length = _props3.length;
-	        var pageSize = _props3.pageSize;
+	        var _props4 = this.props;
+	        var length = _props4.length;
+	        var pageSize = _props4.pageSize;
 
 	        var space = 0;
 	        var from = 0;
@@ -55659,7 +55672,7 @@ webpackJsonp([0],[
 
 	        while (from < maxFrom) {
 	          var itemSize = this.getSizeOf(from);
-	          if (isNaN(itemSize) || space + itemSize > start) break;
+	          if (itemSize == null || space + itemSize > start) break;
 	          space += itemSize;
 	          ++from;
 	        }
@@ -55668,7 +55681,7 @@ webpackJsonp([0],[
 
 	        while (size < maxSize && space < end) {
 	          var itemSize = this.getSizeOf(from + size);
-	          if (isNaN(itemSize)) {
+	          if (itemSize == null) {
 	            size = Math.min(size + pageSize, maxSize);
 	            break;
 	          }
@@ -55676,21 +55689,21 @@ webpackJsonp([0],[
 	          ++size;
 	        }
 
-	        this.setState({ from: from, size: size });
+	        this.setState({ from: from, size: size }, cb);
 	      }
 	    }, {
 	      key: 'updateUniformFrame',
-	      value: function updateUniformFrame() {
+	      value: function updateUniformFrame(cb) {
 	        var _getItemSizeAndItemsPerRow = this.getItemSizeAndItemsPerRow();
 
 	        var itemSize = _getItemSizeAndItemsPerRow.itemSize;
 	        var itemsPerRow = _getItemSizeAndItemsPerRow.itemsPerRow;
 
-	        if (!itemSize || !itemsPerRow) return;
+	        if (!itemSize || !itemsPerRow) return cb();
 
-	        var _props4 = this.props;
-	        var length = _props4.length;
-	        var pageSize = _props4.pageSize;
+	        var _props5 = this.props;
+	        var length = _props5.length;
+	        var pageSize = _props5.pageSize;
 
 	        var _getStartAndEnd3 = this.getStartAndEnd();
 
@@ -55701,27 +55714,38 @@ webpackJsonp([0],[
 
 	        var size = this.constrainSize((Math.ceil((end - start) / itemSize) + 1) * itemsPerRow, length, pageSize, from);
 
-	        return this.setState({ itemsPerRow: itemsPerRow, from: from, itemSize: itemSize, size: size });
+	        return this.setState({ itemsPerRow: itemsPerRow, from: from, itemSize: itemSize, size: size }, cb);
 	      }
 	    }, {
 	      key: 'getSpaceBefore',
 	      value: function getSpaceBefore(index) {
+	        var cache = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	        if (cache[index] != null) return cache[index];
 
 	        // Try the static itemSize.
 	        var _state2 = this.state;
 	        var itemSize = _state2.itemSize;
 	        var itemsPerRow = _state2.itemsPerRow;
 
-	        if (itemSize) return Math.ceil(index / itemsPerRow) * itemSize;
+	        if (itemSize) {
+	          return cache[index] = Math.ceil(index / itemsPerRow) * itemSize;
+	        }
 
-	        // Finally, accumulate sizes of items 0 - index.
-	        var space = 0;
-	        for (var i = 0; i < index; ++i) {
+	        // Find the closest space to index there is a cached value for.
+	        var from = index;
+	        while (from > 0 && cache[--from] == null);
+
+	        // Finally, accumulate sizes of items from - index.
+	        var space = cache[from] || 0;
+	        for (var i = from; i < index; ++i) {
+	          cache[i] = space;
 	          var _itemSize = this.getSizeOf(i);
-	          if (isNaN(_itemSize)) break;
+	          if (_itemSize == null) break;
 	          space += _itemSize;
 	        }
-	        return space;
+
+	        return cache[index] = space;
 	      }
 	    }, {
 	      key: 'cacheSizes',
@@ -55738,24 +55762,31 @@ webpackJsonp([0],[
 	    }, {
 	      key: 'getSizeOf',
 	      value: function getSizeOf(index) {
+	        var cache = this.cache;
+	        var items = this.items;
+	        var _props6 = this.props;
+	        var axis = _props6.axis;
+	        var itemSizeGetter = _props6.itemSizeGetter;
+	        var type = _props6.type;
+	        var _state3 = this.state;
+	        var from = _state3.from;
+	        var itemSize = _state3.itemSize;
+	        var size = _state3.size;
 
 	        // Try the static itemSize.
-	        var itemSize = this.state.itemSize;
-
 	        if (itemSize) return itemSize;
 
 	        // Try the itemSizeGetter.
-	        var itemSizeGetter = this.props.itemSizeGetter;
-
 	        if (itemSizeGetter) return itemSizeGetter(index);
 
 	        // Try the cache.
-	        var cache = this.cache;
+	        if (index in cache) return cache[index];
 
-	        if (cache[index]) return cache[index];
-
-	        // We don't know the size.
-	        return NaN;
+	        // Try the DOM.
+	        if (type === 'simple' && index >= from && index < from + size && items) {
+	          var itemEl = findDOMNode(items).children[index - from];
+	          if (itemEl) return itemEl[OFFSET_SIZE_KEYS[axis]];
+	        }
 	      }
 	    }, {
 	      key: 'constrainFrom',
@@ -55772,7 +55803,7 @@ webpackJsonp([0],[
 	    }, {
 	      key: 'scrollTo',
 	      value: function scrollTo(index) {
-	        this.setScroll(this.getSpaceBefore(index));
+	        if (index != null) this.setScroll(this.getSpaceBefore(index));
 	      }
 	    }, {
 	      key: 'scrollAround',
@@ -55788,40 +55819,37 @@ webpackJsonp([0],[
 	    }, {
 	      key: 'getVisibleRange',
 	      value: function getVisibleRange() {
-	        var el = findDOMNode(this);
-	        var itemEls = el.children;
-	        var top = this.getOffset(el);
-	        var sizeKey = OFFSET_SIZE_KEYS[this.props.axis];
+	        var _state4 = this.state;
+	        var from = _state4.from;
+	        var size = _state4.size;
 
 	        var _getStartAndEnd4 = this.getStartAndEnd(0);
 
 	        var start = _getStartAndEnd4.start;
 	        var end = _getStartAndEnd4.end;
 
-	        var first = 0,
-	            last = 0;
-	        for (var i = 0; i < itemEls.length; ++i) {
-	          var itemEl = itemEls[i];
-	          var itemStart = this.getOffset(itemEl) - top;
-	          var itemEnd = itemStart + itemEl[sizeKey];
-	          if (itemStart <= start && itemEnd > start) first = i;
-	          if (itemStart < end && itemEnd >= end) last = i;
+	        var cache = {};
+	        var first = undefined,
+	            last = undefined;
+	        for (var i = from; i < from + size; ++i) {
+	          var itemStart = this.getSpaceBefore(i, cache);
+	          var itemEnd = itemStart + this.getSizeOf(i);
+	          if (first == null && itemEnd > start) first = i;
+	          if (first != null && itemStart < end) last = i;
 	        }
-	        var from = this.state.from;
-
-	        return [from + first, from + last];
+	        return [first, last];
 	      }
 	    }, {
 	      key: 'renderItems',
 	      value: function renderItems() {
 	        var _this = this;
 
-	        var _props5 = this.props;
-	        var itemRenderer = _props5.itemRenderer;
-	        var itemsRenderer = _props5.itemsRenderer;
-	        var _state3 = this.state;
-	        var from = _state3.from;
-	        var size = _state3.size;
+	        var _props7 = this.props;
+	        var itemRenderer = _props7.itemRenderer;
+	        var itemsRenderer = _props7.itemsRenderer;
+	        var _state5 = this.state;
+	        var from = _state5.from;
+	        var size = _state5.size;
 
 	        var items = [];
 	        for (var i = 0; i < size; ++i) {
@@ -55833,26 +55861,29 @@ webpackJsonp([0],[
 	    }, {
 	      key: 'render',
 	      value: function render() {
-	        var _props6 = this.props;
-	        var axis = _props6.axis;
-	        var length = _props6.length;
-	        var type = _props6.type;
-	        var useTranslate3d = _props6.useTranslate3d;
+	        var _props8 = this.props;
+	        var axis = _props8.axis;
+	        var length = _props8.length;
+	        var type = _props8.type;
+	        var useTranslate3d = _props8.useTranslate3d;
 	        var from = this.state.from;
 
 	        var items = this.renderItems();
 	        if (type === 'simple') return items;
 
 	        var style = { position: 'relative' };
-	        var size = this.getSpaceBefore(length);
-	        style[SIZE_KEYS[axis]] = size;
-	        if (size && axis === 'x') style.overflowX = 'hidden';
-	        var offset = this.getSpaceBefore(from);
+	        var cache = {};
+	        var size = this.getSpaceBefore(length, cache);
+	        if (size) {
+	          style[SIZE_KEYS[axis]] = size;
+	          if (axis === 'x') style.overflowX = 'hidden';
+	        }
+	        var offset = this.getSpaceBefore(from, cache);
 	        var x = axis === 'x' ? offset : 0;
 	        var y = axis === 'y' ? offset : 0;
 	        var transform = useTranslate3d ? 'translate3d(' + x + 'px, ' + y + 'px, 0)' : 'translate(' + x + 'px, ' + y + 'px)';
 	        var listStyle = {
-	          MsTransform: transform,
+	          msTransform: transform,
 	          WebkitTransform: transform,
 	          transform: transform
 	        };

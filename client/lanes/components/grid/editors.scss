@@ -4,12 +4,6 @@ $editor-background: #e6e6e6;
 $editor-border-color: #a8a8a8;
 $editor-border: 1px solid $editor-border-color;
 
-.grid-body {
-    &.is-editing {
-        overflow: visible;
-    }
-}
-
 .toolbar {
     .add-row { margin-right: 10px; }
 }

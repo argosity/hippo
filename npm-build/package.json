@@ -28,7 +28,7 @@
     "react-component-resizable": "^0.3.0",
     "react-deep-force-update": "^2.0.0",
     "react-dom": "^0.14.6",
-    "react-list": "^0.7.3",
+    "react-list": "^0.7.11",
     "react-proxy": "^2.0.0",
     "react-router": "^1.0.0",
     "react-toggle": "^2.0.1",

@@ -30,7 +30,9 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
                 selectedModel: @props.query.results.modelAt(nextProps.editingRowIndex).clone()
             )
     onRowClick: (ev, row, index) ->
-        editTopOffset = ev.currentTarget.offsetTop
+        editTopOffset = this.refs.list.getScroll() + (
+            ev.target.getBoundingClientRect().top - _.dom(this).el.getBoundingClientRect().top
+        )
         selectedIndex = (if @state.selectedIndex == index then null else index)
         selectedModel = if selectedIndex? then @props.query.results.modelAt(selectedIndex).clone() else null
         set = (attrs = {} ) => @setState(_.extend(attrs, {selectedIndex, selectedModel, editTopOffset}))
@@ -106,7 +108,7 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         <div className={_.classnames('grid-body', 'is-editing': @isEditing())}>
             {@renderEditor() if @isEditing()}
             <Lanes.Vendor.List
-                useTranslate3d={true}
+                useTranslate3d
                 isEditing={!!@state.selectedModel}
                 itemRenderer={@renderRow}
                 length={@props.query.results.length}
