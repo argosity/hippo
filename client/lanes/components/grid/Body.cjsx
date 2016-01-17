@@ -38,7 +38,9 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         )
         selectedIndex = (if @state.selectedIndex == index then null else index)
         selectedModel = if selectedIndex? then @props.query.results.modelAt(selectedIndex).clone() else null
-        set = (attrs = {} ) => @setState(_.extend(attrs, {selectedIndex, selectedModel, editTopOffset}))
+        set = (attrs = {}) =>
+            @setState(_.extend(attrs, {selectedIndex, selectedModel, editTopOffset})) unless false is @props.commands?.isEditing()
+
         if @props.onSelectionChange
             osc = @props.onSelectionChange(selectedModel, selectedIndex)
             if _.isPromise(osc)
