@@ -4,6 +4,9 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         query:      React.PropTypes.instanceOf(Lanes.Models.Query).isRequired
         cellStyles: React.PropTypes.object.isRequired
 
+    fieldConvertors:
+        bigdec: (v) -> v.toFixed(2)
+
     getInitialState: ->
         selectedModel: false
 
@@ -46,6 +49,9 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         else
             set()
 
+    convertValue: (value, field) ->
+        if @fieldConvertors[field.type] then @fieldConvertors[field.type](value) else value
+
     renderColumn: (rowNum, index, field, results, row) ->
         value = results.valueForField(rowNum, field)
 
@@ -56,7 +62,10 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         else
             null
 
-        value = field.format(value, row, @props.query) if field.format
+        value = if field.format
+            field.format(value, row, @props.query)
+        else
+            @convertValue(value, field)
 
         value = React.createElement( field.render,
             {value: value, query: @props.query, row, index: rowNum}
