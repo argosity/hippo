@@ -6,6 +6,10 @@ require_relative "<%= identifier %>/extension.rb"
 # The main namespace for <%= namespace %>
 module <%= namespace %>
 
+    def self.system_settings
+        Lanes::SystemSettings.for_ext('<%= identifier %>')
+    end
+
 end
 
 require_relative "<%= identifier %>/model"

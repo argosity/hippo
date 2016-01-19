@@ -6,6 +6,10 @@ require_relative "appy-app/extension.rb"
 # The main namespace for AppyApp
 module AppyApp
 
+    def self.system_settings
+        Lanes::SystemSettings.for_ext('appy-app')
+    end
+
 end
 
 require_relative "appy-app/model"
