@@ -30,6 +30,7 @@ Lanes.Models.Sync = {
     state: (method, model, options = {}) ->
         options.url ||= _.result(model, "url")
         if _.contains(['create', 'update', 'patch'], method)
+            isSave = true
             options.data ||= model.dataForSave(options)
         model.requestInProgress = options
         model.trigger("request", model, method, options)
@@ -42,6 +43,7 @@ Lanes.Models.Sync = {
                     model.errors = reply.errors
                     model.trigger("error", model, options)
                 model.setFromServer(reply.data, options, method)
+                model.trigger("save", model, reply, options) if isSave
                 model.trigger("sync", model, reply, options)
                 resolve(model)
 
