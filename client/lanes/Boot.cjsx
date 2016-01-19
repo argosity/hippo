@@ -1,5 +1,5 @@
 Lanes.renderScreenTo = (selector, options) ->
-    Lanes.config.set(options)
+    Lanes.config.bootstrap(options)
     document.addEventListener "DOMContentLoaded", ->
         viewport = new Lanes.React.Viewport(selector: selector)
         Lanes.Models.PubSub.initialize()
