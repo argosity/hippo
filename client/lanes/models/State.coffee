@@ -51,6 +51,14 @@ class State
             set: (newVal) ->
                 val = parseInt(newVal, 10) unless _.isBlank(newVal)
                 {val, type: 'integer'}
+        file:
+            set: (val) ->
+                type = if _.isObject(val) then 'file' else typeof val
+                if _.isBlank(val)
+                    val = null
+                    type = 'file'
+                return { val, type }
+            default: -> {}
 
         moment:
             get: (val)    -> _.moment(val)
