@@ -96,6 +96,7 @@ module Lanes
                   assets_path_prefix: Lanes.config.assets_path_prefix,
                   api_path: Lanes.config.mounted_at,
                   environment: Lanes.config.environment,
+                  system_settings: Lanes::SystemSettings.config.as_json,
                   initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id,
                 }
                 each do | ext |

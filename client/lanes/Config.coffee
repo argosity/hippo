@@ -1,3 +1,20 @@
+class SystemSettings extends Lanes.Models.Base
+
+    mixins: [ Lanes.Models.Mixins.FileSupport ]
+
+    props:
+        id:       {type:"integer"}
+        logo:     "file"
+        settings: {type: "object", required: true}
+
+    modelTypeIdentifier: -> 'system-settings'
+    url: -> Lanes.config.api_path + '/system-settings'
+
+    initialize: ->
+        @settings ||= {}
+        @settings.lanes || = {}
+        console.log @settings
+
 class Config extends Lanes.Models.State
 
     session:

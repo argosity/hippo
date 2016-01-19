@@ -1,6 +1,9 @@
 require_relative "concerns/attr_accessor_with_default"
 require 'securerandom'
 require 'pathname'
+require 'carrierwave'
+require 'fog'
+
 module Lanes
 
     class Configuration
@@ -40,6 +43,20 @@ module Lanes
             value
         end
 
+        def self.apply
+            CarrierWave.configure do |config|
+                settings = Lanes::SystemSettings.for_ext('lanes')
+                config.storage = settings.file_storage ? settings.file_storage.to_sym : :file
+                config.root = settings.storage_dir || Lanes::Extensions.controlling.root_path.join('public')
+                config.asset_host = Lanes.config.mounted_at + '/file'
+                config.fog_credentials = settings.fog_credentials
+                config.ignore_integrity_errors = false
+                config.ignore_processing_errors = false
+                config.ignore_download_errors = false
+            end
+            Extensions.each{|ext| ext.apply_configuration }
+        end
+
     end
 
     class DefaultConfiguration < Configuration
@@ -72,6 +89,8 @@ module Lanes
 
         # types of assets to include into compiled package
         config_option :static_asset_types, ['images','fonts']
+
+        config_option :configuration_id, (ENV['LANES_CONFIG_ID'] || 1)
     end
 
     class << self

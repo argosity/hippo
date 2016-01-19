@@ -42,6 +42,7 @@ module Lanes
                     require "lanes/api/null_authentication_provider"
                 end
                 # use Rack::Csrf, :skip=>['GET:/'], :raise => true
+                Lanes::Configuration.apply
             end
 
         end

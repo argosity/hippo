@@ -95,6 +95,9 @@ module Lanes
                     $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
                 )
             end
+
+            def apply_configuration
+            end
         end
 
         class Base < Definition
