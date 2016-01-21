@@ -10,6 +10,21 @@
 ###
 
 Lanes.Vendor.MessageBus = do ->
+
+    hiddenProperty = undefined
+    prefixes = ["", "webkit", "ms", "moz"]
+    for prefix in prefixes
+        check = prefix + ( if prefix == "" then "hidden" else "Hidden" )
+        unless _.isUndefined(document[check])
+            hiddenProperty = check
+            break
+
+    isHidden = ->
+        if hiddenProperty
+            document[hiddenProperty]
+        else
+            not document.hasFocus
+
     # http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
     callbacks = undefined
     clientId = undefined
@@ -40,55 +55,6 @@ Lanes.Vendor.MessageBus = do ->
     interval = null
     failCount = 0
     baseUrl = '/'
-
-    ### TODO: The plan is to force a long poll as soon as page becomes visible
-    // MIT based off https://github.com/mathiasbynens/jquery-visibility/blob/master/jquery-visibility.js
-    initVisibilityTracking =  function(window, document, $, undefined) {
-      var prefix;
-      var property;
-      // In Opera, `'onfocusin' in document == true`, hence the extra `hasFocus` check to detect IE-like behavior
-      var eventName = 'onfocusin' in document && 'hasFocus' in document ? 'focusin focusout' : 'focus blur';
-      var prefixes = ['webkit', 'o', 'ms', 'moz', ''];
-      var $event = $.event;
-
-      while ((prefix = prefixes.pop()) !== undefined) {
-        property = (prefix ? prefix + 'H': 'h') + 'idden';
-        var supportsVisibility = typeof document[property] === 'boolean';
-        if (supportsVisibility) {
-          eventName = prefix + 'visibilitychange';
-          break;
-        }
-      }
-
-      $(/blur$/.test(eventName) ? window : document).on(eventName, function(event) {
-        var type = event.type;
-        var originalEvent = event.originalEvent;
-
-        // Avoid errors from triggered native events for which `originalEvent` is
-        // not available.
-        if (!originalEvent) {
-                return;
-        }
-
-        var toElement = originalEvent.toElement;
-
-        // If it's a `{focusin,focusout}` event (IE), `fromElement` and `toElement`
-        // should both be `null` or `undefined`; else, the page visibility hasn't
-        // changed, but the user just clicked somewhere in the doc. In IE9, we need
-        // to check the `relatedTarget` property instead.
-        if (
-                !/^focus./.test(type) || (
-                        toElement === undefined &&
-                        originalEvent.fromElement === undefined &&
-                        originalEvent.relatedTarget === undefined
-                )
-        ) {
-            visibilityChanged(property && document[property] || /^(?:blur|focusout)$/.test(type) ? 'hide' : 'show');
-        }
-      });
-
-    };
-    ###
 
     hiddenProperty = undefined
     _.each ['', 'webkit', 'ms', 'moz', 'ms'], (index, prefix) ->
@@ -178,6 +144,7 @@ Lanes.Vendor.MessageBus = do ->
             timeout: pollTimeout
             method: 'POST'
             headers:
+                'Dont-Chunk': 'true'
                 'Content-Type': 'multipart/form-data'
                 'X_CSRF_TOKEN': Lanes.config.csrf_token
                 'X-SILENCE-LOGGER': 'true'

@@ -66,8 +66,7 @@ Lanes.Models.PubSub = {
         @types = new ModelTypesCollection
 
     initialize: ->
-        #Lanes.Vendor.MessageBus.start()
-        Lanes.Vendor.MessageBus.callbackInterval = 2000
+        Lanes.Vendor.MessageBus.start()
         Lanes.Vendor.MessageBus.subscribe("/file-change", (changes) ->
             Lanes.lib.HotReload.initiate(changes)
         )
