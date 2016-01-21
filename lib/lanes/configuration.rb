@@ -72,8 +72,8 @@ module Lanes
         config_option :session_secret_key_base,  '1234', silent: true
 
         # Configuration for Redis
-        config_option :redis, ENV.has_key?('REDISTOGO_URL') ?
-           {url: ENV["REDISTOGO_URL"]} : {path: "/tmp/redis.sock"}
+        config_option :redis, ENV.has_key?('REDIS_URL') ?
+           {url: ENV["REDIS_URL"]} : {path: "/tmp/redis.sock"}
 
         # url prefix to use for assets
         config_option :assets_path_prefix, "/assets"
