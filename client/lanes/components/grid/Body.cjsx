@@ -30,14 +30,14 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         if nextProps.editingRowIndex?
             @setState(
                 selectedIndex: nextProps.editingRowIndex
-                selectedModel: @props.query.results.modelAt(nextProps.editingRowIndex).clone()
+                selectedModel: @props.query.results.modelAt(nextProps.editingRowIndex)?.clone()
             )
     onRowClick: (ev, row, index) ->
         editTopOffset = this.refs.list.getScroll() + (
             ev.target.getBoundingClientRect().top - _.dom(this).el.getBoundingClientRect().top
         )
         selectedIndex = (if @state.selectedIndex == index then null else index)
-        selectedModel = if selectedIndex? then @props.query.results.modelAt(selectedIndex).clone() else null
+        selectedModel = if selectedIndex? then @props.query.results.modelAt(selectedIndex)?.clone() else null
         set = (attrs = {}) =>
             @setState(_.extend(attrs, {selectedIndex, selectedModel, editTopOffset})) unless false is @props.commands?.isEditing()
 
