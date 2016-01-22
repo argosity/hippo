@@ -5,7 +5,7 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         cellStyles: React.PropTypes.object.isRequired
 
     fieldConvertors:
-        bigdec: (v) -> v.toFixed(2)
+        bigdec: (v) -> _.bigDecimal(v).toFixed(2)
 
     getInitialState: ->
         selectedModel: false
