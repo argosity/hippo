@@ -2,6 +2,7 @@ class Lanes.Components.Grid.Toolbar extends Lanes.React.BaseComponent
 
     propTypes:
         addRecord: React.PropTypes.func
+        startEdit: React.PropTypes.func
 
     onAddRecord: ->
         model = @props.query.results.addBlankRow(0)
