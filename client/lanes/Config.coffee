@@ -13,7 +13,6 @@ class SystemSettings extends Lanes.Models.Base
     initialize: ->
         @settings ||= {}
         @settings.lanes || = {}
-        console.log @settings
 
 class Config extends Lanes.Models.State
 
