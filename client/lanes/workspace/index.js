@@ -2,7 +2,7 @@
 //=require ./Extension
 //=require ./UIState
 //=require ./ScreensMenu
-//=require ./ActiveScreenSwitcher
+//=require ./Tabs
 //=require ./ScreenView
 //=require ./Navbar
 //=require ./Layout

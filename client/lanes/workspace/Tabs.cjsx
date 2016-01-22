@@ -14,7 +14,7 @@ class TabView extends Lanes.React.Component
         </li>
 
 
-class Lanes.Workspace.ActiveScreenSwitcher extends Lanes.React.Component
+class Lanes.Workspace.Tabs extends Lanes.React.Component
 
     dataObjects:
         collection: -> Lanes.Screens.Definitions.displaying
