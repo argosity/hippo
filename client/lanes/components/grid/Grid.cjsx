@@ -54,6 +54,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
     startEdit: (editingRowIndex = 0) ->
         @setState({editingRowIndex})
+        _.defer => @setState({editingRowIndex: null})
 
     render: ->
         cellStyles = new Lanes.Components.Grid.CellStyles(@query.fields)
