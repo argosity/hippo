@@ -62,8 +62,9 @@ class Lanes.Models.AssocationMap
         options = association.getOptions(name, this)
         options.filter ||= {}
         options.filter[fk] = this.get(pk)
-
-        options.inverse_name = definition.inverse
+        options.inverse =
+            name: definition.inverse
+            without: name
 
         if true == target_class::isCollection
             new target_class(options.models || [], options)

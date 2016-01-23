@@ -5,4 +5,3 @@
 //= require ./Screen
 //= require ./Root
 //= require ./DefaultComponentNotFound
-//= require ./Router

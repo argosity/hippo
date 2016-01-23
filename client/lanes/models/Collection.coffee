@@ -201,8 +201,10 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
 #            needsReset =  _.isEmpty(attrs)
             _.extend(attrs, @associationFilter)
         model = super
-        if @options.inverse_name
-            model.set(@options.inverse_name, this.parent, options)
+        if @options.inverse
+            parent = this.parent.clone()
+            parent[@options.inverse.without].reset() if @options.inverse.without
+            model.set(@options.inverse.name, parent, options)
 #        model.changeMonitor.reset() if needsReset
         model
 
@@ -214,6 +216,6 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
 
     copyFrom: (other) ->
         super
-        if @options.inverse_name and @parent
-            @each (m) => m.set(@options.inverse_name, @parent)
+        if @options.inverse and @parent
+            @each (m) => m.set(@options.inverse.name, @parent)
         @
