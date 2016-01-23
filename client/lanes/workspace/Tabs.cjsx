@@ -5,8 +5,7 @@ class TabView extends Lanes.React.Component
         ).isRequired
 
     activate: ->
-        @props.history.push(@model.historyState())
-        #@model.active = true
+        @props.history.push(@model.historyUrl())
         null
 
     close: ->

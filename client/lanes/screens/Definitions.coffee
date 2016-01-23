@@ -4,8 +4,8 @@ class ScreenView extends Lanes.Models.BasicModel
         props:  'object'
         screen: 'object'
         active: ['boolean', true, true]
-        id: type: 'number', setOnce: true, required: true, default: ->
-            _.uniqueId('screen')
+        id: type: 'string', setOnce: true, required: true, default: ->
+            Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3);
 
     component: ->
         @screen.getScreen()
@@ -16,7 +16,8 @@ class ScreenView extends Lanes.Models.BasicModel
     remove: ->
         Lanes.Screens.Definitions.displaying.remove( this )
 
-
+    historyUrl: ->
+        pathname: "/#{@screen.id}/#{@id}/"
 
 class ScreenDefinition extends Lanes.Models.BasicModel
 
@@ -93,8 +94,8 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
 
     display: (props) ->
-        this.ensureLoaded().then =>
-            new ScreenView({props, screen: @})
+        props = _.extend({}, props, screen: this)
+        this.ensureLoaded().then -> new ScreenView(props)
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection
@@ -139,7 +140,9 @@ class ScreenViewSet extends Lanes.Models.BasicCollection
             current = this.length
         this.at(current + inc).active = true
 
-
+    findInstance: (screenId, instanceId) ->
+        this.find (instance) ->
+            instance.screen.id is screenId and instance.id is instanceId
 
 class ScreenSet extends Lanes.Models.BasicCollection
 
@@ -205,4 +208,12 @@ Lanes.Screens.Definitions = {
     groups:  new MenuGroupSet
     register: (spec) ->
         this.all.add( spec )
+    setBrowserLocation: (location) ->
+        [screenId, instanceId, args...] = _.compact(location.pathname.split('/'))
+        return unless screenId
+        if instanceId and ( instance = @displaying.findInstance(screenId, instanceId) )
+            instance.active = true
+        else
+            @all.get(screenId)?.display(id: instanceId, args: args)
+
 }

@@ -5,8 +5,7 @@ class ScreenList extends Lanes.React.Component
         ).isRequired
 
     activateScreen: ->
-        @model.createScreen().then (screen) ->
-            screen.display()
+        @model.display().then (screen) =>
             @props.history.push(screen.historyUrl())
 
     render: ->
