@@ -14,6 +14,10 @@ class Lanes.lib.Dom
     remove: ->
         @el.parentElement.removeChild(@el)
 
+    focusAndSelect: ->
+        @el.select()
+        @el.focus()
+
 wrapArg = (fn) ->
     return ->
         fn(this.el, arguments...)
