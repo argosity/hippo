@@ -14,6 +14,7 @@ class TabView extends Lanes.React.Component
     render: ->
         <li key={@model.cid} className={_.classnames(active: @model.active)}>
             <a onClick={@activate} className='tab'>{@model.screen.title}</a>
+            <LC.Icon type={@model.screen.icon} />
             <span onClick={@close} className='close'>×</span>
         </li>
 
