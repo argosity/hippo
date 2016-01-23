@@ -9,7 +9,7 @@ module Lanes
             end
 
             def root(&block)
-                API::Root.get('/', &block)
+                API::Root.get('/*', &block)
             end
 
             [:get, :post, :put, :patch, :delete].each do | method_name |
