@@ -10,20 +10,26 @@ class Lanes.Workspace.Layout extends Lanes.React.Component
     getChildContext: ->
         uistate: @uistate
 
-    componentWillMount: ->
-        @uistate.set(@props)
-
     pageClasses: ->
         _.classnames( 'page-container', @uistate.screen_menu_size,
             {"popover_menu": @uistate.popover_menu}
         )
 
+    componentWillMount: ->
+        @uistate.set(@props)
+        history = Lanes.Vendor.BrowserHistory.createHistory()
+        @historyStopListening = history.listen (location) ->
+            Lanes.Screens.Definitions.setBrowserLocation(location)# if location.action is 'POP'
+        @setState({history})
+
+    componentWillUnmount: -> @historyStopListening()
+
     render: ->
         <div className="layout">
             <LC.Modal {...@context.viewport.modalProps} />
-            <Lanes.Workspace.Navbar/>
+            <Lanes.Workspace.Navbar history={@state.history} />
             <div className={@pageClasses()}>
-                <Lanes.Workspace.ScreensMenu/>
-                <Lanes.Workspace.ScreenView/>
+                <Lanes.Workspace.ScreensMenu history={@state.history} />
+                <Lanes.Workspace.ScreenView />
             </div>
         </div>

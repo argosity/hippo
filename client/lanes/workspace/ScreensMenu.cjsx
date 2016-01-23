@@ -1,7 +1,13 @@
 class ScreenList extends Lanes.React.Component
+    propTypes:
+        history: React.PropTypes.shape(
+            push: React.PropTypes.func
+        ).isRequired
 
     activateScreen: ->
-        @model.display()
+        @model.createScreen().then (screen) ->
+            screen.display()
+            @props.history.push(screen.historyUrl())
 
     render: ->
         <li>
@@ -13,28 +19,39 @@ class ScreenList extends Lanes.React.Component
 
 class ScreenGroup extends Lanes.React.Component
 
+    propTypes:
+        history: React.PropTypes.shape(
+            push: React.PropTypes.func
+        ).isRequired
+
     toggleActive: ->
         @model.active = !@model.active
         undefined
 
     render: ->
-        screens = @model.screens().map (list) ->
-            <ScreenList model=list key=list.id />
+        screens = @model.screens().map (list) =>
+            <ScreenList {...@props} model=list key=list.id />
 
         <li className={_.classnames("group", active: @model.active)} onClick={@toggleActive}>
             <a className="heading" href="#">
-                <span>{@model.title}</span><i className={"icon icon-#{@model.icon}"}></i>
+                <span>{@model.title}</span>
+                <i className={"icon icon-#{@model.icon}"}></i>
             </a>
             <ul>{screens}</ul>
         </li>
 
 class Lanes.Workspace.ScreensMenu extends Lanes.React.Component
 
+    propTypes:
+        history: React.PropTypes.shape(
+            push: React.PropTypes.func
+        ).isRequired
+
     dataObjects:
         user: -> Lanes.current_user
 
     renderGroup: (group) ->
-        <ScreenGroup model=group key=group.id />
+        <ScreenGroup {...@props} model=group key=group.id />
 
     logOut: ->
         Lanes.current_user.logout()

@@ -3,7 +3,7 @@ Lanes.React.Root = React.createClass
         viewport: Lanes.PropTypes.State.isRequired
 
     getChildContext: ->
-        viewport: @props.route.viewport
+        viewport: @props.viewport
 
     render: ->
         <div classNames="root">

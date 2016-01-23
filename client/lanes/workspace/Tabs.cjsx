@@ -1,7 +1,12 @@
 class TabView extends Lanes.React.Component
+    propTypes:
+        history: React.PropTypes.shape(
+            push: React.PropTypes.func
+        ).isRequired
 
     activate: ->
-        @model.active = true
+        @props.history.push(@model.historyState())
+        #@model.active = true
         null
 
     close: ->
@@ -15,6 +20,10 @@ class TabView extends Lanes.React.Component
 
 
 class Lanes.Workspace.Tabs extends Lanes.React.Component
+    propTypes:
+        history: React.PropTypes.shape(
+            push: React.PropTypes.func
+        ).isRequired
 
     dataObjects:
         collection: -> Lanes.Screens.Definitions.displaying
@@ -30,8 +39,8 @@ class Lanes.Workspace.Tabs extends Lanes.React.Component
                 </div>
                 <div className="wrapper">
                     <ul className="nav nav-tabs">
-                        { @collection.map (view) ->
-                            <TabView key={view.id} model=view /> }
+                        { @collection.map (view) =>
+                            <TabView {...@props} key={view.id} model=view /> }
                     </ul>
                 </div>
             </div>

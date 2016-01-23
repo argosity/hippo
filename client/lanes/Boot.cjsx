@@ -4,6 +4,6 @@ Lanes.renderScreenTo = (selector, options) ->
         viewport = new Lanes.React.Viewport(selector: selector)
         Lanes.Models.PubSub.initialize()
         Lanes.Extensions.fireOnInitialized(viewport)
-        Lanes.React.runRouter(viewport)
+        viewport.renderRoot()
         Lanes.Extensions.fireOnAvailable(viewport)
         viewport.onBoot()

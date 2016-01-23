@@ -34,7 +34,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
         prev.addClass('complete') if prev.hasClass('loading')
         _.delay(->
             prev.remove()
-        , 1000)
+        , 100)
 
     _updateDimensions: ->
         this.set
@@ -55,3 +55,12 @@ class Lanes.React.Viewport extends Lanes.Models.State
         new _.Promise( (onOk, onCancel) =>
             @modalProps = _.extend(props, show: true, {onCancel, onOk})
         )
+
+    renderRoot: ->
+        cntrl = Lanes.Extensions.controlling()
+        component = cntrl?.rootComponent?(this) ||
+            Lanes.React.Root.DefaultComponentNotFound
+        root = React.createElement(Lanes.React.Root, {viewport: @},
+            React.createElement(component)
+        )
+        Lanes.Vendor.ReactDOM.render(root, @lanes)
