@@ -13,7 +13,12 @@ if Function::name == undefined && Object.defineProperty != undefined
 mixinModules = (klass) ->
     Lanes.lib.ModuleSupport.includeInto(klass)
     if klass::mixins
-        klass.include(Lanes.u.getPath(mixin, klass::FILE?.namespace)) for mixin in klass::mixins
+        for mixin in klass::mixins
+            if _.isString(mixin) and klass::FILE
+                part = _.classify(klass::FILE.path[1])
+                mixin = klass::FILE.namespace[part]?.Mixins[mixin] || Lanes[part]?.Mixins[mixin]
+            klass.include(mixin) if mixin
+
 
 extendProperties = (parent, child) ->
     child::extendedProperties = _.uniq(
