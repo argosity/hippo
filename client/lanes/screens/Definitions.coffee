@@ -3,21 +3,26 @@ class ScreenView extends Lanes.Models.BasicModel
     session:
         props:  'object'
         screen: 'object'
+        model:  'state'
         active: ['boolean', true, true]
         id: type: 'string', setOnce: true, required: true, default: ->
-            Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3);
+            Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3)
 
     component: ->
         @screen.getScreen()
 
     initialize: (options) ->
+        this.props ||= {}
+        this.props.screen = this
         Lanes.Screens.Definitions.displaying.add( this )
 
     remove: ->
         Lanes.Screens.Definitions.displaying.remove( this )
 
     historyUrl: ->
-        pathname: "/#{@screen.id}/#{@id}/"
+        code = @model?.visibleIdentifier?() or ''
+        pathname: "/#{@id}/#{@screen.id}/#{code}"
+
 
 class ScreenDefinition extends Lanes.Models.BasicModel
 
@@ -209,11 +214,11 @@ Lanes.Screens.Definitions = {
     register: (spec) ->
         this.all.add( spec )
     setBrowserLocation: (location) ->
-        [screenId, instanceId, args...] = _.compact(location.pathname.split('/'))
+        [instanceId, screenId, args...] = _.compact(location.pathname.split('/'))
         return unless screenId
         if instanceId and ( instance = @displaying.findInstance(screenId, instanceId) )
             instance.active = true
         else
-            @all.get(screenId)?.display(id: instanceId, args: args)
+            @all.get(screenId)?.display(id: instanceId, props: {args: args})
 
 }
