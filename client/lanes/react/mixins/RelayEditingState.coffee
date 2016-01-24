@@ -14,4 +14,8 @@ Lanes.React.Mixins.RelayEditingState = {
         if @props.writable?
             context.writable = @props.writable
         context
+
+    setModelUrl: (model) ->
+        @props.screen.model = model
+
 }

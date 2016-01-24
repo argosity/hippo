@@ -17,13 +17,14 @@ class Lanes.Screens.Commands
 
     printModel: ->
         model = @getModel()
-        window.open(_.result(model, 'pdfDownloadUrl'), 'print')
+        window.open(_.result(model, 'pdfDownloadUrl'), 'lanes-print')
 
     getModel: -> @screen[@options.modelName]
 
     setModel: (model) ->
         @options.modelWillRebind?(model)
         @screen.data.rebind("#{@options.modelName}": model)
+        @screen.setModelUrl?(model)
         @options.modelDidRebind?(model)
 
     saveModel: ->
