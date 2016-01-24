@@ -1,4 +1,5 @@
 Screen = React.createClass
+
     displayName: 'Screen'
     shouldComponentUpdate: ->
         false

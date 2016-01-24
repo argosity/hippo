@@ -19,7 +19,7 @@ class Lanes.Workspace.Layout extends Lanes.React.Component
         @uistate.set(@props)
         history = Lanes.Vendor.BrowserHistory.createHistory()
         @historyStopListening = history.listen (location) ->
-            Lanes.Screens.Definitions.setBrowserLocation(location)# if location.action is 'POP'
+            Lanes.Screens.Definitions.setBrowserLocation(location)
         @setState({history})
 
     componentWillUnmount: -> @historyStopListening()
