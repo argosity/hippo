@@ -1,4 +1,13 @@
 class TabView extends Lanes.React.Component
+
+    bindDataEvents:
+        model: 'change:model'
+
+    setDataState: (nextState) ->
+        if @model.active
+            @props.history.push(@model.historyUrl())
+        @setState(nextState)
+
     propTypes:
         history: React.PropTypes.shape(
             push: React.PropTypes.func
