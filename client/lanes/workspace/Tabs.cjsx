@@ -5,7 +5,7 @@ class TabView extends Lanes.React.Component
 
     setDataState: (nextState) ->
         if @model.active
-            @props.history.push(@model.historyUrl())
+            @props.history.replace(@model.historyUrl())
         @setState(nextState)
 
     propTypes:
