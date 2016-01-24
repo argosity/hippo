@@ -166,10 +166,10 @@ class BaseModel
         else
             this.sync('read', this, options)
 
-
     @fetch: (options = {}) ->
         record = new this()
         record.fetch(options)
+        record
 
     # Removes the model's record from the server (if it is persistent)
     # and then fires the "destroy" event
