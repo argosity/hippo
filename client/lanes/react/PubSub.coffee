@@ -4,23 +4,23 @@ class Lanes.Views.PubSub extends Lanes.Views.ModelObserver
     modelEvents:
         'remote-update': 'onChange'
 
-    hideUpdate: (field)->
-        Lanes.dom.removeClass(field,"updated")
+    hideUpdate: (field) ->
+        Lanes.dom.removeClass(field, "updated")
 
-    showUpdate: (field)->
-        Lanes.dom.addClass(field,"updated")
+    showUpdate: (field) ->
+        Lanes.dom.addClass(field, "updated")
         _.delay(@hideUpdate, 3000, field )
 
-    onChange: (model,change)->
+    onChange: (model, change) ->
         return unless change.record == this.getModel()
         for field in change.fields
             this.showUpdate(field) if field = @view.query("[name=#{field}]")
 
-    bindModel: (model)->
+    bindModel: (model) ->
         Lanes.Models.PubSub.add(model)
         super
 
-    unBindModel: (model)->
+    unBindModel: (model) ->
         Lanes.Models.PubSub.remove(model)
         super
 
