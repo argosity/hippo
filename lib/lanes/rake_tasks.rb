@@ -1,4 +1,5 @@
 require 'puma/control_cli'
+require 'resque/tasks'
 require_relative '../lanes'
 
 desc "Run the puma server in development mode"
@@ -16,6 +17,11 @@ task :console do
     ActiveRecord::Base.logger = Logger.new STDOUT
     ARGV.clear
     IRB.start
+end
+
+task :env do
+    Lanes::DB.configure_rake_environment
+    Lanes::Configuration.apply
 end
 
 # ## quite a bit of this is cribbed from Sinatra ActiveRecord

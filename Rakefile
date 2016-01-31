@@ -5,7 +5,7 @@ require 'yard'
 require 'yard-activerecord'
 require_relative 'yard_ext/all'
 require 'guard'
-
+require 'lanes/rake_tasks'
 Dir.glob('tasks/*.rake').each { |r| load r}
 
 Rake::TestTask.new do |t|

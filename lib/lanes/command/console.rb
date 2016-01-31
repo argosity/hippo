@@ -11,6 +11,7 @@ module Lanes
                 require 'pp'
                 DB.establish_connection
                 ActiveRecord::Base.logger = Logger.new STDOUT
+                Configuration.apply
                 ARGV.clear
                 IRB.start
             end
