@@ -10,8 +10,10 @@ module Lanes
         get Lanes.config.mounted_at + '/file/*',
             &API::Handlers::File.getter
 
-        Extensions.each do | ext |
+
+        Extensions.each(reversed: true) do | ext |
             ext.route(self)
         end
+
     end
 end
