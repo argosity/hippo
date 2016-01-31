@@ -65,7 +65,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
                 <BS.Modal.Title>{@state.title}</BS.Modal.Title>
             </BS.Modal.Header>
 
-            <BS.Modal.Body>
+            <BS.Modal.Body style={maxHeight: @context.viewport.height - 250}>
                 <Body modal={@} />
             </BS.Modal.Body>
 
