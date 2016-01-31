@@ -5,8 +5,8 @@ Lanes.React.Mixins.Screen = {
     listenNetworkEvents: true
 
     loadOrCreateModel: (options) ->
-        if options.prop and @props[options.props]
-            @props[options.props]
+        if options.prop and @props[options.prop]
+            @props[options.prop]
         else
             model = new options.klass
             if options.attribute and @props.args?.length
