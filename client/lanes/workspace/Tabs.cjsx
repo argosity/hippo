@@ -1,11 +1,11 @@
 class TabView extends Lanes.React.Component
 
-    bindDataEvents:
-        model: 'change:model'
-
     setDataState: (nextState) ->
+        console.log nextState
         if @model.active
             @props.history.replace(@model.historyUrl())
+        if Lanes.Screens.Definitions.displaying.length is 0
+            @props.history.push('/')
         @setState(nextState)
 
     propTypes:
@@ -18,6 +18,7 @@ class TabView extends Lanes.React.Component
         null
 
     close: ->
+
         @model.remove()
 
     render: ->
