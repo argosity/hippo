@@ -34,6 +34,7 @@
     }
 
     .header {
+        min-height: 40px;
         .c {
             border: 1px solid $table-border-color;
             align-items: flex-end;
