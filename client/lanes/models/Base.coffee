@@ -41,7 +41,7 @@ class BaseModel
     # used by PubSub to record a remote change to the model
     addChangeSet: (change) ->
         change = new Lanes.Models.ChangeSet(change)
-        this.set( change.value(), silent: true )
+        this.set( change.value() )
         for name, value of change.value()
             this.trigger("remote-update:#{name}", "changeset", this, change)
         this.triggerChangeSet(this, change)
