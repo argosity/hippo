@@ -8,8 +8,11 @@ module Lanes
                 @ext_id = ext_id
             end
 
-            def root(&block)
-                API::Root.get('/*', &block)
+            def root_view( view )
+                API::Root.get '/*' do
+                    pass unless request.accept? 'text/html'
+                    erb view
+                end
             end
 
             [:get, :post, :put, :patch, :delete].each do | method_name |
