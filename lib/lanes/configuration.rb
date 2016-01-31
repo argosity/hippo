@@ -46,12 +46,16 @@ module Lanes
         end
 
         def self.apply
+            ext = Lanes::Extensions.controlling
             ActiveJob::Base.queue_adapter = Lanes.env.test? ? :test : :resque
             Lanes::Job::FailureLogger.configure
             Jobba.configure do |config|
                 config.redis_options = Lanes.config.redis
-                config.namespace = 'jobba'
+                config.namespace = "#{ext.identifier}::jobba"
             end
+
+            Resque.redis.namespace = "#{ext.identifier}::resque"
+            Resque.redis = Lanes.config.redis
 
             CarrierWave.configure do |config|
                 settings = Lanes::SystemSettings.for_ext('lanes')
