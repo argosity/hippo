@@ -25,6 +25,10 @@ Gem::Specification.new do |spec|
     spec.required_ruby_version = ">= 2.0"
 
     spec.add_dependency "activerecord",           "~> 4.2"
+    spec.add_dependency "activejob",              "~> 4.2"
+    spec.add_dependency "jobba",                  "~> 1.4"
+
+    spec.add_dependency "resque",                 "~> 1.25"
     spec.add_dependency "pg",                     "~> 0.17"
     spec.add_dependency "sinatra",                "~> 1.4"
     spec.add_dependency "bcrypt",                 "~> 3.1"
@@ -56,7 +60,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "fog",                    "~> 1.37.0"
     spec.add_dependency "mini_magick",            "~> 4.3.6"
     spec.add_dependency "fastimage",              "~> 1.8.1"
-    spec.add_dependency "resque",                 "~> 1.25.2"
+
     spec.add_development_dependency "bundler",    "~> 1.5"
     spec.add_development_dependency "growl",      "~> 1.0"
     spec.add_development_dependency "diffy",      "~> 3.0"

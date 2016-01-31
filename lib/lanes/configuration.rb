@@ -2,6 +2,8 @@ require_relative "concerns/attr_accessor_with_default"
 require 'securerandom'
 require 'pathname'
 require 'carrierwave'
+require 'active_job'
+require 'jobba'
 require 'fog'
 
 module Lanes
@@ -44,6 +46,13 @@ module Lanes
         end
 
         def self.apply
+            ActiveJob::Base.queue_adapter = Lanes.env.test? ? :test : :resque
+            Lanes::Job::FailureLogger.configure
+            Jobba.configure do |config|
+                config.redis_options = Lanes.config.redis
+                config.namespace = 'jobba'
+            end
+
             CarrierWave.configure do |config|
                 settings = Lanes::SystemSettings.for_ext('lanes')
                 config.storage = settings.file_storage ? settings.file_storage.to_sym : :file

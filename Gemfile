@@ -4,5 +4,6 @@ gem "yard-activerecord",   github: 'nathanstitt/yard-activerecord',   branch: 'd
 gem "active_record_mocks", github: 'nathanstitt/active_record_mocks', branch: 'develop'
 
 gem 'puma'
+gem 'pry-byebug'
 
 gemspec
