@@ -1,4 +1,6 @@
 class Lanes.Workspace.Navbar extends Lanes.React.Component
+    dataObjects:
+        settings: -> Lanes.config.system_settings
 
     propTypes:
         history: React.PropTypes.shape(
@@ -15,11 +17,18 @@ class Lanes.Workspace.Navbar extends Lanes.React.Component
         _.classnames 'header-top', @model.screen_menu_preference,
             "menu-hidden": !@model.screen_menu_shown
 
+    Logo: ->
+        if @settings.logo?.url
+            <img src={@settings.logo.thumb.url} />
+        else
+            <span>Lanes</span>
+
     render: ->
+
         <div className="header-top">
             <div className="navbar-header">
                 <a className="navbar-brand logo" href="#">
-                    Lanes
+                    <@Logo />
                 </a>
                 <button className="screens-menu-toggle" onClick={@switchMenu} type="button">
                     <span className="sr-only">Toggle navbar</span>

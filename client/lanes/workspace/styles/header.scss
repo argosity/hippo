@@ -25,6 +25,12 @@
         color: rgb(205, 208, 212);
         font-size: 30px;
         text-shadow: rgb(143, 112, 112) 2px 2px 4px;
+        padding: 0;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     .navbar-toggle, .screens-menu-toggle {
