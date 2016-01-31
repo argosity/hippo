@@ -32,6 +32,7 @@ class Lanes.Models.AssocationMap
     replaceProxy: (name, model, options) ->
         return unless options.parent._cache[name]?.isProxy
         options.parent._cache[name] = model
+        model.parent = options.parent
         options.parent.trigger("change", options.parent, {})
         options.parent.trigger("change:#{name}", model, {})
 
