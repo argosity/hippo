@@ -74,7 +74,7 @@ Lanes.u = {
             object instanceof Lanes.Models.SubCollection
 
     isState: (object) ->
-        object instanceof Lanes.Models.State
+        _.isObject(object) and object.isProxy or object instanceof Lanes.Models.State
 
     # Can be called one of two ways:
     # With ns being a string, which will attempt to deref it then deref name inside it
@@ -136,12 +136,17 @@ Lanes.u = {
 lcDash = (char, match, index) ->
     return ( if index == 0 then '' else '_' ) + char.toLowerCase()
 
+originalTitleize = _.titleize
+
 _.mixin({
     dasherize: (str) ->
         _.trim(str).replace(/([A-Z])/g, lcDash).replace(/[-_\s]+/g, '-').toLowerCase()
 
+    titleize: (str) ->
+        originalTitleize.call(_, _.humanize(str))
+
     field2title: (field) ->
-        _.titleize _.humanize field
+        _.titleize field
 
     toSentence: (words = [], comma = ', ', nd = ' and ') ->
         last = words.pop()
