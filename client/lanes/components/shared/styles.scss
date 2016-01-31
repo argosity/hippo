@@ -3,6 +3,7 @@
 @import "./resize-sensor";
 @import "./overlay";
 @import "./image-saver";
+@import "./throbber";
 @import "lanes/vendor/toggle";
 
 .record-finder {
@@ -33,4 +34,11 @@
     &.active {
         display: inline;
     }
+}
+
+.job-executing{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h3 { margin: 0; margin-right: 15px; }
 }
