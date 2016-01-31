@@ -14,6 +14,11 @@ module Lanes
             end
         end
 
+        after_commit do
+            Lanes.redis_connection.publish('lanes-system-configuration-update',
+                                           self.settings)
+        end
+
         class << self
             def config
                 @config ||= SystemSettings.find_or_create_by(id: Lanes.config.configuration_id)
@@ -27,17 +32,15 @@ module Lanes
                 config.settings[extension_id] = update
                 config.settings_will_change!
                 config.save!
-                Lanes.redis_connection.publish('lanes-system-configuration-update',
-                                               {extension_id=>update})
             end
 
             def update_handler
                 lambda do
                     wrap_reply do
                         config = SystemSettings.config
-                        config.update_attributes(settings: data['settings'])
-                        Lanes.redis_connection.publish('lanes-system-configuration-update',
-                                                       config.settings)
+                        if data['settings'].is_a?(Hash)
+                            config.update_attributes!(settings: data['settings'])
+                        end
                         std_api_reply :update, { settings: config.settings }, success: true
                     end
                 end
@@ -46,8 +49,10 @@ module Lanes
         end
 
         Thread.new do
-            Lanes.redis_connection(cache:false).subscribe('lanes-system-configuration-update') do |on|
+            Lanes.redis_connection(cache:false).subscribe(
+                'lanes-system-configuration-update') do |on|
                 on.message do |channel, msg|
+                    Lanes.logger.warn "Update Config"
                     Lanes::SystemSettings.instance_variable_set(:@config, nil)
                     Lanes::Configuration.apply
                 end

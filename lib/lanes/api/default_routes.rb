@@ -1,7 +1,7 @@
 module Lanes
     API.routes.draw do
 
-        patch Lanes.config.mounted_at + '/system-settings.json',
+        put Lanes.config.mounted_at + '/system-settings.json',
               &SystemSettings.update_handler
 
         post Lanes.config.mounted_at + '/save-file-attribute',

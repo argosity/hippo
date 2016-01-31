@@ -56,7 +56,10 @@ module Lanes
             CarrierWave.configure do |config|
                 settings = Lanes::SystemSettings.for_ext('lanes')
                 config.storage = settings.file_storage ? settings.file_storage.to_sym : :file
-                config.root = settings.storage_dir || Lanes::Extensions.controlling.root_path.join('public')
+                config.root = lambda {
+                    Lanes::SystemSettings.for_ext('lanes').storage_dir ||
+                        Lanes::Extensions.controlling.root_path.join('public')
+                }
                 config.asset_host = Lanes.config.mounted_at + '/file'
                 config.fog_credentials = settings.fog_credentials
                 config.ignore_integrity_errors = false

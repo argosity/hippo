@@ -27,7 +27,7 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
         </LC.FieldWrapper>
 
     saveConfig: ->
-        @config.save() #persistSystemSettings()
+        @config.save(saveAll: true)
 
     render: ->
         choices = ['file', 'fog']

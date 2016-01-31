@@ -4,6 +4,7 @@ module Lanes::API::Handlers
 
         def self.saver
             lambda do
+                Lanes.logger.debug "Saving File. Root=#{CarrierWave.root}"
                 path = "#{params['extension_id']}/#{params['type']}"
                 model = path.underscore.camelize.constantize
                 record = model.find(params['id'])
@@ -18,7 +19,7 @@ module Lanes::API::Handlers
 
         def self.getter
             lambda do
-                send_file CarrierWave::Uploader::Base.root + '/' + params['splat'].first
+                send_file CarrierWave::Uploader::Base.root.call + '/' + params['splat'].first
             end
         end
     end
