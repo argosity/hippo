@@ -31,7 +31,7 @@ Lanes.Models.Sync = {
         options.url ||= _.result(model, "url")
         if _.contains(['create', 'update', 'patch'], method)
             isSave = true
-            options.data ||= model.dataForSave(options)
+            options.json ||= model.dataForSave(options)
         model.requestInProgress = options
         model.trigger("request", model, method, options)
         return new _.Promise (resolve, reject) ->
@@ -67,7 +67,7 @@ Lanes.Models.Sync = {
         _.defaults(options, {
             method: methodMap[method]
             dataType: "json"
-            data: query
+            json: query
         })
 
         # Ensure that we have a URL.
@@ -75,10 +75,12 @@ Lanes.Models.Sync = {
         options.url += '.json'
         unless _.isEmpty(query)
             options.url += '?' + Lanes.lib.objToParam(query)
-        if options.data and !_.isString(options.data)
-            options.originalData = options.data
-            options.data = JSON.stringify( options.data )
+
+        # if options.data and !_.isString(options.data)
+        #     options.originalData = options.data
+        #     options.json = options.data
         options.headers ||= {}
+        # options.json = true
         options.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
         options.contentType = "application/json"
 
@@ -89,7 +91,7 @@ Lanes.Models.Sync = {
                 if err
                     reject(error:err, body:options.xhr.responseText)
                 else
-                    resolve(JSON.parse(body))
+                    resolve(body)
             )
         )
 
