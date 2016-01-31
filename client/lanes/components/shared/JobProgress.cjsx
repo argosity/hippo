@@ -14,8 +14,6 @@ class Lanes.Components.JobStatus extends Lanes.React.Component
         <BS.ProgressBar now={@job.progress * 100} />
 
     render: ->
-        console.log 'jp rend'
-        window.jbs = @job
         return null if @props.onlyExecuting and not @job.isExecuting
         <div className="job-executing">
             <h3 className="message">{@props.message}</h3>
