@@ -37,9 +37,12 @@ module Lanes
 
             def json_status_str(record, type, success)
                 if success
-                    return type + " succeeded"
+                    type + " succeeded"
                 elsif record
-                    return type + " failed: " + record.errors.full_messages.join("; ")
+                    msg = type + " failed"
+                    if record.is_a?(ActiveRecord::Base)
+                        msg += ": " + record.errors.full_messages.join("; ")
+                    end
                 else
                     return "Record not found"
                 end
