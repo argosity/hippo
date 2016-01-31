@@ -23,7 +23,7 @@ class Lanes.Models.ChangeSet extends Lanes.Models.Base
     value: ->
         set = {}
         for field, change of @update
-            set[field] = change[1]
+            set[field] = if _.isArray(change) then _.last(change) else change
         set
 
 class ChangeSetCollection extends Lanes.Models.BasicCollection
