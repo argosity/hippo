@@ -77,9 +77,11 @@ module Lanes
                 mapped
             end
 
-            def each
+            def each(reversed: false)
                 @cached_instances ||= sorted.map{ |klass| klass.new }
-                @cached_instances.each{ |ext| yield ext }
+                (reversed ? @cached_instances.reverse : @cached_instances).each do |ext|
+                    yield ext
+                end
             end
 
             def controlling
