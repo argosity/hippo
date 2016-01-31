@@ -63,4 +63,4 @@ class Lanes.React.Viewport extends Lanes.Models.State
         root = React.createElement(Lanes.React.Root, {viewport: @},
             React.createElement(component)
         )
-        Lanes.Vendor.ReactDOM.render(root, @lanes)
+        @reactRoot = Lanes.Vendor.ReactDOM.render(root, @lanes)
