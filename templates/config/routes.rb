@@ -1,6 +1,4 @@
 Lanes::API.routes.draw do
-    # Load Lanes at the site root.  Adjust to fit your needs
-    get '/' do
-        erb :lanes_root_view
-    end
+    # Set default view for the site root.  Adjust to fit your needs
+    root_view :lanes_root_view
 end

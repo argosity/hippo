@@ -6,11 +6,6 @@ require 'lanes/command'
 require 'lanes/workspace/extension'
 require 'mocha/mini_test'
 
-# ext = Extensions.controlling
-# if ext.is_a?(::Lanes::Extensions::Base)
-#     Extensions.lock_controlling!
-#     require_relative '../workspace/extension'
-# end
 
 module TestingModels
     include ActiveRecordMocks::IncludeMe

@@ -101,7 +101,7 @@ Foo = (function() {
 
 Bar.extend(Foo);
 
-})(window.Lanes,(window.Lanes ? window.Lanes['Foo'] : null),window.Lanes.Vendor.ld,window.Lanes.Components,window.Lanes.Vendor.React,window.Lanes.Vendor.ReactBootstrap,{namespace:window.Lanes['Foo'],extensionName:'Foo',path:[\"foo\",\"bar\",\"baz\"]},window);
+})(window.Lanes,(window.Lanes ? window.Lanes['Foo'] : null),window.Lanes.Vendor.ld,window.Lanes.Components,window.Lanes.Vendor.React,window.Lanes.Vendor.ReactBootstrap,{namespace:window.Lanes['Foo'],extension:{name:'Foo',identifier:'foo'},path:[\"foo\",\"bar\",\"baz\"]},window);
 EOS
 
 Scope = Struct.new(:logical_path)

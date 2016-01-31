@@ -21,11 +21,11 @@ describe Lanes::SystemSettings do
     end
 
     def test_clear_on_modify
-        current = Lanes::SystemSettings._config
-        assert_same current, Lanes::SystemSettings._config
+        current = Lanes::SystemSettings.config
+        assert_same current, Lanes::SystemSettings.config
         settings = Lanes::SystemSettings.for_ext('foo')
         settings.persist!
-        assert_not_same current, Lanes::SystemSettings._config
+        assert_not_same current, Lanes::SystemSettings.config
     end
 
 end
