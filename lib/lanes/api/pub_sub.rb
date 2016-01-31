@@ -27,7 +27,6 @@ module Lanes
                     end
                 end
 
-                ::MessageBus.redis_config = Lanes.config.redis
                 Updates.relay!
 
                 ::Lanes::API.routes.draw do

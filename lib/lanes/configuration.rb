@@ -5,6 +5,7 @@ require 'carrierwave'
 require 'active_job'
 require 'jobba'
 require 'fog'
+require 'message_bus'
 
 module Lanes
 
@@ -54,8 +55,10 @@ module Lanes
                 config.namespace = "#{ext.identifier}::jobba"
             end
 
+
             Resque.redis.namespace = "#{ext.identifier}::resque"
             Resque.redis = Lanes.config.redis
+            MessageBus.redis_config = Lanes.config.redis
 
             CarrierWave.configure do |config|
                 settings = Lanes::SystemSettings.for_ext('lanes')
