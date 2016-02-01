@@ -13515,6 +13515,15 @@ webpackJsonp([1],{
 	            return (this.displayHours[1] - this.displayHours[0]) * 60;
 	        }
 	    }, {
+	        key: 'propsForDayContainer',
+	        value: function propsForDayContainer(props) {
+	            var classes = ['day'];
+	            if (this.isDateOutsideRange(props.day)) {
+	                classes.push('outside');
+	            }
+	            return { className: classes.join(' '), style: { order: props.position } };
+	        }
+	    }, {
 	        key: 'propsForAllDayEventContainer',
 	        value: function propsForAllDayEventContainer() {
 	            var style = this.multiDayCount ? { flexBasis: this.multiDayCount * C.eventHeight } : { display: 'none' };
@@ -15092,19 +15101,14 @@ webpackJsonp([1],{
 	        return events;
 	    },
 	    render: function render() {
-	        var classes = ['day'];
-	        if (this.props.layout.isDateOutsideRange(this.props.day)) {
-	            classes.push('outside');
-	        }
+	        var props = this.props.layout.propsForDayContainer(this.props);
 
 	        return React.createElement(
 	            'div',
-	            {
+	            _extends({}, props, {
 	                onClick: this.onClick,
-	                style: { order: this.props.position },
-	                className: classes.join(' '),
 	                onDoubleClick: this.onDoubleClick
-	            },
+	            }),
 	            React.createElement(
 	                Label,
 	                { day: this.props.day, className: 'label' },
@@ -16599,6 +16603,7 @@ webpackJsonp([1],{
 
 	var React = __webpack_require__(67);
 	var assign = __webpack_require__(1303);
+	var each = __webpack_require__(1327);
 	var Emitter = __webpack_require__(1372);
 
 	var EVENT_COUNTER = 1;
@@ -16640,18 +16645,47 @@ webpackJsonp([1],{
 	    }, {
 	        key: 'set',
 	        value: function set(attributes, options) {
+	            var _this = this;
+
+	            var changed = false;
+	            each(attributes, function (value, key) {
+	                if (_this.attributes[key] !== value) {
+	                    changed = true;
+	                    return false;
+	                }
+	            });
+	            if (!changed) {
+	                return;
+	            }
 	            assign(this.attributes, attributes);
-	            if (this.collection) {
-	                this.collection.emit('change');
-	            }
-	            if (!options || !options.silent) {
-	                this.emit('change');
-	            }
+	            this._emitChangeEvent(options);
 	        }
 	    }, {
 	        key: 'isEditing',
 	        value: function isEditing() {
 	            return !!this.attributes.editing;
+	        }
+	    }, {
+	        key: 'setEditing',
+	        value: function setEditing(isEditing) {
+	            var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	            if (isEditing !== this.isEditing()) {
+	                this.attributes.editing = isEditing;
+	            }
+	            this._emitChangeEvent(options);
+	        }
+	    }, {
+	        key: '_emitChangeEvent',
+	        value: function _emitChangeEvent() {
+	            var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	            if (this.collection) {
+	                this.collection.emit('change', this);
+	            }
+	            if (!options || !options.silent) {
+	                this.emit('change', this);
+	            }
 	        }
 	    }, {
 	        key: 'range',
