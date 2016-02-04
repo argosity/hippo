@@ -9,7 +9,7 @@ module Lanes
             end
 
             def root_view( view )
-                API::Root.get Lanes.config.mounted_at + '*' do
+                API::Root.get Lanes.config.mounted_at + '?*' do
                     pass unless request.accept? 'text/html'
                     erb view
                 end
