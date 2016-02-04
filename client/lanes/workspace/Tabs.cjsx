@@ -2,6 +2,7 @@ class TabView extends Lanes.React.Component
 
     setDataState: (nextState) ->
         if @model.active
+            _.dom(document.head).qs('title').text = @model.title()
             @props.history.replace(@model.historyUrl())
         if Lanes.Screens.Definitions.displaying.length is 0
             @props.history.push('/')
@@ -16,13 +17,11 @@ class TabView extends Lanes.React.Component
         @props.history.push(@model.historyUrl())
         null
 
-    close: ->
-
-        @model.remove()
+    close: -> @model.remove()
 
     render: ->
         <li key={@model.cid} className={_.classnames(active: @model.active)}>
-            <a onClick={@activate} className='tab'>{@model.screen.title}</a>
+            <a onClick={@activate} className='tab'>{@model.title()}</a>
             <LC.Icon type={@model.screen.icon} />
             <span onClick={@close} className='close'>×</span>
         </li>

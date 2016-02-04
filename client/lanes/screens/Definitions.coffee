@@ -4,12 +4,19 @@ class ScreenView extends Lanes.Models.BasicModel
         props:  'object'
         screen: 'object'
         model:  'state'
-        active: ['boolean', true, true]
+        active: 'boolean' #, true, true]
         id: type: 'string', setOnce: true, required: true, default: ->
             Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3)
 
     component: ->
         @screen.getScreen()
+
+    title: ->
+        code = @model?.visibleIdentifier?() or ''
+        code = "::#{code}" if code
+        title = @screen.title
+        title = title[0...10] + '…' if title.length > 12
+        title + code
 
     initialize: (options) ->
         this.props ||= {}
@@ -100,7 +107,10 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
     display: (props) ->
         props = _.extend({}, props, screen: this)
-        this.ensureLoaded().then -> new ScreenView(props)
+        this.ensureLoaded().then ->
+            sv = new ScreenView(props)
+            sv.active = true
+            sv
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection
