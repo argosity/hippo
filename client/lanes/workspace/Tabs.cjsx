@@ -1,7 +1,6 @@
 class TabView extends Lanes.React.Component
 
     setDataState: (nextState) ->
-        console.log nextState
         if @model.active
             @props.history.replace(@model.historyUrl())
         if Lanes.Screens.Definitions.displaying.length is 0
