@@ -1,15 +1,14 @@
 module Lanes
     API.routes.draw do
 
-        put Lanes.config.mounted_at + '/system-settings.json',
-              &SystemSettings.update_handler
+        put Lanes.config.api_path + 'system-settings.json',
+            &SystemSettings.update_handler
 
-        post Lanes.config.mounted_at + '/save-file-attribute',
+        post Lanes.config.api_path + 'save-file-attribute',
              &API::Handlers::File.saver
 
-        get Lanes.config.mounted_at + '/file/*',
+        get Lanes.config.api_path + 'file/*',
             &API::Handlers::File.getter
-
 
         Extensions.each(reversed: true) do | ext |
             ext.route(self)

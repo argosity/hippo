@@ -47,7 +47,7 @@ Lanes.Models.Mixins.FileSupport = {
         form.append("type", @modelTypeIdentifier())
         form.append("id", @getId())
         form.append("extension_id", @FILE.extension.identifier)
-        url = Lanes.config.api_path + '/save-file-attribute'
+        url = Lanes.config.api_path + 'save-file-attribute'
 
         Lanes.Vendor.xhr.post(url, {body: form}, (err, resp, body) =>
             if err

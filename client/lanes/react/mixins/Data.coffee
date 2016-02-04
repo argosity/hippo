@@ -34,7 +34,7 @@ class DataWrapper
                     if !prevState? or prevState.getId() != state.getId()
                         if prevState and not prevState.isNew()
                             Lanes.Models.PubSub.remove(prevState)
-                        unless state.isNew()
+                        unless false == state.pubsub or state.isNew()
                             Lanes.Models.PubSub.add(state)
                     @listenTo(state, 'remote-update', @onPubSubChangeSet)
         this.setComponentState({}) unless _.isEmpty(objects) or options.silent

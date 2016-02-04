@@ -17,7 +17,10 @@ class Lanes.Workspace.Layout extends Lanes.React.Component
 
     componentWillMount: ->
         @uistate.set(@props)
-        history = Lanes.Vendor.BrowserHistory.createHistory()
+        useBasename = Lanes.Vendor.BrowserHistory.useBasename
+        history = useBasename(Lanes.Vendor.BrowserHistory.createHistory)({
+            basename: Lanes.config.root_path
+        })
         @historyStopListening = history.listen (location) ->
             Lanes.Screens.Definitions.setBrowserLocation(location)
         @setState({history})

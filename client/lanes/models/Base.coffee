@@ -59,7 +59,7 @@ class BaseModel
         @FILE.extension.identifier + '/' + _.pluralize(@modelTypeIdentifier())
 
     urlRoot: ->
-        Lanes.config.api_path + '/' + _.result(this, 'api_path')
+        Lanes.config.api_path + _.result(this, 'api_path')
 
     # Default URL for the model's representation on the server
     url: ->

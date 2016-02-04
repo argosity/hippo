@@ -92,14 +92,15 @@ module Lanes
 
             def client_bootstrap_data(view)
                 data = {
-                  csrf_token: Rack::Csrf.csrf_token(view.env),
-                  controlling_extension: controlling.identifier,
+                  api_path: Lanes.config.api_path,
+                  root_path: Lanes.config.mounted_at,
                   root_view:  Lanes.config.root_view,
-                  assets_path_prefix: Lanes.config.assets_path_prefix,
-                  api_path: Lanes.config.mounted_at,
+                  csrf_token: Rack::Csrf.csrf_token(view.env),
                   environment: Lanes.config.environment,
                   system_settings: Lanes::SystemSettings.config.as_json,
-                  initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id,
+                  assets_path_prefix: Lanes.config.assets_path_prefix,
+                  controlling_extension: controlling.identifier,
+                  initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id
                 }
                 each do | ext |
                     ext_data  = ext.client_bootstrap_data(view)

@@ -1,5 +1,5 @@
 class Field extends Lanes.Models.Base
-
+    pubsub: false
     constructor: (attributes) ->
         super( _.defaults( attributes, {
             title: _.titleize(_.humanize(attributes.id))
@@ -63,6 +63,7 @@ class AvailableFields extends Lanes.Models.Collection
 
 
 class Operator extends Lanes.Models.Base
+    pubsub: false
 
     session:
         id:       'string'
@@ -104,6 +105,7 @@ class Operators extends Lanes.Models.Collection
 
 
 class Clause extends Lanes.Models.Base
+    pubsub: false
 
     session:
         value     : { type: 'string', default: '' }
@@ -179,6 +181,7 @@ class Clauses extends Lanes.Models.Collection
         @fields = options.query.fields
 
 class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network events will be listened to
+    pubsub: false
 
     @mergedSyncOptions: (args...) ->
         _.merge {}, args..., (a, b) ->

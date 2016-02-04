@@ -23,7 +23,7 @@ module Lanes
             end
 
             def lanes_api_url
-                Lanes.config.mounted_at
+                Lanes.config.api_path
             end
 
             def error_as_json

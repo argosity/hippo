@@ -9,7 +9,7 @@ module Lanes
             end
 
             def root_view( view )
-                API::Root.get '/*' do
+                API::Root.get Lanes.config.mounted_at + '*' do
                     pass unless request.accept? 'text/html'
                     erb view
                 end
@@ -55,7 +55,7 @@ module Lanes
             private
 
             def make_path(path)
-                Lanes.config.mounted_at + '/' + @ext_id + '/' + path
+                Lanes.config.api_path + @ext_id + '/' + path
             end
         end
 
@@ -72,7 +72,6 @@ module Lanes
                 routes = RoutingBlock.new(ext_id)
                 routes.instance_eval(&block)
             end
-
         end
 
         def self.routes(&block)

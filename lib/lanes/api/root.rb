@@ -6,6 +6,7 @@ require_relative 'sprockets_extension'
 require_relative 'helper_methods'
 require_relative 'pub_sub'
 
+
 module Lanes
     module API
         class Root < Sinatra::Application
@@ -34,14 +35,14 @@ module Lanes
                 set :show_exceptions, false
                 require_relative 'routing'
 
-                DB.establish_connection
                 PubSub.initialize(self)
                 Extensions.load_controlling_config
                 # late load in case an extension has provided an alternative implementation
                 unless API.const_defined?(:AuthenticationProvider)
                     require "lanes/api/null_authentication_provider"
                 end
-                # use Rack::Csrf, :skip=>['GET:/'], :raise => true
+                use Rack::Csrf, :skip=>['GET:/'], :raise => true
+
                 Lanes::Configuration.apply
             end
 

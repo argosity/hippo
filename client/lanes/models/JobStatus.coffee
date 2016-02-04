@@ -11,7 +11,6 @@ class Lanes.Models.JobStatus extends Lanes.Models.Base
         errors:      'any'
         data:        'object'
 
-    api_key: -> Lanes.config.api_path + '/job-status'
     events:
         'remote-update': 'onUpdate'
 

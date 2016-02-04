@@ -47,16 +47,19 @@ module Lanes
         end
 
         def self.apply
-            ext = Lanes::Extensions.controlling
+            identifier = Lanes::Extensions.controlling.identifier
             ActiveJob::Base.queue_adapter = Lanes.env.test? ? :test : :resque
             Lanes::Job::FailureLogger.configure
+
+            DB.establish_connection
+
             Jobba.configure do |config|
                 config.redis_options = Lanes.config.redis
-                config.namespace = "#{ext.identifier}::jobba"
+                config.namespace = "#{identifier}::jobba"
             end
 
 
-            Resque.redis.namespace = "#{ext.identifier}::resque"
+            Resque.redis.namespace = "#{identifier}::resque"
             Resque.redis = Lanes.config.redis
             MessageBus.redis_config = Lanes.config.redis
 
@@ -67,7 +70,7 @@ module Lanes
                     Lanes::SystemSettings.for_ext('lanes').storage_dir ||
                         Lanes::Extensions.controlling.root_path.join('public').to_s
                 }
-                config.asset_host = Lanes.config.mounted_at + '/file'
+                config.asset_host = Lanes.config.api_path + 'file'
                 config.fog_credentials = settings.fog_credentials
                 config.ignore_integrity_errors = false
                 config.ignore_processing_errors = false
@@ -98,7 +101,7 @@ module Lanes
         config_option :assets_path_prefix, "/assets"
 
         # prefix to use for all urls
-        config_option :mounted_at, '/api'
+        config_option :mounted_at, '/'
 
         # The initial view class to display
         config_option :root_view, 'Lanes.Workspace.Layout'
@@ -110,6 +113,10 @@ module Lanes
         config_option :static_asset_types, ['images','fonts']
 
         config_option :configuration_id, (ENV['LANES_CONFIG_ID'] || 1)
+
+        def api_path
+            mounted_at + 'api/'
+        end
     end
 
     class << self
