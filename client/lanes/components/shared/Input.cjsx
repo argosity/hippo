@@ -7,8 +7,9 @@ class Lanes.Components.Input extends Lanes.React.Component
     ]
 
     propTypes:
-        unlabled:  React.PropTypes.bool
-        onlyNumeric: React.PropTypes.bool
+        unlabled:     React.PropTypes.bool
+        onlyNumeric:  React.PropTypes.bool
+        selctOnFocus: React.PropTypes.bool
 
     getDefaultProps: ->
         type: 'text'
@@ -31,6 +32,9 @@ class Lanes.Components.Input extends Lanes.React.Component
             @setState(pendingValue: false)
             @handleChange(ev)
 
+    selectOnFocus: (ev) ->
+        ev.target.select()
+
     renderEdit: (label) ->
         value = @state.pendingValue or @props.value or @_getValue()
         label ||= @props.label or _.field2title(@props.name)
@@ -42,6 +46,7 @@ class Lanes.Components.Input extends Lanes.React.Component
             onKeyDown: @handleKeyDown if @props.onEnter
             onChange:  @validatedChangeHandler
         }, @props, {value: value})
+        if @props.selectOnFocus then props.onFocus = @selectOnFocus
         if @props.inputOnly then @renderPlain(props) else @renderStyled(props, label)
 
     renderPlain: (props) ->
