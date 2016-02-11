@@ -68,7 +68,7 @@ module Lanes
                 config.storage = settings.file_storage ? settings.file_storage.to_sym : :file
                 config.root = lambda {
                     Lanes::SystemSettings.for_ext('lanes').storage_dir ||
-                        Lanes::Extensions.controlling.root_path.join('public').to_s
+                        Lanes::Extensions.controlling.root_path.join('public/assets').to_s
                 }
                 config.asset_host = Lanes.config.api_path + 'file'
                 config.fog_credentials = settings.fog_credentials
