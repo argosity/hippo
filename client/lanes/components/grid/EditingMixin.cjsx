@@ -23,6 +23,12 @@ Lanes.Components.Grid.EditingMixin = {
             <LC.DateTime {...props} inputOnly step={15}
                 onChange={_.partial(@onDateFieldChange, _, props.field)} />
 
+    displayTypes:
+        bigdec: (props) ->
+            <span>{props.value.toFixed(2)}</span>
+        text: (props) ->
+            <span>{props.value}</span>
+
     listenNetworkEvents: true
     getDefaultProps: -> editors: {}
 
@@ -68,19 +74,21 @@ Lanes.Components.Grid.EditingMixin = {
                 {@renderControls()}
             </div>
 
+    renderEditValue: (props) ->
+        ( @props.editors[props.field.id] ||
+          @editorTypes[props.field.type] ||
+          @editorTypes['text']
+        ).call(this, props)
+
+    renderDisplayValue: (props) ->
+        ( @displayTypes[props.field.type] || @displayTypes['text'] ).call(this, props)
+
     renderField: (field, index) ->
-        control = if field.editable
-            props = _.extend( {
-                index, field,
-                props: @props,
-                name: field.id,
-                value: @getFieldValue(field)
-
-            }, _.pick(@props, 'model', 'query', 'rowIndex') )
-
-            (@props.editors[field.id] || @editorTypes[field.type] || @editorTypes['text']).call(this, props)
-        else
-            <span>{@getFieldValue(field)}</span>
+        props = _.extend( {
+            index, field, props: @props, name: field.id, value: @getFieldValue(field)
+        }, _.pick(@props, 'model', 'query', 'rowIndex') )
+        control = if field.editable then @renderEditValue(props) else
+            @renderDisplayValue(props)
 
         <div key={field.id}
             style = {@props.cellStyles.styles[index]}
