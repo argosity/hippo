@@ -10,7 +10,10 @@ $gray-darker: lighten(#000, 13.5%) !default;
   z-index: 11;
   height: 100%;
   width: 100%;
-
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   .mask {
     background-color: white;
     height: 100%;
@@ -20,9 +23,13 @@ $gray-darker: lighten(#000, 13.5%) !default;
     top: 0;
     width: 100%;
   }
+  &.rounded {
+      .mask { border-radius: $border-radius-large; }
+  }
 
   .message {
     width: 450px;
+    max-width: 90%;
     min-height: 65px;
     line-height: 3rem;
     border: 2px solid $well-border;
