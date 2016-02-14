@@ -37,14 +37,19 @@ class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
         message = @props.message or (
             if @state.hasError
                 errorMsg = @model.errorMessage
-                if _.isString(errorMsg) then errorMsg else "Error"
-            else if @props.visible or @state.isRequesting is 'GET'
+                if errorMsg and _.isString(errorMsg) then errorMsg else "Error"
+            else if @state.isRequesting is 'GET'
                 'Loading…'
-            else
+            else if _.includes(['PATCH', 'POST', 'PUT'], @state.isRequesting)
                 'Saving…'
+            else if @state.isRequesting is 'DELETE'
+                'Deleting…'
+            else
+                'Pending…'
         )
         icon = if @state.hasError then 'exclamation-circle' else 'spinner'
-        <div className="overlay">
+        classes = _.classnames 'overlay', {rounded: @props.roundedCorners}
+        <div className={classes}>
             <div className="mask" />
             <div className="message">
                 <LC.Icon type={icon} animated={not @state.hasError} />
