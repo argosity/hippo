@@ -12,25 +12,30 @@ ProxyMethods = {
     replaceProxy: (name, model) ->
         @_association_cache[name] = model
 
-    replaceWithModel: (model, options) ->
+    replaceWithModel: (model, options, whenReadyMethod) ->
         model = new @_proxied_model(model) unless Lanes.u.isModel(model)
 
-        @_proxied_parent?.replaceProxy(options.association_name, model, @_proxied_options)
+        @_proxied_parent?.replaceProxy(
+            options.association_name, model, @_proxied_options
+        )
+        relayEvents(@_proxied_events, model, 'on')
+        relayEvents(@_proxied_once_events, model, 'once')
+
+        whenReadyMethod?()
 
         if @_proxied_events?['proxyreplace']
             for ev, args of @_proxied_events['proxyreplace'] or []
                 args[0].call(args[1], model)
             delete @_proxied_events['proxyreplace']
 
-        relayEvents(@_proxied_events, model, 'on')
-        relayEvents(@_proxied_once_events, model, 'once')
-
         model
 
     _replaceAndCall: (options, fn) ->
         model = new @_proxied_model()
-        fn.call(model, fn)
-        @replaceWithModel(model, options)
+        @replaceWithModel(model, options, ->
+            fn.call(model, fn)
+        )
+
 
     serialize: (options) ->
         if @_association_cache
