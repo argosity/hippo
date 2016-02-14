@@ -1,14 +1,31 @@
+class CheckBox extends Lanes.React.BaseComponent
+    d: -> @props.query.results.xtraData(@props.row)
+
+    onChange: (ev) -> #, me, results, index) ->
+        @d().selected = ev.target.checked
+        @props.selections.onChange?(@props)
+        @forceUpdate()
+
+    render: ->
+        selected = @d().selected
+        selected = @props.selections.selectionDefault unless selected?
+        <input type="checkbox" checked={selected} onChange={@onChange} />
+
+
 class Lanes.Components.Grid.Selections
     id: 'selected'
     query: false
     textAlign: 'center'
     fixedWidth: 90
-    defaultClicked: true
+    selectionDefault: true
+    sortBy: (row, indx, all) ->
+        false == this.xtraData(indx)?.selected
+
     constructor: (options) ->
         @onChange = options.onChange
         @choices = {}
         _.bindAll(@, 'onColumnClick')
-        @render = _.partial(@render, _, @)
+        @component = _.partial(@component, _, @)
 
     onColumnClick: (ev, {rowNum, field, query}) ->
         unless ev.target.tagName is 'INPUT'
@@ -17,14 +34,5 @@ class Lanes.Components.Grid.Selections
             @select({target: input}, @, query.results, rowNum)
         ev.stopPropagation()
 
-    select: (ev, me, results, index) ->
-        x = results.xtraData(index)
-        x.selected = ev.target.checked
-        me.onChange?(index)
-
-    render: (props, me) ->
-        id = props.row[props.query.idIndex]
-        x = props.query.results.xtraData(props.index)
-        x.selected = me.defaultClicked unless x.selected?
-        <input type="checkbox" defaultChecked={x.selected}
-            onChange={_.partial(me.select, _, me, props.query.results, props.index)} />
+    component: (props, me) ->
+        <CheckBox {...props} selections={me} />
