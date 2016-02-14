@@ -123,6 +123,7 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
                 isEditing={!!@state.selectedModel}
                 itemRenderer={@renderRow}
                 length={@props.query.results.length}
+                forceUpdateProp={@props.query.changeCount}
                 type='variable'
                 ref="list"
             />
