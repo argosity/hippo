@@ -69,9 +69,9 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         else
             @convertValue(value, field)
 
-        value = React.createElement( field.render,
-            {value: value, query: @props.query, row, index: rowNum}
-        ) if field.render
+        value = React.createElement( field.component,
+            {value: value, query: @props.query, row}
+        ) if field.component
 
         <div key={field.id}
             onClick={onColClick}

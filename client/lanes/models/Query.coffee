@@ -14,11 +14,11 @@ class Field extends Lanes.Models.Base
         editable:   type: 'boolean', default: true
         sortable:   type: 'boolean', default: true
         format:     type: 'function'
-        render:     type: 'function'
         flex:       type: 'number',  default: 1
         fixedWidth: type: 'number'
         textAlign:  type: 'string', default: 'left'
         sortBy:     type: 'any'
+        component:  type: 'function'
         onColumnClick: type: 'function'
 
     derived:
