@@ -53,10 +53,11 @@ class BaseModel
         @parent?.triggerChangeSet?(triggered, change)
 
     modelTypeIdentifier: ->
-        _.dasherize(_.last(@FILE.path))
+        _.dasherize(_.last(@FILE?.path || ''))
 
     api_path: ->
-        @FILE.extension.identifier + '/' + _.pluralize(@modelTypeIdentifier())
+        id = @FILE?.extension.identifier || ''
+        id + '/' + _.pluralize(@modelTypeIdentifier())
 
     urlRoot: ->
         Lanes.config.api_path + _.result(this, 'api_path')
@@ -103,8 +104,9 @@ class BaseModel
 
     serialize: (options = {}) ->
         options.depth ||= 1
-        options.depth += 1
         return if options.depth > 5
+        depth = options.depth + 1
+        options = _.extend({}, options, {depth})
         _.extend(super,
             this.associations?.serialize(this, options)
         )
