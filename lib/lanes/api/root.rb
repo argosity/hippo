@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'oj'
-require 'rack/csrf'
-
+require 'rack/protection'
 require_relative 'sprockets_extension'
 require_relative 'helper_methods'
 require_relative 'pub_sub'
@@ -41,7 +40,7 @@ module Lanes
                 unless API.const_defined?(:AuthenticationProvider)
                     require "lanes/api/null_authentication_provider"
                 end
-                use Rack::Csrf, :skip=>['GET:/'], :raise => true
+                use Rack::Protection #, :skip=>['GET:/'], :raise => true
 
                 Lanes::Configuration.apply
             end

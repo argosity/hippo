@@ -95,7 +95,7 @@ module Lanes
                   api_path: Lanes.config.api_path,
                   root_path: Lanes.config.mounted_at,
                   root_view:  Lanes.config.root_view,
-                  csrf_token: Rack::Csrf.csrf_token(view.env),
+                  csrf_token: view.session[:csrf],
                   environment: Lanes.config.environment,
                   system_settings: Lanes::SystemSettings.config.as_json,
                   assets_path_prefix: Lanes.config.assets_path_prefix,
