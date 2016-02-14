@@ -38,6 +38,10 @@ class Lanes.Components.Grid extends Lanes.React.Component
         columEditors: React.PropTypes.object
         onSelectionChange: React.PropTypes.func
         autoLoadQuery: React.PropTypes.bool
+        toolbarChildren: React.PropTypes.oneOfType([
+            React.PropTypes.element,
+            React.PropTypes.arrayOf(React.PropTypes.element)
+        ])
 
     getDefaultProps: ->
         editorProps: {}, autoLoadQuery: true

@@ -27,11 +27,12 @@ class Lanes.Components.Grid.Selections
         _.bindAll(@, 'onColumnClick')
         @component = _.partial(@component, _, @)
 
-    onColumnClick: (ev, {rowNum, field, query}) ->
+    onColumnClick: (ev, props) ->
         unless ev.target.tagName is 'INPUT'
             input = ev.target.querySelector('input')
-            input.checked = !input.checked
-            @select({target: input}, @, query.results, rowNum)
+            xd = props.query.results.xtraData(props.rowNum)
+            xd.selected = input.checked = !input.checked
+        @onChange?(props)
         ev.stopPropagation()
 
     component: (props, me) ->
