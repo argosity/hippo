@@ -1,3 +1,8 @@
+##= require_self
+##= require ./query/Result
+##= require ./query/ArrayResult
+##= require ./query/CollectionResult
+
 class Field extends Lanes.Models.Base
     pubsub: false
     constructor: (attributes) ->
@@ -180,15 +185,15 @@ class Clauses extends Lanes.Models.Collection
         @query = options.query
         @fields = options.query.fields
 
-class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network events will be listened to
+# needs to inherit from Base so network events will be listened to
+class Lanes.Models.Query extends Lanes.Models.Base
     pubsub: false
+
 
     @mergedSyncOptions: (args...) ->
         _.merge {}, args..., (a, b) ->
             if _.isArray(a)
                 return a.concat(b)
-
-
     session:
         src:     'any'
         fields:  'collection'
@@ -201,6 +206,7 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
         autoRetrieve: ['boolean', true, true]
         title: { type: 'string', default: 'Find Record' }
         sortField: 'object'
+        changeCount: {type: 'integer', default: 0}
         sortAscending: ['boolean', true, true]
 
     derived:
@@ -220,7 +226,7 @@ class Lanes.Models.Query extends Lanes.Models.Base # needs to be Base so network
                 if @isCollection
                     new Lanes.Models.Query.CollectionResult(this)
                 else
-                    new Lanes.Models.Query.SyncedResult(this, pageSize: @pageSize)
+                    new Lanes.Models.Query.ArrayResult(this, pageSize: @pageSize)
 
     events:
         'change:sortField':     '_updateSort'
