@@ -17,7 +17,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         query: 'props'
 
     bindDataEvents:
-        query: 'load change'
+        query: 'load change sort'
 
     getInitialState: ->
         {}
