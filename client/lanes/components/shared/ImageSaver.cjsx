@@ -21,7 +21,7 @@ class Lanes.Components.ImageSaver extends Lanes.React.Component
 
     render: ->
         value = if @model.hasImage(@props.name) then @renderImage() else null
-        className = _.classnames(@props.className, 'image-saver')
+        className = _.classnames(@props.className, 'image-saver', {'with-image': @model.hasImage(@props.name)})
         <LC.FieldWrapper {...@props} className={className} value={value}>
             {value}
             <form>
