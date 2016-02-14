@@ -2,7 +2,9 @@ class Page
 
     constructor: (@pageNum, @result, options = {}) ->
         query = {}
-        @rows = []
+        @rows = options.rows || []
+        return if options.rows
+
         @result.query.clauses.each (clause) ->
             _.extend( query, clause.toParam() ) if clause.isValid
 
@@ -39,7 +41,7 @@ class Page
 
     _rowToModel: (row) ->
         attrs = {}
-        for field, i in @result.query.fields.models
+        for field, i in @result.query.fields.models when field.query
             attrs[field.id] = row[field.fetchIndex]
         new @result.query.src(attrs)
 
@@ -82,7 +84,7 @@ class Page
     removeRow: (index = 0) ->
         @rows.splice(@_normalizedIndex(index), 1)
 
-class Lanes.Models.Query.SyncedResult
+class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
 
     constructor: (q, options = {}) ->
         @query = q
@@ -105,8 +107,9 @@ class Lanes.Models.Query.SyncedResult
             ))
         )
 
-    xtraData: (index, options) ->
-        row = @pageForIndex(index).rowAt(index)
+    xtraData: (indexOrRow, options) ->
+        row = if _.isArray(indexOrRow) then indexOrRow else
+            @pageForIndex(indexOrRow).rowAt(indexOrRow)
         row[@xDataColumn] ||= {}
         _.extend(row[@xDataColumn], options) if options
         row[@xDataColumn]
@@ -162,7 +165,17 @@ class Lanes.Models.Query.SyncedResult
         @rowAt(rowNum)[ field.fetchIndex ]
 
     _updateSort: ->
-        @reload()
+        fn = @sortingFunction()
+        if fn then @allRows().then (rows) =>
+            rows = _.sortBy(rows, _.bind(fn, @))
+            rows = if @query.sortAscending then rows.reverse() else rows
+            page = new Page(0, @, rows: rows)
+            @pages = [page]
+            @query.changeCount += 1
+            # @query.trigger('sort', @query)
+            @
+        else
+            @reload()
 
-Object.defineProperty Lanes.Models.Query.SyncedResult.prototype, 'length',
+Object.defineProperty Lanes.Models.Query.ArrayResult.prototype, 'length',
     get: -> @total || 0
