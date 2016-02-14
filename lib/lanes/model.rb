@@ -19,6 +19,7 @@ module Lanes
         include Concerns::CodeIdentifier
         include Concerns::SanitizeFields
         include Concerns::Queries
+        include Concerns::SortingExpressions
 
     end
 

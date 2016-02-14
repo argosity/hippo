@@ -218,7 +218,9 @@ module Lanes
                 end
                 if sort_order.present?
                     sort_order.each do | fld, dir |
-                        query = query.order( fld.gsub(/[^\w|^\.]/,'') + ' ' + ( ( 'asc' == dir.downcase ) ? 'ASC' : 'DESC' ) )
+                        query = model.append_sort_to_query(
+                            query, fld, dir.downcase.to_sym
+                        )
                     end
                 end
                 query
