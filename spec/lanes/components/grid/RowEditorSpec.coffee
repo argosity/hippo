@@ -11,7 +11,7 @@ Model = Lanes.Test.defineModel(
     props: {id: 'integer', code: 'string', name: 'string', notes: 'string'}
 )
 
-LAST_ROW_SELECTOR = '.z-table .z-row:last-child'
+LAST_ROW_SELECTOR = '.grid-body .r:last-child'
 ADD_ROW_SELECTOR = 'button.add-row'
 
 RenderGrid = (q) ->

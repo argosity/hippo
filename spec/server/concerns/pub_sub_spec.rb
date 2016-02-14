@@ -54,9 +54,7 @@ describe "PubSub" do
                     l.string :name, :number
                 end
             end
-
             test.call
-
         end
     end
 
@@ -74,8 +72,10 @@ describe "PubSub" do
     end
 
     it "registers" do
-        assert_equal [ :save, :create, :update, :destroy ], EventTester.valid_event_names
-        assert_equal [ :save, :create, :update, :destroy, :test_one ], A.valid_event_names
+        assert_equal [ :save, :create, :update, :destroy ],
+                     EventTester.valid_event_names
+        assert_equal [ :save, :create, :update, :destroy, :test_one ],
+                     A.valid_event_names
     end
 
     it "can only observe valid events" do
@@ -106,23 +106,22 @@ describe "PubSub" do
 
     it "can be fired and observed" do
         results=[]
-        A.observe(:test_one) do | ev, one, two |
-            results = [ ev, one, two ]
+        A.observe(:test_one) do | one, two |
+            results = [ one, two ]
         end
         a=A.new
         a.send(:fire_pubsub_event, :test_one, 3, 5 )
-        assert_equal [a, 3, 5], results
+        assert_equal [3, 5], results
 
         a.send(:fire_pubsub_event, :test_one, 'foo' )
-        assert_equal [a, 'foo', nil], results
+        assert_equal ['foo', nil], results
     end
-
 
     it "can use custom event assertions" do
         assert_event_fires(A, :test_one) do
             A.new.send(:fire_pubsub_event, :test_one, 3, 5)
         end
-        assert_equal [ 3, 5 ], last_event_results[1..-1]
+        assert_equal [ 3, 5 ], last_event_results
     end
 
 end

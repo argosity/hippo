@@ -54,7 +54,7 @@ describe "Lanes.Models.AssocationProxy", ->
 
     it 'provides api_key', ->
         instance = new @Proxy
-        expect(instance.api_path()).toEqual('s')
+        expect(instance.api_path()).toEqual('/s')
 
     it 'stores events and eventually sets them on model', ->
         spy1 = jasmine.createSpy()
@@ -64,6 +64,8 @@ describe "Lanes.Models.AssocationProxy", ->
         instance.color.once('change:rgb', spy2)
         expect(instance.color.isProxy).toBe(true)
         instance.color.rgb = 'newcolor'
+        expect(instance.color.isProxy).toBeUndefined()
+
         expect(spy1).toHaveBeenCalled()
         expect(spy2).toHaveBeenCalled()
 

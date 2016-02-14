@@ -37,7 +37,7 @@ describe "Lanes.Models.ServerCache", ->
 
         Lanes.Models.ServerCache.fetchCollection(collection).then ->
             expect(Lanes.Models.Sync.perform).toHaveBeenCalledWith('read', jasmine.any(Object))
-            expect(collection.length).toEqual(2)
+            expect(collection.length).toEqual(3)
             Lanes.Models.Sync.perform.calls.reset()
             Lanes.Models.ServerCache.fetchCollection(collection).then ->
                 expect(Lanes.Models.Sync.perform).not.toHaveBeenCalled()

@@ -15,7 +15,7 @@ renderGrid = (q, done) ->
     grid = LT.renderComponent(LC.Grid, props: query: q)
     expect(loaded).toHaveBeenCalled()
     _.defer ->
-        expect(_.dom(grid).qsa('.z-row').length)
+        expect(_.dom(grid).qsa('.r').length)
             .toEqual( q.results.length )
         done()
 
@@ -39,14 +39,11 @@ describe "Lanes.Components.Grid", ->
             renderGrid(@query, d)
 
     it 'renders toolbar', ->
-        jasmineReact.spyOnClass(LC.Grid, 'makeToolBar').and.callThrough()
         grid = LT.renderComponent(LC.Grid, props: {
             query: @query, editor: true, allowCreate: true
         })
-        expect(
-            jasmineReact.classPrototype(LC.Grid).makeToolBar
-        ).toHaveBeenCalled()
-
+        tb = _.dom(grid).qs('.toolbar')
+        expect(tb).not.toBeUndefined()
 
     it 'notifies when selection changes', (done) ->
         spy = jasmine.createSpy('selection')
@@ -54,6 +51,6 @@ describe "Lanes.Components.Grid", ->
             query: @query, editor: true, onSelectionChange: spy
         })
         _.defer ->
-            _.dom(grid).qs('.z-table .z-cell').click()
+            _.dom(grid).qs('.grid-body .c').click()
             expect(spy).toHaveBeenCalled()
             done()

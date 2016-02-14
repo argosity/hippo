@@ -20,12 +20,4 @@ describe Lanes::SystemSettings do
         assert_equal({foo: 'bar'}, Lanes::SystemSettings.for_ext('foo').to_h)
     end
 
-    def test_clear_on_modify
-        current = Lanes::SystemSettings.config
-        assert_same current, Lanes::SystemSettings.config
-        settings = Lanes::SystemSettings.for_ext('foo')
-        settings.persist!
-        assert_not_same current, Lanes::SystemSettings.config
-    end
-
 end

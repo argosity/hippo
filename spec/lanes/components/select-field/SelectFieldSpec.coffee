@@ -27,18 +27,19 @@ describe "Lanes.Components.SelectField", ->
         @brands.ensureLoaded().then(done)
 
     it "renders read only", (done) ->
-        sf = LT.renderComponent(LC.SelectField, props:{model: @car, name: 'brand', labelField: 'name'})
-        expect(_.dom(sf).qs('.display').text).toBe('')
+        sf = LT.renderComponent(LC.SelectField,
+             props:{model: @car, name: 'brand', labelField: 'name'})
+        expect(_.dom(sf).qs('.value').text).toBe('')
         @car.set(brand: @brands.at(0))
         _.defer ->
-            expect(_.dom(sf).qs('.display').text).toBe('General Motors')
+            expect(_.dom(sf).qs('.value').text).toBe('General Motors')
             done()
 
     it "renders as edit", ->
         @car.set(brand: @brands.at(1))
         sf = LT.renderComponent(LC.SelectField, props:{
-            model: @car, name: 'brand', labelField: 'name', editOnly: true, collection: @brands
-        })
+             model: @car, name: 'brand', labelField: 'name',
+             editOnly: true, collection: @brands })
         expect(_.dom(sf).qs('input[type=text]').value).toEqual('Ford Motor Co.')
 
     it 'uses a custom data source', ->
@@ -78,7 +79,7 @@ describe "Lanes.Components.SelectField", ->
             multi: true, model: @car, name: 'carTypes',
             labelField: 'name', collection: @brands
         })
-        expect(_.dom(sf).qs('.display').text).toEqual('General Motors and Chrysler/Dodge')
+        expect(_.dom(sf).qs('.value').text).toEqual('General Motors and Chrysler/Dodge')
 
     it "renders all choices", ->
         sf = LT.renderComponent(LC.SelectField, props:{
