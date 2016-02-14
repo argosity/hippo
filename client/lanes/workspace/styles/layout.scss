@@ -20,7 +20,6 @@
     @extend .container-fluid;
     position: relative;
     top: 50px;
-    min-height: 500px;
     transition: all 0.15s ease-in-out 0s;
     margin-left: 240px;
     padding: 0px;
@@ -28,7 +27,7 @@
     .screen {
         height: 100%;
         display: none;
-        > div { height: 100%; }
+        > div { min-height: 100%; }
         &.active {
             display: block
         }
