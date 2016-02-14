@@ -14230,6 +14230,15 @@ webpackJsonp([4],{
 
 	  if (duration <= 0) setTimeout(done.bind(null, fakeEvent), 0);
 
+	  return {
+	    cancel: function cancel() {
+	      if (fired) return;
+	      fired = true;
+	      _domHelpersEventsOff2['default'](node, _domHelpersTransitionProperties2['default'].end, done);
+	      _domHelpersStyle2['default'](node, reset);
+	    }
+	  };
+
 	  function done(event) {
 	    if (event.target !== event.currentTarget) return;
 
@@ -14290,6 +14299,10 @@ webpackJsonp([4],{
 	function setNumber(_ref) {
 	  var _format2 = _ref.format;
 	  var _parse = _ref.parse;
+	  var _ref$decimalChar = _ref.decimalChar;
+	  var decimalChar = _ref$decimalChar === undefined ? function () {
+	    return '.';
+	  } : _ref$decimalChar;
 	  var _ref$precision = _ref.precision;
 	  var precision = _ref$precision === undefined ? function () {
 	    return null;
@@ -14302,17 +14315,22 @@ webpackJsonp([4],{
 
 	  checkFormats(REQUIRED_NUMBER_FORMATS, formats);
 
+	  formats.editFormat = formats.editFormat || function (str) {
+	    return parseFloat(str);
+	  };
+
 	  _numberLocalizer = {
 	    formats: formats,
 	    precision: precision,
+	    decimalChar: decimalChar,
 	    propType: propType || localePropType,
 
 	    format: function format(value, str, culture) {
 	      return _format(this, _format2, value, str, culture);
 	    },
 
-	    parse: function parse(value, culture) {
-	      var result = _parse.call(this, value, culture);
+	    parse: function parse(value, culture, format) {
+	      var result = _parse.call(this, value, culture, format);
 	      _invariant2['default'](result == null || typeof result === 'number', 'number localizer `parse(..)` must return a number, null, or undefined');
 	      return result;
 	    }
@@ -14361,10 +14379,15 @@ webpackJsonp([4],{
 
 	    return (_numberLocalizer4 = _numberLocalizer).format.apply(_numberLocalizer4, arguments);
 	  },
-	  precision: function precision() {
+	  decimalChar: function decimalChar() {
 	    var _numberLocalizer5;
 
-	    return (_numberLocalizer5 = _numberLocalizer).precision.apply(_numberLocalizer5, arguments);
+	    return (_numberLocalizer5 = _numberLocalizer).decimalChar.apply(_numberLocalizer5, arguments);
+	  },
+	  precision: function precision() {
+	    var _numberLocalizer6;
+
+	    return (_numberLocalizer6 = _numberLocalizer).precision.apply(_numberLocalizer6, arguments);
 	  }
 	};
 
@@ -14401,14 +14424,16 @@ webpackJsonp([4],{
 	function createWrapper() {
 	  var dummy = {};
 
-	  ['formats', 'parse', 'format', 'firstOfWeek', 'precision'].forEach(function (name) {
-	    return Object.defineProperty(dummy, name, {
-	      enumerable: true,
-	      get: function get() {
-	        throw new Error('[React Widgets] You are attempting to use a widget that requires localization ' + '(Calendar, DateTimePicker, NumberPicker). ' + 'However there is no localizer set. Please configure a localizer. \n\n' + 'see http://jquense.github.io/react-widgets/docs/#/i18n for more info.');
-	      }
+	  if (process.env.NODE_ENV !== 'production') {
+	    ['formats', 'parse', 'format', 'firstOfWeek', 'precision'].forEach(function (name) {
+	      return Object.defineProperty(dummy, name, {
+	        enumerable: true,
+	        get: function get() {
+	          throw new Error('[React Widgets] You are attempting to use a widget that requires localization ' + '(Calendar, DateTimePicker, NumberPicker). ' + 'However there is no localizer set. Please configure a localizer. \n\n' + 'see http://jquense.github.io/react-widgets/docs/#/i18n for more info.');
+	        }
+	      });
 	    });
-	  });
+	  }
 	  return dummy;
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(70)))
@@ -14473,7 +14498,7 @@ webpackJsonp([4],{
 	    var result;
 	    if (Array.isArray(arr)) {
 	      arr.every(function (val, idx) {
-	        if (cb.call(thisArg, val, idx, arr)) return (result = val, false);
+	        if (cb.call(thisArg, val, idx, arr)) return result = val, false;
 	        return true;
 	      });
 	      return result;
@@ -14768,11 +14793,11 @@ webpackJsonp([4],{
 	        'aria-owns': listID,
 	        'aria-busy': !!busy,
 	        'aria-live': !open && 'polite',
-	        //aria-activedescendant={activeID}
 	        'aria-autocomplete': 'list',
 	        'aria-disabled': disabled,
 	        'aria-readonly': readOnly,
 	        onKeyDown: this._keyDown,
+	        onKeyPress: this._keyPress,
 	        onClick: this._click,
 	        onFocus: this._focus.bind(null, true),
 	        onBlur: this._focus.bind(null, false),
@@ -14815,8 +14840,7 @@ webpackJsonp([4],{
 	          },
 	          onOpening: function () {
 	            return _this.refs.list.forceUpdate();
-	          },
-	          onRequestClose: this.close
+	          }
 	        }),
 	        _react2['default'].createElement(
 	          'div',
@@ -14854,6 +14878,7 @@ webpackJsonp([4],{
 	        _react2['default'].createElement('i', { className: 'rw-i rw-i-search' })
 	      ),
 	      _react2['default'].createElement('input', { ref: 'filter', className: 'rw-input',
+	        autoComplete: 'off',
 	        placeholder: _util_2['default'].result(messages.filterPlaceholder, this.props),
 	        value: this.props.searchTerm,
 	        onChange: function (e) {
@@ -14924,18 +14949,21 @@ webpackJsonp([4],{
 	      if (isOpen) this.setState({ focusedItem: list.first() });else change(list.first());
 	      e.preventDefault();
 	    } else if (key === 'Escape' && isOpen) {
+	      e.preventDefault();
 	      closeWithFocus();
 	    } else if ((key === 'Enter' || key === ' ' && !filtering) && isOpen) {
+	      e.preventDefault();
 	      change(this.state.focusedItem, true);
+	    } else if (key === ' ' && !filtering && !isOpen) {
+	      e.preventDefault();
+	      this.open();
 	    } else if (key === 'ArrowDown') {
 	      if (alt) this.open();else if (isOpen) this.setState({ focusedItem: list.next(focusedItem) });else change(list.next(selectedItem));
 	      e.preventDefault();
 	    } else if (key === 'ArrowUp') {
 	      if (alt) closeWithFocus();else if (isOpen) this.setState({ focusedItem: list.prev(focusedItem) });else change(list.prev(selectedItem));
 	      e.preventDefault();
-	    } else if (!(this.props.filter && isOpen)) this.search(String.fromCharCode(e.keyCode), function (item) {
-	      isOpen ? _this4.setState({ focusedItem: item }) : change(item);
-	    });
+	    }
 
 	    function change(item, fromList) {
 	      if (!item) return;
@@ -14943,9 +14971,23 @@ webpackJsonp([4],{
 	    }
 	  }
 	}, {
+	  key: '_keyPress',
+	  decorators: [_utilInteraction.widgetEditable],
+	  value: function _keyPress(e) {
+	    var _this5 = this;
+
+	    _utilWidgetHelpers.notify(this.props.onKeyPress, [e]);
+
+	    if (e.defaultPrevented) return;
+
+	    if (!(this.props.filter && this.props.open)) this.search(String.fromCharCode(e.which), function (item) {
+	      _this5.isMounted() && _this5.props.open ? _this5.setState({ focusedItem: item }) : item && _this5.change(item);
+	    });
+	  }
+	}, {
 	  key: 'change',
 	  value: function change(data) {
-	    if (!_util_2['default'].isShallowEqual(data, this.props.value)) {
+	    if (!_utilDataHelpers.valueMatcher(data, this.props.value, this.props.valueField)) {
 	      _utilWidgetHelpers.notify(this.props.onChange, data);
 	      _utilWidgetHelpers.notify(this.props.onSearch, '');
 	      this.close();
@@ -14966,18 +15008,20 @@ webpackJsonp([4],{
 	}, {
 	  key: 'search',
 	  value: function search(character, cb) {
-	    var _this5 = this;
+	    var _this6 = this;
 
 	    var word = ((this._searchTerm || '') + character).toLowerCase();
+
+	    if (!character) return;
 
 	    this._searchTerm = word;
 
 	    this.setTimeout('search', function () {
-	      var list = _this5.refs.list,
-	          key = _this5.props.open ? 'focusedItem' : 'selectedItem',
-	          item = list.next(_this5.state[key], word);
+	      var list = _this6.refs.list,
+	          key = _this6.props.open ? 'focusedItem' : 'selectedItem',
+	          item = list.next(_this6.state[key], word);
 
-	      _this5._searchTerm = '';
+	      _this6._searchTerm = '';
 	      if (item) cb(item);
 	    }, this.props.delay);
 	  }
@@ -15019,6 +15063,8 @@ webpackJsonp([4],{
 
 	var babelHelpers = __webpack_require__(1409);
 
+	var _OVERFLOW;
+
 	var _react = __webpack_require__(67);
 
 	var _react2 = babelHelpers.interopRequireDefault(_react);
@@ -15030,6 +15076,10 @@ webpackJsonp([4],{
 	var _domHelpersQueryHeight = __webpack_require__(1216);
 
 	var _domHelpersQueryHeight2 = babelHelpers.interopRequireDefault(_domHelpersQueryHeight);
+
+	var _domHelpersUtilCamelizeStyle = __webpack_require__(900);
+
+	var _domHelpersUtilCamelizeStyle2 = babelHelpers.interopRequireDefault(_domHelpersUtilCamelizeStyle);
 
 	var _utilConfiguration = __webpack_require__(1411);
 
@@ -15043,33 +15093,24 @@ webpackJsonp([4],{
 
 	var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
 
-	var transform = _utilConfiguration2['default'].animate.transform;
+	var transform = _domHelpersUtilCamelizeStyle2['default'](_utilConfiguration2['default'].animate.transform);
+
+	var CLOSING = 0,
+	    CLOSED = 1,
+	    OPENING = 2,
+	    OPEN = 3;
 
 	function properties(prop, value) {
 	  var _ref, _ref2;
 
 	  var TRANSLATION_MAP = _utilConfiguration2['default'].animate.TRANSLATION_MAP;
 
-	  if (TRANSLATION_MAP && TRANSLATION_MAP[prop]) return (_ref = {}, _ref[transform] = TRANSLATION_MAP[prop] + '(' + value + ')', _ref);
+	  if (TRANSLATION_MAP && TRANSLATION_MAP[prop]) return _ref = {}, _ref[transform] = TRANSLATION_MAP[prop] + '(' + value + ')', _ref;
 
-	  return (_ref2 = {}, _ref2[prop] = value, _ref2);
+	  return _ref2 = {}, _ref2[prop] = value, _ref2;
 	}
 
-	var PopupContent = _react2['default'].createClass({
-	  displayName: 'PopupContent',
-
-	  render: function render() {
-	    var child = this.props.children;
-
-	    if (!child) return _react2['default'].createElement('span', { className: 'rw-popup rw-widget' });
-
-	    child = _react2['default'].Children.only(this.props.children);
-
-	    return _react.cloneElement(child, {
-	      className: _classnames2['default'](child.props.className, 'rw-popup rw-widget')
-	    });
-	  }
-	});
+	var OVERFLOW = (_OVERFLOW = {}, _OVERFLOW[CLOSED] = 'hidden', _OVERFLOW[CLOSING] = 'hidden', _OVERFLOW[OPENING] = 'hidden', _OVERFLOW);
 
 	module.exports = _react2['default'].createClass({
 
@@ -15080,7 +15121,6 @@ webpackJsonp([4],{
 	    dropUp: _react2['default'].PropTypes.bool,
 	    duration: _react2['default'].PropTypes.number,
 
-	    onRequestClose: _react2['default'].PropTypes.func.isRequired,
 	    onClosing: _react2['default'].PropTypes.func,
 	    onOpening: _react2['default'].PropTypes.func,
 	    onClose: _react2['default'].PropTypes.func,
@@ -15088,7 +15128,9 @@ webpackJsonp([4],{
 	  },
 
 	  getInitialState: function getInitialState() {
-	    return {};
+	    return {
+	      status: this.props.open ? OPENING : CLOSED
+	    };
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -15102,25 +15144,35 @@ webpackJsonp([4],{
 	    };
 	  },
 
-	  // componentDidMount(){
-	  //   !this.props.open && this.close(0)
-	  // },
-	  componentWillMount: function componentWillMount() {
-	    !this.props.open && (this._initialPosition = true);
-	  },
-
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    this.setState({
 	      contentChanged: childKey(nextProps.children) !== childKey(this.props.children)
 	    });
 	  },
 
+	  componentDidMount: function componentDidMount() {
+	    if (this.state.status === OPENING) {
+	      this.open();
+	    }
+	  },
+
 	  componentDidUpdate: function componentDidUpdate(pvProps) {
 	    var closing = pvProps.open && !this.props.open,
 	        opening = !pvProps.open && this.props.open,
-	        open = this.props.open;
+	        open = this.props.open,
+	        status = this.state.status;
 
-	    if (opening) this.open();else if (closing) this.close();else if (open) this.height();
+	    if (!!pvProps.dropUp !== !!this.props.dropUp) {
+	      this.cancelNextCallback();
+	      if (status === OPENING) this.open();
+	      if (status === CLOSING) this.close();
+	      return;
+	    }
+
+	    if (opening) this.open();else if (closing) this.close();else if (open) {
+	      var height = this.height();
+	      if (height !== this.state.height) this.setState({ height: height });
+	    }
 	  },
 
 	  render: function render() {
@@ -15129,108 +15181,144 @@ webpackJsonp([4],{
 	    var open = _props.open;
 	    var dropUp = _props.dropUp;
 	    var props = babelHelpers.objectWithoutProperties(_props, ['className', 'open', 'dropUp']);
-	    var display = open ? 'block' : void 0;
+	    var _state = this.state;
+	    var status = _state.status;
+	    var height = _state.height;
 
-	    if (this._initialPosition) {
-	      display = 'none';
-	    }
+	    var overflow = OVERFLOW[status] || 'visible',
+	        display = status === CLOSED ? 'none' : 'block';
 
 	    return _react2['default'].createElement(
 	      'div',
 	      babelHelpers._extends({}, props, {
-	        style: babelHelpers._extends({
-	          display: display,
-	          height: this.state.height
-	        }, props.style),
-	        className: _classnames2['default'](className, 'rw-popup-container', { 'rw-dropup': dropUp })
+	        style: babelHelpers._extends({ display: display, overflow: overflow, height: height }, props.style),
+	        className: _classnames2['default'](className, 'rw-popup-container', {
+	          'rw-dropup': dropUp,
+	          'rw-popup-animating': this.isTransitioning()
+	        })
 	      }),
-	      _react2['default'].createElement(
-	        PopupContent,
-	        { ref: 'content' },
-	        this.props.children
-	      )
+	      this.renderChildren()
 	    );
 	  },
 
-	  reset: function reset() {
-	    var container = _utilCompat2['default'].findDOMNode(this),
-	        content = _utilCompat2['default'].findDOMNode(this.refs.content),
-	        style = { display: 'block', overflow: 'hidden' };
+	  renderChildren: function renderChildren() {
+	    if (!this.props.children) return _react2['default'].createElement('span', { className: 'rw-popup rw-widget' });
 
-	    _domHelpersStyle2['default'](container, style);
-	    this.height();
-	    _domHelpersStyle2['default'](content, properties('top', this.props.dropUp ? '100%' : '-100%'));
-	  },
+	    var offset = this.getOffsetForStatus(this.state.status),
+	        child = _react2['default'].Children.only(this.props.children);
 
-	  height: function height() {
-	    var el = _utilCompat2['default'].findDOMNode(this),
-	        content = _utilCompat2['default'].findDOMNode(this.refs.content),
-	        margin = parseInt(_domHelpersStyle2['default'](content, 'margin-top'), 10) + parseInt(_domHelpersStyle2['default'](content, 'margin-bottom'), 10);
-
-	    var height = _domHelpersQueryHeight2['default'](content) + (isNaN(margin) ? 0 : margin);
-
-	    if (this.state.height !== height) {
-	      el.style.height = height + 'px';
-	      this.setState({ height: height });
-	    }
+	    return _react.cloneElement(child, {
+	      style: babelHelpers._extends({}, child.props.style, offset, {
+	        position: this.isTransitioning() ? 'absolute' : undefined
+	      }),
+	      className: _classnames2['default'](child.props.className, 'rw-popup rw-widget')
+	    });
 	  },
 
 	  open: function open() {
-	    var self = this,
-	        anim = _utilCompat2['default'].findDOMNode(this),
-	        el = _utilCompat2['default'].findDOMNode(this.refs.content);
+	    var _this = this;
 
-	    this.ORGINAL_POSITION = _domHelpersStyle2['default'](el, 'position');
-	    this._isOpening = true;
-
-	    if (this._initialPosition) {
-	      this._initialPosition = false;
-	      this.reset();
-	    } else this.height();
+	    this.cancelNextCallback();
+	    var el = _utilCompat2['default'].findDOMNode(this).firstChild,
+	        height = this.height();
 
 	    this.props.onOpening();
 
-	    anim.className += ' rw-popup-animating';
-	    el.style.position = 'absolute';
+	    this.safeSetState({ status: OPENING, height: height }, function () {
+	      var offset = _this.getOffsetForStatus(OPEN),
+	          duration = _this.props.duration;
 
-	    _utilConfiguration2['default'].animate(el, { top: 0 }, self.props.duration, 'ease', function () {
-	      if (!self._isOpening) return;
-
-	      anim.className = anim.className.replace(/ ?rw-popup-animating/g, '');
-
-	      el.style.position = self.ORGINAL_POSITION;
-	      anim.style.overflow = 'visible';
-	      self.ORGINAL_POSITION = null;
-
-	      self.props.onOpen();
+	      _this.animate(el, offset, duration, 'ease', function () {
+	        _this.safeSetState({ status: OPEN }, function () {
+	          _this.props.onOpen();
+	        });
+	      });
 	    });
 	  },
 
-	  close: function close(dur) {
-	    var self = this,
-	        el = _utilCompat2['default'].findDOMNode(this.refs.content),
-	        anim = _utilCompat2['default'].findDOMNode(this);
+	  close: function close() {
+	    var _this2 = this;
 
-	    this.ORGINAL_POSITION = _domHelpersStyle2['default'](el, 'position');
+	    this.cancelNextCallback();
+	    var el = _utilCompat2['default'].findDOMNode(this).firstChild,
+	        height = this.height();
 
-	    this._isOpening = false;
-	    this.height();
 	    this.props.onClosing();
 
-	    anim.style.overflow = 'hidden';
-	    anim.className += ' rw-popup-animating';
-	    el.style.position = 'absolute';
+	    this.safeSetState({ status: CLOSING, height: height }, function () {
+	      var offset = _this2.getOffsetForStatus(CLOSED),
+	          duration = _this2.props.duration;
 
-	    _utilConfiguration2['default'].animate(el, { top: this.props.dropUp ? '100%' : '-100%' }, dur === undefined ? this.props.duration : dur, 'ease', function () {
-	      if (self._isOpening) return;
-
-	      el.style.position = self.ORGINAL_POSITION;
-	      anim.className = anim.className.replace(/ ?rw-popup-animating/g, '');
-
-	      anim.style.display = 'none';
-	      self.ORGINAL_POSITION = null;
-	      self.props.onClose();
+	      _this2.animate(el, offset, duration, 'ease', function () {
+	        return _this2.setState({ status: CLOSED }, function () {
+	          _this2.props.onClose();
+	        });
+	      });
 	    });
+	  },
+
+	  getOffsetForStatus: function getOffsetForStatus(status) {
+	    var _CLOSED$CLOSING$OPENING$OPEN$status;
+
+	    var _in = properties('top', this.props.dropUp ? '100%' : '-100%'),
+	        out = properties('top', 0);
+	    return (_CLOSED$CLOSING$OPENING$OPEN$status = {}, _CLOSED$CLOSING$OPENING$OPEN$status[CLOSED] = _in, _CLOSED$CLOSING$OPENING$OPEN$status[CLOSING] = out, _CLOSED$CLOSING$OPENING$OPEN$status[OPENING] = _in, _CLOSED$CLOSING$OPENING$OPEN$status[OPEN] = out, _CLOSED$CLOSING$OPENING$OPEN$status)[status] || {};
+	  },
+
+	  height: function height() {
+	    var container = _utilCompat2['default'].findDOMNode(this),
+	        content = container.firstChild,
+	        margin = parseInt(_domHelpersStyle2['default'](content, 'margin-top'), 10) + parseInt(_domHelpersStyle2['default'](content, 'margin-bottom'), 10);
+
+	    var old = container.style.display,
+	        height = undefined;
+
+	    container.style.display = 'block';
+	    height = (_domHelpersQueryHeight2['default'](content) || 0) + (isNaN(margin) ? 0 : margin);
+	    container.style.display = old;
+	    return height;
+	  },
+
+	  isTransitioning: function isTransitioning() {
+	    return this.state.status === OPENING || this.state.status === CLOSED;
+	  },
+
+	  animate: function animate(el, props, dur, easing, cb) {
+	    this._transition = _utilConfiguration2['default'].animate(el, props, dur, easing, this.setNextCallback(cb));
+	  },
+
+	  cancelNextCallback: function cancelNextCallback() {
+	    if (this._transition && this._transition.cancel) {
+	      this._transition.cancel();
+	      this._transition = null;
+	    }
+	    if (this.nextCallback) {
+	      this.nextCallback.cancel();
+	      this.nextCallback = null;
+	    }
+	  },
+
+	  safeSetState: function safeSetState(nextState, callback) {
+	    this.setState(nextState, this.setNextCallback(callback));
+	  },
+
+	  setNextCallback: function setNextCallback(callback) {
+	    var _this3 = this;
+
+	    var active = true;
+
+	    this.nextCallback = function (event) {
+	      if (active) {
+	        active = false;
+	        _this3.nextCallback = null;
+	        callback(event);
+	      }
+	    };
+
+	    this.nextCallback.cancel = function () {
+	      return active = false;
+	    };
+	    return this.nextCallback;
 	  }
 
 	});
@@ -15689,6 +15777,11 @@ webpackJsonp([4],{
 
 	  return -1;
 	}
+
+	/**
+	 * I don't know that the shallow equal makes sense here but am too afraid to
+	 * remove it.
+	 */
 
 	function valueMatcher(a, b, valueField) {
 	  return _.isShallowEqual(dataValue(a, valueField), dataValue(b, valueField));
@@ -16331,14 +16424,17 @@ webpackJsonp([4],{
 	  },
 
 	  setTimeout: function setTimeout(key, cb, duration) {
+	    var _this = this;
+
 	    var timers = this._timers || (this._timers = Object.create(null));
 
 	    if (this._unmounted) return;
 
 	    clearTimeout(timers[key]);
-	    timers[key] = window.setTimeout(cb, duration);
+	    timers[key] = window.setTimeout(function () {
+	      if (!_this._unmounted) cb();
+	    }, duration);
 	  }
-
 	};
 
 /***/ },
@@ -16408,7 +16504,7 @@ webpackJsonp([4],{
 	    if (!searchTerm || !searchTerm.trim() || this.props.filter && searchTerm.length < (this.props.minLength || 1)) return -1;
 
 	    items.every(function (item, i) {
-	      if (matches(item, searchTerm, i)) return (idx = i, false);
+	      if (matches(item, searchTerm, i)) return idx = i, false;
 
 	      return true;
 	    });
@@ -16913,8 +17009,7 @@ webpackJsonp([4],{
 	        babelHelpers._extends({}, popupProps, {
 	          onOpening: function () {
 	            return _this.refs.list.forceUpdate();
-	          },
-	          onRequestClose: this.close
+	          }
 	        }),
 	        _react2['default'].createElement(
 	          'div',
@@ -17015,6 +17110,7 @@ webpackJsonp([4],{
 	    if (e.defaultPrevented) return;
 
 	    if (key === 'End') if (isOpen) this.setState({ focusedItem: list.last() });else select(list.last(), true);else if (key === 'Home') if (isOpen) this.setState({ focusedItem: list.first() });else select(list.first(), true);else if (key === 'Escape' && isOpen) this.close();else if (key === 'Enter' && isOpen) {
+	      e.preventDefault();
 	      select(this.state.focusedItem, true);
 	    } else if (key === 'ArrowDown') {
 	      if (alt) this.open();else {
@@ -17206,6 +17302,7 @@ webpackJsonp([4],{
 	  render: function render() {
 	    return _react2['default'].createElement('input', babelHelpers._extends({}, this.props, {
 	      type: 'text',
+	      autoComplete: 'off',
 	      'aria-disabled': this.props.disabled,
 	      'aria-readonly': this.props.readOnly,
 	      className: this.props.className + ' rw-input',
@@ -17792,7 +17889,11 @@ webpackJsonp([4],{
 	  }, msgs);
 	}
 
-	exports['default'] = _uncontrollable2['default'](Calendar, { value: 'onChange' });
+	exports['default'] = _uncontrollable2['default'](Calendar, {
+	  value: 'onChange',
+	  viewDate: 'onViewDateChange',
+	  view: 'onViewChange'
+	});
 	module.exports = exports['default'];
 
 /***/ },
@@ -19496,7 +19597,7 @@ webpackJsonp([4],{
 	      var calIsActive = open === popups.CALENDAR && key === 'calendar';
 	      var timeIsActive = open === popups.TIME && key === 'timelist';
 
-	      if (!current || (timeIsActive || calIsActive)) return id;
+	      if (!current || timeIsActive || calIsActive) return id;
 	    })];
 	  }
 	}, {
@@ -19592,6 +19693,7 @@ webpackJsonp([4],{
 	        ref: 'element',
 	        tabIndex: '-1',
 	        onKeyDown: this._keyDown,
+	        onKeyPress: this._keyPress,
 	        onFocus: this._focus.bind(null, true),
 	        onBlur: this._focus.bind(null, false),
 	        className: _classnames2['default'](className, 'rw-datetimepicker', 'rw-widget', (_cx = {
@@ -19665,7 +19767,6 @@ webpackJsonp([4],{
 	        {
 	          dropUp: dropUp,
 	          open: timeIsOpen,
-	          onRequestClose: this.close,
 	          duration: duration,
 	          onOpening: function () {
 	            return _this.refs.timePopup.forceUpdate();
@@ -19699,8 +19800,7 @@ webpackJsonp([4],{
 	          className: 'rw-calendar-popup',
 	          dropUp: dropUp,
 	          open: calendarIsOpen,
-	          duration: duration,
-	          onRequestClose: this.close
+	          duration: duration
 	        },
 	        shouldRenderList && _react2['default'].createElement(Calendar, babelHelpers._extends({}, calProps, {
 	          ref: 'calPopup',
@@ -19760,6 +19860,16 @@ webpackJsonp([4],{
 	      if (open === popups.CALENDAR) this.refs.calPopup._keyDown(e);
 	      if (open === popups.TIME) this.refs.timePopup._keyDown(e);
 	    }
+	  }
+	}, {
+	  key: '_keyPress',
+	  decorators: [_utilInteraction.widgetEditable],
+	  value: function _keyPress(e) {
+	    _utilWidgetHelpers.notify(this.props.onKeyPress, [e]);
+
+	    if (e.defaultPrevented) return;
+
+	    if (this.props.open === popups.TIME) this.refs.timePopup._keyPress(e);
 	  }
 	}, {
 	  key: '_focus',
@@ -20067,10 +20177,7 @@ webpackJsonp([4],{
 	  },
 
 	  _keyDown: function _keyDown(e) {
-	    var _this = this;
-
 	    var key = e.key,
-	        character = String.fromCharCode(e.keyCode),
 	        focusedItem = this.state.focusedItem,
 	        list = this.refs.list;
 
@@ -20080,13 +20187,17 @@ webpackJsonp([4],{
 	    } else if (key === 'ArrowUp') {
 	      e.preventDefault();
 	      this.setState({ focusedItem: list.prev(focusedItem) });
-	    } else {
-	      e.preventDefault();
-
-	      this.search(character, function (item) {
-	        _this.setState({ focusedItem: item });
-	      });
 	    }
+	  },
+
+	  _keyPress: function _keyPress(e) {
+	    var _this = this;
+
+	    e.preventDefault();
+
+	    this.search(String.fromCharCode(e.which), function (item) {
+	      _this.isMounted() && _this.setState({ focusedItem: item });
+	    });
 	  },
 
 	  scrollTo: function scrollTo() {
@@ -20411,7 +20522,7 @@ webpackJsonp([4],{
 	            className: _classnames2['default']({ 'rw-state-active': this.state.active === directions.UP }),
 	            onMouseDown: this._mouseDown.bind(null, directions.UP),
 	            onMouseUp: this._mouseUp.bind(null, directions.UP),
-	            onMouseOut: this._mouseUp.bind(null, directions.UP),
+	            onMouseLeave: this._mouseUp.bind(null, directions.UP),
 	            onClick: this._focus.bind(null, true),
 	            disabled: val === this.props.max || this.props.disabled,
 	            'aria-disabled': val === this.props.max || this.props.disabled },
@@ -20432,7 +20543,7 @@ webpackJsonp([4],{
 	            className: _classnames2['default']({ 'rw-state-active': this.state.active === directions.DOWN }),
 	            onMouseDown: this._mouseDown.bind(null, directions.DOWN),
 	            onMouseUp: this._mouseUp.bind(null, directions.DOWN),
-	            onMouseOut: this._mouseUp.bind(null, directions.DOWN),
+	            onMouseLeave: this._mouseUp.bind(null, directions.DOWN),
 	            onClick: this._focus.bind(null, true),
 	            disabled: val === this.props.min || this.props.disabled,
 	            'aria-disabled': val === this.props.min || this.props.disabled },
@@ -20635,7 +20746,7 @@ webpackJsonp([4],{
 
 	var _utilLocalizers = __webpack_require__(1413);
 
-	var format = function format(props) {
+	var getFormat = function getFormat(props) {
 	  return _utilLocalizers.number.getFormat('default', props.format);
 	};
 
@@ -20648,7 +20759,8 @@ webpackJsonp([4],{
 	    placeholder: _react2['default'].PropTypes.string,
 
 	    format: _utilPropTypes2['default'].numberFormat,
-	    parse: _react2['default'].PropTypes.func.isRequired,
+
+	    parse: _react2['default'].PropTypes.func,
 	    culture: _react2['default'].PropTypes.string,
 
 	    min: _react2['default'].PropTypes.number,
@@ -20660,17 +20772,20 @@ webpackJsonp([4],{
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      value: null,
-	      editing: false,
-	      parse: function parse(number, culture) {
-	        return _utilLocalizers.number.parse(number, culture);
-	      }
+	      editing: false
 	    };
 	  },
 
-	  getDefaultState: function getDefaultState(props) {
-	    var value = props.editing ? props.value : formatNumber(props.value, format(props), props.culture);
+	  getDefaultState: function getDefaultState() {
+	    var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
 
-	    if (value == null || isNaN(props.value)) value = '';
+	    var value = props.value,
+	        decimal = _utilLocalizers.number.decimalChar(null, props.culture),
+	        format = getFormat(props);
+
+	    this._beginningWithSign = false;
+
+	    if (value == null || isNaN(props.value)) value = '';else value = props.editing ? ('' + value).replace('.', decimal) : _utilLocalizers.number.format(value, format, props.culture);
 
 	    return {
 	      stringValue: '' + value
@@ -20678,7 +20793,7 @@ webpackJsonp([4],{
 	  },
 
 	  getInitialState: function getInitialState() {
-	    return this.getDefaultState(this.props);
+	    return this.getDefaultState();
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
@@ -20693,6 +20808,7 @@ webpackJsonp([4],{
 	      className: 'rw-input',
 	      onChange: this._change,
 	      onBlur: this._finish,
+	      onKeyPress: this._typing,
 	      'aria-disabled': this.props.disabled,
 	      'aria-readonly': this.props.readOnly,
 	      disabled: this.props.disabled,
@@ -20701,22 +20817,38 @@ webpackJsonp([4],{
 	      value: value }));
 	  },
 
+	  _typing: function _typing(e) {
+	    var current = e.target.value,
+	        newVal = e.key;
+
+	    this._beginningWithSign = current.trim() === '' && this.isSign(newVal);
+
+	    this.props.onKeyPress && this.props.onKeyPress(e);
+	  },
+
 	  _change: function _change(e) {
 	    var val = e.target.value,
-	        number = this.props.parse(e.target.value, this.props.culture),
-	        valid = this.isValid(number);
+	        number = this._parse(e.target.value),
+	        atSign = this.isSign(val.trim()),
+	        startingWithSign = this._beginningWithSign;
 
-	    if (val == null || val.trim() === '' || val.trim() === '-') return this.props.onChange(null);
+	    this._beginningWithSign = false;
 
-	    if (valid && number !== this.props.value && !this.isAtDelimiter(number, val)) return this.props.onChange(number);
+	    if (val == null || val.trim() === '' || atSign && !startingWithSign) {
+	      this.current('');
+	      return this.props.onChange(null);
+	    }
 
-	    //console.log(val !== 0 && !val)
-	    if (!isNaN(number) || this.isAtDelimiter(number, val)) this.current(e.target.value);
+	    if (this.isFlushable(number, val)) {
+	      if (number !== this.props.value) return this.props.onChange(number);else this.setState(this.getDefaultState()); // 5. -> 5
+	    }
+
+	    if (number < this.props.min || atSign && startingWithSign || this.isAtDelimiter(number, val)) this.current(e.target.value);
 	  },
 
 	  _finish: function _finish() {
 	    var str = this.state.stringValue,
-	        number = this.props.parse(str, this.props.culture);
+	        number = this._parse(str);
 
 	    // if number is below the min
 	    // we need to flush low values and decimal stops, onBlur means i'm done inputing
@@ -20725,14 +20857,39 @@ webpackJsonp([4],{
 	    }
 	  },
 
+	  _parse: function _parse(strVal) {
+	    var culture = this.props.culture,
+	        delimChar = _utilLocalizers.number.decimalChar(null, culture),
+	        userParse = this.props.parse;
+
+	    if (userParse) return userParse(strVal, culture);
+
+	    strVal = strVal.replace(delimChar, '.');
+	    strVal = parseFloat(strVal);
+
+	    return strVal;
+	  },
+
+	  isFlushable: function isFlushable(num, str) {
+	    return this.isValid(num) && !this.isAtDelimiter(num, str) && !this.isSign(str);
+	  },
+
+	  isSign: function isSign(val) {
+	    return (val || '').trim() === '-';
+	  },
+
 	  isAtDelimiter: function isAtDelimiter(num, str) {
-	    var next;
+	    var props = arguments.length <= 2 || arguments[2] === undefined ? this.props : arguments[2];
+
+	    var localeChar = _utilLocalizers.number.decimalChar(null, props.culture),
+	        lastIndex = str.length - 1,
+	        char;
 
 	    if (str.length <= 1) return false;
 
-	    next = this.props.parse(str.substr(0, str.length - 1), this.props.culture);
+	    char = str[lastIndex];
 
-	    return typeof next === 'number' && !isNaN(next) && next === num;
+	    return char === localeChar && str.indexOf(char) === lastIndex;
 	  },
 
 	  isValid: function isValid(num) {
@@ -20746,17 +20903,6 @@ webpackJsonp([4],{
 	  }
 
 	});
-
-	// function parseLocaleFloat(number, parser, culture) {
-	//   if ( typeof format === 'function')
-	//     return format(number, culture)
-
-	//   return config.globalize.parseFloat(number, 10, culture)
-	// }
-
-	function formatNumber(number, format, culture) {
-	  return _utilLocalizers.number.format(number, format, culture);
-	}
 	module.exports = exports['default'];
 
 /***/ },
@@ -21095,8 +21241,7 @@ webpackJsonp([4],{
 	        babelHelpers._extends({}, popupProps, {
 	          onOpening: function () {
 	            return _this.refs.list.forceUpdate();
-	          },
-	          onRequestClose: this.close
+	          }
 	        }),
 	        _react2['default'].createElement(
 	          'div',
@@ -21104,8 +21249,8 @@ webpackJsonp([4],{
 	          shouldRenderPopup && [_react2['default'].createElement(List, babelHelpers._extends({ ref: 'list',
 	            key: 0
 	          }, listProps, {
-	            readOnly: !!readOnly,
-	            disabled: !!disabled,
+	            readOnly: readOnly,
+	            disabled: disabled,
 	            id: listID,
 	            'aria-live': 'polite',
 	            'aria-labelledby': _utilWidgetHelpers.instanceId(this),
@@ -21258,10 +21403,15 @@ webpackJsonp([4],{
 
 	      if (altKey) this.close();else if (isOpen) this.setState(babelHelpers._extends({ focusedItem: prev }, nullTag));
 	    } else if (key === 'End') {
+	      e.preventDefault();
 	      if (isOpen) this.setState(babelHelpers._extends({ focusedItem: list.last() }, nullTag));else tagList && this.setState({ focusedTag: tagList.last() });
 	    } else if (key === 'Home') {
+	      e.preventDefault();
 	      if (isOpen) this.setState(babelHelpers._extends({ focusedItem: list.first() }, nullTag));else tagList && this.setState({ focusedTag: tagList.first() });
-	    } else if (isOpen && key === 'Enter') ctrlKey && this.props.onCreate || focusedItem === null ? this._onCreate(this.props.searchTerm) : this._onSelect(this.state.focusedItem);else if (key === 'Escape') isOpen ? this.close() : tagList && this.setState(nullTag);else if (noSearch && key === 'ArrowLeft') tagList && this.setState({ focusedTag: tagList.prev(focusedTag) });else if (noSearch && key === 'ArrowRight') tagList && this.setState({ focusedTag: tagList.next(focusedTag) });else if (noSearch && key === 'Delete') tagList && tagList.remove(focusedTag);else if (noSearch && key === 'Backspace') tagList && tagList.removeNext();
+	    } else if (isOpen && key === 'Enter') {
+	      e.preventDefault();
+	      ctrlKey && this.props.onCreate || focusedItem === null ? this._onCreate(this.props.searchTerm) : this._onSelect(this.state.focusedItem);
+	    } else if (key === 'Escape') isOpen ? this.close() : tagList && this.setState(nullTag);else if (noSearch && key === 'ArrowLeft') tagList && this.setState({ focusedTag: tagList.prev(focusedTag) });else if (noSearch && key === 'ArrowRight') tagList && this.setState({ focusedTag: tagList.next(focusedTag) });else if (noSearch && key === 'Delete') tagList && tagList.remove(focusedTag);else if (noSearch && key === 'Backspace') tagList && tagList.removeNext();
 	  }
 	}, {
 	  key: 'change',
@@ -21786,6 +21936,7 @@ webpackJsonp([4],{
 	      'div',
 	      babelHelpers._extends({}, elementProps, {
 	        onKeyDown: this._keyDown,
+	        onKeyPress: this._keyPress,
 	        onFocus: this._focus.bind(null, true),
 	        onBlur: this._focus.bind(null, false),
 	        role: 'radiogroup',
@@ -21869,7 +22020,17 @@ webpackJsonp([4],{
 	    } else if (multiple && e.keyCode === 65 && e.ctrlKey) {
 	      e.preventDefault();
 	      this.selectAll();
-	    } else this.search(String.fromCharCode(e.keyCode));
+	    }
+	  }
+	}, {
+	  key: '_keyPress',
+	  decorators: [_utilInteraction.widgetEditable],
+	  value: function _keyPress(e) {
+	    _utilWidgetHelpers.notify(this.props.onKeyPress, [e]);
+
+	    if (e.defaultPrevented) return;
+
+	    this.search(String.fromCharCode(e.which));
 	  }
 	}, {
 	  key: 'selectAll',
@@ -21942,7 +22103,10 @@ webpackJsonp([4],{
 	    var _this4 = this;
 
 	    var word = ((this._searchTerm || '') + character).toLowerCase(),
-	        list = this.refs.list;
+	        list = this.refs.list,
+	        multiple = this.props.multiple;
+
+	    if (!character) return;
 
 	    this._searchTerm = word;
 
@@ -21951,7 +22115,9 @@ webpackJsonp([4],{
 
 	      _this4._searchTerm = '';
 
-	      if (focusedItem) _this4.setState({ focusedItem: focusedItem });
+	      if (focusedItem) {
+	        !multiple ? _this4._change(focusedItem, true) : _this4.setState({ focusedItem: focusedItem });
+	      }
 	    }, this.props.delay);
 	  }
 	}, {
@@ -22087,7 +22253,7 @@ webpackJsonp([4],{
 	    },
 
 	    parse: function parse(value, format, culture) {
-	      return getMoment(culture, value, format).toDate();
+	      return value ? getMoment(culture, value, format).toDate() : null;
 	    },
 
 	    format: function format(value, _format, culture) {
