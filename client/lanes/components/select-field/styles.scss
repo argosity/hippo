@@ -2,7 +2,7 @@
 
 .rw-combobox, .rw-datetimepicker, .rw-numberpicker, .rw-dropdownlist {
     padding-bottom: 1px; // push down so border isn't covered
-    input { height: 32px; }
+    input { height: 32px; padding: 6px 12px; }
 }
 
 .rw-multiselect-taglist > li {
