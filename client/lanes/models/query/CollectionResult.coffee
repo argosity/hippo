@@ -1,4 +1,4 @@
-class Lanes.Models.Query.CollectionResult
+class Lanes.Models.Query.CollectionResult extends Lanes.Models.Query.Result
 
     constructor: (@query) ->
         @collection.on('add remove reset', =>
