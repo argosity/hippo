@@ -20,7 +20,9 @@ RenderGrid = (q) ->
     })
 
 RenderEdit = (q, value) ->
+    Lanes.Test.syncSucceedWith(ROW_DATA)
     grid = RenderGrid(q)
+
     new _.Promise (res, rej) -> _.defer ->
         _.dom(grid).qs(LAST_ROW_SELECTOR).click()
         editor = Lanes.Test.Utils.findRenderedComponentWithType(
