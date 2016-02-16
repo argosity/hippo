@@ -90,10 +90,10 @@ class Operators extends Lanes.Models.Collection
     constructor: ->
         super
         this.add([
-            { id: 'like', name: 'Starts With', types:['string'] }
+            { id: 'like', name: 'Starts With', types: Lanes.Models.Query.LIKE_QUERY_TYPES }
             { id: 'eq',   name: 'Equals' }
-            { id: 'lt',   name: 'Less Than',   types:['integer', 'bigdec', 'number'] }
-            { id: 'gt',   name: 'More Than',   types:['integer', 'bigdec', 'number'] }
+            { id: 'lt',   name: 'Less Than', types: Lanes.Models.Query.LESS_THAN_QUERY_TYPES }
+            { id: 'gt',   name: 'More Than', types: Lanes.Models.Query.LESS_THAN_QUERY_TYPES }
         ])
         this.on('change', (changing) ->
             return unless changing.selected
@@ -189,11 +189,14 @@ class Clauses extends Lanes.Models.Collection
 class Lanes.Models.Query extends Lanes.Models.Base
     pubsub: false
 
+    @LIKE_QUERY_TYPES: ['string', 'code']
+    @LESS_THAN_QUERY_TYPES: ['integer', 'bigdec', 'number']
+    @GREATER_THAN_QUERY_TYPES: ['integer', 'bigdec', 'number']
 
     @mergedSyncOptions: (args...) ->
         _.merge {}, args..., (a, b) ->
-            if _.isArray(a)
-                return a.concat(b)
+            return a.concat(b) if _.isArray(a)
+
     session:
         src:     'any'
         fields:  'collection'
