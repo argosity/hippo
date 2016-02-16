@@ -1,9 +1,8 @@
 class BaseExtension
 
-    setBootstrapModels: (data)->
-
-    @extended:(klass)->
+    @extended: (klass) ->
         Lanes.Extensions.register(klass)
 
-
-Lanes.Extensions.Base = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.State, BaseExtension )
+Lanes.Extensions.Base = Lanes.lib.MakeBaseClass(
+    Lanes.Vendor.Ampersand.State, BaseExtension
+)
