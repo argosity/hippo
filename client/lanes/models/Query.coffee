@@ -263,6 +263,11 @@ class Lanes.Models.Query extends Lanes.Models.Base
         this.addNewClause()
         this
 
+    reset: ->
+        @clauses.reset([
+            {query: this, available_fields: @fields, field: @initialField}
+        ])
+
     setSortField: (field, silent = false) ->
         @set({
             sortAscending: (if @sortField is field then !@sortAscending else true)
