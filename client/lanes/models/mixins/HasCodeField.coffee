@@ -10,8 +10,10 @@ Lanes.Models.Mixins.HasCodeField = {
         this.on('change:code', this._cleanCodeAttr)
 
     _cleanCodeAttr: ->
+        code = this.get('code')
+        return unless code
         this.set(
-            'code', this.get('code').toUpperCase().replace(@INVALID_CODE_CHARS, '')
+            'code', code.toUpperCase().replace(@INVALID_CODE_CHARS, '')
         )
 
     visibleIdentifier: -> @code
