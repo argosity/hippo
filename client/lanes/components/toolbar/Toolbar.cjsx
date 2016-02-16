@@ -12,9 +12,11 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         changedModel: 'remote-update'
 
     renderSaveButton: ->
+        model = @props.commands.getModel()
+        text = if model.isNew() then 'Create' else 'Save'
         <BS.Button navItem componentClass="button" disabled={!@isSavable()}
             onClick={@props.commands.saveModel} className="save navbar-btn control">
-            <LC.Icon type="cloud-upload" />{@props.saveButtonText || 'Save'}
+            <LC.Icon type="cloud-upload" />{text}
         </BS.Button>
 
     renderResetButton: ->
