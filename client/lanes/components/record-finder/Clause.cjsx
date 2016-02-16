@@ -23,13 +23,19 @@ class Operator extends Lanes.React.Component
 class Lanes.Components.RecordFinder.Clause extends Lanes.React.Component
 
     propsTypes:
-        onAddClause: React.PropTypes.func.isRequired
         model: Lanes.PropTypes.State.isRequired
+        onEnter: React.PropTypes.func.isRequired
+        onAddClause: React.PropTypes.func.isRequired
 
     setValue: (ev) ->
         @model.value = ev.target.value
 
     runQuery: -> @model.query.results.ensureLoaded()
+
+    componentDidMount: -> @refs.query.focus()
+
+    handleKeyDown: (ev) ->
+        @props.onEnter() if ev.key is 'Enter'
 
     render: ->
         <BS.Row className="clause">
@@ -55,6 +61,8 @@ class Lanes.Components.RecordFinder.Clause extends Lanes.React.Component
                         </BS.DropdownButton>
                     </div>
                     <input type="text"
+                        ref='query'
+                        onKeyDown={@handleKeyDown}
                         value={@model.value}
                         onChange={@setValue}
                         className="form-control query-string"
