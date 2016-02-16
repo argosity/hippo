@@ -162,7 +162,6 @@ class ScreenViewSet extends Lanes.Models.BasicCollection
 class ScreenSet extends Lanes.Models.BasicCollection
 
     model: ScreenDefinition
-    comparator: 'title'
     register: Lanes.emptyFn
 
     addScreen: (screen) ->
