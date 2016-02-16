@@ -30,3 +30,13 @@ describe "Lanes.Models.Collection", ->
         spy.calls.reset()
         collection.reset([{ id:11, title: 'last'}])
         expect(spy).toHaveBeenCalled()
+
+    it 'prevents duplicates when copying from', ->
+        Model = Lanes.Test.defineModel
+            props: { id: 'integer', title: 'string' }
+        collection = new Model.Collection
+        a = collection.add({ id: 1, title: 'first'  })
+        b = collection.add({ id: 2, title: 'second' })
+        c = collection.add({ id: 3, title: 'third'  })
+        a.copyFrom(c)
+        expect(collection.pluck('id')).toEqual([2, 3, 1])
