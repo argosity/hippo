@@ -17,6 +17,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             @props.model
 
     showFinder: ->
+        @props.query.reset()
         @context.viewport.displayModal(
             title: "Find #{@props.query.title}"
             buttons: [{title: 'Cancel'}]
