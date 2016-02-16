@@ -6,7 +6,8 @@
         screen.model_class = "<%= options[:model_class] %>"
         screen.view_class  = "<%= class_name %>"
 <% unless options[:fileless] -%>
-        screen.js          = "<%= screen_id %>.js"
-        screen.css         = "<%= screen_id %>.css"
+        # Can optionally explicity set files to be included
+        # screen.js          = "<%= screen_id %>.js"
+        # screen.css         = "<%= screen_id %>.css"
 <% end -%>
     end
