@@ -29,6 +29,11 @@ class Lanes.Models.AssocationMap
             )
         )
 
+    clear: (model) ->
+        for name, value of @proxy
+            Proxy = @getProxyFor(name)
+            model._cache[name] = new Proxy( this, this.getOptions(name, model) )
+
     replaceProxy: (name, model, options) ->
         return unless options.parent._cache[name]?.isProxy
         options.parent._cache[name] = model
