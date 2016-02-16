@@ -89,15 +89,25 @@ class BaseModel
                 res(@)
 
 
+    clear: ->
+        this.associations?.clear(@)
+        super
+
     # replace this model's attributes with data from other model
     copyFrom: (model) ->
-        attributes = if _.isFunction(model.serialize) then model.serialize() else model
-        _.extend(attributes, model.getAttributes(session: true) ) if Lanes.u.isState(model)
+        attributes = model.clonedAttributes?() || model.serialize?() || model
+        prevAttributes = @clonedAttributes()
+        this.clear()
         this.set(attributes)
+        this.trigger('copyfrom', this, model, prevAttributes)
 
     # duplicate the model.  Copies only attributes, not bound events
     clone: ->
-        new @constructor(@attributes)
+        new @constructor( @clonedAttributes() )
+
+    clonedAttributes: ->
+        attributes = @serialize()
+        _.extend(attributes, @getAttributes(session: true) )
 
     attributeType: (name) ->
         @_definition[name].type
