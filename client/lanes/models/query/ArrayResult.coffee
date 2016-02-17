@@ -172,10 +172,11 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
             page = new Page(0, @, rows: rows)
             @pages = [page]
             @query.changeCount += 1
-            # @query.trigger('sort', @query)
             @
         else
-            @reload()
+            @reload().then =>
+                @query.changeCount += 1
+                @
 
 Object.defineProperty Lanes.Models.Query.ArrayResult.prototype, 'length',
     get: -> @total || 0
