@@ -40,11 +40,18 @@
             align-items: flex-end;
             display: inline-block;
             cursor: pointer;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
             &.sort {
                 &:after {
                     content: $fa-var-sort;
                     font-family: FontAwesome;
-                    float: right;
+                    position: relative;
+                    right: -5px;
                     color: lightgray;
                 }
                 &.asc:after {

@@ -23,7 +23,7 @@ class Lanes.Components.Grid.Header extends Lanes.React.BaseComponent
             onClick={_.partial(@onColumnClick, f)}
             className={classNames}
         >
-            {f.title}
+            <span className='l'>{f.title}</span>
         </div>
 
     render: ->
