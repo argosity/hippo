@@ -45,11 +45,9 @@ module Lanes
                             env.append_path(path)
                         }
                     end
-
                     if compress
-                        require_relative 'sprockets_compressor'
-                        env.js_compressor  = AssetCompressor
-                        env.css_compressor = AssetCompressor
+                        env.js_compressor  = :uglifier
+                        env.css_compressor = :sass
                     end
                     env.append_path root.join('client')
                     JsAssetCompiler.register(env)
