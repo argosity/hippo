@@ -209,6 +209,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
         autoRetrieve: ['boolean', true, true]
         title: { type: 'string', default: 'Find Record' }
         sortField: 'object'
+        defaultSort: 'any'
         changeCount: {type: 'integer', default: 0}
         sortAscending: ['boolean', true, true]
 
@@ -253,26 +254,34 @@ class Lanes.Models.Query extends Lanes.Models.Base
         this.on('change:src change:results', ->
             this.trigger('load')
         )
-        if options.defaultSort
-            @setSortField( @fields.findWhere(id: options.defaultSort), true )
+        this.on('load', ->
+            @changeCount += 1
+        )
+
         if @initialFieldIndex
             @initialField = this.fields.at(@initialFieldIndex)
+
         @initialField ||= this.fields.findWhere(id: "code") ||
             this.fields.findWhere(id: "visibleId") ||
             this.fields.first()
-        this.addNewClause()
+
+        @reset()
         this
 
     reset: ->
+        unless @defaultSort is false
+            sort = @defaultSort or @fields.findWhere(visible: true).id
+            @setSortField( @fields.findWhere(id: sort), sortAscending: true, silent: true )
+
         @clauses.reset([
             {query: this, available_fields: @fields, field: @initialField}
         ])
 
-    setSortField: (field, silent = false) ->
+    setSortField: (field, options = {silent: false}) ->
         @set({
-            sortAscending: (if @sortField is field then !@sortAscending else true)
+            sortAscending: options.sortAscending || (if @sortField is field then !@sortAscending else true)
             sortField: field
-        }, {silent})
+        }, options)
 
     ensureLoaded: -> @results.ensureLoaded()
 
