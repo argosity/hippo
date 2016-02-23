@@ -51,8 +51,10 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
 
 
     render: ->
-        findIcon = <button className="btn btn-primary icon icon-search icon-lg"
-            onClick={@showFinder}/>
+        findIcon = <button className="btn btn-primary icon icon-search icon-lg" onClick={@showFinder}/>
+
+        label =
+            <LC.ControlLabel titleOnly {...@props} />
 
         <LC.Input
             ref="input"
@@ -61,6 +63,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             name={@props.query.initialField.id}
             onKeyPress={@onKeyPress}
             {...@props}
+            label={label}
             model={@modelForAccess()}
             getValue={@getValue}
             buttonAfter={findIcon} />
