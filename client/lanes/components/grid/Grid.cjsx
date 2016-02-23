@@ -36,6 +36,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         ])
         allowCreate:  React.PropTypes.bool
         columEditors: React.PropTypes.object
+        onColumnClick: React.PropTypes.func
         onSelectionChange: React.PropTypes.func
         autoLoadQuery: React.PropTypes.bool
         toolbarChildren: React.PropTypes.oneOfType([

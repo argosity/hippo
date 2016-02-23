@@ -1,12 +1,13 @@
 class Lanes.Components.Grid.Header extends Lanes.React.BaseComponent
 
     propTypes:
-        query:      React.PropTypes.instanceOf(Lanes.Models.Query).isRequired
+        query: React.PropTypes.instanceOf(Lanes.Models.Query).isRequired
         cellStyles: React.PropTypes.object.isRequired
+        onColumnClick: React.PropTypes.func
 
     onColumnClick: (f) ->
         @props.query.setSortField(f)
-
+        @props.onColumnClick?(f)
         @forceUpdate()
 
     renderHeader: (f, i) ->
