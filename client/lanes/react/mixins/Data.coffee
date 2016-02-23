@@ -12,7 +12,7 @@ class DataWrapper
         @rebind(_.clone(initialState), silent: true)
 
     rebind: (objects, options = {}) ->
-        customEvents = _.result(@component, 'bindDataEvents') || {}
+        customEvents = _.result(@component, 'bindDataEvents', {})
         for name, state of objects
             if false == state
                 continue
@@ -65,6 +65,7 @@ class DataWrapper
                 events ||= 'add remove change sort reset'
             else
                 Lanes.warn "Unable to listen to unknown type #{name}"
+
         @listenTo(state, events, _.partial(@setComponentState, name, state))
 
     onError: (modelOrCollection, options) ->
