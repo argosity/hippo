@@ -17,4 +17,4 @@ class Lanes.Components.Icon extends Lanes.React.Component
             'icon-4x'    : @props['4x']
             'icon-5x'    : @props['5x']
 
-        <i {...@props} className={classes} />
+        <i style={@props.style} className={classes} />
