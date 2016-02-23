@@ -245,12 +245,13 @@ module Lanes
             def add_params_to_query(query)
                 query_params.each do | field, value |
                     next unless ( field = convert_field_to_arel(field) )
-                    condition = if value.is_a?(Hash) && value.has_key?('value')
-                                    api_op_string_to_arel_predicate(field, value['op'], value['value'])
-                                else
-                                    api_op_string_to_arel_predicate(field, nil, value)
-                                end
-                    query = query.where(condition)
+                    if value.is_a?(Hash) && value.has_key?('value')
+                        op = value['op']
+                        value = value['value']
+                    end
+                    query = query.where(
+                        field_to_predicate(field, value, op)
+                    )
                 end
                 query
             end
@@ -273,14 +274,14 @@ module Lanes
             end
 
             # complete list: https://github.com/rails/arel/blob/master/lib/arel/predications.rb
-            def api_op_string_to_arel_predicate( field, op, value )
+            def field_to_predicate( field, value, op = nil )
                 case op
-                when 'eq'   then field.eq(value)
+                when nil, 'eq' then field.eq(value)
+                when 'like' then field.matches( value )
                 when 'ne'   then field.not_eq(value)
                 when 'lt'   then field.lt(value)
                 when ( op=='in' && value=~/.*:.*/ ) then field.in( Range.new( *value.split(':') ) )
                 when 'gt'   then field.gt(value)
-                when 'like' then field.matches( value )
                 else
                     value =~ /%/ ? field.matches( value ) : field.eq( value )
                 end
