@@ -35,25 +35,36 @@ class Lanes.Components.Input extends Lanes.React.Component
     selectOnFocus: (ev) ->
         ev.target.select()
 
+    onFieldBlur: ->
+        @onFieldInteraction()
+        @props.onBlur?()
+
     renderEdit: (label) ->
         value = @state.pendingValue or @props.value or @_getValue()
         label ||= @props.label or _.field2title(@props.name)
+
         props = _.extend({
             ref:       'input'
             className: _.classnames('value', changeset: @state.changeset)
             label:     if @props.unlabeled then false else label
-            value:     value
-            onKeyDown: @handleKeyDown if @props.onEnter
             onChange:  @validatedChangeHandler
         }, @props, {value: value})
-        if @props.selectOnFocus then props.onFocus = @selectOnFocus
-        if @props.inputOnly then @renderPlain(props) else @renderStyled(props, label)
 
-    renderPlain: (props) ->
-        <input {...props}/>
+        handlers = { onBlur: @onFieldBlur }
 
-    renderStyled: (props, label) ->
+        if @isFieldValueInvalid() then props.bsStyle   = 'error'
+        if @props.onEnter         then handlers.onKeyDown = @handleKeyDown
+        if @props.selectOnFocus   then handlers.onFocus   = @selectOnFocus
+
+        if @props.inputOnly then @renderPlain(props, handlers) else @renderStyled(props, handlers, label)
+
+    renderPlain: (props, handlers) ->
+        <input {...props} {...handlers} />
+
+    renderStyled: (props, handlers, label) ->
+
         colProps = _.omit(props, 'name')
+
         <BS.Col {...colProps} >
-            <BS.Input {...props} />
+            <BS.Input {...props} {...handlers} />
         </BS.Col>
