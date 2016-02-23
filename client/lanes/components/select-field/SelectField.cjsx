@@ -111,6 +111,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             textField="label"
             onChange={@onChange}
             name={@props.name}
+            onBlur={@onFieldInteraction}
             {...props}
             value={@getCurrentSelection()}
             />
@@ -119,6 +120,10 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         if @props.unstyled
             select
         else
-            <LC.FormGroup {...@props} className={@formGroupClassNames()} label={label}>
+            <LC.FormGroup
+                {...@props}
+                className={@formGroupClassNames()}
+                label={@getLabelValue()}
+            >
                 {select}
             </LC.FormGroup>
