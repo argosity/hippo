@@ -263,8 +263,12 @@ module Lanes
                     else
                         nil
                     end
-                else
+                elsif model.attribute_method?(field)
                     model.arel_table[field]
+                else
+                    Arel::Nodes::SqlLiteral.new(
+                        model.connection.quote_column_name(field)
+                    )
                 end
             end
 
