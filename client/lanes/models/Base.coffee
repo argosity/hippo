@@ -11,10 +11,14 @@ class BaseModel
         errors: 'object'
         changes: { type: 'collection', setOnce: true }
         lastServerMessage: { type: 'string' }
-        parent: 'state'
-        isDirty: { type: 'boolean', default: false }
+        isDirty:   { type: 'boolean', default: false }
+        invalidAttributes: 'array'
 
     derived:
+        isSavable:
+            deps: ['invalidAttributes'], fn: ->
+                _.isEmpty @invalidAttributes #_calculateInvalidAttributes()
+
         errorMessage:
             deps:['errors'], fn: ->
                 if !@errors then ''
@@ -24,6 +28,8 @@ class BaseModel
                 ))
     constructor: (attrs, options = {}) ->
         super
+        @on('change', @_calculateInvalidAttributes)
+        @_calculateInvalidAttributes()
         @changeMonitor = new Lanes.Models.ChangeMonitor(this)
         # The model was created with attributes and it did not originate from a XHR request
         if attrs and !options.xhr
@@ -165,7 +171,6 @@ class BaseModel
 
         this.sync(method, this, options)
 
-
     # Fetch the model from the server. If the server's representation of the
     # model differs from its current attributes, they will be overridden,
     # triggering a `"change"` event.
@@ -222,6 +227,32 @@ class BaseModel
     sync: (options...) ->
         Lanes.Models.Sync.state(options...)
 
+    # Check if an attribute named "name" can be set to "value"
+    # Returns an empty string if value, and an appropriate error message if not
+    invalidMessageFor: (name) ->
+        if !@unmaskedInvalidFields or !_.include(@requiredAttributes, name)
+            return ''
+        if @isBlank(name)
+            "Cannot be empty"
+        else
+            ''
+
+    unmaskInvalidField: (attr) ->
+        if attr is 'all'
+            @unmaskedInvalidFields = 'all'
+            @trigger("invalid-fields", this, @unmaskedInvalidFields)
+        else if @unmaskedInvalidFields isnt 'all'
+            @unmaskedInvalidFields ||= []
+            if _.include(@requiredAttributes, attr) and !_.include(@unmaskedInvalidFields, attr)
+                @unmaskedInvalidFields.push(name)
+                @trigger("invalid-field:#{name}", this)
+
+    _calculateInvalidAttributes: ->
+        invalid = []
+        for name in @requiredAttributes
+            invalid.push(name) if @isBlank(name)
+        @invalidAttributes = invalid
+
     # When the model is extended it auto-creates the created_at and updated_at
     # and sets up the AssociationMap
     @extended: (klass) ->
@@ -237,6 +268,19 @@ class BaseModel
 
     @afterExtended: (klass) ->
         return if klass::abstractClass
+        attrs = []
+        for name, definition of klass::_definition when definition.required
+            attrs.push(name)
+
+        for name, definition of (klass::associations?.definitions || {}) when definition.required
+            attrs.push(name)
+
+        klass::requiredAttributes = attrs
+
+        unless _.isEmpty(klass::requiredAttributes)
+            console.log klass.name, klass::requiredAttributes
+
+
         unless klass.Collection
             @createDefaultCollectionFor(klass)
 
@@ -267,23 +311,17 @@ class BasicModel
     isPersistent: ->
         false
 
-    # Check if an attribute named "name" can be set to "value"
-    # Returns an empty string if value, and an appropriate error message if not
-    checkValid: (name, value) ->
-        return '' unless def = this._definition[name]
-        if def.required && _.isEmpty(value)
-            "Cannot be empty"
-        else
-            ''
+    isBlank: (name) ->
+        return _.isEmpty(this.serialize()) if _.isUndefined(name)
+        value = this.get(name)
+        _.isEmpty(value) || value.isProxy
+
 
     # sets the model from a user interaction
     # subviews may override this to provide a custom implementation
     setFromView: (key, value) ->
         this.set(key, value)
 
-    # True if the model has "name" as eitehr a prop or session attribute
-    hasAttribute: (name) ->
-        !! (this._definition[name] || this._derived[name])
 
 Lanes.Models.BasicModel = Lanes.Models.State.extend( BasicModel )
 
