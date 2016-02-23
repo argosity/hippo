@@ -12,6 +12,9 @@ class Lanes.Components.DateTime extends Lanes.React.Component
         unlabled: React.PropTypes.bool
         format:   React.PropTypes.string
 
+    renderDisplayValue: ->
+        <span>{_.moment(@model[@props.name]).format(@props.format)}</span>
+
     getValue: ->
         @refs.input.getValue()
 
