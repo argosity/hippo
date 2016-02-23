@@ -9,13 +9,21 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         changedModel: -> @props.commands.getModel()
 
     bindDataEvents:
-        changedModel: 'remote-update'
+        changedModel: 'remote-update isSavable'
+
+    onSave: ->
+        model = @props.commands.getModel()
+        if @isSavable(model)
+            @props.commands.saveModel()
+        else
+            model.unmaskInvalidFields('all')
 
     renderSaveButton: ->
         model = @props.commands.getModel()
         text = if model.isNew() then 'Create' else 'Save'
-        <BS.Button navItem componentClass="button" disabled={!@isSavable()}
-            onClick={@props.commands.saveModel} className="save navbar-btn control">
+        classNames = _.classnames('save', 'navbar-btn', 'control', {disabled: !model.isSavable})
+        <BS.Button navItem componentClass="button"
+            onClick={@onSave} className={classNames} >
             <LC.Icon type="cloud-upload" />{text}
         </BS.Button>
 
@@ -42,12 +50,9 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
             </label>
         </li>
 
-    isSavable: ->
+    isSavable: (model) ->
         if @props.commands.saveModel
-            if @props.commands.toggleEdit
-                @props.commands.isEditing()
-            else
-                true
+            @props.commands.isEditing() and model.isSavable
         else
             false
 
