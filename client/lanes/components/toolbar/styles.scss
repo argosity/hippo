@@ -18,6 +18,11 @@
     .btn {
         &.save {
             @extend .btn-primary;
+            // the save button needs to be clicable even if disabled
+            &.disabled {
+                pointer-events: all;
+                cursor: pointer;
+            }
         }
     }
     .spacer {

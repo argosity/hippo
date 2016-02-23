@@ -47,5 +47,15 @@ label.field {
         .field .display { border-bottom: 0; }
         &.editing .react-toggle { margin-top: 5px; }
     }
+    .label-title {
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+    label {
+        display: block;
+    }
+    i.error {
+        margin-left: 4px;
+    }
 
 }
