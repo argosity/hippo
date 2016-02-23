@@ -1,9 +1,7 @@
 class Lanes.Screens.Commands
 
     constructor: (@screen, @options = {}) ->
-        _.defaults(@options,
-            modelName: 'model'
-        )
+        _.defaults(@options, modelName: 'model')
         _.bindAll(this, _.functions(this))
 
     resetModel: ->

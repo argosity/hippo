@@ -2,10 +2,11 @@ Lanes.Components.Form || = {}
 
 Lanes.Components.Form.FieldMixin = {
     bindDataEvents: ->
-        model: "change:#{@props.name} remote-update:#{@props.name}"
+        model: "change:#{@props.name} remote-update:#{@props.name} invalid-fields invalid-field:#{@getInvalidFieldName()}"
 
     mixins: [
         Lanes.React.Mixins.Access
+        Lanes.React.Mixins.FieldErrors
         Lanes.React.Mixins.ReadEditingState
     ]
 
@@ -13,7 +14,9 @@ Lanes.Components.Form.FieldMixin = {
     propTypes:
         model: Lanes.PropTypes.State.isRequired
         name:  React.PropTypes.string.isRequired
-        label: React.PropTypes.string
+        label: React.PropTypes.oneOfType([
+            React.PropTypes.string, React.PropTypes.element
+        ])
         onChange: React.PropTypes.func
         unstyled: React.PropTypes.bool
         getValue: React.PropTypes.func
@@ -63,9 +66,15 @@ Lanes.Components.Form.FieldMixin = {
                 {value}
             </LC.FormGroup>
 
+    getLabelValue: ->
+        @props.label || _.titleize _.humanize @props.name
+
     render: ->
         unless @props.unlabeled
-            label = @props.label || _.titleize _.humanize @props.name
+            label =
+                <LC.ControlLabel {...@props} titleOnly
+                    label={@getLabelValue()} />
+
         if @isEditingRecord()
             if @hasWriteAccess()
                 @renderEdit(label)
