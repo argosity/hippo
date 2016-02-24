@@ -309,7 +309,7 @@ class BasicModel
     isBlank: (name) ->
         return _.isEmpty(this.serialize()) if _.isUndefined(name)
         value = this.get(name)
-        _.isEmpty(value) || value.isProxy
+        _.isBlank(value) || value.isProxy
 
 
     # sets the model from a user interaction
