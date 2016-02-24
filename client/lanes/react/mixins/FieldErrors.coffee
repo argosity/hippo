@@ -20,5 +20,5 @@ Lanes.React.Mixins.FieldErrors = {
         )
 
     onFieldInteraction: ->
-        @getInvalidModel().unmaskInvalidFields( @getInvalidFieldName() )
+        @getInvalidModel().unmaskInvalidField( @getInvalidFieldName() )
 }
