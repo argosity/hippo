@@ -6,4 +6,7 @@
         @include flex-direction(column);
     }
 
+    .grid-component .grid-body {
+        height: initial;
+    }
 }

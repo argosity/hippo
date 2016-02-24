@@ -71,7 +71,7 @@
         overflow: auto;
         position: relative; // for absolutely positioned row editor
         flex-grow: 1;
-
+        height: 1px;
         .r:nth-child(odd) {
             background-color: $table-bg-accent;
         }
