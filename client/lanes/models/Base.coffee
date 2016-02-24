@@ -154,6 +154,7 @@ class BaseModel
     setFromServer: (data, options) ->
         data = if _.isArray(data) then data[0] else data
         BaseModel.__super__.set.call(this, data )
+        @unset('errors')
         this.associations.setFromServer(this, data, options) if this.associations
         this.isDirty = false
 

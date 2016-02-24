@@ -38,13 +38,13 @@ Lanes.Models.Sync = {
             handler = (reply) ->
                 delete model.requestInProgress
                 model.lastServerMessage = reply.message
+                model.setFromServer(reply.data, options, method)
+                model.trigger("save", model, reply, options) if isSave
+                model.trigger("sync", model, reply, options)
                 if reply.errors
                     Lanes.warn reply.errors
                     model.errors = reply.errors
                     model.trigger("error", model, options)
-                model.setFromServer(reply.data, options, method)
-                model.trigger("save", model, reply, options) if isSave
-                model.trigger("sync", model, reply, options)
                 resolve(model)
 
             Lanes.Models.Sync.perform(method, options).then (reply) ->
