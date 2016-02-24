@@ -13541,6 +13541,7 @@ webpackJsonp([1],{
 	                    range[1] = Math.max(layout.event.end().hour(), range[1]);
 	                });
 	            });
+	            range[1] += 1;
 	            return range;
 	        }
 	    }, {
