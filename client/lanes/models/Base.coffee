@@ -271,15 +271,9 @@ class BaseModel
         attrs = []
         for name, definition of klass::_definition when definition.required
             attrs.push(name)
-
         for name, definition of (klass::associations?.definitions || {}) when definition.required
             attrs.push(name)
-
         klass::requiredAttributes = attrs
-
-        unless _.isEmpty(klass::requiredAttributes)
-            console.log klass.name, klass::requiredAttributes
-
 
         unless klass.Collection
             @createDefaultCollectionFor(klass)
