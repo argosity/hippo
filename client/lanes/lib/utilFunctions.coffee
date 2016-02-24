@@ -159,4 +159,18 @@ _.mixin({
             ''
     isPromise: (obj) ->
         !!obj && (_.isObject(obj) || _.isFunction(obj)) && _.isFunction(obj.then)
+
+    isBlank: (value) ->
+        switch true
+            when _.isDate(value)
+                _.isNaN(value.getDate())
+            when _.isError(value), _.isNaN(value)
+                true
+            when _.isElement(value), _.isFunction(value), _.isBoolean(value), _.isRegExp(value)
+                false
+            when _.isNumber(value)
+                !value
+            else
+                _.isEmpty(value)
+
 })
