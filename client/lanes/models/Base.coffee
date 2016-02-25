@@ -202,6 +202,8 @@ class BaseModel
         attrs = {}
         _.extend(attrs, _.pick( this.getAttributes(props:true, true),
             @changeMonitor?.changedAttributes() || {} ) )
+        unless _.isEmpty(attrs) or @isNew()
+            attrs[@idAttribute] = this.getId()
         attrs
 
     # returns data to save to server.  If options.saveAll is true,
