@@ -245,8 +245,8 @@ class BaseModel
         else if @unmaskedInvalidFields isnt 'all'
             @unmaskedInvalidFields ||= []
             if _.include(@requiredAttributes, attr) and !_.include(@unmaskedInvalidFields, attr)
-                @unmaskedInvalidFields.push(name)
-                @trigger("invalid-field:#{name}", this)
+                @unmaskedInvalidFields.push(attr)
+                @trigger("invalid-field:#{attr}", this)
 
     _calculateInvalidAttributes: ->
         invalid = []
