@@ -1,4 +1,4 @@
-class Lanes.Screens.Commands
+class Lanes.Screens.Commands extends Lanes.Models.State
 
     constructor: (@screen, @options = {}) ->
         _.defaults(@options, modelName: 'model')
@@ -8,14 +8,6 @@ class Lanes.Screens.Commands
         model = @getModel()
         @setModel( new model.constructor )
         undefined
-
-    canPrint: ->
-        model = @getModel()
-        not model.isNew() and model?.pdfDownloadUrl
-
-    printModel: ->
-        model = @getModel()
-        window.open(_.result(model, 'pdfDownloadUrl'), 'lanes-print')
 
     getModel: -> @screen[@options.modelName]
 
