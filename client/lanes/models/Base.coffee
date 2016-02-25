@@ -238,6 +238,9 @@ class BaseModel
         else
             ''
 
+    maskInvalidFields: ->
+        delete @unmaskedInvalidFields
+
     unmaskInvalidField: (attr) ->
         if attr is 'all'
             @unmaskedInvalidFields = 'all'

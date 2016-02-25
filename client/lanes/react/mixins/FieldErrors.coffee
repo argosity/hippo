@@ -4,6 +4,9 @@ Lanes.React.Mixins.FieldErrors = {
         Lanes.React.Mixins.ReadEditingState
     ]
 
+    componentWillMount: ->
+        @getInvalidModel().maskInvalidFields()
+
     getInvalidFieldName: ->
         @props.validity_attribute || @props.name
 
