@@ -2,16 +2,17 @@ module Lanes
     module API
 
         module HelperMethods
+
             def lanes_application_title
                 Extensions.controlling.title
             end
 
-            def lanes_javascript_tag
-                javascript_tag( 'lanes' )
+            def lanes_javascript_tags
+                javascript_tag('lanes/vendor') + "\n" + javascript_tag('lanes')
             end
 
-            def lanes_stylesheet_tag
-                stylesheet_tag( 'lanes' )
+            def lanes_stylesheet_tags
+                stylesheet_tag('lanes')
             end
 
             def client_bootstrap_data

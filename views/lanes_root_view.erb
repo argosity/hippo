@@ -56,13 +56,13 @@
             opacity: 0;
           }
         </style>
-        <%= lanes_stylesheet_tag %>
+        <%= lanes_stylesheet_tags %>
     </head>
 
     <body>
         <div class="loading">Loading&#8230;</div>
         <div id="root" />
-        <%= lanes_javascript_tag %>
+        <%= lanes_javascript_tags %>
         <script type="text/javascript">
           Lanes.renderScreenTo('#root', <%= client_bootstrap_data %> );
         </script>

@@ -16,7 +16,7 @@ module Lanes
                     env = ::Sprockets::Environment.new
                     Lanes::API::SprocketsExtension.configure(env, compress:true)
                     manifest = Sprockets::Manifest.new( env.index, "public/assets/manifest.json" )
-                    manifest.compile('lanes.js', 'lanes.css')
+                    manifest.compile('lanes/vendor.js', 'lanes.js', 'lanes.css')
                     Extensions.each do |ext|
                         ext.each_static_asset do | asset |
                           manifest.compile( asset.to_s )

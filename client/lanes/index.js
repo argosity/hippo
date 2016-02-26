@@ -1,4 +1,3 @@
-//= require ./vendor/index
 //= require ./lib
 //= require ./extension
 //= require ./models
