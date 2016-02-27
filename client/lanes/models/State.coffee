@@ -43,8 +43,11 @@ class State
         # Big decimal for attributes that need precision math
         bigdec:
             set: (newVal) ->
-                val = _.bigDecimal(newVal) unless _.isBlank(newVal)
-                { val, type: 'bigdec' }
+                try
+                    val = _.bigDecimal(newVal)
+                    { val, type: 'bigdec' }
+                catch
+                    {val: newVal}
             default: -> new _.bigDecimal(0)
 
         integer:
