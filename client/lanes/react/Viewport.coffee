@@ -52,9 +52,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
         @modalProps = {show: false}
 
     displayModal: (props) ->
-        new _.Promise( (onOk, onCancel) =>
-            @modalProps = _.extend(props, show: true, {onCancel, onOk})
-        )
+        @modalProps = _.extend(props, show: true)
 
     renderRoot: ->
         cntrl = Lanes.Extensions.controlling()
