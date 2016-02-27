@@ -3,10 +3,11 @@ class Lanes.lib.Dom
     constructor: (el) ->
         @el = el
 
-    qs: (selector) ->
+    qs: (selector, options = {}) ->
         el = @el.querySelector(selector)
-        throw new TypeError("Unable to find element for selector #{selector}") unless el
-        new Lanes.lib.Dom(el)
+        if not el and options.raise isnt false
+            throw new TypeError("Unable to find element for selector #{selector}")
+        new Lanes.lib.Dom(el || @el)
 
     qsa: (selector) ->
         @el.querySelectorAll(selector)
