@@ -206,7 +206,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
         initialFieldIndex: 'number'
         pageSize: { type: 'number', default: 100 }
         syncOptions: 'any'
-        autoRetrieve: ['boolean', true, true]
+        autoRetrieve: {type:'boolean', default: false, required: true}
         title: { type: 'string', default: 'Find Record' }
         sortField: 'object'
         defaultSort: 'any'
