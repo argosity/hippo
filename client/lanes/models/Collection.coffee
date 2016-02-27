@@ -217,14 +217,12 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
 
     _prepareModel: (attrs, options = {}) ->
         if @associationFilter
-#            needsReset =  _.isEmpty(attrs)
             _.extend(attrs, @associationFilter)
         model = super
         if @options.inverse
             parent = this.parent.clone()
             parent[@options.inverse.without].reset() if @options.inverse.without
             model.set(@options.inverse.name, parent, options)
-#        model.changeMonitor.reset() if needsReset
         model
 
     fetch: (options) ->
