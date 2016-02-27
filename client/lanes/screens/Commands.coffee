@@ -17,8 +17,11 @@ class Lanes.Screens.Commands extends Lanes.Models.State
         @screen.setModelUrl?(model)
         @options.modelDidRebind?(model)
 
+    getSyncOptions: ->
+        _.result(@screen, 'syncOptions') || {}
+
     saveModel: ->
-        @getModel().save()
+        @getModel().save(@getSyncOptions())
 
     toggleEdit: ->
         @screen.setState(isEditing: !@isEditing())
