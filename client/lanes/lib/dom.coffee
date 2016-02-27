@@ -16,8 +16,17 @@ class Lanes.lib.Dom
         @el.parentElement.removeChild(@el)
 
     focusAndSelect: ->
-        @el.select()
-        @el.focus()
+        @el.select?()
+        @el.focus?()
+
+    closest: (selector) ->
+        # Traverse the DOM up with a while loop
+        el = @el
+        while el.nodeType isnt 9 and !el.matches(selector)
+            # Increment the loop to the parent node
+            el = el.parentNode
+            return null unless el
+        _.dom(el)
 
 wrapArg = (fn) ->
     return ->

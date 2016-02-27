@@ -101,15 +101,6 @@ Lanes.u = {
         else
             method
 
-    closestEl: (el, name) ->
-        # Traverse the DOM up with a while loop
-        while el.nodeType isnt 9 and !el.classList.contains(name)
-            # Increment the loop to the parent node
-            el = el.parentNode
-            return null unless el
-
-        return el
-
     invokeOrReturn: (func, scope = this) ->
         if _.isFunction(func)
             func.apply(scope)
