@@ -29,7 +29,9 @@ class Lanes.Components.ControlLabel extends Lanes.React.Component
     propTypes:
         model: Lanes.PropTypes.State.isRequired
         invalidMsg: React.PropTypes.string
-
+    focusInput: (ev) ->
+        _.dom(ev.target).closest('.form-group')
+            .qs('input', raise: false).focusAndSelect()
     render: ->
         if @props.titleOnly
             <span className="label-title-only">
@@ -37,8 +39,7 @@ class Lanes.Components.ControlLabel extends Lanes.React.Component
                 <InvalidTag {...@props} />
             </span>
         else
-            <label className="control-label">
+            <label className="control-label" onClick={@focusInput}>
                 <span className="label-title">{@props.label}</span>
                 <InvalidTag {...@props} />
-                {@props.children}
             </label>
