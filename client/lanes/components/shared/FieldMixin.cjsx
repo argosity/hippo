@@ -26,7 +26,10 @@ Lanes.Components.Form.FieldMixin = {
         setValue: React.PropTypes.func
 
     _getValue: ->
-        if @props.getValue then @props.getValue() else @model[@props.name]
+        if @props.getValue
+            @props.getValue.call(@model, @props)
+        else
+            @model[@props.name]
 
     _setValue: (value) ->
         if @props.setValue then @props.setValue(value) else @model[@props.name] = value
