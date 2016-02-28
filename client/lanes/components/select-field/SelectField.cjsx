@@ -20,9 +20,11 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     dataObjects:
         model: 'props'
         collection: ->
-            @props.collection || (
+            collection = @props.collection || (
                 @props.model?.associations?.collectionFor(@props.name, @props.model)
             )
+            collection.comparator = @props.labelField
+            collection
 
     onChange: (selections) ->
         selections = [selections] unless _.isArray(selections)
