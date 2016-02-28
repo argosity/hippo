@@ -14,6 +14,9 @@ Lanes.Components.Form.FieldMixin = {
     propTypes:
         model: Lanes.PropTypes.State.isRequired
         name:  React.PropTypes.string.isRequired
+        align: React.PropTypes.oneOf([
+            'right', 'left', 'center'
+        ])
         label: React.PropTypes.oneOfType([
             React.PropTypes.string, React.PropTypes.element
         ])

@@ -5,6 +5,11 @@ class Lanes.Components.FormGroup extends Lanes.React.Component
         Lanes.React.Mixins.FieldErrors
     ]
 
+    propTypes:
+        align: React.PropTypes.oneOf([
+            'right', 'left', 'center'
+        ])
+
     bindDataEvents: ->
         model: "invalid-fields invalid-field:#{@getInvalidFieldName()}"
 
@@ -16,15 +21,16 @@ class Lanes.Components.FormGroup extends Lanes.React.Component
         )
 
         colProps = _.omit(@props, 'name', 'label', 'type', 'editing', 'display')
-
+        valueClassNames = _.classnames('value', {
+            "align-#{@props.align}": @props.align
+        })
         <BS.Col {...colProps} className={className}>
             <div className="form-group">
-                <LC.ControlLabel {...@props}>
-                    <div className="input-group" name={@props.name}>
-                        <div className="value">
-                            {@props.children}
-                        </div>
+                <LC.ControlLabel {...@props} />
+                <div className="input-group" name={@props.name}>
+                    <div className={valueClassNames}>
+                        {@props.children}
                     </div>
-                </LC.ControlLabel>
+                </div>
             </div>
         </BS.Col>

@@ -18,6 +18,7 @@ label.field {
         }
         .value {
             padding-left: 6px;
+            padding-right: 6px;
             display: block;
             height: $lanes-field-value-height;
             line-height:  $lanes-field-value-height;
@@ -49,7 +50,6 @@ label.field {
         &.editing .react-toggle { margin-top: 5px; }
     }
     .label-title {
-        margin-bottom: 5px;
         display: inline-block;
     }
     label {
@@ -58,5 +58,8 @@ label.field {
     i.error {
         margin-left: 4px;
     }
-
+    .value {
+        &.align-right{ text-align: right; }
+        &.align-center{ text-align: center; }
+    }
 }

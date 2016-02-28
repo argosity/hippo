@@ -45,7 +45,10 @@ class Lanes.Components.Input extends Lanes.React.Component
 
         props = _.extend({
             ref:       'input'
-            className: _.classnames('value', changeset: @state.changeset)
+            className: _.classnames('value',
+                changeset: @state.changeset
+                "align-#{@props.align}": @props.align
+            )
             label:     if @props.unlabeled then false else label
             onChange:  @validatedChangeHandler
         }, @props, {value: value})
