@@ -27,7 +27,7 @@ class Lanes.Components.ControlLabel extends Lanes.React.Component
     ]
 
     propTypes:
-        model: Lanes.PropTypes.State.isRequired
+        model: Lanes.PropTypes.State
         invalidMsg: React.PropTypes.string
     focusInput: (ev) ->
         _.dom(ev.target).closest('.form-group')
