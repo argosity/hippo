@@ -176,9 +176,7 @@ class BaseModel
     # model differs from its current attributes, they will be overridden,
     # triggering a `"change"` event.
     fetch:  (original_options = {}) ->
-        options = _.clone(original_options)
-        options = _.extend(options, {limit:1, ignoreUnsaved:true})
-
+        options = _.extend({}, original_options, {limit:1, ignoreUnsaved:true})
         if this.cacheDuration && _.isEmpty(original_options)
             Lanes.Models.ServerCache.fetchRecord(this, options)
         else
