@@ -2,120 +2,116 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     mixins: [ Lanes.Components.Form.FieldMixin ]
 
     propTypes:
-        collection:   Lanes.PropTypes.Collection
+        choices: React.PropTypes.arrayOf(
+            React.PropTypes.shape({
+                id: React.PropTypes.number
+                label: React.PropTypes.string
+            })
+        )
         model:        Lanes.PropTypes.Model
         labelField:   React.PropTypes.string
         getSelection: React.PropTypes.func
         setSelection: React.PropTypes.func
         displayLimit: React.PropTypes.number
-        syncOptions:  React.PropTypes.any
+        syncOptions:  React.PropTypes.object
         fetchWhenOpen: React.PropTypes.bool
         allowFreeForm: React.PropTypes.bool
         includeBlankRow: React.PropTypes.bool
         displayFallback: React.PropTypes.string
 
     getDefaultProps: ->
-        labelField: 'label', idField: 'id', displayLimit: 30, syncOptions: {}, fetchWhenOpen: true
+        labelField: 'code', idField: 'id'
 
     dataObjects:
-        model: 'props'
-        collection: ->
-            collection = @props.collection || (
-                @props.model?.associations?.collectionFor(@props.name, @props.model)
-            )
-            collection.comparator = @props.labelField
-            collection
-
-    onChange: (selections) ->
-        selections = [selections] unless _.isArray(selections)
-        records = _.map selections, (selection) =>
-            @collection.get(selection.id)
-        value = if @props.multi then records else _.first(records)
-        if @props.allowFreeForm and not value
-            value = _.first selections
-        if @props.setSelection
-            @props.setSelection(@model, value, selections)
-        else
-            @model.set(@props.name, value)
-        true
-
-    getCurrentModel: ->
-        value = @model[@props.name]
-        return null unless value
-        if not @props.multi and Lanes.u.isModel(value) and not value.isNew()
-            id = @model[@props.name].getId()
-            if id
-                @collection.getOrFetch(id,
-                    _.extend({}, Lanes.u.invokeOrReturn(@props.syncOptions)))
-            else
-                null
-        else
-            value
-
-    getCurrentSelection: ->
-        if @props.getSelection
-            selection = @props.getSelection(@model)
-            return selection if selection
-        selected = @getCurrentModel()
-        if @props.multi
-            selected
-        else
-            if selected and Lanes.u.isModel(selected)
-                {id: selected[@props.idField], label: selected[@props.labelField]}
-            else
-                if @props.allowFreeForm
-                    {id: selected, label: selected}
-                else
-                    @blankRecord()
-    blankRecord: ->
-
-        {id: null, label: @props.displayFallback || '---------'}
-
-    _getChoices: ->
-        selection = @getCurrentSelection()
-        if @state.isOpen
-            labelField = @props.labelField
-            rows = @collection.map (model) ->
-                {id: model.getId(), label: _.result(model, labelField)}
-            if @props.includeBlankRow
-                rows.unshift @blankRecord()
-            if _.isEmpty(rows) then [@getCurrentSelection()] else rows
-        else
-            if selection then [selection] else []
-
-    onToggle: (isOpen) ->
-        @setState({isOpen})
-        @collection.fetch(
-            _.extend(limit: @props.displayLimit, Lanes.u.invokeOrReturn(@props.syncOptions))
-        ) if isOpen and @props.fetchWhenOpen
+        query: ->
+            src = @props.queryModel or
+                @props.model.associations?.collectionFor(@props.name).model
+            query = new Lanes.Models.Query({
+                syncOptions: Lanes.Models.Query.mergedSyncOptions(@props.syncOptions)
+                src: src
+                fields: [
+                    {id: (@props.model?.idAttribute or 'id'), visible: false},
+                    @props.labelField
+                ]
+            })
 
     renderDisplayValue: ->
-        value = if @props.multi
-            _.toSentence _.pluck(@getCurrentSelection(), @props.labelField)
-        else
-            @getCurrentSelection()?.label
+        value = @getValue()?[@props.labelField]
         <span>{value}</span>
 
-    renderEdit: (label) ->
-        Component = if @props.multi
-            Lanes.Vendor.ReactWidgets.Multiselect
+    getValue: ->
+        return undefined if @state.isOpen
+        return @state.tempDisplayValue if @state.tempDisplayValue
+        model = @props.getSelection?() or @model?[@props.name]
+        return undefined unless model
+        label = model[@props.labelField] or @props.defaultLabel
+        if !label and not _.isEmpty(@props.choices)
+            label = _.findWhere( @props.choices, id: model.id)?[@props.labelField]
+        if label
+            {id: model.id, "#{@props.labelField}": label}
+        else if model.id
+            model.id
         else
-            Lanes.Vendor.ReactWidgets.Combobox
+            undefined
+
+    getClause: -> @query.clauses.first()
+    getChoices: ->
+        @props.choices or @query.results.map (row) =>
+            {id: row[0], "#{@props.labelField}": row[1]}
+
+    onToggle: (isOpen) ->
+        if isOpen and _.isEmpty(@props.choices)
+            c = @getClause()
+            c.value = ''
+            @query.results.reload()
+        @setState({isOpen})
+
+    setModel: (model) ->
+        @setState({isOpen: false, tempDisplayValue: false, requestInProgress: false})
+        if @props.setSelection
+            @props.setSelection(model, parent: @model)
+        else
+            @model.set(@props.name, model)
+
+    onChange: (value) ->
+        if _.isObject(value)
+            model = if Lanes.u.isState(value) then value else new @query.model(value)
+            model.fetch(@props.syncOptions).then(@setModel)
+            @setState(isOpen: false, tempDisplayValue: value, requestInProgress: true)
+        else
+            if not @props.choices
+                c = @getClause()
+                return if c.value is value
+                c.value = value
+                @query.results.reload()
+            @setState(isOpen: true)
+
+    getMessages: ->
+        loading = @query.results.requestInProgress
+        emptyList: if loading then 'Loading …' else 'No records found'
+        emptyFilter: 'No records found'
+
+    isBusy: ->
+        @state.requestInProgress or @query.results.requestInProgress
+
+    renderEdit: (label) ->
         props = _.omit(@props, 'label')
-        select = <Component
+        select = <Lanes.Vendor.ReactWidgets.Combobox
             ref="select"
             className={@props.className}
             open={@state.isOpen}
-            onToggle={@onToggle}
-            suggest={true}
-            data={@_getChoices()}
-            valueField="id"
-            textField="label"
             onChange={@onChange}
+            onToggle={@onToggle}
+            data={@getChoices()}
+            busy={@isBusy()}
+            valueField="id"
+            textField={@props.labelField}
+            filter='startsWith'
             name={@props.name}
+            messages={@getMessages()}
             onBlur={@onFieldInteraction}
+            value={@getValue()}
             {...props}
-            value={@getCurrentSelection()}
             />
 
 
