@@ -119,6 +119,7 @@ Lanes.Models.AssocationProxy = {
 
         definedProps = {
             isProxy: { value: true, enumerable: true, writable: false }
+            id: { get: -> @getId() }
         }
         if klass::associations?
             definedProps.associations =
@@ -128,7 +129,7 @@ Lanes.Models.AssocationProxy = {
                 definedProps[name] = @associationDefinition(name, definition, config)
 
         if klass::_definition?
-            for name, definition of klass::_definition
+            for name, definition of klass::_definition when not definedProps[name]
                 definedProps[name] = @fieldDefinition(name, definition, config)
 
         if klass::_derived?
