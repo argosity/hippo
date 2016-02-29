@@ -25,13 +25,15 @@ class Lanes.Components.Modal extends Lanes.React.Component
     getInitialState: ->
         show: false
 
+    onOkButton: -> @state.onOk?(this)
+    onCancelButton: -> @state.onCancel?(this)
     onButton: (btn) ->
         @selected = btn
         @_hide() if @state.autoHide
         if btn.eventKey is 'ok'
-            @state.onOk?(this)
+            @onOkButton()
         else
-            @state.onCancel?(this)
+            @onCancelButton()
 
     componentWillReceiveProps: (nextProps) ->
         @replaceState(nextProps)
