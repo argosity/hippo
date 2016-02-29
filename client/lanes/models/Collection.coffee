@@ -121,7 +121,6 @@ class ModelsCollection
             if options.reset
                 update = 'reset'
             else
-                options.remove = false unless options.remove?
                 update = 'set'
             this[update](data, options)
         if this._loaded_callbacks

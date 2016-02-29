@@ -143,7 +143,6 @@ class Lanes.Models.AssocationMap
                 if options?.silent isnt true and not association.isProxy
                     model.trigger("change:#{name}", value, {})
             else
-                options = _.extend({}, options, {remove: true})
                 if value then association[fn_name]( value, options ) else association.clear()
 
     pk: (name) ->
