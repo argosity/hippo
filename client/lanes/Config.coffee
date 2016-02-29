@@ -17,6 +17,11 @@ class SystemSettings extends Lanes.Models.Base
         @settings ||= {}
         @settings.lanes || = {}
 
+    forExtension: (ext) ->
+        @settings[ext] ||= {}
+
+    setValueForExtension: (ext, key, value) ->
+        @forExtension(ext)[key] = value
 
 class Config extends Lanes.Models.State
 
