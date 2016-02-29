@@ -25,10 +25,11 @@ class Page
 
         _.extend(options, _.omit(@result.query.syncOptions, 'include'))
         @result.query.trigger('request', @result.query, 'GET', {})
-        @pendingLoad = Lanes.Models.Sync.perform('GET', options).then (resp) =>
+        @result.requestInProgress = options
+        Lanes.Models.Sync.perform('GET', options).then (resp) =>
             @result.total = resp.total
             @rows  = resp.data
-            delete @pending
+            delete @result.requestInProgress
             @result.onPageLoad(@)
 
     _normalizedIndex: (index) ->
@@ -124,7 +125,14 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
     eachRow: (fn) ->
         for i in [0...@length]
             row = @rowAt(i)
-            fn(row, row[@xDataColumn])
+            fn(row, row[@xDataColumn], i)
+
+    map: (fn) ->
+        rows = []
+        @query.results.eachRow (row, xd, i) ->
+            rows.push fn(row, xd, i)
+        rows
+
 
     filteredRows: (fn) ->
         found = []
