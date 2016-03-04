@@ -1,6 +1,8 @@
 @import "lanes/styles/bootstrap/variables";
 @import "lanes/styles/bootstrap/mixins";
 
+$lanes-field-margin: 6px;
+
 label.field {
     display: block;
 }
@@ -17,8 +19,8 @@ label.field {
             display: block;
         }
         .value {
-            padding-left: 6px;
-            padding-right: 6px;
+            padding-left: $lanes-field-margin;
+            padding-right: $lanes-field-margin;
             display: block;
             height: $lanes-field-value-height;
             line-height:  $lanes-field-value-height;
@@ -56,10 +58,19 @@ label.field {
         display: block;
     }
     i.error {
-        margin-left: 4px;
+        margin-left: $lanes-field-margin;
     }
-    .value {
-        &.align-right{ text-align: right; }
-        &.align-center{ text-align: center; }
+    .control-label {
+        margin-left: $lanes-field-margin;
+        margin-right: $lanes-field-margin;
     }
+
+
+}
+
+.align-right{
+    .control-label, .value {text-align: right; }
+}
+.align-center{
+    .control-label, .value { text-align: center; }
 }
