@@ -47,8 +47,8 @@ class Lanes.Components.Input extends Lanes.React.Component
             ref:       'input'
             className: _.classnames('value',
                 changeset: @state.changeset
-                "align-#{@props.align}": @props.align
             )
+
             label:     if @props.unlabeled then false else label
             onChange:  @validatedChangeHandler
         }, @props, {value: value})
@@ -66,8 +66,8 @@ class Lanes.Components.Input extends Lanes.React.Component
 
     renderStyled: (props, handlers, label) ->
 
-        colProps = _.omit(props, 'name')
-
-        <BS.Col {...colProps} >
+        colProps = _.omit(@props, 'name', 'label', 'type', 'editing', 'display')
+        colClassName = _.classnames("align-#{@props.align}": @props.align)
+        <BS.Col {...colProps} className={colClassName}>
             <BS.Input {...props} {...handlers} />
         </BS.Col>
