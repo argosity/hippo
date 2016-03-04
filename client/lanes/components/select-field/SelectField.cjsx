@@ -92,7 +92,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         emptyFilter: 'No records found'
 
     isBusy: ->
-        @state.requestInProgress or @query.results.requestInProgress
+        !!(@state.requestInProgress or @query.results.requestInProgress)
 
     renderEdit: (label) ->
         props = _.omit(@props, 'label')
