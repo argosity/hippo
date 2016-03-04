@@ -34,11 +34,6 @@ CommonMethods = {
             return this
         )
 
-    # replace these models from other collection
-    copyFrom: (collection) ->
-        this.reset( collection.map (model) => ( new @model() ).copyFrom(model) )
-        @
-
     clone: ->
         new @constructor( @invoke( 'clone' ), @options )
 
@@ -129,18 +124,6 @@ class ModelsCollection
 
     isLoaded: -> @_isLoaded
 
-    _onModelEvent: (event, model, copy, prevAttributes) ->
-        if event is 'copyfrom'
-             # are we copying from a model that is also in the same collection
-            if this.get(copy) and prevAttributes[@model::idAttribute] != model[@model::idAttribute]
-                # if we are then the copy will create two appearently identical models
-                # work around that storing the "to-be-overwritten" attrs
-                # and removeing the copy
-                this.add(prevAttributes)
-                this.remove(copy)
-        else
-            super
-
     # true if any models have unsaved data
     isDirty: ->
         !!this.findWhere(isDirty: true)
@@ -229,9 +212,3 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
         _.extend(options.query, @associationFilter)
         _.extend(options, @options)
         super(options)
-
-    copyFrom: (other) ->
-        super
-        if @options.inverse and @parent
-            @each (m) => m.set(@options.inverse.name, @parent)
-        @

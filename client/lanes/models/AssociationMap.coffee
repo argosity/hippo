@@ -34,12 +34,11 @@ class Lanes.Models.AssocationMap
             Proxy = @getProxyFor(name)
             model._cache[name] = new Proxy( this, this.getOptions(name, model) )
 
-    replaceProxy: (name, model, options) ->
-        return unless options.parent._cache[name]?.isProxy
-        options.parent._cache[name] = model
-        model.parent = options.parent
-        options.parent.trigger("change", options.parent, {})
-        options.parent.trigger("change:#{name}", model, {})
+    replace: (parent, name, model) ->
+        parent._cache[name] = model
+        model.parent = parent
+        parent.trigger("change", parent, {})
+        parent.trigger("change:#{name}", model, {})
 
     getOptions: (name, model) ->
         definition = @definitions[name]
@@ -136,7 +135,7 @@ class Lanes.Models.AssocationMap
                 else
                     model.set(this.pk(name), value.id, options) if value.id
                     if Lanes.u.isModel(value)
-                        association.copyFrom( value )
+                        @replace(model, name, value)
                     else
                         association[fn_name]( value )
 

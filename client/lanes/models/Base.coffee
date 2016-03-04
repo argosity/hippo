@@ -86,26 +86,9 @@ class BaseModel
             options['include'] = needed
             this.fetch(options)
 
-    # ensures associations are loaded, then copies them from another model
-    copyAssociationsFrom: (model, associations) ->
-        new _.Promise (res, rej) =>
-            model.withAssociations(associations).then =>
-                for name in associations
-                    @[name].copyFrom(model[name])
-                res(@)
-
-
     clear: ->
         this.associations?.clear(@)
         super
-
-    # replace this model's attributes with data from other model
-    copyFrom: (model) ->
-        attributes = model.clonedAttributes?() || model.serialize?() || model
-        prevAttributes = @clonedAttributes()
-        this.clear()
-        this.set(attributes)
-        this.trigger('copyfrom', this, model, prevAttributes)
 
     # duplicate the model.  Copies only attributes, not bound events
     clone: ->
@@ -231,8 +214,9 @@ class BaseModel
     # Check if an attribute named "name" can be set to "value"
     # Returns an empty string if value, and an appropriate error message if not
     invalidMessageFor: (name) ->
-        if !@unmaskedInvalidFields or !_.include(@requiredAttributes, name)
-            return ''
+        return '' unless @unmaskedInvalidFields and _.include(@requiredAttributes, name) and
+            _.include(@unmaskedInvalidFields, name)
+
         if @isBlank(name)
             "Cannot be empty"
         else

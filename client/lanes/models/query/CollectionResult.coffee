@@ -23,7 +23,10 @@ class Lanes.Models.Query.CollectionResult extends Lanes.Models.Query.Result
         @collection.at(index)
 
     saveModelChanges: (model, index) ->
-        @collection.at(index).copyFrom(model)
+        old = @collection.at(index)
+        @collection.remove(old)
+        @collection.add(model, at:index)
+        @query.changeCount++
 
     addBlankRow: (index) ->
         @collection.add({}, at: index)

@@ -64,9 +64,7 @@ class Page
 
     saveModelChanges: (model, index) ->
         row = @_rowAt(index)
-        cachedModel = @modelCache[ @idForRow(row)] if @modelCache
-        if cachedModel
-            cachedModel.copyFrom(model)
+        @modelCache[ @idForRow(row)] = model
         data = model.serialize()
         for field, i in @result.query.fields.models
             row[field.fetchIndex] = data[field.id]
