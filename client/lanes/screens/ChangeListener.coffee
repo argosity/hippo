@@ -11,8 +11,8 @@ Lanes.Screens.ChangeListener = {
 
     derived:
         changes: deps:[], fn: ->
-            new Lanes.Models.ChangeSetCollection([],{ parent: this })
-        changes_visible: { deps: ['change_count'], fn:-> @change_count > 0 }
+            new Lanes.Models.ChangeSetCollection([], { parent: this })
+        changes_visible: { deps: ['change_count'], fn: -> @change_count > 0 }
 
     bindings:
         'changes_visible': { selector: '.changes-notification', type: 'toggle' }
@@ -27,7 +27,7 @@ Lanes.Screens.ChangeListener = {
             view: 'Lanes.Views.ModelUpdate'
             collection: 'changes'
 
-    onChange: (model,change) ->
+    onChange: (model, change) ->
         @changes.add(change)
         @change_count += 1
 
