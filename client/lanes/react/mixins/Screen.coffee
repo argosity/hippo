@@ -7,6 +7,8 @@ Lanes.React.Mixins.Screen = {
 
     loadOrCreateModel: (options) ->
         if options.prop and @props[options.prop]
+            if options.syncOptions?.include
+                @props[options.prop].withAssociations(options.syncOptions.include, options.syncOptions)
             @props[options.prop]
         else
             model = new options.klass
