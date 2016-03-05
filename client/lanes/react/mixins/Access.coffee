@@ -1,5 +1,8 @@
 calculateAccess = (comp, props) ->
-    model = _.result(comp, 'modelForAccess') || comp.model
+
+    model = _.result(comp, 'modelForAccess') ||
+        comp.commands?.getModel()?.modelForAccess() ||
+        comp.model?.modelForAccess()
 
     accessRight = if props.readonly or comp.context?.readonly
         'r'

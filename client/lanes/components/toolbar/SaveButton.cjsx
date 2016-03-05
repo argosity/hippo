@@ -17,6 +17,7 @@ class Lanes.Components.Toolbar.SaveButton extends Lanes.React.Component
             false
 
     render: ->
+        return null unless @props.commands.canSaveModel()
         model = @props.commands.getModel()
         text = if model.isNew() then 'Create' else 'Save'
         classNames = _.classnames('save', 'navbar-btn', 'control', {disabled: !@isSavable(model)})

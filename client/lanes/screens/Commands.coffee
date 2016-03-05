@@ -17,6 +17,9 @@ class Lanes.Screens.Commands extends Lanes.Models.State
         @screen.setModelUrl?(model)
         @options.modelDidRebind?(model)
 
+    canSaveModel: ->
+        @screen.hasWriteAccess?()
+
     getSyncOptions: ->
         _.result(@screen, 'syncOptions') || {}
 
