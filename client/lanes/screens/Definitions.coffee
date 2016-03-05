@@ -41,6 +41,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
         view:        'string'
         icon:        'string'
         group_id:    'string'
+        access:      'string'
         loading:     'boolean'
         extension:   'string'
         model:       'string'
@@ -188,7 +189,7 @@ class MenuGroup extends Lanes.Models.BasicModel
         @cache ||= new Lanes.Models.SubCollection( Lanes.Screens.Definitions.all, {
             filter: (screen) =>
                 screen.group_id == @id &&
-                    (!screen.model_type || Lanes.current_user.canRead(screen.model_type))
+                    (!screen.model_type || Lanes.current_user.hasAccess(screen.access, screen.model_type))
             watched: ['group_id']
         })
 

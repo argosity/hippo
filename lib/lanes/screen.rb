@@ -90,6 +90,7 @@ module Lanes
                 "#{@extension_id}/screens"
             }
             attr_accessor_with_default :model_class
+            attr_accessor_with_default :model_access, 'read'
             attr_accessor_with_default :js, lambda {
                 has_file_matching?('index.{js,coffee,cjsx}') ? @identifier + '.js' : nil
             }
@@ -127,6 +128,7 @@ module Lanes
                             js:    js,
                             css:   css,
                             assets: [js, css].reject{|asset| asset.blank? },
+                            access: model_access,
                             group_id: group_id,
                             extension: extension,
                             url_prefix: url_prefix,
