@@ -19,7 +19,8 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
             <LC.Icon type="undo" />Reset
         </BS.Button>
 
-    renderEditToggle: ->
+    EditToggle: ->
+        return null unless @props.commands.canEditModel()
         <li navItem className="toggle control">
            <label>
                <Lanes.Vendor.ReactToggle
@@ -39,6 +40,6 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
             {@renderResetButton()}
             {@props.children}
             <div className="spacer"/>
-            {@renderEditToggle()  if @props.commands.toggleEdit}
+            <@EditToggle />
             <LC.Toolbar.RemoteChangeSets model=@changedModel />
         </BS.Nav>
