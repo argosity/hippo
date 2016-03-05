@@ -56,13 +56,11 @@ Lanes.Components.Form.FieldMixin = {
         <span>{value}</span>
 
     formGroupClassNames: ->
-        _.classnames(
-            _.result(this, 'formGroupClass')
-        )
+        _.result(this, 'formGroupClass')
 
     _mixinRenderValue: (label, className) ->
         value = (@renderDisplayValue || @renderMixinDisplayValue)?()
-        className = _.classnames(@props.className, className, {
+        className = _.classnames(@props.className, className, @formGroupClassNames(), {
             "align-#{@props.align}": @props.align
         })
         if @props.unstyled
