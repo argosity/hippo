@@ -33,6 +33,7 @@ class Lanes.Models.User extends Lanes.Models.Base
         options:     'object'
         password:    'string'
 
+    hasAccess: (access, model, field) -> this.roles.can(access, model, field)
     canRead: (model, field)  -> this.roles.canRead(model, field)
     canWrite: (model, field) -> this.roles.canWrite(model, field)
     canDelete: (model)       -> this.roles.canDelete(model)
