@@ -16,6 +16,7 @@ class Lanes.Components.FormGroup extends Lanes.React.Component
     render: ->
         className = _.classnames(className, @props.className, "field"
             editing: @props.editing
+            "align-#{@props.align}": @props.align
             display: false == @props.editing
             'has-error': @isFieldValueInvalid()
         )
