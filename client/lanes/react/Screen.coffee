@@ -4,6 +4,7 @@ Lanes.React.Screen = {
         Lanes.React.Mixins.Data
         Lanes.React.Mixins.Viewport
         Lanes.React.Mixins.Screen
+        Lanes.React.Mixins.Access
         Lanes.React.Mixins.RelayEditingState
     ]
 
