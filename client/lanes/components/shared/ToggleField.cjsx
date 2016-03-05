@@ -24,12 +24,10 @@ class Lanes.Components.ToggleField extends Lanes.React.Component
         if @props.unstyled
             toggle
         else
-            colProps = _.omit(@props, 'name', 'label')
-            <BS.Col {...colProps}>
-                <div className={@formGroupClassNames()}>
-                    <label className="control-label">{label}</label>
-                    <div className="value">
-                        {toggle}
-                    </div>
-                </div>
-            </BS.Col>
+            <LC.FormGroup
+                {...props}
+                className={@formGroupClassNames()}
+                label={label}
+            >
+                {toggle}
+            </LC.FormGroup>

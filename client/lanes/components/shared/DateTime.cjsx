@@ -39,12 +39,10 @@ class Lanes.Components.DateTime extends Lanes.React.Component
         <Lanes.Vendor.ReactWidgets.DateTimePicker {...props} />
 
     renderStyled: (props, label) ->
-        colProps = _.omit(props, 'name', 'value', 'label')
-        <BS.Col {...colProps}>
-            <div className={@formGroupClassNames()}>
-                <label className="control-label">{label}</label>
-                <div className="value">
-                    <Lanes.Vendor.ReactWidgets.DateTimePicker {...props} />
-                </div>
-            </div>
-        </BS.Col>
+        <LC.FormGroup
+            {...props}
+            className={@formGroupClassNames()}
+            label={label}
+        >
+            <Lanes.Vendor.ReactWidgets.DateTimePicker {...props} />
+        </LC.FormGroup>
