@@ -42,7 +42,7 @@ class Page
 
     _rowToModel: (row) ->
         attrs = {}
-        for field, i in @result.query.fields.models when field.query
+        for field, i in @result.query.fields.models when field.query and row[field.fetchIndex]?
             attrs[field.id] = row[field.fetchIndex]
         new @result.query.src(attrs)
 
