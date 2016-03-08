@@ -7,7 +7,7 @@ class Lanes.Screens.UserPreferences extends Lanes.React.Screen
         isEditing: true
         commands: new Lanes.Screens.Commands(this, modelName: 'user')
 
-    setScreens: (model, screens) ->
+    setScreens: (screens) ->
         @user.options = _.extend({}, @user.options, {initial_screens: _.pluck(screens, 'id')})
 
     getScreens: ->
@@ -20,12 +20,15 @@ class Lanes.Screens.UserPreferences extends Lanes.React.Screen
         <LC.ScreenWrapper identifier="user-preferences">
             <Lanes.Screens.CommonComponents commands={@state.commands} />
             <BS.Row>
-                <LC.SelectField xs=12 multi
+                <LC.SelectField xs=12
+                    multiSelect
                     fetchWhenOpen={false}
                     label='Initial Screens'
                     labelField='label'
-                    model={@user} name='options'
-                    collection={Lanes.Screens.Definitions.all}
+                    name='options'
+                    model={@user}
+                    choices={Lanes.Screens.Definitions.all.models}
+                    queryModel={Lanes.Screens.Definitions.all}
                     setSelection={@setScreens}
                     getSelection={@getScreens}
                 />

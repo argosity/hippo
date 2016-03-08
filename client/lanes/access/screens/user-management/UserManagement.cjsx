@@ -8,28 +8,29 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
         query: new Lanes.Models.Query(fields: fields, src: Lanes.Models.User)
 
     rolesForUser: (user) ->
-        _.map user.role_names, (rn) -> {id: rn, label: _.field2title(rn) }
+        _.map user.role_names, (rn) -> {id: rn, name: _.titleize(rn) }
 
-    setRolesForUser: (model, roles) ->
-        model.role_names = _.pluck(roles, 'id')
+    setRolesForUser: (roles, options) ->
+        options.model.role_names = _.pluck(roles, 'id')
 
     editors: (props) ->
         role_names: ({model}) =>
             <LC.SelectField
                 id="role_names"
                 key="row-select"
-                editOnly multi writable unstyled
+                queryModel={Lanes.Models.User}
+                editOnly multiSelect writable unstyled
                 model={model}
                 labelField='name'
                 getSelection={@rolesForUser}
                 setSelection={@setRolesForUser}
-                collection={Lanes.Models.Role.all}
+                choices={Lanes.Models.Role.all.models}
                 fetchWhenOpen={false}
                 name="role_names"
             />
 
     render: ->
-        <LC.ScreenWrapper identifier="user-management">
+        <LC.ScreenWrapper identifier="user-management" flexVertical>
             <h1>Users Management</h1>
             <LC.Grid
                 editorProps={{syncImmediatly: true}}
