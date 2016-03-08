@@ -4,7 +4,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     propTypes:
         choices: React.PropTypes.arrayOf(
             React.PropTypes.shape({
-                id: React.PropTypes.number
+                id: React.PropTypes.any
                 label: React.PropTypes.string
             })
         )
@@ -14,6 +14,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         setSelection: React.PropTypes.func
         displayLimit: React.PropTypes.number
         syncOptions:  React.PropTypes.object
+        multiSelect:  React.PropTypes.bool
         fetchWhenOpen: React.PropTypes.bool
         allowFreeForm: React.PropTypes.bool
         includeBlankRow: React.PropTypes.bool
@@ -40,10 +41,11 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         <span>{value}</span>
 
     getValue: ->
-        return undefined if @state.isOpen
+        return undefined if @state.isOpen and not @props.multiSelect
         return @state.tempDisplayValue if @state.tempDisplayValue
-        model = @props.getSelection?() or @model?[@props.name]
+        model = @props.getSelection?(@model, @props) or @model?[@props.name]
         return undefined unless model
+        return model if @props.multiSelect
         label = model[@props.labelField] or @props.defaultLabel
         if !label and not _.isEmpty(@props.choices)
             label = _.findWhere( @props.choices, id: model.id)?[@props.labelField]
@@ -69,22 +71,25 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     setModel: (model) ->
         @setState({isOpen: false, tempDisplayValue: false, requestInProgress: false})
         if @props.setSelection
-            @props.setSelection(model, parent: @model)
+            @props.setSelection(model, model: @model)
         else
             @model.set(@props.name, model)
 
     onChange: (value) ->
-        if _.isObject(value)
-            model = if Lanes.u.isState(value) then value else new @query.model(value)
-            model.fetch(@props.syncOptions).then(@setModel)
-            @setState(isOpen: false, tempDisplayValue: value, requestInProgress: true)
+        if @props.multiSelect
+            @setModel(value)
         else
-            if not @props.choices
-                c = @getClause()
-                return if c.value is value
-                c.value = value
-                @query.results.reload()
-            @setState(isOpen: true)
+            if _.isObject(value)
+                model = if Lanes.u.isState(value) then value else new @query.model(value)
+                model.fetch(@props.syncOptions).then(@setModel)
+                @setState(isOpen: false, tempDisplayValue: value, requestInProgress: true)
+            else
+                if not @props.choices
+                    c = @getClause()
+                    return if c.value is value
+                    c.value = value
+                    @query.results.reload()
+                @setState(isOpen: true)
 
     getMessages: ->
         loading = @query.results.requestInProgress
@@ -96,7 +101,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
 
     renderEdit: (label) ->
         props = _.omit(@props, 'label')
-        select = <Lanes.Vendor.ReactWidgets.Combobox
+        Component = Lanes.Vendor.ReactWidgets[if @props.multiSelect then 'Multiselect' else 'Combobox']
+        select = <Component
             ref="select"
             className={@props.className}
             open={@state.isOpen}
