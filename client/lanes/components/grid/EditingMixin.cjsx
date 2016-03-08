@@ -18,7 +18,7 @@ Lanes.Components.Grid.EditingMixin = {
             <input type="text" {...props}
                 onChange={_.partial(@onFieldChange, _, props.field)} />
         bigdec: (props) ->
-            <LC.Input onlyNumeric inputOnly {...props} />
+            <LC.NumberInput unstyled {...props} />
         date: (props) ->
             <LC.DateTime {...props} inputOnly step={15}
                 onChange={_.partial(@onDateFieldChange, _, props.field)} />
