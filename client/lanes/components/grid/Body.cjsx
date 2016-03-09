@@ -7,49 +7,18 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
     fieldConvertors:
         bigdec: (v) -> _.bigDecimal(v).toFixed(2)
 
-    getInitialState: ->
-        selectedModel: false
-
-    onEditCancel: (model) ->
-        if model.isNew()
-            @props.query.results.removeRow(@state.selectedIndex)
-        this.hideEditor()
-
-    hideEditor: ->
-        # BUG? Without the defer, render is called with old state
-        _.defer => @setState(selectedIndex: null, selectedModel: null)
-
-    onEditSave: (model, isDeleted = false) ->
-        if (isDeleted)
-            @props.query.results.removeRow(@state.selectedIndex)
-        else
-            @props.query.results.saveModelChanges(model, @state.selectedIndex)
-        this.hideEditor()
-
-    componentWillReceiveProps: (nextProps) ->
-        if nextProps.editingRowIndex?
-            @setState(
-                selectedIndex: nextProps.editingRowIndex
-                selectedModel: @props.query.results.modelAt(nextProps.editingRowIndex)?.clone()
-            )
     onRowClick: (ev, row, index) ->
-        editTopOffset = this.refs.list.getScroll() + (
-            ev.target.getBoundingClientRect().top - _.dom(this).el.getBoundingClientRect().top
+        ourBounds = _.dom(@).el.getBoundingClientRect()
+        clickBounds = _.dom(ev.target).el.getBoundingClientRect()
+        top = this.refs.list.getScroll() + (
+            clickBounds.top - ourBounds.top
         )
-        selectedIndex = (if @state.selectedIndex == index then null else index)
+        left = ev.clientX - ourBounds.left
+        selectedIndex = (if @props.selectedIndex == index then null else index)
         selectedModel = if selectedIndex? then @props.query.results.modelAt(selectedIndex)?.clone() else null
-        set = (attrs = {}) =>
-            @setState(_.extend(attrs, {selectedIndex, selectedModel, editTopOffset})) unless false is @props.commands?.isEditing()
-
-        if @props.onSelectionChange
-            osc = @props.onSelectionChange(selectedModel, selectedIndex)
-            if _.isPromise(osc)
-                @setState(is_loading: true)
-                osc.then -> set(is_loading: false)
-            else
-                set()
-        else
-            set()
+        @props.onRowClick(selectedModel, selectedIndex,
+            {top, left, container: ourBounds, rowHeight: clickBounds.height}
+        )
 
     convertValue: (value, field) ->
         if @fieldConvertors[field.type] then @fieldConvertors[field.type](value) else value
@@ -80,7 +49,6 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
             {value}
         </div>
 
-
     renderRow: (rowNum, ref) ->
         fields = []
         results = @props.query.results
@@ -88,39 +56,27 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         for field, index in @props.query.fields.models when field.visible
             fields.push @renderColumn(rowNum, index, field, results, row)
 
-        onClick = _.partial(@onRowClick, _, row, rowNum)
+        if @props.onRowClick
+            onClick = _.partial(@onRowClick, _, row, rowNum)
         <div key={rowNum} ref={ref} className="r" onClick={onClick} >
             {fields}
         </div>
 
-    renderEditor: ->
-        editor = if true == @props.editor
-            Lanes.Components.Grid.RowEditor
-        else
-            @props.editor
-
-        React.createElement(editor, _.extend({
-            topOffset  : @state.editTopOffset
-            query      : @props.query
-            model      : @state.selectedModel
-            onCancel   : @onEditCancel
-            onSave     : @onEditSave
-            cellStyles : @props.cellStyles
-            editors    : @props.columEditors
-            rowIndex   : @state.selectedIndex
-            rowHeight  : @props.rowHeight
-            allowDelete: @props.allowDelete and @props.commands?.isEditing()
-        }, @props.editorProps))
-
-    isEditing: ->
-        @props.editor and @state.selectedModel and @state.selectedIndex?
-
     render: ->
-        <div className={_.classnames('grid-body', 'is-editing': @isEditing())}>
-            {@renderEditor() if @isEditing()}
+        <div className={_.classnames('grid-body', 'is-editing': @props.editing)}>
+
+            <LC.NetworkActivityOverlay model={@props.query} />
+
+            <Lanes.Components.Grid.Editor
+                {...@props}
+
+                cellStyles={@props.cellStyles}
+                onCancel={@props.onEditCancel}
+                editing={@props.editing} />
+
             <Lanes.Vendor.List
                 useTranslate3d
-                isEditing={!!@state.selectedModel}
+                isEditing={!!@props.editing}
                 itemRenderer={@renderRow}
                 length={@props.query.results.length}
                 forceUpdateProp={@props.query.changeCount}

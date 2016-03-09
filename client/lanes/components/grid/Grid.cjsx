@@ -1,6 +1,7 @@
 ##= require_self
 ##= require ./Toolbar
 ##= require ./RowEditor
+##= require ./PopOverMixin
 ##= require ./PopoverEditor
 ##= require ./CellStyles
 ##= require ./Header
@@ -61,16 +62,36 @@ class Lanes.Components.Grid extends Lanes.React.Component
         @setState({editingRowIndex})
         _.defer => @setState({editingRowIndex: null})
 
+    cancelEdit: ->
+        if @state.editing?.model.isNew()
+            @props.query.results.removeRow(@state.editing.index)
+        @setState(editing: null)
+
+    onRowClick: (selectedModel, selectedIndex, position) ->
+        set = (attrs = {}) =>
+            if @props.editor and false isnt @props.commands?.isEditing()
+                @setState(_.extend(attrs, editing: {index: selectedIndex, model: selectedModel, position}))
+        if @props.onSelectionChange
+            osc = @props.onSelectionChange(selectedModel, selectedIndex)
+            if _.isPromise(osc)
+                @setState(is_loading: true)
+                osc.then -> set(is_loading: false)
+            else
+                set()
+        else
+            set()
+
     render: ->
         cellStyles = new Lanes.Components.Grid.CellStyles(@query.fields)
         <div className='grid-component'>
-            <LC.NetworkActivityOverlay model={@query} />
             <Lanes.Components.Grid.Toolbar {...@props} startEdit={@startEdit} />
             <Lanes.Components.Grid.Header  {...@props} cellStyles={cellStyles} />
             <Lanes.Components.Grid.Body
                 {...@props}
-                editingRowIndex={@state.editingRowIndex}
+                editing={@state.editing}
+                onEditCancel={@cancelEdit}
+                isLoading={@state.isLoading}
                 cellStyles={cellStyles}
-                onRowClick={@onRowClick}
+                onRowClick={@onRowClick if @props.editor or @props.onSelectionChange}
             />
         </div>
