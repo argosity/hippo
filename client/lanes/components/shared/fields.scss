@@ -53,6 +53,13 @@ label.field {
             .react-toggle { cursor: inherit; }
         }
         &.editing .react-toggle { margin-top: 5px; }
+        .value span {
+            display: inline-block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+        }
     }
     .label-title {
         display: inline-block;
