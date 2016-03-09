@@ -14,6 +14,7 @@ Lanes::Screen.for_extension 'AppyApp' do | screens |
         screen.model_class = ""
         screen.view_class  = "ReadySetGo"
         # Can optionally explicity set files to be included
+        # screen.model_access = "write" # defaults to "read"
         # screen.js          = "ready-set-go.js"
         # screen.css         = "ready-set-go.css"
     end

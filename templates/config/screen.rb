@@ -6,6 +6,7 @@
         screen.model_class = "<%= options[:model_class] %>"
         screen.view_class  = "<%= class_name %>"
 <% unless options[:fileless] -%>
+        # screen.model_access = "write" # defaults to "read"
         # Can optionally explicity set files to be included
         # screen.js          = "<%= screen_id %>.js"
         # screen.css         = "<%= screen_id %>.css"
