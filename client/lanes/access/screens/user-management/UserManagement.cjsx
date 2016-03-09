@@ -33,7 +33,7 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
         <LC.ScreenWrapper identifier="user-management" flexVertical>
             <h1>Users Management</h1>
             <LC.Grid
-                editorProps={{syncImmediatly: true}}
+                editorProps={height: 400, syncImmediatly: true}
                 query={@state.query}
                 allowCreate
                 editor={Lanes.Access.Screens.UserManagement.Editor}
