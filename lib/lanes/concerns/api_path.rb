@@ -6,12 +6,14 @@ module Lanes::Concerns
 
         module ClassMethods
 
-            def api_path
-                self.to_s.demodulize.pluralize.underscore.dasherize
+            def api_path(with_module: false)
+                path = with_module ? to_s : to_s.demodulize
+                path.pluralize.underscore.dasherize
             end
 
             def from_api_path(path)
                 name = path.underscore.camelize.singularize
+
                 name = "Lanes::#{name}" unless name=~/^Lanes/
                 name.safe_constantize
             end
