@@ -3,7 +3,7 @@ class Lanes.Models.JobStatus extends Lanes.Models.Base
     props:
         id:          'string'
         job_name:    'string'
-        progress:    'integer'
+        progress:    'number'
         attempt:     'integer'
         state:       'string'
         recorded_at: 'date'
@@ -16,10 +16,17 @@ class Lanes.Models.JobStatus extends Lanes.Models.Base
 
     derived:
         isSubmitted:
-            deps: ['state'], fn: -> !!@state?
+            deps: ['id'], fn: -> !@isNew()
         isExecuting:
             deps: ['state'], fn: ->
                 _.contains(['unqueued', 'queued', 'started'], @state)
+        isActive:
+            deps: ['isSubmitted', 'isExecuting'], fn: ->
+                !(@isSubmitted or @isExecuting)
+        stepsCompleted:
+            deps: ['data'], fn: ->
+                _.map(_.keys(@data?.output), _.titleize)
 
     onUpdate: ->
+        @trigger('update', @)
         @parent?.trigger('update', @)
