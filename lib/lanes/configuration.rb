@@ -62,7 +62,7 @@ module Lanes
             Resque.redis.namespace = "#{identifier}::resque"
             Resque.redis = Lanes.config.redis
             MessageBus.redis_config = Lanes.config.redis
-
+            MessageBus.logger = Lanes.logger
             CarrierWave.configure do |config|
                 settings = Lanes::SystemSettings.for_ext('lanes')
                 config.storage = settings.file_storage ? settings.file_storage.to_sym : :file
