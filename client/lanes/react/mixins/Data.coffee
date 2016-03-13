@@ -32,10 +32,12 @@ class DataWrapper
                 @listenToNetworkEvents(state) if @component.listenNetworkEvents
                 unless false == @component.pubsub or false == @component?.pubsub?[name]
                     if !prevState? or prevState.getId() != state.getId()
-                        if prevState and not prevState.isNew()
-                            Lanes.Models.PubSub.remove(prevState)
-                        unless false == state.pubsub or state.isNew()
-                            Lanes.Models.PubSub.add(state)
+                        Lanes.Models.PubSub.remove(prevState) if prevState
+                        unless false == state.pubsub
+                            if state.isNew()
+                                state.once "change:#{state.idAttribute}", -> Lanes.Models.PubSub.add(state)
+                            else
+                                Lanes.Models.PubSub.add(state)
                     @listenTo(state, 'remote-update', @onPubSubChangeSet)
         this.setComponentState({}) unless _.isEmpty(objects) or options.silent
 
