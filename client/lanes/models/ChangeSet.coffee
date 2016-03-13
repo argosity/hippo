@@ -11,7 +11,7 @@ class Lanes.Models.ChangeSet extends Lanes.Models.Base
 
     derived:
         record: { deps: ['collection'], fn: -> @collection.parent }
-        record_name: { deps: ['record'], fn: -> _.field2title @record.api_path() }
+        record_name: { deps: ['record'], fn: -> _.field2title @record.modelTypeIdentifier() }
         fields: { deps: ['update'], fn: -> _.keys(@update) }
         displayed_fields: { deps:['fields'], fn: -> _.without(@fields, 'updated_by_id', 'updated_at') }
         displayed_changes:
