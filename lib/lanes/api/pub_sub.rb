@@ -6,6 +6,7 @@ module Lanes
         class PubSub
 
             def self.publish(channel, data)
+                Lanes.logger.debug "publishing on: #{channel}"
                 ::MessageBus.publish channel, data
             end
 
@@ -20,8 +21,7 @@ module Lanes
                 require 'message_bus'
                 api.use MessageBus::Rack::Middleware if api
 
-
-                if defined?(PhusionPassenger)
+                if defined?(::PhusionPassenger)
                     PhusionPassenger.on_event(:starting_worker_process) do |forked|
                         MessageBus.after_fork if forked
                     end
