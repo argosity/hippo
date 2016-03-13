@@ -34,14 +34,17 @@ Lanes.Components.Form.FieldMixin = {
     _setValue: (value) ->
         if @props.setValue then @props.setValue(value) else @model[@props.name] = value
 
-    unsetChangeSet: ->
-        @setState(changeset: false) if @isMounted()
+    componentWillUnmount: ->
+        clearTimeout(@state.pendingChangeSetDelay) if @state.pendingChangeSetDelay
+
+    _unsetChangeSet: ->
+        @setState(displayChangeset: false, pendingChangeSetDelay: null)
 
     setDataState: (state, evname) ->
-        changeset = evname == "changeset"
-        if changeset
-            _.delay(@unsetChangeSet, 2000)
-        @setState  _.extend(state, {changeset: changeset})
+        displayChangeset = @model.updatingFromChangeset and @model.changedAttributes()[@props.name]
+        if displayChangeset
+            pendingChangeSetDelay = _.delay(@_unsetChangeSet, 2000)
+        @setState(_.extend( state, {pendingChangeSetDelay, displayChangeset}))
 
     handleChange: (ev) ->
         if @props.onChange
@@ -56,7 +59,9 @@ Lanes.Components.Form.FieldMixin = {
         <span>{value}</span>
 
     formGroupClassNames: ->
-        _.result(this, 'formGroupClass')
+        _.classnames( _.result(this, 'formGroupClass'), {
+            changeset: @state.displayChangeset
+        })
 
     _mixinRenderValue: (label, className) ->
         value = (@renderDisplayValue || @renderMixinDisplayValue)?()
