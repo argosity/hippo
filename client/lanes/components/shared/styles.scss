@@ -36,9 +36,10 @@
     }
 }
 
-.job-executing{
+.job-executing {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    h3 { margin: 0; margin-right: 15px; }
+    justify-content: center;
+    .progress { width: 100%; }
 }
