@@ -13,6 +13,7 @@ class BaseModel
         lastServerMessage: { type: 'string' }
         isDirty:   { type: 'boolean', default: false }
         invalidAttributes: 'array'
+        updatingFromChangeset: { type: 'boolean', default: false }
 
     derived:
         isSavable:
@@ -47,10 +48,12 @@ class BaseModel
     # used by PubSub to record a remote change to the model
     addChangeSet: (change) ->
         change = new Lanes.Models.ChangeSet(change)
+        this.set('updatingFromChangeset', true, silent: true)
         this.set( change.value() )
         for name, value of change.value()
-            this.trigger("remote-update:#{name}", "changeset", this, change)
+            this.trigger("remote-update:#{name}", this, change)
         this.triggerChangeSet(this, change)
+        this.set('updatingFromChangeset', false, silent: true)
 
     triggerChangeSet: (triggered, change) ->
         this.changes ||= new Lanes.Models.ChangeSet.Collection( parent: this )
