@@ -12,7 +12,8 @@ class Lanes.Components.Input extends Lanes.React.Component
 
     renderStyled: (props, handlers, label) ->
         colProps = _.omit(@props, 'name', 'label', 'type', 'editing', 'display')
-        colClassName = _.classnames("align-#{@props.align}": @props.align)
+
+        colClassName = _.classnames("align-#{@props.align}": @props.align, @formGroupClassNames(), 'field')
         <BS.Col {...colProps} className={colClassName}>
             <BS.Input {...props} {...handlers} />
         </BS.Col>
