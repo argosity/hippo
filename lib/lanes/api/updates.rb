@@ -20,8 +20,7 @@ module Lanes
                 @relaying_messages = true
                 Lanes::Model.observe(:save) do |model|
                     if model.changes.any?
-                        path = "/#{model.class.api_path}/#{model.id}"
-
+                        path = "/#{model.class.api_path(with_module: true)}/#{model.id}"
                         Lanes::API::PubSub.publish(path, {
                             by: self.user_info_for_change(model),
                             update: model.changes
