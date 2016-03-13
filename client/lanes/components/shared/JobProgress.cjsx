@@ -8,7 +8,10 @@ class Lanes.Components.JobStatus extends Lanes.React.Component
     pubsub: true
     listenNetworkEvents: true
     dataObjects: { job: 'props' }
-    statusMessage: -> ''
+    statusMessage: ->
+        if _.isEmpty(@job.stepsCompleted) then '' else
+            'Completed: ' + _.toSentence(@job.stepsCompleted)
+
     progressBar: ->
         return null unless @job.progress
         <BS.ProgressBar now={@job.progress * 100} />
