@@ -11,6 +11,7 @@ class ModelType extends Lanes.Models.State
     subscribe: (config) ->
         model = config.models[0]
         channel = "/#{_.result(model, 'api_path')}/#{model.id}"
+        Lanes.log.info "Subscribe to: #{channel}"
         MessageBus.subscribe(channel, (changes) ->
             for model in config.models
                 model.addChangeSet(changes)
@@ -29,6 +30,7 @@ class ModelType extends Lanes.Models.State
         if ( config = @records[model.id] )
             _.remove(config.models, (m) -> m == model)
             if _.isEmpty(config.models)
+                Lanes.log.info "Unsubscribe from: #{config.channel}"
                 MessageBus.unsubscribe( config.channel )
                 delete @records[model.id]
 
