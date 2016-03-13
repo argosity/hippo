@@ -18,14 +18,13 @@
 
 .page-content {
     @extend .container-fluid;
+    overflow-x: hidden;
     position: relative;
     top: 50px;
     transition: all 0.15s ease-in-out 0s;
     margin-left: 240px;
-    padding: 0px;
-    height: 100%;
+    padding: 0 0 20px 0;
     .screen {
-        height: 100%;
         display: none;
         > div { min-height: 100%; }
         &.active {

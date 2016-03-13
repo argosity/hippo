@@ -19,6 +19,7 @@
     "get-object-path": "~0.0.2",
     "history": "^1.13.1",
     "lodash": "^3.10.1",
+    "loglevel": "1.4.0",
     "moment": "^2.11.1",
     "moment-range": "^2.1.0",
     "object-assign": "^4.0.1",

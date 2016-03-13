@@ -11,13 +11,6 @@ Lanes.warn = (msg...) ->
     else console.warn(msg...)
     null
 
-Lanes.log = (msg...) ->
-    return unless console
-    if msg[0] instanceof Error
-        console.warn(msg[0].stack)
-    else console.log(msg...)
-    null
-
 distillTypes = (type, ns) ->
     _.reduce( type.split( '.' ), ( ( memo, val ) -> return if memo then memo[ val ] else null ),  ns )
 

@@ -19,7 +19,7 @@ Lanes.Vendor.xhr                      = require('xhr');
 Lanes.Vendor.ComponentResize          = require('react-component-resizable');
 Lanes.Vendor.List                     = require('react-list')
 Lanes.Vendor.Overlay = require('react-overlays');
-
+Lanes.log = require('loglevel');
 Lanes.Vendor.ld = require('lodash');
 var spf = require('sprintf-js');
 
