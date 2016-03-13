@@ -7,13 +7,11 @@ label.field {
     display: block;
 }
 .field {
-
     font-weight: normal;
     .input-group {
         font-weight: normal;
         width: 100%;
     }
-
     &.display {
         .input-group {
             display: block;
@@ -40,12 +38,21 @@ label.field {
     &.read-only .title { margin-bottom: 5px; }
 }
 
-.field, .form-group {
-    .changeset {
+.field, {
+    .form-group {
+        background-color: rgba(255, 255, 255, 1);
+        transition: background-color 1000ms linear;
+        input { transition: background-color 1000ms linear; }
+    }
+    &.changeset .form-group {
         $color-rgba: rgba(255, 241, 72, .6);
-        border-color: $color-rgba;
+        border-color: darken($color-rgba, 10%);
+        background-color: $color-rgba;
         outline: 0;
         @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+        input {
+            background-color: darken($color-rgba, 20%);
+        }
     }
     &.display {
         &.toggle {
@@ -66,6 +73,10 @@ label.field {
     }
     label {
         display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
     }
     i.error {
         margin-left: $lanes-field-margin;
