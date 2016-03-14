@@ -8,7 +8,7 @@
   var MessageBus = global.MessageBus || (global.MessageBus = {});
 
   MessageBus.ajaxImplementation = function(options){
-    var XHRImpl = MessageBus.xhrImplementation || global.XMLHttpRequest;
+    var XHRImpl = global.MessageBus.xhrImplementation || global.XMLHttpRequest;
     var xhr = new XHRImpl();
     xhr.dataType = options.dataType;
     var url = options.url;
@@ -19,6 +19,7 @@
     for (var name in options.headers){
       xhr.setRequestHeader(name, options.headers[name]);
     }
+    xhr.setRequestHeader('Content-Type', 'application/json');
     if (options.messageBus.chunked){
       options.messageBus.onProgressListener(xhr);
     }
@@ -33,7 +34,7 @@
         options.complete();
       }
     }
-    xhr.send(options.data);
+    xhr.send(JSON.stringify(options.data));
     return xhr;
   };
 

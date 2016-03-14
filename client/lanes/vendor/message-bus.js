@@ -175,10 +175,10 @@ window.MessageBus = (function() {
         position = handle_progress(xhr.responseText, position);
       }
     };
-    var ajax = (me.jQuery && me.jQuery.ajax) || me.ajaxImplementation;
+
     var req = me.ajax({
       url: me.baseUrl + "message-bus/" + me.clientId + "/poll" + (!longPoll ? "?dlp=t" : ""),
-      data: JSON.stringify(data),
+      data: data,
       cache: false,
       dataType: dataType,
       type: 'POST',
