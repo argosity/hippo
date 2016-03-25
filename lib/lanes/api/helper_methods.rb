@@ -40,6 +40,10 @@ module Lanes
                 @json_data ||= Oj.load( request.body.read )
             end
 
+            def request_origin
+                @request_origin ||= env['HTTP_ORIGIN']
+            end
+
             def json_reply( response )
                 content_type 'application/json'
                 Oj.dump(response, mode: :compat)
