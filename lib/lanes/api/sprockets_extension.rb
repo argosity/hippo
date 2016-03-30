@@ -1,7 +1,6 @@
 require 'sprockets'
 require 'sass'
 require 'sinatra/sprockets-helpers'
-require_relative 'javascript_processor'
 require 'compass/import-once/activate'
 require 'sprockets-helpers'
 require 'tilt/erb'
@@ -13,8 +12,13 @@ module Lanes
             class << self
 
                 def compile!
+                    # only require processor if it's needed
+                    # it requires asset pipeline functionality that requires a JS runtime
+                    # which may not be available on production
+                    require_relative 'javascript_processor'
                     env = ::Sprockets::Environment.new
                     Lanes::API::SprocketsExtension.configure(env, compress:true)
+                    JsAssetCompiler.register(env)
                     manifest = Sprockets::Manifest.new( env.index, "public/assets/manifest.json" )
                     manifest.compile('lanes/vendor.js', 'lanes.js', 'lanes.css')
                     Extensions.each do |ext|
@@ -49,8 +53,12 @@ module Lanes
                         env.js_compressor  = :uglifier
                         env.css_compressor = :sass
                     end
+                    # assets are pre-compiled on production
+                    unless Lanes.env.production?
+                        require_relative 'javascript_processor'
+                        JsAssetCompiler.register(env)
+                    end
                     env.append_path root.join('client')
-                    JsAssetCompiler.register(env)
                 end
 
                 def registered(app)
