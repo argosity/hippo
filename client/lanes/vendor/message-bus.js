@@ -1,10 +1,11 @@
 /*jshint bitwise: false*/
-"use strict;"
+(function(global, document, undefined) {
+  'use strict';
+  var previousMessageBus = global.MessageBus;
 
-window.MessageBus = (function() {
   // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
   var callbacks, clientId, failCount, shouldLongPoll, queue, responseCallbacks, uniqueId, baseUrl;
-  var me, started, stopped, longPoller, pollTimeout, paused, later, jQuery;
+  var me, started, stopped, longPoller, pollTimeout, paused, later, jQuery, interval, chunkedBackoff;
 
   uniqueId = function() {
     return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -25,7 +26,7 @@ window.MessageBus = (function() {
   paused = false;
   later = [];
   chunkedBackoff = 0;
-  jQuery = window.jQuery;
+  jQuery = global.jQuery;
   var hiddenProperty;
 
   (function(){
@@ -175,7 +176,9 @@ window.MessageBus = (function() {
         position = handle_progress(xhr.responseText, position);
       }
     };
-
+    if (!me.ajax){
+      throw new Error("Either jQuery or the ajax adapter must be loaded");
+    }
     var req = me.ajax({
       url: me.baseUrl + "message-bus/" + me.clientId + "/poll" + (!longPoll ? "?dlp=t" : ""),
       data: data,
@@ -271,8 +274,11 @@ window.MessageBus = (function() {
     clientId: clientId,
     alwaysLongPoll: false,
     baseUrl: baseUrl,
-    ajax: (jQuery && jQuery.ajax) || MessageBus.ajaxImplementation,
-
+    ajax: (jQuery && jQuery.ajax),
+    noConflict: function(){
+      global.MessageBus = global.MessageBus.previousMessageBus;
+      return this;
+    },
     diagnostics: function(){
       console.log("Stopped: " + stopped + " Started: " + started);
       console.log("Current callbacks");
@@ -329,7 +335,7 @@ window.MessageBus = (function() {
 
       // monitor visibility, issue a new long poll when the page shows
       if(document.addEventListener && 'hidden' in document){
-        me.visibilityEvent = document.addEventListener('visibilitychange', function(){
+        me.visibilityEvent = global.document.addEventListener('visibilitychange', function(){
           if(!document.hidden && !me.longPoll && pollTimeout){
             clearTimeout(pollTimeout);
             pollTimeout = null;
@@ -378,7 +384,7 @@ window.MessageBus = (function() {
 
       for (var i=callbacks.length-1; i>=0; i--) {
 
-        callback = callbacks[i];
+        var callback = callbacks[i];
         var keep;
 
         if (glob) {
@@ -404,6 +410,5 @@ window.MessageBus = (function() {
       return removed;
     }
   };
-
-  return me;
-})();
+  global.MessageBus = me;
+})(window, document);

@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "sinatra",                "~> 1.4"
     spec.add_dependency "bcrypt",                 "~> 3.1"
     spec.add_dependency "oj",                     "~> 2.1"
-#    spec.add_dependency "message_bus",            "2.0.0.beta.4"
+    spec.add_dependency "message_bus",            "2.0.0.beta.6"
     spec.add_dependency "rack-protection",        "~> 1.5"
     spec.add_dependency "sprockets",              "~> 3.0"
     spec.add_dependency "coffee-script",          "~> 2.3"

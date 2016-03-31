@@ -12,7 +12,7 @@ class ModelType extends Lanes.Models.State
         model = config.models[0]
         channel = "/#{_.result(model, 'api_path')}/#{model.id}"
         Lanes.log.info "Subscribe to: #{channel}"
-        MessageBus.subscribe(channel, (changes) ->
+        Lanes.Models.PubSub.mb.subscribe(channel, (changes) ->
             for model in config.models
                 model.addChangeSet(changes)
         )
@@ -31,7 +31,7 @@ class ModelType extends Lanes.Models.State
             _.remove(config.models, (m) -> m == model)
             if _.isEmpty(config.models)
                 Lanes.log.info "Unsubscribe from: #{config.channel}"
-                MessageBus.unsubscribe( config.channel )
+                Lanes.Models.PubSub.mb.unsubscribe( config.channel )
                 delete @records[model.id]
 
 
@@ -67,9 +67,9 @@ Lanes.Models.PubSub = {
         @types = new ModelTypesCollection
 
     initialize: ->
-
-        MessageBus.start()
-        MessageBus.subscribe("/file-change", (changes) ->
+        @mb = MessageBus.noConflict()
+        @mb.start()
+        @mb.subscribe("/file-change", (changes) ->
             Lanes.lib.HotReload.initiate(changes)
         )
 }
