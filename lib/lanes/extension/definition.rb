@@ -97,6 +97,10 @@ module Lanes
             end
 
             def apply_configuration
+                 config_file = root_path.join('config', 'lanes.rb')
+                 if config_file.exist?
+                     require config_file
+                 end
             end
         end
 
