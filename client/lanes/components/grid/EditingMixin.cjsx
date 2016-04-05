@@ -13,6 +13,7 @@ Lanes.Components.Grid.EditingMixin = {
         syncImmediatly: React.PropTypes.oneOfType([
             React.PropTypes.bool, React.PropTypes.func
         ])
+
     editorTypes:
         text: (props) ->
             <input type="text" {...props}
@@ -31,6 +32,8 @@ Lanes.Components.Grid.EditingMixin = {
 
     listenNetworkEvents: true
     getDefaultProps: -> editors: {}
+    componentDidMount: ->
+        _.defer => _.dom(@).qs('input').focusAndSelect()
 
     renderControls: ->
         if @props.allowDelete
