@@ -50,6 +50,7 @@ ProxyMethods = {
     api_path:     -> @_proxied_model::api_path()
     getId:        -> @_proxied_options.parent[@_proxied_config.association_pk]
     isNew:        -> _.isBlank(@getId())
+    clear:        -> null
     invalidMessageFor: (name) ->
         if @_proxied_model::_definition[name]?.required
             "Cannot be empty"
