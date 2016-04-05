@@ -88,7 +88,9 @@ class Lanes.Components.Grid extends Lanes.React.Component
             <Lanes.Components.Grid.Header  {...@props} cellStyles={cellStyles} />
             <Lanes.Components.Grid.Body
                 {...@props}
+                ref='body'
                 editing={@state.editing}
+                onEditSave={@saveEdit}
                 onEditCancel={@cancelEdit}
                 isLoading={@state.isLoading}
                 cellStyles={cellStyles}

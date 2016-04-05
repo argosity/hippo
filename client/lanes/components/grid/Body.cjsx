@@ -69,8 +69,8 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
 
             <Lanes.Components.Grid.Editor
                 {...@props}
-
                 cellStyles={@props.cellStyles}
+                onSave={@props.onEditSave}
                 onCancel={@props.onEditCancel}
                 editing={@props.editing} />
 

@@ -14,7 +14,8 @@ class Lanes.Components.Grid.Editor extends Lanes.React.BaseComponent
             @props.query.results.removeRow(@state.selectedIndex)
         else
             @props.query.results.saveModelChanges(model, @state.selectedIndex)
-        this.hideEditor()
+
+        @props.onSave()
 
     componentWillReceiveProps: (nextProps) ->
         if nextProps.editingRowIndex?
