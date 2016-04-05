@@ -9,7 +9,7 @@ class Lanes.Components.Grid.Toolbar extends Lanes.React.BaseComponent
         ])
 
     onAddRecord: ->
-        model = @props.query.results.addBlankRow(0)
+        @props.query.results.addBlankRow(0)
         @props.startEdit(0)
 
     AddButton: ->

@@ -58,21 +58,17 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
         @setState(sortInfo: sortInfo, selectedIndex: undefined, selectedModel: undefined)
 
-    startEdit: (editingRowIndex = 0) ->
-        @setState({editingRowIndex})
-        _.defer => @setState({editingRowIndex: null})
-
-    cancelEdit: ->
-        if @state.editing?.model.isNew()
-            @props.query.results.removeRow(@state.editing.index)
-        @setState(editing: null)
-
-    onRowClick: (selectedModel, selectedIndex, position) ->
+    startEdit: (index, options = {}) ->
+        editing = _.extend({}, options, {
+            index: index,
+            model: @props.query.results.modelAt(index)
+            position: options.position or (index * 50)
+        })
         set = (attrs = {}) =>
             if @props.editor and false isnt @props.commands?.isEditing()
-                @setState(_.extend(attrs, editing: {index: selectedIndex, model: selectedModel, position}))
+                @setState( _.extend({}, attrs, {editing}) )
         if @props.onSelectionChange
-            osc = @props.onSelectionChange(selectedModel, selectedIndex)
+            osc = @props.onSelectionChange(editing.model, editing.index)
             if _.isPromise(osc)
                 @setState(is_loading: true)
                 osc.then -> set(is_loading: false)
@@ -80,6 +76,17 @@ class Lanes.Components.Grid extends Lanes.React.Component
                 set()
         else
             set()
+
+    cancelEdit: ->
+        if @state.editing?.model.isNew()
+            @props.query.results.removeRow(@state.editing.index)
+        @setState(editing: null)
+
+    saveEdit: ->
+        @setState(editing: null)
+
+    onRowClick: (model, selectedIndex, position) ->
+        @startEdit(selectedIndex, {position, model})
 
     render: ->
         cellStyles = new Lanes.Components.Grid.CellStyles(@query.fields)
