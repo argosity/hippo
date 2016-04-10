@@ -12,7 +12,8 @@ class CheckBox extends Lanes.React.BaseComponent
         <input type="checkbox" checked={selected} onChange={@onChange} />
 
 
-class Lanes.Components.Grid.Selections
+
+DEFAULTS =
     id: 'selected'
     query: false
     textAlign: 'center'
@@ -21,7 +22,9 @@ class Lanes.Components.Grid.Selections
     sortBy: (row, indx, all) ->
         false == this.xtraData(indx)?.selected
 
+class Lanes.Components.Grid.Selections
     constructor: (options) ->
+        _.extend(@, DEFAULTS)
         @onChange = options.onChange
         @choices = {}
         _.bindAll(@, 'onColumnClick')
