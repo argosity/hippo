@@ -3,7 +3,7 @@ REACT_CACHE = Object.create(null)
 Lanes.lib.HotReload =
 
     remember: (klass) ->
-        return klass unless klass::FILE
+        return klass # unless klass::FILE
         path = klass::FILE.path.join("/") + ".js"
         if REACT_CACHE[path]
             return klass
