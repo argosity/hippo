@@ -23,7 +23,10 @@ Lanes.log = require('loglevel');
 Lanes.Vendor.ld = require('lodash');
 var spf = require('sprintf-js');
 
-Lanes.Vendor.ld.mixin(require('underscore.inflection'));
+Lanes.Vendor.React.__spread = Lanes.Vendor.ld.assign;
+
+Lanes.Vendor.ld.mixin(require('lodash-inflection'));
+
 Lanes.Vendor.s = require('underscore.string');
 _.mixin(Lanes.Vendor.s.exports());
 
@@ -35,7 +38,9 @@ Lanes.Vendor.ld.mixin({
     getPath         : require('get-object-path'),
     bigDecimal      : require('big.js'),
     sorty           : require('sorty'),
-    classnames      : require('classnames')
+    classnames      : require('classnames'),
+    sprintf         : spf.sprintf,
+    vsprintf        : spf.vsprintf
 });
 
 Lanes.Vendor.dom = require('ampersand-dom');
