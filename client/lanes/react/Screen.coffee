@@ -10,7 +10,7 @@ Lanes.React.Screen = {
 
     extend: (klass) ->
         comp = Lanes.React.Component.extend(klass, @defaultMixins)
-        klass::mixins.push _.unique(klass::mixins.concat(this.defaultMixins))
+        klass::mixins.push _.uniq(klass::mixins.concat(this.defaultMixins))
         comp
 
 }

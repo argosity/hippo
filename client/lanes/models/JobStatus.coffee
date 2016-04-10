@@ -19,7 +19,7 @@ class Lanes.Models.JobStatus extends Lanes.Models.Base
             deps: ['id'], fn: -> !@isNew()
         isExecuting:
             deps: ['state'], fn: ->
-                _.contains(['unqueued', 'queued', 'started'], @state)
+                _.includes(['unqueued', 'queued', 'started'], @state)
         isActive:
             deps: ['isSubmitted', 'isExecuting'], fn: ->
                 !(@isSubmitted or @isExecuting)

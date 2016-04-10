@@ -48,7 +48,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         return model if @props.multiSelect
         label = model[@props.labelField] or @props.defaultLabel
         if !label and not _.isEmpty(@props.choices)
-            label = _.findWhere( @props.choices, id: model.id)?[@props.labelField]
+            label = _.find( @props.choices, id: model.id)?[@props.labelField]
         if label
             {id: model.id, "#{@props.labelField}": label}
         else if model.id

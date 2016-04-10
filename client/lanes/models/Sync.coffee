@@ -29,7 +29,7 @@ Lanes.Models.Sync = {
 
     state: (method, model, options = {}) ->
         options.url ||= _.result(model, "url")
-        if _.contains(['create', 'update', 'patch'], method)
+        if _.includes(['create', 'update', 'patch'], method)
             isSave = true
             options.json ||= model.dataForSave(options)
         model.requestInProgress = options

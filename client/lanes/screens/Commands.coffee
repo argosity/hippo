@@ -2,7 +2,7 @@ class Lanes.Screens.Commands extends Lanes.Models.State
 
     constructor: (@screen, @options = {}) ->
         _.defaults(@options, modelName: 'model')
-        _.bindAll(this, _.functions(this))
+        _.bindAll(this, _.functionsIn(this))
 
     resetModel: ->
         model = @getModel()

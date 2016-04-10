@@ -24,7 +24,7 @@ Lanes.lib.HotReload =
                 Lanes.Vendor.deepForceUpdate(viewport.reactRoot)
 
     initiate: (assets) ->
-        Lanes.lib.RequestAssets (_.pluck(assets, 'path'))...
+        Lanes.lib.RequestAssets (_.map(assets, 'path'))...
             .then (a) =>
                 for asset in assets
                     if asset.type == "css"

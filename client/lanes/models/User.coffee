@@ -45,7 +45,7 @@ Object.defineProperty(Lanes, 'current_user', {
         events = null
         if CURRENT_USER
             events = CURRENT_USER._events
-        if _.any(events)
+        if _.some(events)
             for key, callbacks of events
                 if user._events[key]
                     user._events[key] = user._events[key].concat(callbacks)

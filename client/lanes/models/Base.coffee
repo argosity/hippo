@@ -217,8 +217,8 @@ class BaseModel
     # Check if an attribute named "name" can be set to "value"
     # Returns an empty string if value, and an appropriate error message if not
     invalidMessageFor: (name) ->
-        return '' unless @unmaskedInvalidFields and _.include(@requiredAttributes, name) and
-            _.include(@unmaskedInvalidFields, name)
+        return '' unless @unmaskedInvalidFields and _.includes(@requiredAttributes, name) and
+            _.includes(@unmaskedInvalidFields, name)
 
         if @isBlank(name)
             "Cannot be empty"
@@ -234,7 +234,7 @@ class BaseModel
             @trigger("invalid-fields", this, @unmaskedInvalidFields)
         else if @unmaskedInvalidFields isnt 'all'
             @unmaskedInvalidFields ||= []
-            if _.include(@requiredAttributes, attr) and !_.include(@unmaskedInvalidFields, attr)
+            if _.includes(@requiredAttributes, attr) and !_.includes(@unmaskedInvalidFields, attr)
                 @unmaskedInvalidFields.push(attr)
                 @trigger("invalid-field:#{attr}", this)
 

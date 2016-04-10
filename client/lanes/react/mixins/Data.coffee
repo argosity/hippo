@@ -118,9 +118,9 @@ readDataObjects = (comp, newProps) ->
     _.mapValues(bound, (value, name) ->
         if _.isFunction(value)
             if _.isEmpty(comp.data?.states[name]) then value.call(comp) else false
-        else if 'props' == value then newProps?[name] or @props[name]
+        else if 'props' == value then newProps?[name] or comp.props[name]
         else value
-    , comp)
+    )
 
 Lanes.React.Mixins.Data = {
     # When the component gets the initial state, instance a `DataWrapper` to take

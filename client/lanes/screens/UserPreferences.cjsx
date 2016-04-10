@@ -8,7 +8,7 @@ class Lanes.Screens.UserPreferences extends Lanes.React.Screen
         commands: new Lanes.Screens.Commands(this, modelName: 'user')
 
     setScreens: (screens) ->
-        @user.options = _.extend({}, @user.options, {initial_screens: _.pluck(screens, 'id')})
+        @user.options = _.extend({}, @user.options, {initial_screens: _.map(screens, 'id')})
 
     getScreens: ->
         _.map(@user.options?.initial_screens || [], (id) ->

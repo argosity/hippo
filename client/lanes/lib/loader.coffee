@@ -15,13 +15,13 @@ class Loader
         this.head = document.querySelector('head')
         this.body = document.body
 
-        _.each(urls, (url) ->
-            url += "?#{parseInt(Math.random() * 100000)}"
+        for baseUrl in urls
+            url = "#{baseUrl}?#{parseInt(Math.random() * 100000)}"
             if /.css($|\?)/.test(url)
                 this.loadCSS(url, onComplete)
             else
                 this.loadJS(url, onComplete)
-        , this)
+
 
 
     loadCSS: (url, fn) ->

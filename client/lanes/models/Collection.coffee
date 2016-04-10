@@ -108,7 +108,7 @@ class ModelsCollection
     setFromServer: (data, options, method) ->
         @_isLoaded = true
         if 'delete' == method
-            models = _.map(_.pluck(options.originalData, 'id'), (id) =>
+            models = _.map(_.map(options.originalData, 'id'), (id) =>
                 @get(id)
             )
             this.remove(models)

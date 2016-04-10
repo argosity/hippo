@@ -12,8 +12,9 @@ class Page
             format: 'array', total_count: 't'
             start: @pageNum * @result.pageSize, limit: @result.pageSize,
             query: query, url: @result.query.src::urlRoot(),
-            fields: _.pluck( @result.query.fields.where(query: true), 'id')
+            fields: _.map( @result.query.fields.where(query: true), 'id')
         }
+
         if @result.query.sortField
             options.order = {}
             {sortBy} = @result.query.sortField

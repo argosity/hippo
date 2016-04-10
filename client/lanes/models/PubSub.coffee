@@ -20,7 +20,7 @@ class ModelType extends Lanes.Models.State
 
     add: (model) ->
         if (config = @records[model.id])
-            config.models.push(model) unless _.include(config.models, model)
+            config.models.push(model) unless _.includes(config.models, model)
         else
             config = { models: [model] }
             config.channel = this.subscribe(config)

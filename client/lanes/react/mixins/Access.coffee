@@ -24,7 +24,7 @@ Lanes.React.Mixins.Access = {
         !!@state.accessRight
 
     hasWriteAccess: ->
-        _.include(['w', 'd'], @state.accessRight)
+        _.includes(['w', 'd'], @state.accessRight)
 
 
 }

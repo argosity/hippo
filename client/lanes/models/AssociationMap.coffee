@@ -161,7 +161,7 @@ class Lanes.Models.AssocationMap
         return ret if options.saveDepth > 5
         for name, def_options of @definitions when @isCreated(model, name)
             continue if def_options.readOnly or
-                (options.onlyAssociations and not _.include(options.onlyAssociations, name))
+                (options.onlyAssociations and not _.includes(options.onlyAssociations, name))
             assoc = model[name]
             ret[name] = assoc.dataForSave(
                 _.extend({}, options, def_options)

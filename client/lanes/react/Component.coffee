@@ -9,7 +9,7 @@ createHelper = (component, name) ->
 
 extendComponent = (component) ->
     names = _.keys(component.prototype.dataObjects).concat(['collection', 'model'])
-    for name in _.unique(names)
+    for name in _.uniq(names)
         createHelper(component, name)
 
 Lanes.React.Component = {
@@ -22,7 +22,7 @@ Lanes.React.Component = {
 
     extend: (klass, mixins = @defaultMixins) ->
         klass::mixins ||= []
-        klass::mixins = _.unique(klass::mixins.concat(mixins))
+        klass::mixins = _.uniq(klass::mixins.concat(mixins))
         comp = React.createClass(klass.prototype)
         extendComponent(comp)
         return Lanes.lib.HotReload.remember(comp)

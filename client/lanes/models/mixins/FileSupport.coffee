@@ -4,7 +4,7 @@ isFileDefinition = (def) ->
 Lanes.Models.Mixins.FileSupport = {
 
     included: (klass) ->
-        files = _.pick klass::props, (def, name) -> isFileDefinition(def)
+        files = _.pickBy klass::props, (def, name) -> isFileDefinition(def)
         return if _.isEmpty(files)
         session = {}
         for name, def of files
@@ -37,7 +37,7 @@ Lanes.Models.Mixins.FileSupport = {
 
 
     _uploadFileAfterSave: ->
-        files = _.pick @_definition, (def, name) =>
+        files = _.pickBy @_definition, (def, name) =>
             isFileDefinition(def) and @["#{name}_file"]
         return if _.isEmpty(files)
 

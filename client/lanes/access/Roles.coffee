@@ -66,7 +66,7 @@ class Lanes.Models.UserRoleSet
             return this.testModelAccess(method, model)
 
     testModelAccess:(method, model) ->
-        !!_.detect( @roles, (role) -> role.can(method, model) )
+        !!_.find( @roles, (role) -> role.can(method, model) )
 
     canRead:(model, field) ->
         this.can('read', model, field)

@@ -11,7 +11,7 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
         _.map user.role_names, (rn) -> {id: rn, name: _.titleize(rn) }
 
     setRolesForUser: (roles, options) ->
-        options.model.role_names = _.pluck(roles, 'id')
+        options.model.role_names = _.map(roles, 'id')
 
     editors: (props) ->
         role_names: ({model}) =>

@@ -81,7 +81,7 @@ class Operator extends Lanes.Models.Base
         valid:
             deps: ['types', 'field']
             fn: ->
-                !this.types || ( this.field && _.contains(this.types, this.field.type) )
+                !this.types || ( this.field && _.includes(this.types, this.field.type) )
 
 
 class Operators extends Lanes.Models.Collection
