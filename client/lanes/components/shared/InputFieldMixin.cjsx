@@ -13,7 +13,7 @@ Lanes.Components.Form.InputFieldMixin =
         type: 'text'
 
     getValue: ->
-        @refs.input.getValue()
+        @refs.input.getValue() or ''
 
     handleKeyDown: (ev) ->
         @props.onEnter() if ev.key is 'Enter'
@@ -26,7 +26,7 @@ Lanes.Components.Form.InputFieldMixin =
         @props.onBlur?()
 
     renderEdit: (label) ->
-        value = @props.value or @_getValue()
+        value = @props.value or @_getValue() or ''
         label ||= @props.label or _.field2title(@props.name)
 
         props = _.extend({

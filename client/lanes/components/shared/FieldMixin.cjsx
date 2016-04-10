@@ -27,9 +27,9 @@ Lanes.Components.Form.FieldMixin = {
 
     _getValue: ->
         if @props.getValue
-            @props.getValue.call(@model, @props)
+            @props.getValue.call(@model, @props) or ''
         else
-            @model[@props.name]
+            @model[@props.name] or ''
 
     _setValue: (value) ->
         if @props.setValue then @props.setValue(value) else @model[@props.name] = value

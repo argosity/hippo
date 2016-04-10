@@ -44,11 +44,11 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
         null
 
     getValue: ->
-        if @props.parentModel
+        value = if @props.parentModel
             @props.parentModel[@props.associationName][@props.name]
         else
             @props.model[@props.name]
-
+        value or ''
 
     render: ->
         findIcon = <button className="btn btn-primary icon icon-search icon-lg" onClick={@showFinder}/>
