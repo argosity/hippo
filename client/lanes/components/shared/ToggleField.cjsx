@@ -5,7 +5,6 @@ class Lanes.Components.ToggleField extends Lanes.React.Component
 
     renderDisplayValue: ->
         <Lanes.Vendor.ReactToggle
-            defaultChecked={!!@props.model[@props.name]}
             checked={!!@props.model[@props.name]}
             disabled={true}
         />
@@ -19,7 +18,6 @@ class Lanes.Components.ToggleField extends Lanes.React.Component
         toggle = <Lanes.Vendor.ReactToggle
             onChange={@handleToggleChange}
             checked={!!@props.model[@props.name]}
-            defaultChecked={!!@props.model[@props.name]}
             />
         if @props.unstyled
             toggle

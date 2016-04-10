@@ -26,7 +26,7 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
                <Lanes.Vendor.ReactToggle
                aria-labelledby="Editing"
                onChange={@props.commands.toggleEdit}
-               defaultChecked={@props.commands.isEditing()} />
+               checked={@props.commands.isEditing()} />
                <span>Edit</span>
             </label>
         </li>
