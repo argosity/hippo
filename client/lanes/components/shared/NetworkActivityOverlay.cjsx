@@ -1,7 +1,7 @@
 class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
 
     propTypes:
-        model:   Lanes.PropTypes.Model.isRequired
+        model:   Lanes.PropTypes.Model
         message: React.PropTypes.string
         timeout: React.PropTypes.number
         visible: React.PropTypes.bool
