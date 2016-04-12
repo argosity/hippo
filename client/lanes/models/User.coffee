@@ -32,7 +32,7 @@ unless Lanes.Models.User
             role_names:  'array'
             options:     'object'
             password:    'string'
-
+        hasAccess: -> true
         canRead:   (model, field) -> true
         canWrite:  (model, field) -> true
         canDelete: (model)        -> true

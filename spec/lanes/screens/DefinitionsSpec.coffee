@@ -9,7 +9,7 @@ describe "Lanes.Screens.Definitions", ->
         testuser = Lanes.Test.makeModel({
             session:
                 isLoggedIn: 'bool'
-            canRead: -> true
+            hasAccess: -> true
         })
         Lanes.current_user = testuser
         Lanes.Test.DefinitionTestModel = Lanes.Test.defineModel({
@@ -26,7 +26,7 @@ describe "Lanes.Screens.Definitions", ->
         expect(Lanes.Screens.Definitions.groups.available().length).toEqual(1)
         expect( group.screens().length ).toEqual(1)
 
-        Lanes.current_user.canRead = -> false
+        Lanes.current_user.hasAccess = -> false
         Lanes.current_user.isLoggedIn = false
 
         expect( group.screens().length ).toEqual(0)
