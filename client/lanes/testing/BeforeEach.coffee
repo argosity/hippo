@@ -10,6 +10,8 @@ Lanes.Test.syncRespondWith = (obj) ->
 
 afterEach ->
     Lanes.current_user._events = @__user_events
+    Lanes.Models.PubSub.types.reset()
+    Lanes.Models.PubSub.mb = @prevMB
 
 beforeEach ->
     @__user_events = Lanes.current_user._events
@@ -22,6 +24,11 @@ beforeEach ->
         message: ''
         data: []
     }
+
+    @prevMB = Lanes.Models.PubSub.mb
+    Lanes.Models.PubSub.mb = jasmine.createSpyObj('MessageBus', [
+        'subscribe', 'unsubscribe'
+    ])
 
     originalFn = Lanes.Models.Sync.perform
     spyOn(Lanes.Models.Sync, 'perform').and.callFake( (method, options) ->
