@@ -15,7 +15,10 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         )
         left = ev.clientX - ourBounds.left
         selectedIndex = (if @props.selectedIndex == index then null else index)
-        selectedModel = if selectedIndex? then @props.query.results.modelAt(selectedIndex)?.clone() else null
+
+        selectedModel = if selectedIndex?
+            @props.query.results.modelAt(selectedIndex, clone: true)
+        else null
         @props.onRowClick(selectedModel, selectedIndex,
             {top, left, container: ourBounds, rowHeight: clickBounds.height}
         )
