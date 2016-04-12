@@ -71,10 +71,7 @@ class ModelsCollection
     # Fetch the a set of models for the collection, replacing all
     # current models whith them when the call completes
     fetch: (options = {}) ->
-        if this.cacheDuration
-            Lanes.Models.ServerCache.fetchCollection(this, options)
-        else
-            this.sync('read', this, options)
+        this.sync('read', this, options)
 
     getOrFetch: (id, options) ->
         @get(id) || @fetchId(id, options)

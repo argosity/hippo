@@ -1,7 +1,7 @@
 # These prototype properties are also
 # set on any Collections that are created
 PROPERTIES_SHARED_WITH_DEFAULT_COLLECTION = [
-    'cacheDuration'
+
 ]
 
 # Da Model. Handles all things dataish
@@ -163,10 +163,7 @@ class BaseModel
     # triggering a `"change"` event.
     fetch:  (original_options = {}) ->
         options = _.extend({}, original_options, {limit:1, ignoreUnsaved:true})
-        if this.cacheDuration && _.isEmpty(original_options)
-            Lanes.Models.ServerCache.fetchRecord(this, options)
-        else
-            this.sync('read', this, options)
+        this.sync('read', this, options)
 
     @fetch: (options = {}) ->
         record = new this()
