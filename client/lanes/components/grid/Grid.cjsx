@@ -61,7 +61,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
     startEdit: (index, options = {}) ->
         editing = _.extend({}, options, {
             index: index,
-            model: @props.query.results.modelAt(index)
+            model: options.model or @props.query.results.modelAt(index)
             position: options.position or (index * 50)
         })
         set = (attrs = {}) =>
@@ -90,6 +90,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
     render: ->
         cellStyles = new Lanes.Components.Grid.CellStyles(@query.fields)
+
         <div className='grid-component'>
             <Lanes.Components.Grid.Toolbar {...@props} startEdit={@startEdit} />
             <Lanes.Components.Grid.Header  {...@props} cellStyles={cellStyles} />

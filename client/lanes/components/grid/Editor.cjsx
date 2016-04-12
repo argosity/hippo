@@ -11,22 +11,13 @@ class Lanes.Components.Grid.Editor extends Lanes.React.BaseComponent
 
     onEditSave: (model, isDeleted = false) ->
         if (isDeleted)
-            @props.query.results.removeRow(@state.selectedIndex)
+            @props.query.results.removeRow(@props.editing.index)
         else
-            @props.query.results.saveModelChanges(model, @state.selectedIndex)
-
+            @props.query.results.saveModelChanges(model, @props.editing.index)
         @props.onSave()
-
-    componentWillReceiveProps: (nextProps) ->
-        if nextProps.editingRowIndex?
-            @setState(
-                selectedIndex: nextProps.editingRowIndex
-                selectedModel: @props.query.results.modelAt(nextProps.editingRowIndex)?.clone()
-            )
 
     render: ->
         return null unless @props.editing
-
         Editor = if true == @props.editor
             Lanes.Components.Grid.RowEditor
         else
