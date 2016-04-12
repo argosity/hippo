@@ -55,7 +55,7 @@ module Lanes
             private
 
             def make_path(path)
-                Lanes.config.api_path + @ext_id + '/' + path
+                Lanes.config.api_path + '/' + @ext_id + '/' + path
             end
         end
 

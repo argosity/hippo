@@ -1,5 +1,5 @@
 class Session extends Lanes.Models.Base
-    api_path: 'lanes-access/user-session'
+    api_path: '/lanes-access/user-session'
 
     props:
         id:         'integer'

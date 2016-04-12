@@ -65,8 +65,8 @@ class BaseModel
         _.dasherize(_.last(@FILE?.path || ''))
 
     api_path: ->
-        id = @FILE?.extension.identifier || ''
-        id + '/' + _.pluralize(@modelTypeIdentifier())
+        id = @FILE?.extension.identifier
+        ( if id then "/#{id}" else '' ) + '/' + _.pluralize(@modelTypeIdentifier())
 
     urlRoot: ->
         Lanes.config.api_path + _.result(this, 'api_path')

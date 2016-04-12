@@ -115,7 +115,7 @@ module Lanes
         config_option :configuration_id, (ENV['LANES_CONFIG_ID'] || 1)
 
         def api_path
-            mounted_at + 'api/'
+            mounted_at + 'api'
         end
     end
 

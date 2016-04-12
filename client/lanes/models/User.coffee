@@ -13,7 +13,7 @@ unless Lanes.Models.User
             super
             this.access_data = access
 
-        api_path: -> 'users'
+        api_path: -> '/users'
 
         derived:
             roles:

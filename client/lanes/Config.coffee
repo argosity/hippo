@@ -8,7 +8,7 @@ class SystemSettings extends Lanes.Models.Base
         settings: "object"
 
     modelTypeIdentifier: -> 'system-settings'
-    url: -> Lanes.config.api_path + 'system-settings'
+    url: -> Lanes.config.api_path + '/system-settings'
     initialize: ->
         @on('change:settings', @setDefaultSettings)
         @setDefaultSettings()
