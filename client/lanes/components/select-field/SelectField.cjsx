@@ -3,10 +3,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
 
     propTypes:
         choices: React.PropTypes.arrayOf(
-            React.PropTypes.shape({
-                id: React.PropTypes.any
-                label: React.PropTypes.string
-            })
+            React.PropTypes.object
         )
         model:        Lanes.PropTypes.Model
         labelField:   React.PropTypes.string
@@ -15,13 +12,10 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         displayLimit: React.PropTypes.number
         syncOptions:  React.PropTypes.object
         multiSelect:  React.PropTypes.bool
-        fetchWhenOpen: React.PropTypes.bool
-        allowFreeForm: React.PropTypes.bool
         includeBlankRow: React.PropTypes.bool
-        displayFallback: React.PropTypes.string
 
     getDefaultProps: ->
-        labelField: 'code', idField: 'id'
+        labelField: 'label', idField: 'id'
 
     dataObjects:
         query: ->
@@ -37,15 +31,20 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             })
 
     renderDisplayValue: ->
-        value = @getValue()?[@props.labelField]
-        <span>{value}</span>
+        value = @getValue()
+        label = if _.isArray(value)
+            _.toSentence( _.map(value, @props.labelField) )
+        else if _.isObject(value)
+            value[@props.labelField]
+        else
+            value
+        <span>{label}</span>
 
     getValue: ->
         return undefined if @state.isOpen and not @props.multiSelect
         return @state.tempDisplayValue if @state.tempDisplayValue
         model = @props.getSelection?(@model, @props) or @model?[@props.name]
-        return undefined unless model
-        return model if @props.multiSelect
+        return model if @props.multiSelect or not model?
         label = model[@props.labelField] or @props.defaultLabel
         if !label and not _.isEmpty(@props.choices)
             label = _.find( @props.choices, id: model.id)?[@props.labelField]
@@ -81,7 +80,10 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         else
             if _.isObject(value)
                 model = if Lanes.u.isState(value) then value else new @query.model(value)
-                model.fetch(@props.syncOptions).then(@setModel)
+                if false is @props.fetchOnSelect
+                    @setModel(model)
+                else
+                    model.fetch(@props.syncOptions).then(@setModel)
                 @setState(isOpen: false, tempDisplayValue: value, requestInProgress: true)
             else
                 if not @props.choices
