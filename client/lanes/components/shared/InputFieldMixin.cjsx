@@ -27,11 +27,10 @@ Lanes.Components.Form.InputFieldMixin =
 
     renderEdit: (label) ->
         value = @props.value or @_getValue() or ''
-        label ||= @props.label or _.field2title(@props.name)
 
         props = _.extend({
             ref:       'input'
-            className: _.classnames('value',
+            className: _.classnames('edit',
                 changeset: @state.changeset
             )
 
@@ -45,4 +44,14 @@ Lanes.Components.Form.InputFieldMixin =
         if @props.onEnter         then handlers.onKeyDown = @handleKeyDown
         if @props.selectOnFocus   then handlers.onFocus   = @selectOnFocus
 
-        @renderInputField(props, handlers, label)
+        props = _.omit(props, 'label')
+        field = @renderInputField(props, handlers)
+
+        if props.inputOnly
+            field
+        else
+            label ||= @props.label or _.field2title(@props.name)
+
+            <LC.FormGroup display {...props} label={label}>
+                {field}
+            </LC.FormGroup>
