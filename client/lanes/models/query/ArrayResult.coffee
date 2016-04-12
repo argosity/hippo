@@ -49,12 +49,8 @@ class Page
 
     rowAt: (index) ->
         @_rowAt(index)
-        # row = @_rowAt(index)
-        # @result.query.fields.map (field) =>
-        #     value = row[field.fetchIndex]
-        #     field.format?(value, row, @result.query) or value
 
-    modelAt: (index) ->
+    modelAt: (index, options) ->
         row = @_rowAt(index)
         @modelCache ||= {}
         id = @idForRow(row)

@@ -19,11 +19,13 @@ class Lanes.Models.Query.CollectionResult extends Lanes.Models.Query.Result
         rows = (@rowAt(i, options) for i in [0...@length])
         _.Promise.resolve(rows)
 
-    modelAt: (index) ->
-        @collection.at(index)
+    modelAt: (index, options = {}) ->
+        model = @collection.at(index)
+        if options.clone then model.clone() else model
 
     saveModelChanges: (model, index) ->
         old = @collection.at(index)
+
         @collection.remove(old)
         @collection.add(model, at:index)
         @query.changeCount++
@@ -48,7 +50,7 @@ class Lanes.Models.Query.CollectionResult extends Lanes.Models.Query.Result
         @modelAt(rowNum)
 
     valueForField: (rowNum, field) ->
-        @modelAt(rowNum)[field.id]
+        @collection.at(rowNum)[field.id]
 
     fieldToSortValue:
         any:    (v) -> v
