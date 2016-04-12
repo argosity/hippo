@@ -28,8 +28,9 @@ RenderEdit = (q, value) ->
         editor = Lanes.Test.Utils.findRenderedComponentWithType(
             grid, Lanes.Components.Grid.RowEditor
         )
-        _.dom(editor).qs('.field:nth-of-type(2) input').setValue(value)
+        _.dom(editor).qs('.field:nth-of-type(2) input').change(target: {value})
         res({grid, editor})
+
 
 
 CommonSpecs = ->
@@ -53,6 +54,7 @@ CommonSpecs = ->
             done()
 
     it 'does not update when edit is canceled', (done) ->
+        expect( @query.results.rowAt(1)[1] ).toEqual('TEST2')
         RenderEdit(@query, 'CANCKED').then ({editor}) =>
             _.dom(editor).qs('.btn.cancel').click()
             expect( @query.results.rowAt(1)[1] ).toEqual('TEST2')
