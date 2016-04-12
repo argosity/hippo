@@ -30,7 +30,7 @@ class DataWrapper
 
             if Lanes.u.isModel(state)
                 @listenToNetworkEvents(state) if @component.listenNetworkEvents
-                unless false == @component.pubsub or false == @component?.pubsub?[name]
+                if @isStateUsingPubsub(name)
                     if !prevState? or prevState.getId() != state.getId()
                         Lanes.Models.PubSub.remove(prevState) if prevState
                         unless false == state.pubsub
@@ -102,8 +102,11 @@ class DataWrapper
             @component.setState(state)
         true
 
+    isStateUsingPubsub: (name) ->
+        not (false == @component.pubsub or false == @component.pubsub?[name])
+
     destroy: (state, events, fn) ->
-        for name, state of @states
+        for name, state of @states when @isStateUsingPubsub(name)
             Lanes.Models.PubSub.remove(state) if Lanes.u.isModel(state)
         this.stopListening()
         delete @component.data
