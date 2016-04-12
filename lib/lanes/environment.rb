@@ -10,6 +10,9 @@ module Lanes
         def production?
             Lanes.config.environment == :production
         end
+        def to_s
+            Lanes.config.environment.to_s
+        end
     end
 
     # @return [Environment]

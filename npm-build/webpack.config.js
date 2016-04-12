@@ -1,33 +1,46 @@
-// A WIP: http://webpack.github.io/docs/webpack-for-browserify-users.html
-
 var fs      = require('fs');
 var path    = require('path');
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
+var buildEnv = process.env.BUILD_ENV || 'development';
+var COMMONS = "commons-" + buildEnv;
+var SCRIPTS = {
+    base: "./base.js",
+    widgets: "./react-widgets.js",
+    toggle: "./react-toggle.js",
+    calendar: "./calendar.js",
+}
+
+var ENTRIES = {};
+for (key in SCRIPTS){
+    ENTRIES[ key + '-' + buildEnv ] = SCRIPTS[key];
+}
+ENTRIES['development'] = "./development.js";
+
 module.exports = {
     cache: false,
-    entry: {
-        base: "./base.js",
-        widgets: "./react-widgets.js",
-        toggle: "./react-toggle.js",
-        calendar: "./calendar.js",
-        development: "./development.js"
-    },
-    'resolve': {
-        'alias': {
-            'underscore': 'lodash'
-        }
-    },
+    entry: ENTRIES,
     output: {
         path: path.join(__dirname, "../client/lanes/vendor/"),
         filename: "[name].js"
     },
+    resolve: {
+
+        alias: {
+            underscore: 'lodash',
+            react: path.resolve('./node_modules/react'),
+            'react-dom': path.resolve('./node_modules/react-dom')
+        }
+    },
     plugins: [
-        new CommonsChunkPlugin("commons.js"),
+        new webpack.optimize.DedupePlugin(),
+        new CommonsChunkPlugin({name: COMMONS, minChunks: 2}),
         new ExtractTextPlugin("[name].scss"),
-        new webpack.optimize.DedupePlugin()
+        new webpack.DefinePlugin({
+            'process.env': { 'NODE_ENV': JSON.stringify(buildEnv) }
+        })
     ],
     module: {
         loaders: [

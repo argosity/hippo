@@ -1,0 +1,5 @@
+<% if Lanes.env.production?
+    require_asset "./base-production"
+else
+    require_asset "./base-development"
+end %>

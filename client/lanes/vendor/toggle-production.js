@@ -6,79 +6,14 @@ webpackJsonp([3],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.ReactToggle = __webpack_require__(1421)
-	__webpack_require__(1427);
+	Lanes.Vendor.ReactToggle = __webpack_require__(916)
+	__webpack_require__(922);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 66:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(67);
-
-
-/***/ },
-
-/***/ 841:
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-
-/***/ 1421:
+/***/ 916:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -89,13 +24,13 @@ webpackJsonp([3],{
 
 	var React = _interopRequire(__webpack_require__(66));
 
-	var classNames = _interopRequire(__webpack_require__(841));
+	var classNames = _interopRequire(__webpack_require__(335));
 
-	var Check = _interopRequire(__webpack_require__(1422));
+	var Check = _interopRequire(__webpack_require__(917));
 
-	var X = _interopRequire(__webpack_require__(1423));
+	var X = _interopRequire(__webpack_require__(918));
 
-	var PureRenderMixin = _interopRequire(__webpack_require__(1424));
+	var PureRenderMixin = _interopRequire(__webpack_require__(919));
 
 	module.exports = React.createClass({
 	  mixins: [PureRenderMixin],
@@ -193,7 +128,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 1422:
+/***/ 917:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -222,7 +157,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 1423:
+/***/ 918:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -251,14 +186,14 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 1424:
+/***/ 919:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1425);
+	module.exports = __webpack_require__(920);
 
 /***/ },
 
-/***/ 1425:
+/***/ 920:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -274,7 +209,7 @@ webpackJsonp([3],{
 
 	'use strict';
 
-	var shallowCompare = __webpack_require__(1426);
+	var shallowCompare = __webpack_require__(921);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -310,7 +245,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 1426:
+/***/ 921:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -326,7 +261,7 @@ webpackJsonp([3],{
 
 	'use strict';
 
-	var shallowEqual = __webpack_require__(188);
+	var shallowEqual = __webpack_require__(187);
 
 	/**
 	 * Does a shallow comparison for props and state.
@@ -340,7 +275,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 1427:
+/***/ 922:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
