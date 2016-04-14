@@ -59,6 +59,6 @@ class Lanes.React.Viewport extends Lanes.Models.State
         component = cntrl?.rootComponent?(this) ||
             Lanes.React.Root.DefaultComponentNotFound
         root = React.createElement(Lanes.React.Root, {viewport: @},
-            React.createElement(component)
+            React.createElement(component, extension: cntrl)
         )
         @reactRoot = Lanes.Vendor.ReactDOM.render(root, @lanes)
