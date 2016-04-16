@@ -112,7 +112,8 @@ class DataWrapper
         delete @component.data
 
 
-_.extend(DataWrapper.prototype, Lanes.Vendor.BBEvents)
+Lanes.Vendor.Events.createEmitter(DataWrapper.prototype)
+#_.extend(DataWrapper.prototype, Lanes.Vendor.BBEvents)
 
 readDataObjects = (comp, newProps) ->
     bound = _.clone _.result(comp, 'dataObjects') || {}

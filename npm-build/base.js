@@ -8,13 +8,13 @@ Lanes.Vendor.ReactDOM                 = require("react-dom");
 
 Lanes.Vendor.Ampersand.SubCollection  = require("ampersand-subcollection");
 Lanes.Vendor.Ampersand.RestCollection = require("ampersand-rest-collection");
-Lanes.Vendor.Ampersand.USCollection   = require('ampersand-collection-underscore-mixin');
+Lanes.Vendor.Ampersand.LDCollection   = require('ampersand-collection-lodash-mixin');
 Lanes.Vendor.Ampersand.Collection     = require("ampersand-collection");
+Lanes.Vendor.Events                   = require('ampersand-events');
 Lanes.Vendor.ReactBootstrap           = require("react-bootstrap");
 Lanes.Vendor.BrowserHistory           = require("history");
 Lanes.Vendor.Moment                   = require("moment");
 Lanes.Vendor.RSVP                     = require('rsvp');
-Lanes.Vendor.BBEvents                 = require('backbone-events-standalone');
 Lanes.Vendor.xhr                      = require('xhr');
 Lanes.Vendor.ComponentResize          = require('react-component-resizable');
 Lanes.Vendor.List                     = require('react-list')

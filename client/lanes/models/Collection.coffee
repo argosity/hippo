@@ -178,7 +178,7 @@ class SubCollection
 Lanes.Models.SubCollection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.SubCollection, SubCollection )
 
 Lanes.Models.BasicCollection = Lanes.lib.MakeBaseClass(
-    Lanes.Vendor.Ampersand.Collection.extend(Lanes.Vendor.Ampersand.USCollection), BasicCollection
+    Lanes.Vendor.Ampersand.Collection.extend(Lanes.Vendor.Ampersand.LDCollection), BasicCollection
 
 )
 

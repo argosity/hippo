@@ -4,7 +4,8 @@
 @import "./overlay";
 @import "./image-saver";
 @import "./throbber";
-@import "lanes/vendor/toggle";
+@import "lanes/vendor/styles/toggle";
+@import "lanes/vendor/styles/widgets";
 
 .record-finder {
     .icon { cursor: pointer; }

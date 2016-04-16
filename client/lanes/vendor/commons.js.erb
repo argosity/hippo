@@ -1,5 +1,5 @@
 <% if Lanes.env.production?
-    require_asset "./commons-production"
+    require_asset "./production/commons"
 else
-    require_asset "./commons-development"
+    require_asset "./development/commons"
 end %>
