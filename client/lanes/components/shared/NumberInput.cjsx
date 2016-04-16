@@ -9,7 +9,7 @@ class Lanes.Components.NumberInput extends Lanes.React.Component
     renderInputField: (props, handlers, label) ->
         props.format ||= '#,###.00'
         props = _.omit(props, 'label')
-        input = <Lanes.Vendor.ReactWidgets.NumberPicker
+        <Lanes.Vendor.ReactWidgets.NumberPicker
             ref="select"
             className={@props.className}
             {...handlers}
@@ -17,13 +17,3 @@ class Lanes.Components.NumberInput extends Lanes.React.Component
             onChange={@handleNumberChange}
             value={Number(props.value)}
         />
-        if @props.unstyled
-            input
-        else
-            <LC.FormGroup
-                {...@props}
-                className={@formGroupClassNames()}
-                label={@getLabelValue()}
-            >
-                {input}
-            </LC.FormGroup>
