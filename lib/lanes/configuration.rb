@@ -63,19 +63,7 @@ module Lanes
             Resque.redis = Lanes.config.redis
             MessageBus.redis_config = Lanes.config.redis
             MessageBus.logger = Lanes.logger
-            CarrierWave.configure do |config|
-                settings = Lanes::SystemSettings.for_ext('lanes')
-                config.storage = settings.file_storage ? settings.file_storage.to_sym : :file
-                config.root = lambda {
-                    Lanes::SystemSettings.for_ext('lanes').storage_dir ||
-                        Lanes::Extensions.controlling.root_path.join('public/assets').to_s
-                }
-                config.asset_host = Lanes.config.api_path + 'file'
-                config.fog_credentials = settings.fog_credentials
-                config.ignore_integrity_errors = false
-                config.ignore_processing_errors = false
-                config.ignore_download_errors = false
-            end
+            Lanes::SystemSettings.for_ext('lanes').apply!
             Extensions.each{|ext| ext.apply_configuration }
         end
 
@@ -112,7 +100,13 @@ module Lanes
         # types of assets to include into compiled package
         config_option :static_asset_types, ['images','fonts']
 
+        # id is used to load a settings object from the DB.
+        # For testing or other uses it can be changed here
         config_option :configuration_id, (ENV['LANES_CONFIG_ID'] || 1)
+
+        # Storage engine to use, default to file, may also be set to
+        # 'fog' or any other value that CarrierWave accepts
+        config_option :storage_type, 'file'
 
         def api_path
             mounted_at + 'api'

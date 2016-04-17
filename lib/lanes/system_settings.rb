@@ -12,11 +12,23 @@ module Lanes
             def persist!
                 SystemSettings.persist!(@extension_id, self.to_h)
             end
+            def apply!
+                CarrierWave.configure do |config|
+                    config.storage = Lanes.config.storage_type
+                    config.root = Lanes::Extensions.controlling
+                                    .root_path.join('public/files').to_s
+                    config.asset_host = Lanes.config.api_path + '/file'
+                    config.fog_credentials = self.fog_credentials
+                    config.ignore_integrity_errors = false
+                    config.ignore_processing_errors = false
+                    config.ignore_download_errors = false
+                end
+            end
         end
 
-        after_commit do
-            Lanes.redis_connection.publish('lanes-system-configuration-update',
-                                           self.settings)
+        after_commit :notify_updated
+        def notify_updated
+            Lanes.redis_connection.publish('lanes-system-configuration-update', self.id)
         end
 
         class << self
@@ -46,15 +58,18 @@ module Lanes
                 end
             end
 
+            def clear_cache!(msg)
+                Lanes.logger.debug "SystemSettings cache reset"
+                Lanes::SystemSettings.instance_variable_set(:@config, nil)
+                Lanes::Configuration.apply
+            end
         end
 
         Thread.new do
             Lanes.redis_connection(cache:false).subscribe(
                 'lanes-system-configuration-update') do |on|
                 on.message do |channel, msg|
-                    Lanes.logger.warn "Update Config"
-                    Lanes::SystemSettings.instance_variable_set(:@config, nil)
-                    Lanes::Configuration.apply
+                    Lanes::SystemSettings.clear_cache!(msg)
                 end
             end
         end
