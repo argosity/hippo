@@ -33,12 +33,10 @@ Lanes.Components.Form.InputFieldMixin =
             className: _.classnames('edit',
                 changeset: @state.changeset
             )
-
             label:     if @props.unlabeled then false else label
-            onChange:  @handleChange
         }, @props, {value: value})
 
-        handlers = { onBlur: @onFieldBlur }
+        handlers = { onBlur: @onFieldBlur, onChange: @handleChange }
 
         if @isFieldValueInvalid() then props.bsStyle   = 'error'
         if @props.onEnter         then handlers.onKeyDown = @handleKeyDown
