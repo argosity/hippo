@@ -5,7 +5,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         choices: React.PropTypes.arrayOf(
             React.PropTypes.object
         )
-        model:        Lanes.PropTypes.Model
+        model:        Lanes.PropTypes.State.isRequired
+        idField:      React.PropTypes.string
         labelField:   React.PropTypes.string
         getSelection: React.PropTypes.func
         setSelection: React.PropTypes.func
@@ -25,7 +26,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
                 syncOptions: Lanes.Models.Query.mergedSyncOptions(@props.syncOptions)
                 src: src
                 fields: [
-                    {id: (@props.model?.idAttribute or 'id'), visible: false},
+                    {id: @props.idField, visible: false},
                     @props.labelField
                 ]
             })
