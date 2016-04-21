@@ -62,7 +62,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         editing = _.extend({}, options, {
             index: index,
             model: options.model or @props.query.results.modelAt(index)
-            position: options.position or (index * 50)
+            position: options.position || @refs.body.getDefaultEditingPosition()
         })
         set = (attrs = {}) =>
             if @props.editor and false isnt @props.commands?.isEditing()
