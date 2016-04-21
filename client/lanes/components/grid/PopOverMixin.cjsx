@@ -22,7 +22,7 @@ Lanes.Components.Grid.PopoverMixin = {
         else
             props.placement = 'right'
             props.positionLeft = position.left
-        props.arrowOffsetTop = Math.min(position.top, (@props.height - 75))
+        props.arrowOffsetTop = Math.min(position.top + 20, (@props.height - 75))
         props.positionTop    = Math.max(5, position.top - props.arrowOffsetTop + (position.rowHeight / 2))
 
         <div className="editor po">
