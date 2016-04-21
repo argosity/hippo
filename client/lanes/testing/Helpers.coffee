@@ -25,12 +25,14 @@ Lanes.Test.renderComponent = (component, args = {}) ->
 Lanes.Test.Utils = Lanes.Vendor.ReactTestUtils
 
 wrap = (name) ->
-    ->
-        Lanes.Test.Utils.Simulate[name](@el, arguments...)
+    (options = {}) ->
+        args = _.extend {target: @el}, options
+        Lanes.Test.Utils.Simulate[name](@el, args)
         return @
 
 for name, func of Lanes.Test.Utils.Simulate
     Lanes.lib.Dom::[name] = wrap(name, func)
 
 Lanes.lib.Dom::setValue = (value) ->
-    @setAttribute('value', value).change()
+    @value = value
+    @change()
