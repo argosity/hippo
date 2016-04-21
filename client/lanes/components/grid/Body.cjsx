@@ -15,13 +15,20 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         )
         left = ev.clientX - ourBounds.left
         selectedIndex = (if @props.selectedIndex == index then null else index)
-
         selectedModel = if selectedIndex?
             @props.query.results.modelAt(selectedIndex, clone: true)
         else null
         @props.onRowClick(selectedModel, selectedIndex,
             {top, left, container: ourBounds, rowHeight: clickBounds.height}
         )
+
+    getDefaultEditingPosition: ->
+        el = _.dom(@).el
+        container = el.getBoundingClientRect()
+        {
+            container, top: 0, left: container.width * 0.4
+            rowHeight: el.querySelector('.r')?.clientHeight || 50
+        }
 
     convertValue: (value, field) ->
         if @fieldConvertors[field.type] then @fieldConvertors[field.type](value) else value
