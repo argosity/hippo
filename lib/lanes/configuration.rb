@@ -106,7 +106,7 @@ module Lanes
 
         # Storage engine to use, default to file, may also be set to
         # 'fog' or any other value that CarrierWave accepts
-        config_option :storage_type, 'file'
+        config_option :storage_type, :file
 
         def api_path
             mounted_at + 'api'

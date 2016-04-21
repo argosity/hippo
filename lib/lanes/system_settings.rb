@@ -14,7 +14,7 @@ module Lanes
             end
             def apply!
                 CarrierWave.configure do |config|
-                    config.storage = Lanes.config.storage_type
+                    config.storage = Lanes.config.storage_type.to_sym
                     config.root = Lanes::Extensions.controlling
                                     .root_path.join('public/files').to_s
                     config.asset_host = Lanes.config.api_path + '/file'
