@@ -55,7 +55,7 @@ Lanes.Components.Grid.EditingMixin = {
         </div>
 
     getFieldValue: (field) ->
-        @props.model[field.id]
+        @props.model[field.id] || ''
 
     onDateFieldChange: (date, field) ->
         @props.model[field.id] = date
