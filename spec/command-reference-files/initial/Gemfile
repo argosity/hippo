@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # For development while Lanes is evolving track master branch
 gem "lanes",   github: 'argosity/lanes',   branch: 'master'
 
-# gem "lanes", '0.3.0'
+# gem "lanes", '0.4.0'
 
 gem "rake"
 gem 'puma'
