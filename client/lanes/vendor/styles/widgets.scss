@@ -561,6 +561,7 @@ ul.rw-list.rw-list-grouped > li.rw-list-option,
   cursor: not-allowed;
 }
 .rw-calendar-grid {
+  outline: none;
   height: 14.28571429em;
   table-layout: fixed;
   width: 100%;
@@ -602,6 +603,7 @@ ul.rw-list.rw-list-grouped > li.rw-list-option,
   position: relative;
   min-height: 27px;
   cursor: auto;
+  outline: none;
   padding-left: 5px;
 }
 .rw-selectlist > ul > li.rw-list-option > label > input {

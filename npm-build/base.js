@@ -23,7 +23,7 @@ Lanes.log = require('loglevel');
 Lanes.Vendor.ld = require('lodash');
 var spf = require('sprintf-js');
 
-Lanes.Vendor.React.__spread = Lanes.Vendor.ld.assign;
+
 
 Lanes.Vendor.ld.mixin(require('lodash-inflection'));
 
