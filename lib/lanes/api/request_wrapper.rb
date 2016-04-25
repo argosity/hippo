@@ -31,7 +31,7 @@ module Lanes
                 def make_handler(model, controller, parent_attribute)
                     lambda do
                         authentication = Lanes::API::AuthenticationProvider.new(request)
-                        authentication.wrap_reply(model, self) do
+                        authentication.wrap_model_access(model, self) do
                             if parent_attribute
                               params[:nested_attribute] = Hash[ parent_attribute,
                                                                params[parent_attribute] ]
@@ -39,6 +39,17 @@ module Lanes
                             wrap_reply(!request.get?) do
                                 yield controller.new(model, authentication, params, data)
                             end
+                        end
+                    end
+                end
+
+                def with_authenticated_user
+                    lambda do
+                        authentication = Lanes::API::AuthenticationProvider.new(request)
+                        if authentication.current_user
+                            yield authentication.current_user, self
+                        else
+                            authentication.fail_request
                         end
                     end
                 end
