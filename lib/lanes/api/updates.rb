@@ -24,7 +24,7 @@ module Lanes
                         Lanes::API::PubSub.publish(path, {
                             by: self.user_info_for_change(model),
                             update: model.changes
-                          })
+                        })
                     end
                 end
 
