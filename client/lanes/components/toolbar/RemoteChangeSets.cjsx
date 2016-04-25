@@ -1,10 +1,15 @@
 class Change extends Lanes.React.Component
 
     renderField: (field) ->
+        unless _.isObject(field.from)
+            from = <div className="from">{field.from}</div>
+        unless _.isObject(field.to)
+            to = <div className='to'>{field.to}</div>
+
         <div className='change' key={field.name}>
             <div className="field">{@model.record_name} {_.field2title field.name}:</div>
-            <div className="from">{field.from}</div>
-            <div className='to'>{field.to}</div>
+            {from}
+            {to}
         </div>
 
     render: ->
