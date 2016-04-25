@@ -13,7 +13,6 @@ module Lanes
                     if Lanes.env.test? && request.env['HTTP_X_TESTING_USER'].present?
                         Lanes::User.where(login: request.env['HTTP_X_TESTING_USER']).first
                     else
-                        return Lanes::User.first
                         Lanes::User.where(id: request.session['user_id']).first
                     end
                 )
@@ -47,18 +46,32 @@ module Lanes
                 end
             end
 
-            def wrap_reply(model, req)
+            def wrap_request(req)
+                if current_user
+                    ::Lanes::User.scoped_to(current_user) do | user |
+                        yield
+                    end
+                else
+                    fail_request(req)
+                end
+            end
+
+            def wrap_model_access(model, req)
                 if allowed_access_to?(model)
                     ::Lanes::User.scoped_to(current_user) do | user |
                         yield
                     end
                 else
-                    Lanes.logger.warn request.env['HTTP_X_TESTING_USER']
-                    Lanes.logger.warn "Unauthorized access attempted to #{req.url}"
-                    req.halt( 401, Oj.dump({
-                      success:false, errors: {user: "Access Denied"}, message: "Access Denied"
-                    }))
+                    fail_request(req)
                 end
+            end
+
+            def fail_request(req)
+                Lanes.logger.warn request.env['HTTP_X_TESTING_USER']
+                Lanes.logger.warn "Unauthorized access attempted to #{req.url}"
+                req.halt( 401, Oj.dump({
+                    success:false, errors: {user: "Access Denied"}, message: "Access Denied"
+                }))
             end
         end
 
