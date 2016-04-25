@@ -3,6 +3,9 @@ class Lanes.Components.ImageSaver extends Lanes.React.Component
     propTypes:
         model: Lanes.PropTypes.Model
         name: React.PropTypes.string.isRequired
+        size: React.PropTypes.oneOf([
+            'thumb', 'medium', 'original'
+        ]).isRequired
 
     listenNetworkEvents: true
     bindDataEvents: ->
@@ -17,16 +20,27 @@ class Lanes.Components.ImageSaver extends Lanes.React.Component
         @model.set("#{@props.name}_file", ev.target.files[0])
 
     renderImage: ->
-        <img className="preview" src={@model.imageUrlFor('logo', 'thumb')} />
+        <img className="preview" src={@model.imageUrlFor(@props.name, @props.size)} />
+
+    blankImage: ->
+        null
 
     render: ->
-        value = if @model.hasImage(@props.name) then @renderImage() else null
-        className = _.classnames(@props.className, 'image-saver', {'with-image': @model.hasImage(@props.name)})
-        <LC.FieldWrapper {...@props} className={className} value={value}>
-            {value}
+        hasImage  = @model.hasImage(@props.name)
+        Component = if hasImage then @renderImage else @blankImage
+        className = _.classnames(@props.className, 'image-saver', {
+            'with-image': hasImage
+        })
+
+        <LC.FieldWrapper
+            {...@props}
+            className={className}
+            displayComponent={Component}
+        >
+            <Component />
             <form>
                 <label className="selector">
-                    {if value then 'Update' else 'Choose'}
+                    <span>{if hasImage then 'Update' else 'Choose'}</span>
                     <input id='file' className="file" type="file" onChange={@handleImageChange} />
                 </label>
             </form>
