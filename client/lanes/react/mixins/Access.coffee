@@ -13,7 +13,7 @@ calculateAccess = (comp, props) ->
     comp.setState({accessRight}) if accessRight
 
 Lanes.React.Mixins.Access = {
-
+    getInitialState: -> {}
     componentDidMount: ->
         calculateAccess(this, @props)
 
