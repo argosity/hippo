@@ -1,19 +1,26 @@
+class FakeNumberEvent
+    constructor: (value) ->
+        value = if _.isNull(value) then 0 else value
+        @target = {value}
+    isDefaultPrevented: -> false
+
 class Lanes.Components.NumberInput extends Lanes.React.Component
 
     mixins: [
         Lanes.Components.Form.InputFieldMixin
     ]
-    handleNumberChange: (n) ->
-        value = if _.isNull(n) then 0 else n
-        @handleChange(target: {value})
 
-    renderInputField: (props, handlers, label) ->
+    handleNumberChange: (n) ->
+        @fieldMixinSetValue( new FakeNumberEvent(n) )
+
+    renderInputField: (props, handlers) ->
+
         props.format ||= '#,###.00'
         props = _.omit(props, 'label')
 
         <Lanes.Vendor.ReactWidgets.NumberPicker
             ref="select"
-            className={@props.className}
+
             {...handlers}
             {...props}
             onChange={@handleNumberChange}

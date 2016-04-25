@@ -3,51 +3,37 @@
 
 $lanes-field-margin: 6px;
 
-label.field {
-    display: block;
-}
-.field {
-    font-weight: normal;
-    .input-group {
-        font-weight: normal;
-        width: 100%;
-    }
+
+
+.lanes-field {
+
+    .control-label {display: block;}
+
     &.display {
-        .input-group {
-            display: block;
-        }
-        .value {
-            padding-left: $lanes-field-margin;
-            padding-right: $lanes-field-margin;
-            display: block;
-            height: $lanes-field-value-height;
-            line-height:  $lanes-field-value-height;
+        .form-group {
             border-bottom: 1px solid $input-border;
+            min-height: 57px; // 55 + 1px border
+        }
+        &.toggle {
+            .form-group { border-bottom: 0; }
+            .react-toggle { cursor: inherit; }
         }
 
     }
-    &.edit {
-        // bootstrap styles
-        .value > div > input:only-child {
-            border-top-left-radius: $border-radius-base;
-            border-top-right-radius: $border-radius-base;
-            border-bottom-left-radius: $border-radius-base;
-            border-bottom-right-radius: $border-radius-base;
-        }
-    }
-    &.read-only .input-group {
-        @extend .form-control !optional;
-        padding: 6px 12px;
-        cursor: not-allowed;
-    }
-    .label {
-        padding: 0;
-        font-size: 85%;
-    }
-    &.read-only .title { margin-bottom: 5px; }
-}
 
-.field, {
+    &.align-right{
+        text-align: right;
+        .control-label, .value, .rw-widget input {text-align: right; }
+    }
+    &.align-center{
+        text-align: center;
+        .control-label, .value, .rw-widget input { text-align: center; }
+    }
+
+    &.select {
+        .form-control-feedback { right: 30px; }
+    }
+
     .form-group {
         background-color: rgba(255, 255, 255, 1);
         transition: background-color 1000ms linear;
@@ -63,44 +49,4 @@ label.field {
             background-color: darken($color-rgba, 20%);
         }
     }
-    &.display {
-        &.toggle {
-            .value { border-bottom: 0; }
-            .react-toggle { cursor: inherit; }
-        }
-        &.editing .react-toggle { margin-top: 5px; }
-        .value span {
-            display: inline-block;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 100%;
-        }
-    }
-    .label-title {
-        display: inline-block;
-    }
-    label {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 100%;
-    }
-    i.error {
-        margin-left: $lanes-field-margin;
-    }
-    .control-label {
-        margin-left: $lanes-field-margin;
-        margin-right: $lanes-field-margin;
-    }
-
-
-}
-
-.align-right{
-    .control-label, .value, .rw-widget input {text-align: right; }
-}
-.align-center{
-    .control-label, .value, .rw-widget input { text-align: center; }
 }

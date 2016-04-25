@@ -5,15 +5,11 @@ Lanes.Components.Form.InputFieldMixin =
     ]
 
     propTypes:
-        unlabled:     React.PropTypes.bool
         onlyNumeric:  React.PropTypes.bool
         selctOnFocus: React.PropTypes.bool
 
     getDefaultProps: ->
         type: 'text'
-
-    getValue: ->
-        @refs.input.getValue() or ''
 
     handleKeyDown: (ev) ->
         @props.onEnter() if ev.key is 'Enter'
@@ -25,31 +21,16 @@ Lanes.Components.Form.InputFieldMixin =
         @onFieldInteraction()
         @props.onBlur?()
 
-    renderEdit: (label) ->
-        value = @props.value or @_getValue() or ''
+    renderEdit: (props) ->
+        props = _.extend(props, {
+            ref: 'input'
+            name: @props.name
+            value: @fieldMixinGetValue()
+        })
 
-        props = _.extend({
-            ref:       'input'
-            className: _.classnames('edit',
-                changeset: @state.changeset
-            )
-            label:     if @props.unlabeled then false else label
-        }, @props, {value: value})
+        handlers = { onBlur: @onFieldBlur }
 
-        handlers = { onBlur: @onFieldBlur, onChange: @handleChange }
-
-        if @isFieldValueInvalid() then props.bsStyle   = 'error'
         if @props.onEnter         then handlers.onKeyDown = @handleKeyDown
         if @props.selectOnFocus   then handlers.onFocus   = @selectOnFocus
 
-        props = _.omit(props, 'label')
-        field = @renderInputField(props, handlers)
-
-        if props.inputOnly
-            field
-        else
-            label ||= @props.label or _.field2title(@props.name)
-
-            <LC.FormGroup display {...props} label={label}>
-                {field}
-            </LC.FormGroup>
+        @renderInputField(props, handlers)

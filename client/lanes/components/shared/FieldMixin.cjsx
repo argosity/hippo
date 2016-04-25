@@ -6,8 +6,9 @@ Lanes.Components.Form.FieldMixin = {
 
     mixins: [
         Lanes.React.Mixins.Access
-        Lanes.React.Mixins.FieldErrors
         Lanes.React.Mixins.ReadEditingState
+
+        Lanes.React.Mixins.FieldErrors
     ]
 
     pubsub: false
@@ -20,19 +21,18 @@ Lanes.Components.Form.FieldMixin = {
         label: React.PropTypes.oneOfType([
             React.PropTypes.string, React.PropTypes.element
         ])
+        unlabled:     React.PropTypes.bool
+
         onChange: React.PropTypes.func
         unstyled: React.PropTypes.bool
         getValue: React.PropTypes.func
         setValue: React.PropTypes.func
 
-    _getValue: ->
-        if @props.getValue
-            @props.getValue.call(@model, @props) or ''
-        else
-            @model[@props.name] or ''
-
-    _setValue: (value) ->
-        if @props.setValue then @props.setValue(value) else @model[@props.name] = value
+    fieldMixinSetValue: (ev) ->
+        if @props.onChange
+            @props.onChange(ev)
+        unless ev.isDefaultPrevented()
+            @model[@props.name] = ev.target.value
 
     componentWillUnmount: ->
         clearTimeout(@state.pendingChangeSetDelay) if @state.pendingChangeSetDelay
@@ -42,61 +42,98 @@ Lanes.Components.Form.FieldMixin = {
 
     setDataState: (state, evname) ->
         displayChangeset = @model.updatingFromChangeset and @model.changedAttributes()[@props.name]
-        if displayChangeset
+        if displayChangeset and not @state.pendingChangeSetDelay
             pendingChangeSetDelay = _.delay(@_unsetChangeSet, 2000)
         @setState(_.extend( state, {pendingChangeSetDelay, displayChangeset}))
 
-    handleChange: (ev) ->
-        if @props.onChange
-            @props.onChange(ev)
+    _fieldMixinGetLabelValue: ->
+        @getLabelValue?() ||
+            @props.label ||
+            _.titleize _.humanize @props.name
+
+    fieldMixinGetValue: ->
+        value = if @props.getValue
+            @props.getValue.call(@model, @props)
+        else if @props.value?
+            @props.value
+        else if @getValue
+            @getValue()
         else
-            @_setValue(ev.target.value)
-        null
-
-    renderMixinDisplayValue: ->
-        value = @_getValue() || ""
-        value = String(value) if _.isObject(value) or not value
-        <span>{value}</span>
-
-    formGroupClassNames: ->
-        _.classnames( _.result(this, 'formGroupClass'), {
-            changeset: @state.displayChangeset
-        })
-
-    _mixinRenderValue: (label, className) ->
-        value = (@renderDisplayValue || @renderMixinDisplayValue)?()
-        className = _.classnames(@props.className, className, @formGroupClassNames(), {
-            "align-#{@props.align}": @props.align
-        })
-        if @props.unstyled
+            @model[@props.name]
+        if _.isBlank(value)
+            ''
+        else
             value
-        else
-            <LC.FormGroup display {...@props}
-                className={className} label={label}
-            >
-                {value}
-            </LC.FormGroup>
 
-    getLabelValue: ->
-        @props.label || _.titleize _.humanize @props.name
+    _fieldMixinRenderFormGroup: (child, props, options) ->
+        if (invalidMsg = @fieldInvalidValueMessage())
+            msg = <BS.HelpBlock>{invalidMsg}</BS.HelpBlock>
+        <BS.Col {...props}>
+            <BS.FormGroup validationState={options.validationState}>
+                <BS.ControlLabel>
+                    {@_fieldMixinGetLabelValue()}
+                </BS.ControlLabel>
+                {child}
+                <BS.FormControl.Feedback />
+                {msg}
+            </BS.FormGroup>
+        </BS.Col>
 
-    render: ->
-        unless @props.unlabeled
-            label =
-                <LC.ControlLabel {...@props} titleOnly
-                    label={@getLabelValue()} />
+    _fieldMixinRenderEdit: (props) ->
+        <BS.FormControl
+            type={@props.type || "text"}
+            value={@fieldMixinGetValue()}
+            {...props}
+        />
 
+    _fieldMixinRenderDisplay: (props) ->
+        value = @fieldMixinGetValue()
+        value = value.toString() if _.isObject(value)
+
+        <BS.FormControl.Static {...props}>
+            {value}
+        </BS.FormControl.Static>
+
+    _fieldMixinRenderNone: (props) ->
+        <span {...props} />
+
+    renderType: ->
         if @isEditingRecord()
             if @hasWriteAccess()
-                @renderEdit(label)
+                ['edit', 'Edit']
             else if @hasReadAccess()
-                (@renderReadOnly || @_mixinRenderValue)(label, "read-only")
+                ['read-only', 'Display']
             else
-                <span />
+                ['none', 'None']
         else
             if @hasReadAccess()
-                (@renderDisplay || @_mixinRenderValue)(label, "display")
+                ['display', 'Display']
             else
-                <span/>
+                ['none', 'None']
+
+    render: ->
+        [type, method] = @renderType()
+        options = {}
+
+        hasError = @isFieldValueInvalid()
+        options.validationState = 'warning' if hasError
+        props = _.omit @props, 'model', 'label', 'name', 'unlabeled'
+        props.className = _.classnames(
+            _.result(this, 'fieldClassName'),
+            'lanes-field', type, props.className,
+            ( if @props.align then "align-#{@props.align}" else null),
+            {
+                changeset: @state.displayChangeset
+                'has-error': hasError
+            }
+        )
+
+        field = (@[ "render#{method}" ] || @["_fieldMixinRender#{method}"])(
+            if @props.unlabeled then props else {}
+        )
+        if @props.unlabeled
+            field
+        else
+            ( @['renderFormGroup'] || @['_fieldMixinRenderFormGroup'] )(field, props, options)
 
 }

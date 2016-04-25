@@ -5,4 +5,8 @@ class Lanes.Components.Input extends Lanes.React.Component
     ]
 
     renderInputField: (props, handlers) ->
-        <BS.Input standalone {...props} {...handlers} />
+        <BS.FormControl
+            {...props}
+            {...handlers}
+            onChange={@fieldMixinSetValue}
+        />

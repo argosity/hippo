@@ -7,6 +7,10 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
         commands:    React.PropTypes.object
         onModelSet:  React.PropTypes.func
 
+    mixins: [
+        Lanes.Components.Form.InputFieldMixin
+    ]
+
     contextTypes:
         viewport: Lanes.PropTypes.State.isRequired
 
@@ -43,27 +47,29 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             this.loadCurrentSelection()
         null
 
-    getValue: ->
+    getValue: (ev) ->
         value = if @props.parentModel
             @props.parentModel[@props.associationName][@props.name]
         else
             @props.model[@props.name]
         value or ''
 
-    render: ->
-        findIcon = <button className="btn btn-primary icon icon-search icon-lg" onClick={@showFinder}/>
-        model = @props.parentModel or @props.model
-        label =
-            <LC.ControlLabel titleOnly {...@props} model={model} />
 
-        <LC.Input
-            ref="input"
-            groupClassName="record-finder"
-            editOnly writable
-            name={@props.query.initialField.id}
-            onKeyPress={@onKeyPress}
-            {...@props}
-            label={label}
-            model={@modelForAccess()}
-            getValue={@getValue}
-            buttonAfter={findIcon} />
+    renderInputField: (props, handlers) ->
+                # editOnly writable
+        model = @props.parentModel or @props.model
+
+        <BS.InputGroup>
+
+            <BS.FormControl
+                {...props} {...handlers}
+                onChange={@fieldMixinSetValue}
+                value={@getValue()}
+                onKeyPress={@onKeyPress}
+            />
+
+            <BS.InputGroup.Button>
+                <button className="btn btn-primary icon icon-search icon-lg"
+                    onClick={@showFinder} />
+            </BS.InputGroup.Button>
+        </BS.InputGroup>

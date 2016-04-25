@@ -18,6 +18,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     getDefaultProps: ->
         labelField: 'label', idField: 'id'
 
+    fieldClassName: 'select'
+
     dataObjects:
         query: ->
             src = @props.queryModel or
@@ -30,16 +32,6 @@ class Lanes.Components.SelectField extends Lanes.React.Component
                     @props.labelField
                 ]
             })
-
-    renderDisplayValue: ->
-        value = @getValue()
-        label = if _.isArray(value)
-            _.toSentence( _.map(value, @props.labelField) )
-        else if _.isObject(value)
-            value[@props.labelField]
-        else
-            value
-        <span>{label}</span>
 
     getValue: ->
         return undefined if @state.isOpen and not @props.multiSelect
@@ -102,10 +94,23 @@ class Lanes.Components.SelectField extends Lanes.React.Component
     isBusy: ->
         !!(@state.requestInProgress or @query.results.requestInProgress)
 
-    renderEdit: (label) ->
-        props = _.omit(@props, 'label')
-        Component = Lanes.Vendor.ReactWidgets[if @props.multiSelect then 'Multiselect' else 'Combobox']
-        select = <Component
+    renderDisplay: (props) ->
+        value = @getValue()
+        label = if _.isArray(value)
+            _.toSentence( _.map(value, @props.labelField) )
+        else if _.isObject(value)
+            value[@props.labelField]
+        else
+            value
+        <BS.FormControl.Static {...props}>
+            {label}
+        </BS.FormControl.Static>
+
+
+    renderEdit: (props) ->
+        type = if @props.multiSelect then 'Multiselect' else 'Combobox'
+        Component = Lanes.Vendor.ReactWidgets[type]
+        <Component
             ref="select"
             className={@props.className}
             open={@state.isOpen}
@@ -121,16 +126,4 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             onBlur={@onFieldInteraction}
             value={@getValue()}
             {...props}
-            />
-
-
-        if @props.unstyled
-            select
-        else
-            <LC.FormGroup
-                {...@props}
-                className={@formGroupClassNames()}
-                label={@getLabelValue()}
-            >
-                {select}
-            </LC.FormGroup>
+        />
