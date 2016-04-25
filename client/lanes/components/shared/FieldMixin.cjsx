@@ -13,20 +13,20 @@ Lanes.Components.Form.FieldMixin = {
 
     pubsub: false
     propTypes:
-        model: Lanes.PropTypes.State.isRequired
-        name:  React.PropTypes.string.isRequired
+        model:     Lanes.PropTypes.State.isRequired
+        name:      React.PropTypes.string.isRequired
+        unlabeled: React.PropTypes.bool
+        fieldOnly: React.PropTypes.bool
+        onChange:  React.PropTypes.func
+        unstyled:  React.PropTypes.bool
+        getValue:  React.PropTypes.func
+        setValue:  React.PropTypes.func
         align: React.PropTypes.oneOf([
             'right', 'left', 'center'
         ])
         label: React.PropTypes.oneOfType([
             React.PropTypes.string, React.PropTypes.element
         ])
-        unlabled:     React.PropTypes.bool
-
-        onChange: React.PropTypes.func
-        unstyled: React.PropTypes.bool
-        getValue: React.PropTypes.func
-        setValue: React.PropTypes.func
 
     fieldMixinSetValue: (ev) ->
         if @props.onChange
@@ -68,11 +68,15 @@ Lanes.Components.Form.FieldMixin = {
     _fieldMixinRenderFormGroup: (child, props, options) ->
         if (invalidMsg = @fieldInvalidValueMessage())
             msg = <BS.HelpBlock>{invalidMsg}</BS.HelpBlock>
-        <BS.Col {...props}>
-            <BS.FormGroup validationState={options.validationState}>
+        unless @props.unlabeld
+            label =
                 <BS.ControlLabel>
                     {@_fieldMixinGetLabelValue()}
                 </BS.ControlLabel>
+
+        <BS.Col {...props}>
+            <BS.FormGroup validationState={options.validationState}>
+                {label}
                 {child}
                 <BS.FormControl.Feedback />
                 {msg}
@@ -117,7 +121,7 @@ Lanes.Components.Form.FieldMixin = {
 
         hasError = @isFieldValueInvalid()
         options.validationState = 'warning' if hasError
-        props = _.omit @props, 'model', 'label', 'name', 'unlabeled'
+        props = _.omit @props, 'model', 'label', 'name', 'unlabeled', 'fieldOnly'
         props.className = _.classnames(
             _.result(this, 'fieldClassName'),
             'lanes-field', type, props.className,
@@ -129,9 +133,9 @@ Lanes.Components.Form.FieldMixin = {
         )
 
         field = (@[ "render#{method}" ] || @["_fieldMixinRender#{method}"])(
-            if @props.unlabeled then props else {}
+            if @props.fieldOnly then props else {}
         )
-        if @props.unlabeled
+        if @props.fieldOnly
             field
         else
             ( @['renderFormGroup'] || @['_fieldMixinRenderFormGroup'] )(field, props, options)

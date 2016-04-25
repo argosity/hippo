@@ -7,13 +7,19 @@ class Lanes.Components.FieldWrapper extends Lanes.React.BaseComponent
     ]
     blankElement: 'span'
     propTypes:
-        model: Lanes.PropTypes.State.isRequired
-
+        model:    Lanes.PropTypes.State.isRequired
+        unlabeled: React.PropTypes.bool
         displayComponent: React.PropTypes.any.isRequired
-
         label: React.PropTypes.oneOfType([
             React.PropTypes.string, React.PropTypes.element
         ])
+
+    renderLabel: ->
+        return null if @props.unlabeled
+        <BS.ControlLabel>
+            {@props.label}
+        </BS.ControlLabel>
+
 
     renderType: ->
         if @isEditingRecord()
@@ -51,7 +57,7 @@ class Lanes.Components.FieldWrapper extends Lanes.React.BaseComponent
         <BS.Col {...props} className={className}>
             <BS.FormGroup validationState={validationState}>
                 <BS.ControlLabel>
-                    {@props.label}
+                {@renderLabel()}
                 </BS.ControlLabel>
                 {child}
                 <BS.FormControl.Feedback />
