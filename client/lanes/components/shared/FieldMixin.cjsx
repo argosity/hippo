@@ -133,7 +133,7 @@ Lanes.Components.Form.FieldMixin = {
         )
 
         field = (@[ "render#{method}" ] || @["_fieldMixinRender#{method}"])(
-            if @props.fieldOnly then props else {}
+            if @props.fieldOnly then props else _.omit(props, 'className')
         )
         if @props.fieldOnly
             field
