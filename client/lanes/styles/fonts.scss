@@ -13,3 +13,12 @@ button, a.btn {
         font-family: $lanes-icon-font;
     }
 }
+
+
+// replace glyphicons with fa
+.glyphicon {
+    @extend .icon;
+    &.glyphicon-ok:before           { content: $fa-var-check;                }
+    &.glyphicon-warning-sign:before { content: $fa-var-exclamation-triangle; }
+    &.glyphicon-error:before        { content: $fa-var-exclamation;          }
+}
