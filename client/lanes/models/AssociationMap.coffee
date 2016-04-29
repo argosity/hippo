@@ -98,7 +98,8 @@ class Lanes.Models.AssocationMap
             -> definition.default.apply(this, args) || defaultCreator.apply(this, args)
         else
             defaultCreator
-        { fn: _.partial(createFn, args...) }
+        { fn: _.partial(createFn, args...), deps: [ @pk(name) ] }
+
 
     # Sets the assocations for "model"
     set: (model, data, options) ->
