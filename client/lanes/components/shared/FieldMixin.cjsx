@@ -1,6 +1,8 @@
 Lanes.Components.Form || = {}
 
+
 Lanes.Components.Form.FieldMixin = {
+
     bindDataEvents: ->
         model: "change:#{@props.name} remote-update:#{@props.name} invalid-fields invalid-field:#{@getInvalidFieldName()}"
 
@@ -31,7 +33,7 @@ Lanes.Components.Form.FieldMixin = {
     fieldMixinSetValue: (ev) ->
         if @props.onChange
             @props.onChange(ev)
-        unless ev.isDefaultPrevented()
+        unless true is ev.isDefaultPrevented?()
             @model[@props.name] = ev.target.value
 
     componentWillUnmount: ->
