@@ -116,6 +116,13 @@ Lanes.Components.Form.FieldMixin = {
                 ['display', 'Display']
             else
                 ['none', 'None']
+    statics:
+        cleanColumnProps: (props) ->
+            _.omit props, 'model', 'label', 'name', 'unlabeled', 'fieldOnly'
+
+        renderEmptyColumn: (props = @props) ->
+            props = @cleanColumnProps(props)
+            <BS.Col {...props} />
 
     render: ->
         [type, method] = @renderType()
@@ -123,7 +130,8 @@ Lanes.Components.Form.FieldMixin = {
 
         hasError = @isFieldValueInvalid()
         options.validationState = 'warning' if hasError
-        props = _.omit @props, 'model', 'label', 'name', 'unlabeled', 'fieldOnly'
+        props = LC.Form.FieldMixin.statics.cleanColumnProps(@props)
+
         props.className = _.classnames(
             _.result(this, 'fieldClassName'),
             'lanes-field', type, props.className,
