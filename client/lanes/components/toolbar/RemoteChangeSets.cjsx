@@ -17,17 +17,15 @@ class Change extends Lanes.React.Component
             if @model.by?.email
                 <a href={"mailto:#{@model.by.email}"}>{@model.by.name}</a>
             else if @model?.by.name
-                @model.by.name
+                <span>@model.by.name</span>
             else
-                'Unknown User'
-
-        user =
-            <LC.Tooltip id='user-email' placement='left'
-                content={Lanes.Vendor.Moment( @model.created_at ).fromNow()}
-            >{user}</LC.Tooltip>
+                <span>Unknown User</span>
 
         <div className="update">
-            {user}
+            <div className="header">
+                {user}
+                <span className="time">{Lanes.Vendor.Moment( @model.created_at ).fromNow()}</span>
+            </div>
             <div className="changes">
                 {@renderField(change) for change in @model.displayed_changes }
             </div>
