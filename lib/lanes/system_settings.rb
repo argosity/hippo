@@ -63,7 +63,6 @@ module Lanes
             def clear_cache!(msg)
                 Lanes.logger.debug "SystemSettings cache reset"
                 Lanes::SystemSettings.instance_variable_set(:@config, nil)
-                Lanes::Configuration.apply
             end
         end
 
@@ -71,7 +70,9 @@ module Lanes
             Lanes.redis_connection(cache:false).subscribe(
                 'lanes-system-configuration-update') do |on|
                 on.message do |channel, msg|
-                    Lanes::SystemSettings.clear_cache!(msg)
+                    ActiveRecord::Base.connection_pool.with_connection do
+                        Lanes::SystemSettings.clear_cache!(msg)
+                    end
                 end
             end
         end
