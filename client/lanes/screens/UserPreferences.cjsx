@@ -16,6 +16,7 @@ class Lanes.Screens.UserPreferences extends Lanes.React.Screen
             {id, label: screen.label}
         )
 
+
     render: ->
         <LC.ScreenWrapper identifier="user-preferences">
             <Lanes.Screens.CommonComponents commands={@state.commands} />
@@ -33,6 +34,6 @@ class Lanes.Screens.UserPreferences extends Lanes.React.Screen
                     getSelection={@getScreens}
                 />
             </BS.Row>
-            {for id, Ext of Lanes.Extensions.instances when Ext.preferenceElement
-                <Ext.preferenceElement key={id} /> }
+            {for id, Ext of Lanes.Extensions.instances when Ext.getPreferenceElement
+                Ext.getPreferenceElement(key: id)}
         </LC.ScreenWrapper>

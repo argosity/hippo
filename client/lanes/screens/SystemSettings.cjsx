@@ -13,7 +13,9 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
 
     renderFileOptions: ->
         dir = @config.settings.lanes.storage_dir
-        <LC.FieldWrapper label='Store Directory' sm=9 {...@props} value={dir}>
+        <LC.FieldWrapper
+            model={@config} displayComponent={<span />}
+            label='Store Directory' sm=9 {...@props} value={dir}>
             <input type="text" className='value form-control'
                 placeholder="Directory to store files" value={dir}
                 onChange={_.partial(@onChange, 'storage_dir')} />
@@ -27,7 +29,9 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
         </LC.FieldWrapper>
 
     saveConfig: ->
+        comp.onBeforeSave?() for id, comp of @refs
         @config.save(saveAll: true)
+        comp.onSave?() for id, comp of @refs
 
     render: ->
         choices = ['file', 'fog']
@@ -42,15 +46,17 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
             </BS.Nav>
 
             <BS.Row>
-                <LC.FieldWrapper label='File Storage' sm=3 {...@props} value={storage}>
+                <LC.FieldWrapper
+                    model={@config} displayComponent={<span />}
+                    label='File Storage' sm=3 {...@props} value={storage}>
                     <Lanes.Vendor.ReactWidgets.DropdownList
                         data={choices} value={storage} onChange={_.partial(@onChange, 'storage')} />
                 </LC.FieldWrapper>
                 {if storage is 'file' then @renderFileOptions() else @renderFogOptions()}
             </BS.Row>
             <BS.Row>
-                <LC.ImageSaver label='Logo' sm=4 model={@config} name='logo' />
+                <LC.ImageSaver label='Logo' sm=4 model={@config} name='logo' size='thumb' />
             </BS.Row>
-            {for id, Ext of Lanes.Extensions.instances when Ext.settingsElement
-                <Ext.settingsElement settings={@config.settings[id]} key={id} /> }
+            {for id, Ext of Lanes.Extensions.instances when Ext.getSettingsElement
+                Ext.getSettingsElement(ref: id, key: id, settings: @config.settings[id])}
         </LC.ScreenWrapper>
