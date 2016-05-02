@@ -28,7 +28,7 @@ module Lanes
                     end
                 end
 
-                def make_handler(model, controller, parent_attribute)
+                def make_handler(model, controller, parent_attribute = nil)
                     lambda do
                         authentication = Lanes::API::AuthenticationProvider.new(request)
                         authentication.wrap_model_access(model, self) do
@@ -36,20 +36,23 @@ module Lanes
                               params[:nested_attribute] = Hash[ parent_attribute,
                                                                params[parent_attribute] ]
                             end
-                            wrap_reply(!request.get?) do
+                            wrap_reply(with_transaction: !request.get?) do
                                 yield controller.new(model, authentication, params, data)
                             end
                         end
                     end
                 end
 
-                def with_authenticated_user
+                def with_authenticated_user(role:nil, with_transaction:true)
                     lambda do
                         authentication = Lanes::API::AuthenticationProvider.new(request)
-                        if authentication.current_user
-                            yield authentication.current_user, self
+                        user = authentication.current_user
+                        if user and ( role.nil? or user.roles.include?(role) )
+                            wrap_reply(with_transaction: with_transaction) do
+                                yield authentication.current_user, self
+                            end
                         else
-                            authentication.fail_request
+                            authentication.fail_request(self)
                         end
                     end
                 end
@@ -60,7 +63,7 @@ module Lanes
                 Lanes.logger.debug JSON.pretty_generate(data) unless Lanes.env.production? or data.nil?
             end
 
-            def wrap_reply(with_transaction=true)
+            def wrap_reply(with_transaction:true)
                 response = { success: false, message: "No response was generated" }
                 log_request
                 if with_transaction
