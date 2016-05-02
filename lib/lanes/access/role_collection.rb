@@ -5,13 +5,20 @@ module Lanes
             include Enumerable
 
             def initialize(user)
-                @roles ||= user.role_names.map{ |name|
+                @role_names = user.role_names
+                @roles = user.role_names.map{ |name|
                     "Lanes::Access::Roles::#{name.classify}".safe_constantize
                 }.compact.map{ |klass| klass.new(user) }
             end
 
             def exposed_data
-                @roles.map{ |role| role.class.to_s.demodulize.downcase }
+                @role_names
+            end
+
+            # @param role [String]
+            # @return [Boolean] Does a role with the given id exist?
+            def include?(role)
+                @role_names.include?(role)
             end
 
             # @param model [Lanes::Model]
