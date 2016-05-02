@@ -32,20 +32,31 @@ module Lanes
                 prefix = parent_attribute ? parent_attribute + '/' : ''
 
                 # index
-                get "#{prefix}#{path}/?:id?.json", &RequestWrapper.get(model, controller, parent_attribute)
+                if controller.method_defined?(:perform_retrieval)
+                    get "#{prefix}#{path}/?:id?.json",
+                        &RequestWrapper.get(model, controller, parent_attribute)
+                end
 
                 # create
-                post "#{prefix}#{path}.json", &RequestWrapper.post(model, controller, parent_attribute)
+                if controller.method_defined?(:perform_creation)
+                    post "#{prefix}#{path}.json",
+                         &RequestWrapper.post(model, controller, parent_attribute)
+                end
 
                 unless options[:immutable]
 
                     # update
-                    patch "#{prefix}#{path}/?:id?.json", &RequestWrapper.update(model, controller, parent_attribute)
-                    put   "#{prefix}#{path}/?:id?.json", &RequestWrapper.update(model, controller, parent_attribute)
+                    if controller.method_defined?(:perform_update)
+                        patch "#{prefix}#{path}/?:id?.json",
+                              &RequestWrapper.update(model, controller, parent_attribute)
+                        put   "#{prefix}#{path}/?:id?.json",
+                              &RequestWrapper.update(model, controller, parent_attribute)
+                    end
 
-                    unless options[:indestructible]
+                    if controller.method_defined?(:perform_destroy) and not options[:indestructible]
                         # destroy
-                        delete "#{prefix}#{path}/?:id?.json", &RequestWrapper.delete(model, controller, parent_attribute)
+                        delete "#{prefix}#{path}/?:id?.json",
+                               &RequestWrapper.delete(model, controller, parent_attribute)
                     end
 
                 end
