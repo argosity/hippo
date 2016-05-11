@@ -199,9 +199,7 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
             _.extend(attrs, @associationFilter)
         model = super
         if @options.inverse
-            parent = this.parent.clone()
-            parent[@options.inverse.without].reset() if @options.inverse.without
-            model.set(@options.inverse.name, parent, options)
+            model.set(@options.inverse.name, @parent, options)
         model
 
     fetch: (options) ->
