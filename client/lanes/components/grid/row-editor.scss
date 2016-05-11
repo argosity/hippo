@@ -29,6 +29,12 @@
             &.center input { text-align: center; }
             &.right  input { text-align: right;  }
         }
+        .lanes-field, .form-group {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
     }
     .controls .buttons {
         background: $editor-background;
