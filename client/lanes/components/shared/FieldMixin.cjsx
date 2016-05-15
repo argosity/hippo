@@ -118,7 +118,7 @@ Lanes.Components.Form.FieldMixin = {
                 ['none', 'None']
     statics:
         cleanColumnProps: (props) ->
-            _.omit props, 'model', 'label', 'name', 'unlabeled', 'fieldOnly'
+            _.omit props, 'model', 'label', 'name', 'unlabeled', 'fieldOnly', 'placeholder', 'type'
 
         renderEmptyColumn: (props = @props) ->
             props = @cleanColumnProps(props)
