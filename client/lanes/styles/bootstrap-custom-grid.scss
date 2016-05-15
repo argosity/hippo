@@ -90,7 +90,9 @@
     }
 }
 
-.modal {
+.lanes-modal, .modal {
+    @include make-grid-columns();
+
     &.lg {
         .modal-lg {
             @include make-grid(xs);
