@@ -26,22 +26,7 @@ module Lanes
 
     class << self
         def logger
-            @logger ||= (
-                if defined?(::Rails)
-                    Rails.logger
-                else
-                    if Lanes.env.production?
-                        dest = if FileTest.writable?("log/production.log")
-                                   "log/production.log"
-                               else
-                                   STDOUT
-                               end
-                        ::Logger.new(dest)
-                    else
-                        ::Logger.new MultiDestinationLogger.new
-                    end
-                end
-            )
+            @logger ||= _create_logger
         end
 
         def logger=( logger )
@@ -64,10 +49,35 @@ module Lanes
             logger.debug '⚡ '*40
         end
 
+        private
+
+        def _create_logger
+            if defined?(::Rails)
+                Rails.logger
+            else
+                if Lanes.env.production?
+                    dest = if FileTest.writable?("log/production.log")
+                               "log/production.log"
+                           else
+                               STDOUT
+                           end
+                    logger = ::Logger.new(dest)
+                    logger.level = ::Logger::WARN
+                    logger
+                else
+                    logger = ::Logger.new MultiDestinationLogger.new
+                    logger.level = ::Logger::DEBUG
+                    logger
+                end
+            end
+        end
+
+
     end
 
     Lanes.config.get(:environment) do | env |
         self.logger=nil # it'll be re-opened on next write
     end
+
 
 end
