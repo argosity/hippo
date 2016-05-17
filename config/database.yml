@@ -1,9 +1,9 @@
 development:
   adapter: postgresql
-  database: skr_dev
+  database: lanes_dev
   host: /tmp
 
 test:
   adapter: postgresql
-  database: skr_dev
+  database: lanes_dev
   host: /tmp
