@@ -36,7 +36,8 @@ class Lanes.Models.AssocationMap
 
     replace: (parent, name, model) ->
         parent._cache[name] = model
-        model.parent = parent
+        model.parent = parent if model.hasAttribute('parent')
+        model.parent_association = name if model.hasAttribute('parent_association')
         parent.trigger("change", parent, {})
         parent.trigger("change:#{name}", model, {})
 
@@ -108,8 +109,10 @@ class Lanes.Models.AssocationMap
             if @exists(name) && Lanes.u.isModel(value) && !value.isNew()
                 model[@pk(name)] = if value then value.getId() else null
 
-    setFromServer: (model, data, options) ->
+    setFromServer: (model, data, options, method) ->
         this._set(model, data, options, 'setFromServer')
+
+
 
     onIdChange: (model) ->
         for name, def of @definitions

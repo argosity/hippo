@@ -64,6 +64,9 @@ class BaseModel
     modelTypeIdentifier: ->
         _.dasherize(_.last(@FILE?.path || ''))
 
+    extensionIdentifier: ->
+        @FILE.extension.identifier
+
     api_path: ->
         id = @FILE?.extension.identifier
         ( if id then "/#{id}" else '' ) + '/' + _.pluralize(@modelTypeIdentifier())
@@ -137,11 +140,11 @@ class BaseModel
         record
 
     # Sets the attribute data from a server respose
-    setFromServer: (data, options) ->
+    setFromServer: (data, options, method) ->
         data = if _.isArray(data) then data[0] else data
         BaseModel.__super__.set.call(this, data )
         @unset('errors')
-        this.associations.setFromServer(this, data, options) if this.associations
+        this.associations?.setFromServer(this, data, options, method)
         this.isDirty = false
 
     # save the model's data to the server
@@ -203,7 +206,7 @@ class BaseModel
     unCacheDerived: (name) ->
         delete this._cache[name]
 
-    # True if the model has "name" as either a prop or session attribute
+    # True if the model has "name" as either a prop, session, or derived attribute
     hasAttribute: (name) ->
         !! (this._definition[name] || this._derived[name])
 
