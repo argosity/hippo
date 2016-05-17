@@ -27,8 +27,10 @@ module Lanes::API::Handlers
         end
 
         def self.getter
-            Lanes::API::RequestWrapper.with_authenticated_user do |user, req|
-                req.send_file CarrierWave::Uploader::Base.root.call + '/' + req.params['splat'].first
+            lambda do
+                # files are stored using a random string, therefore we assume that anyone who
+                # knows the filename has access and don't empose any further restrictions
+                send_file CarrierWave::Uploader::Base.root.call + '/' + params['splat'].first
             end
         end
     end
