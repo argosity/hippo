@@ -19,7 +19,7 @@ class Lanes.Workspace.Navbar extends Lanes.React.Component
 
     Logo: ->
         if @settings.logo?.url
-            <img src={@settings.logo.thumb.url} />
+            <img src={@settings.logo.thumbnail_url} />
         else
             <span>
                 {Lanes.Extensions.controlling().title()}

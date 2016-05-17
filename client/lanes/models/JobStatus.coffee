@@ -11,6 +11,9 @@ class Lanes.Models.JobStatus extends Lanes.Models.Base
         errors:      'any'
         data:        'object'
 
+    session:
+        parent: 'object'
+
     events:
         'remote-update': 'onUpdate'
 

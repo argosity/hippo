@@ -18,7 +18,6 @@ class Lanes.Screens.Commands extends Lanes.Models.State
         @options.modelDidRebind?(model)
 
     canEditModel: ->
-
         @screen.hasWriteAccess?()
 
     getSyncOptions: ->

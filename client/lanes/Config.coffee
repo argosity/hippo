@@ -4,8 +4,10 @@ class SystemSettings extends Lanes.Models.Base
 
     props:
         id:       {type:"integer"}
-        logo:     "file"
         settings: "object"
+
+    associations:
+        logo:  { model: "Lanes.Models.Asset" }
 
     modelTypeIdentifier: -> 'system-settings'
     url: -> Lanes.config.api_path + '/system-settings'

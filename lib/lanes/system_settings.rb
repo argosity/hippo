@@ -2,7 +2,7 @@ module Lanes
 
     class SystemSettings < Lanes::Model
 
-        mount_uploader :logo, Lanes::Concerns::ImageUploader
+        has_one :logo, as: :owner, :class_name=>'Lanes::Asset'
 
         class ExtensionSettings < OpenStruct
             def initialize(ext_id, settings)
@@ -19,7 +19,7 @@ module Lanes
                         Lanes::Extensions.controlling
                             .root_path.join('public/files').to_s
                     }
-                    config.asset_host = Lanes.config.api_path + '/file'
+                    config.asset_host = Lanes.config.api_path + '/asset'
                     config.fog_credentials = self.fog_credentials
                     config.ignore_integrity_errors = false
                     config.ignore_processing_errors = false

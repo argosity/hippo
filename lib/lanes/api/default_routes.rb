@@ -4,11 +4,11 @@ module Lanes
         put Lanes.config.api_path + '/system-settings.json',
             &SystemSettings.update_handler
 
-        post Lanes.config.api_path + '/save-file-attribute',
-             &API::Handlers::File.saver
+        post Lanes.config.api_path + '/asset',
+             &API::Handlers::Asset.saver
 
-        get Lanes.config.api_path + '/file/*',
-            &API::Handlers::File.getter
+        get Lanes.config.api_path + '/asset/*',
+            &API::Handlers::Asset.getter
 
         Extensions.each(reversed: true) do | ext |
             ext.route(self)

@@ -55,7 +55,7 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
                 {if storage is 'file' then @renderFileOptions() else @renderFogOptions()}
             </BS.Row>
             <BS.Row>
-                <LC.ImageSaver label='Logo' sm=4 model={@config} name='logo' size='thumb' />
+                <LC.ImageAsset sm=4 model={@config} name='logo' label='Logo' size='thumb' />
             </BS.Row>
             {for id, Ext of Lanes.Extensions.instances when Ext.getSettingsElement
                 Ext.getSettingsElement(ref: id, key: id, settings: @config.settings[id])}

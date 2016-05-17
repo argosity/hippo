@@ -11,7 +11,15 @@ module TestingModels
     include ActiveRecordMocks::IncludeMe
 
     def around(&block)
-        self.with_testing_models(&block)
+        cw_root = CarrierWave.root
+        begin
+            Dir.mktmpdir('lanes-cw-root') do | dir |
+                CarrierWave.root = dir
+                self.with_testing_models(&block)
+            end
+        ensure
+            CarrierWave.root = cw_root
+        end
     end
 
     def with_testing_models
@@ -59,6 +67,10 @@ module TestingModels
 
 end
 
-class TestCase < ActiveSupport::TestCase
+class Lanes::TestCase
+
+    def fixtures_path
+        Pathname.new(__FILE__).dirname.join("..","fixtures").expand_path
+    end
 
 end
