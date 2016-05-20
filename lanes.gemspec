@@ -33,7 +33,6 @@ Gem::Specification.new do |spec|
     spec.add_dependency "compass-import-once",    "~> 1.0"
     spec.add_dependency "execjs",                 "~> 2.6"
     spec.add_dependency "fastimage",              "~> 1.8.1"
-    spec.add_dependency "fog",                    "~> 1.37.0"
     spec.add_dependency "guard",                  "~> 2.13"
     spec.add_dependency "guard-jasmine",          "~> 2.0"
     spec.add_dependency "guard-minitest",         "~> 2.3"

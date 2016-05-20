@@ -4,7 +4,6 @@ require 'pathname'
 require 'carrierwave'
 require 'active_job'
 require 'jobba'
-require 'fog'
 require 'message_bus'
 
 module Lanes
