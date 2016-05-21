@@ -70,7 +70,7 @@ Lanes.Components.Form.FieldMixin = {
     _fieldMixinRenderFormGroup: (child, props, options) ->
         if (invalidMsg = @fieldInvalidValueMessage())
             msg = <BS.HelpBlock>{invalidMsg}</BS.HelpBlock>
-        unless @props.unlabeld
+        unless @props.unlabeled
             label =
                 <BS.ControlLabel>
                     {@_fieldMixinGetLabelValue()}
