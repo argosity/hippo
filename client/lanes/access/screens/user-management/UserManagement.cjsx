@@ -19,7 +19,7 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
                 id="role_names"
                 key="row-select"
                 queryModel={Lanes.Models.User}
-                editOnly multiSelect writable unstyled
+                fieldOnly editOnly multiSelect writable
                 model={model}
                 labelField='name'
                 getSelection={@rolesForUser}
@@ -33,7 +33,7 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
         <LC.ScreenWrapper identifier="user-management" flexVertical>
             <h1>Users Management</h1>
             <LC.Grid
-                editorProps={height: 400, syncImmediatly: true}
+                editorProps={height: 350, syncImmediatly: true}
                 query={@state.query}
                 allowCreate
                 editor={Lanes.Access.Screens.UserManagement.Editor}
