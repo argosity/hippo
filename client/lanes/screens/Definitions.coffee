@@ -95,7 +95,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
                     resolve(me)
                 else if attempt < 3
                     attempt += 1
-                    _.delay(done, 500)
+                    _.delay(done, 500 * attempt)
                 else
                     reject("Screen #{me.view} not definied after file retrieval")
             err = (msg) ->
