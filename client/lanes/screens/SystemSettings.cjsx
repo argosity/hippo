@@ -21,15 +21,21 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
                 onChange={_.partial(@onChange, 'storage_dir')} />
         </LC.FieldWrapper>
 
+    fogValue: ->
+        @state.fogValue or
+            JSON.stringify(@config.settings.lanes.fog_credentials, null, 2)
+    setFog: (ev) ->
+        @setState(fogValue: ev.target.value)
+
     renderFogOptions: ->
-        value = JSON.stringify(@config.settings.lanes.fog_credentials, null, 2)
-        <LC.FieldWrapper label='Fog Options' sm=9 {...@props} value={value}>
-            <BS.Input type="textarea" placeholder="FOG options (as JSON)" value={value}
-                onChange={_.partial(@onChange, 'fog_credentials')} />
-        </LC.FieldWrapper>
+        <LC.TextArea sm=9 name='fog' placeholder="FOG options (as JSON)" model={@config}
+            getValue={@fogValue} onChange={@setFog} />
 
     saveConfig: ->
         comp.onBeforeSave?() for id, comp of @refs
+        if @state.fogValue
+            try
+                @config.settings.lanes.fog_credentials = JSON.parse(@state.fogValue)
         @config.save(saveAll: true)
         comp.onSave?() for id, comp of @refs
 
