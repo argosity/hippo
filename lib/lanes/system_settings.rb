@@ -20,7 +20,9 @@ module Lanes
                             .root_path.join('public/files').to_s
                     }
                     config.asset_host = Lanes.config.api_path + '/asset'
-                    config.fog_credentials = self.fog_credentials
+                    if self.fog_credentials and Object.const_defined?(:Fog)
+                        config.fog_credentials = self.fog_credentials
+                    end
                     config.ignore_integrity_errors = false
                     config.ignore_processing_errors = false
                     config.ignore_download_errors = false
