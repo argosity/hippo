@@ -13,33 +13,34 @@ class DataWrapper
 
     rebind: (objects, options = {}) ->
         customEvents = _.result(@component, 'bindDataEvents', {})
-        for name, state of objects
-            if false == state
-                continue
-            unless state
-                Lanes.warn "#{name} is not set on #{@componentName()}"
-                continue
-            prevState = @states[name]
-            # onto next if the object is the same
-            continue if prevState == state
+        @_rebindAttr(name, state, customEvents[name], options) for name, state of objects when state isnt false
 
-            @states[name] = state
-            this.stopListening(prevState) if prevState
+    _rebindAttr: (name, state, ev, options) ->
+        unless state
+            Lanes.warn "#{name} is not set on #{@componentName()}"
+            return
 
-            this.bindEvents(name, state, customEvents[name]) if state
+        prevState = @states[name]
 
-            if Lanes.u.isModel(state)
-                @listenToNetworkEvents(state) if @component.listenNetworkEvents
-                if @isStateUsingPubsub(name)
-                    if !prevState? or prevState.getId() != state.getId()
-                        Lanes.Models.PubSub.remove(prevState) if prevState
-                        unless false == state.pubsub
-                            if state.isNew()
-                                state.once "change:#{state.idAttribute}", -> Lanes.Models.PubSub.add(state)
-                            else
-                                Lanes.Models.PubSub.add(state)
-                    @listenTo(state, 'remote-update', @onPubSubChangeSet)
-        this.setComponentState({}) unless _.isEmpty(objects) or options.silent
+        # onto next if the object is the same
+        return if prevState == state
+
+        @states[name] = state
+
+        this.bindEvents(name, state, ev)
+
+        if Lanes.u.isModel(state)
+            @listenToNetworkEvents(state) if @component.listenNetworkEvents
+            if @isStateUsingPubsub(name, state)
+                if !prevState? or prevState.getId() != state.getId()
+                    Lanes.Models.PubSub.remove(prevState) if prevState
+                    unless false == state.pubsub
+                        if state.isNew()
+                            state.once "change:#{state.idAttribute}", -> Lanes.Models.PubSub.add(state)
+                        else
+                            Lanes.Models.PubSub.add(state)
+                @listenTo(state, 'remote-update', @onPubSubChangeSet)
+        this.setComponentState({}) unless options.silent
 
     listenToNetworkEvents: (state) ->
         @listenTo(state,     'error',     @onError)
@@ -102,11 +103,12 @@ class DataWrapper
             @component.setState(state)
         true
 
-    isStateUsingPubsub: (name) ->
-        not (false == @component.pubsub or false == @component.pubsub?[name])
+    isStateUsingPubsub: (name, state) ->
+        _.result(state, 'registerforPubSub') isnt false and
+            not (false == @component.pubsub or false == @component.pubsub?[name])
 
     destroy: (state, events, fn) ->
-        for name, state of @states when @isStateUsingPubsub(name)
+        for name, state of @states when @isStateUsingPubsub(name, state)
             Lanes.Models.PubSub.remove(state) if Lanes.u.isModel(state)
         this.stopListening()
         delete @component.data
@@ -142,7 +144,7 @@ Lanes.React.Mixins.Data = {
         newState = readDataObjects(this, newProps)
         return if _.isEmpty(newState)
         if @data
-            @data.rebind(newState, silent:true)
+            @data.rebind(newState)
         else
             @data = new DataWrapper(this, newState)
 
