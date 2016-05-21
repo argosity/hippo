@@ -16,6 +16,7 @@ Lanes.Components.Grid.EditingMixin = {
 
     editorTypes:
         text: (props) ->
+            props.value ||= ''
             <input type="text" {...props}
                 onChange={_.partial(@onFieldChange, _, props.field)} />
         bigdec: (props) ->
