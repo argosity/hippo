@@ -9,6 +9,7 @@ class Lanes.Components.TextArea extends Lanes.React.Component
         <textarea
             {...props}
             {...handlers}
+            {..._.pick(@props, 'placeholder')}
             className={className}
             onChange={@fieldMixinSetValue}
         />
