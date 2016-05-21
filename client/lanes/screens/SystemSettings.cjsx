@@ -37,7 +37,7 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
         choices = ['file', 'fog']
         storage = @config.settings.lanes?.storage || 'file'
 
-        <LC.ScreenWrapper identifier="user-preferences">
+        <LC.ScreenWrapper identifier="system-settings">
             <BS.Nav bsStyle="pills" className="lanes-toolbar">
                 <BS.Button navItem componentClass="button"
                     onClick={@saveConfig} className="save navbar-btn control">
