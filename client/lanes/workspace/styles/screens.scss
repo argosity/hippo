@@ -1,4 +1,15 @@
 .screen {
     padding: 5px;
     width: 100%;
+
+    > .first-run {
+        font-size: 1.3rem;
+        li + li {
+            margin-top: 1rem;
+        }
+        .help {
+            margin-top: 2rem;
+            p { text-align: right; }
+        }
+    }
 }

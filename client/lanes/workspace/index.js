@@ -6,3 +6,4 @@
 //=require ./ScreenView
 //=require ./Navbar
 //=require ./Layout
+//=require ./FirstRun
