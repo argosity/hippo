@@ -8,6 +8,6 @@ class Lanes.Components.ScreenWrapper extends Lanes.React.Component
             'screen-wrapper',  @props.identifier,
             'flex-vertically': @props.flexVertical
         )
-        <div className={classes}>
+        <div className={classes} style={@props.style}>
             {@props.children}
         </div>
