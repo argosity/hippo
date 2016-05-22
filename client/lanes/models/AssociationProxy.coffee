@@ -33,9 +33,11 @@ ProxyMethods = {
 
     _replaceAndCall: (options, fn) ->
         model = new @_proxied_model()
+        retVal = undefined
         @replaceWithModel(model, options, ->
-            fn.call(model, fn)
+            retVal = fn.call(model, fn)
         )
+        retVal
 
 
     serialize: (options) ->
