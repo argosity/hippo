@@ -60,8 +60,12 @@ class Lanes.Models.AssocationMap
             else
                 new target_class(options)
         else
-            Proxy = association.getProxyFor(name)
-            new Proxy( association, association.getOptions(name, @)  )
+            existing = this._cache[name]
+            if existing and not existing.isProxy and existing[fk] == @[pk]
+                existing
+            else
+                Proxy = association.getProxyFor(name)
+                new Proxy( association, association.getOptions(name, @)  )
 
     # will be called in the scope of the parent model
     createCollection: (association, name, definition, fk, pk, target_class) ->
