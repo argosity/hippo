@@ -34,7 +34,8 @@ Lanes.Components.Grid.EditingMixin = {
     listenNetworkEvents: true
     getDefaultProps: -> editors: {}
     componentDidMount: ->
-        _.dom(@).qs('input').focusAndSelect()
+        qs = if @props.initiallyFocusedField then ".field[data-id=\"#{@props.initiallyFocusedField}\"] input" else 'input'
+        _.defer => _.dom(@).qs(qs).focusAndSelect()
 
     renderControls: ->
         if @props.allowDelete
@@ -95,6 +96,7 @@ Lanes.Components.Grid.EditingMixin = {
             @renderDisplayValue(props)
 
         <div key={field.id}
+            data-id={field.id}
             style = {@props.cellStyles.styles[index]}
             className = {_.classnames('field', @props.cellStyles.classes[index])}
         >
