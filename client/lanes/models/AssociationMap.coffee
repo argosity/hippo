@@ -36,8 +36,9 @@ class Lanes.Models.AssocationMap
 
     replace: (parent, name, model) ->
         parent._cache[name] = model
-        model.parent = parent if model.hasAttribute('parent')
-        model.parent_association = name if model.hasAttribute('parent_association')
+        model.parent = parent if model.hasAttribute?('parent') or model.parent?
+        model.parent_association = name if model.hasAttribute?('parent_association') or model.parent_association?
+
         parent.trigger("change", parent, {})
         parent.trigger("change:#{name}", model, {})
 
