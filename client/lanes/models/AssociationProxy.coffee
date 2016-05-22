@@ -14,10 +14,11 @@ ProxyMethods = {
 
     replaceWithModel: (model, options, whenReadyMethod) ->
         model = new @_proxied_model(model) unless Lanes.u.isModel(model)
-
-        @_proxied_parent?.replace(
-            @_proxied_options.parent, options.association_name, model
-        )
+        if @_proxied_parent
+            if @_proxied_parent.isProxy
+                @_proxied_parent.replaceProxy(options.association_name, model)
+            else
+                @_proxied_parent.replace( @_proxied_options.parent, options.association_name, model )
         relayEvents(@_proxied_events, model, 'on')
         relayEvents(@_proxied_once_events, model, 'once')
 
