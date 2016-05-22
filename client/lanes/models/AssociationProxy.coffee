@@ -103,7 +103,7 @@ Lanes.Models.AssocationProxy = {
                 Proxy = Lanes.Models.AssocationProxy.construct(klass,
                     association_name: name
                 )
-                new Proxy(@)
+                new Proxy(@, @_proxied_model::associations.getOptions(name, @))
             )
 
 
