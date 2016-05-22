@@ -9,21 +9,21 @@ webpackJsonp([2],{
 	// "react-proxy": "git@github.com:gaearon/react-proxy.git#react-0.15",
 	// Lanes.Vendor.ReactProxy      = require("react-proxy");
 
-	Lanes.Vendor.ReactTestUtils  = __webpack_require__(938);
-	Lanes.Vendor.deepForceUpdate = __webpack_require__(940);
+	Lanes.Vendor.ReactTestUtils  = __webpack_require__(1006);
+	Lanes.Vendor.deepForceUpdate = __webpack_require__(1008);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 938:
+/***/ 1006:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(939);
+	module.exports = __webpack_require__(1007);
 
 /***/ },
 
-/***/ 939:
+/***/ 1007:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39,26 +39,26 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var _assign = __webpack_require__(68);
+	var _assign = __webpack_require__(208);
 
-	var EventConstants = __webpack_require__(103);
-	var EventPluginHub = __webpack_require__(105);
-	var EventPluginRegistry = __webpack_require__(106);
-	var EventPropagators = __webpack_require__(104);
-	var React = __webpack_require__(67);
-	var ReactDefaultInjection = __webpack_require__(101);
-	var ReactDOM = __webpack_require__(97);
-	var ReactDOMComponentTree = __webpack_require__(98);
-	var ReactElement = __webpack_require__(72);
-	var ReactBrowserEventEmitter = __webpack_require__(166);
-	var ReactCompositeComponent = __webpack_require__(179);
-	var ReactInstanceMap = __webpack_require__(180);
-	var ReactUpdates = __webpack_require__(118);
-	var SyntheticEvent = __webpack_require__(115);
+	var EventConstants = __webpack_require__(249);
+	var EventPluginHub = __webpack_require__(251);
+	var EventPluginRegistry = __webpack_require__(252);
+	var EventPropagators = __webpack_require__(250);
+	var React = __webpack_require__(207);
+	var ReactDefaultInjection = __webpack_require__(247);
+	var ReactDOM = __webpack_require__(243);
+	var ReactDOMComponentTree = __webpack_require__(244);
+	var ReactElement = __webpack_require__(212);
+	var ReactBrowserEventEmitter = __webpack_require__(310);
+	var ReactCompositeComponent = __webpack_require__(324);
+	var ReactInstanceMap = __webpack_require__(325);
+	var ReactUpdates = __webpack_require__(263);
+	var SyntheticEvent = __webpack_require__(260);
 
-	var emptyObject = __webpack_require__(84);
-	var findDOMNode = __webpack_require__(227);
-	var invariant = __webpack_require__(71);
+	var emptyObject = __webpack_require__(230);
+	var findDOMNode = __webpack_require__(369);
+	var invariant = __webpack_require__(211);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -91,6 +91,10 @@ webpackJsonp([2],{
 	}
 
 	/**
+	 * Utilities for making it easy to test React components.
+	 *
+	 * See https://facebook.github.io/react/docs/test-utils.html
+	 *
 	 * Todo: Support the entire DOM.scry query syntax. For now, these simple
 	 * utilities will suffice for testing purposes.
 	 * @lends ReactTestUtils
@@ -180,9 +184,6 @@ webpackJsonp([2],{
 	   * @return {array} an array of all the matches.
 	   */
 	  scryRenderedDOMComponentsWithClass: function (root, classNames) {
-	    if (!Array.isArray(classNames)) {
-	      classNames = classNames.split(/\s+/);
-	    }
 	    return ReactTestUtils.findAllInRenderedTree(root, function (inst) {
 	      if (ReactTestUtils.isDOMComponent(inst)) {
 	        var className = inst.className;
@@ -191,6 +192,11 @@ webpackJsonp([2],{
 	          className = inst.getAttribute('class') || '';
 	        }
 	        var classList = className.split(/\s+/);
+
+	        if (!Array.isArray(classNames)) {
+	          !(classNames !== undefined) ?  true ? invariant(false, 'TestUtils.scryRenderedDOMComponentsWithClass expects a ' + 'className as a second argument.') : invariant(false) : void 0;
+	          classNames = classNames.split(/\s+/);
+	        }
 	        return classNames.every(function (name) {
 	          return classList.indexOf(name) !== -1;
 	        });
@@ -333,9 +339,12 @@ webpackJsonp([2],{
 	  return this._instance ? this._instance._instance : null;
 	};
 
+	var nextDebugID = 1;
+
 	var NoopInternalComponent = function (element) {
 	  this._renderedOutput = element;
 	  this._currentElement = element;
+	  this._debugID = nextDebugID++;
 	};
 
 	NoopInternalComponent.prototype = {
@@ -359,9 +368,11 @@ webpackJsonp([2],{
 	};
 
 	var ShallowComponentWrapper = function (element) {
+	  this._debugID = nextDebugID++;
 	  this.construct(element);
 	};
 	_assign(ShallowComponentWrapper.prototype, ReactCompositeComponent.Mixin, {
+	  _constructComponent: ReactCompositeComponent.Mixin._constructComponentWithoutOwner,
 	  _instantiateReactComponent: function (element) {
 	    return new NoopInternalComponent(element);
 	  },
@@ -525,7 +536,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 940:
+/***/ 1008:
 /***/ function(module, exports) {
 
 	'use strict';

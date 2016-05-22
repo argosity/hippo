@@ -6,14 +6,14 @@ webpackJsonp([2],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.ReactToggle = __webpack_require__(934)
-	__webpack_require__(940);
+	Lanes.Vendor.ReactToggle = __webpack_require__(1003)
+	__webpack_require__(1009);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 934:
+/***/ 1003:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22,15 +22,15 @@ webpackJsonp([2],{
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = _interopRequire(__webpack_require__(66));
+	var React = _interopRequire(__webpack_require__(206));
 
-	var classNames = _interopRequire(__webpack_require__(439));
+	var classNames = _interopRequire(__webpack_require__(507));
 
-	var Check = _interopRequire(__webpack_require__(935));
+	var Check = _interopRequire(__webpack_require__(1004));
 
-	var X = _interopRequire(__webpack_require__(936));
+	var X = _interopRequire(__webpack_require__(1005));
 
-	var PureRenderMixin = _interopRequire(__webpack_require__(937));
+	var PureRenderMixin = _interopRequire(__webpack_require__(1006));
 
 	module.exports = React.createClass({
 	  mixins: [PureRenderMixin],
@@ -128,14 +128,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 935:
+/***/ 1004:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-	var React = _interopRequire(__webpack_require__(66));
+	var React = _interopRequire(__webpack_require__(206));
 
 	module.exports = React.createClass({
 	  displayName: "check.es6",
@@ -157,14 +157,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 936:
+/***/ 1005:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-	var React = _interopRequire(__webpack_require__(66));
+	var React = _interopRequire(__webpack_require__(206));
 
 	module.exports = React.createClass({
 	  displayName: "x.es6",
@@ -186,14 +186,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 937:
+/***/ 1006:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(938);
+	module.exports = __webpack_require__(1007);
 
 /***/ },
 
-/***/ 938:
+/***/ 1007:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -209,7 +209,7 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var shallowCompare = __webpack_require__(939);
+	var shallowCompare = __webpack_require__(1008);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -234,6 +234,8 @@ webpackJsonp([2],{
 	 * complex data structures this mixin may have false-negatives for deeper
 	 * differences. Only mixin to components which have simple props and state, or
 	 * use `forceUpdate()` when you know deep data structures have changed.
+	 *
+	 * See https://facebook.github.io/react/docs/pure-render-mixin.html
 	 */
 	var ReactComponentWithPureRenderMixin = {
 	  shouldComponentUpdate: function (nextProps, nextState) {
@@ -245,7 +247,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 939:
+/***/ 1008:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -261,11 +263,12 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var shallowEqual = __webpack_require__(187);
+	var shallowEqual = __webpack_require__(330);
 
 	/**
 	 * Does a shallow comparison for props and state.
 	 * See ReactComponentWithPureRenderMixin
+	 * See also https://facebook.github.io/react/docs/shallow-compare.html
 	 */
 	function shallowCompare(instance, nextProps, nextState) {
 	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
@@ -275,7 +278,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 940:
+/***/ 1009:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
