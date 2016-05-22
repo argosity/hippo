@@ -90,11 +90,11 @@
     }
 }
 
-.lanes-modal, .modal {
+.lanes-modal, .modal, .popover {
     @include make-grid-columns();
 
     &.lg {
-        .modal-lg {
+        .modal-lg, .popover-content {
             @include make-grid(xs);
             @include make-grid(sm);
             @include make-grid(md);
@@ -102,14 +102,14 @@
         }
     }
     &.md {
-        .modal-lg {
+        .modal-lg, .popover-content {
             @include make-grid(xs);
             @include make-grid(sm);
             @include make-grid(md);
         }
     }
     &.sm {
-        .modal-lg {
+        .modal-lg, .popover-content {
             @include make-grid(xs);
             @include make-grid(sm);
         }
