@@ -271,15 +271,16 @@ class Lanes.Models.Query extends Lanes.Models.Base
     reset: ->
         unless @defaultSort is false
             sort = @defaultSort or @fields.findWhere(visible: true).id
-            @setSortField( @fields.findWhere(id: sort), sortAscending: true, silent: true )
+            @setSortField( @fields.findWhere(id: sort), sortAscending: @sortAscending, silent: true )
 
         @clauses.reset([
             {query: this, available_fields: @fields, field: @initialField}
         ])
 
     setSortField: (field, options = {silent: false}) ->
+        options.sortAscending ?= (if @sortField is field then !@sortAscending else true)
         @set({
-            sortAscending: options.sortAscending || (if @sortField is field then !@sortAscending else true)
+            sortAscending: options.sortAscending
             sortField: field
         }, options)
 
