@@ -122,6 +122,8 @@ lcDash = (char, match, index) ->
 
 originalTitleize = _.titleize
 
+
+# some are taken from https://github.com/epeli/underscore.string
 _.mixin({
     dasherize: (str) ->
         _.trim(str).replace(/([A-Z])/g, lcDash).replace(/[-_\s]+/g, '-').toLowerCase()
@@ -143,6 +145,16 @@ _.mixin({
             ''
     isPromise: (obj) ->
         !!obj && (_.isObject(obj) || _.isFunction(obj)) && _.isFunction(obj.then)
+
+    classify: (str) ->
+        s = _.toString(str)
+        @capitalize(@camelCase(s.replace(/[\W_]/g, ' ')).replace(/\s/g, ''))
+
+    humanize: (str) ->
+        @capitalize(@trim(@underscored(str).replace(/_id$/, '').replace(/_/g, ' ')))
+
+    underscored: (str) ->
+        return @trim(str).replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase()
 
     isBlank: (value) ->
         switch true

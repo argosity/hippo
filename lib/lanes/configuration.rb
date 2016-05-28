@@ -57,7 +57,6 @@ module Lanes
                 config.namespace = "#{identifier}::jobba"
             end
 
-
             Resque.redis.namespace = "#{identifier}::resque"
             Resque.redis = Lanes.config.redis
             MessageBus.redis_config = Lanes.config.redis

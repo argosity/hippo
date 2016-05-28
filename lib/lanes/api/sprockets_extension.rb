@@ -23,7 +23,7 @@ module Lanes
                     manifest.compile('lanes/vendor.js', 'lanes.js', 'lanes.css')
                     Extensions.each do |ext|
                         ext.each_static_asset do | asset |
-                          manifest.compile( asset.to_s )
+                            manifest.compile( asset.to_s )
                         end
                     end
                     Screen.each do | screen |

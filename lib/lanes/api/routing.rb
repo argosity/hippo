@@ -24,23 +24,23 @@ module Lanes
             def resources(model, options = {})
                 path = options[:path] || model.api_path
                 controller = options[:controller] || Lanes::API::Controller
-                parent_attribute = false
+
                 if options[:under]
-                    parent_attribute = options[:parent_attribute] || options[:under].underscore.singularize+'_id'
+                    options[:parent_attribute] = options[:under].underscore.singularize+'_id'
                 end
 
-                prefix = parent_attribute ? parent_attribute + '/' : ''
+                prefix = options[:parent_attribute] ? options[:parent_attribute] + '/' : ''
 
                 # index
                 if controller.method_defined?(:perform_retrieval)
                     get "#{prefix}#{path}/?:id?.json",
-                        &RequestWrapper.get(model, controller, parent_attribute)
+                        &RequestWrapper.get(model, controller, options)
                 end
 
                 # create
                 if controller.method_defined?(:perform_creation)
                     post "#{prefix}#{path}.json",
-                         &RequestWrapper.post(model, controller, parent_attribute)
+                         &RequestWrapper.post(model, controller, options)
                 end
 
                 unless options[:immutable]
@@ -48,15 +48,15 @@ module Lanes
                     # update
                     if controller.method_defined?(:perform_update)
                         patch "#{prefix}#{path}/?:id?.json",
-                              &RequestWrapper.update(model, controller, parent_attribute)
+                              &RequestWrapper.update(model, controller, options)
                         put   "#{prefix}#{path}/?:id?.json",
-                              &RequestWrapper.update(model, controller, parent_attribute)
+                              &RequestWrapper.update(model, controller, options)
                     end
 
                     if controller.method_defined?(:perform_destroy) and not options[:indestructible]
                         # destroy
                         delete "#{prefix}#{path}/?:id?.json",
-                               &RequestWrapper.delete(model, controller, parent_attribute)
+                               &RequestWrapper.delete(model, controller, options)
                     end
 
                 end

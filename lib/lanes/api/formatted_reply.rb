@@ -5,7 +5,7 @@ module Lanes
             # constructs a Hash with success, messages, and data keys and
             # populates them appropriately
 
-            def std_api_reply(type, data, options)
+            def std_api_reply(type, data, options = {})
                 json = { success: options[:success].nil? ? true : options[:success] }
                 if data.is_a?(ActiveRecord::Base)
                     record_active_record_errors(data, json)
@@ -15,7 +15,7 @@ module Lanes
                 end
                 json.merge(
                   message: options[:messsage] || json_status_str(data, type.to_s.capitalize, json[:success]),
-                  data:    json[:success] ? records_for_reply(data, type, options) : []
+                  data: json[:success] ? records_for_reply(data, type, options) : []
                 )
             end
 

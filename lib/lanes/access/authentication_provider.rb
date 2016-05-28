@@ -32,8 +32,8 @@ module Lanes
                                       end
             end
 
-            def allowed_access_to?(klass)
-                return false if current_user.nil?
+            def allowed_access_to?(klass, options)
+                return false if current_user.nil? and not options[:allow_anonymous]
                 case request.request_method
                 when 'GET'
                     klass.can_read_attributes?(request.params,current_user)
@@ -56,8 +56,8 @@ module Lanes
                 end
             end
 
-            def wrap_model_access(model, req)
-                if allowed_access_to?(model)
+            def wrap_model_access(model, req, options)
+                if allowed_access_to?(model, options)
                     ::Lanes::User.scoped_to(current_user) do | user |
                         yield
                     end

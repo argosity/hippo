@@ -1,4 +1,4 @@
-webpackJsonp([1],{
+webpackJsonp([0],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -6,31 +6,31 @@ webpackJsonp([1],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.Dayz = __webpack_require__(1038);
+	Lanes.Vendor.Dayz = __webpack_require__(10);
 
-	__webpack_require__(1054);
+	__webpack_require__(423);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 1038:
+/***/ 10:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = __webpack_require__(206);
-	var moment = __webpack_require__(835);
-	var Layout = __webpack_require__(1039);
-	var Day = __webpack_require__(1043);
-	var XLabels = __webpack_require__(1046);
-	var YLabels = __webpack_require__(1047);
+	var React = __webpack_require__(11);
+	var moment = __webpack_require__(44);
+	var Layout = __webpack_require__(147);
+	var Day = __webpack_require__(268);
+	var XLabels = __webpack_require__(401);
+	var YLabels = __webpack_require__(405);
 
-	__webpack_require__(1030); // needed in order to for range to install itself
+	__webpack_require__(409); // needed in order to for range to install itself
 
-	var EventsCollection = __webpack_require__(1051);
+	var EventsCollection = __webpack_require__(410);
 
 	var Dayz = React.createClass({
 	    displayName: 'Dayz',
@@ -132,7 +132,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1039:
+/***/ 147:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -141,11 +141,11 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var assign = __webpack_require__(20);
-	var each = __webpack_require__(1040);
-	var moment = __webpack_require__(835);
-	var EventLayout = __webpack_require__(1041);
-	var C = __webpack_require__(1042);
+	var assign = __webpack_require__(148);
+	var each = __webpack_require__(179);
+	var moment = __webpack_require__(44);
+	var EventLayout = __webpack_require__(266);
+	var C = __webpack_require__(267);
 
 	function cacheKey(day) {
 	    return day.format('YYYYMMDD');
@@ -340,15 +340,15 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1040:
+/***/ 179:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(199);
+	module.exports = __webpack_require__(180);
 
 
 /***/ },
 
-/***/ 1041:
+/***/ 266:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -357,7 +357,7 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var moment = __webpack_require__(835);
+	var moment = __webpack_require__(44);
 
 	// an event layout describes how an event is displayed.
 	// A event may be split into one or more layouts in order to be split across week boundaries
@@ -457,7 +457,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1042:
+/***/ 267:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -470,20 +470,20 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1043:
+/***/ 268:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = __webpack_require__(206);
-	var Layout = __webpack_require__(1039);
-	var Event = __webpack_require__(1044);
-	var Label = __webpack_require__(1045);
-	var assign = __webpack_require__(20);
-	var each = __webpack_require__(1040);
-	var ReactDOM = __webpack_require__(239);
+	var React = __webpack_require__(11);
+	var Layout = __webpack_require__(147);
+	var Event = __webpack_require__(269);
+	var Label = __webpack_require__(270);
+	var assign = __webpack_require__(148);
+	var each = __webpack_require__(179);
+	var ReactDOM = __webpack_require__(271);
 
 	var IsDayClass = new RegExp('(\\s|^)(events|day|label)(\\s|$)');
 
@@ -615,13 +615,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1044:
+/***/ 269:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var React = __webpack_require__(206);
-	var EventLayout = __webpack_require__(1041);
+	var React = __webpack_require__(11);
+	var EventLayout = __webpack_require__(266);
 
 	var IsResizeClass = new RegExp('(\\s|^)event(\\s|$)');
 
@@ -694,12 +694,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1045:
+/***/ 270:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var React = __webpack_require__(206);
+	var React = __webpack_require__(11);
 
 	var Label = React.createClass({
 	    displayName: 'Label',
@@ -722,13 +722,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1046:
+/***/ 401:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var React = __webpack_require__(206);
-	var map = __webpack_require__(492);
+	var React = __webpack_require__(11);
+	var map = __webpack_require__(402);
 
 	var XLabels = React.createClass({
 	    displayName: 'XLabels',
@@ -770,16 +770,16 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1047:
+/***/ 405:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var React = __webpack_require__(206);
-	var moment = __webpack_require__(835);
-	var Layout = __webpack_require__(1039);
-	var each = __webpack_require__(1040);
-	var range = __webpack_require__(1048);
+	var React = __webpack_require__(11);
+	var moment = __webpack_require__(44);
+	var Layout = __webpack_require__(147);
+	var each = __webpack_require__(179);
+	var range = __webpack_require__(406);
 
 	var YLabels = React.createClass({
 	    displayName: 'YLabels',
@@ -831,10 +831,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1048:
+/***/ 406:
 /***/ function(module, exports, __webpack_require__) {
 
-	var createRange = __webpack_require__(1049);
+	var createRange = __webpack_require__(407);
 
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -884,12 +884,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1049:
+/***/ 407:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(1050),
-	    isIterateeCall = __webpack_require__(25),
-	    toNumber = __webpack_require__(37);
+	var baseRange = __webpack_require__(408),
+	    isIterateeCall = __webpack_require__(153),
+	    toNumber = __webpack_require__(165);
 
 	/**
 	 * Creates a `_.range` or `_.rangeRight` function.
@@ -922,7 +922,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1050:
+/***/ 408:
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -957,7 +957,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1051:
+/***/ 410:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -966,11 +966,11 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Event = __webpack_require__(1052);
-	var Emitter = __webpack_require__(1053);
-	var _each = __webpack_require__(1040);
-	var assign = __webpack_require__(20);
-	var sortBy = __webpack_require__(517);
+	var Event = __webpack_require__(411);
+	var Emitter = __webpack_require__(412);
+	var _each = __webpack_require__(179);
+	var assign = __webpack_require__(148);
+	var sortBy = __webpack_require__(413);
 
 	function lengthCompare(event) {
 	    return event.attributes.range.start.diff(event.attributes.range.end);
@@ -1033,7 +1033,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1052:
+/***/ 411:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1042,10 +1042,10 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var React = __webpack_require__(206);
-	var assign = __webpack_require__(20);
-	var each = __webpack_require__(1040);
-	var Emitter = __webpack_require__(1053);
+	var React = __webpack_require__(11);
+	var assign = __webpack_require__(148);
+	var each = __webpack_require__(179);
+	var Emitter = __webpack_require__(412);
 
 	var EVENT_COUNTER = 1;
 
@@ -1180,7 +1180,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1053:
+/***/ 412:
 /***/ function(module, exports) {
 
 	function E () {
@@ -1253,7 +1253,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 1054:
+/***/ 423:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "calendar.scss";

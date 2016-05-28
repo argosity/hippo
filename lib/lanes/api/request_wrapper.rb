@@ -28,27 +28,36 @@ module Lanes
                     end
                 end
 
-                def make_handler(model, controller, parent_attribute = nil)
+                # @!visibility private
+                def make_handler(model, controller, options = {})
                     lambda do
                         authentication = Lanes::API::AuthenticationProvider.new(request)
-                        authentication.wrap_model_access(model, self) do
-                            if parent_attribute
-                              params[:nested_attribute] = Hash[ parent_attribute,
+                        authentication.wrap_model_access(model, self, options) do
+                            if options[:parent_attribute]
+                              params[:nested_attribute] = Hash[ options[:parent_attribute],
                                                                params[parent_attribute] ]
                             end
-                            wrap_reply(with_transaction: !request.get?) do
+                            wrap_reply(options.merge(with_transaction: !request.get?)) do
                                 yield controller.new(model, authentication, params, data)
                             end
                         end
                     end
                 end
 
-                def with_authenticated_user(role:nil, with_transaction:true)
+                # Ensure request is performed with a logged in user. The provided block will be called
+                # with |user, request|
+                #
+                # @param [options] options for additional checks
+                # @option options [String] :role A role name that the user must have
+                # @option opts [Boolean] :with_transaction rollback DB transaction if exceptions occur
+                #
+                def with_authenticated_user(options = {with_transaction: true})
+                    role = options[:role]
                     lambda do
                         authentication = Lanes::API::AuthenticationProvider.new(request)
                         user = authentication.current_user
                         if user and ( role.nil? or user.roles.include?(role) )
-                            wrap_reply(with_transaction: with_transaction) do
+                            wrap_reply(options) do
                                 yield authentication.current_user, self
                             end
                         else
@@ -58,15 +67,14 @@ module Lanes
                 end
             end
 
-            def log_request
-                Lanes.logger.info "UserID: #{session['user_id']}, Params: #{request.params}"
-                Lanes.logger.debug JSON.pretty_generate(data) unless Lanes.env.production? or data.nil?
-            end
-
-            def wrap_reply(with_transaction:true)
+            # Wraps a HTTP request in an optional DB transaction and converts yeilded data to JSON
+            #
+            # @param [options] options for additional checks
+            # @option opts [Boolean] :with_transaction rollback DB transaction if exceptions occur
+            def wrap_reply(options = {with_transaction: true})
                 response = { success: false, message: "No response was generated" }
                 log_request
-                if with_transaction
+                if options[:with_transaction]
                     Lanes::Model.transaction do
                         response = yield
                         # This is quite possibly a horrible idea.
@@ -84,6 +92,11 @@ module Lanes
                 json_reply response
             end
 
+            # Logs UserID and params for a request.  In non-production, the JSON payload is also logged
+            def log_request
+                Lanes.logger.info "UserID: #{session['user_id']}, Params: #{request.params}"
+                Lanes.logger.debug JSON.pretty_generate(data) unless Lanes.env.production? or data.nil?
+            end
         end
 
 

@@ -7,9 +7,10 @@ var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 var buildEnv = process.env.BUILD_ENV || 'development';
 var COMMONS = "commons";
 var SCRIPTS = {
-    base: "./base.js",
-    widgets: "./react-widgets.js",
-    toggle: "./react-toggle.js",
+    data:     "./data.js",
+    ui:       "./ui.js",
+    widgets:  "./react-widgets.js",
+    toggle:   "./react-toggle.js",
     calendar: "./calendar.js",
 }
 

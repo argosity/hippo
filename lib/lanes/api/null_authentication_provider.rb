@@ -27,6 +27,9 @@ module Lanes
             def wrap_reply(model, req)
                 yield
             end
+            def wrap_model_access(model, req, options)
+                yield
+            end
 
         end
     end

@@ -1,5 +1,7 @@
 <% if Lanes.env.production?
-    require_asset "./production/base"
+    require_asset "./production/data"
+    require_asset "./production/ui"
 else
-    require_asset "./development/base"
+    require_asset "./development/data"
+    require_asset "./development/ui"
 end %>

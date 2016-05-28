@@ -63,6 +63,10 @@ module Lanes
                 [ root_path.join('client') ]
             end
 
+            def standard_client_path
+                root_path.join('client', identifier )
+            end
+
             def static_paths
                 client_paths.each_with_object(Array.new) do |path, result|
                     Lanes.config.static_asset_types.each do | prefix |
@@ -74,7 +78,7 @@ module Lanes
             def each_static_asset
                 static_paths.each do | path |
                     path.find.each do | entry |
-                        yield entry if entry.file?
+                        yield entry.relative_path_from(path) if entry.file?
                     end
                 end
             end

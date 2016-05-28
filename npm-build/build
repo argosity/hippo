@@ -7,3 +7,6 @@ BUILD_ENV=development webpack --progress
 
 echo Building production
 BUILD_ENV=production webpack --progress --optimize-dedupe
+
+echo Building standalone
+BUILD_ENV=production webpack --config webpack-standalone.config.js --progress --optimize-dedupe

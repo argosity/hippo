@@ -26,7 +26,7 @@ class Lanes.Components.FormGroup extends Lanes.React.Component
         })
         <BS.Col {...colProps} className={className}>
             <BS.FormGroup className={valueClassNames}>
-                <LC.ControlLabel {...@props} />
+                <BS.ControlLabel>{@props.label}</BS.ControlLabel>
                 {@props.children}
             </BS.FormGroup>
         </BS.Col>
