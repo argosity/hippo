@@ -6,15 +6,15 @@ webpackJsonp([1],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.Dayz = __webpack_require__(978);
+	Lanes.Vendor.Dayz = __webpack_require__(1038);
 
-	__webpack_require__(1002);
+	__webpack_require__(1054);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 978:
+/***/ 1038:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22,15 +22,15 @@ webpackJsonp([1],{
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = __webpack_require__(206);
-	var moment = __webpack_require__(775);
-	var Layout = __webpack_require__(979);
-	var Day = __webpack_require__(983);
-	var XLabels = __webpack_require__(986);
-	var YLabels = __webpack_require__(989);
+	var moment = __webpack_require__(835);
+	var Layout = __webpack_require__(1039);
+	var Day = __webpack_require__(1043);
+	var XLabels = __webpack_require__(1046);
+	var YLabels = __webpack_require__(1047);
 
-	__webpack_require__(970); // needed in order to for range to install itself
+	__webpack_require__(1030); // needed in order to for range to install itself
 
-	var EventsCollection = __webpack_require__(993);
+	var EventsCollection = __webpack_require__(1051);
 
 	var Dayz = React.createClass({
 	    displayName: 'Dayz',
@@ -132,7 +132,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 979:
+/***/ 1039:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -142,10 +142,10 @@ webpackJsonp([1],{
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var assign = __webpack_require__(20);
-	var each = __webpack_require__(980);
-	var moment = __webpack_require__(775);
-	var EventLayout = __webpack_require__(981);
-	var C = __webpack_require__(982);
+	var each = __webpack_require__(1040);
+	var moment = __webpack_require__(835);
+	var EventLayout = __webpack_require__(1041);
+	var C = __webpack_require__(1042);
 
 	function cacheKey(day) {
 	    return day.format('YYYYMMDD');
@@ -340,7 +340,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 980:
+/***/ 1040:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(199);
@@ -348,7 +348,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 981:
+/***/ 1041:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -357,7 +357,7 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var moment = __webpack_require__(775);
+	var moment = __webpack_require__(835);
 
 	// an event layout describes how an event is displayed.
 	// A event may be split into one or more layouts in order to be split across week boundaries
@@ -457,7 +457,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 982:
+/***/ 1042:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -470,7 +470,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 983:
+/***/ 1043:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -478,11 +478,11 @@ webpackJsonp([1],{
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = __webpack_require__(206);
-	var Layout = __webpack_require__(979);
-	var Event = __webpack_require__(984);
-	var Label = __webpack_require__(985);
+	var Layout = __webpack_require__(1039);
+	var Event = __webpack_require__(1044);
+	var Label = __webpack_require__(1045);
 	var assign = __webpack_require__(20);
-	var each = __webpack_require__(980);
+	var each = __webpack_require__(1040);
 	var ReactDOM = __webpack_require__(239);
 
 	var IsDayClass = new RegExp('(\\s|^)(events|day|label)(\\s|$)');
@@ -615,13 +615,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 984:
+/***/ 1044:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(206);
-	var EventLayout = __webpack_require__(981);
+	var EventLayout = __webpack_require__(1041);
 
 	var IsResizeClass = new RegExp('(\\s|^)event(\\s|$)');
 
@@ -694,7 +694,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 985:
+/***/ 1045:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -722,13 +722,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 986:
+/***/ 1046:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(206);
-	var map = __webpack_require__(987);
+	var map = __webpack_require__(492);
 
 	var XLabels = React.createClass({
 	    displayName: 'XLabels',
@@ -770,106 +770,16 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 987:
-/***/ function(module, exports, __webpack_require__) {
-
-	var arrayMap = __webpack_require__(50),
-	    baseIteratee = __webpack_require__(108),
-	    baseMap = __webpack_require__(988),
-	    isArray = __webpack_require__(47);
-
-	/**
-	 * Creates an array of values by running each element in `collection` thru
-	 * `iteratee`. The iteratee is invoked with three arguments:
-	 * (value, index|key, collection).
-	 *
-	 * Many lodash methods are guarded to work as iteratees for methods like
-	 * `_.every`, `_.filter`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
-	 *
-	 * The guarded methods are:
-	 * `ary`, `chunk`, `curry`, `curryRight`, `drop`, `dropRight`, `every`,
-	 * `fill`, `invert`, `parseInt`, `random`, `range`, `rangeRight`, `repeat`,
-	 * `sampleSize`, `slice`, `some`, `sortBy`, `split`, `take`, `takeRight`,
-	 * `template`, `trim`, `trimEnd`, `trimStart`, and `words`
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Collection
-	 * @param {Array|Object} collection The collection to iterate over.
-	 * @param {Array|Function|Object|string} [iteratee=_.identity]
-	 *  The function invoked per iteration.
-	 * @returns {Array} Returns the new mapped array.
-	 * @example
-	 *
-	 * function square(n) {
-	 *   return n * n;
-	 * }
-	 *
-	 * _.map([4, 8], square);
-	 * // => [16, 64]
-	 *
-	 * _.map({ 'a': 4, 'b': 8 }, square);
-	 * // => [16, 64] (iteration order is not guaranteed)
-	 *
-	 * var users = [
-	 *   { 'user': 'barney' },
-	 *   { 'user': 'fred' }
-	 * ];
-	 *
-	 * // The `_.property` iteratee shorthand.
-	 * _.map(users, 'user');
-	 * // => ['barney', 'fred']
-	 */
-	function map(collection, iteratee) {
-	  var func = isArray(collection) ? arrayMap : baseMap;
-	  return func(collection, baseIteratee(iteratee, 3));
-	}
-
-	module.exports = map;
-
-
-/***/ },
-
-/***/ 988:
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseEach = __webpack_require__(201),
-	    isArrayLike = __webpack_require__(26);
-
-	/**
-	 * The base implementation of `_.map` without support for iteratee shorthands.
-	 *
-	 * @private
-	 * @param {Array|Object} collection The collection to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {Array} Returns the new mapped array.
-	 */
-	function baseMap(collection, iteratee) {
-	  var index = -1,
-	      result = isArrayLike(collection) ? Array(collection.length) : [];
-
-	  baseEach(collection, function(value, key, collection) {
-	    result[++index] = iteratee(value, key, collection);
-	  });
-	  return result;
-	}
-
-	module.exports = baseMap;
-
-
-/***/ },
-
-/***/ 989:
+/***/ 1047:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(206);
-	var moment = __webpack_require__(775);
-	var Layout = __webpack_require__(979);
-	var each = __webpack_require__(980);
-	var range = __webpack_require__(990);
+	var moment = __webpack_require__(835);
+	var Layout = __webpack_require__(1039);
+	var each = __webpack_require__(1040);
+	var range = __webpack_require__(1048);
 
 	var YLabels = React.createClass({
 	    displayName: 'YLabels',
@@ -921,10 +831,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 990:
+/***/ 1048:
 /***/ function(module, exports, __webpack_require__) {
 
-	var createRange = __webpack_require__(991);
+	var createRange = __webpack_require__(1049);
 
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -974,10 +884,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 991:
+/***/ 1049:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(992),
+	var baseRange = __webpack_require__(1050),
 	    isIterateeCall = __webpack_require__(25),
 	    toNumber = __webpack_require__(37);
 
@@ -1012,7 +922,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 992:
+/***/ 1050:
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -1047,7 +957,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 993:
+/***/ 1051:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1056,11 +966,11 @@ webpackJsonp([1],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Event = __webpack_require__(994);
-	var Emitter = __webpack_require__(995);
-	var _each = __webpack_require__(980);
+	var Event = __webpack_require__(1052);
+	var Emitter = __webpack_require__(1053);
+	var _each = __webpack_require__(1040);
 	var assign = __webpack_require__(20);
-	var sortBy = __webpack_require__(996);
+	var sortBy = __webpack_require__(517);
 
 	function lengthCompare(event) {
 	    return event.attributes.range.start.diff(event.attributes.range.end);
@@ -1123,7 +1033,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 994:
+/***/ 1052:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1134,8 +1044,8 @@ webpackJsonp([1],{
 
 	var React = __webpack_require__(206);
 	var assign = __webpack_require__(20);
-	var each = __webpack_require__(980);
-	var Emitter = __webpack_require__(995);
+	var each = __webpack_require__(1040);
+	var Emitter = __webpack_require__(1053);
 
 	var EVENT_COUNTER = 1;
 
@@ -1270,7 +1180,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 995:
+/***/ 1053:
 /***/ function(module, exports) {
 
 	function E () {
@@ -1343,264 +1253,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 996:
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseFlatten = __webpack_require__(88),
-	    baseOrderBy = __webpack_require__(997),
-	    isArray = __webpack_require__(47),
-	    isFlattenableIteratee = __webpack_require__(1001),
-	    isIterateeCall = __webpack_require__(25),
-	    rest = __webpack_require__(33);
-
-	/**
-	 * Creates an array of elements, sorted in ascending order by the results of
-	 * running each element in a collection thru each iteratee. This method
-	 * performs a stable sort, that is, it preserves the original sort order of
-	 * equal elements. The iteratees are invoked with one argument: (value).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Collection
-	 * @param {Array|Object} collection The collection to iterate over.
-	 * @param {...(Array|Array[]|Function|Function[]|Object|Object[]|string|string[])}
-	 *  [iteratees=[_.identity]] The iteratees to sort by.
-	 * @returns {Array} Returns the new sorted array.
-	 * @example
-	 *
-	 * var users = [
-	 *   { 'user': 'fred',   'age': 48 },
-	 *   { 'user': 'barney', 'age': 36 },
-	 *   { 'user': 'fred',   'age': 40 },
-	 *   { 'user': 'barney', 'age': 34 }
-	 * ];
-	 *
-	 * _.sortBy(users, function(o) { return o.user; });
-	 * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
-	 *
-	 * _.sortBy(users, ['user', 'age']);
-	 * // => objects for [['barney', 34], ['barney', 36], ['fred', 40], ['fred', 48]]
-	 *
-	 * _.sortBy(users, 'user', function(o) {
-	 *   return Math.floor(o.age / 10);
-	 * });
-	 * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
-	 */
-	var sortBy = rest(function(collection, iteratees) {
-	  if (collection == null) {
-	    return [];
-	  }
-	  var length = iteratees.length;
-	  if (length > 1 && isIterateeCall(collection, iteratees[0], iteratees[1])) {
-	    iteratees = [];
-	  } else if (length > 2 && isIterateeCall(iteratees[0], iteratees[1], iteratees[2])) {
-	    iteratees = [iteratees[0]];
-	  }
-	  iteratees = (iteratees.length == 1 && isArray(iteratees[0]))
-	    ? iteratees[0]
-	    : baseFlatten(iteratees, 1, isFlattenableIteratee);
-
-	  return baseOrderBy(collection, iteratees, []);
-	});
-
-	module.exports = sortBy;
-
-
-/***/ },
-
-/***/ 997:
-/***/ function(module, exports, __webpack_require__) {
-
-	var arrayMap = __webpack_require__(50),
-	    baseIteratee = __webpack_require__(108),
-	    baseMap = __webpack_require__(988),
-	    baseSortBy = __webpack_require__(998),
-	    baseUnary = __webpack_require__(86),
-	    compareMultiple = __webpack_require__(999),
-	    identity = __webpack_require__(149);
-
-	/**
-	 * The base implementation of `_.orderBy` without param guards.
-	 *
-	 * @private
-	 * @param {Array|Object} collection The collection to iterate over.
-	 * @param {Function[]|Object[]|string[]} iteratees The iteratees to sort by.
-	 * @param {string[]} orders The sort orders of `iteratees`.
-	 * @returns {Array} Returns the new sorted array.
-	 */
-	function baseOrderBy(collection, iteratees, orders) {
-	  var index = -1;
-	  iteratees = arrayMap(iteratees.length ? iteratees : [identity], baseUnary(baseIteratee));
-
-	  var result = baseMap(collection, function(value, key, collection) {
-	    var criteria = arrayMap(iteratees, function(iteratee) {
-	      return iteratee(value);
-	    });
-	    return { 'criteria': criteria, 'index': ++index, 'value': value };
-	  });
-
-	  return baseSortBy(result, function(object, other) {
-	    return compareMultiple(object, other, orders);
-	  });
-	}
-
-	module.exports = baseOrderBy;
-
-
-/***/ },
-
-/***/ 998:
-/***/ function(module, exports) {
-
-	/**
-	 * The base implementation of `_.sortBy` which uses `comparer` to define the
-	 * sort order of `array` and replaces criteria objects with their corresponding
-	 * values.
-	 *
-	 * @private
-	 * @param {Array} array The array to sort.
-	 * @param {Function} comparer The function to define sort order.
-	 * @returns {Array} Returns `array`.
-	 */
-	function baseSortBy(array, comparer) {
-	  var length = array.length;
-
-	  array.sort(comparer);
-	  while (length--) {
-	    array[length] = array[length].value;
-	  }
-	  return array;
-	}
-
-	module.exports = baseSortBy;
-
-
-/***/ },
-
-/***/ 999:
-/***/ function(module, exports, __webpack_require__) {
-
-	var compareAscending = __webpack_require__(1000);
-
-	/**
-	 * Used by `_.orderBy` to compare multiple properties of a value to another
-	 * and stable sort them.
-	 *
-	 * If `orders` is unspecified, all values are sorted in ascending order. Otherwise,
-	 * specify an order of "desc" for descending or "asc" for ascending sort order
-	 * of corresponding values.
-	 *
-	 * @private
-	 * @param {Object} object The object to compare.
-	 * @param {Object} other The other object to compare.
-	 * @param {boolean[]|string[]} orders The order to sort by for each property.
-	 * @returns {number} Returns the sort order indicator for `object`.
-	 */
-	function compareMultiple(object, other, orders) {
-	  var index = -1,
-	      objCriteria = object.criteria,
-	      othCriteria = other.criteria,
-	      length = objCriteria.length,
-	      ordersLength = orders.length;
-
-	  while (++index < length) {
-	    var result = compareAscending(objCriteria[index], othCriteria[index]);
-	    if (result) {
-	      if (index >= ordersLength) {
-	        return result;
-	      }
-	      var order = orders[index];
-	      return result * (order == 'desc' ? -1 : 1);
-	    }
-	  }
-	  // Fixes an `Array#sort` bug in the JS engine embedded in Adobe applications
-	  // that causes it, under certain circumstances, to provide the same value for
-	  // `object` and `other`. See https://github.com/jashkenas/underscore/pull/1247
-	  // for more details.
-	  //
-	  // This also ensures a stable sort in V8 and other engines.
-	  // See https://bugs.chromium.org/p/v8/issues/detail?id=90 for more details.
-	  return object.index - other.index;
-	}
-
-	module.exports = compareMultiple;
-
-
-/***/ },
-
-/***/ 1000:
-/***/ function(module, exports, __webpack_require__) {
-
-	var isSymbol = __webpack_require__(18);
-
-	/**
-	 * Compares values to sort them in ascending order.
-	 *
-	 * @private
-	 * @param {*} value The value to compare.
-	 * @param {*} other The other value to compare.
-	 * @returns {number} Returns the sort order indicator for `value`.
-	 */
-	function compareAscending(value, other) {
-	  if (value !== other) {
-	    var valIsDefined = value !== undefined,
-	        valIsNull = value === null,
-	        valIsReflexive = value === value,
-	        valIsSymbol = isSymbol(value);
-
-	    var othIsDefined = other !== undefined,
-	        othIsNull = other === null,
-	        othIsReflexive = other === other,
-	        othIsSymbol = isSymbol(other);
-
-	    if ((!othIsNull && !othIsSymbol && !valIsSymbol && value > other) ||
-	        (valIsSymbol && othIsDefined && othIsReflexive && !othIsNull && !othIsSymbol) ||
-	        (valIsNull && othIsDefined && othIsReflexive) ||
-	        (!valIsDefined && othIsReflexive) ||
-	        !valIsReflexive) {
-	      return 1;
-	    }
-	    if ((!valIsNull && !valIsSymbol && !othIsSymbol && value < other) ||
-	        (othIsSymbol && valIsDefined && valIsReflexive && !valIsNull && !valIsSymbol) ||
-	        (othIsNull && valIsDefined && valIsReflexive) ||
-	        (!othIsDefined && valIsReflexive) ||
-	        !othIsReflexive) {
-	      return -1;
-	    }
-	  }
-	  return 0;
-	}
-
-	module.exports = compareAscending;
-
-
-/***/ },
-
-/***/ 1001:
-/***/ function(module, exports, __webpack_require__) {
-
-	var isArray = __webpack_require__(47),
-	    isFunction = __webpack_require__(29);
-
-	/**
-	 * Checks if `value` is a flattenable array and not a `_.matchesProperty`
-	 * iteratee shorthand.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
-	 */
-	function isFlattenableIteratee(value) {
-	  return isArray(value) && !(value.length == 2 && !isFunction(value[0]));
-	}
-
-	module.exports = isFlattenableIteratee;
-
-
-/***/ },
-
-/***/ 1002:
+/***/ 1054:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "calendar.scss";
