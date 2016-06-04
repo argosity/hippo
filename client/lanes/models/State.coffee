@@ -52,7 +52,11 @@ class State
 
         integer:
             set: (newVal) ->
-                val = parseInt(newVal, 10) unless _.isBlank(newVal)
+                val = switch
+                    when _.isInteger(newVal) then newVal
+                    when ! _.isBlank(newVal) then parseInt(newVal, 10)
+                    else
+                        undefined
                 {val, type: 'integer'}
         file:
             set: (val) ->
