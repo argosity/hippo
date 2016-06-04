@@ -2,7 +2,6 @@
 //= require ./extension
 //= require ./models
 //= require ./Config
-//= require ./plugins
 //= require ./react
 //= require ./components
 //= require ./screens

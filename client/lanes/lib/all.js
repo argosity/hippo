@@ -10,3 +10,4 @@
 //= require ./format
 //= require ./promise_helpers
 //= require ./results
+//= require ./ResizeSensor
