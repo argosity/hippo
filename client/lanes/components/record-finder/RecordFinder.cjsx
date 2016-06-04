@@ -49,7 +49,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
 
     getValue: (ev) ->
         value = if @props.parentModel
-            @props.parentModel[@props.associationName][@props.name]
+            @props.parentModel[@props.associationName]?[@props.name]
         else
             @props.model[@props.name]
         value or ''

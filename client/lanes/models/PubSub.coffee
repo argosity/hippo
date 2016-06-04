@@ -9,7 +9,7 @@ class ModelConfig
     add: (model) ->
         if @count is 0
             Lanes.log.info "[pubsub] subscribe to: #{@channel}"
-            Lanes.Models.PubSub.mb.subscribe(@channel, @mbCallBack(@models))
+            Lanes.Models.PubSub.mb?.subscribe(@channel, @mbCallBack(@models))
         @count += 1
         config = @modelConfig(model)
         config.count += 1

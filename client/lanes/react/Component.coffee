@@ -25,11 +25,11 @@ Lanes.React.Component = {
         klass::mixins = _.uniq(klass::mixins.concat(mixins))
         comp = React.createClass(klass.prototype)
         extendComponent(comp)
-        return Lanes.lib.HotReload.remember(comp)
+        return Lanes.lib.HotReload?.remember(comp) or comp
 }
 
 Lanes.React.BaseComponent = {
-    extend: (klass, mixins = @defaultMixins) ->
+    extend: (klass) ->
         comp = React.createClass(klass.prototype)
-        return Lanes.lib.HotReload.remember(comp)
+        return Lanes.lib.HotReload?.remember(comp) or comp
 }

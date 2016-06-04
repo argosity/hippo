@@ -5,7 +5,7 @@ Lanes.React.Mixins.FieldErrors = {
     ]
 
     componentWillMount: ->
-        @getInvalidModel()?.maskInvalidFields()
+        @getInvalidModel()?.maskInvalidFields?()
 
     getInvalidFieldName: ->
         @props.validity_attribute || @props.name
@@ -18,7 +18,7 @@ Lanes.React.Mixins.FieldErrors = {
 
     fieldInvalidValueMessage: ->
         return '' unless @isEditingRecord()
-        @getInvalidModel()?.invalidMessageFor(
+        @getInvalidModel()?.invalidMessageFor?(
             @getInvalidFieldName()
         )
 
