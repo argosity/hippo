@@ -19,7 +19,7 @@ module Lanes
         # The parameters are deliberately shortened so they can be used in
         # query parameters without blowing the URL up to an unacceptable length
 
-        class Controller
+        class ControllerBase
 
             attr_reader :model, :user, :params, :data
             include FormattedReply
@@ -29,39 +29,6 @@ module Lanes
                 @model  = model
                 @params = params
                 @data   = data
-            end
-
-            def perform_retrieval
-                query   = build_query
-                options = build_reply_options
-                query   = add_modifiers_to_query(query)
-                options[:total_count] = query.dup.unscope(:select).count if should_include_total_count?
-                if params[:id]
-                    query  = query.first!
-                end
-                std_api_reply(:retrieve, query, options)
-            end
-
-            def perform_creation
-                record  = model.from_attribute_data(data, user)
-                options = build_reply_options.merge(success: record.save)
-                std_api_reply(:create, record, options)
-            end
-
-            def perform_update
-                if params[:id]
-                    perform_single_update( build_query.first! )
-                elsif data.is_a?(Array)
-                    perform_multiple_updates
-                end
-            end
-
-            def perform_destroy
-                if params[:id]
-                    perform_single_destroy
-                elsif data.is_a?(Array)
-                    perform_multiple_destroy
-                end
             end
 
             protected
@@ -279,12 +246,13 @@ module Lanes
                 when 'like' then field.matches( value )
                 when 'ne'   then field.not_eq(value)
                 when 'lt'   then field.lt(value)
-                when ( op=='in' && value=~/.*:.*/ ) then field.in( Range.new( *value.split(':') ) )
+                when 'in'   then field.in( Range.new( *value ) )
                 when 'gt'   then field.gt(value)
                 else
                     value =~ /%/ ? field.matches( value ) : field.eq( value )
                 end
             end
+
 
         end
     end
