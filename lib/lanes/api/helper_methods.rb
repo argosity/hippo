@@ -33,7 +33,7 @@ module Lanes
                     success: false,
                     errors:  { exception: request.env['sinatra.error'].message },
                     message: request.env['sinatra.error'].message
-                })
+                }, mode: :compat)
             end
 
             def data
