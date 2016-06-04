@@ -52,7 +52,7 @@ Lanes.Models.Sync = {
             Lanes.Models.Sync.perform(method, options).then (reply) ->
                 handler(reply)
             , (err) ->
-                reply = { errors: { http: err.error.message } }
+                reply = { errors: { http:  err?.error?.message or 'unknown' } }
                 try
                     reply = JSON.parse(err.body) unless _.isEmpty(err?.body)
                 finally
@@ -83,14 +83,13 @@ Lanes.Models.Sync = {
         #     options.json = options.data
         options.headers ||= {}
         # options.json = true
-        options.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
+        if Lanes.config.csrf_token
+            options.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
         options.contentType = "application/json"
 
-        # Make the request, allowing the user to override any Ajax options.
-        # xhr = options.xhr = Lanes.$.ajax(_.extend(params, options))
         new _.Promise( (resolve, reject) ->
             options.xhr = Lanes.Vendor.xhr(options, (err, resp, body) ->
-                if err
+                if err or resp.statusCode >= 400
                     reject(error:err, body:options.xhr.responseText)
                 else
                     resolve(body)
