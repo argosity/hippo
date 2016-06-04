@@ -4,7 +4,7 @@
 # Note!  An AssociationMap is created for each type of Model, and    #
 # is shared between all instances                                    #
 # ------------------------------------------------------------------ #
-class Lanes.Models.AssocationMap
+class Lanes.Models.AssociationMap
     constructor: (@klass) ->
         @klass::derived ||= {}
         @definitions = @klass::associations
@@ -131,27 +131,34 @@ class Lanes.Models.AssocationMap
             continue if not @exists(name) or
                 (_.isEmpty(value) and not @isCreated(model, name))
 
-            association = model[name]
+            definition = @definitions[name]
 
-            if association.isProxy and Lanes.u.isModel(value) and not value.isProxy
-                association.replaceWithModel(value, association_name: name)
+            if @isCreated(model, name)
+                association = model[name]
+                # nothing to do if setting to same object
+                continue if value is association
 
-            else if Lanes.u.isModel(association)
-                continue if association is value
-
-                if !value
-                    association.clear()
-                else
-                    model.set(this.pk(name), value.id, options) if value.id
-                    if Lanes.u.isModel(value)
-                        @replace(model, name, value)
+                if association.isProxy and Lanes.u.isModel(value) and not value.isProxy
+                    association.replaceWithModel(value, association_name: name)
+                else if definition.model
+                    if value
+                        @_setModel(model, name, value, options, fn_name)
                     else
-                        association[fn_name]( value )
-
-                if options?.silent isnt true and not association.isProxy
-                    model.trigger("change:#{name}", value, {})
+                        association.clear()
+                else
+                    if value then association[fn_name]( value, options ) else association.clear()
             else
-                if value then association[fn_name]( value, options ) else association.clear()
+                @_setModel(model, name, value, options, fn_name)
+
+    _setModel: (model, name, value, options, fn_name) ->
+        model.set(this.pk(name), value.id, options) if value.id
+
+        if Lanes.u.isModel(value)
+            @replace(model, name, value)
+        else
+            model[name][fn_name]( value )
+        if options?.silent isnt true
+            model.trigger("change:#{name}", value, {})
 
     pk: (name) ->
         def = @definitions[name]
