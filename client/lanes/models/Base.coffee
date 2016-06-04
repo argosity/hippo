@@ -198,9 +198,14 @@ class BaseModel
             data = this.getAttributes(props:true, true)
         else
             data = this.unsavedAttributes()
-        if this.associations && (!_.isEmpty(data) || !this.isNew()) && !options.excludeAssociations
-            data.id = this.getId() unless this.isNew()
-            _.extend(data, this.associations.dataForSave(this, options))
+        if this.associations && !options.excludeAssociations
+            # empty associations are not included
+            associationData = this.associations.dataForSave(this, options)
+            _.extend(data, associationData)
+            # if submitting associations, we must include our id so they can be updated
+            unless this.isNew() or _.isEmpty(associationData)
+                data[@idAttribute] = this.getId()
+
         data
 
     unCacheDerived: (name) ->
@@ -255,7 +260,7 @@ class BaseModel
         klass::session['updated_at'] ||= 'date'
 
         if klass::associations
-            klass::associations = new Lanes.Models.AssocationMap(klass)
+            klass::associations = new Lanes.Models.AssociationMap(klass)
 
     @afterExtended: (klass) ->
         return if klass::abstractClass
