@@ -60,14 +60,14 @@ module Lanes
             attr_reader :contents
 
             CONSTRUCTOR = /constructor\s*:/
-
             EXTENDING_CLASS_DEFINITION = /^\s*class\s+([\w|\.]+)\s+extends\s+([\w|\.]+)\s*?(\n|\#)/
+            REACT_CLASS_MATCH = /\.(React|Screens|Components|Views)\./
 
             def cleaned
                 @contents = data.dup
                 data.scan(EXTENDING_CLASS_DEFINITION) do |match|
                     (name, extends) = match
-                    cc = if extends =~ /\.(React|Screens|Components)\./
+                    cc = if extends =~ REACT_CLASS_MATCH
                              ReactCoffeeClass.new(name, extends, contents)
                          else
                              CoffeeClass.new(name, extends, contents)
@@ -80,7 +80,13 @@ module Lanes
 
 
             def evaluate(scope, locals, &block)
-                wrap_js scope, ::CoffeeScript.compile(cleaned, bare: true)
+                begin
+                    wrap_js scope, ::CoffeeScript.compile(cleaned, bare: true)
+                rescue => e
+                    Lanes.logger.warn e
+                    Lanes.logger.warn cleaned
+                    raise e
+                end
             end
         end
 
