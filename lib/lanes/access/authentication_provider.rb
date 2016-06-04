@@ -33,7 +33,8 @@ module Lanes
             end
 
             def allowed_access_to?(klass, options)
-                return false if current_user.nil? and not options[:allow_anonymous]
+                return true if options[:public] == true and current_user.nil?
+                return false if current_user.nil?
                 case request.request_method
                 when 'GET'
                     klass.can_read_attributes?(request.params,current_user)
