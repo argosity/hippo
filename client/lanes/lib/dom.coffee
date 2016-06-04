@@ -66,7 +66,7 @@ _.dom = (unknown, query) ->
         throw new TypeError("Selector / DOM node is not present")
     else if _.isElement(unknown)
         unknown
-    else if unknown.isReactComponent
+    else if unknown.isReactComponent or unknown.render
         Lanes.Vendor.ReactDOM.findDOMNode(unknown)
     else if unknown.nodeType is 9 # body tag
         unknown
