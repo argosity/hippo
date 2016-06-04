@@ -14,6 +14,9 @@ class Lanes.React.Viewport extends Lanes.Models.State
         reactRoot:  'object'
         lanes:      'element'
         modalProps: 'object'
+        pubSubDisabled: 'boolean'
+        rootComponent: 'any'
+        rootProps:   'object'
 
     constructor: ->
         super
@@ -21,13 +24,20 @@ class Lanes.React.Viewport extends Lanes.Models.State
         return unless @selector
         @domRoot = document.body.querySelector(@selector)
         _.dom(@domRoot).addClass('lanes-root')
-        Lanes.fatal("Root selector #{@selector} not found") unless root
+        Lanes.fatal("Root selector #{@selector} not found") unless @domRoot
         _.dom(@domRoot).html = "<div class='lanes'/>"
         this.lanes = @domRoot.querySelector('.lanes')
         Lanes.lib.ResizeSensor(@domRoot, _.debounce( =>
             @_updateDimensions()
         , 250))
         this._updateDimensions()
+
+        Lanes.Models.PubSub.initialize() unless @pubSubDisabled
+        Lanes.Extensions.fireOnInitialized(@)
+        @renderRoot()
+        Lanes.Extensions.fireOnAvailable(@)
+        @onBoot()
+
 
     onBoot: ->
         prev = _.dom(this.domRoot.previousElementSibling)
@@ -55,10 +65,12 @@ class Lanes.React.Viewport extends Lanes.Models.State
         @modalProps = _.extend(props, show: true)
 
     renderRoot: ->
-        cntrl = Lanes.Extensions.controlling()
-        component = cntrl?.rootComponent?(this) ||
-            Lanes.React.Root.DefaultComponentNotFound
+        component = @rootComponent || (
+            cntrl = Lanes.Extensions.controlling()
+            component = cntrl?.rootComponent?(this) ||
+                Lanes.React.Root.DefaultComponentNotFound
+        )
         root = React.createElement(Lanes.React.Root, {viewport: @},
-            React.createElement(component, extension: cntrl)
+            React.createElement(component, _.extend(@rootProps, extension: cntrl))
         )
         @reactRoot = Lanes.Vendor.ReactDOM.render(root, @lanes)
