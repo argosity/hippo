@@ -1,9 +1,9 @@
 Lanes.u.format ||= {}
 
-Lanes.u.format.shartDate = (d) ->
+Lanes.u.format.shortDate = (d) ->
     _.moment(d).format('L')
 
-Lanes.u.format.shartDateTime = (d) ->
+Lanes.u.format.shortDateTime = (d) ->
     _.moment(d).format('lll')
 
 Lanes.u.format.currency = (v) ->
