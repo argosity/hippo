@@ -45,6 +45,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "mocha",                  "~> 1.1"
     spec.add_dependency "oj",                     "~> 2.1"
     spec.add_dependency "pg",                     "~> 0.8"
+    spec.add_dependency "rack-cors",              "~> 0.4"
     spec.add_dependency "rack-protection",        "~> 1.5"
     spec.add_dependency "rack-test",              "~> 0.6"
     spec.add_dependency "rake",                   "~> 10.0"

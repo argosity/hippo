@@ -80,6 +80,8 @@ module Lanes
                         end
                     end
 
+                    Root::CORS_PATHS['/assets/*'] = {origins: '*', methods: [:get]}
+
                     app.configure :test, :development do
                         app.get "#{Lanes.config.assets_path_prefix}/*" do |path|
                             env_sprockets = request.env.dup

@@ -6,25 +6,25 @@ module Lanes
 
                 def get(*args)
                     make_handler(*args) do |controller|
-                        controller.perform_retrieval
+                        controller.show
                     end
                 end
 
                 def post(*args)
                     make_handler(*args) do |controller|
-                        controller.perform_creation
+                        controller.create
                     end
                 end
 
                 def update(*args)
                     make_handler(*args) do |controller|
-                        controller.perform_update
+                        controller.update
                     end
                 end
 
                 def delete(*args)
                     make_handler(*args) do |controller|
-                        controller.perform_destroy
+                        controller.destroy
                     end
                 end
 
@@ -43,6 +43,7 @@ module Lanes
                         end
                     end
                 end
+
 
                 # Ensure request is performed with a logged in user. The provided block will be called
                 # with |user, request|

@@ -9,6 +9,7 @@ require_relative 'pub_sub'
 module Lanes
     module API
         class Root < Sinatra::Application
+            CORS_PATHS = {}
 
             Lanes.config.get(:environment) do | env |
                 set :environment, env
@@ -40,11 +41,32 @@ module Lanes
                 unless API.const_defined?(:AuthenticationProvider)
                     require "lanes/api/null_authentication_provider"
                 end
-                use Rack::Protection #, :skip=>['GET:/'], :raise => true
-
                 Lanes::Configuration.apply
             end
 
+            configure do
+                cors_resources = []
+
+                if API::Root::CORS_PATHS.any?
+                    use Rack::Cors, debug: !Lanes.env.production? do
+
+                        API::Root::CORS_PATHS.each do | path, options |
+                            allow do
+                                cors_resources.push  Rack::Cors::Resource.new('', path)
+                                origins options[:origins]
+                                resource path, :methods => options[:methods], :headers => :any
+                            end
+                        end
+
+                    end
+
+                end
+                use Rack::Protection, allow_if: -> (env) {
+                    path = env['PATH_INFO']
+                    cors_resources.any?{|r| r.matches_path?(path) }
+                }
+
+            end
         end
     end
 end

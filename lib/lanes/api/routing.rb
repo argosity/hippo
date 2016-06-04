@@ -16,47 +16,66 @@ module Lanes
             end
 
             [:get, :post, :put, :patch, :delete].each do | method_name |
-                define_method(method_name) do | path, options = {}, &block |
-                    API::Root.send(method_name, make_path(path), options, &block)
+                define_method(method_name) do | path_suffix, options = {}, &block |
+                    API::Root.send(method_name, make_path(path_suffix), options, &block)
                 end
+            end
+
+            def enable_cors(path_suffix, options = {origins: '*', methods: [:get]})
+                puts path_suffix
+                puts options
+                API::Root::CORS_PATHS[make_path(path_suffix)] = options
             end
 
             def resources(model, options = {})
                 path = options[:path] || model.api_path
-                controller = options[:controller] || Lanes::API::Controller
-
+                controller = options[:controller] || Lanes::API::GenericController
+                format = options[:format] || '.json'
                 if options[:under]
                     options[:parent_attribute] = options[:under].underscore.singularize+'_id'
                 end
 
                 prefix = options[:parent_attribute] ? options[:parent_attribute] + '/' : ''
 
-                # index
-                if controller.method_defined?(:perform_retrieval)
-                    get "#{prefix}#{path}/?:id?.json",
-                        &RequestWrapper.get(model, controller, options)
+                configured_routes = Hash.new{|hsh, key| hsh[key] = []}
+
+                bind = lambda{ |method, route, wrapper_method = method|
+                    route = route + format
+                    configured_routes[route].push(method)
+                    self.send( method, route,
+                               &RequestWrapper.send(wrapper_method, model, controller, options) )
+                }
+
+                # show
+                if controller.method_defined?(:show)
+                    bind[:get, "#{prefix}#{path}/?:id?"]
                 end
 
                 # create
-                if controller.method_defined?(:perform_creation)
-                    post "#{prefix}#{path}.json",
-                         &RequestWrapper.post(model, controller, options)
+                if controller.method_defined?(:create)
+                    bind[:post, "#{prefix}#{path}"]
                 end
 
                 unless options[:immutable]
 
                     # update
-                    if controller.method_defined?(:perform_update)
-                        patch "#{prefix}#{path}/?:id?.json",
-                              &RequestWrapper.update(model, controller, options)
-                        put   "#{prefix}#{path}/?:id?.json",
-                              &RequestWrapper.update(model, controller, options)
+                    if controller.method_defined?(:update)
+                        bind[:patch, "#{prefix}#{path}/?:id?", :update]
+                        bind[:put,   "#{prefix}#{path}/?:id?", :update]
                     end
 
-                    if controller.method_defined?(:perform_destroy) and not options[:indestructible]
-                        # destroy
-                        delete "#{prefix}#{path}/?:id?.json",
-                               &RequestWrapper.delete(model, controller, options)
+                    # destroy
+                    if controller.method_defined?(:destroy) and not options[:indestructible]
+                        bind[:delete, "#{prefix}#{path}/?:id?"]
+                    end
+
+                end
+
+                if options[:cors]
+                    cors = options[:cors].is_a?(Hash) ? otions[:cors] : {origins: options[:cors]}
+
+                    configured_routes.each do | route, methods |
+                        enable_cors route, cors.merge(methods: methods)
                     end
 
                 end
