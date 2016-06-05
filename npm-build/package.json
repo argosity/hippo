@@ -2,6 +2,7 @@
   "name": "lanes-vendor-modules",
   "author": "Nathan Stitt",
   "license": "MIT",
+  "private": true,
   "description": "Build for deploy",
   "version": "0.1.0",
   "main": "vendor.js",
