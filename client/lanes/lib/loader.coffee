@@ -2,7 +2,7 @@
 #
 GECKO = /Gecko\//.test(navigator.userAgent)
 
-class Loader
+class Lanes.lib.AssetLoader
 
     constructor: (urls, cb) ->
         finished = 0
@@ -91,7 +91,7 @@ Lanes.lib.RequestAssets = (urls...) ->
     for url, i in urls
         urls[i] = Lanes.config.assets_path_prefix.concat( '/', urls[i] )
     new _.Promise(  (resolve, reject) ->
-        new Loader(urls, (completed) ->
+        new Lanes.lib.AssetLoader(urls, (completed) ->
             failures = _.pick(completed, (status, url) -> !status.success )
             if _.isEmpty(failures)
                 resolve(completed)
