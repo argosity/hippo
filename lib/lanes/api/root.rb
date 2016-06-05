@@ -1,10 +1,10 @@
 require 'sinatra'
 require 'oj'
 require 'rack/protection'
+require 'rack/cors'
 require_relative 'sprockets_extension'
 require_relative 'helper_methods'
 require_relative 'pub_sub'
-
 
 module Lanes
     module API
