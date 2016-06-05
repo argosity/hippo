@@ -32,7 +32,7 @@ module Lanes
                                       end
             end
 
-            def allowed_access_to?(klass, options)
+            def allowed_access_to?(klass, options = {})
                 return true if options[:public] == true and current_user.nil?
                 return false if current_user.nil?
                 case request.request_method
@@ -57,7 +57,7 @@ module Lanes
                 end
             end
 
-            def wrap_model_access(model, req, options)
+            def wrap_model_access(model, req, options = {})
                 if allowed_access_to?(model, options)
                     ::Lanes::User.scoped_to(current_user) do | user |
                         yield
