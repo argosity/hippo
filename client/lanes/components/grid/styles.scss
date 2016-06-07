@@ -9,7 +9,6 @@
     flex-direction: column;
     flex: 1;
 
-
     // styles shared between header and row
     .header, .r {
         display: flex;
@@ -17,13 +16,12 @@
         min-height: 40px;
         display: flex;
         flex-direction: row;
+        page-break-inside: avoid;
         .c {
             padding: $table-cell-padding;
             line-height: $line-height-base;
-
             display: flex;
             flex-direction: row;
-
             &.center { justify-content: center;   }
             &.right  { justify-content: flex-end; }
 
@@ -54,6 +52,11 @@
                     right: -5px;
                     color: lightgray;
                 }
+                &:not(.asc):not(.desc) {
+                    &:after {
+                        @include hidden-print;
+                    }
+                }
                 &.asc:after {
                     color: gray;
                     content: $fa-var-sort-asc;
@@ -65,13 +68,21 @@
             }
         }
     }
-
+    .r {
+        margin-right: 10px;
+        /* page-break-inside: avoid; */
+        break-inside: avoid-page;
+    }
     .grid-body {
         border-top: 1px solid $table-border-color;
         overflow: auto;
         position: relative; // for absolutely positioned row editor
         flex-grow: 1;
-        height: 1px;
+        height: 1px; // panel needs height to force scroll
+        @media print {
+            overflow: visible;
+            height: initial;
+        }
         .r:nth-child(odd) {
             background-color: $table-bg-accent;
         }

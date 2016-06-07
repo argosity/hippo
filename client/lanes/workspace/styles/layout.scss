@@ -7,6 +7,8 @@
 
 .page-container {
     height: calc(100% - #{$workspace-header-height});
+    @media print { height: 100%; }
+
     .screens-menu {
         width: 240px;
         z-index: 20;
@@ -21,10 +23,18 @@
     overflow-x: hidden;
     position: relative;
     top: 50px;
+    @media print { top: 0; }
     transition: all 0.15s ease-in-out 0s;
     margin-left: 240px;
+
     padding: 0 0 20px 0;
     height: 100%;
+
+    @media print {
+        margin-left: 0;
+        height: initial;
+    }
+
     .screen {
         height: 100%;
         display: none;
@@ -37,6 +47,7 @@
 
 .screens-menu {
     background-color: $navbar-inverse-bg;
+    @include hidden-print;
     .navigation {
         border-bottom: 1px solid $navbar-inverse-border;
         list-style: none outside none;
@@ -203,6 +214,7 @@
 
     .page-content {
         margin-left: 60px;
+        @media print { margin-left: 0; }
     }
 }
 

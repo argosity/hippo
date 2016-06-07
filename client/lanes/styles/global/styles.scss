@@ -1,2 +1,3 @@
-.cursor-pointer { cursor: pointer; }
-a { cursor: pointer; }
+a               { cursor: pointer;       }
+.cursor-pointer { cursor: pointer;       }
+.non-printable  { @include hidden-print; }

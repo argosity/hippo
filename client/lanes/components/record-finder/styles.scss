@@ -4,13 +4,15 @@
 }
 
 
-.record-finder-query-string {
-  text-transform: uppercase;
-}
-
 .record-finder {
   .form-control {
-
+      @media print {
+          border-bottom-right-radius: $border-radius-base;
+          border-top-right-radius: $border-radius-base;
+      }
+  }
+  .input-group-btn {
+      @include hidden-print;
   }
 }
 

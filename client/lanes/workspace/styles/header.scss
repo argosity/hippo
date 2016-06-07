@@ -2,6 +2,7 @@
     @extend .navbar;
     @extend .navbar-inverse;
     @extend .navbar-fixed-top;
+    @include hidden-print;
     z-index: 20;
     height: $workspace-header-height;
     border-radius: 0;

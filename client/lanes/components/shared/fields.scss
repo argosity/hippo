@@ -49,4 +49,9 @@ $lanes-field-margin: 6px;
             background-color: darken($color-rgba, 20%);
         }
     }
+
+    .rw-datetimepicker {
+        &.rw-has-both { padding-right: 0; }
+        .rw-select { @include hidden-print; }
+    }
 }

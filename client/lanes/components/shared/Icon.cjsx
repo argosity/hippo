@@ -1,4 +1,4 @@
-class Lanes.Components.Icon extends Lanes.React.Component
+class Lanes.Components.Icon extends Lanes.React.BaseComponent
 
     propTypes:
         type: React.PropTypes.string.isRequired
@@ -7,7 +7,8 @@ class Lanes.Components.Icon extends Lanes.React.Component
     render: ->
 
         classes = _.classnames 'icon', "icon-#{@props.type}", @props.className,
-            'cursor-pointer'      : @props.onClick,
+            'non-printable': @props.noPrint,
+            'with-action' : @props.onClick,
             "icon-#{@props.size}" : @props.size,
             'icon-pulse' : @props.animated
             'flush'      : @props.flush

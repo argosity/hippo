@@ -44,3 +44,18 @@
     justify-content: center;
     .progress { width: 100%; }
 }
+
+.icon {
+    &.with-action {
+        cursor: pointer;
+        &:hover{ text-shadow: 1px 2px 2px #666666; }
+    }
+}
+
+.lanes-panel-heading {
+    display: flex;
+    align-items: center;
+    .spacer {
+        flex: 1;
+    }
+}

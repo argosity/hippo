@@ -59,7 +59,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
                 # editOnly writable
         model = @props.parentModel or @props.model
 
-        <BS.InputGroup>
+        <BS.InputGroup className="record-finder">
 
             <BS.FormControl
                 {...props} {...handlers}
