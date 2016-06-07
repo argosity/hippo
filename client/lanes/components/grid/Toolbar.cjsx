@@ -1,7 +1,7 @@
 class Lanes.Components.Grid.Toolbar extends Lanes.React.BaseComponent
 
     propTypes:
-        addRecord: React.PropTypes.func
+        onAddRecord: React.PropTypes.func
         startEdit: React.PropTypes.func
         toolbarChildren: React.PropTypes.oneOfType([
             React.PropTypes.element,
@@ -13,16 +13,19 @@ class Lanes.Components.Grid.Toolbar extends Lanes.React.BaseComponent
         @props.startEdit(0)
 
     AddButton: ->
-        return null unless @props.allowCreate
+        return null unless @props.onAddRecord and @props.allowCreate
         <BS.Button className="navbar-btn add-row pull-right"
             onClick={@onAddRecord} bsSize='small'
         >
             <LC.Icon type="plus" />Add Row
         </BS.Button>
 
+
+    shouldDisplay: ->
+        not ( ( false == @props.commands?.isEditing() or not @props.allowCreate ) and not @props.toolbarChildren )
+
     render: ->
-        if ( ( false == @props.commands?.isEditing() or not @props.allowCreate ) and not @props.toolbarChildren )
-            return null
+        return null unless @shouldDisplay()
 
         props = _.extend {}, @props,
         <Lanes.Components.Grid.Toolbar key="toolbar" {...props} />
