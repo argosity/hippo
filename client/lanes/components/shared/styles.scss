@@ -58,4 +58,7 @@
     .spacer {
         flex: 1;
     }
+    > *:not(.panel-title){
+        margin-left: 0.5rem;
+    }
 }
