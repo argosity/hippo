@@ -1,3 +1,12 @@
+class AllRows extends Lanes.React.BaseComponent
+    render: ->
+        len = @props.length
+        rows = []
+        for i in [0...len - 1] by 1
+            rows.push @props.itemRenderer(i, i)
+        <div>{rows}</div>
+
+
 class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
 
     propTypes:
@@ -72,7 +81,10 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
             {fields}
         </div>
 
+
     render: ->
+        Rows = if @props.renderCompleteResults then AllRows else Lanes.Vendor.List
+
         <div className={_.classnames('grid-body', 'is-editing': @props.editing)}>
 
             <LC.NetworkActivityOverlay model={@props.query} />
@@ -84,7 +96,8 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
                 onCancel={@props.onEditCancel}
                 editing={@props.editing} />
 
-            <Lanes.Vendor.List
+
+            <Rows
                 useTranslate3d
                 isEditing={!!@props.editing}
                 itemRenderer={@renderRow}

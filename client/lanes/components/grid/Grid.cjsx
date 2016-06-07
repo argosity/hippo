@@ -10,23 +10,6 @@
 
 class Lanes.Components.Grid extends Lanes.React.Component
 
-    mixins: [
-        Lanes.React.Mixins.MonitorSize
-    ]
-
-    dataObjects:
-        query: 'props'
-
-    bindDataEvents:
-        query: 'load change sort'
-
-    getInitialState: ->
-        {}
-
-    componentWillReceiveProps: (nextProps) ->
-        if nextProps.autoLoadQuery and nextProps.query isnt @props.query
-            nextProps.query.ensureLoaded()
-
     propTypes:
         query:  React.PropTypes.instanceOf(Lanes.Models.Query).isRequired
         width:  React.PropTypes.number
@@ -40,16 +23,34 @@ class Lanes.Components.Grid extends Lanes.React.Component
         onColumnClick: React.PropTypes.func
         onSelectionChange: React.PropTypes.func
         autoLoadQuery: React.PropTypes.bool
+        renderCompleteResults: React.PropTypes.bool
         toolbarChildren: React.PropTypes.oneOfType([
             React.PropTypes.element,
             React.PropTypes.arrayOf(React.PropTypes.element)
         ])
 
-    getDefaultProps: ->
-        editorProps: {}, autoLoadQuery: true
+    mixins: [
+        Lanes.React.Mixins.MonitorSize
+    ]
+
+    dataObjects:
+        query: 'props'
+
+    bindDataEvents:
+        query: 'load change sort'
+
+    componentWillReceiveProps: (nextProps) ->
+        if nextProps.autoLoadQuery and nextProps.query isnt @props.query
+            nextProps.query.ensureLoaded()
 
     componentWillMount: ->
         @query.ensureLoaded() if @props.autoLoadQuery
+
+    getInitialState: ->
+        {}
+
+    getDefaultProps: ->
+        editorProps: {}, autoLoadQuery: true
 
     onSortChange: (sortInfo) ->
         for sortConfig in sortInfo
