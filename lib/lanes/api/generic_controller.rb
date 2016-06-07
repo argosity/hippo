@@ -7,8 +7,8 @@ module Lanes
             def show
                 query   = build_query
                 options = build_reply_options
-                query   = add_modifiers_to_query(query)
                 options[:total_count] = query.dup.unscope(:select).count if should_include_total_count?
+                query   = add_modifiers_to_query(query)
                 if params[:id]
                     query  = query.first!
                 end
