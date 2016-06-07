@@ -7,3 +7,5 @@ class Lanes.Models.Query.Result
         field = @query.sortField
         return false unless field
         if _.isFunction field.sortBy then field.sortBy else false
+
+    loadFully: -> _.Promise.resolve(@)

@@ -1,10 +1,12 @@
 class Page
 
     constructor: (@pageNum, @result, options = {}) ->
-        query = {}
-        @rows = options.rows || []
-        return if options.rows
+        @rows = options.rows
+        @_load() unless @rows or options.noLoad is true
 
+    _load: ->
+        @rows = []
+        query = {}
         @result.query.clauses.each (clause) ->
             _.extend( query, clause.toParam() ) if clause.isValid
 
@@ -25,13 +27,18 @@ class Page
             options.order[field_name] = if @result.query.sortAscending then 'asc' else 'desc'
 
         _.extend(options, _.omit(@result.query.syncOptions, 'include'))
-        @result.query.trigger('request', @result.query, 'GET', {})
-        @result.requestInProgress = options
+         # defer trigger in case we were called from render() and triggering
+         # would cause a loop that it's not in the render
+        _.defer => @result.query.trigger('request', @result.query, 'GET', {})
+        @result.requestInProgress = @requestInProgress = options
         Lanes.Models.Sync.perform('GET', options).then (resp) =>
             @result.total = resp.total
             @rows  = resp.data
             delete @result.requestInProgress
-            @result.onPageLoad(@)
+            delete @requestInProgress
+            _.defer => @result.onPageLoad(@)
+
+    isLoaded: -> not _.isUndefined(@rows)
 
     _normalizedIndex: (index) ->
         index = index % @result.pageSize
@@ -92,7 +99,7 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
         @total = 0
         @pages = {}
 
-    pageForIndex: (index) ->
+    pageForIndex: (index, options = {}) ->
         pageNum = Math.floor(index / @pageSize)
         @pages[pageNum] ||= new Page(pageNum, this)
 
@@ -151,6 +158,19 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
 
     ensureLoaded: (options = {}) ->
         @pageForIndex(options.page || 0).pendingLoad or _.Promise.resolve(@)
+
+    loadFully: ->
+        len = @length
+        console.log "Loading 0 ... #{len}, ps: #{pageSize}"
+        loading = []
+
+        for pageIndex in [0...len - 1] by @pageSize
+            page = @pageForIndex(pageIndex, noLoad: true)
+            loading.push page._load() unless page.isLoaded()
+            null
+
+        _.Promise.all(loading)
+
 
     reload: (options = {}) ->
         @pages = []
