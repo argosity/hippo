@@ -36,7 +36,6 @@ module ::Guard
             body = paths.map do | file |
                 asset_to_json(file)
             end
-            p body
             post.body = Oj.dump(body)
             http = Net::HTTP.new(@uri.host, @uri.port)
             http.request(post)
