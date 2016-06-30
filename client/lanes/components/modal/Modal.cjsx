@@ -25,15 +25,15 @@ class Lanes.Components.Modal extends Lanes.React.Component
     getInitialState: ->
         show: false
 
-    onOkButton: -> @state.onOk?(this)
-    onCancelButton: -> @state.onCancel?(this)
-    onButton: (btn) ->
+    onOkButton: (ev) -> @state.onOk?(this, ev)
+    onCancelButton: (ev) -> @state.onCancel?(this, ev)
+    onButton: (ev, btn) ->
         @selected = btn
-        @_hide() if @state.autoHide
         if btn.eventKey is 'ok'
-            @onOkButton()
+            @onOkButton(ev)
         else
-            @onCancelButton()
+            @onCancelButton(ev)
+        @_hide() if @state.autoHide and ev.defaultPrevented isnt true
 
     componentWillReceiveProps: (nextProps) ->
         @replaceState(nextProps)
@@ -46,9 +46,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
         @context.viewport.modalProps.show = true
         @setState(show: true)
 
-    hide: ->
-        @_hide()
-        @state.onCancel?()
+    hide: -> @_hide()
 
     render: ->
         return null unless @state.show
@@ -58,7 +56,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
             button.eventKey ||= (button.key or button.title).toLowerCase()
             <BS.Button key={button.title}
                 bsStyle={button.style || 'default'} className={name}
-                onClick={_.partial(@onButton, button)}>{button.title}</BS.Button>
+                onClick={_.partial(@onButton, _, button)}>{button.title}</BS.Button>
 
         cls = _.classnames('lanes-modal', @state.className, @context.uistate?.layout_size)
         Body = @state.body
@@ -68,7 +66,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
             </BS.Modal.Header>
 
             <BS.Modal.Body style={maxHeight: @context.viewport.height - 250}>
-                <Body modal={@} />
+                <Body ref="body" {...@props} modal={@} />
             </BS.Modal.Body>
 
             <BS.Modal.Footer>{buttons}</BS.Modal.Footer>
