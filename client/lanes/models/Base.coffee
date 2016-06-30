@@ -20,6 +20,9 @@ class BaseModel
             deps: ['invalidAttributes'], fn: ->
                 _.isEmpty @invalidAttributes #_calculateInvalidAttributes()
 
+        hasErrors:
+            deps: ['errors'], fn: -> not _.isEmpty(@errors)
+
         errorMessage:
             deps:['errors'], fn: ->
                 if !@errors then ''
