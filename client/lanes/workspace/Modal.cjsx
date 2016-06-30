@@ -35,7 +35,7 @@ class Lanes.Workspace.Dialog extends Lanes.React.Component
 
         classes = _.classnames('layout-dialog', @props.className)
 
-        <BS.Modal.Dialog>
+        <BS.Modal.Dialog className={classes}>
             <BS.Modal.Header>
                 <BS.Modal.Title>{@props.title}</BS.Modal.Title>
             </BS.Modal.Header>
