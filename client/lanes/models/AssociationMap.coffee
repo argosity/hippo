@@ -45,6 +45,8 @@ class Lanes.Models.AssociationMap
     getOptions: (name, model) ->
         definition = @definitions[name]
         options = { parent: model }
+        if definition.inverse
+            options[ definition.inverse.name ] = model
         if definition.options
             _.extend(options, Lanes.u.resultsFor(model, definition.options))
         options
