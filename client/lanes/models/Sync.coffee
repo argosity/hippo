@@ -78,11 +78,8 @@ Lanes.Models.Sync = {
         unless _.isEmpty(query)
             options.url += '?' + Lanes.lib.objToParam(query)
 
-        # if options.data and !_.isString(options.data)
-        #     options.originalData = options.data
-        #     options.json = options.data
         options.headers ||= {}
-        # options.json = true
+
         if Lanes.config.csrf_token
             options.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
         options.contentType = "application/json"
