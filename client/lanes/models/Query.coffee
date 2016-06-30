@@ -265,7 +265,6 @@ class Lanes.Models.Query extends Lanes.Models.Base
             this.fields.findWhere(id: "visibleId") ||
             this.fields.first()
 
-        @reset()
         this
 
     reset: ->
