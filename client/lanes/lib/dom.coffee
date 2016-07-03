@@ -45,6 +45,9 @@ for name, func of Lanes.Vendor.dom
 
 Object.defineProperties(Lanes.lib.Dom.prototype, {
 
+    bounds:
+        get: -> @el.getBoundingClientRect()
+
     text:
         get: -> @el.textContent
         set: (txt) ->
