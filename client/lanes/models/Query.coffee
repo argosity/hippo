@@ -264,17 +264,17 @@ class Lanes.Models.Query extends Lanes.Models.Base
         @initialField ||= this.fields.findWhere(id: "code") ||
             this.fields.findWhere(id: "visibleId") ||
             this.fields.first()
-
+        @reset(true)
         this
 
-    reset: ->
+    reset: (silent = false) ->
         unless @defaultSort is false
             sort = @defaultSort or @fields.findWhere(visible: true).id
             @setSortField( @fields.findWhere(id: sort), sortAscending: @sortAscending, silent: true )
 
         @clauses.reset([
             {query: this, available_fields: @fields, field: @initialField}
-        ])
+        ], {silent})
 
     setSortField: (field, options = {silent: false}) ->
         options.sortAscending ?= (if @sortField is field then !@sortAscending else true)
