@@ -263,7 +263,7 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var shallowEqual = __webpack_require__(362);
+	var shallowEqual = __webpack_require__(361);
 
 	/**
 	 * Does a shallow comparison for props and state.

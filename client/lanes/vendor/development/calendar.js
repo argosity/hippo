@@ -480,10 +480,10 @@ webpackJsonp([0],{
 	var React = __webpack_require__(11);
 	var Layout = __webpack_require__(150);
 	var Event = __webpack_require__(272);
-	var Label = __webpack_require__(273);
+	var Label = __webpack_require__(403);
 	var assign = __webpack_require__(151);
 	var each = __webpack_require__(182);
-	var ReactDOM = __webpack_require__(274);
+	var ReactDOM = __webpack_require__(273);
 
 	var IsDayClass = new RegExp('(\\s|^)(events|day|label)(\\s|$)');
 
@@ -507,7 +507,7 @@ webpackJsonp([0],{
 	        return { resize: false };
 	    },
 	    getBounds: function getBounds() {
-	        return ReactDOM.findDOMNode(this).getBoundingClientRect();
+	        return ReactDOM.findDOMNode(this.refs.events || this.refs.root).getBoundingClientRect();
 	    },
 	    _onClickHandler: function _onClickHandler(ev, handler) {
 	        if (!handler || !IsDayClass.test(ev.target.className) || this.lastMouseUp && this.lastMouseUp < new Date().getMilliseconds() + 100) {
@@ -585,7 +585,7 @@ webpackJsonp([0],{
 	        if (singleDayEvents.length) {
 	            events.push(React.createElement(
 	                'div',
-	                { key: 'events', refs: 'events', className: 'events',
+	                { key: 'events', ref: 'events', className: 'events',
 	                    onMouseMove: onMouseMove, onMouseUp: this.onMouseUp },
 	                singleDayEvents
 	            ));
@@ -597,7 +597,8 @@ webpackJsonp([0],{
 
 	        return React.createElement(
 	            'div',
-	            _extends({}, props, {
+	            _extends({ ref: 'root'
+	            }, props, {
 	                onClick: this.onClick,
 	                onDoubleClick: this.onDoubleClick
 	            }),
@@ -621,8 +622,8 @@ webpackJsonp([0],{
 	'use strict';
 
 	var React = __webpack_require__(11);
+	var ReactDOM = __webpack_require__(273);
 	var EventLayout = __webpack_require__(269);
-
 	var IsResizeClass = new RegExp('(\\s|^)event(\\s|$)');
 
 	var Event = React.createClass({
@@ -654,7 +655,7 @@ webpackJsonp([0],{
 	        if (!IsResizeClass.test(ev.target.className)) {
 	            return;
 	        }
-	        var bounds = this.refs.element.getBoundingClientRect();
+	        var bounds = ReactDOM.findDOMNode(this.refs.element).getBoundingClientRect();
 	        var resize = void 0;
 	        if (ev.clientY - bounds.top < 10) {
 	            resize = { type: 'start' };
@@ -694,7 +695,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 273:
+/***/ 403:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1184,12 +1185,12 @@ webpackJsonp([0],{
 /***/ function(module, exports) {
 
 	function E () {
-		// Keep this empty so it's easier to inherit from
+	  // Keep this empty so it's easier to inherit from
 	  // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
 	}
 
 	E.prototype = {
-		on: function (name, callback, ctx) {
+	  on: function (name, callback, ctx) {
 	    var e = this.e || (this.e = {});
 
 	    (e[name] || (e[name] = [])).push({

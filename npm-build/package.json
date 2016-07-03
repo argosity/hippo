@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "description": "Build for deploy",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": "vendor.js",
   "dependencies": {
     "ampersand-collection": "~2.0",
@@ -16,7 +16,7 @@
     "ampersand-filtered-subcollection": "~3.0",
     "big.js": "~3.1",
     "classnames": "~2.2",
-    "dayz": "0.6.3",
+    "dayz": "0.6.5",
     "get-object-path": "~0.0.3",
     "history": "^2.1.0",
     "lodash": "*",
