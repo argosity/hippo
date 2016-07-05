@@ -13,7 +13,7 @@ class Lanes.Components.Grid.Toolbar extends Lanes.React.BaseComponent
         @props.startEdit(0)
 
     AddButton: ->
-        return null unless @props.onAddRecord and @props.allowCreate
+        return null unless @props.allowCreate
         <BS.Button className="navbar-btn add-row pull-right"
             onClick={@onAddRecord} bsSize='small'
         >
