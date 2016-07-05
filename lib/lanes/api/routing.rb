@@ -22,8 +22,6 @@ module Lanes
             end
 
             def enable_cors(path_suffix, options = {origins: '*', methods: [:get]})
-                puts path_suffix
-                puts options
                 API::Root::CORS_PATHS[make_path(path_suffix)] = options
             end
 
