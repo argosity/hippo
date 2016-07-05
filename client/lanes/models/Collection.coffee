@@ -103,6 +103,7 @@ class ModelsCollection
 
     # Sets the attribute data from a server respose
     setFromServer: (data, options, method) ->
+        options ||= {}
         @_isLoaded = true
         if 'delete' == method
             models = _.map(_.map(options.originalData, 'id'), (id) =>
