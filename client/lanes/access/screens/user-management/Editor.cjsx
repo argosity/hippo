@@ -17,4 +17,4 @@ class Lanes.Access.Screens.UserManagement.Editor extends Lanes.React.Component
         </form>
 
     render: ->
-        @renderPopover()
+        @renderPopover(height: 380)
