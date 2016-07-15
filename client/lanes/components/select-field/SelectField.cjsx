@@ -20,7 +20,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
 
     fieldClassName: 'select'
 
-    dataObjects:
+    modelBindings:
         query: ->
             src = @props.queryModel or
                 @props.model.associations?.collectionFor(@props.name).model

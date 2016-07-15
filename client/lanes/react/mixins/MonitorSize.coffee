@@ -7,5 +7,5 @@ Lanes.React.Mixins.MonitorSize = {
 
     componentDidMount: ->
         if @context.viewport
-            @data.listenTo(@context.viewport, 'change:height change:width', @_updateViewportSize)
+            @modelBindings.listenTo(@context.viewport, 'change:height change:width', @_updateViewportSize)
 }

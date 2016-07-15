@@ -1,6 +1,6 @@
 class Lanes.Components.RecordFinder.Dialog extends Lanes.React.Component
 
-    dataObjects:
+    modelBindings:
         clauses: ->
             @props.query.clauses
 

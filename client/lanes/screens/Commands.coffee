@@ -13,7 +13,7 @@ class Lanes.Screens.Commands extends Lanes.Models.State
 
     setModel: (model) ->
         @options.modelWillRebind?(model)
-        @screen.data.rebind("#{@options.modelName}": model)
+        @screen.modelBindings.reset({"#{@options.modelName}": model})
         @screen.setModelUrl?(model)
         @options.modelDidRebind?(model)
 

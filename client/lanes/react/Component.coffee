@@ -1,20 +1,21 @@
-createHelper = (component, name) ->
-    unless component.prototype[name]
-        Object.defineProperty(component.prototype, name,
-            configurable: true, enumerable: true
-            get: -> @data?.states[name]
-            set: (val) ->
-                @data?.rebind("#{name}": val)
-        )
+# createHelper = (component, name) ->
+#     unless component.prototype[name]
+#         Object.defineProperty(component.prototype, name,
+#             configurable: true, enumerable: true
+#             get: -> @data?.states[name]
+#             set: (val) ->
+#                 @data?.rebind("#{name}": val)
+#         )
 
-extendComponent = (component) ->
-    names = _.keys(component.prototype.dataObjects).concat(['collection', 'model'])
-    for name in _.uniq(names)
-        createHelper(component, name)
+# extendComponent = (component) ->
+#     names = _.keys(component.prototype.dataObjects).concat(['collection', 'model'])
+#     for name in _.uniq(names)
+#         createHelper(component, name)
 
 Lanes.React.Component = {
 
     defaultMixins: [
+        Lanes.Vendor.ReactModelMixin
         Lanes.React.Mixins.Data
         Lanes.React.Mixins.Viewport
         Lanes.React.Mixins.Component
@@ -24,7 +25,7 @@ Lanes.React.Component = {
         klass::mixins ||= []
         klass::mixins = _.uniq(klass::mixins.concat(mixins))
         comp = React.createClass(klass.prototype)
-        extendComponent(comp)
+#        extendComponent(comp)
         return Lanes.lib.HotReload?.remember(comp) or comp
 }
 

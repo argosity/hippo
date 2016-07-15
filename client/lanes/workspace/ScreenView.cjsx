@@ -10,11 +10,11 @@ class Lanes.Workspace.ScreenView extends Lanes.React.Component
     contextTypes:
         uistate: React.PropTypes.object.isRequired
 
-    dataObjects:
+    modelBindings:
         displaying: -> Lanes.Screens.Definitions.displaying
         allScreens: -> Lanes.Screens.Definitions.all
 
-    bindDataEvents:
+    bindEvents:
         displaying: 'change:active remove add'
         allScreens: 'change:loading'
 

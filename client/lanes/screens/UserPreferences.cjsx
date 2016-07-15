@@ -1,6 +1,6 @@
 class Lanes.Screens.UserPreferences extends Lanes.React.Screen
 
-    dataObjects:
+    modelBindings:
         user: -> Lanes.current_user
 
     getInitialState: ->

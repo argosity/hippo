@@ -17,6 +17,7 @@
     "big.js": "~3.1",
     "classnames": "~2.2",
     "dayz": "0.6.5",
+    "react-model-binding": "0.3.0",
     "get-object-path": "~0.0.3",
     "history": "^2.1.0",
     "lodash": "*",

@@ -1,6 +1,6 @@
 class Lanes.Screens.SystemSettings extends Lanes.React.Screen
 
-    dataObjects:
+    modelBindings:
         config: -> Lanes.config.system_settings
 
     getInitialState: ->

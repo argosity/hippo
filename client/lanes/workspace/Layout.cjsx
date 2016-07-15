@@ -1,6 +1,6 @@
 class Lanes.Workspace.Layout extends Lanes.React.Component
 
-    dataObjects:
+    modelBindings:
         uistate:  -> Lanes.Workspace.Extension.uistate
         viewport: -> @context.viewport
 

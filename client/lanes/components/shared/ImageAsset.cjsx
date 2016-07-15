@@ -7,12 +7,12 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
             'thumb', 'medium', 'original'
         ]).isRequired
 
-    dataObjects:
+    modelBindings:
         asset: -> @props.model[@props.name]
 
     listenNetworkEvents: true
 
-    bindDataEvents: ->
+    bindEvents: ->
         model: "change:#{@props.name} change:#{@props.name}_data"
 
     handleImageChange: (ev) ->

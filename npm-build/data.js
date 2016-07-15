@@ -19,6 +19,7 @@ Lanes.Vendor.Ampersand.RestCollection = require("ampersand-rest-collection");
 Lanes.Vendor.Ampersand.LDCollection   = require('ampersand-collection-lodash-mixin');
 Lanes.Vendor.Ampersand.Collection     = require("ampersand-collection");
 Lanes.Vendor.Events                   = require('ampersand-events');
+Lanes.Vendor.ReactModelMixin          = require("react-model-binding");
 
 Lanes.log           = require('loglevel');
 Lanes.Vendor.dom    = require('ampersand-dom');

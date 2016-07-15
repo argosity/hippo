@@ -7,7 +7,7 @@ class Lanes.Components.JobStatus extends Lanes.React.Component
 
     pubsub: true
     listenNetworkEvents: true
-    dataObjects: { job: 'props' }
+    modelBindings: { job: 'props' }
     statusMessage: ->
         if _.isEmpty(@job.stepsCompleted) then '' else
             'Completed: ' + _.toSentence(@job.stepsCompleted)

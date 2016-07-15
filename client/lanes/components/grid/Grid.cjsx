@@ -33,10 +33,10 @@ class Lanes.Components.Grid extends Lanes.React.Component
         Lanes.React.Mixins.MonitorSize
     ]
 
-    dataObjects:
+    modelBindings:
         query: 'props'
 
-    bindDataEvents:
+    bindEvents:
         query: 'load change sort'
 
     componentWillReceiveProps: (nextProps) ->

@@ -3,7 +3,7 @@ class Lanes.Components.ErrorDisplay extends Lanes.React.Component
     propTypes:
         model:  Lanes.PropTypes.State.isRequired
 
-    bindDataEvents: ->
+    bindEvents: ->
         model: "change:error"
 
     clearErrors: ->

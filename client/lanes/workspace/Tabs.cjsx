@@ -1,6 +1,6 @@
 class TabView extends Lanes.React.Component
 
-    setDataState: (nextState) ->
+    setModelState: (nextState) ->
         if @model.active
             _.dom(document.head).qs('title').text = @model.title()
             @props.history.replace(@model.historyUrl())
@@ -33,7 +33,7 @@ class Lanes.Workspace.Tabs extends Lanes.React.Component
             push: React.PropTypes.func
         ).isRequired
 
-    dataObjects:
+    modelBindings:
         collection: -> Lanes.Screens.Definitions.displaying
 
     render: ->

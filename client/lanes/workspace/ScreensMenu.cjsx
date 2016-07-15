@@ -46,7 +46,7 @@ class Lanes.Workspace.ScreensMenu extends Lanes.React.Component
             push: React.PropTypes.func
         ).isRequired
 
-    dataObjects:
+    modelBindings:
         user: -> Lanes.current_user
 
     renderGroup: (group) ->

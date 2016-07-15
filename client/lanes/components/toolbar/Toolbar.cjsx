@@ -7,10 +7,10 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         toggleEdit: Lanes.PropTypes.Model
         commands: React.PropTypes.object.isRequired
 
-    dataObjects:
+    modelBindings:
         changedModel: -> @props.commands.getModel()
 
-    bindDataEvents:
+    bindEvents:
         changedModel: 'remote-update isSavable'
 
     renderResetButton: ->

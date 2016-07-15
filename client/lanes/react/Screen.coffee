@@ -1,6 +1,7 @@
 Lanes.React.Screen = {
 
     defaultMixins: [
+        Lanes.Vendor.ReactModelMixin
         Lanes.React.Mixins.Data
         Lanes.React.Mixins.Viewport
         Lanes.React.Mixins.Screen

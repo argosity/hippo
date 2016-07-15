@@ -3,7 +3,7 @@ Lanes.Components.Form || = {}
 
 Lanes.Components.Form.FieldMixin = {
 
-    bindDataEvents: ->
+    bindEvents: ->
         model: "change:#{@props.name} remote-update:#{@props.name} invalid-fields invalid-field:#{@getInvalidFieldName()}"
 
     mixins: [
@@ -42,7 +42,7 @@ Lanes.Components.Form.FieldMixin = {
     _unsetChangeSet: ->
         @setState(displayChangeset: false, pendingChangeSetDelay: null)
 
-    setDataState: (state, evname) ->
+    setModelState: (state, evname) ->
         displayChangeset = @model.updatingFromChangeset and @model.changedAttributes()[@props.name]
         if displayChangeset and not @state.pendingChangeSetDelay
             pendingChangeSetDelay = _.delay(@_unsetChangeSet, 2000)

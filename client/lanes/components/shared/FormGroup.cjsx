@@ -10,7 +10,7 @@ class Lanes.Components.FormGroup extends Lanes.React.Component
             'right', 'left', 'center'
         ])
 
-    bindDataEvents: ->
+    bindEvents: ->
         model: "invalid-fields invalid-field:#{@getInvalidFieldName()}"
 
     render: ->

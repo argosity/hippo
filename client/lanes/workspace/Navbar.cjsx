@@ -1,5 +1,5 @@
 class Lanes.Workspace.Navbar extends Lanes.React.Component
-    dataObjects:
+    modelBindings:
         settings: -> Lanes.config.system_settings
 
     propTypes:

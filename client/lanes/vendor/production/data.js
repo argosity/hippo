@@ -25434,7 +25434,9 @@ webpackJsonp([1],[
 
 	function ReactEventBinding(component){
 	    this.component = component;
+	    this.bindingsDefinition = component.modelBindings;
 	    this.models = {};
+	    component.modelBindings = this;
 	}
 
 	ReactEventBinding.prototype.componentName = function() {
@@ -25465,6 +25467,9 @@ webpackJsonp([1],[
 	        events = (name === 'collection' || model.isCollection) ? 'add remove reset' : 'change';
 	    }
 	    if (prevModel){
+	        if (isFunction(this.component.onModelUnbind)){
+	            this.component.onModelUnbind(prevModel, name);
+	        }
 	        this.stopListening(prevModel);
 	    }
 	    this.models[name] = model;
@@ -25474,12 +25479,18 @@ webpackJsonp([1],[
 	        this.setComponentState(model);
 	    }
 	    if (isFunction(this.component.onModelBind)){
-	        this.component.onModelBind(this, model, name, prevModel);
+	        this.component.onModelBind(model, name);
 	    }
 	};
 
 	ReactEventBinding.prototype.destroy = function() {
+	    if (isFunction(this.component.onModelUnbind)){
+	        for(var prop in this.models){
+	            this.component.onModelUnbind(this.models[prop], prop);
+	        }
+	    }
 	    this.stopListening();
+	    this.component.modelBindings = this.bindingsDefinition;
 	};
 
 	ReactEventBinding.prototype.setComponentState = function() {
@@ -25518,14 +25529,14 @@ webpackJsonp([1],[
 
 	// binds any "model" or "collection" props, combined with any that
 	// are specified by the components "modelBindings" property
-	function readBindings(comp, newProps) {
-	    var bindings = clone(result(comp, 'modelBindings')) || {};
+	function installBindings(comp, newProps) {
+	    var definitions = clone(result(comp, 'modelBindings')) || {};
 	    DEFAULT_PROP_BINDINGS.forEach(function(prop){
 	        if (comp.props[prop]){
-	            bindings[prop] = (bindings[prop] || 'props');
+	            definitions[prop] = (definitions[prop] || 'props');
 	        }
 	    });
-	    bindings = mapValues(bindings, function(value, name) {
+	    definitions = mapValues(definitions, function(value, name) {
 	        configureGetter(comp, name);
 	        if (isFunction(value)){
 	            return value.call(comp);
@@ -25535,16 +25546,16 @@ webpackJsonp([1],[
 	            return value;
 	        }
 	    });
-	    if (!isEmpty(bindings)){
-	        comp.modelBindings = new ReactEventBinding(comp);
-	        comp.modelBindings.configure(bindings, {silent: true});
+	    if (!isEmpty(definitions)){
+	        var bindings = new ReactEventBinding(comp);
+	        bindings.configure(definitions, {silent: true});
 	    }
 	}
 
 	var ReactEventBindingMixin = {
 
 	    getInitialState: function(){
-	        readBindings(this, this.props);
+	        installBindings(this, this.props);
 	        return {};
 	    },
 
@@ -25552,7 +25563,7 @@ webpackJsonp([1],[
 	        if (this.modelBindings){
 	            this.modelBindings.reset(nextProps);
 	        } else {
-	            readBindings(this, nextProps);
+	            installBindings(this, nextProps);
 	        }
 	    },
 

@@ -43,7 +43,7 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
     getDefaultProps: ->
         writable: true, editOnly: true
 
-    dataObjects: ->
+    modelBindings: ->
         model: 'props'
 
     warning: ->
