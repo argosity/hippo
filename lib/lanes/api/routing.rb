@@ -83,7 +83,9 @@ module Lanes
             private
 
             def make_path(path)
-                Lanes.config.api_path + '/' + @ext_id + '/' + path
+                path = Lanes.config.api_path + '/' + @ext_id + '/' + path
+                Lanes.logger.info("[route]: #{path}")
+                path
             end
         end
 
