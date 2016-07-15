@@ -21,7 +21,7 @@ module Lanes
 
             def get_js_aliases(ns)
                 ext = Extensions.for_identifier(ns)
-                aliases = ext ? ext.client_js_aliases : {}
+                aliases = ext ? ext.client_js_aliases || {} : {}
                 aliases.merge!({
                     'LC'    => 'window.Lanes.Components',
                     'React' => 'window.Lanes.Vendor.React',
