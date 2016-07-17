@@ -77,17 +77,14 @@ class Operator extends Lanes.Models.Base
         field:    'object'
         selected: 'boolean'
 
-    derived:
-        valid:
-            deps: ['types', 'field']
-            fn: ->
-                !this.types || ( this.field && _.includes(this.types, this.field.type) )
+    validForField: (field) ->
+        _.isEmpty(@types) or _.includes(this.types, field.type)
 
 
 class Operators extends Lanes.Models.Collection
     model: Operator
 
-    constructor: ->
+    constructor: (models, attrs) ->
         super
         this.add([
             { id: 'like', name: 'Starts With', types: Lanes.Models.Query.LIKE_QUERY_TYPES }
@@ -100,13 +97,14 @@ class Operators extends Lanes.Models.Collection
             for model in @models
                 model.selected = false unless model == changing
         )
-    setField: (field) ->
-        this.invoke('set', 'field', field)
-        selected = this.findWhere(selected: true)
-        if selected && !selected.valid
-            selected.selected = false
-            this.findWhere(valid:true).selected = true
+        @setField(attrs.parent.query.initialField)
 
+    setField: (field) ->
+        @field = field
+        @valid = @subcollection(filter: (op) => op.validForField(@field) )
+        selected = this.findWhere(selected: true)
+        unless selected && selected.validForField(field)
+            @valid.at(0)?.selected = true
 
 
 class Clause extends Lanes.Models.Base
@@ -120,8 +118,7 @@ class Clause extends Lanes.Models.Base
     associations:
         operators : { collection: Operators }
         fields:
-            collection: AvailableFields, options: ->
-                query: this.collection.query
+            collection: AvailableFields
 
     derived:
         description:
@@ -138,15 +135,12 @@ class Clause extends Lanes.Models.Base
     constructor: (options) ->
         super
         this.fields.reset(options.available_fields.models)
-        @operators.field = @fields.first()
         @fields.on('change:selected',    this.setField,    this)
         @operators.on('change:selected', this.setOperator, this)
-        field = @fields.findWhere(visible: true)
-        if field
+        @operator = @operators.findWhere(selected: true)
+        if (field = @fields.findWhere(visible: true))
             field.selected = true
             @setField(field)
-            operator = @operators.find (o) -> o.valid
-            operator?.selected = true
 
     setFromView: (type, val) ->
         if type == "fields" || type == "operators"
@@ -157,7 +151,7 @@ class Clause extends Lanes.Models.Base
     setField: (field) ->
         return unless field.selected
         @operators.setField( field )
-        this.field = field
+        @field = field
 
     setOperator: (operator) ->
         return unless operator.selected
@@ -185,11 +179,14 @@ class Clauses extends Lanes.Models.Collection
         @query = options.query
         @fields = options.query.fields
 
+    session:
+        field: 'state'
+
 # needs to inherit from Base so network events will be listened to
 class Lanes.Models.Query extends Lanes.Models.Base
     pubsub: false
 
-    @LIKE_QUERY_TYPES: ['string', 'code']
+    @LIKE_QUERY_TYPES: ['string', 'code', 'visible_id']
     @LESS_THAN_QUERY_TYPES: ['integer', 'bigdec', 'number']
     @GREATER_THAN_QUERY_TYPES: ['integer', 'bigdec', 'number']
 
@@ -199,8 +196,6 @@ class Lanes.Models.Query extends Lanes.Models.Base
 
     session:
         src:     'any'
-        fields:  'collection'
-        clauses: 'collection'
         initialField: 'state'
         idIndex: 'number'
         initialFieldIndex: 'number'
@@ -212,6 +207,10 @@ class Lanes.Models.Query extends Lanes.Models.Base
         defaultSort: 'any'
         changeCount: {type: 'integer', default: 0}
         sortAscending: ['boolean', true, true]
+
+    associations:
+        fields:  {collection: AvailableFields, inverse: 'query'}
+        clauses: {collection: Clauses, inverse: 'query'}
 
     derived:
         isCollection:
@@ -238,7 +237,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
 
     constructor: (options = {}) ->
         super
-        @fields = new AvailableFields([], query: this)
+        # @fields = new AvailableFields([], query: this)
         for col, i in options.fields
             rec = if _.isObject(col) then col else { id: col }
             @fields.add rec
@@ -246,7 +245,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
         unless @idIndex?
             @idIndex = @fields.length
             @fields.add(id: @idAttribute)
-        @clauses = new Clauses([], query: this )
+        # @clauses = new Clauses([], query: this )
         this.listenTo(@clauses, 'change remove reset', =>
             @results.reset()
             @results.ensureLoaded() if this.autoRetrieve
@@ -259,11 +258,11 @@ class Lanes.Models.Query extends Lanes.Models.Base
         )
 
         if @initialFieldIndex
-            @initialField = this.fields.at(@initialFieldIndex)
+            @initialField = this.fields.visible.at(@initialFieldIndex)
 
-        @initialField ||= this.fields.findWhere(id: "code") ||
-            this.fields.findWhere(id: "visibleId") ||
-            this.fields.first()
+        @initialField ||= this.fields.visible.findWhere(id: "code") ||
+            this.fields.visible.findWhere(id: "visible_id") ||
+            this.fields.visible.first()
         @reset(true)
         this
 

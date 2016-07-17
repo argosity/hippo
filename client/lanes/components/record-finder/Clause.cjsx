@@ -11,7 +11,6 @@ class Field extends Lanes.React.Component
 
 class Operator extends Lanes.React.Component
     render: ->
-        return null unless @model.valid
         <BS.Row>
             <input id={@model.id} type="radio" name="operator" value={@model.id}
                 checked={@model.selected}
@@ -53,7 +52,7 @@ class Lanes.Components.RecordFinder.Clause extends Lanes.React.Component
                               </div>
                               <div className="col-xs-6">
                                 <div className="operators">
-                                    {@model.operators.map (o) ->
+                                    {@model.operators.valid.map (o) ->
                                         <Operator key=o.id model=o /> }
                                 </div>
                               </div>
