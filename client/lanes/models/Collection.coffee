@@ -178,7 +178,11 @@ class SubCollection
     setFromServer: (data, options, type) ->
         @collection.setFromServer(data, options, type)
 
-Lanes.Models.SubCollection = Lanes.lib.MakeBaseClass( Lanes.Vendor.Ampersand.SubCollection, SubCollection )
+Lanes.Models.SubCollection = Lanes.lib.MakeBaseClass(
+    Lanes.Vendor.Ampersand.SubCollection.extend(Lanes.Vendor.Ampersand.LDCollection), SubCollection
+)
+
+
 
 Lanes.Models.BasicCollection = Lanes.lib.MakeBaseClass(
     Lanes.Vendor.Ampersand.Collection.extend(Lanes.Vendor.Ampersand.LDCollection), BasicCollection
