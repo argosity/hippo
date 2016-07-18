@@ -5,10 +5,11 @@ class State
         @
 
     _bindEvent: (eventSpec, fnName) ->
-        [kp, event] = eventSpec.split(' ')
-        unless event
-            event = kp; kp = ''
-        _.get(@, kp, @).on(event, @[fnName], @)
+        [kp, events...] = eventSpec.split(' ')
+        if _.isEmpty(events)
+            @on(kp, @[fnName])
+        else
+            @listenTo(_.get(@, kp), events.join(' '), @[fnName])
 
 
     isState: true
