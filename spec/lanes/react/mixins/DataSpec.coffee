@@ -1,21 +1,21 @@
 describe "Lanes.React.DataMixin", ->
 
-    it "fires setState for a model", ->
+    it "fires forceUpdate for a model", ->
         model = Lanes.Test.makeModel
             props:
                 id: 'integer'
                 foo: 'string'
         comp = Lanes.Test.makeComponent({}, model: model)
-        spyOn(comp, 'setState')
+        spyOn(comp, 'forceUpdate')
         model.foo = "bar"
-        expect(comp.setState).toHaveBeenCalledWith( model: model )
+        expect(comp.forceUpdate).toHaveBeenCalled()
 
-    it "fires setState for a collection", ->
+    it "fires forceUpdate for a collection", ->
         collection = Lanes.Test.makeCollection()
         comp = Lanes.Test.makeComponent({}, collection: collection)
-        spyOn(comp, 'setState')
+        spyOn(comp, 'forceUpdate')
         collection.add([{}])
-        expect(comp.setState).toHaveBeenCalledWith( collection: collection )
+        expect(comp.forceUpdate).toHaveBeenCalled()
 
     it "obeys global pubsub settings", ->
         spyOn(Lanes.Models.PubSub, 'add').and.callThrough()
@@ -39,17 +39,18 @@ describe "Lanes.React.DataMixin", ->
             props:
                 foo: 'string'
                 bar: 'string'
+
         comp = Lanes.Test.makeComponent({
-            bindDataEvents:
+            bindEvents:
                 model: 'change:bar'
         }, {
             model: model
         })
-        spyOn(comp, 'setState')
+        spyOn(comp, 'forceUpdate')
         model.foo = "bar"
-        expect(comp.setState).not.toHaveBeenCalled()
+        expect(comp.forceUpdate).not.toHaveBeenCalled()
         model.bar = "foo"
-        expect(comp.setState).toHaveBeenCalledWith( model: model )
+        expect(comp.forceUpdate).toHaveBeenCalled()
 
     it "can rebind events", ->
         Model = Lanes.Test.defineModel
@@ -60,13 +61,14 @@ describe "Lanes.React.DataMixin", ->
         comp = Lanes.Test.makeComponent({}, {
             model: m1
         })
-        spyOn(comp, 'setState')
+        spyOn(comp, 'forceUpdate')
         m1.foo = "bar"
-        expect(comp.setState).toHaveBeenCalled()
+        expect(comp.forceUpdate).toHaveBeenCalled()
 
-        comp.data.rebind(model: m2)
-        comp.setState.calls.reset()
+        comp.modelBindings.reset(model: m2)
+        comp.forceUpdate.calls.reset()
+
         m1.foo = "a different bar"
-        expect(comp.setState).not.toHaveBeenCalled()
+        expect(comp.forceUpdate).not.toHaveBeenCalled()
         m2.foo = "bar"
-        expect(comp.setState).toHaveBeenCalled()
+        expect(comp.forceUpdate).toHaveBeenCalled()
