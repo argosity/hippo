@@ -117,8 +117,7 @@ class Clause extends Lanes.Models.Base
 
     associations:
         operators : { collection: Operators }
-        fields:
-            collection: AvailableFields
+        fields:     { collection: AvailableFields }
 
     derived:
         description:
@@ -237,7 +236,8 @@ class Lanes.Models.Query extends Lanes.Models.Base
 
     constructor: (options = {}) ->
         super
-        # @fields = new AvailableFields([], query: this)
+
+        @fields.reset()
         for col, i in options.fields
             rec = if _.isObject(col) then col else { id: col }
             @fields.add rec
@@ -265,6 +265,11 @@ class Lanes.Models.Query extends Lanes.Models.Base
             this.fields.visible.first()
         @reset(true)
         this
+
+    clonedAttributes: ->
+        attrs = @getAttributes(session: true, derived: false)
+        attrs.fields = this.fields.serialize({session: true})
+        attrs
 
     reset: (silent = false) ->
         unless @defaultSort is false
