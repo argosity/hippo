@@ -8,7 +8,7 @@ npm run build
 
 cd -
 
-cp -r ~/code/dayz/lib/* ./node_modules/dayz/lib/
-cp -r ~/code/dayz/style/* ./node_modules/dayz/style/
+cp -rv ~/code/dayz/lib/* ./node_modules/dayz/lib/
+cp -rv ~/code/dayz/style/* ./node_modules/dayz/style/
 
 ./build
