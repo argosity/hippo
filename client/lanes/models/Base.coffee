@@ -105,7 +105,7 @@ class BaseModel
 
     clonedAttributes: ->
         attributes = @serialize()
-        _.extend(attributes, @getAttributes(session: true) )
+        _.extend(attributes, @getAttributes(session: true, derived: false) )
 
     attributeType: (name) ->
         @_definition[name].type
