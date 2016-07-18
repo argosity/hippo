@@ -8,13 +8,15 @@ describe "Lanes.Model.PubSub", ->
         @getModelConfig = ->
             Lanes.Models.PubSub.types.get('/s').records[1]
 
-    it "checks in/out a model when it binds to a view", ->
+    it "checks in/out a model when it binds to a view", (done) ->
         spyOn(Lanes.Models.PubSub, 'add').and.callThrough()
         spyOn(Lanes.Models.PubSub, 'remove')
         component = Lanes.Test.makeComponent({}, model: @model)
-        expect(Lanes.Models.PubSub.add).toHaveBeenCalledWith(@model)
-        component.data.destroy()
-        expect(Lanes.Models.PubSub.remove).toHaveBeenCalledWith(@model)
+        _.defer =>
+            expect(Lanes.Models.PubSub.add).toHaveBeenCalledWith(@model)
+            component.modelBindings.destroy()
+            expect(Lanes.Models.PubSub.remove).toHaveBeenCalledWith(@model)
+            done()
 
     it "can retrieve a model after checkin", ->
         record = new @Model(id: 11, foo: 'bar')
@@ -34,12 +36,10 @@ describe "Lanes.Model.PubSub", ->
             Lanes.Models.PubSub.remove(@model)
         ).not.toThrowError()
 
-
     it 'removes models', ->
         Lanes.Models.PubSub.add(@model)
         configs = Lanes.Models.PubSub.types.get('/s').records[1].models
         expect(configs.length).toEqual(1)
-
         Lanes.Models.PubSub.remove(@model)
         expect(configs[0].count).toEqual(1)
         Lanes.Models.PubSub.remove(@model)
@@ -66,8 +66,6 @@ describe "Lanes.Model.PubSub", ->
         expect(Lanes.Models.PubSub.mb.subscribe.calls.count()).toEqual(1)
         expect(Lanes.Models.PubSub.mb.unsubscribe.calls.count()).toEqual(0)
         Lanes.Models.PubSub.remove(newModel)
-
         Lanes.Models.PubSub.remove(newModel)
-
         expect(@getModelConfig()).toBeUndefined()
         expect(Lanes.Models.PubSub.mb.unsubscribe.calls.count()).toEqual(1)
