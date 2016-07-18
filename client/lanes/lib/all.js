@@ -5,7 +5,7 @@
 //= require ./loader
 //= require ./MakeBaseClass
 //= require ./el
-//= require ./dom-polyfills
+//= require ./polyfills
 //= require ./dom
 //= require ./format
 //= require ./promise_helpers
