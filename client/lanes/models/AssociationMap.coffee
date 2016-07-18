@@ -46,7 +46,7 @@ class Lanes.Models.AssociationMap
         definition = @definitions[name]
         options = { parent: model }
         if definition.inverse
-            options[ definition.inverse.name ] = model
+            options[ definition.inverse ] = model
         if definition.options
             _.extend(options, Lanes.u.resultsFor(model, definition.options))
         options
@@ -75,9 +75,6 @@ class Lanes.Models.AssociationMap
         options = association.getOptions(name, this)
         options.filter ||= {}
         options.filter[fk] = this.get(pk)
-        options.inverse =
-            name: definition.inverse
-            without: name
 
         if true == target_class::isCollection
             new target_class(options.models || [], options)
