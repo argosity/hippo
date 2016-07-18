@@ -33,7 +33,10 @@ Lanes.React.Mixins.Data = {
     getInitialState: ->
         @_networkEventsListener = new NetworkEventListener(this) if @listenNetworkEvents
 
-    onAttributeBind: (events, name, prevAttr) ->
+    onModelUnbind: (model, name) ->
+        Lanes.Models.PubSub.remove(model)
+
+    onModelBind: (model, name) ->
         model = this[name]
         return unless Lanes.u.isModel(model)
         @_networkEventsListener?.bindEvents(events, @[name])
@@ -41,15 +44,12 @@ Lanes.React.Mixins.Data = {
         return unless _.result(model, 'registerforPubSub') isnt false and
             not (false == @pubsub or false == @pubsub?[name])
 
-        if !prevAttr? or prevAttr.getId() != model.getId()
-            Lanes.Models.PubSub.remove(prevAttr) if prevAttr
-            unless false == model.pubsub
-                if model.isNew()
-                    model.once "change:#{model.idAttribute}", -> Lanes.Models.PubSub.add(model)
-                else
-                    Lanes.Models.PubSub.add(model)
+        if model.isNew()
+            model.once "change:#{model.idAttribute}", -> Lanes.Models.PubSub.add(model)
+        else
+            Lanes.Models.PubSub.add(model)
 
-        events.listenTo(model, 'remote-update', (model, cs) =>
+        this.modelBindings.listenTo(model, 'remote-update', (model, cs) =>
             screen = @context?.screen || @getChildContext?()?.screen
             screen?.onPubSubChangeSet?(model, cs)
         )

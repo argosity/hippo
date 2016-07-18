@@ -26,7 +26,7 @@ describe "Lanes.Components.NetworkActivityOverlay", ->
         model = new Model
         na = LT.renderComponent(LC.NetworkActivityOverlay, props:{
             errorTimeout: 2, model:model})
-        na.setDataState(hasError: true)
+        na.setModelState(hasError: true)
         expect(_.dom(na).qs('.message').text).toBe('Error')
         _.delay( ->
             expect(_.dom(na).el).toBe(null)
