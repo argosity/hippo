@@ -66,7 +66,7 @@ class Lanes.Components.Modal extends Lanes.React.Component
             </BS.Modal.Header>
 
             <BS.Modal.Body style={maxHeight: @context.viewport.height - 250}>
-                <Body ref="body" {...@props} modal={@} />
+                <Body {...@props} modal={@} />
             </BS.Modal.Body>
 
             <BS.Modal.Footer>{buttons}</BS.Modal.Footer>
