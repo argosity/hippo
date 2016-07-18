@@ -10,6 +10,8 @@ BRAND_DATA = {total:3, success:true, message:"Retrieve succeeded", data:[
     {id: 3, code: "DODGE", name: "Chrysler/Dodge"}
 ]}
 
+VALUE_CLASS = '.form-control-static'
+
 Car = Lanes.Test.defineModel(
     props: {id: 'integer', code: 'string', brand_id: 'integer'}
     session:
@@ -29,10 +31,10 @@ describe "Lanes.Components.SelectField", ->
     it "renders read only", (done) ->
         sf = LT.renderComponent(LC.SelectField,
              props:{model: @car, name: 'brand', labelField: 'name'})
-        expect(_.dom(sf).qs('.value').text).toBe('')
+        expect(_.dom(sf).qs(VALUE_CLASS).text).toBe('')
         @car.set(brand: @brands.at(0))
         _.defer ->
-            expect(_.dom(sf).qs('.value').text).toBe('General Motors')
+            expect(_.dom(sf).qs(VALUE_CLASS).text).toBe('General Motors')
             done()
 
     it "renders as edit", ->
@@ -83,7 +85,7 @@ describe "Lanes.Components.SelectField", ->
             model: @car, name: 'brand', labelField: 'name',
             choices: @brands.models
         })
-        expect(_.dom(sf).qs('.value').text).toEqual('Chrysler/Dodge')
+        expect(_.dom(sf).qs(VALUE_CLASS).text).toEqual('Chrysler/Dodge')
 
     it 'renders label for multiple values', ->
         @car.carTypes = [ @brands.at(0), @brands.at(2) ]
@@ -91,7 +93,7 @@ describe "Lanes.Components.SelectField", ->
             queryModel: Car, multiSelect: true, model: @car, name: 'carTypes'
             labelField: 'name', choices: @brands.models
         })
-        expect(_.dom(sf).qs('.value').text).toEqual('General Motors and Chrysler/Dodge')
+        expect(_.dom(sf).qs(VALUE_CLASS).text).toEqual('General Motors and Chrysler/Dodge')
 
 
     it "renders all choices", ->
