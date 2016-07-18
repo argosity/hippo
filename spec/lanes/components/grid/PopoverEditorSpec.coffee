@@ -1,11 +1,10 @@
 #= require lanes/components/grid
 
-COLLECTION_DATA = [
-    {id:1, code:'TEST1', name: 'Nathan Stitt', notes: 'swell guy'}
-    {id:2, code:'TEST2', name: 'Nathan Stitt', notes: 'Dupe of id #1'}
-]
 
-ROW_DATA = _.map COLLECTION_DATA, (r) -> _.values(r)
+DATA = {total:2, success:true, message:"Retrieve succeeded", data:[
+    [1, "TEST1", "Nathan Stitt", "swell guy"]
+    [2, "TEST2", "Nathan Stitt", "Dupe of id #1"]
+]}
 
 Model = Lanes.Test.defineModel(
     props: {id: 'integer', code: 'string', name: 'string', notes: 'string'}
@@ -17,15 +16,15 @@ ADD_ROW_SELECTOR = 'button.add-row'
 describe "Lanes.Components.Grid.PopoverEditor", ->
 
     beforeEach (done) ->
+        LT.syncRespondWith(DATA)
         @query = new Lanes.Models.Query(
-            fields: [ 'id', 'code', 'name', 'notes' ], src: Model
+            src: Model, fields: [ 'id', 'code', 'name', 'notes' ]
         )
-        Lanes.Test.syncSucceedWith(ROW_DATA)
-        @query.ensureLoaded().then(done)
-        @grid = LT.renderComponent(LC.Grid, props: {
-            editor: Lanes.Components.Grid.PopoverEditor
-            query: @query, allowCreate: true
-        })
+        @query.ensureLoaded().then =>
+            @grid = LT.renderComponent(LC.Grid, props: {
+                allowCreate: true, editor: Lanes.Components.Grid.PopoverEditor, query: @query
+            })
+            done()
 
     it "edits", (done) ->
         _.dom(@grid).qs(LAST_ROW_SELECTOR).click(clientX: 5)

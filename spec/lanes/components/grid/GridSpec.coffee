@@ -15,9 +15,9 @@ renderGrid = (q, done) ->
     grid = LT.renderComponent(LC.Grid, props: query: q)
     expect(loaded).toHaveBeenCalled()
     _.defer ->
-        expect(_.dom(grid).qsa('.r').length)
-            .toEqual( q.results.length )
+        expect(_.dom(grid).qs('.r').el).not.toBeNull()
         done()
+
 
 describe "Lanes.Components.Grid", ->
 
