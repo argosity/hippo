@@ -1,5 +1,6 @@
 a               { cursor: pointer;       }
-.cursor-pointer { cursor: pointer;       }
+.cursor-pointer,
+.clickable      { cursor: pointer;       }
 .non-printable  { @include hidden-print; }
 .align-right    { text-align: right;     }
 .align-center   { text-align: center;    }
