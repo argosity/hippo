@@ -39,7 +39,7 @@ Lanes.React.Mixins.Data = {
     onModelBind: (model, name) ->
         model = this[name]
         return unless Lanes.u.isModel(model)
-        @_networkEventsListener?.bindEvents(events, @[name])
+        @_networkEventsListener?.bindEvents(@modelBindings, @[name])
 
         return unless _.result(model, 'registerforPubSub') isnt false and
             not (false == @pubsub or false == @pubsub?[name])
