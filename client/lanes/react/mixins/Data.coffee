@@ -1,6 +1,6 @@
 class NetworkEventListener
 
-    constructor: (@component) ->
+    constructor: (component) -> @component = component
 
     bindEvents: (events, model) ->
         events.listenTo(model, 'error',     @onError)
@@ -8,30 +8,27 @@ class NetworkEventListener
             .listenTo(model,   'load sync', @onSync)
 
     onError: (modelOrCollection, options) ->
-        # Set state only if there's no silent option
-        return if options.silent
-        @component.setState
+        @component.setState(
             isRequesting: false
             hasError: modelOrCollection?.errorMessage or true
-            error: modelOrCollection.errors
+            errors: modelOrCollection.errors
+        ) unless options?.silent
 
     onRequest: (modelOrCollection, type, options) ->
-        # Set `state` only if there's no silent option
-        unless options.silent
-            @setComponentState
-                isRequesting: type
-                hasError: false
-                isInvalid: false
+        @component.setState(
+            isRequesting: true
+            hasError: false
+            errors: []
+        ) unless options?.silent
 
     onSync: (modelOrCollection, res, options = {}) ->
-        # Calls `setReactState` only if there's no silent option
-        this.setComponentState(isRequesting: false) unless options.silent
+        @component.setState(isRequesting: false) unless options?.silent
 
+getNetworkListener = (component) ->
+    return unless _.result(component, 'listenNetworkEvents') is true
+    component._networkEventsListener ||= new NetworkEventListener(component)
 
 Lanes.React.Mixins.Data = {
-
-    getInitialState: ->
-        @_networkEventsListener = new NetworkEventListener(this) if @listenNetworkEvents
 
     onModelUnbind: (model, name) ->
         Lanes.Models.PubSub.remove(model)
@@ -39,10 +36,11 @@ Lanes.React.Mixins.Data = {
     onModelBind: (model, name) ->
         model = this[name]
         return unless Lanes.u.isModel(model)
-        @_networkEventsListener?.bindEvents(@modelBindings, @[name])
 
-        return unless _.result(model, 'registerforPubSub') isnt false and
-            not (false == @pubsub or false == @pubsub?[name])
+        getNetworkListener(@)?.bindEvents(@modelBindings, @[name])
+
+        return if _.result(model, 'registerForPubSub') is false or
+            _.result(@, 'registerForPubSub') is false
 
         if model.isNew()
             model.once "change:#{model.idAttribute}", -> Lanes.Models.PubSub.add(model)

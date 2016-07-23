@@ -3,7 +3,7 @@ Lanes.Components.Form || = {}
 
 Lanes.Components.Form.FieldMixin = {
 
-    registerforPubSub: false
+    registerForPubSub: false
 
     bindEvents: ->
         model: "change:#{@props.name} remote-update:#{@props.name} invalid-fields invalid-field:#{@getInvalidFieldName()}"

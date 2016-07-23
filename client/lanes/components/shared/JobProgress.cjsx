@@ -1,12 +1,13 @@
 class Lanes.Components.JobStatus extends Lanes.React.Component
 
+    registerForPubSub: true
+    listenNetworkEvents: true
+
     propTypes:
         job: Lanes.PropTypes.State
         onlyExecuting: React.PropTypes.bool
         message: React.PropTypes.string
 
-    pubsub: true
-    listenNetworkEvents: true
     modelBindings: { job: 'props' }
     statusMessage: ->
         if _.isEmpty(@job.stepsCompleted) then '' else

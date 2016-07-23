@@ -4,7 +4,8 @@
 ##= require ./query/CollectionResult
 
 class Field extends Lanes.Models.Base
-    pubsub: false
+    registerForPubSub: false
+
     constructor: (attributes) ->
         super( _.defaults( attributes, {
             title: _.titleize(_.humanize(attributes.id))
@@ -68,7 +69,7 @@ class AvailableFields extends Lanes.Models.Collection
 
 
 class Operator extends Lanes.Models.Base
-    pubsub: false
+    registerForPubSub: false
 
     session:
         id:       'string'
@@ -108,7 +109,7 @@ class Operators extends Lanes.Models.Collection
 
 
 class Clause extends Lanes.Models.Base
-    pubsub: false
+    registerForPubSub: false
 
     session:
         value     : { type: 'string', default: '' }
@@ -183,7 +184,7 @@ class Clauses extends Lanes.Models.Collection
 
 # needs to inherit from Base so network events will be listened to
 class Lanes.Models.Query extends Lanes.Models.Base
-    pubsub: false
+    registerForPubSub: false
 
     @LIKE_QUERY_TYPES: ['string', 'code', 'visible_id']
     @LESS_THAN_QUERY_TYPES: ['integer', 'bigdec', 'number']
@@ -300,7 +301,10 @@ class Lanes.Models.Query extends Lanes.Models.Base
         options.query = {}
         options.query[ @initialField.id ] = code
         _.extend(options, _.result(this, 'syncOptions'))
-        @src.fetch(options)
+        @trigger('request')
+        @src.fetch(options).then (model) =>
+            @trigger('load')
+            model
 
     defaultField: ->
         @fields.findWhere( field: @initialField )
