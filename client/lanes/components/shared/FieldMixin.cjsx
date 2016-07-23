@@ -3,6 +3,8 @@ Lanes.Components.Form || = {}
 
 Lanes.Components.Form.FieldMixin = {
 
+    registerforPubSub: false
+
     bindEvents: ->
         model: "change:#{@props.name} remote-update:#{@props.name} invalid-fields invalid-field:#{@getInvalidFieldName()}"
 
@@ -13,7 +15,6 @@ Lanes.Components.Form.FieldMixin = {
         Lanes.React.Mixins.FieldErrors
     ]
 
-    pubsub: false
     propTypes:
         model:     Lanes.PropTypes.State.isRequired
         name:      React.PropTypes.string.isRequired
@@ -42,11 +43,11 @@ Lanes.Components.Form.FieldMixin = {
     _unsetChangeSet: ->
         @setState(displayChangeset: false, pendingChangeSetDelay: null)
 
-    setModelState: (state, evname) ->
+    setModelState: ->
         displayChangeset = @model.updatingFromChangeset and @model.changedAttributes()[@props.name]
         if displayChangeset and not @state.pendingChangeSetDelay
             pendingChangeSetDelay = _.delay(@_unsetChangeSet, 2000)
-        @setState(_.extend( state, {pendingChangeSetDelay, displayChangeset}))
+        @setState({pendingChangeSetDelay, displayChangeset})
 
     _fieldMixinGetLabelValue: ->
         @getLabelValue?() ||
