@@ -1,5 +1,7 @@
 class Lanes.Components.RecordFinder extends Lanes.React.Component
 
+    listenNetworkEvents: true
+
     propTypes:
         query:       Lanes.PropTypes.State.isRequired
         model:       Lanes.PropTypes.State
@@ -13,6 +15,9 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
 
     contextTypes:
         viewport: Lanes.PropTypes.State.isRequired
+
+    modelBindings: ->
+        query: 'props'
 
     modelForAccess: ->
         if @props.parentModel
@@ -55,13 +60,9 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             @props.model[@props.name]
         value or ''
 
-
     renderInputField: (props, handlers) ->
-                # editOnly writable
         model = @props.parentModel or @props.model
-
         <BS.InputGroup className="record-finder">
-
             <BS.FormControl
                 {...props} {...handlers}
                 onChange={@fieldMixinSetValue}
@@ -70,7 +71,10 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
             />
 
             <BS.InputGroup.Button>
-                <button className="btn btn-primary icon icon-search icon-lg"
-                    onClick={@showFinder} />
+                <button className='btn btn-primary' onClick={@showFinder}>
+                    <LC.Icon lg
+                        type={if @state.isRequesting then 'spinner' else 'search'}
+                    />
+                </button>
             </BS.InputGroup.Button>
         </BS.InputGroup>

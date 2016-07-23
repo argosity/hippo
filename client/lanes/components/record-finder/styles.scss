@@ -12,6 +12,7 @@
       }
   }
   .input-group-btn {
+      .icon { margin: 0; }
       @include hidden-print;
   }
 }
