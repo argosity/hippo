@@ -6,14 +6,14 @@ webpackJsonp([3],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.ReactToggle = __webpack_require__(692)
-	__webpack_require__(698);
+	Lanes.Vendor.ReactToggle = __webpack_require__(696)
+	__webpack_require__(702);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 692:
+/***/ 696:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24,13 +24,13 @@ webpackJsonp([3],{
 
 	var React = _interopRequire(__webpack_require__(11));
 
-	var classNames = _interopRequire(__webpack_require__(688));
+	var classNames = _interopRequire(__webpack_require__(692));
 
-	var Check = _interopRequire(__webpack_require__(693));
+	var Check = _interopRequire(__webpack_require__(697));
 
-	var X = _interopRequire(__webpack_require__(694));
+	var X = _interopRequire(__webpack_require__(698));
 
-	var PureRenderMixin = _interopRequire(__webpack_require__(695));
+	var PureRenderMixin = _interopRequire(__webpack_require__(699));
 
 	module.exports = React.createClass({
 	  mixins: [PureRenderMixin],
@@ -128,7 +128,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 693:
+/***/ 697:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -143,13 +143,13 @@ webpackJsonp([3],{
 	  render: function render() {
 	    return React.createElement(
 	      "svg",
-	      { width: "14", height: "11", viewBox: "0 0 14 11", xmlns: "http://www.w3.org/2000/svg" },
+	      { width: "14", height: "11", viewBox: "0 0 14 11" },
 	      React.createElement(
 	        "title",
 	        null,
 	        "switch-check"
 	      ),
-	      React.createElement("path", { d: "M11.264 0L5.26 6.004 2.103 2.847 0 4.95l5.26 5.26 8.108-8.107L11.264 0", fill: "#fff", "fill-rule": "evenodd" })
+	      React.createElement("path", { d: "M11.264 0L5.26 6.004 2.103 2.847 0 4.95l5.26 5.26 8.108-8.107L11.264 0", fill: "#fff", fillRule: "evenodd" })
 	    );
 	  }
 	});
@@ -157,7 +157,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 694:
+/***/ 698:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -172,13 +172,13 @@ webpackJsonp([3],{
 	  render: function render() {
 	    return React.createElement(
 	      "svg",
-	      { width: "10", height: "10", viewBox: "0 0 10 10", xmlns: "http://www.w3.org/2000/svg" },
+	      { width: "10", height: "10", viewBox: "0 0 10 10" },
 	      React.createElement(
 	        "title",
 	        null,
 	        "switch-x"
 	      ),
-	      React.createElement("path", { d: "M9.9 2.12L7.78 0 4.95 2.828 2.12 0 0 2.12l2.83 2.83L0 7.776 2.123 9.9 4.95 7.07 7.78 9.9 9.9 7.776 7.072 4.95 9.9 2.12", fill: "#fff", "fill-rule": "evenodd" })
+	      React.createElement("path", { d: "M9.9 2.12L7.78 0 4.95 2.828 2.12 0 0 2.12l2.83 2.83L0 7.776 2.123 9.9 4.95 7.07 7.78 9.9 9.9 7.776 7.072 4.95 9.9 2.12", fill: "#fff", fillRule: "evenodd" })
 	    );
 	  }
 	});
@@ -186,14 +186,14 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 695:
+/***/ 699:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(696);
+	module.exports = __webpack_require__(700);
 
 /***/ },
 
-/***/ 696:
+/***/ 700:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -209,7 +209,7 @@ webpackJsonp([3],{
 
 	'use strict';
 
-	var shallowCompare = __webpack_require__(697);
+	var shallowCompare = __webpack_require__(701);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -247,7 +247,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 697:
+/***/ 701:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -263,7 +263,7 @@ webpackJsonp([3],{
 
 	'use strict';
 
-	var shallowEqual = __webpack_require__(364);
+	var shallowEqual = __webpack_require__(369);
 
 	/**
 	 * Does a shallow comparison for props and state.
@@ -278,7 +278,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 698:
+/***/ 702:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

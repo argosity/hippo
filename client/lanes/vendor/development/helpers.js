@@ -9,21 +9,21 @@ webpackJsonp([2],{
 	// "react-proxy": "git@github.com:gaearon/react-proxy.git#react-0.15",
 	// Lanes.Vendor.ReactProxy      = require("react-proxy");
 
-	Lanes.Vendor.ReactTestUtils  = __webpack_require__(689);
-	Lanes.Vendor.deepForceUpdate = __webpack_require__(691);
+	Lanes.Vendor.ReactTestUtils  = __webpack_require__(693);
+	Lanes.Vendor.deepForceUpdate = __webpack_require__(695);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 689:
+/***/ 693:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(690);
+	module.exports = __webpack_require__(694);
 
 /***/ },
 
-/***/ 690:
+/***/ 694:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39,26 +39,29 @@ webpackJsonp([2],{
 
 	'use strict';
 
-	var _assign = __webpack_require__(13);
+	var _prodInvariant = __webpack_require__(16),
+	    _assign = __webpack_require__(13);
 
-	var EventConstants = __webpack_require__(280);
-	var EventPluginHub = __webpack_require__(282);
-	var EventPluginRegistry = __webpack_require__(283);
-	var EventPropagators = __webpack_require__(281);
+	var EventConstants = __webpack_require__(276);
+	var EventPluginHub = __webpack_require__(278);
+	var EventPluginRegistry = __webpack_require__(279);
+	var EventPropagators = __webpack_require__(277);
 	var React = __webpack_require__(12);
-	var ReactDefaultInjection = __webpack_require__(278);
-	var ReactDOM = __webpack_require__(274);
-	var ReactDOMComponentTree = __webpack_require__(275);
-	var ReactElement = __webpack_require__(17);
-	var ReactBrowserEventEmitter = __webpack_require__(341);
-	var ReactCompositeComponent = __webpack_require__(355);
-	var ReactInstanceMap = __webpack_require__(356);
-	var ReactUpdates = __webpack_require__(294);
-	var SyntheticEvent = __webpack_require__(291);
+	var ReactDefaultInjection = __webpack_require__(274);
+	var ReactDOM = __webpack_require__(270);
+	var ReactDOMComponentTree = __webpack_require__(271);
+	var ReactElement = __webpack_require__(18);
+	var ReactBrowserEventEmitter = __webpack_require__(345);
+	var ReactCompositeComponent = __webpack_require__(360);
+	var ReactInstanceMap = __webpack_require__(357);
+	var ReactInstrumentation = __webpack_require__(297);
+	var ReactReconciler = __webpack_require__(294);
+	var ReactUpdates = __webpack_require__(291);
+	var SyntheticEvent = __webpack_require__(288);
 
-	var emptyObject = __webpack_require__(35);
-	var findDOMNode = __webpack_require__(400);
-	var invariant = __webpack_require__(16);
+	var emptyObject = __webpack_require__(28);
+	var findDOMNode = __webpack_require__(405);
+	var invariant = __webpack_require__(17);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -174,7 +177,7 @@ webpackJsonp([2],{
 	    if (!inst) {
 	      return [];
 	    }
-	    !ReactTestUtils.isCompositeComponent(inst) ?  true ? invariant(false, 'findAllInRenderedTree(...): instance must be a composite component') : invariant(false) : void 0;
+	    !ReactTestUtils.isCompositeComponent(inst) ?  true ? invariant(false, 'findAllInRenderedTree(...): instance must be a composite component') : _prodInvariant('10') : void 0;
 	    return findAllInRenderedTreeInternal(ReactInstanceMap.get(inst), test);
 	  },
 
@@ -194,7 +197,7 @@ webpackJsonp([2],{
 	        var classList = className.split(/\s+/);
 
 	        if (!Array.isArray(classNames)) {
-	          !(classNames !== undefined) ?  true ? invariant(false, 'TestUtils.scryRenderedDOMComponentsWithClass expects a ' + 'className as a second argument.') : invariant(false) : void 0;
+	          !(classNames !== undefined) ?  true ? invariant(false, 'TestUtils.scryRenderedDOMComponentsWithClass expects a className as a second argument.') : _prodInvariant('11') : void 0;
 	          classNames = classNames.split(/\s+/);
 	        }
 	        return classNames.every(function (name) {
@@ -356,7 +359,7 @@ webpackJsonp([2],{
 	    this._currentElement = element;
 	  },
 
-	  getNativeNode: function () {
+	  getHostNode: function () {
 	    return undefined;
 	  },
 
@@ -368,7 +371,11 @@ webpackJsonp([2],{
 	};
 
 	var ShallowComponentWrapper = function (element) {
+	  // TODO: Consolidate with instantiateReactComponent
 	  this._debugID = nextDebugID++;
+	  var displayName = element.type.displayName || element.type.name || 'Unknown';
+	  ReactInstrumentation.debugTool.onSetDisplayName(this._debugID, displayName);
+
 	  this.construct(element);
 	};
 	_assign(ShallowComponentWrapper.prototype, ReactCompositeComponent.Mixin, {
@@ -386,8 +393,8 @@ webpackJsonp([2],{
 	  // conjunction with an inline-requires transform.
 	  ReactDefaultInjection.inject();
 
-	  !ReactElement.isValidElement(element) ?  true ? invariant(false, 'ReactShallowRenderer render(): Invalid component element.%s', typeof element === 'function' ? ' Instead of passing a component class, make sure to instantiate ' + 'it by passing it to React.createElement.' : '') : invariant(false) : void 0;
-	  !(typeof element.type !== 'string') ?  true ? invariant(false, 'ReactShallowRenderer render(): Shallow rendering works only with custom ' + 'components, not primitives (%s). Instead of calling `.render(el)` and ' + 'inspecting the rendered output, look at `el.props` directly instead.', element.type) : invariant(false) : void 0;
+	  !ReactElement.isValidElement(element) ?  true ? invariant(false, 'ReactShallowRenderer render(): Invalid component element.%s', typeof element === 'function' ? ' Instead of passing a component class, make sure to instantiate ' + 'it by passing it to React.createElement.' : '') : _prodInvariant('12', typeof element === 'function' ? ' Instead of passing a component class, make sure to instantiate ' + 'it by passing it to React.createElement.' : '') : void 0;
+	  !(typeof element.type !== 'string') ?  true ? invariant(false, 'ReactShallowRenderer render(): Shallow rendering works only with custom components, not primitives (%s). Instead of calling `.render(el)` and inspecting the rendered output, look at `el.props` directly instead.', element.type) : _prodInvariant('13', element.type) : void 0;
 
 	  if (!context) {
 	    context = emptyObject;
@@ -409,16 +416,16 @@ webpackJsonp([2],{
 
 	ReactShallowRenderer.prototype.unmount = function () {
 	  if (this._instance) {
-	    this._instance.unmountComponent(false);
+	    ReactReconciler.unmountComponent(this._instance, false);
 	  }
 	};
 
 	ReactShallowRenderer.prototype._render = function (element, transaction, context) {
 	  if (this._instance) {
-	    this._instance.receiveComponent(element, transaction, context);
+	    ReactReconciler.receiveComponent(this._instance, element, transaction, context);
 	  } else {
 	    var instance = new ShallowComponentWrapper(element);
-	    instance.mountComponent(transaction, null, null, context);
+	    ReactReconciler.mountComponent(instance, transaction, null, null, context);
 	    this._instance = instance;
 	  }
 	};
@@ -434,7 +441,7 @@ webpackJsonp([2],{
 	function makeSimulator(eventType) {
 	  return function (domComponentOrNode, eventData) {
 	    var node;
-	    !!React.isValidElement(domComponentOrNode) ?  true ? invariant(false, 'TestUtils.Simulate expects a component instance and not a ReactElement.' + 'TestUtils.Simulate will not work if you are using shallow rendering.') : invariant(false) : void 0;
+	    !!React.isValidElement(domComponentOrNode) ?  true ? invariant(false, 'TestUtils.Simulate expects a component instance and not a ReactElement.TestUtils.Simulate will not work if you are using shallow rendering.') : _prodInvariant('14') : void 0;
 	    if (ReactTestUtils.isDOMComponent(domComponentOrNode)) {
 	      node = findDOMNode(domComponentOrNode);
 	    } else if (domComponentOrNode.tagName) {
@@ -533,56 +540,6 @@ webpackJsonp([2],{
 	});
 
 	module.exports = ReactTestUtils;
-
-/***/ },
-
-/***/ 691:
-/***/ function(module, exports) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	exports['default'] = deepForceUpdate;
-	function traverseRenderedChildren(internalInstance, callback, argument) {
-	  callback(internalInstance, argument);
-
-	  if (internalInstance._renderedComponent) {
-	    traverseRenderedChildren(internalInstance._renderedComponent, callback, argument);
-	  } else {
-	    for (var key in internalInstance._renderedChildren) {
-	      if (internalInstance._renderedChildren.hasOwnProperty(key)) {
-	        traverseRenderedChildren(internalInstance._renderedChildren[key], callback, argument);
-	      }
-	    }
-	  }
-	}
-
-	function setPendingForceUpdate(internalInstance) {
-	  if (internalInstance._pendingForceUpdate === false) {
-	    internalInstance._pendingForceUpdate = true;
-	  }
-	}
-
-	function forceUpdateIfPending(internalInstance) {
-	  if (internalInstance._pendingForceUpdate === true) {
-	    var publicInstance = internalInstance._instance;
-	    var updater = publicInstance.updater;
-
-	    if (typeof publicInstance.forceUpdate === 'function') {
-	      publicInstance.forceUpdate();
-	    } else if (updater && typeof updater.enqueueForceUpdate === 'function') {
-	      updater.enqueueForceUpdate(publicInstance);
-	    }
-	  }
-	}
-
-	function deepForceUpdate(instance) {
-	  var internalInstance = instance._reactInternalInstance;
-	  traverseRenderedChildren(internalInstance, setPendingForceUpdate);
-	  traverseRenderedChildren(internalInstance, forceUpdateIfPending);
-	}
-
-	module.exports = exports['default'];
 
 /***/ }
 
