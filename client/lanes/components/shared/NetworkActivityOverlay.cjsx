@@ -25,7 +25,7 @@ class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
 
     listenNetworkEvents: true
 
-    setModelState: (state) ->
+    setNetworkActivity: (state) ->
         if state.hasError or state.isRequesting
             @installRemoval(state)
         else if not @state.hasError
