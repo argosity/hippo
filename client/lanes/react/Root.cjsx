@@ -6,6 +6,6 @@ Lanes.React.Root = React.createClass
         viewport: @props.viewport
 
     render: ->
-        <div classNames="root">
+        <div className="root">
             {this.props.children}
         </div>

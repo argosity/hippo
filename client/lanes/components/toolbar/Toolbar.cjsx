@@ -14,20 +14,20 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         changedModel: 'remote-update isSavable'
 
     renderResetButton: ->
-        <BS.Button navItem componentClass="button"
+        <BS.Button componentClass="button"
             onClick={@props.commands.resetModel} className="reset navbar-btn control">
             <LC.Icon type="undo" />Reset
         </BS.Button>
 
     EditToggle: ->
         return null unless @props.commands.canEditModel()
-        <li navItem className="toggle control">
-           <label>
-               <Lanes.Vendor.ReactToggle
-               aria-labelledby="Editing"
-               onChange={@props.commands.toggleEdit}
-               checked={@props.commands.isEditing()} />
-               <span>Edit</span>
+        <li className="toggle control">
+            <label>
+                <Lanes.Vendor.ReactToggle
+                    aria-labelledby="Editing"
+                    onChange={@props.commands.toggleEdit}
+                    checked={@props.commands.isEditing()} />
+                <span>Edit</span>
             </label>
         </li>
 

@@ -27,6 +27,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
         Lanes.fatal("Root selector #{@selector} not found") unless @domRoot
         _.dom(@domRoot).html = "<div class='lanes'/>"
         this.lanes = @domRoot.querySelector('.lanes')
+
         Lanes.lib.ResizeSensor(@domRoot, _.debounce( =>
             @_updateDimensions()
         , 250))

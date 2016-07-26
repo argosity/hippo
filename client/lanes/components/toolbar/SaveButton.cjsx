@@ -21,7 +21,7 @@ class Lanes.Components.Toolbar.SaveButton extends Lanes.React.Component
         model = @props.commands.getModel()
         text = if model.isNew() then 'Create' else 'Save'
         classNames = _.classnames('save', 'navbar-btn', 'control', {disabled: !@isSavable(model)})
-        <BS.Button navItem componentClass="button"
+        <BS.Button componentClass="button"
             onClick={@onSave} className={classNames} >
             <LC.Icon type="cloud-upload" />{text}
         </BS.Button>
