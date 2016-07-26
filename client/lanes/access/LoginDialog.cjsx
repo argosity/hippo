@@ -53,7 +53,9 @@ class Lanes.Access.LoginDialog extends Lanes.React.Component
 
     render: ->
         <div>
-            {@warning() if @state?.hasError}
+            <LC.ErrorDisplay model={@props.model} />
+            <LC.NetworkActivityOverlay model={@props.model} />
+
             <BS.Row>
                 <BS.Col mdOffset={2} xs={12} md={8}>
 
