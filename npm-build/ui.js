@@ -6,3 +6,6 @@ Lanes.Vendor.BrowserHistory           = require("history");
 Lanes.Vendor.ComponentResize          = require('react-component-resizable');
 Lanes.Vendor.List                     = require('react-list')
 Lanes.Vendor.Overlay = require('react-overlays');
+
+Lanes.Vendor.ReactProxy = require('react-proxy')['default'];
+Lanes.Vendor.deepForceUpdate = require('react-deep-force-update')['default'];
