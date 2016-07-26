@@ -3,26 +3,34 @@ class NetworkEventListener
     constructor: (component) -> @component = component
 
     bindEvents: (events, model) ->
-        events.listenTo(model, 'error',     @onError)
-            .listenTo(model,   'request',   @onRequest)
-            .listenTo(model,   'load sync', @onSync)
+        model.on('error', @onError, @)
+            .on('request', @onRequest, @)
+            .on('load sync', @)
+
+    unbindEvents: (events, model) ->
+        model.off(null, null, @)
+
+    setState: (state, options) ->
+        return if options?.silent
+        fn = @component.setNetworkActivity or @component.setState
+        fn.call(@component, state)
 
     onError: (modelOrCollection, options) ->
-        @component.setState(
+        @setState(
             isRequesting: false
             hasError: modelOrCollection?.errorMessage or true
             errors: modelOrCollection.errors
-        ) unless options?.silent
+        )
 
     onRequest: (modelOrCollection, type, options) ->
-        @component.setState(
+        @setState(
             isRequesting: true
             hasError: false
             errors: []
-        ) unless options?.silent
+        )
 
     onSync: (modelOrCollection, res, options = {}) ->
-        @component.setState(isRequesting: false) unless options?.silent
+        @setState(isRequesting: false)
 
 getNetworkListener = (component) ->
     return unless _.result(component, 'listenNetworkEvents') is true
@@ -32,6 +40,7 @@ Lanes.React.Mixins.Data = {
 
     onModelUnbind: (model, name) ->
         Lanes.Models.PubSub.remove(model)
+        getNetworkListener(@)?.unBindEvents(@modelBindings, @[name])
 
     onModelBind: (model, name) ->
         model = this[name]
