@@ -5,7 +5,7 @@ class NetworkEventListener
     bindEvents: (events, model) ->
         model.on('error', @onError, @)
             .on('request', @onRequest, @)
-            .on('load sync', @)
+            .on('load sync', @onSync, @)
 
     unBindEvents: (events, model) ->
         model.off(null, null, @)
