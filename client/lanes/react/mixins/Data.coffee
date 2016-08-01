@@ -7,7 +7,7 @@ class NetworkEventListener
             .on('request', @onRequest, @)
             .on('load sync', @)
 
-    unbindEvents: (events, model) ->
+    unBindEvents: (events, model) ->
         model.off(null, null, @)
 
     setState: (state, options) ->
