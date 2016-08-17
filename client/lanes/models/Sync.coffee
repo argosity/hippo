@@ -61,7 +61,7 @@ Lanes.Models.Sync = {
 
 
     perform: (method, options = {}) ->
-        query = {}
+        query = options.queryParams || {}
         for key, value of options
             query[ this.paramsMap[key] ] = value if this.paramsMap[key]
 
