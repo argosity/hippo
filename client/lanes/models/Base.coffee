@@ -18,7 +18,7 @@ class BaseModel
     derived:
         isSavable:
             deps: ['invalidAttributes'], fn: ->
-                _.isEmpty @invalidAttributes #_calculateInvalidAttributes()
+                _.isEmpty @invalidAttributes
 
         hasErrors:
             deps: ['errors'], fn: -> not _.isEmpty(@errors)
