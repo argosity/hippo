@@ -50,6 +50,9 @@ class Lanes.Models.UserRoleSet
             @roles.push( role )
             @locked_fields = role.decodeLockedFields(access.locked_fields, @locked_fields)
 
+    includes: (name) ->
+        !!_.find(@roles, {type: name})
+
     can: (method, model, field) ->
         return true unless model
         if model.constructor and not model.prototype
