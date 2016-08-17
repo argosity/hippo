@@ -55,4 +55,21 @@ class SetAttributeDataTest < Lanes::TestCase
         assert_equal 42, tm.instance_variable_get(:@setting)
     end
 
+    def test_deleting_has_many
+        tm = TestModel.create!
+        1.upto(3) { |x| tm.hm.create({description: "description-#{x}"}) }
+
+        assert_equal tm.hm(true).count, 3
+        tm.set_attribute_data({
+            hm: [
+              { 'id' => 1, 'description' => 'updated' },
+              { 'id' => 2, '_delete' => true }
+            ]
+        }, @user)
+        assert_saves tm
+        assert_equal tm.hm(true).count, 2
+        refute tm.hm.find_by(id: 2)
+        assert_equal tm.hm.find(1).description, 'updated'
+    end
+
 end

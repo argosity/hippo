@@ -76,11 +76,10 @@ module Lanes::Concerns
         # @param user [User] who is performing request
         # @returns
         def set_attribute_data(data, user)
-
             return {} unless self.can_write_attributes?(data, user)
-
             data.each_with_object(Hash.new) do | (key, value), result |
                 # First we set all the attributes that are allowed
+
                 if self.setting_attribute_is_allowed?(key.to_sym, user)
                     result[key] = value
                     public_send("#{key}=", value)
@@ -101,15 +100,22 @@ module Lanes::Concerns
             end
         end
 
-        def _set_attribute_data_from_collection(association, name, value, user)
-            records = public_send(name, value)
-            value.map do | association_data |
+        def _set_attribute_data_from_collection(association, name, record_data, user)
+            records = public_send(name)
+            record_data.map do | association_data |
+
                 record = if association_data['id'].blank?
                              association.build
                          else
                              records.detect{ |r| r.id.to_s == association_data['id'].to_s }
                          end
-                record.set_attribute_data(association_data, user) if record
+                next unless record
+
+                if association_data['_delete'] == true
+                    record.mark_for_destruction
+                else
+                    record.set_attribute_data(association_data, user)
+                end
             end
         end
 
