@@ -9,7 +9,7 @@ module Lanes
             module ClassMethods
 
                 def compose_query_using_detail_view( view: nil, join_to: nil )
-                    join_to = "#{table_name.singularize}_#{primary_key}" unless join_to
+                    join_to ||= self.name.demodulize.tableize.singularize + '_' + primary_key
                     joins("join #{view} as details on details.#{join_to} = #{table_name}.#{primary_key}")
                         .select("#{table_name}.*, details.*")
                 end
