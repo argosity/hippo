@@ -7,7 +7,10 @@ $lanes-field-margin: 6px;
 
 .lanes-field {
 
-    .control-label {display: block;}
+    .control-label {
+        display: block;
+        min-height: 18px;
+    }
 
     &.display {
         .form-group {

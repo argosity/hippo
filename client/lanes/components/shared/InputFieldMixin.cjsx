@@ -7,6 +7,10 @@ Lanes.Components.Form.InputFieldMixin =
     propTypes:
         onlyNumeric:  React.PropTypes.bool
         selctOnFocus: React.PropTypes.bool
+        onEnter: React.PropTypes.func
+
+    focus: ->
+        _.dom(@, 'input').el.focus()
 
     getDefaultProps: ->
         type: 'text'
@@ -32,5 +36,7 @@ Lanes.Components.Form.InputFieldMixin =
 
         if @props.onEnter         then handlers.onKeyDown = @handleKeyDown
         if @props.selectOnFocus   then handlers.onFocus   = @selectOnFocus
+
+        props = LC.Form.FieldMixin.statics.cleanBsSizes(props)
 
         @renderInputField(props, handlers)

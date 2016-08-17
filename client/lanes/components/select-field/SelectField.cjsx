@@ -13,7 +13,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         displayLimit: React.PropTypes.number
         syncOptions:  React.PropTypes.object
         multiSelect:  React.PropTypes.bool
-        includeBlankRow: React.PropTypes.bool
+        fetchOnSelect:React.PropTypes.bool
+        withClearBtn: React.PropTypes.bool
 
     getDefaultProps: ->
         labelField: 'label', idField: 'id'
@@ -22,16 +23,20 @@ class Lanes.Components.SelectField extends Lanes.React.Component
 
     modelBindings:
         query: ->
-            src = @props.queryModel or
-                @props.model.associations?.collectionFor(@props.name).model
             query = new Lanes.Models.Query({
                 syncOptions: Lanes.Models.Query.mergedSyncOptions(@props.syncOptions)
-                src: src
+                src: @props.queryModel or @props.model.associations?.collectionFor(@props.name).model
                 fields: [
                     {id: @props.idField, visible: false},
                     @props.labelField
                 ]
             })
+
+    clearSelectedValue: ->
+        @setState(tempDisplayValue: '') if @state.tempDisplayValue
+        if @props.setSelection then @props.setSelection(null) else
+            @model?.unset(@props.name)
+        @forceUpdate()
 
     getValue: ->
         return undefined if @state.isOpen and not @props.multiSelect
@@ -77,7 +82,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
                     @setModel(model)
                 else
                     model.fetch(@props.syncOptions).then(@setModel)
-                @setState(isOpen: false, tempDisplayValue: value, requestInProgress: true)
+                    @setState(requestInProgress: true)
+                @setState(isOpen: false, tempDisplayValue: value)
             else
                 if not @props.choices
                     c = @getClause()
@@ -106,10 +112,13 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             {label}
         </BS.FormControl.Static>
 
-
-    renderEdit: (props) ->
+    renderSelectControl: (props) ->
         type = if @props.multiSelect then 'Multiselect' else 'Combobox'
         Component = Lanes.Vendor.ReactWidgets[type]
+
+        props = _.without( props, _.keys(@constructor.propTypes) )
+
+        # props = _.without(props, 'withClearBtn', `getSelection`, `setSelection`
         <Component
             ref="select"
             className={@props.className}
@@ -127,3 +136,17 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             value={@getValue()}
             {...props}
         />
+
+    renderEdit: (props) ->
+        if @props.withClearBtn
+            <BS.InputGroup className="selection">
+                {@renderSelectControl(props)}
+                <BS.InputGroup.Button>
+                    <button className='btn' onClick={@clearSelectedValue}>
+                        <LC.Icon type='undo' tooltip="Clear Selection"
+                            tooltipProps={trigger: ['hover', 'focus']} />
+                    </button>
+                </BS.InputGroup.Button>
+            </BS.InputGroup>
+        else
+            @renderSelectControl(props)

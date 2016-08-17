@@ -2,7 +2,7 @@ class Lanes.Components.Tooltip extends Lanes.React.Component
 
     TTProps: [
         'id', 'placement', 'positionLeft', 'positionTop',
-        'arrowOffsetLeft', 'arrowOffsetTop'
+        'arrowOffsetLeft', 'arrowOffsetTop', 'trigger'
     ]
 
     render: ->
