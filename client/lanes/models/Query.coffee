@@ -166,7 +166,7 @@ class Clause extends Lanes.Models.Base
         value = this.get('value')
         value += '%' if 'like' == op
         value = parseFloat(value) if @field.type == "n"
-        param[ this.field.id ] = if 'eq' == op then value else { op: op, value: value }
+        param[ @field.id ] = if 'eq' == op then value else { op: op, value: value }
         param
 
 
@@ -294,7 +294,7 @@ class Lanes.Models.Query extends Lanes.Models.Base
         ! @clauses.findWhere( isValid: false )
 
     loadModel: (model, options = {}) ->
-        _.extend(options, _.result(this, 'syncOptions'))
+        _.extend(options, _.result(this, 'syncOptions'), force: true)
         model.withAssociations(options.include || [], options)
 
     loadSingle: (code, options = {}) ->
