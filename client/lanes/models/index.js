@@ -1,4 +1,5 @@
 //= require_self
+//= require_tree ./mixins
 //= require ./Sync
 //= require ./ServerCache
 //= require ./AssociationMap
@@ -6,5 +7,4 @@
 //= require ./State
 //= require ./Base
 //= require ./Collection
-//= require_tree ./mixins
 //= require_tree .
