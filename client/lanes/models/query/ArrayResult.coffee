@@ -59,22 +59,12 @@ class Page
 
     modelAt: (index, options) ->
         row = @_rowAt(index)
-        @modelCache ||= {}
-        id = @idForRow(row)
-        if _.isBlank(id)
-            @_rowToModel(row)
-        else
-            @modelCache[id] ||= @_rowToModel(row)
+        @_rowToModel(row)
 
     saveModelChanges: (model, index) ->
         row = @_rowAt(index)
-        @modelCache[ @idForRow(row)] = model
-        data = model.serialize()
         for field, i in @result.query.fields.models
-            row[field.fetchIndex] = data[field.id]
-
-    idForRow: (row) ->
-        row[@result.query.idIndex]
+            row[field.fetchIndex] = model[field.id]
 
     addBlankRow: (index) ->
         model = new @result.query.model
@@ -127,7 +117,7 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
     eachRow: (fn) ->
         for i in [0...@length]
             row = @rowAt(i)
-            fn(row, row[@xDataColumn], i)
+            return i if 'break' is fn(row, row[@xDataColumn], i)
 
     map: (fn) ->
         rows = []
@@ -135,6 +125,12 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
             rows.push fn(row, xd, i)
         rows
 
+    findById: (id) ->
+        @eachRow (row, xd, i) =>
+            return 'break' if id is @idForRow(row)
+
+    idForRow: (row) ->
+        row[@query.idIndex]
 
     filteredRows: (fn) ->
         found = []
@@ -146,7 +142,10 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
         @pageForIndex(index).modelAt(index)
 
     saveModelChanges: (model, index) ->
+        if _.isUndefined(index)
+            index = @findById( model.getId() )
         @pageForIndex(index).saveModelChanges(model, index)
+        @query.changeCount += 1
 
     removeRow: (index = 0) ->
         @total -= 1
