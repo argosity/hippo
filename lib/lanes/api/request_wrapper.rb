@@ -77,7 +77,7 @@ module Lanes
                 log_request
                 if options[:with_transaction]
                     Lanes::Model.transaction do
-                        response = yield
+                        response = yield || {success: false}
                         # This is quite possibly a horrible idea.
                         # It enables test specs to reset the db state after a request
                         if !Lanes.env.production? && request.env['HTTP_X_ROLLBACK_AFTER_REQUEST']
