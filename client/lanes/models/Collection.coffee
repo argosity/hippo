@@ -54,7 +54,6 @@ class ModelsCollection
 
     constructor: ->
         @_isLoaded = false
-        @errors = []
         Lanes.Vendor.Ampersand.Collection.apply(this, arguments)
         this.on('add remove reset', this._triggerLengthEvent )
 
@@ -201,6 +200,10 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
         @associationFilter = @options.filter
         super
 
+    mixins: [
+        Lanes.Models.Mixins.TrackRemovals
+    ]
+
     _prepareModel: (attrs, options = {}) ->
         if @associationFilter
             _.extend(attrs, @associationFilter)
@@ -214,3 +217,16 @@ class Lanes.Models.AssociationCollection extends Lanes.Models.Collection
         _.extend(options.query, @associationFilter)
         _.extend(options, @options)
         super(options)
+
+    isDirty: ->
+        super || @hasRemovedModels()
+
+    dataForSave: ->
+        data = super
+        for id in @getRemovedModelIds()
+            data.push({"#{@model.prototype.idAttribute}": id, _delete: true})
+        data
+
+    setFromServer: (data, options, method) ->
+        @clearRemovedModelIds()
+        super
