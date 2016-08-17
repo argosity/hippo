@@ -43,7 +43,6 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-
             &.sort {
                 &:after {
                     content: $fa-var-sort;
@@ -52,6 +51,14 @@
                     right: -5px;
                     color: lightgray;
                 }
+                &.center {
+                    position: relative;
+                    &:after {
+                        right: 5px;
+                        position: absolute;
+                    }
+                }
+
                 &:not(.asc):not(.desc) {
                     &:after {
                         @include hidden-print;
