@@ -174,6 +174,14 @@ module Lanes
 
             # query options
 
+            def add_access_limits_to_query(query)
+                if model.respond_to?(:access_limits_for_query)
+                    query = model.access_limits_for_query(query, user, params)
+                else
+                    query
+                end
+            end
+
             def build_query(query = model.all)
                 if params[:id]
                     query = query.where(id: params[:id])
@@ -181,16 +189,26 @@ module Lanes
                 if params[:nested_attribute]
                     query = query.where(params[:nested_attribute])
                 end
+                query = add_access_limits_to_query(query)
+
                 if query_params.present?
                     query = add_params_to_query(query)
                 end
                 query
             end
 
-            def add_modifiers_to_query(query)
+            def count_query_records(query)
+                model.from('('+query.to_sql+') q').count
+            end
+
+            def add_scopes_to_query(query)
                 if query_scopes.present?
                     query = add_scope_to_query(query)
                 end
+                query
+            end
+
+            def add_modifiers_to_query(query)
                 query = query.limit(query_limit_size)
                 query = query.offset(query_offset.to_i) if query_offset.present?
                 if include_associations.any?
