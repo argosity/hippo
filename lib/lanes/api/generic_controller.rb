@@ -5,14 +5,7 @@ module Lanes
         class GenericController < ControllerBase
 
             def show
-                query   = build_query
-                options = build_reply_options
-                options[:total_count] = query.dup.unscope(:select).count if should_include_total_count?
-                query   = add_modifiers_to_query(query)
-                if params[:id]
-                    query  = query.first!
-                end
-                std_api_reply(:retrieve, query, options)
+                perform_retrieval
             end
 
             def create
@@ -23,7 +16,7 @@ module Lanes
 
             def update
                 if params[:id]
-                    perform_single_update( build_query.first! )
+                    perform_single_update
                 elsif data.is_a?(Array)
                     perform_multiple_updates
                 end

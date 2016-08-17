@@ -33,39 +33,64 @@ module Lanes
 
             protected
 
+            def perform_retrieval
+                query   = build_query
+                query   = add_scopes_to_query(query)
+                query   = add_access_limits_to_query(query)
+                options = build_reply_options
+                if should_include_total_count?
+                    options[:total_count] = count_query_records(query)
+                end
+                query = add_modifiers_to_query(query)
+                if params[:id]
+                    query  = query.first!
+                end
+                std_api_reply(:retrieve, query, options)
+            end
+
             def perform_single_destroy
-                record = model.find(params[:id])
+                query = model.where(id: params[:id])
+                query = add_access_limits_to_query(query)
+                record = query.first!
                 record.destroy
                 std_api_reply(:destroy, record, {})
             end
 
             def perform_multiple_destroy
-                records = model.find( data.map{|rec|rec['id']} )
+                query = model.where( id: data.map{|rec|rec['id']} )
+                query = add_access_limits_to_query(query)
                 success = true
-                records.each do | record |
+                query.each do | record |
                     if user.can_delete?(record, record.id)
                         success = false unless record.destroy
                     end
                 end
                 options = build_reply_options.merge(success: success)
-                std_api_reply(:destroy, records, options)
+                std_api_reply(:destroy, query, options)
             end
 
             def perform_multiple_updates
-                records = model.find( data.map{|rec|rec['id']} )
+
+                query = model.where( id: data.map{|rec|rec['id']} )
+                query = add_access_limits_to_query(query)
+
                 success = true
-                records.each do | record |
+                query.each do | record |
                     record_data = data.detect{ |rd| rd['id'] == record.id }
+                    next unless record_data
                     if user.can_write?(record, record.id)
                         record.set_attribute_data(record_data, user)
                         success = false unless record.save
                     end
                 end
                 options = build_reply_options.merge(success: success)
-                std_api_reply(:update, records, options)
+                std_api_reply(:update, query, options)
             end
 
-            def perform_single_update(record)
+            def perform_single_update
+                query = build_query
+                query = add_access_limits_to_query(query)
+                record = query.first!
                 record.set_attribute_data(data, user)
                 options = build_reply_options.merge(success: record.save)
                 std_api_reply(:update, record, options)
