@@ -40,7 +40,7 @@ Lanes.React.Mixins.Data = {
 
     onModelUnbind: (model, name) ->
         Lanes.Models.PubSub.remove(model)
-        getNetworkListener(@)?.unBindEvents(@modelBindings, @[name])
+        getNetworkListener(@)?.unBindEvents(@modelBindings, model)
 
     onModelBind: (model, name) ->
         model = this[name]
