@@ -14,7 +14,7 @@ class Lanes.Components.FormGroup extends Lanes.React.Component
         model: "invalid-fields invalid-field:#{@getInvalidFieldName()}"
 
     render: ->
-        className = _.classnames(className, @props.className, "field"
+        className = _.classnames(className, @props.className, "lanes-field"
             editing: @props.editing
             "align-#{@props.align}": @props.align
             display: false == @props.editing
