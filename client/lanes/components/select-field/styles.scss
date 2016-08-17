@@ -1,5 +1,13 @@
 @import "lanes/vendor/styles/widgets";
 
+.input-group {
+    .select:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .input-group-btn button { height: 35px; }
+}
+
 .rw-combobox, .rw-datetimepicker, .rw-numberpicker, .rw-dropdownlist {
     padding-bottom: 1px; // push down so border isn't covered
     input { height: 32px; padding: 6px 12px; }

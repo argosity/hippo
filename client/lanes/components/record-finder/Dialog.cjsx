@@ -48,6 +48,6 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.React.Component
             <LC.Grid
                 onColumnClick={@onColumnSort}
                 query={@props.query} height=200 autoLoadQuery
-                onSelectionChange=@onRecordSelect
+                onSelectionChange={@onRecordSelect}
             />
         </div>
