@@ -80,6 +80,7 @@ class Lanes.Models.AssociationMap
             new target_class(options.models || [], options)
         else
             options.model = target_class
+            options.association_name=name
             new Lanes.Models.AssociationCollection(options.models || [], options)
 
     # returns a collection for the given association.
@@ -178,9 +179,10 @@ class Lanes.Models.AssociationMap
             continue if def_options.readOnly or
                 (options.onlyAssociations and not _.includes(options.onlyAssociations, name))
             assoc = model[name]
+            force = _.includes(options.includeAssociations, name)
             ret[name] = assoc.dataForSave(
-                _.extend({}, options, def_options)
-            ) if _.result(assoc, 'isDirty')
+                _.extend({}, options, def_options, saveAll: force)
+            ) if _.result(assoc, 'isDirty') or force
         ret
 
     serialize: (model, options = {depth: 1}) ->
