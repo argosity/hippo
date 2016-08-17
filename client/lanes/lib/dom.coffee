@@ -15,6 +15,9 @@ class Lanes.lib.Dom
     remove: ->
         @el.parentElement.removeChild(@el)
 
+    focus: ->
+        @el.focus?()
+
     focusAndSelect: ->
         @el.select?()
         @el.focus?()
