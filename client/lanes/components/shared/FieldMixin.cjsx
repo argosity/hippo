@@ -70,7 +70,11 @@ Lanes.Components.Form.FieldMixin = {
 
     _fieldMixinRenderFormGroup: (child, props, options) ->
         if (invalidMsg = @fieldInvalidValueMessage())
-            msg = <BS.HelpBlock>{invalidMsg}</BS.HelpBlock>
+            feedback = [
+                <BS.FormControl.Feedback key="feedback" />
+                <BS.HelpBlock key="help">{invalidMsg}</BS.HelpBlock>
+            ]
+
         unless @props.unlabeled
             label =
                 <BS.ControlLabel>
@@ -81,8 +85,7 @@ Lanes.Components.Form.FieldMixin = {
             <BS.FormGroup validationState={options.validationState}>
                 {label}
                 {child}
-                <BS.FormControl.Feedback />
-                {msg}
+                {feedback}
             </BS.FormGroup>
         </BS.Col>
 
@@ -102,7 +105,9 @@ Lanes.Components.Form.FieldMixin = {
         </BS.FormControl.Static>
 
     _fieldMixinRenderNone: (props) ->
-        <span {...props} />
+        clean = LC.Form.FieldMixin.statics.cleanColumnProps(props, @, 'xs', 'sm', 'md', 'lg')
+
+        <span {...clean} />
 
     renderType: ->
         if @isEditingRecord()
@@ -118,15 +123,19 @@ Lanes.Components.Form.FieldMixin = {
             else
                 ['none', 'None']
     statics:
-        cleanColumnProps: (props) ->
-            _.omit props,
+        cleanColumnProps: (props, comp, xtra...) ->
+            _.omit( props,  _.keys(comp.constructor.propTypes).concat([
                 'model', 'label', 'name', 'unlabeled', 'fieldOnly', 'placeholder',
                 'commands', 'query', 'editOnly', 'syncOptions', 'labelField', 'type',
-                'selectField', 'idField', 'queryModel', 'choices'
+                'selectField', 'idField', 'queryModel', 'choices', 'align'
+            ], xtra))
 
         renderEmptyColumn: (props = @props) ->
-            props = @cleanColumnProps(props)
+            props = @cleanColumnProps(props, @)
             <BS.Col {...props} />
+
+        cleanBsSizes: (props) ->
+            _.omit(props, 'lg', 'md', 'sm', 'xs')
 
     render: ->
         [type, method] = @renderType()
@@ -134,7 +143,7 @@ Lanes.Components.Form.FieldMixin = {
 
         hasError = @isFieldValueInvalid()
         options.validationState = 'warning' if hasError
-        props = LC.Form.FieldMixin.statics.cleanColumnProps(@props)
+        props = LC.Form.FieldMixin.statics.cleanColumnProps(@props, @)
 
         props.className = _.classnames(
             _.result(this, 'fieldClassName'),
