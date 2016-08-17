@@ -31,13 +31,13 @@ class Lanes.Components.Icon extends Lanes.React.BaseComponent
             'icon-3x'    : @props['3x']
             'icon-4x'    : @props['4x']
             'icon-5x'    : @props['5x']
-            'clickable'  : @props.tooltip and @props.tooltipProps.trigger is 'click'
+            'clickable'  : @props.clickable or (@props.tooltip and @props.tooltipProps.trigger is 'click')
 
         icon =
             <i style={@props.style} className={classes} />
 
         if @props.tooltip
-            props = _.extend({}, @props.tooltipProps, DEFAULT_TOOLTIP_PROPS)
+            props = _.extend({}, DEFAULT_TOOLTIP_PROPS, @props.tooltipProps)
             <LC.Tooltip id={@state.uniqueId}
                 content={@props.tooltip}
                 {...props}
