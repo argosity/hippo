@@ -7,8 +7,8 @@ $lanes-icon-font: 'FontAwesome';
 button, a.btn {
     .icon {
         margin-right: 0.5em;
-        &.flush { margin-right: 0; }
     }
+    &.flush .icon { margin-right: 0; }
     &.icon:before{
         font-family: $lanes-icon-font;
     }
