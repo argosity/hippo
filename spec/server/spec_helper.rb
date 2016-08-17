@@ -25,8 +25,6 @@ module TestingModels
     def with_testing_models
         with_mocked_tables do |m|
 
-            m.enable_extension "hstore"
-
             m.create_table do |t|
                 t.model_name :TestModel
                 t.parent_class "Lanes::Model"
