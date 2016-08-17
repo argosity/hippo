@@ -27,7 +27,7 @@
     "object-assign": "^4.1.0",
     "react": "*",
     "react-addons-test-utils": "^15.2",
-    "react-bootstrap": "^0.30.0",
+    "react-bootstrap": "^0.30.2",
     "react-component-resizable": "git://github.com/arcanis/react-component-resizable#patch-1",
     "react-deep-force-update": "^2.0.1",
     "react-dom": "^15.2",
