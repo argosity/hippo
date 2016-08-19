@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "execjs",                 "~> 2.6"
     spec.add_dependency "fastimage",              "~> 1.8.1"
     spec.add_dependency "guard",                  "~> 2.13"
-    spec.add_dependency "guard-jasmine",          "~> 2.0"
+    spec.add_dependency "guard-jasmine",          "~> 2.1"
     spec.add_dependency "guard-minitest",         "~> 2.3"
     spec.add_dependency "hashie",                 "~> 3.3"
     spec.add_dependency "jasmine-core",           "~> 2.0"
