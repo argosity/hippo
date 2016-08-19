@@ -1,5 +1,6 @@
 Lanes.Test.makeScreen = (props = {}, args = {}) ->
     class TestScreen
+        FILE: { path: ['test'] }
         render: -> React.createElement('div')
     _.extend(TestScreen.prototype, props)
     Screen = Lanes.React.Screen.extend(TestScreen)
@@ -8,6 +9,7 @@ Lanes.Test.makeScreen = (props = {}, args = {}) ->
 
 Lanes.Test.makeComponent = (props = {}, args = {}) ->
     class TestComponent
+        FILE: { path: ['test'] }
         render: -> React.createElement('div')
     _.extend(TestComponent.prototype, props)
     Component = Lanes.React.Component.extend(TestComponent)
@@ -15,6 +17,7 @@ Lanes.Test.makeComponent = (props = {}, args = {}) ->
 
 Lanes.Test.defineModel = (props = {}) ->
     class TestModel
+        FILE: { path: ['test'] }
         constructor: -> super
     _.extend(TestModel.prototype, props)
     Lanes.Models.Base.extend(TestModel)
@@ -29,6 +32,7 @@ Lanes.Test.makeCollection = (props = {}, args = {}) ->
     _.extend(TestCollection.prototype, props)
     unless TestCollection::model
         class TestModel
+            FILE: { path: ['test'] }
             constructor: -> super
         TestCollection::model = Lanes.Models.Base.extend(TestModel)
     Lanes.Models.Collection.extend(TestCollection)
