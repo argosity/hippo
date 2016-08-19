@@ -1,7 +1,7 @@
 class Lanes.Screens.CommonComponents extends Lanes.React.Component
 
     propTypes:
-        commands:        React.PropTypes.instanceOf(Lanes.Screens.Commands).isRequired
+        commands:        React.PropTypes.object.isRequired
         errors:          React.PropTypes.bool
         networkActivity: React.PropTypes.bool
         toolbarProps:    React.PropTypes.object
