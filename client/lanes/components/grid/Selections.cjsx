@@ -1,7 +1,7 @@
 class CheckBox extends Lanes.React.BaseComponent
     d: -> @props.query.results.xtraData(@props.row)
 
-    onChange: (ev) -> #, me, results, index) ->
+    onChange: (ev) ->
         @d().selected = ev.target.checked
         @props.selections.onChange?(@props)
         @forceUpdate()
@@ -9,7 +9,8 @@ class CheckBox extends Lanes.React.BaseComponent
     render: ->
         selected = @d().selected
         selected = @props.selections.selectionDefault unless selected?
-        <input type="checkbox" checked={selected} onChange={@onChange} />
+        attrs = @props.selections.attributesGetter?(@props) || {}
+        <input type="checkbox" checked={selected} onChange={@onChange} {...attrs} />
 
 
 
@@ -23,9 +24,17 @@ DEFAULTS =
         false == this.xtraData(indx)?.selected
 
 class Lanes.Components.Grid.Selections
-    constructor: (options) ->
+
+    @setRow: (row, xd, selected) ->
+        xd.selected = selected
+
+    @isSelected: (row, xd, selected) ->
+        !(xd && false == xd.selected)
+
+
+    constructor: (options = {}) ->
         _.extend(@, DEFAULTS)
-        @onChange = options.onChange
+        _.extend(@, _.pick(options, 'onChange', 'attributesGetter'))
         @choices = {}
         _.bindAll(@, 'onColumnClick')
         @component = _.partial(@component, _, @)
@@ -33,8 +42,9 @@ class Lanes.Components.Grid.Selections
     onColumnClick: (ev, props) ->
         unless ev.target.tagName is 'INPUT'
             input = ev.target.querySelector('input')
-            xd = props.query.results.xtraData(props.rowNum)
-            xd.selected = input.checked = !input.checked
+            unless input.disabled
+                xd = props.query.results.xtraData(props.rowNum)
+                xd.selected = input.checked = !input.checked
         @onChange?(props)
         ev.stopPropagation()
 
