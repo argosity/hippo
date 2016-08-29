@@ -43,7 +43,7 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
         if @fieldConvertors[field.type] then @fieldConvertors[field.type](value) else value
 
     renderColumn: (rowNum, index, field, results, row) ->
-        value = results.valueForField(rowNum, field)
+        value = results.valueForField(row, field)
 
         onColClick = if field.onColumnClick
             _.partial(field.onColumnClick, _,
@@ -51,7 +51,6 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
             )
         else
             null
-
         value = if field.format
             field.format(value, row, @props.query)
         else

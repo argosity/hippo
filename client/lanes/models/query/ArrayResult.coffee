@@ -183,8 +183,8 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
     rowRepresentation: (rowNum) ->
         @pageForIndex(rowNum).rowAt(rowNum)
 
-    valueForField: (rowNum, field) ->
-        @rowAt(rowNum)[ field.fetchIndex ]
+    valueForField: (row, field) ->
+        if field.fetchIndex? then row[ field.fetchIndex ] else undefined
 
     _updateSort: ->
         fn = @sortingFunction()

@@ -49,8 +49,8 @@ class Lanes.Models.Query.CollectionResult extends Lanes.Models.Query.Result
     rowRepresentation: (rowNum) ->
         @modelAt(rowNum)
 
-    valueForField: (rowNum, field) ->
-        @collection.at(rowNum)[field.id]
+    valueForField: (model, field) ->
+        model[field.id]
 
     fieldToSortValue:
         any:    (v) -> v
