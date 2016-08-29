@@ -145,7 +145,7 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
         if _.isUndefined(index)
             index = @findById( model.getId() )
         @pageForIndex(index).saveModelChanges(model, index)
-        @query.changeCount += 1
+        @query.markModified()
 
     removeRow: (index = 0) ->
         @total -= 1
@@ -193,11 +193,11 @@ class Lanes.Models.Query.ArrayResult extends Lanes.Models.Query.Result
             rows = if @query.sortAscending then rows.reverse() else rows
             page = new Page(0, @, rows: rows)
             @pages = [page]
-            @query.changeCount += 1
+            @query.markModified()
             @
         else
             @reload().then =>
-                @query.changeCount += 1
+                @query.markModified()
                 @
 
 Object.defineProperty Lanes.Models.Query.ArrayResult.prototype, 'length',

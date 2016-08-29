@@ -272,6 +272,8 @@ class Lanes.Models.Query extends Lanes.Models.Base
         attrs.fields = this.fields.serialize({session: true})
         attrs
 
+    markModified: -> @changeCount += 1
+
     reset: (silent = false) ->
         unless @defaultSort is false
             sort = @defaultSort or @fields.findWhere(visible: true).id

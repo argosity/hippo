@@ -5,7 +5,7 @@ class Lanes.Models.Query.CollectionResult extends Lanes.Models.Query.Result
             @query.trigger('change', @query)
         )
         @collection.on('sort', =>
-            @query.changeCount += 1
+            @query.markModified()
         )
 
         this
@@ -28,7 +28,7 @@ class Lanes.Models.Query.CollectionResult extends Lanes.Models.Query.Result
 
         @collection.remove(old)
         @collection.add(model, at:index)
-        @query.changeCount++
+        @query.markModified()
 
     addBlankRow: (index) ->
         @collection.add({}, at: index)
