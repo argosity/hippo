@@ -5,7 +5,7 @@ class Lanes.Components.ScreenWrapper extends Lanes.React.Component
 
     render: ->
         classes = _.classnames(
-            'screen-wrapper',  @props.identifier,
+            'screen-wrapper',  @props.identifier, @props.className
             'flex-vertically': @props.flexVertical
         )
         <div className={classes} style={@props.style}>
