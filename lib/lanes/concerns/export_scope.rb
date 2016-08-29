@@ -25,7 +25,7 @@ module Lanes::Concerns
             def scope(name, body, options = {}, &block)
                 super(name, body, &block)
                 if (export = options[:export])
-                    export_scope(name, body, limit: (export == true ? nil : export[:limit]))
+                    export_scope(name, limit: (export == true ? nil : export[:limit]))
                 end
             end
 
@@ -35,14 +35,12 @@ module Lanes::Concerns
             # @param limit [Symbol referring to a Class method name, lambda]
             # If given, this will be queried by the API to determining if a given user may call the scope
             # @return nil
-            def export_scope(name, query, limit: nil)
+            def export_scope(name, limit: nil)
                 include ExportedLimitEvaluator
 
                 self.exported_scopes ||= Hash.new
                 self.exported_scopes[name.to_sym] = {
-                    scope: scope(name, query),
-                    name: name,
-                    limit: limit
+                    name: name, limit: limit
                 }
                 nil
             end
