@@ -16,6 +16,30 @@ module Lanes::Concerns
             self.blacklist_attributes :created_at, :updated_at, :created_by_id, :updated_by_id
             before_update :record_update_modifications
             before_create :record_create_modifications
+
+            self.export_scope :with_user_logins
+        end
+
+        module ClassMethods
+
+            def with_user_logins
+                q = self; t = table_name
+                if current_scope.nil? || current_scope.select_values.exclude?("#{t}.*")
+                    q = q.select("#{t}.*")
+                end
+                if self.column_names.include?('created_by_id')
+                    q = q.select("created_by_user.login as created_by_login")
+                          .joins("left join lanes_users as created_by_user on " \
+                                 "created_by_user.id = #{t}.created_by_id")
+                end
+                if self.column_names.include?('updated_by_id')
+                    q = q.select("updated_by_user.login as updated_by_login")
+                          .joins("left join lanes_users as updated_by_user on " \
+                                 "updated_by_user.id = #{t}.updated_by_id")
+                end
+                q
+            end
+
         end
 
         private

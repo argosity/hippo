@@ -261,6 +261,9 @@ class BaseModel
 
         klass::session['created_at'] ||= 'date'
         klass::session['updated_at'] ||= 'date'
+        # these columns are included when loaded with the 'with_user_logins' scope
+        klass::session['created_by_user.login'] ||= 'string'
+        klass::session['updated_by_user.login'] ||= 'string'
 
         if klass::associations
             klass::associations = new Lanes.Models.AssociationMap(klass)
