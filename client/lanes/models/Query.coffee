@@ -26,6 +26,7 @@ class Field extends Lanes.Models.Base
         sortBy:     type: 'any'
         component:  type: 'function'
         onColumnClick: type: 'function'
+        fetchIndex: type: 'integer'
 
     derived:
         default_value: deps: ['id'], fn: ->
@@ -39,12 +40,6 @@ class Field extends Lanes.Models.Base
             deps: ['model_field'], fn: ->
                 type = @model_field?.type || 'string'
                 if type == "code" then "string" else type
-        fetchIndex:
-            fn: ->
-                fetchIndex = 0
-                for field, index in this.collection.models
-                    return fetchIndex if this == field
-                    fetchIndex += 1 if field.query
 
     validValue: (value) ->
         if this.type == 'n'
@@ -59,6 +54,7 @@ class AvailableFields extends Lanes.Models.Collection
 
     constructor: (models, options) ->
         @query = options.query
+        this.on('add remove reset', @calculateFetchIndexes)
         this.on('change', (changing) ->
             return unless changing.selected
             for model in @models
@@ -66,7 +62,12 @@ class AvailableFields extends Lanes.Models.Collection
         )
         super
         @visible = @subcollection(where: {visible: true})
+        @calculateFetchIndexes()
 
+    calculateFetchIndexes: ->
+        index = 0
+        for field in @models
+            field.fetchIndex = if field.query then index++ else undefined
 
 class Operator extends Lanes.Models.Base
     registerForPubSub: false
