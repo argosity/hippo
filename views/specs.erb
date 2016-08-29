@@ -14,7 +14,10 @@
           <script src="<%= js_file %>" type="text/javascript"></script>
         <% end %>
         <script type="text/javascript">
-            Lanes.config.bootstrap( <%= client_bootstrap_data %> );
+          Lanes.config.bootstrap( <%=
+                                     client_bootstrap_data(mergedWith: {
+                                     api_path: 'http://localhost:8888' + Lanes.config.api_path
+                                     }) %> );
         </script>
 
     </head>
