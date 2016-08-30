@@ -19,7 +19,7 @@ class Lanes.Components.Grid.Header extends Lanes.React.BaseComponent
             desc:  sorted and not @props.query.sortAscending
             @props.cellStyles.props[i].className
         )
-        <div key={i}
+        <div key={f.cid}
             {...@props.cellStyles.props[i]}
             onClick={_.partial(@onColumnClick, f)}
             className={classNames}
