@@ -143,7 +143,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
                 {@renderSelectControl(props)}
                 <BS.InputGroup.Button>
                     <button className='btn' onClick={@clearSelectedValue}>
-                        <LC.Icon type='undo' tooltip="Clear Selection"
+                        <LC.Icon type='undo' flush tooltip="Clear Selection"
                             tooltipProps={trigger: ['hover', 'focus']} />
                     </button>
                 </BS.InputGroup.Button>
