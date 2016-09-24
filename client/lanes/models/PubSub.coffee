@@ -86,6 +86,7 @@ Lanes.Models.PubSub = {
 
     initialize: ->
         @mb ||= MessageBus.noConflict()
+        @mb.baseUrl = Lanes.config.api_host + '/'
         @mb.start()
         @mb.subscribe("/file-change", (changes) ->
             Lanes.lib.HotReload.initiate(changes)
