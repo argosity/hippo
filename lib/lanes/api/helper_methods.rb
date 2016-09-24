@@ -16,7 +16,8 @@ module Lanes
             end
 
             def client_bootstrap_data(mergedWith: {})
-                Oj.dump(Extensions.client_bootstrap_data(self).merge(mergedWith), mode: :compat)
+                Oj.dump(Extensions.client_bootstrap_data(self)
+                           .merge(mergedWith), mode: :compat)
             end
 
             def csrf_token
