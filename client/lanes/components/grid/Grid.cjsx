@@ -24,6 +24,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
         onSelectionChange: React.PropTypes.func
         autoLoadQuery: React.PropTypes.bool
         renderCompleteResults: React.PropTypes.bool
+        isRowFocused: React.PropTypes.func
         toolbarChildren: React.PropTypes.oneOfType([
             React.PropTypes.element,
             React.PropTypes.arrayOf(React.PropTypes.element)
@@ -91,7 +92,6 @@ class Lanes.Components.Grid extends Lanes.React.Component
 
     render: ->
         cellStyles = new Lanes.Components.Grid.CellStyles(@query.fields)
-
         <div className='grid-component'>
             <Lanes.Components.Grid.Toolbar {...@props} startEdit={@startEdit} />
             <Lanes.Components.Grid.Header  {...@props} cellStyles={cellStyles} />
@@ -103,6 +103,7 @@ class Lanes.Components.Grid extends Lanes.React.Component
                 onEditCancel={@cancelEdit}
                 isLoading={@state.isLoading}
                 cellStyles={cellStyles}
+                isRowFocused={@props.isRowFocused}
                 onRowClick={@onRowClick if @props.editor or @props.onSelectionChange}
             />
         </div>

@@ -77,8 +77,9 @@
     }
     .r {
         margin-right: 10px;
-        /* page-break-inside: avoid; */
+        page-break-inside: avoid;
         break-inside: avoid-page;
+        margin-left: 5px;
     }
     .grid-body {
         border-top: 1px solid $table-border-color;
@@ -90,11 +91,19 @@
             overflow: visible;
             height: initial;
         }
-        .r:nth-child(odd) {
-            background-color: $table-bg-accent;
-        }
+
         .c {
             align-items: center;
+        }
+        .r {
+            &.focused {
+                outline-style: dotted;
+                outline-width: 2px;
+                outline-color: gray;
+            }
+            &:nth-child(odd) {
+                background-color: $table-bg-accent;
+            }
         }
     }
 

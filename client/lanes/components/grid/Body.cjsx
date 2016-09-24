@@ -76,7 +76,9 @@ class Lanes.Components.Grid.Body extends Lanes.React.BaseComponent
 
         if @props.onRowClick
             onClick = _.partial(@onRowClick, _, row, rowNum)
-        <div key={rowNum} ref={ref} className="r" onClick={onClick} >
+
+        classes = _.classnames('r', focused: @props.isRowFocused?(row))
+        <div key={rowNum} ref={ref} className={classes} onClick={onClick} >
             {fields}
         </div>
 
