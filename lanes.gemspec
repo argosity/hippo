@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "hashie",                 "~> 3.3"
     spec.add_dependency "jasmine-core",           "~> 2.0"
     spec.add_dependency "jobba",                  "~> 1.4"
-    spec.add_dependency "message_bus",            "2.0.0.beta.6"
+    spec.add_dependency "message_bus",            "~> 2.0"
     spec.add_dependency "mini_magick",            "~> 4.3.6"
     spec.add_dependency "minitest-around",        "~> 0.2"
     spec.add_dependency "mocha",                  "~> 1.1"
