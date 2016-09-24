@@ -17,6 +17,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
         pubSubDisabled: 'boolean'
         rootComponent: 'any'
         rootProps:   'object'
+        rootElement:  'object'
 
     constructor: ->
         super
@@ -42,10 +43,11 @@ class Lanes.React.Viewport extends Lanes.Models.State
 
     onBoot: ->
         prev = _.dom(this.domRoot.previousElementSibling)
-        prev.addClass('complete') if prev.hasClass('loading')
-        _.delay(->
-            prev.remove()
-        , 100)
+        if prev.hasClass('loading')
+            prev.addClass('complete')
+            _.delay(->
+                prev.remove()
+            , 100)
 
     _updateDimensions: ->
         this.set
@@ -71,7 +73,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
             component = cntrl?.rootComponent?(this) ||
                 Lanes.React.Root.DefaultComponentNotFound
         )
-        root = React.createElement(Lanes.React.Root, {viewport: @},
+        @rootElement = React.createElement(Lanes.React.Root, {viewport: @},
             React.createElement(component, _.extend(@rootProps, extension: cntrl))
         )
-        @reactRoot = Lanes.Vendor.ReactDOM.render(root, @lanes)
+        @reactRoot = Lanes.Vendor.ReactDOM.render(@rootElement, @lanes)
