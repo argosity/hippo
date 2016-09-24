@@ -22,6 +22,16 @@ class Lanes.lib.Dom
         @el.select?()
         @el.focus?()
 
+    setStyle: (style) ->
+        _.extend(@el.style, style)
+
+    on: (evname, fn, useCapture = false) ->
+        if @el.addEventListener
+            @el.addEventListener(evname, fn, useCapture)
+        else if @el.attachEvent
+            @el.attachEvent('on' + evname, fn)
+
+
     closest: (selector) ->
         # Traverse the DOM up with a while loop
         el = @el
@@ -42,7 +52,7 @@ chain = (fn) ->
 
 for name, func of Lanes.Vendor.dom
     Lanes.lib.Dom::[name] = if name.match(/^has/)
-        wrapArg
+        wrapArg(func)
     else
         chain(func)
 
