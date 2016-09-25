@@ -24,8 +24,8 @@ Gem::Specification.new do |spec|
 
     spec.required_ruby_version = ">= 2.0"
 
-    spec.add_dependency "activejob",              "~> 4.2"
-    spec.add_dependency "activerecord",           "~> 4.2"
+    spec.add_dependency "activejob",              "~> 5.0"
+    spec.add_dependency "activerecord",           "~> 5.0"
     spec.add_dependency "bcrypt",                 "~> 3.1"
     spec.add_dependency "carrierwave",            "~> 0.10.0"
     spec.add_dependency "coffee-react",           "~> 4.0"

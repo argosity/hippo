@@ -1,7 +1,7 @@
-# This file will be loaded if the current extension is the
-# one controlling Lanes.
+# This file will be loaded as part of Lanes startup.
 #
-# It will not be evaluated if another extension is loading this one
+# Extensions are called in load order, so be aware latter extensions may
+# override config options specified
 Lanes.configure do | config |
     # You can specify a different initial vew by setting it here
     # It must be set if the "Workspace" extension is disabled in

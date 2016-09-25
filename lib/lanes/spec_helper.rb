@@ -41,7 +41,7 @@ module Lanes
         include ActiveRecord::TestFixtures
         self.fixture_path = Lanes::Extensions.controlling.root_path.join('spec','fixtures')
 
-        self.use_transactional_fixtures = true
+        self.use_transactional_tests = true
         fixtures :all
 
         def admin

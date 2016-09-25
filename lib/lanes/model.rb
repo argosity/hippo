@@ -3,8 +3,6 @@ require 'carrierwave/orm/activerecord'
 
 module Lanes
 
-    ::ActiveRecord::Base.raise_in_transactional_callbacks = true
-
     class Model < ::ActiveRecord::Base
         self.abstract_class = true
 

@@ -1,12 +1,7 @@
 module AccessFixtureTestPatches
-    extend ActiveSupport::Concern
 
-    included do
-        alias_method_chain :table_rows, :custom_autoset_user_fields
-    end
-
-    def table_rows_with_custom_autoset_user_fields
-        results = table_rows_without_custom_autoset_user_fields
+    def table_rows
+        results = super
         if model_class && model_class < ActiveRecord::Base && model_class.record_modifications
             results[ table_name ].each do | row |
                 # 135138680 is the 'admin' user
@@ -18,4 +13,4 @@ module AccessFixtureTestPatches
     end
 end
 
-ActiveRecord::FixtureSet.send :include, AccessFixtureTestPatches
+ActiveRecord::FixtureSet.prepend AccessFixtureTestPatches

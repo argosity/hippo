@@ -20,8 +20,8 @@ module Lanes::Concerns
         #
         #  * Safely escape data *(should __ALWAYS__ do this anyway, but it bears mentioning again)*
         #  * Be relatively simple and complete quickly.
-        #  * Provide value to the client that it cannot obtain by using normal query methods
-        module ClassMethods
+        #  * Provide value to the client that it cannot obtain by using normal query method
+        class_methods do
             def scope(name, body, options = {}, &block)
                 super(name, body, &block)
                 if (export = options[:export])

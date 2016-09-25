@@ -5,10 +5,10 @@ module Lanes
 
     class MultiDestinationLogger
         def initialize
-            @targets = [
-                STDOUT,
+            @targets = [STDOUT]
+            @targets.push(
                 File.open("log/#{Lanes.config.environment}.log", "a")
-            ]
+            ) if File.writable?("log")
             Lanes.config.get(:environment) do
                 @targets.each{|t| t.sync = ! Lanes.env.production? }
             end

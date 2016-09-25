@@ -1,14 +1,21 @@
 require_relative "../spec_helper"
 
 class ExportedLimitsTest < Lanes::TestCase
+    module FakeScope
+        extend ActiveSupport::Concern
+        class_methods do
+            def scope(*args) # act like ActiveRecord model
+            end
+        end
+    end
 
-    class LimitsTestingModel
-
+    class Base
+        include FakeScope
         include Lanes::Concerns::ExportScope
         include Lanes::Concerns::ExportMethods
+    end
 
-        def self.scope(name, query)# act like ActiveRecord model
-        end
+    class LimitsTestingModel < Base
 
         def secret_method( name, query )
         end
@@ -20,9 +27,9 @@ class ExportedLimitsTest < Lanes::TestCase
             user == 'anon'
         }
 
-        export_scope :admin_data, lambda{ | param |
+        scope :admin_data, lambda { | param |
             param
-        }, limit: :only_admins
+        }, export: {limit: :only_admins}
 
         export_methods :secret_method, limit: :only_admins
 
@@ -34,11 +41,9 @@ class ExportedLimitsTest < Lanes::TestCase
     end
 
     def test_limits
-        assert LimitsTestingModel.has_exported_method?( 'test_method', 'anon' ), "anyone can retrieve no_limit data"
-
+       assert LimitsTestingModel.has_exported_method?( 'test_method', 'anon' ), "anyone can retrieve no_limit data"
         assert LimitsTestingModel.has_exported_scope?( 'admin_data', 'admin' ), "Admins can retrieve admin data"
         refute LimitsTestingModel.has_exported_scope?( 'admin_data', 'non-admin' ), "Non-Admin cannot retrieve admin data"
-
         assert LimitsTestingModel.has_exported_method?( 'secret_method', 'admin' ), "Public can retrieve public data"
         refute LimitsTestingModel.has_exported_method?( 'secret_method', 'unk' ), "User must be admin to retrieve public data"
     end
