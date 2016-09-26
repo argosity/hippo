@@ -110,9 +110,9 @@
 	Lanes.Vendor.ld.mixin(__webpack_require__(418));
 
 	Lanes.Vendor.s = __webpack_require__(419);
-	_.mixin(Lanes.Vendor.s.exports());
+	Lanes.Vendor.ld.mixin(Lanes.Vendor.s.exports());
 
-	_.moment = Lanes.Vendor.Moment;
+	Lanes.Vendor.ld.moment = Lanes.Vendor.Moment;
 	__webpack_require__(490)
 
 	Lanes.Vendor.ld.mixin({

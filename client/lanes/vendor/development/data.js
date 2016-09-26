@@ -35,9 +35,9 @@ webpackJsonp([1],[
 	Lanes.Vendor.ld.mixin(__webpack_require__(614));
 
 	Lanes.Vendor.s = __webpack_require__(615);
-	_.mixin(Lanes.Vendor.s.exports());
+	Lanes.Vendor.ld.mixin(Lanes.Vendor.s.exports());
 
-	_.moment = Lanes.Vendor.Moment;
+	Lanes.Vendor.ld.moment = Lanes.Vendor.Moment;
 	__webpack_require__(417)
 
 	Lanes.Vendor.ld.mixin({

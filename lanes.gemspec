@@ -54,7 +54,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "sanitize",               "~> 3.0"
     spec.add_dependency "sass",                   "~> 3.4"
     spec.add_dependency "sinatra",                "~> 1.4"
-    spec.add_dependency "sprockets",              "~> 3.6"
+    spec.add_dependency "sprockets",              "3.6.3"
     spec.add_dependency "sprockets-helpers",      "~> 1.2"
     spec.add_dependency "thor",                   "~> 0.19"
     spec.add_dependency "uglifier",               "~> 2.7"
