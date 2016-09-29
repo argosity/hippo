@@ -13,11 +13,6 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
     bindEvents:
         changedModel: 'remote-update isSavable'
 
-    renderResetButton: ->
-        <BS.Button componentClass="button"
-            onClick={@props.commands.resetModel} className="reset navbar-btn control">
-            <LC.Icon type="undo" />Reset
-        </BS.Button>
 
     EditToggle: ->
         return null unless @props.commands.canEditModel()
@@ -37,9 +32,14 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
     render: ->
         <BS.Nav bsStyle="pills" className="lanes-toolbar">
             <Lanes.Components.Toolbar.SaveButton commands={@props.commands} />
-            {@renderResetButton()}
+            <BS.NavItem
+                onClick={@props.commands.resetModel}
+                className="reset navbar-btn control">
+                <LC.Icon type="undo" />Reset
+            </BS.NavItem>
             {@props.children}
-            <div className="spacer"/>
+            <BS.NavItem className="spacer" />
+
             <@EditToggle />
             <LC.Toolbar.RemoteChangeSets model=@changedModel />
         </BS.Nav>

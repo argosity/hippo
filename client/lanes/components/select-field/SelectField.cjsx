@@ -108,9 +108,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             value[@props.labelField]
         else
             value
-        <BS.FormControl.Static {...props}>
-            {label}
-        </BS.FormControl.Static>
+        clean = LC.Form.FieldMixin.statics.cleanSizeProps(props)
+        <BS.FormControl.Static {...clean}>{label}</BS.FormControl.Static>
 
     renderSelectControl: (props) ->
         type = if @props.multiSelect then 'Multiselect' else 'Combobox'

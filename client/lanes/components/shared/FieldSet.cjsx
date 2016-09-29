@@ -17,7 +17,7 @@ class Lanes.Components.FieldSet extends Lanes.React.Component
         @setState(expanded: not @state.expanded)
 
     render: ->
-        colProps = _.omit(@props, 'name')
+        colProps = _.omit(@props, 'name', 'expanded')
         <BS.Col {...colProps}>
             <fieldset className={
                 _.classnames("collapsible", @props.className, @state.icon

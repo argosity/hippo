@@ -6,6 +6,9 @@ Lanes.React.Mixins.ReadEditingState = {
         writable: React.PropTypes.bool
         readonly: React.PropTypes.bool
 
+    propTypes:
+        editOnly:  React.PropTypes.bool
+
     isEditingRecord: ->
         @props.editOnly or @context.recordDisplay == 'edit'
 }

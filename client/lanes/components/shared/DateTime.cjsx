@@ -21,7 +21,8 @@ class Lanes.Components.DateTime extends Lanes.React.Component
 
 
     renderDisplay: (props) ->
-        <BS.FormControl.Static {...props}>
+        clean = LC.Form.FieldMixin.statics.cleanSizeProps(props)
+        <BS.FormControl.Static {...clean}>
             {_.moment(@model[@props.name]).format(@props.format)}
         </BS.FormControl.Static>
 

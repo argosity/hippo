@@ -17,6 +17,11 @@ Lanes.React.Mixins.Access = {
     componentDidMount: ->
         calculateAccess(this, @props)
 
+    propTypes:
+        writable: React.PropTypes.bool
+        readable: React.PropTypes.bool
+        readonly: React.PropTypes.bool
+
     componentWillReceiveProps: (newProps) ->
         calculateAccess(this, newProps)
 

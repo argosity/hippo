@@ -11,7 +11,6 @@ Lanes.Components.Form.FieldMixin = {
     mixins: [
         Lanes.React.Mixins.Access
         Lanes.React.Mixins.ReadEditingState
-
         Lanes.React.Mixins.FieldErrors
     ]
 
@@ -99,14 +98,13 @@ Lanes.Components.Form.FieldMixin = {
     _fieldMixinRenderDisplay: (props) ->
         value = @fieldMixinGetValue()
         value = value.toString() if _.isObject(value)
-
-        <BS.FormControl.Static {...props}>
+        <BS.FormControl.Static>
             {value}
         </BS.FormControl.Static>
 
-    _fieldMixinRenderNone: (props) ->
-        clean = LC.Form.FieldMixin.statics.cleanColumnProps(props, @, 'xs', 'sm', 'md', 'lg')
 
+    _fieldMixinRenderNone: (props) ->
+        clean = LC.Form.FieldMixin.statics.cleanSizeProps(props)
         <span {...clean} />
 
     renderType: ->
@@ -123,6 +121,9 @@ Lanes.Components.Form.FieldMixin = {
             else
                 ['none', 'None']
     statics:
+        cleanSizeProps: (props) ->
+            LC.Form.FieldMixin.statics.cleanColumnProps(props, @, 'xs', 'sm', 'md', 'lg')
+
         cleanColumnProps: (props, comp, xtra...) ->
             _.omit( props,  _.keys(comp.constructor.propTypes).concat([
                 'model', 'label', 'name', 'unlabeled', 'fieldOnly', 'placeholder',
