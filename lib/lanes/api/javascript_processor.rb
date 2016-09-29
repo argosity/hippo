@@ -58,10 +58,11 @@ module Lanes
                 (aliases, definitions) = get_js_aliases(identifier)
                 ns, ns_file_ref, ns_ref, ns_name = get_wrapping_vars(identifier)
                 file="{namespace:#{ns_file_ref},extension:{name:'#{ns}',identifier:'#{identifier}'},path:#{path}}"
-                "(function(Lanes,#{ns_name}_,#{aliases},FILE,window,undefined)"\
-                    "{\n#{js}\n})"\
-                    "(window.Lanes,#{ns_ref}window.Lanes.Vendor.ld,"\
-                    "#{definitions},#{file},window);"
+                "(function(Lanes,#{ns_name}_,#{aliases},FILE,window,undefined)" \
+                "{\n#{js}\n})" \
+                "((window.Lanes = (window.Lanes || {})),#{ns_ref}" \
+                "(window.Lanes.Vendor = (window.Lanes.Vendor || {})).ld," \
+                "#{definitions},#{file},window);"
             end
 
         end
