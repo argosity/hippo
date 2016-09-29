@@ -4,11 +4,10 @@ $lanes-icon-font: 'FontAwesome';
 
 @import "./fonts/font-awesome";
 
-button, a.btn {
-    .icon {
+button, a.btn, [role=button] {
+    .icon:not(.flush) {
         margin-right: 0.5em;
     }
-    &.flush .icon { margin-right: 0; }
     &.icon:before{
         font-family: $lanes-icon-font;
     }

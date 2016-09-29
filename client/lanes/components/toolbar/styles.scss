@@ -15,8 +15,11 @@
     align-items: center;
     flex-wrap: wrap;
 
-    .btn {
-        &.save {
+
+    .navbar-btn {
+        &.save > a {
+            width: 100%;
+            @extend .btn;
             @extend .btn-primary;
             // the save button needs to be clicable even if disabled
             &.disabled {
