@@ -60,15 +60,24 @@ class Lanes.Components.Modal extends Lanes.React.Component
 
         cls = _.classnames('lanes-modal', @state.className, @context.uistate?.layout_size)
         Body = @state.body
-        <BS.Modal.Dialog className={cls} bsSize={@state.size} onHide={@_hide}>
-            <BS.Modal.Header>
-                <BS.Modal.Title>{@state.title}</BS.Modal.Title>
-            </BS.Modal.Header>
+        <span>
+            <BS.Modal
+                show={@state.show}
+                className={cls}
+                bsSize={@state.size}
+                onHide={@_hide}
+                container={@}
+            >
 
-            <BS.Modal.Body style={maxHeight: @context.viewport.height - 250}>
-                <Body {...@props} modal={@} />
-            </BS.Modal.Body>
+                <BS.Modal.Header>
+                    <BS.Modal.Title>{@state.title}</BS.Modal.Title>
+                </BS.Modal.Header>
 
-            <BS.Modal.Footer>{buttons}</BS.Modal.Footer>
+                <BS.Modal.Body style={maxHeight: @context.viewport.height - 250}>
+                    <Body {...@props} modal={@} />
+                </BS.Modal.Body>
 
-        </BS.Modal.Dialog>
+                <BS.Modal.Footer>{buttons}</BS.Modal.Footer>
+
+            </BS.Modal>
+        </span>
