@@ -37,7 +37,6 @@ class Lanes.Components.Toolbar.RemoteChangeSets extends Lanes.React.Component
         model: Lanes.PropTypes.State
 
     render: ->
-        console.log 'render rcs', @model.cid
         return null unless @model?.changes
         title = <span>
             <i className="icon icon-cloud-download icon-lg" />
