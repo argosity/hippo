@@ -15,7 +15,6 @@ class Lanes.Workspace.ScreenView extends Lanes.React.Component
         allScreens: -> Lanes.Screens.Definitions.all
 
     bindEvents:
-        displaying: 'change:active remove add'
         allScreens: 'change:loading'
 
     renderScreen: (screen) ->
