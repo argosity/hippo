@@ -37,15 +37,19 @@ class Lanes.Components.Toolbar.RemoteChangeSets extends Lanes.React.Component
         model: Lanes.PropTypes.State
 
     render: ->
+        console.log 'render rcs', @model.cid
         return null unless @model?.changes
         title = <span>
             <i className="icon icon-cloud-download icon-lg" />
             <LC.CountBadge superScript count={@model.changes.length} />
         </span>
-        <BS.Nav navbar pullRight className="changes-notification">
-          <BS.DropdownButton id="record-changes" title={title}>
-              <div className="scroller">
-                  {@model.changes.map (ch) -> <Change key={ch.cid} model={ch} />}
-              </div>
-          </BS.DropdownButton>
-        </BS.Nav>
+
+        <div className="changes-notification">
+            <BS.DropdownButton id="record-changes"
+                title={title}
+            >
+                <div className="scroller">
+                    {@model.changes.map (ch) -> <Change key={ch.cid} model={ch} />}
+                </div>
+            </BS.DropdownButton>
+        </div>

@@ -8,11 +8,10 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
         commands: React.PropTypes.object.isRequired
 
     modelBindings:
-        changedModel: -> @props.commands.getModel()
+        model: 'props'
 
     bindEvents:
         changedModel: 'remote-update isSavable'
-
 
     EditToggle: ->
         return null unless @props.commands.canEditModel()
@@ -41,5 +40,5 @@ class Lanes.Components.Toolbar extends Lanes.React.Component
             <BS.NavItem className="spacer" />
 
             <@EditToggle />
-            <LC.Toolbar.RemoteChangeSets model=@changedModel />
+            <LC.Toolbar.RemoteChangeSets model=@model />
         </BS.Nav>

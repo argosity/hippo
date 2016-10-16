@@ -108,7 +108,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             value[@props.labelField]
         else
             value
-        clean = LC.Form.FieldMixin.statics.cleanSizeProps(props)
+        clean = LC.Form.FieldMixin.statics.cleanSizeProps(props, @)
+
         <BS.FormControl.Static {...clean}>{label}</BS.FormControl.Static>
 
     renderSelectControl: (props) ->

@@ -13,7 +13,7 @@ class Lanes.Screens.CommonComponents extends Lanes.React.Component
         <div>
             {unless @networkActivity is false
                 <LC.NetworkActivityOverlay model={model} {...@props} /> }
-            <LC.Toolbar {...@props} {...@props.toolbarProps}>
+            <LC.Toolbar {...@props} {...@props.toolbarProps} model={model}>
                 {@props.children}
             </LC.Toolbar>
             {<LC.ErrorDisplay model={model} {...@props} /> unless @errors  is false}

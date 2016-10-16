@@ -22,6 +22,9 @@
     }
 
     .dropdown-menu {
+        width: 300px;
+        right: 0;
+        left: -200px;
         .update {
             border-bottom: 1px solid $table-border-color;
             margin-bottom: 5px;
@@ -45,7 +48,6 @@
                 margin-left: 0.5rem;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-                max-width: 180px;
                 overflow: hidden;
             }
         }

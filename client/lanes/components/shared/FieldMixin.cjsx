@@ -121,8 +121,11 @@ Lanes.Components.Form.FieldMixin = {
             else
                 ['none', 'None']
     statics:
-        cleanSizeProps: (props) ->
-            LC.Form.FieldMixin.statics.cleanColumnProps(props, @, 'xs', 'sm', 'md', 'lg')
+        cleanSizeProps: (props, comp = {}) ->
+            LC.Form.FieldMixin.statics.cleanColumnProps(props, comp,
+                'xs', 'sm', 'md', 'lg',
+                'xsOffset', 'smOffset', 'mdOffset', 'lgOffset'
+            )
 
         cleanColumnProps: (props, comp, xtra...) ->
             _.omit( props,  _.keys(comp.constructor.propTypes).concat([

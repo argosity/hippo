@@ -8,6 +8,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
         parentModel: Lanes.PropTypes.State
         commands:    React.PropTypes.object
         onModelSet:  React.PropTypes.func
+        associationName: React.PropTypes.string
 
     mixins: [
         Lanes.Components.Form.InputFieldMixin
@@ -62,6 +63,7 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
 
     renderInputField: (props, handlers) ->
         model = @props.parentModel or @props.model
+
         <BS.InputGroup className="record-finder">
             <BS.FormControl
                 {...props} {...handlers}

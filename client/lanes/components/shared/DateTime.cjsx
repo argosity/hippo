@@ -32,7 +32,7 @@ class Lanes.Components.DateTime extends Lanes.React.Component
             value:     @fieldMixinGetValue()
             onChange:  @handleDateTimeChange
         }, @props)
-
+        props = _.omit(LC.Form.FieldMixin.statics.cleanSizeProps(props), 'writable')
         <Lanes.Vendor.ReactWidgets.DateTimePicker
             {...props}
         />
