@@ -1,4 +1,7 @@
 ALL_INSTANCES = []
+class FakeHistory
+    push:    Lanes.emptyFn
+    replace: Lanes.emptyFn
 
 class Lanes.React.Viewport extends Lanes.Models.State
 
@@ -6,18 +9,20 @@ class Lanes.React.Viewport extends Lanes.Models.State
     @displayError: (msg) -> _.first(ALL_INSTANCES)?.displayError(msg)
 
     session:
-        width:      'number'
-        height:     'number'
-        el:         'element'
-        selector:   'string'
-        domRoot:    'element'
-        reactRoot:  'object'
-        lanes:      'element'
-        modalProps: 'object'
+        width:          'number'
+        height:         'number'
+        el:             'element'
+        selector:       'string'
+        domRoot:        'element'
+        reactRoot:      'object'
+        lanes:          'element'
+        modalProps:     'object'
         pubSubDisabled: 'boolean'
-        rootComponent: 'any'
-        rootProps:   'object'
-        rootElement:  'object'
+        rootComponent:  'any'
+        rootProps:      'object'
+        rootElement:    'object'
+        history:        'object'
+        useHistory:     'boolean'
 
     constructor: ->
         super
@@ -43,11 +48,33 @@ class Lanes.React.Viewport extends Lanes.Models.State
 
     onBoot: ->
         prev = _.dom(this.domRoot.previousElementSibling)
+        if @useHistory
+            @initializeHistory()
+        else
+            @history = new FakeHistory
+
         if prev.hasClass('loading')
             prev.addClass('complete')
             _.delay(->
                 prev.remove()
             , 100)
+
+    initializeHistory: ->
+        useBasename = Lanes.Vendor.BrowserHistory.useBasename
+
+        @history = useBasename(Lanes.Vendor.BrowserHistory.createHistory)({
+            basename: Lanes.config.root_path
+        })
+        @_historyStopListening = @history.listen (location) ->
+            Lanes.Screens.Definitions.setBrowserLocation(location)
+
+        Lanes.Screens.Definitions.setBrowserLocation(
+            @history.getCurrentLocation()
+        )
+
+    close: ->
+        @hideModal()
+        @_historyStopListening?()
 
     _updateDimensions: ->
         this.set

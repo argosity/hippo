@@ -1,12 +1,8 @@
 class ScreenList extends Lanes.React.Component
-    propTypes:
-        history: React.PropTypes.shape(
-            push: React.PropTypes.func
-        ).isRequired
 
     activateScreen: ->
         @model.display().then (screen) =>
-            @props.history.push(screen.historyUrl())
+            @context.viewport.history.push(screen.historyUrl())
 
     render: ->
         <li>
@@ -17,11 +13,6 @@ class ScreenList extends Lanes.React.Component
 
 
 class ScreenGroup extends Lanes.React.Component
-
-    propTypes:
-        history: React.PropTypes.shape(
-            push: React.PropTypes.func
-        ).isRequired
 
     toggleActive: ->
         @model.active = !@model.active
@@ -40,11 +31,6 @@ class ScreenGroup extends Lanes.React.Component
         </li>
 
 class Lanes.Workspace.ScreensMenu extends Lanes.React.Component
-
-    propTypes:
-        history: React.PropTypes.shape(
-            push: React.PropTypes.func
-        ).isRequired
 
     modelBindings:
         user: -> Lanes.current_user

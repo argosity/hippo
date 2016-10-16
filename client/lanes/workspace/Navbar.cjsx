@@ -2,11 +2,6 @@ class Lanes.Workspace.Navbar extends Lanes.React.Component
     modelBindings:
         settings: -> Lanes.config.system_settings
 
-    propTypes:
-        history: React.PropTypes.shape(
-            push: React.PropTypes.func
-        ).isRequired
-
     contextTypes:
         uistate: React.PropTypes.object.isRequired
 
@@ -38,5 +33,5 @@ class Lanes.Workspace.Navbar extends Lanes.React.Component
                     <i className="icon"></i>
                 </button>
             </div>
-            <Lanes.Workspace.Tabs history={@props.history} />
+            <Lanes.Workspace.Tabs />
         </div>

@@ -3,18 +3,14 @@ class TabView extends Lanes.React.Component
     setModelState: (nextState) ->
         if @model.active
             _.dom(document.head).qs('title').text = @model.title()
-            @props.history.replace(@model.historyUrl())
+            @context.viewport.history.replace(@model.historyUrl())
         if Lanes.Screens.Definitions.displaying.length is 0
-            @props.history.push('/')
+            @context.viewport.history.push('/')
         @setState(nextState)
 
-    propTypes:
-        history: React.PropTypes.shape(
-            push: React.PropTypes.func
-        ).isRequired
-
     activate: ->
-        @props.history.push(@model.historyUrl())
+        @model.active = true
+        @context.viewport.history.push(@model.historyUrl())
         null
 
     close: -> @model.remove()
@@ -28,10 +24,6 @@ class TabView extends Lanes.React.Component
 
 
 class Lanes.Workspace.Tabs extends Lanes.React.Component
-    propTypes:
-        history: React.PropTypes.shape(
-            push: React.PropTypes.func
-        ).isRequired
 
     modelBindings:
         collection: -> Lanes.Screens.Definitions.displaying
