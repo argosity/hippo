@@ -15,9 +15,9 @@ module Lanes
                 identified_by :current_user
 
                 def connect
-                    self.current_user = Lanes::User.where(id: cookies['user_id']).first
-
-                    reject_unauthorized_connection unless current_user
+                    reject_unauthorized_connection unless
+                        cookies['user_id'] &&
+                        self.current_user = Lanes::User.where(id: cookies['user_id']).first
                 end
 
                 protected
@@ -35,8 +35,8 @@ module Lanes
                     'adapter' => 'postgresql'
                 }
                 config.connection_class = -> { Connection }
-                config.allowed_request_origins = -> (env) {
-                    "http://localhost:9292"
+                config.allowed_request_origins = -> (host) {
+                    host
                 }
 
                 ActionCable::Server::Base.config = config
