@@ -2,6 +2,7 @@ development:
   adapter: postgresql
   database: appy-app_dev
   host: /tmp
+  pool:  <%= ENV["DB_POOL"] || 12 %>
 
 test:
   adapter: postgresql
