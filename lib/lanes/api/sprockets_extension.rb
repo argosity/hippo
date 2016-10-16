@@ -85,7 +85,7 @@ module Lanes
                     app.configure :test, :development do
                         app.get "#{Lanes.config.assets_path_prefix}/*" do |path|
                             env_sprockets = request.env.dup
-                            env_sprockets['PATH_INFO'] = path
+                            env_sprockets['PATH_INFO'] = path.gsub(/\?\d+$/, '')
                             settings.sprockets.call env_sprockets
                         end
                     end
