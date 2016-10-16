@@ -64,7 +64,9 @@ class ScreenDefinition extends Lanes.Models.BasicModel
                     @url_prefix
                 else
                     "#{@extension.toLowerCase()}/screens"
-                @assets.map (asset) -> "#{prefix}/#{asset}"
+                @assets.map (asset) ->
+                    "//#{Lanes.config.api_host}" +
+                        "#{Lanes.config.assets_path_prefix}/#{prefix}/#{asset}"
 
         extension_path:
             deps: ['extension', 'model'], fn: ->

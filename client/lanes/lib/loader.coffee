@@ -88,8 +88,6 @@ class Lanes.lib.AssetLoader
 
 Lanes.lib.RequestAssets = (urls...) ->
     urls = urls[0] if urls.length == 1 && _.isArray(urls[0])
-    for url, i in urls
-        urls[i] = Lanes.config.assets_path_prefix.concat( '/', urls[i] )
     new _.Promise(  (resolve, reject) ->
         new Lanes.lib.AssetLoader(urls, (completed) ->
             failures = _.pick(completed, (status, url) -> !status.success )

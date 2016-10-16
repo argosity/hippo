@@ -74,12 +74,14 @@ Lanes.Models.Sync = {
 
         # Ensure that we have a URL.
         options.url or Lanes.Models.Sync.urlError()
-        options.url += '.json'
+
+        options.url = '//' + Lanes.config.api_host + options.url + '.json'
+
         unless _.isEmpty(query)
             options.url += '?' + Lanes.lib.objToParam(query)
 
         options.headers ||= {}
-
+        options.withCredentials = true
         if Lanes.config.csrf_token
             options.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
         options.contentType = "application/json"
