@@ -8,8 +8,7 @@ class ModelConfig
 
     add: (model) ->
         if @count is 0
-            Lanes.log.info "[pubsub] subscribe to: #{@channel}"
-            Lanes.Models.PubSub.mb?.subscribe(@channel, @mbCallBack(@models))
+            Lanes.Models.PubSub.channel?.subscribe(@channel) #, @mbCallBack(@models))
         @count += 1
         config = @modelConfig(model)
         config.count += 1
@@ -32,14 +31,11 @@ class ModelConfig
             _.remove(@models, {model: model}) if config.count is 0
 
     unsubscribe: ->
-        Lanes.log.info "[pubsub] unsubscribe from: #{@channel}"
-        Lanes.Models.PubSub.mb?.unsubscribe( @channel )
+        Lanes.Models.PubSub.channel?.unsubscribe( @channel )
         delete @type.records[@id]
 
-    mbCallBack: (models) ->
-        (changes) ->
-            config.model.addChangeSet(changes) for config in models
-
+    onChange: (data) ->
+        config.model.addChangeSet(data) for config in @models
 
 class ModelType
 
@@ -54,6 +50,11 @@ class ModelType
     remove: (model) ->
         @records[model.id]?.remove(model)
 
+    onChange: (id, data) ->
+        @records[id].onChange(data)
+
+    unsubscribeAll: ->
+        record.unsubscribe() for id, record of @records
 
 class ModelTypesCollection extends Lanes.Models.BasicCollection
 
@@ -64,6 +65,30 @@ class ModelTypesCollection extends Lanes.Models.BasicCollection
         path = _.result(model, 'api_path')
         models = this.get(path) || this.add(id: path)
 
+
+CableChannel = {
+    connected: ->
+        @subscribe 'file-change', ->
+            Lanes.lib.HotReload.initiate(changes)
+
+    subscribe: (channel) ->
+        Lanes.log.info "[pubsub] subscribe to: #{channel}"
+
+        @perform("on", {channel})
+
+    unsubscribe: (channel) ->
+        Lanes.log.info "[pubsub] unsubscribe from: #{channel}"
+        @perform("off", {channel})
+
+    received: (data) ->
+        [channel, model, id] = data.channel.match(/(.*)\/(\d+)/)
+        Lanes.log.info "[pubsub] change recvd for: #{channel}"
+
+        Lanes.Models.PubSub.onChange(
+            model, id, _.omit(data, 'channel')
+        )
+
+}
 
 Lanes.Models.PubSub = {
 
@@ -85,10 +110,22 @@ Lanes.Models.PubSub = {
         @types = new ModelTypesCollection
 
     initialize: ->
-        @mb ||= MessageBus.noConflict()
-        @mb.baseUrl = Lanes.config.api_host + '/'
-        @mb.start()
-        @mb.subscribe("/file-change", (changes) ->
-            Lanes.lib.HotReload.initiate(changes)
-        )
+        Lanes.current_user.on 'change:isLoggedIn', _.bind(@onLoginChange, @)
+        @onLoginChange() if Lanes.current_user.isLoggedIn
+
+    onChange: (path, id , data) ->
+        @types.get(path).onChange(id, data)
+
+    onLoginChange: ->
+        if Lanes.current_user.isLoggedIn
+            @cable = ActionCable.createConsumer(
+                "ws://#{Lanes.config.api_host}#{Lanes.config.api_path}/ws"
+            )
+            @channel = @cable.subscriptions.create "Lanes::API::PubSub", CableChannel
+        else
+            Lanes.Models.PubSub.types.each (t) -> t.unsubscribeAll()
+            delete @channel
+            @cable.disconnect()
+            delete @cable
+
 }

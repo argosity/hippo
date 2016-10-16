@@ -10,9 +10,19 @@ module Lanes
         get Lanes.config.api_path + '/asset/*',
             &API::Handlers::Asset.getter
 
+        get Lanes.config.api_path + '/ws' do
+            API::Cable.server.call(env)
+        end
+
         get Lanes.config.api_path + '/boostrap.json' do
             content_type 'application/json'
             client_bootstrap_data
+        end
+
+        post Lanes.config.api_path + '/dev-file-change.json' do
+            API::PubSub.publish("file-change", data)
+
+            "OK"
         end
 
         Extensions.each(reversed: true) do | ext |

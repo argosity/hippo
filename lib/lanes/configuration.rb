@@ -4,7 +4,6 @@ require 'pathname'
 require 'carrierwave'
 require 'active_job'
 require 'jobba'
-require 'message_bus'
 
 module Lanes
 
@@ -59,8 +58,7 @@ module Lanes
 
             Resque.redis.namespace = "#{identifier}::resque"
             Resque.redis = Lanes.config.redis
-            MessageBus.redis_config = Lanes.config.redis
-            MessageBus.logger = Lanes.logger
+
             Lanes::SystemSettings.for_ext('lanes').apply!
             Extensions.each{|ext| ext.apply_configuration }
         end

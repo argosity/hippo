@@ -1,41 +1,23 @@
-require 'message_bus'
-
 module Lanes
     module API
 
-        class PubSub
-
-            def self.publish(channel, data)
-                Lanes.logger.debug "publishing on: #{channel}"
-                ::MessageBus.publish channel, data
+        class PubSub < Cable::Channel
+            PREFIX = 'ps:'
+            def on(data)
+                channel = PREFIX + data['channel']
+                stream_from channel
             end
 
-            def self.initialize(api=nil)
-                #return unless Extensions.require_pub_sub?
-                Lanes.config.get(:environment) do | env |
-                    MessageBus.logger = Lanes.logger
-                end
+            def off(data)
+                channel = PREFIX + data['channel']
+                cb = pubsub.instance_variable_get('@listener')
+                       .instance_variable_get('@subscribers')[channel].first
+                pubsub.unsubscribe(channel, cb)
+            end
 
-                require "oj"
-                require_relative "updates"
-                require 'message_bus'
-                api.use MessageBus::Rack::Middleware if api
-
-                if defined?(::PhusionPassenger)
-                    PhusionPassenger.on_event(:starting_worker_process) do |forked|
-                        MessageBus.after_fork if forked
-                    end
-                end
-
-                Updates.relay!
-
-                ::Lanes::API.routes.draw do
-                    post '/file-change.json' do
-                        ::Lanes::API::PubSub.publish("/file-change", data)
-                        "OK"
-                    end
-                end
-
+            def self.publish(channel, data)
+                ActionCable.server.broadcast PREFIX + channel,
+                                             data.merge(channel: channel)
             end
 
         end

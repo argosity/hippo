@@ -5,8 +5,9 @@ module ::Guard
 
         def initialize(options = {})
             super
+            api = Lanes.config.api_path
             @uri = URI.parse(
-                "http://localhost:#{options[:port]}/file-change.json"
+                "http://localhost:#{options[:port]}#{api}/dev-file-change.json"
             )
         end
 

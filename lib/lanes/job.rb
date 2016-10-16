@@ -1,5 +1,4 @@
 require 'jobba'
-require 'lanes/api/pub_sub'
 
 module Jobba
     module RecordStatus
