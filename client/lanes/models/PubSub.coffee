@@ -118,9 +118,9 @@ Lanes.Models.PubSub = {
 
     onLoginChange: ->
         if Lanes.current_user.isLoggedIn
-            @cable = ActionCable.createConsumer(
-                "ws://#{Lanes.config.api_host}#{Lanes.config.api_path}/ws"
-            )
+            url = window.location.protocol.replace('http', 'ws') +
+                "//#{Lanes.config.api_host}#{Lanes.config.api_path}/ws"
+            @cable = ActionCable.createConsumer(url)
             @channel = @cable.subscriptions.create "Lanes::API::PubSub", CableChannel
         else
             Lanes.Models.PubSub.types.each (t) -> t.unsubscribeAll()
