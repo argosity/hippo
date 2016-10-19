@@ -15,6 +15,7 @@ class Lanes.Workspace.ScreenView extends Lanes.React.Component
         allScreens: -> Lanes.Screens.Definitions.all
 
     bindEvents:
+        displaying: 'add remove reset change:active'
         allScreens: 'change:loading'
 
     renderScreen: (screen) ->
@@ -33,7 +34,6 @@ class Lanes.Workspace.ScreenView extends Lanes.React.Component
         </div>
 
     render: ->
-
         child = if @displaying.isEmpty() then <@BaseView /> else @displaying.map(@renderScreen)
         <div className={"page-content #{@context.uistate.layout_size}"}>
             {@renderLoading() if Lanes.Screens.Definitions.all.isLoading()}
