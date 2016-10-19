@@ -14,13 +14,11 @@ class Lanes.Workspace.Navbar extends Lanes.React.Component
             "menu-hidden": !@model.screen_menu_shown
 
     Logo: ->
-        if @settings.logo?.url
+        if @settings.logo?.thumbnail_url
             url = "//#{Lanes.config.api_host}#{@settings.logo.thumbnail_url}"
             <img src={url} />
         else
-            <span>
-                {Lanes.Extensions.controlling().title()}
-            </span>
+            <span>{Lanes.Extensions.controlling().title()}</span>
 
     render: ->
 
