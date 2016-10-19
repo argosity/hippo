@@ -22,7 +22,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
         rootProps:      'object'
         rootElement:    'object'
         history:        'object'
-        useHistory:     'boolean'
+        useHistory:     {type: 'boolean', default: true}
 
     constructor: ->
         super
@@ -52,7 +52,6 @@ class Lanes.React.Viewport extends Lanes.Models.State
             @initializeHistory()
         else
             @history = new FakeHistory
-
         if prev.hasClass('loading')
             prev.addClass('complete')
             _.delay(->
@@ -70,6 +69,13 @@ class Lanes.React.Viewport extends Lanes.Models.State
 
         Lanes.Screens.Definitions.setBrowserLocation(
             @history.getCurrentLocation()
+        )
+
+        Lanes.Screens.Definitions.displaying.on('change:active', (screen) =>
+            if screen.active
+                @history.replace(screen.historyUrl())
+            if Lanes.Screens.Definitions.displaying.length is 0
+                @history.push('/')
         )
 
     close: ->
