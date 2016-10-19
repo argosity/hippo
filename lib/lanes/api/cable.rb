@@ -31,9 +31,7 @@ module Lanes
                 require_relative 'updates'
                 @@config = ActionCable::Server::Configuration.new
                 config.logger = Lanes.logger
-                config.cable = {
-                    'adapter' => 'postgresql'
-                }
+                config.cable = Lanes.config.cable
                 config.connection_class = -> { Connection }
                 config.allowed_request_origins = -> (host) {
                     host

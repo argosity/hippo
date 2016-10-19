@@ -104,6 +104,9 @@ module Lanes
         # 'fog' or any other value that CarrierWave accepts
         config_option :storage_type, :file
 
+        # Configuration for action cable
+        config_option :cable, { 'adapter' => 'redis' }
+
         def api_path
             mounted_at + 'api'
         end
