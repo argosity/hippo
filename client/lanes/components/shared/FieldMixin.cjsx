@@ -122,10 +122,7 @@ Lanes.Components.Form.FieldMixin = {
                 ['none', 'None']
     statics:
         cleanSizeProps: (props, comp = {}) ->
-            LC.Form.FieldMixin.statics.cleanColumnProps(props, comp,
-                'xs', 'sm', 'md', 'lg',
-                'xsOffset', 'smOffset', 'mdOffset', 'lgOffset'
-            )
+            Lanes.u.cleanBsSizes( LC.Form.FieldMixin.statics.cleanColumnProps(props, comp) )
 
         cleanColumnProps: (props, comp, xtra...) ->
             _.omit( props,  _.keys(comp.constructor.propTypes).concat([
@@ -137,9 +134,6 @@ Lanes.Components.Form.FieldMixin = {
         renderEmptyColumn: (props = @props) ->
             props = @cleanColumnProps(props, @)
             <BS.Col {...props} />
-
-        cleanBsSizes: (props) ->
-            _.omit(props, 'lg', 'md', 'sm', 'xs')
 
     render: ->
         [type, method] = @renderType()

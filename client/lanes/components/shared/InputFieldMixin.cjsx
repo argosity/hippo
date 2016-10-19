@@ -37,6 +37,6 @@ Lanes.Components.Form.InputFieldMixin =
         if @props.onEnter         then handlers.onKeyDown = @handleKeyDown
         if @props.selectOnFocus   then handlers.onFocus   = @selectOnFocus
 
-        props = LC.Form.FieldMixin.statics.cleanBsSizes(props)
+        props = Lanes.u.cleanBsSizes(props)
 
         @renderInputField(props, handlers)

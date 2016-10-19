@@ -15,13 +15,11 @@ distillTypes = (type, ns) ->
     _.reduce( type.split( '.' ), ( ( memo, val ) -> return if memo then memo[ val ] else null ),  ns )
 
 Lanes.u = {
-
-    withReactContext: (newContext, fn) ->
-        previousContext = Lanes.Vendor.ReactContext.current
-        Lanes.Vendor.ReactContext.current = _.clone newContext
-        ret = fn()
-        Lanes.Vendor.ReactContext.current = previousContext
-        ret
+    cleanBsSizes: (props) ->
+        _.omit(props,
+            'xs', 'sm', 'md', 'lg',
+            'xsOffset', 'smOffset', 'mdOffset', 'lgOffset'
+        )
 
     makeComparatorUsing: (method) ->
         (a, b) -> Lanes.u.comparator(a[method], b[method])

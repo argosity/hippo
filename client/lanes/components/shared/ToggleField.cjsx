@@ -8,6 +8,7 @@ class Lanes.Components.ToggleField extends Lanes.React.Component
         null
 
     renderDisplay: (props) ->
+        props = Lanes.u.cleanBsSizes(props)
         <Lanes.Vendor.ReactToggle
             {...props}
             checked={!!@props.model[@props.name]}
@@ -15,7 +16,7 @@ class Lanes.Components.ToggleField extends Lanes.React.Component
         />
 
     renderEdit: (props) ->
-
+        props = Lanes.u.cleanBsSizes(props)
         <Lanes.Vendor.ReactToggle
             {...props}
             onChange={@handleToggleChange}
