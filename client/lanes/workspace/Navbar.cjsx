@@ -5,7 +5,8 @@ class Lanes.Workspace.Navbar extends Lanes.React.Component
     contextTypes:
         uistate: React.PropTypes.object.isRequired
 
-    switchMenu: ->
+    switchMenu: (ev) ->
+        ev.preventDefault()
         @context.uistate.nextSidebarState()
 
     classNames: ->

@@ -1,6 +1,7 @@
 class ScreenList extends Lanes.React.Component
 
-    activateScreen: ->
+    activateScreen: (ev) ->
+        ev.preventDefault()
         @model.display().then (screen) =>
             @context.viewport.history.push(screen.historyUrl())
 
@@ -14,7 +15,8 @@ class ScreenList extends Lanes.React.Component
 
 class ScreenGroup extends Lanes.React.Component
 
-    toggleActive: ->
+    toggleActive: (ev) ->
+        ev.preventDefault()
         @model.active = !@model.active
         undefined
 
@@ -38,7 +40,8 @@ class Lanes.Workspace.ScreensMenu extends Lanes.React.Component
     renderGroup: (group) ->
         <ScreenGroup {...@props} model=group key=group.id />
 
-    logOut: ->
+    logOut: (ev) ->
+        ev.preventDefault()
         Lanes.current_user.logout()
 
     render: ->
