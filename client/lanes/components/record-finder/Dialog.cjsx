@@ -11,12 +11,19 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.React.Component
     contextTypes:
         viewport: Lanes.PropTypes.State.isRequired
 
+    getInitialState: -> {}
+
     warning: ->
         <BS.Alert bsStyle='warning'>
              <strong>{@model.lastServerMessage}</strong>
         </BS.Alert>
 
-    onRecordSelect: (model) ->
+    isGridRowFocused: (row, index) ->
+        @state.selectedRow is index
+
+    onRecordSelect: (model, selectedRow) ->
+        @setState({selectedRow})
+        @props.query.markModified()
         return unless model
         @props.query.loadModel(model).then @props.onRecordSelect
         _.delay( =>
@@ -47,6 +54,7 @@ class Lanes.Components.RecordFinder.Dialog extends Lanes.React.Component
             </div>
             <LC.Grid
                 onColumnClick={@onColumnSort}
+                isRowFocused={@isGridRowFocused}
                 query={@props.query} height=200 autoLoadQuery
                 onSelectionChange={@onRecordSelect}
             />
