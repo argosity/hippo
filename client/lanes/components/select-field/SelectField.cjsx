@@ -15,6 +15,7 @@ class Lanes.Components.SelectField extends Lanes.React.Component
         multiSelect:  React.PropTypes.bool
         fetchOnSelect:React.PropTypes.bool
         withClearBtn: React.PropTypes.bool
+        fallBackValue:React.PropTypes.string
 
     getDefaultProps: ->
         labelField: 'label', idField: 'id'
@@ -48,6 +49,8 @@ class Lanes.Components.SelectField extends Lanes.React.Component
             label = _.find( @props.choices, id: model.id)?[@props.labelField]
         if label
             {id: model.id, "#{@props.labelField}": label}
+        else if @props.fallBackValue
+            @props.fallBackValue
         else if model.id
             model.id
         else
