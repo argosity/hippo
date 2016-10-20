@@ -6,7 +6,9 @@ $lanes-field-margin: 6px;
 
 
 .lanes-field {
-
+    .form-control {
+        height: inherit;
+    }
     .control-label {
         display: block;
         min-height: 18px;
