@@ -30,7 +30,7 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
         className = _.classnames('image-asset', @props.className, {
             'with-image': @asset.hasImage
         })
-
+        console.log @asset.file_data
         <LC.FieldWrapper
             {...@props}
             className={className}
@@ -39,8 +39,11 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
             <Component />
             <form>
                 <label className="selector">
-                    <span>{if @asset.hasImage then 'Update' else 'Choose'}</span>
-                    <input id='file' className="file" type="file" onChange={@handleImageChange} />
+                    <span>
+                        {if @asset.hasImage then 'Update' else 'Choose'}
+                    </span>
+                    <input id='file' className="file" type="file"
+                        onChange={@handleImageChange} />
                 </label>
             </form>
         </LC.FieldWrapper>

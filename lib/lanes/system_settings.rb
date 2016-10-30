@@ -13,20 +13,14 @@ module Lanes
                 SystemSettings.persist!(@extension_id, self.to_h)
             end
             def apply!
-                CarrierWave.configure do |config|
-                    config.storage = Lanes.config.storage_type.to_sym
-                    config.root = lambda {
-                        Lanes::Extensions.controlling
-                            .root_path.join('public/files').to_s
-                    }
-                    config.asset_host = Lanes.config.api_path + '/asset'
-                    if self.fog_credentials and Object.const_defined?(:Fog)
-                        config.fog_credentials = self.fog_credentials
-                    end
-                    config.ignore_integrity_errors = false
-                    config.ignore_processing_errors = false
-                    config.ignore_download_errors = false
-                end
+                require 'shrine/storage/file_system'
+                ext = Extensions.controlling
+                Lanes::Concerns::AssetUploader.storages = {
+                    cache: Shrine::Storage::FileSystem.new(ext.root_path,
+                                                           prefix: "tmp/cache"),
+                    store: Shrine::Storage::FileSystem.new(ext.root_path,
+                                                           prefix: "public/files")
+                }
             end
         end
 

@@ -4,8 +4,6 @@ module Lanes::API::Handlers
 
         def self.saver
             lambda do
-                Lanes.logger.debug "Saving File. Root=#{CarrierWave.root}"
-
                 path = "#{params['extension_id']}/#{params['owner_type']}"
                 model = path.underscore.camelize.constantize
 
@@ -17,7 +15,8 @@ module Lanes::API::Handlers
                             else
                                 owner.send("build_#{params['owner_association']}")
                             end
-                    asset.store_uploaded_file(params['file'])
+
+                    asset.update(file: params['file'])
 
                     json_reply std_api_reply asset.new_record? ? :update : :create,
                                              asset,
@@ -27,10 +26,10 @@ module Lanes::API::Handlers
         end
 
         def self.getter
+            root = Lanes::Extensions.controlling
+                       .root_path.join('public', 'files')
             lambda do
-                # files are stored using a random string, therefore we assume that anyone who
-                # knows the filename has access and don't empose any further restrictions
-                send_file CarrierWave::Uploader::Base.root.call + '/' + params['splat'].first
+-                send_file(root.join( params['splat'].first ).to_s)
             end
         end
     end

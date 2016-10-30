@@ -20,7 +20,6 @@ class Lanes.Components.FieldWrapper extends Lanes.React.BaseComponent
             {@props.label}
         </BS.ControlLabel>
 
-
     renderType: ->
         if @isEditingRecord()
             if @hasWriteAccess()
@@ -37,8 +36,9 @@ class Lanes.Components.FieldWrapper extends Lanes.React.BaseComponent
 
     render: ->
         [type, child] = @renderType()
+
         props = _.omit(@props,
-            'value', 'model', 'value', 'label', 'name'
+            'value', 'model', 'value', 'label', 'name', 'displayComponent'
         )
         unless child
             Comp = @props.displayComponent

@@ -1,37 +1,43 @@
+IMAGES = [
+    "image/png", "image/jpg", "image/gif"
+]
+
+IS_IMAGE = (content_type) ->
+    !!(content_type && IMAGES.indexOf(content_type) isnt -1)
+
 class Lanes.Models.Asset extends Lanes.Models.Base
 
     props:
         id:        'integer'
         order:     'integer'
-        thumbnail: 'object'
-        medium:    'object'
-        original:  'object'
-        metadata:  'object'
+        file_data: 'object'
 
     session:
-        data: 'string'
-        blob: 'object'
-        owner: 'object'
-        parent: 'object'
+        data:     'string'
+        blob:     'object'
+        owner:    'object'
+        parent:   'object'
+        metadata: 'object'
         parent_association: 'string'
 
     derived:
         original_url:
-            deps: ['data', 'original'], fn: ->
-                if @data then @data else @original?.url
+            deps: ['data', 'file_data'], fn: ->
+                if @data then @data else @urlFor('original')
         medium_url:
-            deps: ['data', 'medium'], fn: ->
-                if @data then @data else @medium?.url
+            deps: ['data', 'file_data'], fn: ->
+                if @data then @data else @urlFor('medium')
         thumbnail_url:
-            deps: ['data', 'thumbnail'], fn: ->
-                if @data then @data else @thumbnail?.url
+            deps: ['data', 'file_data'], fn: ->
+                if @data then @data else @urlFor('thumbnail')
 
         hasImage:
-            deps: ['data', 'original', 'metadata'], fn: ->
-                @metadata?.content_type?.includes?('image')
+            deps: ['data', 'file_data'], fn: ->
+                (@data && IS_IMAGE(@metadata.content_type)) ||
+                    (@file_data && IS_IMAGE(@file_data.original
+                        .metadata.mime_type))
     events:
         'change:blob': 'onBlobChange'
-        'parent:save': 'onParentSave'
 
     initialize: ->
         @on('change:parent', =>
@@ -40,11 +46,18 @@ class Lanes.Models.Asset extends Lanes.Models.Base
             @listenTo(@parent, 'save', @save)
         )
 
+    baseUrl: ->
+        Lanes.config.api_path + '/asset'
+
+    urlFor: (type) ->
+        data = @file_data?[type]
+        if data then "#{@baseUrl()}/#{data.id}" else undefined
 
     onBlobChange: ->
         if @blob
-            @metadata ||= {}
-            @metadata.content_type = @blob.type
+            @metadata = {
+                content_type: @blob.type
+            }
             reader = new FileReader()
             reader.onloadend = (ev) =>
                 @data = reader.result if ev.type is 'loadend'
@@ -69,7 +82,6 @@ class Lanes.Models.Asset extends Lanes.Models.Base
         url = Lanes.config.api_path + '/asset'
 
         Lanes.Vendor.xhr.post(url, {body: form}, (err, resp, body) =>
-            @blob = null
             if err
                 @errors = { http: err.message }
             else
@@ -77,5 +89,6 @@ class Lanes.Models.Asset extends Lanes.Models.Base
                 if reply.errors or reply.success is false
                     @errors = reply.errors
                 else
+                    @metadata = @blob = @data = null
                     @set( reply.data )
         )

@@ -1,5 +1,4 @@
 require_relative 'concerns/all'
-require 'carrierwave/orm/activerecord'
 
 module Lanes
 

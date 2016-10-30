@@ -36,7 +36,8 @@ Gem::Specification.new do |spec|
     spec.add_dependency "rack-test",              "~> 0.6"
 
     spec.add_dependency "bcrypt",                 "~> 3.1"
-    spec.add_dependency "carrierwave",            "~> 0.10.0"
+    spec.add_dependency "shrine",                 "~> 2.4"
+    spec.add_dependency "image_processing",       "~> 0.4"
     spec.add_dependency "coffee-react",           "~> 4.0"
     spec.add_dependency "coffee-script",          "~> 2.4"
     spec.add_dependency "compass-import-once",    "~> 1.0"
@@ -66,5 +67,5 @@ Gem::Specification.new do |spec|
     spec.add_development_dependency "bundler",    "~> 1.5"
     spec.add_development_dependency "diffy",      "~> 3.0"
     spec.add_development_dependency "growl",      "~> 1.0"
-
+    spec.add_development_dependency "shrine-memory", ">= 0.2.2"
 end

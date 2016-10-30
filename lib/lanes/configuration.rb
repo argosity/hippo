@@ -1,7 +1,7 @@
 require_relative "concerns/attr_accessor_with_default"
 require 'securerandom'
 require 'pathname'
-require 'carrierwave'
+require 'shrine'
 require 'active_job'
 require 'jobba'
 
@@ -99,10 +99,6 @@ module Lanes
         # id is used to load a settings object from the DB.
         # For testing or other uses it can be changed here
         config_option :configuration_id, (ENV['LANES_CONFIG_ID'] || 1)
-
-        # Storage engine to use, default to file, may also be set to
-        # 'fog' or any other value that CarrierWave accepts
-        config_option :storage_type, :file
 
         # Configuration for action cable
         config_option :cable, { 'adapter' => 'redis' }

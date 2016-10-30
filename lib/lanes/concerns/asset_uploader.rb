@@ -1,58 +1,36 @@
-require 'mini_magick'
-require 'carrierwave'
-require 'fastimage'
+require 'shrine'
+require 'image_processing/mini_magick'
 
 module Lanes::Concerns
 
-    class AssetUploader < CarrierWave::Uploader::Base
-
-        include CarrierWave::MiniMagick
-
-        process :store_attributes
-
-        version :medium,  :if => :image? do
-            process :resize_to_fit => [800, 800]
-        end
-
-        version :thumbnail,  :if => :image? do
-            process :resize_to_fit => [200,200]
-        end
-
-        def cache_dir
-            '/tmp'
-        end
-
-        def filename
-            if original_filename && model && model.read_attribute(mounted_as).present?
-                model.read_attribute(mounted_as)
-            end
-        end
-
-        def store_dir
-            token = secure_token
-            "#{token[0, 2]}/#{token[2, 2]}"
-        end
-
-        protected
-
-        def store_attributes
-            if file && model
-                model.metadata['size'] = file.size
-                model.metadata['content_type'] = file.content_type
-                if image?(file)
-                    img = ::MiniMagick::Image.open(file.file)
-                    model.metadata['width'] = img.width
-                    model.metadata['height'] = img.height
+    class AssetUploader < Shrine
+        module LocationHash
+            module InstanceMethods
+                CHAR_CHOICES = [*('a'..'z'),*('0'..'9')]
+                def generate_location(io, context)
+                    basename, _ = super.split("/")
+                    path = Array.new(3){ CHAR_CHOICES.shuffle[0,4].join }
+                    path.push(basename).join('/')
                 end
             end
         end
+        ::Shrine::Plugins.register_plugin(:location_hash, LocationHash)
 
-        def image?(new_file)
-            new_file.content_type.include? 'image'
-        end
+        include ImageProcessing::MiniMagick
 
-        def secure_token
-            model[mounted_as] ||= ::Lanes::Strings.random
+        plugin :activerecord
+        plugin :rack_file
+        plugin :processing
+        plugin :store_dimensions
+        plugin :determine_mime_type
+        plugin :versions
+        plugin :location_hash
+
+        process(:store) do |io, context|
+            size_800 = resize_to_limit(io.download, 800, 800)
+            size_500 = resize_to_limit(size_800,    500, 500)
+            size_300 = resize_to_limit(size_500,    300, 300)
+            {original: size_800, medium: size_500, thumbnail: size_300}
         end
 
     end
