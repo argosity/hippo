@@ -80,8 +80,9 @@ class Lanes.Models.AssociationMap
             new target_class(options.models || [], options)
         else
             options.model = target_class
-            options.association_name=name
-            new Lanes.Models.AssociationCollection(options.models || [], options)
+            options.association_name = name
+            klass = options.collectionClass or Lanes.Models.AssociationCollection
+            new klass(options.models || [], options)
 
     # returns a collection for the given association.
     collectionFor: (name, model, options = {}) ->
