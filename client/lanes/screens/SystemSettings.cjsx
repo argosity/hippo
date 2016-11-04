@@ -55,7 +55,8 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
                 </BS.NavItem>
             </BS.Nav>
             <BS.Row>
-                <LC.ImageAsset sm=4 model={@config} name='logo'
+
+                <LC.ImageAsset sm=4 asset={@config.logo}
                     label='Logo' size='thumb' />
             </BS.Row>
             {for id, Ext of Lanes.Extensions.instances when Ext.getSettingsElement
