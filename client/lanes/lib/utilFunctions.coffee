@@ -168,6 +168,8 @@ _.mixin({
                 false
             when _.isNumber(value)
                 !value
+            when _.isObject(value)
+                _.keys(value).length is 0
             else
                 _.isEmpty(value)
 
