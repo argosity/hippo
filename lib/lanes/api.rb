@@ -13,6 +13,3 @@ require_relative 'api/root'
 Lanes.config.get(:environment) do
     require_relative("api/test_specs") unless Lanes.env.production?
 end
-
-require_relative "api/handlers/asset.rb"
-require_relative 'api/default_routes'
