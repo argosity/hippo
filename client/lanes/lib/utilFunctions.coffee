@@ -16,10 +16,14 @@ distillTypes = (type, ns) ->
 
 Lanes.u = {
     cleanBsSizes: (props) ->
-        _.omit(props,
-            'xs', 'sm', 'md', 'lg',
-            'xsOffset', 'smOffset', 'mdOffset', 'lgOffset'
-        )
+        _.omit(props, @getBsSizeProps() )
+
+    bsSizes: (props) ->
+        _.pick(props, @getBsSizeProps())
+
+    getBsSizeProps: ->
+        [ 'xs', 'sm', 'md', 'lg',
+          'xsOffset', 'smOffset', 'mdOffset', 'lgOffset' ]
 
     makeComparatorUsing: (method) ->
         (a, b) -> Lanes.u.comparator(a[method], b[method])
