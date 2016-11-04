@@ -33,13 +33,12 @@ class Lanes.Models.Asset extends Lanes.Models.Base
 
         isPresent:
             deps: ['data', 'file_data'], fn: ->
-                @data || !_.isEmpty(@file_data)
+                @data || !_.isBlank(@file_data)
 
         hasImage:
             deps: ['data', 'file_data'], fn: ->
                 (@data && IS_IMAGE(@metadata.content_type)) ||
-                    (@file_data && IS_IMAGE(@file_data.original
-                        .metadata.mime_type))
+                    (@file_data && IS_IMAGE(@file_data.original?.metadata.mime_type))
     events:
         'change:blob': 'onBlobChange'
 
@@ -54,7 +53,7 @@ class Lanes.Models.Asset extends Lanes.Models.Base
         Lanes.config.api_path + '/asset'
 
     urlFor: (type) ->
-        data = @file_data?[type]
+        data = @file_data[type]
         if data then "#{@baseUrl()}/#{data.id}" else undefined
 
     onBlobChange: ->
