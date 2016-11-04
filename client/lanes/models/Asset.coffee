@@ -31,6 +31,10 @@ class Lanes.Models.Asset extends Lanes.Models.Base
             deps: ['data', 'file_data'], fn: ->
                 if @data then @data else @urlFor('thumbnail')
 
+        isPresent:
+            deps: ['data', 'file_data'], fn: ->
+                @data || !_.isEmpty(@file_data)
+
         hasImage:
             deps: ['data', 'file_data'], fn: ->
                 (@data && IS_IMAGE(@metadata.content_type)) ||
@@ -55,14 +59,11 @@ class Lanes.Models.Asset extends Lanes.Models.Base
 
     onBlobChange: ->
         if @blob
-            @metadata = {
-                content_type: @blob.type
-            }
+            @metadata = { content_type: @blob.type }
             reader = new FileReader()
             reader.onloadend = (ev) =>
                 @data = reader.result if ev.type is 'loadend'
             reader.readAsDataURL(@blob)
-
         else
             @data = null
             @mdatadata?.content_type = undefined
