@@ -4,6 +4,7 @@ module Lanes::API::Handlers
 
         def self.saver
             lambda do
+
                 path = "#{params['extension_id']}/#{params['owner_type']}"
                 model = path.underscore.camelize.constantize
 
@@ -13,7 +14,14 @@ module Lanes::API::Handlers
                     asset = if params['id']
                                 ::Lanes::Asset.find(params['id'])
                             else
-                                owner.send("build_#{params['owner_association']}")
+                                assoc = owner.class.reflections[
+                                    params['owner_association']
+                                ]
+                                if assoc.collection?
+                                    owner.send(params['owner_association']).build
+                                else
+                                    owner.send("build_#{params['owner_association']}")
+                                end
                             end
 
                     asset.update(file: params['file'])

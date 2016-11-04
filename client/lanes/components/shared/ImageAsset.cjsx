@@ -1,14 +1,13 @@
 class Lanes.Components.ImageAsset extends Lanes.React.Component
 
     propTypes:
-        model: Lanes.PropTypes.Model.isRequired
-        name: React.PropTypes.string.isRequired
+        asset: Lanes.PropTypes.Model.isRequired
         size: React.PropTypes.oneOf([
             'thumb', 'medium', 'original'
         ]).isRequired
 
     modelBindings:
-        asset: -> @props.model[@props.name]
+        asset: 'props'
 
     listenNetworkEvents: true
 
@@ -30,20 +29,18 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
         className = _.classnames('image-asset', @props.className, {
             'with-image': @asset.hasImage
         })
-        console.log @asset.file_data
-        <LC.FieldWrapper
-            {...@props}
+        <BS.Col
+            {...Lanes.u.bsSizes(@props)}
             className={className}
-            displayComponent={Component}
         >
             <Component />
             <form>
                 <label className="selector">
                     <span>
-                        {if @asset.hasImage then 'Update' else 'Choose'}
+                        {if @asset.isPresent then 'Change' else 'Add'}
                     </span>
                     <input id='file' className="file" type="file"
                         onChange={@handleImageChange} />
                 </label>
             </form>
-        </LC.FieldWrapper>
+        </BS.Col>

@@ -1,6 +1,7 @@
 @import "../../styles/bootstrap/buttons";
 
 .image-asset {
+    position: relative;
     &.field {
         .value {
             border-bottom: 0;
@@ -34,5 +35,19 @@
     img {
         height: auto;
         width: 100%;
+    }
+}
+
+.assets-listing {
+
+    display: flex;
+
+    .image-asset {
+        max-width: 200px;
+        & + .image-asset {
+            border-left: 1px dotted lightgrey;
+            padding-left: 10px;
+            margin-left: 10px;
+        }
     }
 }
