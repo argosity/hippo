@@ -1,11 +1,12 @@
 class Lanes.Components.FieldSet extends Lanes.React.Component
 
-    getDefaultProps: ->
-        expanded: true
-
     propTypes:
         title: React.PropTypes.string.isRequired
         expanded: React.PropTypes.bool
+        containerClassName: React.PropTypes.string
+
+    getDefaultProps: ->
+        expanded: true
 
     getInitialState: ->
         expanded: @props.expanded
@@ -17,7 +18,8 @@ class Lanes.Components.FieldSet extends Lanes.React.Component
         @setState(expanded: not @state.expanded)
 
     render: ->
-        colProps = _.omit(@props, 'name', 'expanded')
+        colProps = _.omit(@props, 'name', 'expanded', 'bodyClassName')
+        bodyClassName = _.classnames("container", @props.containerClassName)
         <BS.Col {...colProps}>
             <fieldset className={
                 _.classnames("collapsible", @props.className, @state.icon
@@ -27,7 +29,7 @@ class Lanes.Components.FieldSet extends Lanes.React.Component
                     {@props.title}
                 </legend>
                 <BS.Collapse in={@state.expanded}>
-                    <div ref="body" className="fieldset-fields">
+                    <div ref="body" className={bodyClassName} >
                         {@props.children}
                     </div>
                 </BS.Collapse>
