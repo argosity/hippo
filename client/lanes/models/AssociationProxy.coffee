@@ -62,12 +62,15 @@ ProxyMethods = {
 
     on: (ev, rest...) ->
         rememberEvents( @_proxied_events ||= {}, ev, rest )
+        @
 
     once: (ev, rest...) ->
         rememberEvents( @_proxied_once_events ||= {}, ev, rest )
+        @
 
     off: (ev, rest...) ->
         delete @_proxied_events[ev]
+        @
 
 }
 
