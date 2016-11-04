@@ -55,7 +55,7 @@ module Lanes
                 config.redis_options = Lanes.config.redis
                 config.namespace = "#{identifier}::jobba"
             end
-
+            API::Cable.configure
             Resque.redis.namespace = "#{identifier}::resque"
             Resque.redis = Lanes.config.redis
 
