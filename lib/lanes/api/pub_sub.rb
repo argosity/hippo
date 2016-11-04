@@ -1,3 +1,5 @@
+require_relative 'cable'
+
 module Lanes
     module API
 
@@ -16,8 +18,10 @@ module Lanes
             end
 
             def self.publish(channel, data)
-                ActionCable.server.broadcast PREFIX + channel,
-                                             data.merge(channel: channel)
+                ActionCable.server.broadcast(
+                    PREFIX + channel,
+                    data.merge(channel: channel)
+                )
             end
 
         end

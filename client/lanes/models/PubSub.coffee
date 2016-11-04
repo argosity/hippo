@@ -81,9 +81,8 @@ CableChannel = {
         @perform("off", {channel})
 
     received: (data) ->
-        [channel, model, id] = data.channel.match(/(.*)\/(\d+)/)
+        [channel, model, id] = data.channel.match(/(.*)\/([^\/]+)/)
         Lanes.log.info "[pubsub] change recvd for: #{channel}"
-
         Lanes.Models.PubSub.onChange(
             model, id, _.omit(data, 'channel')
         )

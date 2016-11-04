@@ -1,4 +1,6 @@
 require 'jobba'
+require_relative 'api/pub_sub'
+
 
 module Jobba
     module RecordStatus
@@ -36,7 +38,10 @@ module Lanes
         }
 
         def deliver_progress_to_clients
-            API::PubSub.publish("/lanes/job-statuses/#{job_id}", update: Job.status_for_id(job_id))
+            ::Lanes::API::PubSub.publish(
+                "/lanes/job-statuses/#{job_id}",
+                update: Job.status_for_id(job_id)
+            )
         end
 
         def save_progress(output, progress=1.0)
