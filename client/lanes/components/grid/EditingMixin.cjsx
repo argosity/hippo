@@ -14,15 +14,19 @@ Lanes.Components.Grid.EditingMixin = {
             React.PropTypes.bool, React.PropTypes.func
         ])
 
+    cleanProps: (props) ->
+        _.omit(props, 'index', 'field', 'props', 'query', 'rowIndex')
+
     editorTypes:
         text: (props) ->
+            props = _.omit(@cleanProps(props), 'model')
             props.value ||= ''
             <input type="text" {...props}
                 onChange={_.partial(@onFieldChange, _, props.field)} />
         bigdec: (props) ->
-            <LC.NumberInput unstyled {...props} />
+            <LC.NumberInput unstyled {...@cleanProps(props)} />
         date: (props) ->
-            <LC.DateTime {...props} inputOnly step={15}
+            <LC.DateTime {...@cleanProps(props)} inputOnly step={15}
                 onChange={_.partial(@onDateFieldChange, _, props.field)} />
 
     displayTypes:

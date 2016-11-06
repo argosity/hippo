@@ -152,9 +152,9 @@ Lanes.Components.Form.FieldMixin = {
                 'has-error': hasError
             }
         )
-
+        fieldProps = Lanes.u.cleanBsSizes(props)
         field = (@[ "render#{method}" ] || @["_fieldMixinRender#{method}"])(
-            if @props.fieldOnly then props else _.omit(props, 'className')
+            if @props.fieldOnly then fieldProps else _.omit(fieldProps, 'className')
         )
         if @props.fieldOnly
             field
