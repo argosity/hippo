@@ -2,7 +2,13 @@ module Lanes
 
     class SystemSettings < Lanes::Model
 
-        has_one :logo, as: :owner, :class_name=>'Lanes::Asset', :dependent => :destroy
+        has_one :logo, as: :owner, class_name: 'Lanes::Asset',
+                dependent: :destroy
+
+        has_one :print_logo,  -> { where owner_type: "SecondaryPhoto"},
+                class_name: 'Lanes::Asset', foreign_key: :owner_id,
+                foreign_type: :owner_type,
+                dependent: :destroy
 
         class ExtensionSettings < OpenStruct
             def initialize(ext_id, settings)

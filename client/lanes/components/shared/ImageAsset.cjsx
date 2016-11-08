@@ -2,6 +2,7 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
 
     propTypes:
         asset: Lanes.PropTypes.Model.isRequired
+        label: React.PropTypes.string
         size: React.PropTypes.oneOf([
             'thumb', 'medium', 'original'
         ]).isRequired
@@ -24,6 +25,10 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
     blankImage: ->
         null
 
+    Label: ->
+        return null unless @props.label
+        <label>{@props.label}</label>
+
     render: ->
         Component = if @asset.hasImage then @renderImage else @blankImage
         className = _.classnames('image-asset', @props.className, {
@@ -33,6 +38,7 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
             {...Lanes.u.bsSizes(@props)}
             className={className}
         >
+            <@Label />
             <Component />
             <form>
                 <label className="selector">

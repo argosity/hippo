@@ -7,7 +7,8 @@ class SystemSettings extends Lanes.Models.Base
         settings: "object"
 
     associations:
-        logo:  { model: "Lanes.Models.Asset" }
+        logo:        { model: "Lanes.Models.Asset" }
+        print_logo:  { model: "Lanes.Models.Asset" }
 
     modelTypeIdentifier: -> 'system-settings'
     url: -> Lanes.config.api_path + '/system-settings'

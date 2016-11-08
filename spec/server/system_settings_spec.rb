@@ -20,4 +20,20 @@ describe Lanes::SystemSettings do
         assert_equal({foo: 'bar'}, Lanes::SystemSettings.for_ext('foo').to_h)
     end
 
+    def test_logos
+        settings = Lanes::SystemSettings.new
+        Tempfile.open do |tf1|
+            tf1.write fixtures_path.join('logo.png').read
+            tf1.rewind
+            Tempfile.open do |tf2|
+                tf2.write fixtures_path.join('logo.png').read
+                tf2.rewind
+
+                settings.build_logo(file: tf1)
+                settings.build_print_logo(file: tf2)
+                assert_saves settings
+            end
+        end
+    end
+
 end

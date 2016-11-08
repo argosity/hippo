@@ -97,7 +97,9 @@ module Lanes
                   root_view:  Lanes.config.root_view,
                   csrf_token: view.session[:csrf],
                   environment: Lanes.config.environment,
-                  system_settings: Lanes::SystemSettings.config.as_json(include: 'logo'),
+                  system_settings: Lanes::SystemSettings.config.as_json(
+                      include: ['logo', 'print_logo']
+                  ),
                   assets_path_prefix: Lanes.config.assets_path_prefix,
                   controlling_extension: controlling.identifier,
                   initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id
