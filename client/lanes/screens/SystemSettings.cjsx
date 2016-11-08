@@ -55,10 +55,12 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
                 </BS.NavItem>
             </BS.Nav>
             <BS.Row>
-                <LC.ImageAsset sm=4 asset={@config.logo}
-                    label='Logo' size='thumb' />
-                <LC.ImageAsset sm=4 asset={@config.print_logo}
-                    label='Print Logo' size='thumb' />
+                <LC.FieldSet title="Logos" sm=12>
+                    <LC.ImageAsset sm=5 asset={@config.logo}
+                        label='Primary' size='thumb' />
+                    <LC.ImageAsset sm=5 smOffset=2 asset={@config.print_logo}
+                        label='Print' size='thumb' />
+                </LC.FieldSet>
             </BS.Row>
             {for id, Ext of Lanes.Extensions.instances when Ext.getSettingsElement
                 Ext.getSettingsElement(ref: id, key: id, settings: @config.settings[id] || {})}
