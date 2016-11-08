@@ -53,7 +53,7 @@ class Lanes.Models.Asset extends Lanes.Models.Base
         Lanes.config.api_path + '/asset'
 
     urlFor: (type) ->
-        data = @file_data[type]
+        data = @file_data?[type]
         if data then "#{@baseUrl()}/#{data.id}" else undefined
 
     onBlobChange: ->
