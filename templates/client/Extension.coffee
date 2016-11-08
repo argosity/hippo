@@ -14,7 +14,8 @@ class <%= namespace %>.Extension extends Lanes.Extensions.Base
 
     # Data that is provided by <%= namespace %>::Extension#client_bootstrap_data
     # in lib/<%= identifier %>/extension.rb is passed to this method
-    setBootstrapData: Lanes.emptyFn
+    # the Base class will simply store the provided data as @data
+    setBootstrapData: -> super
 
     # All extenensions have been given their data and Lanes has completed startup
     onAvailable: Lanes.emptyFn

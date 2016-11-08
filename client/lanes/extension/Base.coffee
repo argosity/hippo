@@ -6,6 +6,8 @@ class BaseExtension
     title: ->
         _.titleize @identifier
 
+    setBootstrapData: (data) ->
+        @data = data
 
 Lanes.Extensions.Base = Lanes.lib.MakeBaseClass(
     Lanes.Vendor.Ampersand.State, BaseExtension
