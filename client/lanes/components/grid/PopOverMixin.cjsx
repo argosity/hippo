@@ -1,5 +1,9 @@
 ##= require ./EditingMixin
-
+BAD_PROPS = [
+    'position', 'model', 'index', 'syncImmediatly', 'query',
+    'onCancel', 'onSave', 'cellStyles', 'editors', 'rowIndex',
+    'rowHeight', 'allowDelete'
+]
 Lanes.Components.Grid.PopoverMixin = {
 
     mixins: [
@@ -24,6 +28,8 @@ Lanes.Components.Grid.PopoverMixin = {
             props.positionLeft = position.left
         props.arrowOffsetTop = Math.min(position.top + 20, (props.height - 75))
         props.positionTop    = Math.max(5, position.top - props.arrowOffsetTop + (position.rowHeight / 2))
+
+        props = _.omit(props, BAD_PROPS)
 
         <div className="editor po">
             <BS.Popover

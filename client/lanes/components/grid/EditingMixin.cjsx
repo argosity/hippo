@@ -19,9 +19,9 @@ Lanes.Components.Grid.EditingMixin = {
 
     editorTypes:
         text: (props) ->
-            props = _.omit(@cleanProps(props), 'model')
-            props.value ||= ''
-            <input type="text" {...props}
+            inputProps = _.omit(@cleanProps(props), 'model')
+            inputProps.value ?= ''
+            <input type="text" {...inputProps}
                 onChange={_.partial(@onFieldChange, _, props.field)} />
         bigdec: (props) ->
             <LC.NumberInput unstyled {...@cleanProps(props)} />
