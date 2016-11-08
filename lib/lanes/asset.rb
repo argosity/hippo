@@ -6,8 +6,11 @@ module Lanes
 
         belongs_to :owner, polymorphic: true
 
-        validates :owner,  set: true
+        validates :owner_id, :owner_type, presence: true
 
+        def present?
+            super && file.present?
+        end
     end
 
 end
