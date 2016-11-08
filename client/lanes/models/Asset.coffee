@@ -1,5 +1,5 @@
 IMAGES = [
-    "image/png", "image/jpg", "image/gif"
+    "image/png", "image/jpeg", "image/gif"
 ]
 
 IS_IMAGE = (content_type) ->
