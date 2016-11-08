@@ -25,7 +25,7 @@ class Lanes.Access.Screens.UserManagement extends Lanes.React.Screen
                 getSelection={@rolesForUser}
                 setSelection={@setRolesForUser}
                 choices={Lanes.Models.Role.all.models}
-                fetchWhenOpen={false}
+                fetchOnSelect={false}
                 name="role_names"
             />
 
