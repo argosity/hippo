@@ -8,7 +8,12 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
         parentModel: Lanes.PropTypes.State
         commands:    React.PropTypes.object
         onModelSet:  React.PropTypes.func
+        autoFocus:   React.PropTypes.bool
+        inputType:   React.PropTypes.string
         associationName: React.PropTypes.string
+
+    getDefaultProps: ->
+        inputType: 'text'
 
     mixins: [
         Lanes.Components.Form.InputFieldMixin
@@ -63,15 +68,14 @@ class Lanes.Components.RecordFinder extends Lanes.React.Component
 
     renderInputField: (props, handlers) ->
         model = @props.parentModel or @props.model
-
         <BS.InputGroup className="record-finder">
-            <BS.FormControl
-                {...props} {...handlers}
+            <input className="form-control"
+                type={@props.inputType}
+                autoFocus={@props.autoFocus}
                 onChange={@fieldMixinSetValue}
                 value={@getValue()}
                 onKeyPress={@onKeyPress}
             />
-
             <BS.InputGroup.Button>
                 <button className='btn btn-primary' onClick={@showFinder}>
                     <LC.Icon lg
