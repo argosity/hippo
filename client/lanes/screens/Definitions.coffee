@@ -90,11 +90,15 @@ class ScreenDefinition extends Lanes.Models.BasicModel
         return new _.Promise( (resolve, reject) ->
             me.loading = true
             attempt = 0
-            done = ->
+            onViewLoaded = (view) ->
                 me.loading = false
+                resolve(view)
+            done = ->
                 viewModel = me.getScreen()
                 if viewModel
-                    resolve(me)
+                    _.delay ->
+                        onViewLoaded(viewModel)
+                    100
                 else if attempt < 3
                     attempt += 1
                     _.delay(done, 500 * attempt)
@@ -172,7 +176,7 @@ class ScreenSet extends Lanes.Models.BasicCollection
         screen.set(active:true)
 
     isLoading: ->
-        !!Lanes.Screens.Definitions.all.findWhere({loading: true})
+        !!@findWhere(loading: true)
 
 class MenuGroup extends Lanes.Models.BasicModel
 
