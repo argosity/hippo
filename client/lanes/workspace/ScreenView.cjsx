@@ -25,7 +25,7 @@ class Lanes.Workspace.ScreenView extends Lanes.React.Component
 
     renderLoading: ->
         screen = Lanes.Screens.Definitions.all.findWhere(loading: true)
-        <LC.NetworkActivityOverlay visible model={screen} message="Loading #{screen.title}…" />
+        <LC.NetworkActivityOverlay visible message="Loading #{screen.title}…" />
 
     BaseView: ->
         Base = Lanes.Extensions.controlling().initialScreen?() or Lanes.Workspace.FirstRun
@@ -36,6 +36,6 @@ class Lanes.Workspace.ScreenView extends Lanes.React.Component
     render: ->
         child = if @displaying.isEmpty() then <@BaseView /> else @displaying.map(@renderScreen)
         <div className={"page-content #{@context.uistate.layout_size}"}>
-            {@renderLoading() if Lanes.Screens.Definitions.all.isLoading()}
+            {@renderLoading() if @allScreens.isLoading()}
             {child}
         </div>
