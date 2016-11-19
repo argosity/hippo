@@ -32,8 +32,8 @@ class Config extends Lanes.Models.State
         csrf_token:  { type: 'string', setOnce: true   }
         root_path:   { type: 'string', setOnce: true   }
         api_path:    { type: 'string', default: '/api' }
-        api_host:    { type: 'string', default: window.location.host }
-        environment: { type: 'string', setOnce: true }
+        api_host:    { type: 'string', default: "//#{window.location.host}" }
+        environment: { type: 'string', setOnce: true   }
         system_settings: { type: 'state', required: true }
         assets_path_prefix: { type: 'string', setOnce: true }
         initial_workspace_screen_id: { type: 'string', setOnce: true }

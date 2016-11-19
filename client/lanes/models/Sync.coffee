@@ -75,7 +75,7 @@ Lanes.Models.Sync = {
         # Ensure that we have a URL.
         options.url or Lanes.Models.Sync.urlError()
 
-        options.url = '//' + Lanes.config.api_host + options.url + '.json'
+        options.url = Lanes.config.api_host + options.url + '.json'
 
         unless _.isEmpty(query)
             options.url += '?' + Lanes.lib.objToParam(query)

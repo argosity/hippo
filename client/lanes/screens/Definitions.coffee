@@ -65,9 +65,7 @@ class ScreenDefinition extends Lanes.Models.BasicModel
                 else
                     "#{@extension.toLowerCase()}/screens"
                 @assets.map (asset) ->
-                    "//#{Lanes.config.api_host}" +
-                        "#{Lanes.config.assets_path_prefix}/#{prefix}/#{asset}"
-
+                    Lanes.config.api_host + "#{Lanes.config.assets_path_prefix}/#{prefix}/#{asset}"
         extension_path:
             deps: ['extension', 'model'], fn: ->
                 _.classify(@extension) + ".Screens." + @view
