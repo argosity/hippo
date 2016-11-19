@@ -41,6 +41,10 @@ namespace :db do
     task :environment do
         Lanes::DB.configure_rake_environment
     end
+    task :load_lanes_config do
+        Lanes::DB.configure_rake_environment
+    end
+    task(:load_config).clear.enhance([:load_lanes_config])
 end
 
 namespace :assets do
