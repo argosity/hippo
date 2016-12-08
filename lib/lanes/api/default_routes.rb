@@ -1,11 +1,16 @@
 require_relative "handlers/asset.rb"
 
+unless Lanes.env.production?
+    require_relative("test_specs")
+end
+
 module Lanes
     API.routes.draw do
         # WS endpoint must come first
         get Lanes.config.api_path + '/ws' do
             API::Cable.server.call(env)
         end
+
 
         Extensions.each(reversed: true) do | ext |
             ext.route(self)
