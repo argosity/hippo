@@ -13,7 +13,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
         height:         'number'
         el:             'element'
         selector:       'string'
-        domRoot:        'element'
+        container:      'element'
         reactRoot:      'object'
         lanes:          'element'
         modalProps:     'object'
@@ -27,14 +27,17 @@ class Lanes.React.Viewport extends Lanes.Models.State
     constructor: ->
         super
         ALL_INSTANCES.push(this)
-        return unless @selector
-        @domRoot = document.body.querySelector(@selector)
-        _.dom(@domRoot).addClass('lanes-root')
-        Lanes.fatal("Root selector #{@selector} not found") unless @domRoot
-        _.dom(@domRoot).html = "<div class='lanes'/>"
-        this.lanes = @domRoot.querySelector('.lanes')
+        unless (@container or (@selector and
+                (@container = document.body.querySelector(@selector))))
+            console.warn("Unable to render without container or valid selector")
+            return
 
-        Lanes.lib.ResizeSensor(@domRoot, _.debounce( =>
+        _.dom(@container).addClass('lanes-root')
+        Lanes.fatal("Root selector #{@selector} not found") unless @container
+        _.dom(@container).html = "<div class='lanes'/>"
+        this.lanes = @container.querySelector('.lanes')
+
+        Lanes.lib.ResizeSensor(@container, _.debounce( =>
             @_updateDimensions()
         , 250))
         this._updateDimensions()
@@ -47,7 +50,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
 
 
     onBoot: ->
-        prev = _.dom(this.domRoot.previousElementSibling)
+        prev = _.dom(this.container.previousElementSibling)
         if @useHistory
             @initializeHistory()
         else
@@ -81,6 +84,7 @@ class Lanes.React.Viewport extends Lanes.Models.State
     close: ->
         @hideModal()
         @_historyStopListening?()
+        @container.remove()
 
     _updateDimensions: ->
         this.set
