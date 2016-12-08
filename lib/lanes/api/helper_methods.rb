@@ -1,8 +1,6 @@
 module Lanes
     module API
-
         module HelperMethods
-
             def lanes_application_title
                 Extensions.controlling.title
             end
@@ -16,8 +14,7 @@ module Lanes
             end
 
             def client_bootstrap_data(mergedWith: {})
-                Oj.dump(Extensions.client_bootstrap_data(self)
-                           .merge(mergedWith), mode: :compat)
+                API.to_json(Extensions.client_bootstrap_data(self).merge(mergedWith))
             end
 
             def csrf_token
@@ -30,11 +27,11 @@ module Lanes
 
             def error_as_json
                 Lanes.logger.warn request.env['sinatra.error']
-                Oj.dump({
+                API.to_json(
                     success: false,
                     errors:  { exception: request.env['sinatra.error'].message },
                     message: request.env['sinatra.error'].message
-                }, mode: :compat)
+                )
             end
 
             def data
@@ -45,13 +42,10 @@ module Lanes
                 @request_origin ||= env['HTTP_ORIGIN']
             end
 
-            def json_reply( response )
+            def json_reply(response)
                 content_type 'application/json'
-                Oj.dump(response, mode: :compat)
+                API.to_json(response)
             end
-
-
         end
-
     end
 end
