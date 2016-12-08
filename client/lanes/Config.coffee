@@ -29,14 +29,14 @@ class SystemSettings extends Lanes.Models.Base
 class Config extends Lanes.Models.State
 
     session:
-        csrf_token:  { type: 'string', setOnce: true   }
-        root_path:   { type: 'string', setOnce: true   }
-        api_path:    { type: 'string', default: '/api' }
-        api_host:    { type: 'string', default: "//#{window.location.host}" }
-        environment: { type: 'string', setOnce: true   }
+        csrf_token:  { type: 'string', setOnce: true     }
+        root_path:   { type: 'string', setOnce: true     }
+        api_path:    { type: 'string', default: '/api'   }
+        environment: { type: 'string', setOnce: true     }
         system_settings: { type: 'state', required: true }
         assets_path_prefix: { type: 'string', setOnce: true }
-        initial_workspace_screen_id: { type: 'string', setOnce: true }
+        api_host:    { type: 'string', default: "//#{window.location.host }" }
+        initial_workspace_screen_id: { type: 'string', setOnce: true      }
 
     derived:
         env:
@@ -57,4 +57,8 @@ class Config extends Lanes.Models.State
         @set(options)
         Lanes.Extensions.setBootstrapData(options) if _.isObject(options)
 
-Lanes.config = new Config
+configInstance = new Config
+
+Object.defineProperty Lanes, 'config',
+    get: -> configInstance
+    set: -> throw new Error("Unable to reset config")
