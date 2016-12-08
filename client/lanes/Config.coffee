@@ -18,7 +18,7 @@ class SystemSettings extends Lanes.Models.Base
 
     setDefaultSettings: ->
         @settings ||= {}
-        @settings.lanes || = {}
+        @settings.lanes ||= {}
 
     forExtension: (ext) ->
         @settings[ext] ||= {}

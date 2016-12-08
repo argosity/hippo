@@ -1,4 +1,4 @@
-Lanes.Components.Form || = {}
+Lanes.Components.Form ||= {}
 
 
 Lanes.Components.Form.FieldMixin = {
