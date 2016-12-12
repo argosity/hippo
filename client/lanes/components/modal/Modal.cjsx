@@ -25,6 +25,12 @@ class Lanes.Components.Modal extends Lanes.React.Component
     getInitialState: ->
         show: false
 
+    setBusy: (isBusy) ->
+        @setState({isBusy})
+
+    busyMessage: ->
+        (if _.isString(@state.isBusy) then @state.isBusy else '') + '…'
+
     onOkButton: (ev) -> @state.onOk?(this, ev)
     onCancelButton: (ev) -> @state.onCancel?(this, ev)
     onButton: (ev, btn) ->
@@ -56,7 +62,9 @@ class Lanes.Components.Modal extends Lanes.React.Component
             button.eventKey ||= (button.key or button.title).toLowerCase()
             <BS.Button key={button.title}
                 bsStyle={button.style || 'default'} className={name}
-                onClick={_.partial(@onButton, _, button)}>{button.title}</BS.Button>
+                disabled={!!@state.isBusy}
+                onClick={_.partial(@onButton, _, button)}
+            >{button.title}</BS.Button>
 
         cls = _.classnames('lanes-modal', @state.className, @context.uistate?.layout_size)
         Body = @state.body
@@ -74,6 +82,8 @@ class Lanes.Components.Modal extends Lanes.React.Component
                 </BS.Modal.Header>
 
                 <BS.Modal.Body style={maxHeight: @context.viewport.height - 250}>
+                    <LC.NetworkActivityOverlay visible={!!@state.isBusy}
+                        message={@busyMessage()} />
                     <Body {...@props} modal={@} />
                 </BS.Modal.Body>
 
