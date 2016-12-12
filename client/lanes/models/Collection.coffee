@@ -13,6 +13,9 @@ CommonMethods = {
     pick: (keys...) ->
         _.map(@models, _.partialRight(_.pick, keys...))
 
+    unSaved: ->
+        @filter (pymnt) -> pymnt.isNew()
+
     sum: ->
         args = _.toArray(arguments)
         args.unshift(this.models)
@@ -35,7 +38,7 @@ CommonMethods = {
         )
 
     clone: ->
-        new @constructor( @invoke( 'clone' ), @options )
+        new @constructor( @each( 'clone' ), @options )
 
     serialize: (options = {depth: 1}) ->
         depth = options.depth
