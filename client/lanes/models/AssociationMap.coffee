@@ -46,6 +46,7 @@ class Lanes.Models.AssociationMap
         definition = @definitions[name]
         options = { parent: model }
         if definition.inverse
+            options.inverse = { name: definition.inverse, value: model }
             options[ definition.inverse ] = model
         if definition.options
             _.extend(options, Lanes.u.resultsFor(model, definition.options))
@@ -82,6 +83,8 @@ class Lanes.Models.AssociationMap
             options.model = target_class
             options.association_name = name
             klass = options.collectionClass or Lanes.Models.AssociationCollection
+            if _.isString(klass)
+                klass = Lanes.u.findObject(klass, 'Models', association.klass::FILE)
             new klass(options.models || [], options)
 
     # returns a collection for the given association.
