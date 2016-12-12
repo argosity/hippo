@@ -34,7 +34,7 @@ class Lanes.Components.Icon extends Lanes.React.BaseComponent
             'clickable'  : @props.clickable or (@props.tooltip and @props.tooltipProps.trigger is 'click')
 
         icon =
-            <i style={@props.style} className={classes} />
+            <i style={@props.style} className={classes} onClick={@props.onClick} />
 
         if @props.tooltip
             props = _.extend({}, DEFAULT_TOOLTIP_PROPS, @props.tooltipProps)
