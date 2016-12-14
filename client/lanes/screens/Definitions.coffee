@@ -191,7 +191,6 @@ class MenuGroup extends Lanes.Models.BasicModel
 
     constructor: ->
         super
-        Lanes.current_user.on "change:isLoggedIn", => delete @cache
 
     screens: ->
         @cache ||= new Lanes.Models.SubCollection( Lanes.Screens.Definitions.all, {
@@ -207,9 +206,6 @@ class MenuGroupSet extends Lanes.Models.BasicCollection
 
     constructor: ->
         super
-        Lanes.current_user.on("change:isLoggedIn", =>
-            delete @cache
-        )
 
     available: ->
         @cache ||= new Lanes.Models.SubCollection(this, {
@@ -243,3 +239,8 @@ Lanes.Screens.Definitions = {
             @all.get(screenId)?.display(id: instanceId, props: {args: args})
 
 }
+
+Lanes.current_user.on "change:isLoggedIn", (user) ->
+    Lanes.Screens.Definitions.groups.each (group) ->
+        delete group.cache
+    delete Lanes.Screens.Definitions.groups.cache
