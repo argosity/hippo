@@ -112,10 +112,14 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
     display: (props) ->
         props = _.extend({}, props, screen: this)
-        this.ensureLoaded().then ->
+        display = ->
             sv = new ScreenView(props)
             sv.active = true
-            sv
+        this.ensureLoaded().then ->
+            if Lanes.current_user.isLoggedIn
+                display()
+            else
+                Lanes.current_user.on('change:isLoggedIn', display)
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection
@@ -221,6 +225,8 @@ Lanes.Screens.display_id = (screen_id) ->
     else
         Lanes.warn "Unable to find definition for screen #{screen_id}"
 
+
+
 Lanes.Screens.Definitions = {
     all: new ScreenSet
     displaying: new ScreenViewSet([], { single_active_only: true })
@@ -230,6 +236,7 @@ Lanes.Screens.Definitions = {
     setBrowserLocation: (location) ->
         [instanceId, screenId, args...] = _.compact(location.pathname.split('/'))
         return unless screenId
+
         if instanceId and ( instance = @displaying.findInstance(screenId, instanceId) )
             instance.active = true
         else
