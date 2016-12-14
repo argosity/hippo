@@ -244,3 +244,6 @@ Lanes.current_user.on "change:isLoggedIn", (user) ->
     Lanes.Screens.Definitions.groups.each (group) ->
         delete group.cache
     delete Lanes.Screens.Definitions.groups.cache
+
+    unless user.isLoggedIn
+        Lanes.Screens.Definitions.displaying.reset()
