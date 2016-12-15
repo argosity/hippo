@@ -222,16 +222,17 @@ class BaseModel
     sync: (options...) ->
         Lanes.Models.Sync.state(options...)
 
-    # Check if an attribute named "name" can be set to "value"
-    # Returns an empty string if value, and an appropriate error message if not
+    # Check if an attribute named "name" is invalid
+    # Returns an empty string if valid, and an appropriate error message if not
     invalidMessageFor: (name) ->
-        return '' unless @unmaskedInvalidFields and _.includes(@requiredAttributes, name) and
-            _.includes(@unmaskedInvalidFields, name)
-
-        if @isBlank(name)
+        if @shouldCheckFieldValidity(name) and @isBlank(name)
             "Cannot be empty"
         else
             ''
+    shouldCheckFieldValidity: (name) ->
+        @unmaskedInvalidFields and
+            _.includes(@requiredAttributes, name) and
+            _.includes(@unmaskedInvalidFields, name)
 
     maskInvalidFields: ->
         delete @unmaskedInvalidFields
@@ -244,6 +245,7 @@ class BaseModel
             @unmaskedInvalidFields ||= []
             if _.includes(@requiredAttributes, attr) and !_.includes(@unmaskedInvalidFields, attr)
                 @unmaskedInvalidFields.push(attr)
+
                 @trigger("invalid-field:#{attr}", this)
 
     _calculateInvalidAttributes: ->
