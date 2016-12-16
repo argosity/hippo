@@ -10,5 +10,6 @@ Lanes.React.Mixins.ReadEditingState = {
         editOnly:  React.PropTypes.bool
 
     isEditingRecord: ->
+        # if updated, also change Lanes.React.Mixins.FieldErrors.fieldInvalidValueMessage
         @props.editOnly or @context.recordDisplay == 'edit'
 }

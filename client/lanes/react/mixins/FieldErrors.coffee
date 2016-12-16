@@ -1,8 +1,5 @@
 Lanes.React.Mixins.FieldErrors = {
 
-    mixins: [
-        Lanes.React.Mixins.ReadEditingState
-    ]
 
     componentWillMount: ->
         @getInvalidModel()?.maskInvalidFields?()
@@ -17,7 +14,9 @@ Lanes.React.Mixins.FieldErrors = {
         !!@fieldInvalidValueMessage()
 
     fieldInvalidValueMessage: ->
-        return '' unless @isEditingRecord()
+        # check needs to stay in sync with Lanes.React.Mixins.ReadEditingState.isEditingRecord
+        return '' unless @props.editOnly or @context.recordDisplay == 'edit'
+
         @getInvalidModel()?.invalidMessageFor?(
             @getInvalidFieldName()
         )
