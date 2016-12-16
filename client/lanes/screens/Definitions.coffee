@@ -112,14 +112,18 @@ class ScreenDefinition extends Lanes.Models.BasicModel
 
     display: (props) ->
         props = _.extend({}, props, screen: this)
-        display = ->
+        display = (resolve) ->
             sv = new ScreenView(props)
             sv.active = true
+            resolve(sv)
         this.ensureLoaded().then ->
-            if Lanes.current_user.isLoggedIn
-                display()
-            else
-                Lanes.current_user.on('change:isLoggedIn', display)
+            new _.Promise (resolve) ->
+                if Lanes.current_user.isLoggedIn
+                    display(resolve)
+                else
+                    Lanes.current_user.on('change:isLoggedIn', ->
+                        display(resolve)
+                    )
 
 
 class ScreenViewSet extends Lanes.Models.BasicCollection
