@@ -6,7 +6,7 @@ webpackJsonp([2],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.ReactToggle = __webpack_require__(720)
+	Lanes.Vendor.ReactToggle = __webpack_require__(720).default;
 	__webpack_require__(726);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
