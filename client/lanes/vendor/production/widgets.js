@@ -6,27 +6,27 @@ webpackJsonp([4],{
 	/* WEBPACK VAR INJECTION */(function(global) {var Lanes = ( global.Lanes || (global.Lanes = {}) );
 	Lanes.Vendor = ( Lanes.Vendor || {} );
 
-	Lanes.Vendor.ReactWidgets = __webpack_require__(987)
-	__webpack_require__(1052);
-	var Moment = __webpack_require__(39);
-	var momentLocalizer = __webpack_require__(1056);
+	Lanes.Vendor.ReactWidgets = __webpack_require__(1021)
+	__webpack_require__(1084);
+	var Moment = __webpack_require__(38);
+	var momentLocalizer = __webpack_require__(1088);
 	momentLocalizer(Moment);
 
-	var numberLocalizer = __webpack_require__(1057)
+	var numberLocalizer = __webpack_require__(1089)
 	numberLocalizer();
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 987:
+/***/ 1021:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var configure = __webpack_require__(988);
+	var configure = __webpack_require__(1022);
 
 	if (false) {
 	  [Array.prototype.some, Array.prototype.filter, Array.prototype.reduce].forEach(function (method) {
@@ -35,34 +35,34 @@ webpackJsonp([4],{
 	}
 
 	module.exports = _extends({}, configure, {
-	  DropdownList: __webpack_require__(993),
-	  Combobox: __webpack_require__(1024),
-	  Calendar: __webpack_require__(1027),
-	  DateTimePicker: __webpack_require__(1042),
-	  NumberPicker: __webpack_require__(1045),
-	  Multiselect: __webpack_require__(1048),
-	  SelectList: __webpack_require__(1051),
+	  DropdownList: __webpack_require__(1027),
+	  Combobox: __webpack_require__(1056),
+	  Calendar: __webpack_require__(1059),
+	  DateTimePicker: __webpack_require__(1074),
+	  NumberPicker: __webpack_require__(1077),
+	  Multiselect: __webpack_require__(1080),
+	  SelectList: __webpack_require__(1083),
 
 	  utils: {
-	    ReplaceTransitionGroup: __webpack_require__(1040),
-	    SlideTransition: __webpack_require__(1039)
+	    ReplaceTransitionGroup: __webpack_require__(1072),
+	    SlideTransition: __webpack_require__(1071)
 	  }
 	});
 
 /***/ },
 
-/***/ 988:
+/***/ 1022:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _configuration = __webpack_require__(989);
+	var _configuration = __webpack_require__(1023);
 
 	var _configuration2 = _interopRequireDefault(_configuration);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
 	var localizers = _interopRequireWildcard(_localizers);
 
@@ -75,8 +75,8 @@ webpackJsonp([4],{
 	    _configuration2.default.animate = animatefn;
 	  },
 	  setLocalizers: function setLocalizers(_ref) {
-	    var date = _ref.date;
-	    var number = _ref.number;
+	    var date = _ref.date,
+	        number = _ref.number;
 
 	    date && this.setDateLocalizer(date);
 	    number && this.setNumberLocalizer(number);
@@ -91,14 +91,14 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 989:
+/***/ 1023:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _animate = __webpack_require__(990);
+	var _animate = __webpack_require__(1024);
 
 	var _animate2 = _interopRequireDefault(_animate);
 
@@ -109,7 +109,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 990:
+/***/ 1024:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -117,23 +117,23 @@ webpackJsonp([4],{
 	exports.__esModule = true;
 	exports.default = animate;
 
-	var _hyphenate = __webpack_require__(819);
+	var _hyphenate = __webpack_require__(856);
 
 	var _hyphenate2 = _interopRequireDefault(_hyphenate);
 
-	var _style = __webpack_require__(815);
+	var _style = __webpack_require__(852);
 
 	var _style2 = _interopRequireDefault(_style);
 
-	var _on = __webpack_require__(826);
+	var _on = __webpack_require__(863);
 
 	var _on2 = _interopRequireDefault(_on);
 
-	var _off = __webpack_require__(848);
+	var _off = __webpack_require__(885);
 
 	var _off2 = _interopRequireDefault(_off);
 
-	var _properties = __webpack_require__(824);
+	var _properties = __webpack_require__(861);
 
 	var _properties2 = _interopRequireDefault(_properties);
 
@@ -223,7 +223,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 991:
+/***/ 1025:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -232,11 +232,11 @@ webpackJsonp([4],{
 	exports.date = exports.number = exports.setNumber = undefined;
 	exports.setDate = setDate;
 
-	var _invariant = __webpack_require__(785);
+	var _invariant = __webpack_require__(822);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _ = __webpack_require__(992);
+	var _ = __webpack_require__(1026);
 
 	var _react = __webpack_require__(11);
 
@@ -267,18 +267,18 @@ webpackJsonp([4],{
 	var _numberLocalizer = createWrapper('NumberPicker');
 
 	function setNumber(_ref) {
-	  var _format2 = _ref.format;
-	  var _parse = _ref.parse;
-	  var _ref$decimalChar = _ref.decimalChar;
-	  var decimalChar = _ref$decimalChar === undefined ? function () {
+	  var _format2 = _ref.format,
+	      _parse = _ref.parse,
+	      _ref$decimalChar = _ref.decimalChar,
+	      decimalChar = _ref$decimalChar === undefined ? function () {
 	    return '.';
-	  } : _ref$decimalChar;
-	  var _ref$precision = _ref.precision;
-	  var precision = _ref$precision === undefined ? function () {
+	  } : _ref$decimalChar,
+	      _ref$precision = _ref.precision,
+	      precision = _ref$precision === undefined ? function () {
 	    return null;
-	  } : _ref$precision;
-	  var formats = _ref.formats;
-	  var propType = _ref.propType;
+	  } : _ref$precision,
+	      formats = _ref.formats,
+	      propType = _ref.propType;
 
 	  (0, _invariant2.default)(typeof _format2 === 'function', 'number localizer `format(..)` must be a function');
 	  (0, _invariant2.default)(typeof _parse === 'function', 'number localizer `parse(..)` must be a function');
@@ -408,12 +408,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 992:
+/***/ 1026:
 /***/ function(module, exports) {
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var idCount = 0;
 
@@ -536,7 +536,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 993:
+/***/ 1027:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -551,71 +551,71 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _activeElement = __webpack_require__(828);
+	var _activeElement = __webpack_require__(865);
 
 	var _activeElement2 = _interopRequireDefault(_activeElement);
 
-	var _contains = __webpack_require__(830);
+	var _contains = __webpack_require__(867);
 
 	var _contains2 = _interopRequireDefault(_contains);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _Widget = __webpack_require__(994);
+	var _Widget = __webpack_require__(1028);
 
 	var _Widget2 = _interopRequireDefault(_Widget);
 
-	var _Input = __webpack_require__(995);
+	var _Input = __webpack_require__(1029);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Select = __webpack_require__(996);
+	var _Select = __webpack_require__(1030);
 
 	var _Select2 = _interopRequireDefault(_Select);
 
-	var _DropdownListInput = __webpack_require__(998);
+	var _DropdownListInput = __webpack_require__(1032);
 
 	var _DropdownListInput2 = _interopRequireDefault(_DropdownListInput);
 
-	var _Popup = __webpack_require__(1002);
+	var _Popup = __webpack_require__(1036);
 
 	var _Popup2 = _interopRequireDefault(_Popup);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _List = __webpack_require__(1004);
+	var _List = __webpack_require__(1038);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _ListGroupable = __webpack_require__(1010);
+	var _ListGroupable = __webpack_require__(1044);
 
 	var _ListGroupable2 = _interopRequireDefault(_ListGroupable);
 
-	var _validateListInterface = __webpack_require__(1011);
+	var _validateListInterface = __webpack_require__(1046);
 
 	var _validateListInterface2 = _interopRequireDefault(_validateListInterface);
 
-	var _uncontrollable = __webpack_require__(1012);
+	var _uncontrollable = __webpack_require__(870);
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -694,7 +694,7 @@ webpackJsonp([4],{
 
 	  displayName: 'DropdownList',
 
-	  mixins: [__webpack_require__(1015), __webpack_require__(1016), __webpack_require__(1017), __webpack_require__(1018), __webpack_require__(1019), __webpack_require__(1022), __webpack_require__(1009)(), __webpack_require__(1023)({
+	  mixins: [__webpack_require__(1047), __webpack_require__(1048), __webpack_require__(1049), __webpack_require__(1050), __webpack_require__(1051), __webpack_require__(1054), __webpack_require__(1043)(), __webpack_require__(1055)({
 	    didHandle: function didHandle(focused) {
 	      if (!focused) this.close();
 	    }
@@ -714,13 +714,13 @@ webpackJsonp([4],{
 	    };
 	  },
 	  getInitialState: function getInitialState() {
-	    var _props = this.props;
-	    var open = _props.open;
-	    var filter = _props.filter;
-	    var value = _props.value;
-	    var data = _props.data;
-	    var searchTerm = _props.searchTerm;
-	    var valueField = _props.valueField;
+	    var _props = this.props,
+	        open = _props.open,
+	        filter = _props.filter,
+	        value = _props.value,
+	        data = _props.data,
+	        searchTerm = _props.searchTerm,
+	        valueField = _props.valueField;
 
 
 	    var processed = filter ? this.filter(data, searchTerm) : data,
@@ -736,12 +736,12 @@ webpackJsonp([4],{
 	    this.refs.list && (0, _validateListInterface2.default)(this.refs.list);
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(props) {
-	    var open = props.open;
-	    var filter = props.filter;
-	    var value = props.value;
-	    var data = props.data;
-	    var searchTerm = props.searchTerm;
-	    var valueField = props.valueField;
+	    var open = props.open,
+	        filter = props.filter,
+	        value = props.value,
+	        data = props.data,
+	        searchTerm = props.searchTerm,
+	        valueField = props.valueField;
 
 
 	    var processed = filter ? this.filter(data, searchTerm) : data,
@@ -771,13 +771,13 @@ webpackJsonp([4],{
 	    );
 	  },
 	  renderList: function renderList(List, id, messages) {
-	    var _props2 = this.props;
-	    var open = _props2.open;
-	    var filter = _props2.filter;
-	    var data = _props2.data;
-	    var _state = this.state;
-	    var selectedItem = _state.selectedItem;
-	    var focusedItem = _state.focusedItem;
+	    var _props2 = this.props,
+	        open = _props2.open,
+	        filter = _props2.filter,
+	        data = _props2.data;
+	    var _state = this.state,
+	        selectedItem = _state.selectedItem,
+	        focusedItem = _state.focusedItem;
 
 
 	    var listProps = _3.default.pickProps(this.props, List);
@@ -806,22 +806,22 @@ webpackJsonp([4],{
 	  render: function render() {
 	    var _this2 = this;
 
-	    var _props3 = this.props;
-	    var className = _props3.className;
-	    var tabIndex = _props3.tabIndex;
-	    var duration = _props3.duration;
-	    var valueField = _props3.valueField;
-	    var textField = _props3.textField;
-	    var groupBy = _props3.groupBy;
-	    var messages = _props3.messages;
-	    var data = _props3.data;
-	    var busy = _props3.busy;
-	    var dropUp = _props3.dropUp;
-	    var placeholder = _props3.placeholder;
-	    var value = _props3.value;
-	    var open = _props3.open;
-	    var valueComponent = _props3.valueComponent;
-	    var List = _props3.listComponent;
+	    var _props3 = this.props,
+	        className = _props3.className,
+	        tabIndex = _props3.tabIndex,
+	        duration = _props3.duration,
+	        valueField = _props3.valueField,
+	        textField = _props3.textField,
+	        groupBy = _props3.groupBy,
+	        messages = _props3.messages,
+	        data = _props3.data,
+	        busy = _props3.busy,
+	        dropUp = _props3.dropUp,
+	        placeholder = _props3.placeholder,
+	        value = _props3.value,
+	        open = _props3.open,
+	        valueComponent = _props3.valueComponent,
+	        List = _props3.listComponent;
 
 
 	    List = List || groupBy && _ListGroupable2.default || _List2.default;
@@ -928,7 +928,7 @@ webpackJsonp([4],{
 	    (0, _widgetHelpers.notify)(this.props.onKeyDown, [e]);
 
 	    var change = function change(item, fromList) {
-	      if (!item) return;
+	      if (item == null) return;
 	      fromList ? _this3.handleSelect(item) : _this3.change(item);
 	    };
 
@@ -978,9 +978,9 @@ webpackJsonp([4],{
 	    }
 	  },
 	  focus: function focus(target) {
-	    var _props4 = this.props;
-	    var filter = _props4.filter;
-	    var open = _props4.open;
+	    var _props4 = this.props,
+	        filter = _props4.filter,
+	        open = _props4.open;
 
 	    var inst = target || (filter && open ? this.refs.filter : this.refs.input);
 
@@ -1034,7 +1034,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 994:
+/***/ 1028:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1049,7 +1049,7 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -1073,16 +1073,15 @@ webpackJsonp([4],{
 	  }
 
 	  Widget.prototype.render = function render() {
-	    var _props = this.props;
-	    var className = _props.className;
-	    var tabIndex = _props.tabIndex;
-	    var open = _props.open;
-	    var dropUp = _props.dropUp;
-	    var disabled = _props.disabled;
-	    var readOnly = _props.readOnly;
-	    var focused = _props.focused;
-
-	    var props = _objectWithoutProperties(_props, ['className', 'tabIndex', 'open', 'dropUp', 'disabled', 'readOnly', 'focused']);
+	    var _props = this.props,
+	        className = _props.className,
+	        tabIndex = _props.tabIndex,
+	        open = _props.open,
+	        dropUp = _props.dropUp,
+	        disabled = _props.disabled,
+	        readOnly = _props.readOnly,
+	        focused = _props.focused,
+	        props = _objectWithoutProperties(_props, ['className', 'tabIndex', 'open', 'dropUp', 'disabled', 'readOnly', 'focused']);
 
 	    var isRtl = !!this.context.isRtl;
 	    var openClass = 'rw-open' + (dropUp ? '-up' : '');
@@ -1111,7 +1110,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 995:
+/***/ 1029:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1124,7 +1123,7 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -1148,16 +1147,15 @@ webpackJsonp([4],{
 	  }
 
 	  Input.prototype.render = function render() {
-	    var _props = this.props;
-	    var className = _props.className;
-	    var disabled = _props.disabled;
-	    var readOnly = _props.readOnly;
-	    var value = _props.value;
-	    var tabIndex = _props.tabIndex;
-	    var _props$component = _props.component;
-	    var Component = _props$component === undefined ? 'input' : _props$component;
-
-	    var props = _objectWithoutProperties(_props, ['className', 'disabled', 'readOnly', 'value', 'tabIndex', 'component']);
+	    var _props = this.props,
+	        className = _props.className,
+	        disabled = _props.disabled,
+	        readOnly = _props.readOnly,
+	        value = _props.value,
+	        tabIndex = _props.tabIndex,
+	        _props$component = _props.component,
+	        Component = _props$component === undefined ? 'input' : _props$component,
+	        props = _objectWithoutProperties(_props, ['className', 'disabled', 'readOnly', 'value', 'tabIndex', 'component']);
 
 	    return _react2.default.createElement(Component, _extends({}, props, {
 	      type: 'text',
@@ -1180,7 +1178,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 996:
+/***/ 1030:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1193,11 +1191,11 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Button = __webpack_require__(997);
+	var _Button = __webpack_require__(1031);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
@@ -1221,10 +1219,9 @@ webpackJsonp([4],{
 	  }
 
 	  Select.prototype.render = function render() {
-	    var _props = this.props;
-	    var className = _props.className;
-
-	    var props = _objectWithoutProperties(_props, ['className']);
+	    var _props = this.props,
+	        className = _props.className,
+	        props = _objectWithoutProperties(_props, ['className']);
 
 	    return _react2.default.createElement(_Button2.default, _extends({}, props, {
 	      className: (0, _classnames2.default)(className, 'rw-select')
@@ -1239,7 +1236,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 997:
+/***/ 1031:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1252,7 +1249,7 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -1276,18 +1273,17 @@ webpackJsonp([4],{
 	  }
 
 	  Button.prototype.render = function render() {
-	    var _props = this.props;
-	    var className = _props.className;
-	    var disabled = _props.disabled;
-	    var label = _props.label;
-	    var icon = _props.icon;
-	    var busy = _props.busy;
-	    var active = _props.active;
-	    var children = _props.children;
-	    var _props$component = _props.component;
-	    var Tag = _props$component === undefined ? 'button' : _props$component;
-
-	    var props = _objectWithoutProperties(_props, ['className', 'disabled', 'label', 'icon', 'busy', 'active', 'children', 'component']);
+	    var _props = this.props,
+	        className = _props.className,
+	        disabled = _props.disabled,
+	        label = _props.label,
+	        icon = _props.icon,
+	        busy = _props.busy,
+	        active = _props.active,
+	        children = _props.children,
+	        _props$component = _props.component,
+	        Tag = _props$component === undefined ? 'button' : _props$component,
+	        props = _objectWithoutProperties(_props, ['className', 'disabled', 'label', 'icon', 'busy', 'active', 'children', 'component']);
 
 	    var type = props.type;
 
@@ -1304,7 +1300,7 @@ webpackJsonp([4],{
 	        'aria-label': label,
 	        className: (0, _classnames2.default)(className, 'rw-btn', active && !disabled && 'rw-state-active')
 	      }),
-	      icon && _react2.default.createElement('i', {
+	      icon && _react2.default.createElement('span', {
 	        'aria-hidden': true,
 	        className: (0, _classnames2.default)('rw-i', 'rw-i-' + icon, busy && 'rw-loading')
 	      }),
@@ -1320,7 +1316,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 998:
+/***/ 1032:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1333,11 +1329,11 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1357,11 +1353,11 @@ webpackJsonp([4],{
 	  }
 
 	  DropdownListInput.prototype.render = function render() {
-	    var _props = this.props;
-	    var placeholder = _props.placeholder;
-	    var value = _props.value;
-	    var textField = _props.textField;
-	    var Component = _props.valueComponent;
+	    var _props = this.props,
+	        placeholder = _props.placeholder,
+	        value = _props.value,
+	        textField = _props.textField,
+	        Component = _props.valueComponent;
 
 
 	    return _react2.default.createElement(
@@ -1387,7 +1383,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 999:
+/***/ 1033:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1396,11 +1392,11 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
 	var _localizers2 = _interopRequireDefault(_localizers);
 
-	var _filter = __webpack_require__(1000);
+	var _filter = __webpack_require__(1034);
 
 	var _filter2 = _interopRequireDefault(_filter);
 
@@ -1455,13 +1451,18 @@ webpackJsonp([4],{
 
 	function createChainableTypeChecker(validate) {
 
-	  function checkType(isRequired, props, propName, componentName, location) {
+	  function checkType(isRequired, props, propName, componentName) {
 	    componentName = componentName || '<<anonymous>>';
+
+	    for (var _len = arguments.length, args = Array(_len > 4 ? _len - 4 : 0), _key = 4; _key < _len; _key++) {
+	      args[_key - 4] = arguments[_key];
+	    }
+
 	    if (props[propName] == null) {
 	      if (isRequired) {
 	        return new Error('Required prop `' + propName + '` was not specified in  `' + componentName + '`.');
 	      }
-	    } else return validate(props, propName, componentName, location);
+	    } else return validate.apply(undefined, [props, propName, componentName].concat(args));
 	  }
 
 	  var chainedCheckType = checkType.bind(null, false);
@@ -1472,7 +1473,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1000:
+/***/ 1034:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1516,14 +1517,14 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1001:
+/***/ 1035:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	exports.dataValue = dataValue;
 	exports.dataText = dataText;
@@ -1531,7 +1532,7 @@ webpackJsonp([4],{
 	exports.valueMatcher = valueMatcher;
 	exports.dataItem = dataItem;
 
-	var _ = __webpack_require__(992);
+	var _ = __webpack_require__(1026);
 
 	function accessor(data, field) {
 	  var value = data;
@@ -1583,7 +1584,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1002:
+/***/ 1036:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1598,31 +1599,31 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _style = __webpack_require__(815);
+	var _style = __webpack_require__(852);
 
 	var _style2 = _interopRequireDefault(_style);
 
-	var _height = __webpack_require__(974);
+	var _height = __webpack_require__(1008);
 
 	var _height2 = _interopRequireDefault(_height);
 
-	var _camelizeStyle = __webpack_require__(816);
+	var _camelizeStyle = __webpack_require__(853);
 
 	var _camelizeStyle2 = _interopRequireDefault(_camelizeStyle);
 
-	var _configuration = __webpack_require__(989);
+	var _configuration = __webpack_require__(1023);
 
 	var _configuration2 = _interopRequireDefault(_configuration);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
@@ -1711,18 +1712,24 @@ webpackJsonp([4],{
 	    }
 
 	    if (opening) this.open();else if (closing) this.close();else if (open) {
-	      var height = this.height();
-	      if (height !== this.state.height) this.setState({ height: height });
+	      // this.height() returns a floating point number with the desired height
+	      // for this popup. Because of potential rounding errors in floating point
+	      // aritmetic we must allow an error margin when comparing to the current
+	      // state, otherwise we can end up in an infinite loop where the height
+	      // is never exactly equal to our target value.
+	      var height = this.height(),
+	          diff = Math.abs(height - this.state.height);
+	      if (isNaN(diff) || diff > 0.1) this.setState({ height: height });
 	    }
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var className = _props.className;
-	    var dropUp = _props.dropUp;
-	    var style = _props.style;
-	    var _state = this.state;
-	    var status = _state.status;
-	    var height = _state.height;
+	    var _props = this.props,
+	        className = _props.className,
+	        dropUp = _props.dropUp,
+	        style = _props.style,
+	        _state = this.state,
+	        status = _state.status,
+	        height = _state.height;
 
 
 	    var overflow = OVERFLOW[status] || 'visible',
@@ -1868,7 +1875,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1003:
+/***/ 1037:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1877,7 +1884,7 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(266);
+	var _reactDom = __webpack_require__(213);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -1899,7 +1906,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1004:
+/***/ 1038:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1912,31 +1919,31 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ListOption = __webpack_require__(1005);
+	var _ListOption = __webpack_require__(1039);
 
 	var _ListOption2 = _interopRequireDefault(_ListOption);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1948,7 +1955,7 @@ webpackJsonp([4],{
 
 	  displayName: 'List',
 
-	  mixins: [__webpack_require__(1008), __webpack_require__(1009)()],
+	  mixins: [__webpack_require__(1042), __webpack_require__(1043)()],
 
 	  propTypes: {
 	    data: _react2.default.PropTypes.array,
@@ -1986,11 +1993,12 @@ webpackJsonp([4],{
 	    this.move();
 	  },
 	  componentDidUpdate: function componentDidUpdate() {
-	    var _props = this.props;
-	    var data = _props.data;
-	    var focused = _props.focused;
-	    var idx = data.indexOf(focused);
-	    var activeId = optionId((0, _widgetHelpers.instanceId)(this), idx);
+	    var _props = this.props,
+	        data = _props.data,
+	        focused = _props.focused,
+	        idx = data.indexOf(focused),
+	        activeId = optionId((0, _widgetHelpers.instanceId)(this), idx);
+
 
 	    this.ariaActiveDescendant(idx !== -1 ? activeId : null);
 
@@ -1999,18 +2007,18 @@ webpackJsonp([4],{
 	  render: function render() {
 	    var _this = this;
 
-	    var _props2 = this.props;
-	    var className = _props2.className;
-	    var role = _props2.role;
-	    var data = _props2.data;
-	    var textField = _props2.textField;
-	    var valueField = _props2.valueField;
-	    var focused = _props2.focused;
-	    var selected = _props2.selected;
-	    var messages = _props2.messages;
-	    var onSelect = _props2.onSelect;
-	    var ItemComponent = _props2.itemComponent;
-	    var Option = _props2.optionComponent;
+	    var _props2 = this.props,
+	        className = _props2.className,
+	        role = _props2.role,
+	        data = _props2.data,
+	        textField = _props2.textField,
+	        valueField = _props2.valueField,
+	        focused = _props2.focused,
+	        selected = _props2.selected,
+	        messages = _props2.messages,
+	        onSelect = _props2.onSelect,
+	        ItemComponent = _props2.itemComponent,
+	        Option = _props2.optionComponent;
 
 
 	    var id = (0, _widgetHelpers.instanceId)(this),
@@ -2077,7 +2085,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1005:
+/***/ 1039:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2090,11 +2098,11 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
@@ -2112,13 +2120,13 @@ webpackJsonp([4],{
 	  },
 
 	  render: function render() {
-	    var _props = this.props;
-	    var className = _props.className;
-	    var children = _props.children;
-	    var focused = _props.focused;
-	    var selected = _props.selected;
-	    var disabled = _props.disabled;
-	    var readOnly = _props.readOnly;
+	    var _props = this.props,
+	        className = _props.className,
+	        children = _props.children,
+	        focused = _props.focused,
+	        selected = _props.selected,
+	        disabled = _props.disabled,
+	        readOnly = _props.readOnly;
 
 
 	    var props = _3.default.omitOwnProps(this);
@@ -2148,7 +2156,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1006:
+/***/ 1040:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2158,14 +2166,14 @@ webpackJsonp([4],{
 	exports.instanceId = instanceId;
 	exports.isFirstFocusedRender = isFirstFocusedRender;
 
-	var _ = __webpack_require__(992);
+	var _ = __webpack_require__(1026);
 
 	function notify(handler, args) {
 	  handler && handler.apply(null, [].concat(args));
 	}
 
 	function instanceId(component) {
-	  var suffix = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+	  var suffix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
 	  component.__id || (component.__id = (0, _.uniqueId)('rw_'));
 	  return (component.props.id || component.__id) + suffix;
@@ -2177,7 +2185,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1007:
+/***/ 1041:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2191,7 +2199,7 @@ webpackJsonp([4],{
 	exports.contains = contains;
 	exports.move = move;
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
 	function isDisabled(props) {
 	  return props.disabled === true || props.disabled === 'disabled';
@@ -2257,24 +2265,24 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1008:
+/***/ 1042:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _filter = __webpack_require__(1000);
+	var _filter = __webpack_require__(1034);
 
 	var _filter2 = _interopRequireDefault(_filter);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2342,7 +2350,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1009:
+/***/ 1043:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2350,7 +2358,7 @@ webpackJsonp([4],{
 	exports.__esModule = true;
 
 	exports.default = function (nodeOrComponent) {
-	  var reconcileChildren = arguments.length <= 1 || arguments[1] === undefined ? defaultReconcile : arguments[1];
+	  var reconcileChildren = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultReconcile;
 
 
 	  return {
@@ -2367,7 +2375,7 @@ webpackJsonp([4],{
 	    },
 
 	    ariaActiveDescendant: function ariaActiveDescendant(id) {
-	      var key = arguments.length <= 1 || arguments[1] === undefined ? this.props.ariaActiveDescendantKey : arguments[1];
+	      var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.ariaActiveDescendantKey;
 	      var activeDescendants = this.context.activeDescendants;
 
 	      var current = this.__ariaActiveDescendantId;
@@ -2401,7 +2409,7 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
@@ -2428,7 +2436,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1010:
+/***/ 1044:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2441,35 +2449,35 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ListOption = __webpack_require__(1005);
+	var _ListOption = __webpack_require__(1039);
 
 	var _ListOption2 = _interopRequireDefault(_ListOption);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _warning = __webpack_require__(949);
+	var _warning = __webpack_require__(1045);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2481,7 +2489,7 @@ webpackJsonp([4],{
 
 	  displayName: 'List',
 
-	  mixins: [__webpack_require__(1008), __webpack_require__(1009)()],
+	  mixins: [__webpack_require__(1042), __webpack_require__(1043)()],
 
 	  propTypes: {
 	    data: _react2.default.PropTypes.array,
@@ -2546,14 +2554,14 @@ webpackJsonp([4],{
 	  render: function render() {
 	    var _this = this;
 
-	    var _props = this.props;
-	    var className = _props.className;
-	    var role = _props.role;
-	    var data = _props.data;
-	    var messages = _props.messages;
-	    var _state = this.state;
-	    var sortedKeys = _state.sortedKeys;
-	    var groups = _state.groups;
+	    var _props = this.props,
+	        className = _props.className,
+	        role = _props.role,
+	        data = _props.data,
+	        messages = _props.messages;
+	    var _state = this.state,
+	        sortedKeys = _state.sortedKeys,
+	        groups = _state.groups;
 
 
 	    var elementProps = _3.default.omitOwnProps(this);
@@ -2610,14 +2618,14 @@ webpackJsonp([4],{
 	    );
 	  },
 	  _renderItem: function _renderItem(group, item, idx) {
-	    var _props2 = this.props;
-	    var focused = _props2.focused;
-	    var selected = _props2.selected;
-	    var onSelect = _props2.onSelect;
-	    var textField = _props2.textField;
-	    var valueField = _props2.valueField;
-	    var ItemComponent = _props2.itemComponent;
-	    var Option = _props2.optionComponent;
+	    var _props2 = this.props,
+	        focused = _props2.focused,
+	        selected = _props2.selected,
+	        onSelect = _props2.onSelect,
+	        textField = _props2.textField,
+	        valueField = _props2.valueField,
+	        ItemComponent = _props2.itemComponent,
+	        Option = _props2.optionComponent;
 
 
 	    var currentID = optionId((0, _widgetHelpers.instanceId)(this), idx),
@@ -2660,7 +2668,7 @@ webpackJsonp([4],{
 	    // so long as you also sorted by group
 	    keys = keys || [];
 
-	    (0, _warning2.default)(typeof groupBy !== 'string' || !data.length || _3.default.has(data[0], groupBy), '[React Widgets] You are seem to be trying to group this list by a ' + ('property `' + groupBy + '` that doesn\'t exist in the dataset items, this may be a typo'));
+	    (0, _warning2.default)(typeof groupBy !== 'string' || !data.length || _3.default.has(data[0], groupBy), '[React Widgets] You seem to be trying to group this list by a ' + ('property `' + groupBy + '` that doesn\'t exist in the dataset items, this may be a typo'));
 
 	    return data.reduce(function (grps, item) {
 	      var group = iter(item);
@@ -2707,7 +2715,74 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1011:
+/***/ 1045:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	/**
+	 * Similar to invariant but only logs a warning if the condition is not met.
+	 * This can be used to log issues in development environments in critical
+	 * paths. Removing the logging code for production environments will keep the
+	 * same logic and follow the same code paths.
+	 */
+
+	var warning = function() {};
+
+	if (false) {
+	  warning = function(condition, format, args) {
+	    var len = arguments.length;
+	    args = new Array(len > 2 ? len - 2 : 0);
+	    for (var key = 2; key < len; key++) {
+	      args[key - 2] = arguments[key];
+	    }
+	    if (format === undefined) {
+	      throw new Error(
+	        '`warning(condition, format, ...args)` requires a warning ' +
+	        'message argument'
+	      );
+	    }
+
+	    if (format.length < 10 || (/^[s\W]*$/).test(format)) {
+	      throw new Error(
+	        'The warning format should be able to uniquely identify this ' +
+	        'warning. Please, use a more descriptive format than: ' + format
+	      );
+	    }
+
+	    if (!condition) {
+	      var argIndex = 0;
+	      var message = 'Warning: ' +
+	        format.replace(/%s/g, function() {
+	          return args[argIndex++];
+	        });
+	      if (typeof console !== 'undefined') {
+	        console.error(message);
+	      }
+	      try {
+	        // This error was thrown as a convenience so that you can use this stack
+	        // to find the callsite that caused this warning to fire.
+	        throw new Error(message);
+	      } catch(x) {}
+	    }
+	  };
+	}
+
+	module.exports = warning;
+
+
+/***/ },
+
+/***/ 1046:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2715,7 +2790,7 @@ webpackJsonp([4],{
 	exports.__esModule = true;
 	exports.default = validateListComponent;
 
-	var _invariant = __webpack_require__(785);
+	var _invariant = __webpack_require__(822);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -2734,349 +2809,13 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1012:
+/***/ 1047:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.__esModule = true;
-
-	var _createUncontrollable = __webpack_require__(1013);
-
-	var _createUncontrollable2 = _interopRequireDefault(_createUncontrollable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var mixin = {
-	  shouldComponentUpdate: function shouldComponentUpdate() {
-	    //let the forceUpdate trigger the update
-	    return !this._notifying;
-	  }
-	};
-
-	function set(component, propName, handler, value, args) {
-	  if (handler) {
-	    component._notifying = true;
-	    handler.call.apply(handler, [component, value].concat(args));
-	    component._notifying = false;
-	  }
-
-	  component._values[propName] = value;
-
-	  if (component.isMounted()) component.forceUpdate();
-	}
-
-	exports.default = (0, _createUncontrollable2.default)([mixin], set);
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 1013:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	exports.default = createUncontrollable;
-
-	var _react = __webpack_require__(11);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _invariant = __webpack_require__(785);
-
-	var _invariant2 = _interopRequireDefault(_invariant);
-
-	var _utils = __webpack_require__(1014);
-
-	var utils = _interopRequireWildcard(_utils);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function createUncontrollable(mixins, set) {
-
-	  return uncontrollable;
-
-	  function uncontrollable(Component, controlledValues) {
-	    var methods = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
-
-	    var displayName = Component.displayName || Component.name || 'Component',
-	        basePropTypes = utils.getType(Component).propTypes,
-	        isCompositeComponent = utils.isReactComponent(Component),
-	        controlledProps = Object.keys(controlledValues),
-	        propTypes;
-
-	    var OMIT_PROPS = ['valueLink', 'checkedLink'].concat(controlledProps.map(utils.defaultKey));
-
-	    propTypes = utils.uncontrolledPropTypes(controlledValues, basePropTypes, displayName);
-
-	    (0, _invariant2.default)(isCompositeComponent || !methods.length, '[uncontrollable] stateless function components cannot pass through methods ' + 'because they have no associated instances. Check component: ' + displayName + ', ' + 'attempting to pass through methods: ' + methods.join(', '));
-	    methods = utils.transform(methods, function (obj, method) {
-	      obj[method] = function () {
-	        var _refs$inner;
-
-	        return (_refs$inner = this.refs.inner)[method].apply(_refs$inner, arguments);
-	      };
-	    }, {});
-
-	    var component = _react2.default.createClass(_extends({
-
-	      displayName: 'Uncontrolled(' + displayName + ')',
-
-	      mixins: mixins,
-
-	      propTypes: propTypes
-
-	    }, methods, {
-	      componentWillMount: function componentWillMount() {
-	        var _this = this;
-
-	        var props = this.props;
-
-	        this._values = {};
-
-	        controlledProps.forEach(function (key) {
-	          _this._values[key] = props[utils.defaultKey(key)];
-	        });
-	      },
-
-
-	      /**
-	       * If a prop switches from controlled to Uncontrolled
-	       * reset its value to the defaultValue
-	       */
-	      componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var _this2 = this;
-
-	        var props = this.props;
-
-	        controlledProps.forEach(function (key) {
-	          if (utils.getValue(nextProps, key) === undefined && utils.getValue(props, key) !== undefined) {
-	            _this2._values[key] = nextProps[utils.defaultKey(key)];
-	          }
-	        });
-	      },
-	      render: function render() {
-	        var _this3 = this;
-
-	        var newProps = {},
-	            props = omitProps(this.props);
-
-	        utils.each(controlledValues, function (handle, propName) {
-	          var linkPropName = utils.getLinkName(propName),
-	              prop = _this3.props[propName];
-
-	          if (linkPropName && !isProp(_this3.props, propName) && isProp(_this3.props, linkPropName)) {
-	            prop = _this3.props[linkPropName].value;
-	          }
-
-	          newProps[propName] = prop !== undefined ? prop : _this3._values[propName];
-
-	          newProps[handle] = setAndNotify.bind(_this3, propName);
-	        });
-
-	        newProps = _extends({}, props, newProps, {
-	          ref: isCompositeComponent ? 'inner' : null
-	        });
-
-	        return _react2.default.createElement(Component, newProps);
-	      }
-	    }));
-
-	    component.ControlledComponent = Component;
-
-	    /**
-	     * useful when wrapping a Component and you want to control
-	     * everything
-	     */
-	    component.deferControlTo = function (newComponent) {
-	      var additions = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	      var nextMethods = arguments[2];
-
-	      return uncontrollable(newComponent, _extends({}, controlledValues, additions), nextMethods);
-	    };
-
-	    return component;
-
-	    function setAndNotify(propName, value) {
-	      var linkName = utils.getLinkName(propName),
-	          handler = this.props[controlledValues[propName]];
-
-	      if (linkName && isProp(this.props, linkName) && !handler) {
-	        handler = this.props[linkName].requestChange;
-	      }
-
-	      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-	        args[_key - 2] = arguments[_key];
-	      }
-
-	      set(this, propName, handler, value, args);
-	    }
-
-	    function isProp(props, prop) {
-	      return props[prop] !== undefined;
-	    }
-
-	    function omitProps(props) {
-	      var result = {};
-
-	      utils.each(props, function (value, key) {
-	        if (OMIT_PROPS.indexOf(key) === -1) result[key] = value;
-	      });
-
-	      return result;
-	    }
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 1014:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	exports.version = undefined;
-	exports.customPropType = customPropType;
-	exports.uncontrolledPropTypes = uncontrolledPropTypes;
-	exports.getType = getType;
-	exports.getValue = getValue;
-	exports.getLinkName = getLinkName;
-	exports.defaultKey = defaultKey;
-	exports.chain = chain;
-	exports.transform = transform;
-	exports.each = each;
-	exports.isReactComponent = isReactComponent;
-	exports.has = has;
-
-	var _react = __webpack_require__(11);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _invariant = __webpack_require__(785);
-
-	var _invariant2 = _interopRequireDefault(_invariant);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function customPropType(handler, propType, name) {
-
-	  return function (props, propName) {
-
-	    if (props[propName] !== undefined) {
-	      if (!props[handler]) {
-	        return new Error('You have provided a `' + propName + '` prop to ' + '`' + name + '` without an `' + handler + '` handler. This will render a read-only field. ' + 'If the field should be mutable use `' + defaultKey(propName) + '`. Otherwise, set `' + handler + '`');
-	      }
-
-	      return propType && propType(props, propName, name);
-	    }
-	  };
-	}
-
-	function uncontrolledPropTypes(controlledValues, basePropTypes, displayName) {
-	  var propTypes = {};
-
-	  if (false) {
-	    transform(controlledValues, function (obj, handler, prop) {
-	      var type = basePropTypes[prop];
-
-	      (0, _invariant2.default)(typeof handler === 'string' && handler.trim().length, 'Uncontrollable - [%s]: the prop `%s` needs a valid handler key name in order to make it uncontrollable', displayName, prop);
-
-	      obj[prop] = customPropType(handler, type, displayName);
-
-	      if (type !== undefined) obj[defaultKey(prop)] = type;
-	    }, propTypes);
-	  }
-
-	  return propTypes;
-	}
-
-	var version = exports.version = _react2.default.version.split('.').map(parseFloat);
-
-	function getType(component) {
-	  if (version[0] >= 15 || version[0] === 0 && version[1] >= 13) return component;
-
-	  return component.type;
-	}
-
-	function getValue(props, name) {
-	  var linkPropName = getLinkName(name);
-
-	  if (linkPropName && !isProp(props, name) && isProp(props, linkPropName)) return props[linkPropName].value;
-
-	  return props[name];
-	}
-
-	function isProp(props, prop) {
-	  return props[prop] !== undefined;
-	}
-
-	function getLinkName(name) {
-	  return name === 'value' ? 'valueLink' : name === 'checked' ? 'checkedLink' : null;
-	}
-
-	function defaultKey(key) {
-	  return 'default' + key.charAt(0).toUpperCase() + key.substr(1);
-	}
-
-	function chain(thisArg, a, b) {
-	  return function chainedFunction() {
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-
-	    a && a.call.apply(a, [thisArg].concat(args));
-	    b && b.call.apply(b, [thisArg].concat(args));
-	  };
-	}
-
-	function transform(obj, cb, seed) {
-	  each(obj, cb.bind(null, seed = seed || (Array.isArray(obj) ? [] : {})));
-	  return seed;
-	}
-
-	function each(obj, cb, thisArg) {
-	  if (Array.isArray(obj)) return obj.forEach(cb, thisArg);
-
-	  for (var key in obj) {
-	    if (has(obj, key)) cb.call(thisArg, obj[key], key, obj);
-	  }
-	}
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-	function isReactComponent(component) {
-	  return !!(component && component.prototype && component.prototype.isReactComponent);
-	}
-
-	function has(o, k) {
-	  return o ? Object.prototype.hasOwnProperty.call(o, k) : false;
-	}
-
-/***/ },
-
-/***/ 1015:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _require = __webpack_require__(992);
-
-	var has = _require.has;
-
+	var _require = __webpack_require__(1026),
+	    has = _require.has;
 
 	module.exports = {
 	  componentWillUnmount: function componentWillUnmount() {
@@ -3108,7 +2847,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1016:
+/***/ 1048:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3119,7 +2858,7 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(266);
+	var _reactDom = __webpack_require__(213);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3139,12 +2878,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1017:
+/***/ 1049:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _ = __webpack_require__(992);
+	var _ = __webpack_require__(1026);
 
 	//backport PureRenderEqual
 	module.exports = {
@@ -3155,7 +2894,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1018:
+/***/ 1050:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3164,15 +2903,15 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _filter = __webpack_require__(1000);
+	var _filter = __webpack_require__(1034);
 
 	var _filter2 = _interopRequireDefault(_filter);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3235,14 +2974,14 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1019:
+/***/ 1051:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _scrollTo2 = __webpack_require__(1020);
+	var _scrollTo2 = __webpack_require__(1052);
 
 	var _scrollTo3 = _interopRequireDefault(_scrollTo2);
 
@@ -3275,16 +3014,16 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1020:
+/***/ 1052:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var getOffset = __webpack_require__(915),
-	    height = __webpack_require__(974),
-	    getScrollParent = __webpack_require__(1021),
-	    scrollTop = __webpack_require__(918),
-	    raf = __webpack_require__(975),
-	    getWindow = __webpack_require__(895);
+	var getOffset = __webpack_require__(950),
+	    height = __webpack_require__(1008),
+	    getScrollParent = __webpack_require__(1053),
+	    scrollTop = __webpack_require__(953),
+	    raf = __webpack_require__(1009),
+	    getWindow = __webpack_require__(930);
 
 	module.exports = function scrollTo(selected, scrollParent) {
 	    var offset = getOffset(selected),
@@ -3332,13 +3071,13 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1021:
+/***/ 1053:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var css = __webpack_require__(815),
-	    height = __webpack_require__(974);
+	var css = __webpack_require__(852),
+	    height = __webpack_require__(1008);
 
 	module.exports = function scrollPrarent(node) {
 	  var position = css(node, 'position'),
@@ -3362,7 +3101,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1022:
+/***/ 1054:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3395,7 +3134,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1023:
+/***/ 1055:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3403,11 +3142,11 @@ webpackJsonp([4],{
 	exports.__esModule = true;
 	exports.default = FocusMixin;
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
@@ -3445,8 +3184,8 @@ webpackJsonp([4],{
 	function FocusMixin(_ref) {
 	  var _desc, _value, _obj;
 
-	  var willHandle = _ref.willHandle;
-	  var didHandle = _ref.didHandle;
+	  var willHandle = _ref.willHandle,
+	      didHandle = _ref.didHandle;
 
 	  function _handleFocus(inst, focused, event) {
 	    var handler = inst.props[focused ? 'onFocus' : 'onBlur'];
@@ -3480,7 +3219,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1024:
+/***/ 1056:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3495,63 +3234,63 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _filter = __webpack_require__(1000);
+	var _filter = __webpack_require__(1034);
 
 	var _filter2 = _interopRequireDefault(_filter);
 
-	var _Widget = __webpack_require__(994);
+	var _Widget = __webpack_require__(1028);
 
 	var _Widget2 = _interopRequireDefault(_Widget);
 
-	var _Popup = __webpack_require__(1002);
+	var _Popup = __webpack_require__(1036);
 
 	var _Popup2 = _interopRequireDefault(_Popup);
 
-	var _Select = __webpack_require__(996);
+	var _Select = __webpack_require__(1030);
 
 	var _Select2 = _interopRequireDefault(_Select);
 
-	var _ComboboxInput = __webpack_require__(1025);
+	var _ComboboxInput = __webpack_require__(1057);
 
 	var _ComboboxInput2 = _interopRequireDefault(_ComboboxInput);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _List = __webpack_require__(1004);
+	var _List = __webpack_require__(1038);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _ListGroupable = __webpack_require__(1010);
+	var _ListGroupable = __webpack_require__(1044);
 
 	var _ListGroupable2 = _interopRequireDefault(_ListGroupable);
 
-	var _validateListInterface = __webpack_require__(1011);
+	var _validateListInterface = __webpack_require__(1046);
 
 	var _validateListInterface2 = _interopRequireDefault(_validateListInterface);
 
-	var _uncontrollable = __webpack_require__(1012);
+	var _uncontrollable = __webpack_require__(870);
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3636,7 +3375,7 @@ webpackJsonp([4],{
 
 	  displayName: 'ComboBox',
 
-	  mixins: [__webpack_require__(1015), __webpack_require__(1018), __webpack_require__(1019), __webpack_require__(1022), __webpack_require__(1009)('input'), __webpack_require__(1023)({
+	  mixins: [__webpack_require__(1047), __webpack_require__(1050), __webpack_require__(1051), __webpack_require__(1054), __webpack_require__(1043)('input'), __webpack_require__(1055)({
 	    willHandle: function willHandle(focused) {
 	      // not suggesting anymore
 	      !focused && this.refs.input.accept();
@@ -3649,12 +3388,13 @@ webpackJsonp([4],{
 	  propTypes: propTypes,
 
 	  getInitialState: function getInitialState() {
-	    var _props = this.props;
-	    var value = _props.value;
-	    var data = _props.data;
-	    var valueField = _props.valueField;
-	    var items = this.process(data, value);
-	    var idx = (0, _dataHelpers.dataIndexOf)(items, value, valueField);
+	    var _props = this.props,
+	        value = _props.value,
+	        data = _props.data,
+	        valueField = _props.valueField,
+	        items = this.process(data, value),
+	        idx = (0, _dataHelpers.dataIndexOf)(items, value, valueField);
+
 
 	    return {
 	      selectedItem: items[idx],
@@ -3687,10 +3427,10 @@ webpackJsonp([4],{
 	    return isSuggesting || stateChanged || valueChanged;
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    var value = nextProps.value;
-	    var data = nextProps.data;
-	    var valueField = nextProps.valueField;
-	    var textField = nextProps.textField;
+	    var value = nextProps.value,
+	        data = nextProps.data,
+	        valueField = nextProps.valueField,
+	        textField = nextProps.textField;
 
 
 	    var rawIdx = (0, _dataHelpers.dataIndexOf)(data, value, valueField),
@@ -3712,21 +3452,21 @@ webpackJsonp([4],{
 	    });
 	  },
 	  renderInput: function renderInput(listID) {
-	    var _props2 = this.props;
-	    var suggest = _props2.suggest;
-	    var filter = _props2.filter;
-	    var textField = _props2.textField;
-	    var busy = _props2.busy;
-	    var name = _props2.name;
-	    var data = _props2.data;
-	    var value = _props2.value;
-	    var valueField = _props2.valueField;
-	    var autoFocus = _props2.autoFocus;
-	    var tabIndex = _props2.tabIndex;
-	    var disabled = _props2.disabled;
-	    var readOnly = _props2.readOnly;
-	    var placeholder = _props2.placeholder;
-	    var open = _props2.open;
+	    var _props2 = this.props,
+	        suggest = _props2.suggest,
+	        filter = _props2.filter,
+	        textField = _props2.textField,
+	        busy = _props2.busy,
+	        name = _props2.name,
+	        data = _props2.data,
+	        value = _props2.value,
+	        valueField = _props2.valueField,
+	        autoFocus = _props2.autoFocus,
+	        tabIndex = _props2.tabIndex,
+	        disabled = _props2.disabled,
+	        readOnly = _props2.readOnly,
+	        placeholder = _props2.placeholder,
+	        open = _props2.open;
 
 
 	    var valueItem = (0, _dataHelpers.dataItem)(data, value, valueField); // take value from the raw data
@@ -3735,7 +3475,7 @@ webpackJsonp([4],{
 
 	    return _react2.default.createElement(_ComboboxInput2.default, {
 	      ref: 'input',
-	      id: (0, _widgetHelpers.instanceId)(this),
+	      id: (0, _widgetHelpers.instanceId)(this, '_input'),
 	      autoFocus: autoFocus,
 	      tabIndex: tabIndex,
 	      suggest: suggest,
@@ -3755,12 +3495,12 @@ webpackJsonp([4],{
 	    });
 	  },
 	  renderList: function renderList(List, id, messages) {
-	    var _props3 = this.props;
-	    var open = _props3.open;
-	    var data = _props3.data;
-	    var _state = this.state;
-	    var selectedItem = _state.selectedItem;
-	    var focusedItem = _state.focusedItem;
+	    var _props3 = this.props,
+	        open = _props3.open,
+	        data = _props3.data;
+	    var _state = this.state,
+	        selectedItem = _state.selectedItem,
+	        focusedItem = _state.focusedItem;
 
 
 	    var listProps = _3.default.pickProps(this.props, List);
@@ -3785,15 +3525,15 @@ webpackJsonp([4],{
 	  render: function render() {
 	    var _this = this;
 
-	    var _props4 = this.props;
-	    var className = _props4.className;
-	    var duration = _props4.duration;
-	    var groupBy = _props4.groupBy;
-	    var messages = _props4.messages;
-	    var busy = _props4.busy;
-	    var dropUp = _props4.dropUp;
-	    var open = _props4.open;
-	    var List = _props4.listComponent;
+	    var _props4 = this.props,
+	        className = _props4.className,
+	        duration = _props4.duration,
+	        groupBy = _props4.groupBy,
+	        messages = _props4.messages,
+	        busy = _props4.busy,
+	        dropUp = _props4.dropUp,
+	        open = _props4.open,
+	        List = _props4.listComponent;
 	    var focused = this.state.focused;
 
 
@@ -3858,9 +3598,9 @@ webpackJsonp([4],{
 	    this._isTyping = true;
 	  },
 	  handleInputChange: function handleInputChange(e) {
-	    var _props5 = this.props;
-	    var data = _props5.data;
-	    var textField = _props5.textField;
+	    var _props5 = this.props,
+	        data = _props5.data,
+	        textField = _props5.textField;
 
 
 	    var shouldSuggest = !!this.props.suggest,
@@ -3937,10 +3677,10 @@ webpackJsonp([4],{
 	    this.props.open ? this.close() : this.open();
 	  },
 	  suggest: function suggest(data, value) {
-	    var _props6 = this.props;
-	    var textField = _props6.textField;
-	    var suggest = _props6.suggest;
-	    var minLength = _props6.minLength;
+	    var _props6 = this.props,
+	        textField = _props6.textField,
+	        suggest = _props6.suggest,
+	        minLength = _props6.minLength;
 
 
 	    var word = (0, _dataHelpers.dataText)(value, textField),
@@ -3988,7 +3728,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1025:
+/***/ 1057:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4001,19 +3741,19 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _caret = __webpack_require__(1026);
+	var _caret = __webpack_require__(1058);
 
 	var _caret2 = _interopRequireDefault(_caret);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _Input = __webpack_require__(995);
+	var _Input = __webpack_require__(1029);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
@@ -4050,10 +3790,9 @@ webpackJsonp([4],{
 	    };
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var onKeyDown = _props.onKeyDown;
-
-	    var props = _objectWithoutProperties(_props, ['onKeyDown']);
+	    var _props = this.props,
+	        onKeyDown = _props.onKeyDown,
+	        props = _objectWithoutProperties(_props, ['onKeyDown']);
 
 	    delete props.suggest;
 
@@ -4094,7 +3833,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1026:
+/***/ 1058:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4152,7 +3891,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1027:
+/***/ 1059:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4168,71 +3907,71 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _Widget = __webpack_require__(994);
+	var _Widget = __webpack_require__(1028);
 
 	var _Widget2 = _interopRequireDefault(_Widget);
 
-	var _Header = __webpack_require__(1028);
+	var _Header = __webpack_require__(1060);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Footer = __webpack_require__(1030);
+	var _Footer = __webpack_require__(1062);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _Month = __webpack_require__(1031);
+	var _Month = __webpack_require__(1063);
 
 	var _Month2 = _interopRequireDefault(_Month);
 
-	var _Year = __webpack_require__(1036);
+	var _Year = __webpack_require__(1068);
 
 	var _Year2 = _interopRequireDefault(_Year);
 
-	var _Decade = __webpack_require__(1037);
+	var _Decade = __webpack_require__(1069);
 
 	var _Decade2 = _interopRequireDefault(_Decade);
 
-	var _Century = __webpack_require__(1038);
+	var _Century = __webpack_require__(1070);
 
 	var _Century2 = _interopRequireDefault(_Century);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _uncontrollable = __webpack_require__(1012);
+	var _uncontrollable = __webpack_require__(870);
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _SlideTransition = __webpack_require__(1039);
+	var _SlideTransition = __webpack_require__(1071);
 
 	var _SlideTransition2 = _interopRequireDefault(_SlideTransition);
 
-	var _dates = __webpack_require__(1033);
+	var _dates = __webpack_require__(1065);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
-	var _constants = __webpack_require__(1035);
+	var _constants = __webpack_require__(1067);
 
 	var constants = _interopRequireWildcard(_constants);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -4321,7 +4060,11 @@ webpackJsonp([4],{
 	  initialView: _react2.default.PropTypes.oneOf(VIEW_OPTIONS),
 
 	  finalView: function finalView(props, propName, componentName) {
-	    var err = _react2.default.PropTypes.oneOf(VIEW_OPTIONS)(props, propName, componentName);
+	    for (var _len = arguments.length, args = Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+	      args[_key - 3] = arguments[_key];
+	    }
+
+	    var err = _react2.default.PropTypes.oneOf(VIEW_OPTIONS).apply(undefined, [props, propName, componentName].concat(args));
 
 	    if (err) return err;
 	    if (VIEW_OPTIONS.indexOf(props[propName]) < VIEW_OPTIONS.indexOf(props.initialView)) return new Error(('The `' + propName + '` prop: `' + props[propName] + '` cannot be \'lower\' than the `initialView`\n        prop. This creates a range that cannot be rendered.').replace(/\n\t/g, ''));
@@ -4354,7 +4097,7 @@ webpackJsonp([4],{
 
 	  displayName: 'Calendar',
 
-	  mixins: [__webpack_require__(1015), __webpack_require__(1016), __webpack_require__(1017), __webpack_require__(1022), __webpack_require__(1009)(), __webpack_require__(1023)({
+	  mixins: [__webpack_require__(1047), __webpack_require__(1048), __webpack_require__(1049), __webpack_require__(1054), __webpack_require__(1043)(), __webpack_require__(1055)({
 	    willHandle: function willHandle() {
 	      if (+this.props.tabIndex === -1) return false;
 	    }
@@ -4406,25 +4149,25 @@ webpackJsonp([4],{
 	  render: function render() {
 	    var _this = this;
 
-	    var _props = this.props;
-	    var className = _props.className;
-	    var value = _props.value;
-	    var footerFormat = _props.footerFormat;
-	    var disabled = _props.disabled;
-	    var readOnly = _props.readOnly;
-	    var finalView = _props.finalView;
-	    var footer = _props.footer;
-	    var messages = _props.messages;
-	    var min = _props.min;
-	    var max = _props.max;
-	    var culture = _props.culture;
-	    var duration = _props.duration;
-	    var tabIndex = _props.tabIndex;
-	    var currentDate = _props.currentDate;
-	    var _state = this.state;
-	    var view = _state.view;
-	    var slideDirection = _state.slideDirection;
-	    var focused = _state.focused;
+	    var _props = this.props,
+	        className = _props.className,
+	        value = _props.value,
+	        footerFormat = _props.footerFormat,
+	        disabled = _props.disabled,
+	        readOnly = _props.readOnly,
+	        finalView = _props.finalView,
+	        footer = _props.footer,
+	        messages = _props.messages,
+	        min = _props.min,
+	        max = _props.max,
+	        culture = _props.culture,
+	        duration = _props.duration,
+	        tabIndex = _props.tabIndex,
+	        currentDate = _props.currentDate;
+	    var _state = this.state,
+	        view = _state.view,
+	        slideDirection = _state.slideDirection,
+	        focused = _state.focused;
 
 
 	    var View = VIEW[view],
@@ -4537,7 +4280,7 @@ webpackJsonp([4],{
 	    this.navigate(dir.DOWN, date);
 	  },
 	  changeCurrentDate: function changeCurrentDate(date) {
-	    var currentDate = arguments.length <= 1 || arguments[1] === undefined ? this.props.currentDate : arguments[1];
+	    var currentDate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.currentDate;
 
 	    var inRangeDate = this.inRangeValue(date ? new Date(date) : currentDate);
 	    if (_dates2.default.eq(inRangeDate, dateOrNull(currentDate), VIEW_UNIT[this.state.view])) return;
@@ -4603,11 +4346,11 @@ webpackJsonp([4],{
 	    (0, _widgetHelpers.notify)(this.props.onKeyDown, [e]);
 	  },
 	  _label: function _label() {
-	    var _props2 = this.props;
-	    var culture = _props2.culture;
-	    var props = _objectWithoutProperties(_props2, ['culture']);
-	    var view = this.state.view;
-	    var dt = this.props.currentDate;
+	    var _props2 = this.props,
+	        culture = _props2.culture,
+	        props = _objectWithoutProperties(_props2, ['culture']),
+	        view = this.state.view,
+	        dt = this.props.currentDate;
 
 	    if (view === 'month') return _localizers.date.format(dt, format(props, 'header'), culture);else if (view === 'year') return _localizers.date.format(dt, format(props, 'year'), culture);else if (view === 'decade') return _localizers.date.format(_dates2.default.startOf(dt, 'decade'), format(props, 'decade'), culture);else if (view === 'century') return _localizers.date.format(_dates2.default.startOf(dt, 'century'), format(props, 'century'), culture);
 	  },
@@ -4648,7 +4391,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1028:
+/***/ 1060:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4659,7 +4402,7 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Button = __webpack_require__(997);
+	var _Button = __webpack_require__(1031);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
@@ -4684,7 +4427,7 @@ webpackJsonp([4],{
 	    })
 	  },
 
-	  mixins: [__webpack_require__(1017), __webpack_require__(1029)],
+	  mixins: [__webpack_require__(1049), __webpack_require__(1061)],
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -4695,16 +4438,16 @@ webpackJsonp([4],{
 	    };
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var messages = _props.messages;
-	    var label = _props.label;
-	    var labelId = _props.labelId;
-	    var onMoveRight = _props.onMoveRight;
-	    var onMoveLeft = _props.onMoveLeft;
-	    var onViewChange = _props.onViewChange;
-	    var prevDisabled = _props.prevDisabled;
-	    var upDisabled = _props.upDisabled;
-	    var nextDisabled = _props.nextDisabled;
+	    var _props = this.props,
+	        messages = _props.messages,
+	        label = _props.label,
+	        labelId = _props.labelId,
+	        onMoveRight = _props.onMoveRight,
+	        onMoveLeft = _props.onMoveLeft,
+	        onViewChange = _props.onViewChange,
+	        prevDisabled = _props.prevDisabled,
+	        upDisabled = _props.upDisabled,
+	        nextDisabled = _props.nextDisabled;
 
 
 	    var rtl = this.isRtl();
@@ -4745,7 +4488,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1029:
+/***/ 1061:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4772,7 +4515,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1030:
+/***/ 1062:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4781,11 +4524,11 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Button = __webpack_require__(997);
+	var _Button = __webpack_require__(1031);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4798,10 +4541,10 @@ webpackJsonp([4],{
 	  displayName: 'Footer',
 
 	  render: function render() {
-	    var _props = this.props;
-	    var disabled = _props.disabled;
-	    var readOnly = _props.readOnly;
-	    var value = _props.value;
+	    var _props = this.props,
+	        disabled = _props.disabled,
+	        readOnly = _props.readOnly,
+	        value = _props.value;
 
 
 	    return _react2.default.createElement(
@@ -4821,7 +4564,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1031:
+/***/ 1063:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4832,25 +4575,25 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CalendarView = __webpack_require__(1032);
+	var _CalendarView = __webpack_require__(1064);
 
 	var _CalendarView2 = _interopRequireDefault(_CalendarView);
 
-	var _dates = __webpack_require__(1033);
+	var _dates = __webpack_require__(1065);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4891,7 +4634,7 @@ webpackJsonp([4],{
 	    isEqual: isEqual
 	  },
 
-	  mixins: [__webpack_require__(1029), __webpack_require__(1009)()],
+	  mixins: [__webpack_require__(1061), __webpack_require__(1043)()],
 
 	  propTypes: propTypes,
 
@@ -4900,11 +4643,11 @@ webpackJsonp([4],{
 	    this.ariaActiveDescendant(activeId, null);
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var focused = _props.focused;
-	    var culture = _props.culture;
-	    var month = _dates2.default.visibleDays(focused, culture);
-	    var rows = _3.default.chunk(month, 7);
+	    var _props = this.props,
+	        focused = _props.focused,
+	        culture = _props.culture,
+	        month = _dates2.default.visibleDays(focused, culture),
+	        rows = _3.default.chunk(month, 7);
 
 	    return _react2.default.createElement(
 	      _CalendarView2.default,
@@ -4928,18 +4671,18 @@ webpackJsonp([4],{
 	  renderRow: function renderRow(row, rowIdx) {
 	    var _this = this;
 
-	    var _props2 = this.props;
-	    var focused = _props2.focused;
-	    var today = _props2.today;
-	    var disabled = _props2.disabled;
-	    var onChange = _props2.onChange;
-	    var value = _props2.value;
-	    var culture = _props2.culture;
-	    var min = _props2.min;
-	    var max = _props2.max;
-	    var Day = _props2.dayComponent;
-	    var id = (0, _widgetHelpers.instanceId)(this);
-	    var labelFormat = _localizers.date.getFormat('footer');
+	    var _props2 = this.props,
+	        focused = _props2.focused,
+	        today = _props2.today,
+	        disabled = _props2.disabled,
+	        onChange = _props2.onChange,
+	        value = _props2.value,
+	        culture = _props2.culture,
+	        min = _props2.min,
+	        max = _props2.max,
+	        Day = _props2.dayComponent,
+	        id = (0, _widgetHelpers.instanceId)(this),
+	        labelFormat = _localizers.date.getFormat('footer');
 
 	    return _react2.default.createElement(
 	      _CalendarView2.default.Row,
@@ -4986,7 +4729,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1032:
+/***/ 1064:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5001,11 +4744,11 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _dates = __webpack_require__(1033);
+	var _dates = __webpack_require__(1065);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
@@ -5059,11 +4802,11 @@ webpackJsonp([4],{
 	    }
 
 	    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, _React$Component2.call.apply(_React$Component2, [this].concat(args))), _this2), _this2.handleChange = function () {
-	      var _this2$props = _this2.props;
-	      var onChange = _this2$props.onChange;
-	      var min = _this2$props.min;
-	      var max = _this2$props.max;
-	      var date = _this2$props.date;
+	      var _this2$props = _this2.props,
+	          onChange = _this2$props.onChange,
+	          min = _this2$props.min,
+	          max = _this2$props.max,
+	          date = _this2$props.date;
 
 	      onChange(clamp(date, min, max));
 	    }, _temp), _possibleConstructorReturn(_this2, _ret);
@@ -5074,11 +4817,11 @@ webpackJsonp([4],{
 	  };
 
 	  CalendarViewCell.prototype.isEmpty = function isEmpty() {
-	    var _props = this.props;
-	    var unit = _props.unit;
-	    var min = _props.min;
-	    var max = _props.max;
-	    var date = _props.date;
+	    var _props = this.props,
+	        unit = _props.unit,
+	        min = _props.min,
+	        max = _props.max,
+	        date = _props.date;
 
 	    return !_dates2.default.inRange(date, min, max, unit);
 	  };
@@ -5096,27 +4839,27 @@ webpackJsonp([4],{
 	  };
 
 	  CalendarViewCell.prototype.isOffView = function isOffView() {
-	    var _props2 = this.props;
-	    var viewUnit = _props2.viewUnit;
-	    var focused = _props2.focused;
-	    var date = _props2.date;
+	    var _props2 = this.props,
+	        viewUnit = _props2.viewUnit,
+	        focused = _props2.focused,
+	        date = _props2.date;
 
 	    return viewUnit && _dates2.default[viewUnit](date) !== _dates2.default[viewUnit](focused);
 	  };
 
 	  CalendarViewCell.prototype.render = function render() {
-	    var _props3 = this.props;
-	    var children = _props3.children;
-	    var id = _props3.id;
-	    var label = _props3.label;
-	    var disabled = _props3.disabled;
+	    var _props3 = this.props,
+	        children = _props3.children,
+	        id = _props3.id,
+	        label = _props3.label,
+	        disabled = _props3.disabled;
 
 
 	    if (this.isEmpty()) {
 	      return _react2.default.createElement(
 	        'td',
 	        { className: 'rw-empty-cell', role: 'presentation' },
-	        ' '
+	        '\xA0'
 	      );
 	    }
 
@@ -5167,7 +4910,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1033:
+/***/ 1065:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5176,13 +4919,13 @@ webpackJsonp([4],{
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _dateArithmetic = __webpack_require__(1034);
+	var _dateArithmetic = __webpack_require__(1066);
 
 	var _dateArithmetic2 = _interopRequireDefault(_dateArithmetic);
 
-	var _constants = __webpack_require__(1035);
+	var _constants = __webpack_require__(1067);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5267,7 +5010,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1034:
+/***/ 1066:
 /***/ function(module, exports) {
 
 	var MILI    = 'milliseconds'
@@ -5495,7 +5238,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1035:
+/***/ 1067:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5531,7 +5274,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1036:
+/***/ 1068:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5542,25 +5285,25 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CalendarView = __webpack_require__(1032);
+	var _CalendarView = __webpack_require__(1064);
 
 	var _CalendarView2 = _interopRequireDefault(_CalendarView);
 
-	var _dates = __webpack_require__(1033);
+	var _dates = __webpack_require__(1065);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5588,7 +5331,7 @@ webpackJsonp([4],{
 
 	  displayName: 'YearView',
 
-	  mixins: [__webpack_require__(1029), __webpack_require__(1009)()],
+	  mixins: [__webpack_require__(1061), __webpack_require__(1043)()],
 
 	  propTypes: propTypes,
 
@@ -5597,8 +5340,9 @@ webpackJsonp([4],{
 	    this.ariaActiveDescendant(activeId);
 	  },
 	  render: function render() {
-	    var focused = this.props.focused;
-	    var months = _dates2.default.monthsInYear(_dates2.default.year(focused));
+	    var focused = this.props.focused,
+	        months = _dates2.default.monthsInYear(_dates2.default.year(focused));
+
 
 	    return _react2.default.createElement(
 	      _CalendarView2.default,
@@ -5613,15 +5357,15 @@ webpackJsonp([4],{
 	  renderRow: function renderRow(row, rowIdx) {
 	    var _this = this;
 
-	    var _props = this.props;
-	    var focused = _props.focused;
-	    var disabled = _props.disabled;
-	    var onChange = _props.onChange;
-	    var value = _props.value;
-	    var today = _props.today;
-	    var culture = _props.culture;
-	    var min = _props.min;
-	    var max = _props.max;
+	    var _props = this.props,
+	        focused = _props.focused,
+	        disabled = _props.disabled,
+	        onChange = _props.onChange,
+	        value = _props.value,
+	        today = _props.today,
+	        culture = _props.culture,
+	        min = _props.min,
+	        max = _props.max;
 
 
 	    var id = (0, _widgetHelpers.instanceId)(this),
@@ -5661,7 +5405,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1037:
+/***/ 1069:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5672,25 +5416,25 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CalendarView = __webpack_require__(1032);
+	var _CalendarView = __webpack_require__(1064);
 
 	var _CalendarView2 = _interopRequireDefault(_CalendarView);
 
-	var _dates = __webpack_require__(1033);
+	var _dates = __webpack_require__(1065);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5714,7 +5458,7 @@ webpackJsonp([4],{
 
 	  displayName: 'DecadeView',
 
-	  mixins: [__webpack_require__(1017), __webpack_require__(1029), __webpack_require__(1009)()],
+	  mixins: [__webpack_require__(1049), __webpack_require__(1061), __webpack_require__(1043)()],
 
 	  propTypes: propTypes,
 
@@ -5737,16 +5481,16 @@ webpackJsonp([4],{
 	    );
 	  },
 	  renderRow: function renderRow(row, rowIdx) {
-	    var _props = this.props;
-	    var focused = _props.focused;
-	    var disabled = _props.disabled;
-	    var onChange = _props.onChange;
-	    var yearFormat = _props.yearFormat;
-	    var value = _props.value;
-	    var today = _props.today;
-	    var culture = _props.culture;
-	    var min = _props.min;
-	    var max = _props.max;
+	    var _props = this.props,
+	        focused = _props.focused,
+	        disabled = _props.disabled,
+	        onChange = _props.onChange,
+	        yearFormat = _props.yearFormat,
+	        value = _props.value,
+	        today = _props.today,
+	        culture = _props.culture,
+	        min = _props.min,
+	        max = _props.max;
 
 
 	    var id = (0, _widgetHelpers.instanceId)(this);
@@ -5793,7 +5537,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1038:
+/***/ 1070:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5804,25 +5548,25 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CalendarView = __webpack_require__(1032);
+	var _CalendarView = __webpack_require__(1064);
 
 	var _CalendarView2 = _interopRequireDefault(_CalendarView);
 
-	var _dates = __webpack_require__(1033);
+	var _dates = __webpack_require__(1065);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5849,7 +5593,7 @@ webpackJsonp([4],{
 
 	  displayName: 'CenturyView',
 
-	  mixins: [__webpack_require__(1017), __webpack_require__(1029), __webpack_require__(1009)()],
+	  mixins: [__webpack_require__(1049), __webpack_require__(1061), __webpack_require__(1043)()],
 
 	  propTypes: propTypes,
 
@@ -5874,15 +5618,15 @@ webpackJsonp([4],{
 	  renderRow: function renderRow(row, rowIdx) {
 	    var _this = this;
 
-	    var _props = this.props;
-	    var focused = _props.focused;
-	    var disabled = _props.disabled;
-	    var onChange = _props.onChange;
-	    var value = _props.value;
-	    var today = _props.today;
-	    var culture = _props.culture;
-	    var min = _props.min;
-	    var max = _props.max;
+	    var _props = this.props,
+	        focused = _props.focused,
+	        disabled = _props.disabled,
+	        onChange = _props.onChange,
+	        value = _props.value,
+	        today = _props.today,
+	        culture = _props.culture,
+	        min = _props.min,
+	        max = _props.max;
 
 
 	    var id = (0, _widgetHelpers.instanceId)(this, '_century');
@@ -5929,7 +5673,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1039:
+/***/ 1071:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5940,27 +5684,27 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ReplaceTransitionGroup = __webpack_require__(1040);
+	var _ReplaceTransitionGroup = __webpack_require__(1072);
 
 	var _ReplaceTransitionGroup2 = _interopRequireDefault(_ReplaceTransitionGroup);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _style = __webpack_require__(815);
+	var _style = __webpack_require__(852);
 
 	var _style2 = _interopRequireDefault(_style);
 
-	var _width = __webpack_require__(1041);
+	var _width = __webpack_require__(1073);
 
 	var _width2 = _interopRequireDefault(_width);
 
-	var _configuration = __webpack_require__(989);
+	var _configuration = __webpack_require__(1023);
 
 	var _configuration2 = _interopRequireDefault(_configuration);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
@@ -6052,9 +5796,9 @@ webpackJsonp([4],{
 	    );
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var style = _props.style;
-	    var children = _props.children;
+	    var _props = this.props,
+	        style = _props.style,
+	        children = _props.children;
 
 
 	    style = _extends({}, style, {
@@ -6077,7 +5821,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1040:
+/***/ 1072:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6088,23 +5832,23 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _style = __webpack_require__(815);
+	var _style = __webpack_require__(852);
 
 	var _style2 = _interopRequireDefault(_style);
 
-	var _height = __webpack_require__(974);
+	var _height = __webpack_require__(1008);
 
 	var _height2 = _interopRequireDefault(_height);
 
-	var _width = __webpack_require__(1041);
+	var _width = __webpack_require__(1073);
 
 	var _width2 = _interopRequireDefault(_width);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
@@ -6116,8 +5860,6 @@ webpackJsonp([4],{
 	 * https://github.com/facebook/react/blob/master/src/addons/transitions/ReactTransitionGroup.js
 	 * relevent code is licensed accordingly
 	 */
-
-
 	function getChild(children) {
 	  return _react2.default.Children.only(children);
 	}
@@ -6284,13 +6026,13 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1041:
+/***/ 1073:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var offset = __webpack_require__(915),
-	    getWindow = __webpack_require__(895);
+	var offset = __webpack_require__(950),
+	    getWindow = __webpack_require__(930);
 
 	module.exports = function width(node, client) {
 	  var win = getWindow(node);
@@ -6299,7 +6041,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1042:
+/***/ 1074:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6314,69 +6056,69 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _invariant = __webpack_require__(785);
+	var _invariant = __webpack_require__(822);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _activeElement = __webpack_require__(828);
+	var _activeElement = __webpack_require__(865);
 
 	var _activeElement2 = _interopRequireDefault(_activeElement);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _dates = __webpack_require__(1033);
+	var _dates = __webpack_require__(1065);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _constants = __webpack_require__(1035);
+	var _constants = __webpack_require__(1067);
 
-	var _Widget = __webpack_require__(994);
+	var _Widget = __webpack_require__(1028);
 
 	var _Widget2 = _interopRequireDefault(_Widget);
 
-	var _Popup = __webpack_require__(1002);
+	var _Popup = __webpack_require__(1036);
 
 	var _Popup2 = _interopRequireDefault(_Popup);
 
-	var _Calendar = __webpack_require__(1027);
+	var _Calendar = __webpack_require__(1059);
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
-	var _TimeList = __webpack_require__(1043);
+	var _TimeList = __webpack_require__(1075);
 
 	var _TimeList2 = _interopRequireDefault(_TimeList);
 
-	var _DateTimePickerInput = __webpack_require__(1044);
+	var _DateTimePickerInput = __webpack_require__(1076);
 
 	var _DateTimePickerInput2 = _interopRequireDefault(_DateTimePickerInput);
 
-	var _Button = __webpack_require__(997);
+	var _Button = __webpack_require__(1031);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _uncontrollable = __webpack_require__(1012);
+	var _uncontrollable = __webpack_require__(870);
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6470,15 +6212,16 @@ webpackJsonp([4],{
 
 	  displayName: 'DateTimePicker',
 
-	  mixins: [__webpack_require__(1015), __webpack_require__(1017), __webpack_require__(1019), __webpack_require__(1022), __webpack_require__(1023)({
+	  mixins: [__webpack_require__(1047), __webpack_require__(1049), __webpack_require__(1051), __webpack_require__(1054), __webpack_require__(1055)({
 	    didHandle: function didHandle(focused) {
 	      if (!focused) this.close();
 	    }
-	  }), __webpack_require__(1009)('valueInput', function (key, id) {
-	    var open = this.props.open;
-	    var current = this.ariaActiveDescendant();
-	    var calIsActive = open === _constants.datePopups.CALENDAR && key === 'calendar';
-	    var timeIsActive = open === _constants.datePopups.TIME && key === 'timelist';
+	  }), __webpack_require__(1043)('valueInput', function (key, id) {
+	    var open = this.props.open,
+	        current = this.ariaActiveDescendant(),
+	        calIsActive = open === _constants.datePopups.CALENDAR && key === 'calendar',
+	        timeIsActive = open === _constants.datePopups.TIME && key === 'timelist';
+
 
 	    if (!current || timeIsActive || calIsActive) return id;
 	  })],
@@ -6513,20 +6256,20 @@ webpackJsonp([4],{
 	    };
 	  },
 	  renderInput: function renderInput(id, owns) {
-	    var _props = this.props;
-	    var open = _props.open;
-	    var value = _props.value;
-	    var editFormat = _props.editFormat;
-	    var culture = _props.culture;
-	    var busy = _props.busy;
-	    var placeholder = _props.placeholder;
-	    var disabled = _props.disabled;
-	    var readOnly = _props.readOnly;
-	    var name = _props.name;
-	    var tabIndex = _props.tabIndex;
-	    var autoFocus = _props.autoFocus;
-	    var ariaLabelledby = _props['aria-labelledby'];
-	    var ariaDescribedby = _props['aria-describedby'];
+	    var _props = this.props,
+	        open = _props.open,
+	        value = _props.value,
+	        editFormat = _props.editFormat,
+	        culture = _props.culture,
+	        busy = _props.busy,
+	        placeholder = _props.placeholder,
+	        disabled = _props.disabled,
+	        readOnly = _props.readOnly,
+	        name = _props.name,
+	        tabIndex = _props.tabIndex,
+	        autoFocus = _props.autoFocus,
+	        ariaLabelledby = _props['aria-labelledby'],
+	        ariaDescribedby = _props['aria-describedby'];
 	    var focused = this.state.focused;
 
 
@@ -6556,11 +6299,11 @@ webpackJsonp([4],{
 	    });
 	  },
 	  renderButtons: function renderButtons(messages) {
-	    var _props2 = this.props;
-	    var calendar = _props2.calendar;
-	    var time = _props2.time;
-	    var disabled = _props2.disabled;
-	    var readOnly = _props2.readOnly;
+	    var _props2 = this.props,
+	        calendar = _props2.calendar,
+	        time = _props2.time,
+	        disabled = _props2.disabled,
+	        readOnly = _props2.readOnly;
 
 
 	    if (!calendar && !time) {
@@ -6589,11 +6332,11 @@ webpackJsonp([4],{
 	  renderCalendar: function renderCalendar(id, inputID) {
 	    var _this = this;
 
-	    var _props3 = this.props;
-	    var open = _props3.open;
-	    var value = _props3.value;
-	    var duration = _props3.duration;
-	    var dropUp = _props3.dropUp;
+	    var _props3 = this.props,
+	        open = _props3.open,
+	        value = _props3.value,
+	        duration = _props3.duration,
+	        dropUp = _props3.dropUp;
 
 
 	    var calendarProps = _3.default.pickProps(this.props, Calendar);
@@ -6630,14 +6373,14 @@ webpackJsonp([4],{
 	  renderTimeList: function renderTimeList(id, inputID) {
 	    var _this2 = this;
 
-	    var _props4 = this.props;
-	    var open = _props4.open;
-	    var value = _props4.value;
-	    var duration = _props4.duration;
-	    var dropUp = _props4.dropUp;
-	    var calendar = _props4.calendar;
-	    var timeFormat = _props4.timeFormat;
-	    var timeComponent = _props4.timeComponent;
+	    var _props4 = this.props,
+	        open = _props4.open,
+	        value = _props4.value,
+	        duration = _props4.duration,
+	        dropUp = _props4.dropUp,
+	        calendar = _props4.calendar,
+	        timeFormat = _props4.timeFormat,
+	        timeComponent = _props4.timeComponent;
 
 
 	    var timeListProps = _3.default.pickProps(this.props, _TimeList2.default);
@@ -6673,15 +6416,15 @@ webpackJsonp([4],{
 	    );
 	  },
 	  render: function render() {
-	    var _props5 = this.props;
-	    var className = _props5.className;
-	    var calendar = _props5.calendar;
-	    var time = _props5.time;
-	    var open = _props5.open;
-	    var messages = _props5.messages;
-	    var disabled = _props5.disabled;
-	    var readOnly = _props5.readOnly;
-	    var dropUp = _props5.dropUp;
+	    var _props5 = this.props,
+	        className = _props5.className,
+	        calendar = _props5.calendar,
+	        time = _props5.time,
+	        open = _props5.open,
+	        messages = _props5.messages,
+	        disabled = _props5.disabled,
+	        readOnly = _props5.readOnly,
+	        dropUp = _props5.dropUp;
 	    var focused = this.state.focused;
 
 
@@ -6718,9 +6461,9 @@ webpackJsonp([4],{
 	    );
 	  },
 	  handleChange: function handleChange(date, str, constrain) {
-	    var _props6 = this.props;
-	    var onChange = _props6.onChange;
-	    var value = _props6.value;
+	    var _props6 = this.props,
+	        onChange = _props6.onChange,
+	        value = _props6.value;
 
 
 	    if (constrain) date = this.inRangeValue(date);
@@ -6735,10 +6478,10 @@ webpackJsonp([4],{
 	    }
 	  },
 	  handleKeyDown: function handleKeyDown(e) {
-	    var _props7 = this.props;
-	    var open = _props7.open;
-	    var calendar = _props7.calendar;
-	    var time = _props7.time;
+	    var _props7 = this.props,
+	        open = _props7.open,
+	        calendar = _props7.calendar,
+	        time = _props7.time;
 
 
 	    (0, _widgetHelpers.notify)(this.props.onKeyDown, [e]);
@@ -6867,7 +6610,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1043:
+/***/ 1075:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6880,21 +6623,21 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _dates2 = __webpack_require__(1033);
+	var _dates2 = __webpack_require__(1065);
 
 	var _dates3 = _interopRequireDefault(_dates2);
 
-	var _List = __webpack_require__(1004);
+	var _List = __webpack_require__(1038);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
@@ -6923,7 +6666,7 @@ webpackJsonp([4],{
 	    delay: _react2.default.PropTypes.number
 	  },
 
-	  mixins: [__webpack_require__(1015)],
+	  mixins: [__webpack_require__(1047)],
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -6938,7 +6681,7 @@ webpackJsonp([4],{
 	  },
 	  getInitialState: function getInitialState() {
 	    var data = this._dates(this.props),
-	        focusedItem = this._closestDate(data, this.props.value);
+	        focusedItem = this._closestDate(data, this.props.value || this.props.currentDate);
 
 	    return {
 	      focusedItem: focusedItem || data[0],
@@ -6947,7 +6690,7 @@ webpackJsonp([4],{
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    var data = this._dates(nextProps),
-	        focusedItem = this._closestDate(data, nextProps.value),
+	        focusedItem = this._closestDate(data, nextProps.value || this.props.currentDate),
 	        valChanged = !_dates3.default.eq(nextProps.value, this.props.value, 'minutes'),
 	        minChanged = !_dates3.default.eq(nextProps.min, this.props.min, 'minutes'),
 	        maxChanged = !_dates3.default.eq(nextProps.max, this.props.max, 'minutes'),
@@ -6961,9 +6704,9 @@ webpackJsonp([4],{
 	    }
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var value = _props.value;
-	    var onSelect = _props.onSelect;
+	    var _props = this.props,
+	        value = _props.value,
+	        onSelect = _props.onSelect;
 
 
 	    var times = this.state.dates,
@@ -7092,7 +6835,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1044:
+/***/ 1076:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7105,21 +6848,21 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _Input = __webpack_require__(995);
+	var _Input = __webpack_require__(1029);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -7141,11 +6884,11 @@ webpackJsonp([4],{
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    var value = nextProps.value;
-	    var editing = nextProps.editing;
-	    var editFormat = nextProps.editFormat;
-	    var format = nextProps.format;
-	    var culture = nextProps.culture;
+	    var value = nextProps.value,
+	        editing = nextProps.editing,
+	        editFormat = nextProps.editFormat,
+	        format = nextProps.format,
+	        culture = nextProps.culture;
 
 
 	    this.setState({
@@ -7153,12 +6896,12 @@ webpackJsonp([4],{
 	    });
 	  },
 	  getInitialState: function getInitialState() {
-	    var _props = this.props;
-	    var value = _props.value;
-	    var editing = _props.editing;
-	    var editFormat = _props.editFormat;
-	    var format = _props.format;
-	    var culture = _props.culture;
+	    var _props = this.props,
+	        value = _props.value,
+	        editing = _props.editing,
+	        editFormat = _props.editFormat,
+	        format = _props.format,
+	        culture = _props.culture;
 
 
 	    return {
@@ -7166,9 +6909,9 @@ webpackJsonp([4],{
 	    };
 	  },
 	  render: function render() {
-	    var _props2 = this.props;
-	    var disabled = _props2.disabled;
-	    var readOnly = _props2.readOnly;
+	    var _props2 = this.props,
+	        disabled = _props2.disabled,
+	        readOnly = _props2.readOnly;
 	    var textValue = this.state.textValue;
 
 
@@ -7190,12 +6933,12 @@ webpackJsonp([4],{
 	    this.setState({ textValue: value });
 	  },
 	  handleBlur: function handleBlur(event) {
-	    var _props3 = this.props;
-	    var format = _props3.format;
-	    var culture = _props3.culture;
-	    var parse = _props3.parse;
-	    var onChange = _props3.onChange;
-	    var onBlur = _props3.onBlur;
+	    var _props3 = this.props,
+	        format = _props3.format,
+	        culture = _props3.culture,
+	        parse = _props3.parse,
+	        onChange = _props3.onChange,
+	        onBlur = _props3.onBlur;
 
 
 	    onBlur && onBlur(event);
@@ -7228,7 +6971,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1045:
+/***/ 1077:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7243,45 +6986,45 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _uncontrollable = __webpack_require__(1012);
+	var _uncontrollable = __webpack_require__(870);
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _constants = __webpack_require__(1035);
+	var _constants = __webpack_require__(1067);
 
-	var _repeater = __webpack_require__(1046);
+	var _repeater = __webpack_require__(1078);
 
 	var _repeater2 = _interopRequireDefault(_repeater);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
-	var _NumberInput = __webpack_require__(1047);
+	var _NumberInput = __webpack_require__(1079);
 
 	var _NumberInput2 = _interopRequireDefault(_NumberInput);
 
-	var _Button = __webpack_require__(997);
+	var _Button = __webpack_require__(1031);
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7357,7 +7100,7 @@ webpackJsonp([4],{
 
 	  displayName: 'NumberPicker',
 
-	  mixins: [__webpack_require__(1015), __webpack_require__(1017), __webpack_require__(1022), __webpack_require__(1023)({
+	  mixins: [__webpack_require__(1047), __webpack_require__(1049), __webpack_require__(1054), __webpack_require__(1055)({
 	    willHandle: function willHandle(focused) {
 	      if (focused) this.focus();
 	    }
@@ -7389,13 +7132,11 @@ webpackJsonp([4],{
 	  render: function render() {
 	    var _this = this;
 
-	    var _$omitOwnProps = _3.default.omitOwnProps(this);
-
-	    var className = _$omitOwnProps.className;
-	    var onKeyPress = _$omitOwnProps.onKeyPress;
-	    var onKeyUp = _$omitOwnProps.onKeyUp;
-
-	    var props = _objectWithoutProperties(_$omitOwnProps, ['className', 'onKeyPress', 'onKeyUp']);
+	    var _$omitOwnProps = _3.default.omitOwnProps(this),
+	        className = _$omitOwnProps.className,
+	        onKeyPress = _$omitOwnProps.onKeyPress,
+	        onKeyUp = _$omitOwnProps.onKeyUp,
+	        props = _objectWithoutProperties(_$omitOwnProps, ['className', 'onKeyPress', 'onKeyUp']);
 
 	    var val = this.constrainValue(this.props.value);
 
@@ -7436,7 +7177,7 @@ webpackJsonp([4],{
 	          icon: 'caret-down',
 	          onClick: this.handleFocus,
 	          label: this.props.messages.decrement,
-	          active: this.state.active === _constants.directions.UP,
+	          active: this.state.active === _constants.directions.DOWN,
 	          disabled: val === this.props.min || this.props.disabled,
 	          onMouseUp: function onMouseUp() {
 	            return _this.handleMouseUp(_constants.directions.DOWN);
@@ -7557,7 +7298,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1046:
+/***/ 1078:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7584,7 +7325,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1047:
+/***/ 1079:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7597,15 +7338,15 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _localizers = __webpack_require__(991);
+	var _localizers = __webpack_require__(1025);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7642,7 +7383,7 @@ webpackJsonp([4],{
 	    };
 	  },
 	  getDefaultState: function getDefaultState() {
-	    var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
 	    var value = props.value,
 	        decimal = _localizers.number.decimalChar(null, props.culture),
@@ -7730,16 +7471,14 @@ webpackJsonp([4],{
 	  isPaddedZeros: function isPaddedZeros(str) {
 	    var localeChar = _localizers.number.decimalChar(null, this.props.culture);
 
-	    var _str$split = str.split(localeChar);
-
-	    var _ = _str$split[0];
-	    var decimals = _str$split[1];
-
+	    var _str$split = str.split(localeChar),
+	        _ = _str$split[0],
+	        decimals = _str$split[1];
 
 	    return !!(decimals && decimals.match(/0+$/));
 	  },
 	  isAtDelimiter: function isAtDelimiter(num, str) {
-	    var props = arguments.length <= 2 || arguments[2] === undefined ? this.props : arguments[2];
+	    var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.props;
 
 	    var localeChar = _localizers.number.decimalChar(null, props.culture),
 	        lastIndex = str.length - 1,
@@ -7766,7 +7505,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1048:
+/***/ 1080:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7781,55 +7520,55 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _uncontrollable = __webpack_require__(1012);
+	var _uncontrollable = __webpack_require__(870);
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _Widget = __webpack_require__(994);
+	var _Widget = __webpack_require__(1028);
 
 	var _Widget2 = _interopRequireDefault(_Widget);
 
-	var _Popup = __webpack_require__(1002);
+	var _Popup = __webpack_require__(1036);
 
 	var _Popup2 = _interopRequireDefault(_Popup);
 
-	var _MultiselectInput = __webpack_require__(1049);
+	var _MultiselectInput = __webpack_require__(1081);
 
 	var _MultiselectInput2 = _interopRequireDefault(_MultiselectInput);
 
-	var _MultiselectTagList = __webpack_require__(1050);
+	var _MultiselectTagList = __webpack_require__(1082);
 
 	var _MultiselectTagList2 = _interopRequireDefault(_MultiselectTagList);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _List = __webpack_require__(1004);
+	var _List = __webpack_require__(1038);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _ListGroupable = __webpack_require__(1010);
+	var _ListGroupable = __webpack_require__(1044);
 
 	var _ListGroupable2 = _interopRequireDefault(_ListGroupable);
 
-	var _validateListInterface = __webpack_require__(1011);
+	var _validateListInterface = __webpack_require__(1046);
 
 	var _validateListInterface2 = _interopRequireDefault(_validateListInterface);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7923,7 +7662,7 @@ webpackJsonp([4],{
 
 	  displayName: 'Multiselect',
 
-	  mixins: [__webpack_require__(1015), __webpack_require__(1018), __webpack_require__(1019), __webpack_require__(1022), __webpack_require__(1023)({
+	  mixins: [__webpack_require__(1047), __webpack_require__(1050), __webpack_require__(1051), __webpack_require__(1054), __webpack_require__(1055)({
 	    willHandle: function willHandle(focused) {
 	      focused && this.focus();
 	    },
@@ -7934,7 +7673,7 @@ webpackJsonp([4],{
 
 	      if (focused && !this.props.open) this.open();
 	    }
-	  }), __webpack_require__(1009)('input', function (key, id) {
+	  }), __webpack_require__(1043)('input', function (key, id) {
 	    var myKey = this.props.ariaActiveDescendantKey;
 
 
@@ -7968,15 +7707,16 @@ webpackJsonp([4],{
 	    };
 	  },
 	  getInitialState: function getInitialState() {
-	    var _props = this.props;
-	    var data = _props.data;
-	    var value = _props.value;
-	    var valueField = _props.valueField;
-	    var searchTerm = _props.searchTerm;
-	    var dataItems = splat(value).map(function (item) {
+	    var _props = this.props,
+	        data = _props.data,
+	        value = _props.value,
+	        valueField = _props.valueField,
+	        searchTerm = _props.searchTerm,
+	        dataItems = splat(value).map(function (item) {
 	      return (0, _dataHelpers.dataItem)(data, item, valueField);
-	    });
-	    var processedData = this.process(data, dataItems, searchTerm);
+	    }),
+	        processedData = this.process(data, dataItems, searchTerm);
+
 
 	    return {
 	      focusedTag: null,
@@ -7991,13 +7731,13 @@ webpackJsonp([4],{
 	    this.refs.list && (0, _validateListInterface2.default)(this.refs.list);
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    var data = nextProps.data;
-	    var value = nextProps.value;
-	    var valueField = nextProps.valueField;
-	    var searchTerm = nextProps.searchTerm;
-	    var values = _3.default.splat(value);
-	    var current = this.state.focusedItem;
-	    var items = this.process(data, values, searchTerm);
+	    var data = nextProps.data,
+	        value = nextProps.value,
+	        valueField = nextProps.valueField,
+	        searchTerm = nextProps.searchTerm,
+	        values = _3.default.splat(value),
+	        current = this.state.focusedItem,
+	        items = this.process(data, values, searchTerm);
 
 	    this.setState({
 	      processedData: items,
@@ -8039,14 +7779,14 @@ webpackJsonp([4],{
 	    );
 	  },
 	  renderInput: function renderInput(owns) {
-	    var _props2 = this.props;
-	    var searchTerm = _props2.searchTerm;
-	    var maxLength = _props2.maxLength;
-	    var tabIndex = _props2.tabIndex;
-	    var busy = _props2.busy;
-	    var open = _props2.open;
-	    var disabled = _props2.disabled;
-	    var readOnly = _props2.readOnly;
+	    var _props2 = this.props,
+	        searchTerm = _props2.searchTerm,
+	        maxLength = _props2.maxLength,
+	        tabIndex = _props2.tabIndex,
+	        busy = _props2.busy,
+	        open = _props2.open,
+	        disabled = _props2.disabled,
+	        readOnly = _props2.readOnly;
 
 
 	    return _react2.default.createElement(_MultiselectInput2.default, {
@@ -8071,10 +7811,10 @@ webpackJsonp([4],{
 	    });
 	  },
 	  renderList: function renderList(List, id, messages) {
-	    var _props3 = this.props;
-	    var open = _props3.open;
-	    var disabled = _props3.disabled;
-	    var readOnly = _props3.readOnly;
+	    var _props3 = this.props,
+	        open = _props3.open,
+	        disabled = _props3.disabled,
+	        readOnly = _props3.readOnly;
 	    var focusedItem = this.state.focusedItem;
 
 
@@ -8102,9 +7842,9 @@ webpackJsonp([4],{
 	  },
 	  renderNotificationArea: function renderNotificationArea(id, messages) {
 	    var textField = this.props.textField;
-	    var _state = this.state;
-	    var focused = _state.focused;
-	    var dataItems = _state.dataItems;
+	    var _state = this.state,
+	        focused = _state.focused,
+	        dataItems = _state.dataItems;
 
 
 	    return _react2.default.createElement(
@@ -8123,14 +7863,14 @@ webpackJsonp([4],{
 	    );
 	  },
 	  renderTags: function renderTags(id, messages) {
-	    var _props4 = this.props;
-	    var disabled = _props4.disabled;
-	    var readOnly = _props4.readOnly;
-	    var valueField = _props4.valueField;
-	    var textField = _props4.textField;
-	    var _state2 = this.state;
-	    var focusedTag = _state2.focusedTag;
-	    var dataItems = _state2.dataItems;
+	    var _props4 = this.props,
+	        disabled = _props4.disabled,
+	        readOnly = _props4.readOnly,
+	        valueField = _props4.valueField,
+	        textField = _props4.textField;
+	    var _state2 = this.state,
+	        focusedTag = _state2.focusedTag,
+	        dataItems = _state2.dataItems;
 
 
 	    var Component = this.props.tagComponent;
@@ -8153,20 +7893,20 @@ webpackJsonp([4],{
 	  render: function render() {
 	    var _this2 = this;
 
-	    var _props5 = this.props;
-	    var className = _props5.className;
-	    var groupBy = _props5.groupBy;
-	    var messages = _props5.messages;
-	    var busy = _props5.busy;
-	    var dropUp = _props5.dropUp;
-	    var open = _props5.open;
-	    var duration = _props5.duration;
-	    var disabled = _props5.disabled;
-	    var readOnly = _props5.readOnly;
-	    var List = _props5.listComponent;
-	    var _state3 = this.state;
-	    var focused = _state3.focused;
-	    var dataItems = _state3.dataItems;
+	    var _props5 = this.props,
+	        className = _props5.className,
+	        groupBy = _props5.groupBy,
+	        messages = _props5.messages,
+	        busy = _props5.busy,
+	        dropUp = _props5.dropUp,
+	        open = _props5.open,
+	        duration = _props5.duration,
+	        disabled = _props5.disabled,
+	        readOnly = _props5.readOnly,
+	        List = _props5.listComponent;
+	    var _state3 = this.state,
+	        focused = _state3.focused,
+	        dataItems = _state3.dataItems;
 
 
 	    List = List || groupBy && _ListGroupable2.default || _List2.default;
@@ -8205,7 +7945,7 @@ webpackJsonp([4],{
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'rw-multiselect-wrapper' },
-	        busy && _react2.default.createElement('i', { className: 'rw-i rw-loading' }),
+	        busy && _react2.default.createElement('span', { className: 'rw-i rw-loading' }),
 	        shouldRenderTags && this.renderTags(tagsID, messages),
 	        this.renderInput(inputOwns)
 	      ),
@@ -8272,16 +8012,18 @@ webpackJsonp([4],{
 	    this.focus();
 	  },
 	  handleKeyDown: function handleKeyDown(e) {
-	    var key = e.key;
-	    var altKey = e.altKey;
-	    var ctrlKey = e.ctrlKey;
-	    var noSearch = !this.props.searchTerm && !this._deletingText;
-	    var isOpen = this.props.open;var _state4 = this.state;
-	    var focusedTag = _state4.focusedTag;
-	    var focusedItem = _state4.focusedItem;
-	    var _refs = this.refs;
-	    var list = _refs.list;
-	    var tagList = _refs.tagList;
+	    var key = e.key,
+	        keyCode = e.keyCode,
+	        altKey = e.altKey,
+	        ctrlKey = e.ctrlKey,
+	        noSearch = !this.props.searchTerm && !this._deletingText,
+	        isOpen = this.props.open;
+	    var _state4 = this.state,
+	        focusedTag = _state4.focusedTag,
+	        focusedItem = _state4.focusedItem;
+	    var _refs = this.refs,
+	        list = _refs.list,
+	        tagList = _refs.tagList;
 
 	    var nullTag = { focusedTag: null };
 
@@ -8309,7 +8051,8 @@ webpackJsonp([4],{
 	    } else if (key === 'Home') {
 	      e.preventDefault();
 	      if (isOpen) this.setState(_extends({ focusedItem: list.first() }, nullTag));else tagList && this.setState({ focusedTag: tagList.first() });
-	    } else if (isOpen && key === 'Enter') {
+	    } else if (isOpen && keyCode === 13) {
+	      // using keyCode to ignore enter for japanese IME
 	      e.preventDefault();
 	      ctrlKey && this.props.onCreate || focusedItem === null ? this.handleCreate(this.props.searchTerm) : this.handleSelect(this.state.focusedItem);
 	    } else if (key === 'Escape') isOpen ? this.close() : tagList && this.setState(nullTag);else if (noSearch && key === 'ArrowLeft') tagList && this.setState({ focusedTag: tagList.prev(focusedTag) });else if (noSearch && key === 'ArrowRight') tagList && this.setState({ focusedTag: tagList.next(focusedTag) });else if (noSearch && key === 'Delete') tagList && tagList.remove(focusedTag);else if (noSearch && key === 'Backspace') tagList && tagList.removeNext();
@@ -8346,11 +8089,11 @@ webpackJsonp([4],{
 	    return items;
 	  },
 	  shouldShowCreate: function shouldShowCreate() {
-	    var _props6 = this.props;
-	    var textField = _props6.textField;
-	    var searchTerm = _props6.searchTerm;
-	    var onCreate = _props6.onCreate;
-	    var caseSensitive = _props6.caseSensitive;
+	    var _props6 = this.props,
+	        textField = _props6.textField,
+	        searchTerm = _props6.searchTerm,
+	        onCreate = _props6.onCreate,
+	        caseSensitive = _props6.caseSensitive;
 
 
 	    if (!onCreate || !searchTerm) return false;
@@ -8386,7 +8129,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1049:
+/***/ 1081:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8401,15 +8144,15 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -8433,11 +8176,10 @@ webpackJsonp([4],{
 	  }
 
 	  MultiselectInput.prototype.render = function render() {
-	    var _props = this.props;
-	    var disabled = _props.disabled;
-	    var readOnly = _props.readOnly;
-
-	    var props = _objectWithoutProperties(_props, ['disabled', 'readOnly']);
+	    var _props = this.props,
+	        disabled = _props.disabled,
+	        readOnly = _props.readOnly,
+	        props = _objectWithoutProperties(_props, ['disabled', 'readOnly']);
 
 	    var size = Math.max((props.value || props.placeholder).length, 1) + 1;
 
@@ -8471,7 +8213,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1050:
+/***/ 1082:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8484,23 +8226,23 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8512,7 +8254,7 @@ webpackJsonp([4],{
 	  displayName: 'MultiselectTagList',
 
 
-	  mixins: [__webpack_require__(1017), __webpack_require__(1009)()],
+	  mixins: [__webpack_require__(1049), __webpack_require__(1043)()],
 
 	  propTypes: {
 	    value: _react2.default.PropTypes.array,
@@ -8534,19 +8276,20 @@ webpackJsonp([4],{
 	    };
 	  },
 	  componentDidUpdate: function componentDidUpdate() {
-	    var focused = this.props.focused;
-	    var activeId = optionId((0, _widgetHelpers.instanceId)(this), focused);
+	    var focused = this.props.focused,
+	        activeId = optionId((0, _widgetHelpers.instanceId)(this), focused);
+
 
 	    this.ariaActiveDescendant(focused == null || (0, _interaction.isDisabledItem)(focused, this.props) ? null : activeId);
 	  },
 	  render: function render() {
 	    var _this = this;
 
-	    var _props = this.props;
-	    var focused = _props.focused;
-	    var value = _props.value;
-	    var textField = _props.textField;
-	    var ValueComponent = _props.valueComponent;
+	    var _props = this.props,
+	        focused = _props.focused,
+	        value = _props.value,
+	        textField = _props.textField,
+	        ValueComponent = _props.valueComponent;
 
 
 	    var id = (0, _widgetHelpers.instanceId)(this);
@@ -8591,7 +8334,7 @@ webpackJsonp([4],{
 	            _react2.default.createElement(
 	              'span',
 	              { className: 'rw-tag-btn', 'aria-hidden': 'true' },
-	              '×'
+	              '\xD7'
 	            )
 	          )
 	        );
@@ -8659,7 +8402,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1051:
+/***/ 1083:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8674,55 +8417,55 @@ webpackJsonp([4],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _2 = __webpack_require__(992);
+	var _2 = __webpack_require__(1026);
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _classnames = __webpack_require__(682);
+	var _classnames = __webpack_require__(719);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _uncontrollable = __webpack_require__(1012);
+	var _uncontrollable = __webpack_require__(870);
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _compat = __webpack_require__(1003);
+	var _compat = __webpack_require__(1037);
 
 	var _compat2 = _interopRequireDefault(_compat);
 
-	var _propTypes = __webpack_require__(999);
+	var _propTypes = __webpack_require__(1033);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _List = __webpack_require__(1004);
+	var _List = __webpack_require__(1038);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _ListGroupable = __webpack_require__(1010);
+	var _ListGroupable = __webpack_require__(1044);
 
 	var _ListGroupable2 = _interopRequireDefault(_ListGroupable);
 
-	var _ListOption = __webpack_require__(1005);
+	var _ListOption = __webpack_require__(1039);
 
 	var _ListOption2 = _interopRequireDefault(_ListOption);
 
-	var _Widget = __webpack_require__(994);
+	var _Widget = __webpack_require__(1028);
 
 	var _Widget2 = _interopRequireDefault(_Widget);
 
-	var _validateListInterface = __webpack_require__(1011);
+	var _validateListInterface = __webpack_require__(1046);
 
 	var _validateListInterface2 = _interopRequireDefault(_validateListInterface);
 
-	var _scrollTo2 = __webpack_require__(1020);
+	var _scrollTo2 = __webpack_require__(1052);
 
 	var _scrollTo3 = _interopRequireDefault(_scrollTo2);
 
-	var _dataHelpers = __webpack_require__(1001);
+	var _dataHelpers = __webpack_require__(1035);
 
-	var _interaction = __webpack_require__(1007);
+	var _interaction = __webpack_require__(1041);
 
-	var _widgetHelpers = __webpack_require__(1006);
+	var _widgetHelpers = __webpack_require__(1040);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8787,9 +8530,9 @@ webpackJsonp([4],{
 	};
 
 	function getFirstValue(props) {
-	  var data = props.data;
-	  var value = props.value;
-	  var valueField = props.valueField;
+	  var data = props.data,
+	      value = props.value,
+	      valueField = props.valueField;
 
 	  value = _3.default.splat(value);
 
@@ -8806,7 +8549,7 @@ webpackJsonp([4],{
 
 	  propTypes: propTypes,
 
-	  mixins: [__webpack_require__(1015), __webpack_require__(1016), __webpack_require__(1022), __webpack_require__(1009)(), __webpack_require__(1023)({
+	  mixins: [__webpack_require__(1047), __webpack_require__(1048), __webpack_require__(1054), __webpack_require__(1043)(), __webpack_require__(1055)({
 	    didHandle: function didHandle(focused) {
 	      // the rigamarole here is to avoid flicker went clicking an item and
 	      // gaining focus at the same time.
@@ -8831,10 +8574,10 @@ webpackJsonp([4],{
 	    };
 	  },
 	  getDefaultState: function getDefaultState(props) {
-	    var data = props.data;
-	    var value = props.value;
-	    var valueField = props.valueField;
-	    var multiple = props.multiple;
+	    var data = props.data,
+	        value = props.value,
+	        valueField = props.valueField,
+	        multiple = props.multiple;
 
 
 	    return {
@@ -8857,12 +8600,12 @@ webpackJsonp([4],{
 	    (0, _validateListInterface2.default)(this.refs.list);
 	  },
 	  render: function render() {
-	    var _props = this.props;
-	    var className = _props.className;
-	    var tabIndex = _props.tabIndex;
-	    var busy = _props.busy;
-	    var groupBy = _props.groupBy;
-	    var List = _props.listComponent;
+	    var _props = this.props,
+	        className = _props.className,
+	        tabIndex = _props.tabIndex,
+	        busy = _props.busy,
+	        groupBy = _props.groupBy,
+	        List = _props.listComponent;
 
 
 	    List = List || groupBy && _ListGroupable2.default || _List2.default;
@@ -8870,10 +8613,10 @@ webpackJsonp([4],{
 	    var elementProps = _3.default.omitOwnProps(this, List);
 	    var listProps = _3.default.pickProps(this.props, List);
 
-	    var _state = this.state;
-	    var ListItem = _state.ListItem;
-	    var focusedItem = _state.focusedItem;
-	    var focused = _state.focused;
+	    var _state = this.state,
+	        ListItem = _state.ListItem,
+	        focusedItem = _state.focusedItem,
+	        focused = _state.focused;
 
 
 	    var items = this._data();
@@ -8918,12 +8661,13 @@ webpackJsonp([4],{
 	  handleKeyDown: function handleKeyDown(e) {
 	    var _this = this;
 
-	    var key = e.key;
-	    var _props2 = this.props;
-	    var valueField = _props2.valueField;
-	    var multiple = _props2.multiple;
-	    var list = this.refs.list;
-	    var focusedItem = this.state.focusedItem;
+	    var key = e.key,
+	        _props2 = this.props,
+	        valueField = _props2.valueField,
+	        multiple = _props2.multiple,
+	        list = this.refs.list,
+	        focusedItem = this.state.focusedItem;
+
 
 	    var change = function change(item) {
 	      if (item) _this.handleChange(item, multiple ? !(0, _interaction.contains)(item, _this._values(), valueField) // toggle value
@@ -8979,13 +8723,13 @@ webpackJsonp([4],{
 	  selectAll: function selectAll() {
 	    var _this2 = this;
 
-	    var _props3 = this.props;
-	    var disabled = _props3.disabled;
-	    var readOnly = _props3.readOnly;
-	    var valueField = _props3.valueField;
-	    var values = this.state.dataItems;
-	    var data = this._data();
-	    var blacklist;
+	    var _props3 = this.props,
+	        disabled = _props3.disabled,
+	        readOnly = _props3.readOnly,
+	        valueField = _props3.valueField,
+	        values = this.state.dataItems,
+	        data = this._data(),
+	        blacklist;
 
 	    disabled = disabled || readOnly;
 	    disabled = Array.isArray(disabled) ? disabled : [];
@@ -9009,8 +8753,9 @@ webpackJsonp([4],{
 	    (0, _widgetHelpers.notify)(this.props.onChange, [data]);
 	  },
 	  handleChange: function handleChange(item, checked) {
-	    var multiple = this.props.multiple;
-	    var values = this.state.dataItems;
+	    var multiple = this.props.multiple,
+	        values = this.state.dataItems;
+
 
 	    multiple = !!multiple;
 
@@ -9061,10 +8806,10 @@ webpackJsonp([4],{
 	    displayName: 'SelectItem',
 
 	    handleChange: function handleChange(e) {
-	      var _props4 = this.props;
-	      var disabled = _props4.disabled;
-	      var readonly = _props4.readonly;
-	      var dataItem = _props4.dataItem;
+	      var _props4 = this.props,
+	          disabled = _props4.disabled,
+	          readonly = _props4.readonly,
+	          dataItem = _props4.dataItem;
 
 
 	      if (!disabled && !readonly) parent.handleChange(dataItem, e.target.checked);
@@ -9073,15 +8818,15 @@ webpackJsonp([4],{
 	      parent._clicking = true;
 	    },
 	    render: function render() {
-	      var _props5 = this.props;
-	      var children = _props5.children;
-	      var disabled = _props5.disabled;
-	      var readonly = _props5.readonly;
-	      var item = _props5.dataItem;
-	      var _parent$props = parent.props;
-	      var multiple = _parent$props.multiple;
-	      var _parent$props$name = _parent$props.name;
-	      var name = _parent$props$name === undefined ? (0, _widgetHelpers.instanceId)(parent, '_name') : _parent$props$name;
+	      var _props5 = this.props,
+	          children = _props5.children,
+	          disabled = _props5.disabled,
+	          readonly = _props5.readonly,
+	          item = _props5.dataItem;
+	      var _parent$props = parent.props,
+	          multiple = _parent$props.multiple,
+	          _parent$props$name = _parent$props.name,
+	          name = _parent$props$name === undefined ? (0, _widgetHelpers.instanceId)(parent, '_name') : _parent$props$name;
 
 
 	      var checked = (0, _interaction.contains)(item, parent._values(), parent.props.valueField),
@@ -9117,14 +8862,14 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1052:
+/***/ 1084:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 1056:
+/***/ 1088:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9190,7 +8935,7 @@ webpackJsonp([4],{
 	  return localizer;
 	};
 
-	var _configure = __webpack_require__(988);
+	var _configure = __webpack_require__(1022);
 
 	var _configure2 = _interopRequireDefault(_configure);
 
@@ -9200,7 +8945,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1057:
+/***/ 1089:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9211,15 +8956,15 @@ webpackJsonp([4],{
 
 	exports.default = simpleNumber;
 
-	var _configure = __webpack_require__(988);
+	var _configure = __webpack_require__(1022);
 
 	var _configure2 = _interopRequireDefault(_configure);
 
-	var _formatNumberWithString = __webpack_require__(1058);
+	var _formatNumberWithString = __webpack_require__(1090);
 
 	var _formatNumberWithString2 = _interopRequireDefault(_formatNumberWithString);
 
-	var _deconstructNumberFormat = __webpack_require__(1059);
+	var _deconstructNumberFormat = __webpack_require__(1091);
 
 	var _deconstructNumberFormat2 = _interopRequireDefault(_deconstructNumberFormat);
 
@@ -9231,11 +8976,9 @@ webpackJsonp([4],{
 	};
 
 	function simpleNumber(options) {
-	  var _defaults$options = _extends({}, defaults, options);
-
-	  var decimal = _defaults$options.decimal;
-	  var grouping = _defaults$options.grouping;
-
+	  var _defaults$options = _extends({}, defaults, options),
+	      decimal = _defaults$options.decimal,
+	      grouping = _defaults$options.grouping;
 
 	  var localizer = {
 	    formats: {
@@ -9285,13 +9028,13 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1058:
+/***/ 1090:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var deconstructNumberFormat = __webpack_require__(1059);
-	var formatFactory = __webpack_require__(1060);
+	var deconstructNumberFormat = __webpack_require__(1091);
+	var formatFactory = __webpack_require__(1092);
 
 	exports = module.exports = function formatNumberWithString(value, requiredFormat, overrideOptions) {
 
@@ -9328,7 +9071,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1059:
+/***/ 1091:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9534,7 +9277,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 1060:
+/***/ 1092:
 /***/ function(module, exports) {
 
 	

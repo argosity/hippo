@@ -8,7 +8,7 @@ webpackJsonp([0],{
 
 	Lanes.Vendor.Dayz = __webpack_require__(10);
 
-	__webpack_require__(421);
+	__webpack_require__(445);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
@@ -22,15 +22,15 @@ webpackJsonp([0],{
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = __webpack_require__(11);
-	var moment = __webpack_require__(39);
-	var Layout = __webpack_require__(143);
-	var Day = __webpack_require__(264);
-	var XLabels = __webpack_require__(399);
-	var YLabels = __webpack_require__(403);
+	var moment = __webpack_require__(38);
+	var Layout = __webpack_require__(149);
+	var Day = __webpack_require__(211);
+	var XLabels = __webpack_require__(352);
+	var YLabels = __webpack_require__(427);
 
-	__webpack_require__(407); // needed in order to for range to install itself
+	__webpack_require__(433); // needed in order to for range to install itself
 
-	var EventsCollection = __webpack_require__(408);
+	var EventsCollection = __webpack_require__(434);
 
 	var Dayz = React.createClass({
 	    displayName: 'Dayz',
@@ -132,7 +132,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 143:
+/***/ 149:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -141,11 +141,11 @@ webpackJsonp([0],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var assign = __webpack_require__(144);
-	var each = __webpack_require__(175);
-	var moment = __webpack_require__(39);
-	var EventLayout = __webpack_require__(262);
-	var C = __webpack_require__(263);
+	var assign = __webpack_require__(150);
+	var each = __webpack_require__(200);
+	var moment = __webpack_require__(38);
+	var EventLayout = __webpack_require__(209);
+	var C = __webpack_require__(210);
 
 	function cacheKey(day) {
 	    return day.format('YYYYMMDD');
@@ -340,15 +340,15 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 175:
+/***/ 200:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(176);
+	module.exports = __webpack_require__(201);
 
 
 /***/ },
 
-/***/ 262:
+/***/ 209:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -357,7 +357,7 @@ webpackJsonp([0],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var moment = __webpack_require__(39);
+	var moment = __webpack_require__(38);
 
 	// an event layout describes how an event is displayed.
 	// A event may be split into one or more layouts in order to be split across week boundaries
@@ -457,7 +457,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 263:
+/***/ 210:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -470,7 +470,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 264:
+/***/ 211:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -478,12 +478,12 @@ webpackJsonp([0],{
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = __webpack_require__(11);
-	var Layout = __webpack_require__(143);
-	var Event = __webpack_require__(265);
-	var Label = __webpack_require__(398);
-	var assign = __webpack_require__(144);
-	var each = __webpack_require__(175);
-	var ReactDOM = __webpack_require__(266);
+	var Layout = __webpack_require__(149);
+	var Event = __webpack_require__(212);
+	var Label = __webpack_require__(351);
+	var assign = __webpack_require__(150);
+	var each = __webpack_require__(200);
+	var ReactDOM = __webpack_require__(213);
 
 	var IsDayClass = new RegExp('(\\s|^)(events|day|label)(\\s|$)');
 
@@ -616,14 +616,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 265:
+/***/ 212:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(11);
-	var ReactDOM = __webpack_require__(266);
-	var EventLayout = __webpack_require__(262);
+	var ReactDOM = __webpack_require__(213);
+	var EventLayout = __webpack_require__(209);
 	var IsResizeClass = new RegExp('(\\s|^)event(\\s|$)');
 
 	var Event = React.createClass({
@@ -695,7 +695,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 398:
+/***/ 351:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -723,13 +723,13 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 399:
+/***/ 352:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(11);
-	var map = __webpack_require__(400);
+	var map = __webpack_require__(353);
 
 	var XLabels = React.createClass({
 	    displayName: 'XLabels',
@@ -771,16 +771,16 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 403:
+/***/ 427:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(11);
-	var moment = __webpack_require__(39);
-	var Layout = __webpack_require__(143);
-	var each = __webpack_require__(175);
-	var range = __webpack_require__(404);
+	var moment = __webpack_require__(38);
+	var Layout = __webpack_require__(149);
+	var each = __webpack_require__(200);
+	var range = __webpack_require__(428);
 
 	var YLabels = React.createClass({
 	    displayName: 'YLabels',
@@ -832,10 +832,10 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 404:
+/***/ 428:
 /***/ function(module, exports, __webpack_require__) {
 
-	var createRange = __webpack_require__(405);
+	var createRange = __webpack_require__(429);
 
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -885,12 +885,12 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 405:
+/***/ 429:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(406),
-	    isIterateeCall = __webpack_require__(149),
-	    toNumber = __webpack_require__(161);
+	var baseRange = __webpack_require__(430),
+	    isIterateeCall = __webpack_require__(179),
+	    toFinite = __webpack_require__(431);
 
 	/**
 	 * Creates a `_.range` or `_.rangeRight` function.
@@ -905,15 +905,14 @@ webpackJsonp([0],{
 	      end = step = undefined;
 	    }
 	    // Ensure the sign of `-0` is preserved.
-	    start = toNumber(start);
-	    start = start === start ? start : 0;
+	    start = toFinite(start);
 	    if (end === undefined) {
 	      end = start;
 	      start = 0;
 	    } else {
-	      end = toNumber(end) || 0;
+	      end = toFinite(end);
 	    }
-	    step = step === undefined ? (start < end ? 1 : -1) : (toNumber(step) || 0);
+	    step = step === undefined ? (start < end ? 1 : -1) : toFinite(step);
 	    return baseRange(start, end, step, fromRight);
 	  };
 	}
@@ -923,7 +922,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 406:
+/***/ 430:
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -932,7 +931,7 @@ webpackJsonp([0],{
 
 	/**
 	 * The base implementation of `_.range` and `_.rangeRight` which doesn't
-	 * coerce arguments to numbers.
+	 * coerce arguments.
 	 *
 	 * @private
 	 * @param {number} start The start of the range.
@@ -958,7 +957,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 408:
+/***/ 434:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -967,11 +966,11 @@ webpackJsonp([0],{
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Event = __webpack_require__(409);
-	var Emitter = __webpack_require__(410);
-	var _each = __webpack_require__(175);
-	var assign = __webpack_require__(144);
-	var sortBy = __webpack_require__(411);
+	var Event = __webpack_require__(435);
+	var Emitter = __webpack_require__(436);
+	var _each = __webpack_require__(200);
+	var assign = __webpack_require__(150);
+	var sortBy = __webpack_require__(437);
 
 	function lengthCompare(event) {
 	    return event.attributes.range.start.diff(event.attributes.range.end);
@@ -1034,7 +1033,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 409:
+/***/ 435:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1044,9 +1043,9 @@ webpackJsonp([0],{
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var React = __webpack_require__(11);
-	var assign = __webpack_require__(144);
-	var each = __webpack_require__(175);
-	var Emitter = __webpack_require__(410);
+	var assign = __webpack_require__(150);
+	var each = __webpack_require__(200);
+	var Emitter = __webpack_require__(436);
 
 	var EVENT_COUNTER = 1;
 
@@ -1181,7 +1180,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 410:
+/***/ 436:
 /***/ function(module, exports) {
 
 	function E () {
@@ -1254,7 +1253,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 421:
+/***/ 445:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "calendar.scss";

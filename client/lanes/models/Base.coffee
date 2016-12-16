@@ -24,12 +24,14 @@ class BaseModel
             deps: ['errors'], fn: -> not _.isEmpty(@errors)
 
         errorMessage:
-            deps:['errors'], fn: ->
-                if !@errors then ''
-                else if @errors.exception then @errors.exception
-                else  _.toSentence( _.map(@errors, (value, key) ->
-                    _.titleize(_.humanize(key)) + ' ' + value
-                ))
+            deps:['hasErrors'], fn: ->
+                return '' unless @hasErrors
+                @errors.exception or (
+                    _.toSentence( _.map(@errors, (value, key) ->
+                        _.titleize(_.humanize(key)) + ' ' + value
+                    ))
+                )
+
     constructor: (attrs, options = {}) ->
         super
         @on('change', @_calculateInvalidAttributes)
@@ -232,7 +234,8 @@ class BaseModel
     shouldCheckFieldValidity: (name) ->
         @unmaskedInvalidFields and
             _.includes(@requiredAttributes, name) and
-            _.includes(@unmaskedInvalidFields, name)
+                (@unmaskedInvalidFields is 'all' or
+                    _.includes(@unmaskedInvalidFields, name))
 
     maskInvalidFields: ->
         delete @unmaskedInvalidFields
@@ -240,7 +243,9 @@ class BaseModel
     unmaskInvalidField: (attr) ->
         if attr is 'all'
             @unmaskedInvalidFields = 'all'
-            @trigger("invalid-fields", this, @unmaskedInvalidFields)
+            @_calculateInvalidAttributes()
+            unless _.isEmpty(@invalidAttributes)
+                @trigger("invalid-fields", this, @invalidAttributes)
         else if @unmaskedInvalidFields isnt 'all'
             @unmaskedInvalidFields ||= []
             if _.includes(@requiredAttributes, attr) and !_.includes(@unmaskedInvalidFields, attr)
@@ -251,7 +256,7 @@ class BaseModel
     _calculateInvalidAttributes: ->
         invalid = []
         for name in @requiredAttributes
-            invalid.push(name) if @isBlank(name)
+            invalid.push(name) if @invalidMessageFor(name)
         @invalidAttributes = invalid
 
     # When the model is extended it auto-creates the created_at and updated_at

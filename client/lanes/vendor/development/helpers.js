@@ -9,21 +9,21 @@ webpackJsonp([2],{
 	// "react-proxy": "git@github.com:gaearon/react-proxy.git#react-0.15",
 	// Lanes.Vendor.ReactProxy      = require("react-proxy");
 
-	Lanes.Vendor.ReactTestUtils  = __webpack_require__(693);
-	Lanes.Vendor.deepForceUpdate = __webpack_require__(695);
+	Lanes.Vendor.ReactTestUtils  = __webpack_require__(732);
+	Lanes.Vendor.deepForceUpdate = __webpack_require__(736);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 
-/***/ 693:
+/***/ 732:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(694);
+	module.exports = __webpack_require__(733);
 
 /***/ },
 
-/***/ 694:
+/***/ 733:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34,33 +34,27 @@ webpackJsonp([2],{
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule ReactTestUtils
 	 */
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(16),
+	var _prodInvariant = __webpack_require__(220),
 	    _assign = __webpack_require__(13);
 
-	var EventConstants = __webpack_require__(276);
-	var EventPluginHub = __webpack_require__(278);
-	var EventPluginRegistry = __webpack_require__(279);
-	var EventPropagators = __webpack_require__(277);
+	var EventConstants = __webpack_require__(734);
+	var EventPluginHub = __webpack_require__(227);
+	var EventPluginRegistry = __webpack_require__(228);
+	var EventPropagators = __webpack_require__(226);
 	var React = __webpack_require__(12);
-	var ReactDefaultInjection = __webpack_require__(274);
-	var ReactDOM = __webpack_require__(270);
-	var ReactDOMComponentTree = __webpack_require__(271);
-	var ReactElement = __webpack_require__(18);
-	var ReactBrowserEventEmitter = __webpack_require__(345);
-	var ReactCompositeComponent = __webpack_require__(360);
-	var ReactInstanceMap = __webpack_require__(357);
-	var ReactInstrumentation = __webpack_require__(297);
-	var ReactReconciler = __webpack_require__(294);
-	var ReactUpdates = __webpack_require__(291);
-	var SyntheticEvent = __webpack_require__(288);
+	var ReactDOM = __webpack_require__(218);
+	var ReactDOMComponentTree = __webpack_require__(219);
+	var ReactBrowserEventEmitter = __webpack_require__(290);
+	var ReactInstanceMap = __webpack_require__(301);
+	var ReactUpdates = __webpack_require__(241);
+	var SyntheticEvent = __webpack_require__(238);
+	var ReactShallowRenderer = __webpack_require__(735);
 
-	var emptyObject = __webpack_require__(28);
-	var findDOMNode = __webpack_require__(405);
+	var findDOMNode = __webpack_require__(357);
 	var invariant = __webpack_require__(17);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
@@ -87,7 +81,7 @@ webpackJsonp([2],{
 	      }
 	      ret = ret.concat(findAllInRenderedTreeInternal(renderedChildren[key], test));
 	    }
-	  } else if (ReactElement.isValidElement(currentElement) && typeof currentElement.type === 'function') {
+	  } else if (React.isValidElement(currentElement) && typeof currentElement.type === 'function') {
 	    ret = ret.concat(findAllInRenderedTreeInternal(inst._renderedComponent, test));
 	  }
 	  return ret;
@@ -103,22 +97,22 @@ webpackJsonp([2],{
 	 * @lends ReactTestUtils
 	 */
 	var ReactTestUtils = {
-	  renderIntoDocument: function (instance) {
+	  renderIntoDocument: function (element) {
 	    var div = document.createElement('div');
 	    // None of our tests actually require attaching the container to the
 	    // DOM, and doing so creates a mess that we rely on test isolation to
 	    // clean up, so we're going to stop honoring the name of this method
 	    // (and probably rename it eventually) if no problems arise.
 	    // document.documentElement.appendChild(div);
-	    return ReactDOM.render(instance, div);
+	    return ReactDOM.render(element, div);
 	  },
 
 	  isElement: function (element) {
-	    return ReactElement.isValidElement(element);
+	    return React.isValidElement(element);
 	  },
 
 	  isElementOfType: function (inst, convenienceConstructor) {
-	    return ReactElement.isValidElement(inst) && inst.type === convenienceConstructor;
+	    return React.isValidElement(inst) && inst.type === convenienceConstructor;
 	  },
 
 	  isDOMComponent: function (inst) {
@@ -126,7 +120,7 @@ webpackJsonp([2],{
 	  },
 
 	  isDOMComponentElement: function (inst) {
-	    return !!(inst && ReactElement.isValidElement(inst) && !!inst.tagName);
+	    return !!(inst && React.isValidElement(inst) && !!inst.tagName);
 	  },
 
 	  isCompositeComponent: function (inst) {
@@ -149,7 +143,7 @@ webpackJsonp([2],{
 	  },
 
 	  isCompositeComponentElement: function (inst) {
-	    if (!ReactElement.isValidElement(inst)) {
+	    if (!React.isValidElement(inst)) {
 	      return false;
 	    }
 	    // We check the prototype of the type that will get mounted, not the
@@ -332,105 +326,6 @@ webpackJsonp([2],{
 	};
 
 	/**
-	 * @class ReactShallowRenderer
-	 */
-	var ReactShallowRenderer = function () {
-	  this._instance = null;
-	};
-
-	ReactShallowRenderer.prototype.getMountedInstance = function () {
-	  return this._instance ? this._instance._instance : null;
-	};
-
-	var nextDebugID = 1;
-
-	var NoopInternalComponent = function (element) {
-	  this._renderedOutput = element;
-	  this._currentElement = element;
-	  this._debugID = nextDebugID++;
-	};
-
-	NoopInternalComponent.prototype = {
-
-	  mountComponent: function () {},
-
-	  receiveComponent: function (element) {
-	    this._renderedOutput = element;
-	    this._currentElement = element;
-	  },
-
-	  getHostNode: function () {
-	    return undefined;
-	  },
-
-	  unmountComponent: function () {},
-
-	  getPublicInstance: function () {
-	    return null;
-	  }
-	};
-
-	var ShallowComponentWrapper = function (element) {
-	  // TODO: Consolidate with instantiateReactComponent
-	  this._debugID = nextDebugID++;
-	  var displayName = element.type.displayName || element.type.name || 'Unknown';
-	  ReactInstrumentation.debugTool.onSetDisplayName(this._debugID, displayName);
-
-	  this.construct(element);
-	};
-	_assign(ShallowComponentWrapper.prototype, ReactCompositeComponent.Mixin, {
-	  _constructComponent: ReactCompositeComponent.Mixin._constructComponentWithoutOwner,
-	  _instantiateReactComponent: function (element) {
-	    return new NoopInternalComponent(element);
-	  },
-	  _replaceNodeWithMarkup: function () {},
-	  _renderValidatedComponent: ReactCompositeComponent.Mixin._renderValidatedComponentWithoutOwnerOrContext
-	});
-
-	ReactShallowRenderer.prototype.render = function (element, context) {
-	  // Ensure we've done the default injections. This might not be true in the
-	  // case of a simple test that only requires React and the TestUtils in
-	  // conjunction with an inline-requires transform.
-	  ReactDefaultInjection.inject();
-
-	  !ReactElement.isValidElement(element) ?  true ? invariant(false, 'ReactShallowRenderer render(): Invalid component element.%s', typeof element === 'function' ? ' Instead of passing a component class, make sure to instantiate ' + 'it by passing it to React.createElement.' : '') : _prodInvariant('12', typeof element === 'function' ? ' Instead of passing a component class, make sure to instantiate ' + 'it by passing it to React.createElement.' : '') : void 0;
-	  !(typeof element.type !== 'string') ?  true ? invariant(false, 'ReactShallowRenderer render(): Shallow rendering works only with custom components, not primitives (%s). Instead of calling `.render(el)` and inspecting the rendered output, look at `el.props` directly instead.', element.type) : _prodInvariant('13', element.type) : void 0;
-
-	  if (!context) {
-	    context = emptyObject;
-	  }
-	  ReactUpdates.batchedUpdates(_batchedRender, this, element, context);
-
-	  return this.getRenderOutput();
-	};
-
-	function _batchedRender(renderer, element, context) {
-	  var transaction = ReactUpdates.ReactReconcileTransaction.getPooled(true);
-	  renderer._render(element, transaction, context);
-	  ReactUpdates.ReactReconcileTransaction.release(transaction);
-	}
-
-	ReactShallowRenderer.prototype.getRenderOutput = function () {
-	  return this._instance && this._instance._renderedComponent && this._instance._renderedComponent._renderedOutput || null;
-	};
-
-	ReactShallowRenderer.prototype.unmount = function () {
-	  if (this._instance) {
-	    ReactReconciler.unmountComponent(this._instance, false);
-	  }
-	};
-
-	ReactShallowRenderer.prototype._render = function (element, transaction, context) {
-	  if (this._instance) {
-	    ReactReconciler.receiveComponent(this._instance, element, transaction, context);
-	  } else {
-	    var instance = new ShallowComponentWrapper(element);
-	    ReactReconciler.mountComponent(instance, transaction, null, null, context);
-	    this._instance = instance;
-	  }
-	};
-
-	/**
 	 * Exports:
 	 *
 	 * - `ReactTestUtils.Simulate.click(Element/ReactDOMComponent)`
@@ -452,6 +347,8 @@ webpackJsonp([2],{
 
 	    var fakeNativeEvent = new Event();
 	    fakeNativeEvent.target = node;
+	    fakeNativeEvent.type = eventType.toLowerCase();
+
 	    // We don't use SyntheticEvent.getPooled in order to not have to worry about
 	    // properly destroying any properties assigned from `eventData` upon release
 	    var event = new SyntheticEvent(dispatchConfig, ReactDOMComponentTree.getInstanceFromNode(node), fakeNativeEvent, node);
@@ -540,6 +437,243 @@ webpackJsonp([2],{
 	});
 
 	module.exports = ReactTestUtils;
+
+/***/ },
+
+/***/ 734:
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	/**
+	 * Types of raw signals from the browser caught at the top level.
+	 */
+	var topLevelTypes = {
+	  topAbort: null,
+	  topAnimationEnd: null,
+	  topAnimationIteration: null,
+	  topAnimationStart: null,
+	  topBlur: null,
+	  topCanPlay: null,
+	  topCanPlayThrough: null,
+	  topChange: null,
+	  topClick: null,
+	  topCompositionEnd: null,
+	  topCompositionStart: null,
+	  topCompositionUpdate: null,
+	  topContextMenu: null,
+	  topCopy: null,
+	  topCut: null,
+	  topDoubleClick: null,
+	  topDrag: null,
+	  topDragEnd: null,
+	  topDragEnter: null,
+	  topDragExit: null,
+	  topDragLeave: null,
+	  topDragOver: null,
+	  topDragStart: null,
+	  topDrop: null,
+	  topDurationChange: null,
+	  topEmptied: null,
+	  topEncrypted: null,
+	  topEnded: null,
+	  topError: null,
+	  topFocus: null,
+	  topInput: null,
+	  topInvalid: null,
+	  topKeyDown: null,
+	  topKeyPress: null,
+	  topKeyUp: null,
+	  topLoad: null,
+	  topLoadedData: null,
+	  topLoadedMetadata: null,
+	  topLoadStart: null,
+	  topMouseDown: null,
+	  topMouseMove: null,
+	  topMouseOut: null,
+	  topMouseOver: null,
+	  topMouseUp: null,
+	  topPaste: null,
+	  topPause: null,
+	  topPlay: null,
+	  topPlaying: null,
+	  topProgress: null,
+	  topRateChange: null,
+	  topReset: null,
+	  topScroll: null,
+	  topSeeked: null,
+	  topSeeking: null,
+	  topSelectionChange: null,
+	  topStalled: null,
+	  topSubmit: null,
+	  topSuspend: null,
+	  topTextInput: null,
+	  topTimeUpdate: null,
+	  topTouchCancel: null,
+	  topTouchEnd: null,
+	  topTouchMove: null,
+	  topTouchStart: null,
+	  topTransitionEnd: null,
+	  topVolumeChange: null,
+	  topWaiting: null,
+	  topWheel: null
+	};
+
+	var EventConstants = {
+	  topLevelTypes: topLevelTypes
+	};
+
+	module.exports = EventConstants;
+
+/***/ },
+
+/***/ 735:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	var _prodInvariant = __webpack_require__(220),
+	    _assign = __webpack_require__(13);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var React = __webpack_require__(12);
+	var ReactDefaultInjection = __webpack_require__(223);
+	var ReactCompositeComponent = __webpack_require__(304);
+	var ReactReconciler = __webpack_require__(244);
+	var ReactUpdates = __webpack_require__(241);
+
+	var emptyObject = __webpack_require__(29);
+	var getNextDebugID = __webpack_require__(312);
+	var invariant = __webpack_require__(17);
+
+	var NoopInternalComponent = function () {
+	  function NoopInternalComponent(element) {
+	    _classCallCheck(this, NoopInternalComponent);
+
+	    this._renderedOutput = element;
+	    this._currentElement = element;
+
+	    if (true) {
+	      this._debugID = getNextDebugID();
+	    }
+	  }
+
+	  NoopInternalComponent.prototype.mountComponent = function mountComponent() {};
+
+	  NoopInternalComponent.prototype.receiveComponent = function receiveComponent(element) {
+	    this._renderedOutput = element;
+	    this._currentElement = element;
+	  };
+
+	  NoopInternalComponent.prototype.unmountComponent = function unmountComponent() {};
+
+	  NoopInternalComponent.prototype.getHostNode = function getHostNode() {
+	    return undefined;
+	  };
+
+	  NoopInternalComponent.prototype.getPublicInstance = function getPublicInstance() {
+	    return null;
+	  };
+
+	  return NoopInternalComponent;
+	}();
+
+	var ShallowComponentWrapper = function (element) {
+	  // TODO: Consolidate with instantiateReactComponent
+	  if (true) {
+	    this._debugID = getNextDebugID();
+	  }
+
+	  this.construct(element);
+	};
+	_assign(ShallowComponentWrapper.prototype, ReactCompositeComponent, {
+	  _constructComponent: ReactCompositeComponent._constructComponentWithoutOwner,
+	  _instantiateReactComponent: function (element) {
+	    return new NoopInternalComponent(element);
+	  },
+	  _replaceNodeWithMarkup: function () {},
+	  _renderValidatedComponent: ReactCompositeComponent._renderValidatedComponentWithoutOwnerOrContext
+	});
+
+	function _batchedRender(renderer, element, context) {
+	  var transaction = ReactUpdates.ReactReconcileTransaction.getPooled(true);
+	  renderer._render(element, transaction, context);
+	  ReactUpdates.ReactReconcileTransaction.release(transaction);
+	}
+
+	var ReactShallowRenderer = function () {
+	  function ReactShallowRenderer() {
+	    _classCallCheck(this, ReactShallowRenderer);
+
+	    this._instance = null;
+	  }
+
+	  ReactShallowRenderer.prototype.getMountedInstance = function getMountedInstance() {
+	    return this._instance ? this._instance._instance : null;
+	  };
+
+	  ReactShallowRenderer.prototype.render = function render(element, context) {
+	    // Ensure we've done the default injections. This might not be true in the
+	    // case of a simple test that only requires React and the TestUtils in
+	    // conjunction with an inline-requires transform.
+	    ReactDefaultInjection.inject();
+
+	    !React.isValidElement(element) ?  true ? invariant(false, 'ReactShallowRenderer render(): Invalid component element.%s', typeof element === 'function' ? ' Instead of passing a component class, make sure to instantiate ' + 'it by passing it to React.createElement.' : '') : _prodInvariant('12', typeof element === 'function' ? ' Instead of passing a component class, make sure to instantiate ' + 'it by passing it to React.createElement.' : '') : void 0;
+	    !(typeof element.type !== 'string') ?  true ? invariant(false, 'ReactShallowRenderer render(): Shallow rendering works only with custom components, not primitives (%s). Instead of calling `.render(el)` and inspecting the rendered output, look at `el.props` directly instead.', element.type) : _prodInvariant('13', element.type) : void 0;
+
+	    if (!context) {
+	      context = emptyObject;
+	    }
+	    ReactUpdates.batchedUpdates(_batchedRender, this, element, context);
+
+	    return this.getRenderOutput();
+	  };
+
+	  ReactShallowRenderer.prototype.getRenderOutput = function getRenderOutput() {
+	    return this._instance && this._instance._renderedComponent && this._instance._renderedComponent._renderedOutput || null;
+	  };
+
+	  ReactShallowRenderer.prototype.unmount = function unmount() {
+	    if (this._instance) {
+	      ReactReconciler.unmountComponent(this._instance, false);
+	    }
+	  };
+
+	  ReactShallowRenderer.prototype._render = function _render(element, transaction, context) {
+	    if (this._instance) {
+	      ReactReconciler.receiveComponent(this._instance, element, transaction, context);
+	    } else {
+	      var instance = new ShallowComponentWrapper(element);
+	      ReactReconciler.mountComponent(instance, transaction, null, null, context, 0);
+	      this._instance = instance;
+	    }
+	  };
+
+	  return ReactShallowRenderer;
+	}();
+
+	module.exports = ReactShallowRenderer;
 
 /***/ }
 
