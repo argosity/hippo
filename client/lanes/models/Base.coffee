@@ -28,7 +28,7 @@ class BaseModel
                 return '' unless @hasErrors
                 @errors.exception or (
                     _.toSentence( _.map(@errors, (value, key) ->
-                        _.titleize(_.humanize(key)) + ' ' + value
+                        _.titleize(_.humanize(key.replace('.', ' '))) + ' ' + value
                     ))
                 )
 
