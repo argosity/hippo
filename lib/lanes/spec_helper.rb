@@ -77,7 +77,6 @@ module Lanes
         [ :get, :put, :post, :delete, :patch].each do |name|
             define_method(name) do |uri, params = {}, env = {}, &block|
                 session = env['rack.session'] ||= {}
-                env[Rack::Csrf.rackified_header] = Rack::Csrf.token(env)
                 session[:user_id] = @current_user.id if @current_user
                 params = Oj.dump(params, mode: :compat) if params.is_a?(Hash)
                 super(uri,params,env,&block)
