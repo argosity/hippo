@@ -9,7 +9,7 @@ module Lanes
             end
 
             def create
-                record  = model.from_attribute_data(data, user)
+                record  = model.from_attribute_data(data, current_user)
                 options = build_reply_options.merge(success: record.save)
                 std_api_reply(:create, record, options)
             end

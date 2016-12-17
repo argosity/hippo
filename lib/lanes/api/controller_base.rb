@@ -21,17 +21,21 @@ module Lanes
 
         class ControllerBase
 
-            attr_reader :model, :user, :params, :data
+            attr_reader :model, :params, :data
             include FormattedReply
 
             def initialize(model, authentication, params, data={})
-                @user   = authentication.current_user
                 @model  = model
                 @params = params
                 @data   = data
+                @authentication = authentication
             end
 
             protected
+
+            def current_user
+                @current_user ||= @authentication.current_user
+            end
 
             def perform_retrieval
                 query   = build_query
@@ -61,7 +65,7 @@ module Lanes
                 query = add_access_limits_to_query(query)
                 success = true
                 query.each do | record |
-                    if user.can_delete?(record, record.id)
+                    if current_user.can_delete?(record, record.id)
                         success = false unless record.destroy
                     end
                 end
@@ -78,8 +82,8 @@ module Lanes
                 query.each do | record |
                     record_data = data.detect{ |rd| rd['id'] == record.id }
                     next unless record_data
-                    if user.can_write?(record, record.id)
-                        record.set_attribute_data(record_data, user)
+                    if current_user.can_write?(record, record.id)
+                        record.set_attribute_data(record_data, current_user)
                         success = false unless record.save
                     end
                 end
@@ -91,7 +95,7 @@ module Lanes
                 query = build_query
                 query = add_access_limits_to_query(query)
                 record = query.first!
-                record.set_attribute_data(data, user)
+                record.set_attribute_data(data, current_user)
                 options = build_reply_options.merge(success: record.save)
                 std_api_reply(:update, record, options)
             end
@@ -135,25 +139,25 @@ module Lanes
                 options = {}
                 if include_associations.any?
                     options[:include] = include_associations.each_with_object({}) do |association, includes|
-                        includes.merge! build_allowed_associations(association, user)
+                        includes.merge! build_allowed_associations(association)
                     end
                 end
 
                 if requested_fields.any?
-                    options[:methods] = requested_fields.select{|f| model.has_exported_method?(f,user) }
+                    options[:methods] = requested_fields.select{|f| model.has_exported_method?(f, current_user) }
                 end
                 options[:format] = reply_with_array? ? 'array' : 'object'
                 options
             end
 
-            def build_allowed_associations(association, user, model_class=self.model)
+            def build_allowed_associations(association, model_class = self.model)
                 includes = {}
                 if association.is_a?(Hash)
                     association.each do |include_name, sub_associations|
-                        if model_class.has_exported_association?(include_name, user) &&
+                        if model_class.has_exported_association?(include_name, current_user) &&
                            ( reflection = model_class.reflect_on_association( include_name.to_sym ) )
                             sub_includes = includes[include_name.to_sym] = {}
-                            allowed = build_allowed_associations( sub_associations, user, reflection.klass )
+                            allowed = build_allowed_associations( sub_associations, reflection.klass )
                             unless allowed.empty?
                                 sub_includes[:include] ||= []
                                 sub_includes[:include] << allowed
@@ -162,12 +166,12 @@ module Lanes
                     end
                 elsif association.is_a?(Array)
                     association.each do | sub_association |
-                        if model_class.has_exported_association?(sub_association, user)
-                            includes.merge! build_allowed_associations( sub_association, user, model_class )
+                        if model_class.has_exported_association?(sub_association, current_user)
+                            includes.merge! build_allowed_associations( sub_association, model_class )
                         end
                     end
                 else
-                    includes[ association.to_sym ] = {} if  model_class.has_exported_association?(association,user)
+                    includes[ association.to_sym ] = {} if  model_class.has_exported_association?(association, current_user)
                 end
                 includes
             end
@@ -176,7 +180,7 @@ module Lanes
 
             def add_access_limits_to_query(query)
                 if model.respond_to?(:access_limits_for_query)
-                    query = model.access_limits_for_query(query, user, params)
+                    query = model.access_limits_for_query(query, current_user, params)
                 else
                     query
                 end
@@ -216,11 +220,11 @@ module Lanes
                         if desired.is_a?(Hash)
                             nested = {}
                             desired.each do | name, sub_associations |
-                                nested[name.to_sym] = sub_associations if model.has_exported_association?(name,user)
+                                nested[name.to_sym] = sub_associations if model.has_exported_association?(name, current_user)
                             end
                             results.push(nested) unless nested.empty?
                         else
-                            results.push(desired.to_sym) if model.has_exported_association?(desired,user)
+                            results.push(desired.to_sym) if model.has_exported_association?(desired, current_user)
                         end
                     end
                     query = query.includes(allowed_includes) unless allowed_includes.empty?
@@ -242,7 +246,7 @@ module Lanes
 
             def add_scope_to_query(query)
                 query_scopes.each do | name, arg |
-                    if model.has_exported_scope?(name,user)
+                    if model.has_exported_scope?(name, current_user)
                         args = [name]
                         args.push( arg ) unless arg.blank?
                         query = query.send( *args )
@@ -268,7 +272,7 @@ module Lanes
             def convert_field_to_arel(field)
                 if field.include?('.')
                     (table_name, field_name) = field.split('.')
-                    if model.has_exported_join_table?(table_name, user)
+                    if model.has_exported_join_table?(table_name, current_user)
                         Arel::Table.new(table_name)[field_name]
                     else
                         nil
