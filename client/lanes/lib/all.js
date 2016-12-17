@@ -3,6 +3,7 @@
 //= require ./objToParam
 //= require ./ModuleSupport
 //= require ./loader
+//= require ./RequestAssets
 //= require ./MakeBaseClass
 //= require ./el
 //= require ./polyfills
