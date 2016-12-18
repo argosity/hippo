@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "activejob",              "~> 5.0"
     spec.add_dependency "activerecord",           "~> 5.0"
     spec.add_dependency "actioncable",            "~> 5.0"
+    spec.add_dependency "mail",                   "~> 2.6"
 
     spec.add_dependency "sinatra",                "~> 2.0.0.beta2"
     spec.add_dependency "rack",                   "~> 2.0"
