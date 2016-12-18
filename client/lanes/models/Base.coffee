@@ -24,7 +24,7 @@ class BaseModel
             deps: ['errors'], fn: -> not _.isEmpty(@errors)
 
         errorMessage:
-            deps:['hasErrors'], fn: ->
+            deps:['errors'], fn: ->
                 return '' unless @hasErrors
                 @errors.exception or (
                     _.toSentence( _.map(@errors, (value, key) ->
