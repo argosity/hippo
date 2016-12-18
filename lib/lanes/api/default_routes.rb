@@ -8,7 +8,7 @@ module Lanes
     API.routes.draw do
         # WS endpoint must come first
         get Lanes.config.api_path + '/ws' do
-            API::Cable.server.call(env)
+            API::Cable.handle_request(request)
         end
 
 

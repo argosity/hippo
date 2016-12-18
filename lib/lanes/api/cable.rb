@@ -7,6 +7,9 @@ module Lanes
             mattr_reader :server
             mattr_reader :config
 
+            def self.handle_request(request)
+                @@server.call(request.env)
+            end
 
             class Channel < ActionCable::Channel::Base
             end
@@ -28,6 +31,7 @@ module Lanes
             end
 
             def self.configure
+
                 require_relative 'updates'
                 @@config = ActionCable::Server::Configuration.new
                 config.logger = Lanes.logger

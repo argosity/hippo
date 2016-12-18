@@ -5,13 +5,13 @@ module Lanes
 
         class PubSub < Cable::Channel
             PREFIX = 'ps:'
+
             def on(data)
-                channel = PREFIX + data['channel']
-                stream_from channel
+                stream_from channel_prefix + data['channel']
             end
 
             def off(data)
-                channel = PREFIX + data['channel']
+                channel = channel_prefix + data['channel']
                 cb = pubsub.instance_variable_get('@listener')
                        .instance_variable_get('@subscribers')[channel].first
                 pubsub.unsubscribe(channel, cb)
@@ -19,9 +19,12 @@ module Lanes
 
             def self.publish(channel, data)
                 ActionCable.server.broadcast(
-                    PREFIX + channel,
-                    data.merge(channel: channel)
+                    data.merge(channel: channel_prefix + channel)
                 )
+            end
+
+            def channel_prefix
+                PREFIX
             end
 
         end
