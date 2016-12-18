@@ -37,7 +37,7 @@ module Lanes
                               params[:nested_attribute] = Hash[ options[:parent_attribute],
                                                                params[parent_attribute] ]
                             end
-                            wrap_reply(options.merge(with_transaction: !request.get?)) do
+                            wrap_reply(options.reverse_merge(with_transaction: !request.get?)) do
                                 yield controller.new(model, authentication, params, data)
                             end
                         end
