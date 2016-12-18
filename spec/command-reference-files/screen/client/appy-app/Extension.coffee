@@ -16,7 +16,8 @@ class AppyApp.Extension extends Lanes.Extensions.Base
 
     # Data that is provided by AppyApp::Extension#client_bootstrap_data
     # in lib/appy-app/extension.rb is passed to this method
-    setBootstrapData: Lanes.emptyFn
+    # the Base class will simply store the provided data as @data
+    setBootstrapData: -> super
 
     # All extenensions have been given their data and Lanes has completed startup
     onAvailable: Lanes.emptyFn

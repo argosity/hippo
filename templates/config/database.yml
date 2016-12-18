@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   database: <%= name %>_dev
   host: /tmp
-  pool:  <%= ENV["DB_POOL"] || 12 %>
+  pool:  <%%= ENV["DB_POOL"] || 12 %>
 
 test:
   adapter: postgresql

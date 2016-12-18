@@ -1,1 +1,8 @@
-
+default:
+  id: 1
+  settings:
+    lanes:
+      smtp:
+        server: test.test.test
+        login: 'test'
+        password: 'test'
