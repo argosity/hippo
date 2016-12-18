@@ -83,7 +83,7 @@ Lanes.Models.Sync = {
         options.headers ||= {}
         options.withCredentials = true
         if Lanes.config.csrf_token
-            options.headers['X_CSRF_TOKEN'] = Lanes.config.csrf_token
+            options.headers['X-CSRF-TOKEN'] = Lanes.config.csrf_token
         options.contentType = "application/json"
 
         new _.Promise( (resolve, reject) ->
