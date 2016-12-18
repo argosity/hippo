@@ -7,13 +7,15 @@ class SystemSettings extends Lanes.Models.Base
         settings: "object"
 
     associations:
-        logo:        { model: "Lanes.Models.Asset" }
-        print_logo:  { model: "Lanes.Models.Asset" }
+        logo:        { model: "Lanes.Models.Asset"        }
+        smtp:        { model: "Lanes.Models.SmtpSettings" }
+        print_logo:  { model: "Lanes.Models.Asset"        }
 
     modelTypeIdentifier: -> 'system-settings'
     url: -> Lanes.config.api_path + '/system-settings'
     initialize: ->
         @on('change:settings', @setDefaultSettings)
+        @smtp.set(@settings?.lanes?.smtp)
         @setDefaultSettings()
 
     setDefaultSettings: ->
@@ -25,6 +27,16 @@ class SystemSettings extends Lanes.Models.Base
 
     setValueForExtension: (ext, key, value) ->
         @forExtension(ext)[key] = value
+
+    set: (data) ->
+        ret = super
+        @smtp.set(@settings?.lanes?.smtp)
+        ret
+
+    dataForSave: ->
+        data = super
+        data.settings.lanes.smtp = @smtp.serialize()
+        data
 
 class Config extends Lanes.Models.State
 

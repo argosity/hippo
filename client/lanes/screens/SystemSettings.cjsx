@@ -55,11 +55,17 @@ class Lanes.Screens.SystemSettings extends Lanes.React.Screen
                 </BS.NavItem>
             </BS.Nav>
             <BS.Row>
-                <LC.FieldSet title="Logos" sm=12>
-                    <LC.ImageAsset sm=5 asset={@config.logo}
+                <LC.FieldSet title="Logos" sm=9>
+                    <LC.ImageAsset sm=6 asset={@config.logo}
                         label='Primary' size='thumb' />
-                    <LC.ImageAsset sm=5 smOffset=2 asset={@config.print_logo}
+                    <LC.ImageAsset sm=6 asset={@config.print_logo}
                         label='Print' size='thumb' />
+                </LC.FieldSet>
+                <LC.FieldSet title="Email Server" sm=3>
+                    <LC.Input sm=12 label='From Email Address' name='from' model={@config.smtp}  />
+                    <LC.Input sm=12 name='server' model={@config.smtp} />
+                    <LC.Input sm=12 name='login' model={@config.smtp}  />
+                    <LC.Input sm=12 type='password' name='password' model={@config.smtp} />
                 </LC.FieldSet>
             </BS.Row>
             {for id, Ext of Lanes.Extensions.instances when Ext.getSettingsElement
