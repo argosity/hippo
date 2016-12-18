@@ -18,9 +18,12 @@ module Lanes
             end
 
             def self.publish(channel, data)
-                ActionCable.server.broadcast(
-                    data.merge(channel: channel_prefix + channel)
-                )
+                channel = channel_prefix + channel
+                ActionCable.server.broadcast(channel, data.merge(channel: channel))
+            end
+
+            def self.channel_prefix
+                PREFIX
             end
 
             def channel_prefix
