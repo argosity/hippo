@@ -41,7 +41,7 @@ module Lanes
             end
 
             def for_ext(extension_id)
-                ExtensionSettings.new(extension_id, config.settings[extension_id])
+                ExtensionSettings.new(extension_id, config.settings[extension_id.to_s])
             end
 
             def persist!(extension_id, update)
@@ -66,17 +66,24 @@ module Lanes
                 Lanes.logger.debug "SystemSettings cache reset"
                 Lanes::SystemSettings.instance_variable_set(:@config, nil)
             end
-        end
 
-        Thread.new do
-            Lanes.redis_connection(cache:false).subscribe(
-                'lanes-system-configuration-update') do |on|
-                on.message do |channel, msg|
-                    ActiveRecord::Base.connection_pool.with_connection do
-                        Lanes::SystemSettings.clear_cache!(msg)
+            def on_change(extension_id, call_now: false, &block)
+                Thread.new do
+                    Lanes.redis_connection(cache:false).subscribe(
+                        'lanes-system-configuration-update') do |on|
+                        on.message do |channel, msg|
+                            ActiveRecord::Base.connection_pool.with_connection do
+                                yield SystemSettings.for_ext(extension_id)
+                            end
+                        end
                     end
                 end
             end
+
+        end
+
+        SystemSettings.on_change(:lanes) do
+            Lanes::SystemSettings.clear_cache!(msg)
         end
 
     end
