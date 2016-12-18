@@ -6,14 +6,14 @@ module Lanes
 
         def self.set_defaults(settings = SystemSettings.for_ext(:lanes))
             smtp = settings['smtp'] || {}
+            method = Lanes.env.production? ? :smtp : :test
             Mail.defaults do
-                Lanes.env.production?
-                delivery_method Lanes.env.production? ? :smtp : :test, {
-                                    from:      smtp['from'],
-                                    address:   smtp['server'],
-                                    user_name: smtp['username'],
-                                    password:  smtp['password']
-                                }
+                delivery_method(method, {
+                                    user_name: smtp['login'],
+                                    password:  smtp['password'],
+                                    address:   smtp['server']
+                                })
+
             end
             @@configured = true
         end
@@ -22,12 +22,14 @@ module Lanes
             self.set_defaults(settings)
         end
 
-        def self.new(*args, &block)
+        def self.new(args = {}, &block)
+            args[:from] = SystemSettings.for_ext(:lanes).dig('smtp', 'from')
             set_defaults unless @@configured
             Mail::Message.new(args, &block)
         end
 
-        def self.deliver(*args, &block)
+        def self.deliver(args = {}, &block)
+            args[:from] = SystemSettings.for_ext(:lanes).dig('smtp', 'from')
             set_defaults unless @@configured
             mail = self.new(args, &block)
             mail.deliver
