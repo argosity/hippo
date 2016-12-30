@@ -12,6 +12,10 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
 
     listenNetworkEvents: true
 
+    mixins: [
+        Lanes.React.Mixins.ReadEditingState
+    ]
+
     bindEvents: ->
         model: "change:#{@props.name} change:#{@props.name}_data"
 
@@ -29,6 +33,18 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
         return null unless @props.label
         <label>{@props.label}</label>
 
+    Edit: ->
+        return null unless @isEditingRecord()
+        <form>
+            <label className="selector">
+                <span>
+                    {if @asset.isPresent then 'Change' else 'Add'}
+                </span>
+                <input id='file' className="file" type="file"
+                    onChange={@handleImageChange} />
+            </label>
+        </form>
+
     render: ->
         Component = if @asset.hasImage then @renderImage else @blankImage
         className = _.classnames('image-asset', @props.className, {
@@ -40,13 +56,5 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
         >
             <@Label />
             <Component />
-            <form>
-                <label className="selector">
-                    <span>
-                        {if @asset.isPresent then 'Change' else 'Add'}
-                    </span>
-                    <input id='file' className="file" type="file"
-                        onChange={@handleImageChange} />
-                </label>
-            </form>
+            <@Edit />
         </BS.Col>
