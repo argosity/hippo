@@ -1,21 +1,21 @@
 module Lanes
     module API
 
+        def self.set_root_view(view)
+            API::Root.get Lanes.config.mounted_at + '?*' do
+                if request.accept? 'text/html'
+                    erb :lanes_root_view
+                else
+                    pass
+                end
+            end
+        end
+
         class RoutingBlock
             def initialize(ext_id)
                 Lanes::Extensions.for_identifier(ext_id) ||
                     raise( "Unable to find extension '#{ext_id}' for screen group")
                 @ext_id = ext_id
-            end
-
-            def root_view( view )
-                API::Root.get Lanes.config.mounted_at + '?*' do
-                    if request.accept? 'text/html'
-                        erb :lanes_root_view
-                    else
-                        pass
-                    end
-                end
             end
 
             [:get, :post, :put, :patch, :delete].each do | method_name |

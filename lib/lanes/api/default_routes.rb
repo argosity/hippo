@@ -11,7 +11,6 @@ module Lanes
             API::Cable.handle_request(request)
         end
 
-
         Extensions.each(reversed: true) do | ext |
             ext.route(self)
         end
@@ -29,5 +28,9 @@ module Lanes
             API::PubSub.publish("file-change", data)
             "OK"
         end
+
     end
+
+    API.set_root_view :lanes_root_view
+
 end
