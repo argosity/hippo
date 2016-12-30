@@ -1,4 +1,4 @@
-class CreateTestTests < ActiveRecord::Migration
+class CreateTestTests < ActiveRecord::Migration[5.0]
     def change
         create_table :test_tests do |t|
             t.string :name
