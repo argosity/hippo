@@ -34,10 +34,9 @@ module Lanes::API::Handlers
         end
 
         def self.getter
-            root = Lanes::Extensions.controlling
-                       .root_path.join('public', 'files')
+            root = Lanes::Extensions.controlling.root_path.join('public', 'files')
             lambda do
--                send_file(root.join( params['splat'].first ).to_s)
+                send_file(root.join( params['splat'].first ).to_s)
             end
         end
     end
