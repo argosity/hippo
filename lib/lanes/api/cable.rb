@@ -18,9 +18,13 @@ module Lanes
                 identified_by :current_user
 
                 def connect
-                    reject_unauthorized_connection unless
-                        cookies['user_id'] &&
-                        self.current_user = Lanes::User.where(id: cookies['user_id']).first
+                    unless cookies['user_id'] &&
+                            self.current_user = Lanes::User
+                                                    .where(id: cookies['user_id']).first
+                        Lanes.logger.warn("Rejecting ws connection due to unauthorized access by user_id #{cookies['user_id']}")
+
+                        reject_unauthorized_connection
+                    end
                 end
 
                 protected
