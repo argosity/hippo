@@ -74,12 +74,21 @@ module Lanes
             json_body['data']
         end
 
-        [ :get, :put, :post, :delete, :patch].each do |name|
+        [ :delete, :get ].each do |name|
+            define_method(name) do |uri, params = {}, env = {}, &block|
+                session = env['rack.session'] ||= {}
+                session[:user_id] = @current_user.id if @current_user
+                params.stringify_keys!
+                super(uri, params, env, &block)
+            end
+        end
+
+        [ :put, :post, :patch].each do |name|
             define_method(name) do |uri, params = {}, env = {}, &block|
                 session = env['rack.session'] ||= {}
                 session[:user_id] = @current_user.id if @current_user
                 params = Oj.dump(params, mode: :compat) if params.is_a?(Hash)
-                super(uri,params,env,&block)
+                super(uri, params, env, &block)
             end
         end
 
