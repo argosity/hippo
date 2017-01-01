@@ -22,8 +22,10 @@ class Lanes.Models.AssociationMap
         Lanes.u.findObject(object, 'Models', @klass::FILE)
 
     getProxyFor: (name) ->
+        klass = @getClassFor(name)
+        return null unless klass
         @proxy[name] ||= (
-            Lanes.Models.AssocationProxy.construct( @getClassFor(name),
+            Lanes.Models.AssocationProxy.construct( klass,
                 association_pk: @pk(name)
                 association_name: name
             )
@@ -54,7 +56,7 @@ class Lanes.Models.AssociationMap
 
     # will be called in the scope of the parent model
     createModel: (association, name, definition, fk, pk, target_class) ->
-        if definition.autoCreate
+        if definition.required
             target_class ||= association.getClassFor(name)
             options = association.getOptions(name, this)
             model_id = this.get(pk)
@@ -68,11 +70,15 @@ class Lanes.Models.AssociationMap
                 existing
             else
                 Proxy = association.getProxyFor(name)
-                new Proxy( association, association.getOptions(name, @)  )
+                if Proxy
+                    new Proxy( association, association.getOptions(name, @)  )
+                else
+                    null
 
     # will be called in the scope of the parent model
     createCollection: (association, name, definition, fk, pk, target_class) ->
         target_class ||= association.getClassFor(name)
+        return null unless target_class
         options = association.getOptions(name, this)
         options.filter ||= {}
         options.filter[fk] = this.get(pk)
@@ -160,7 +166,7 @@ class Lanes.Models.AssociationMap
         if Lanes.u.isModel(value)
             @replace(model, name, value)
         else
-            model[name][fn_name]( value )
+            model[name]?[fn_name]( value )
         if options?.silent isnt true
             model.trigger("change:#{name}", value, {})
 
