@@ -1,3 +1,5 @@
+##= require 'lanes/components/shared/Icon'
+
 class Lanes.Components.NetworkActivityOverlay extends Lanes.React.Component
 
     propTypes:
