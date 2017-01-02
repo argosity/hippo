@@ -23,6 +23,11 @@ module Lanes
                 []
             end
 
+            def each_static_asset
+                super{ | entry | yield entry }
+                [ 'lanes/fonts/fontawesome-webfont.woff',
+                  'lanes/fonts/fontawesome-webfont.woff2' ].each { | asset | yield asset }
+            end
         end
 
     end
