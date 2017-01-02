@@ -19,7 +19,6 @@ class Lanes.Components.DateTime extends Lanes.React.Component
     handleDateTimeChange: (val) ->
         @fieldMixinSetValue({target: {value: val}})
 
-
     renderDisplay: (props) ->
         clean = LC.Form.FieldMixin.statics.cleanSizeProps(props)
         <BS.FormControl.Static {...clean}>
@@ -29,7 +28,7 @@ class Lanes.Components.DateTime extends Lanes.React.Component
     renderEdit: (props) ->
         props = _.extend({
             ref:       'control'
-            value:     @fieldMixinGetValue()
+            value:     _.moment(@fieldMixinGetValue() || new Date()).toDate()
             onChange:  @handleDateTimeChange
         }, @props)
         props = _.omit(LC.Form.FieldMixin.statics.cleanSizeProps(props), 'writable')
