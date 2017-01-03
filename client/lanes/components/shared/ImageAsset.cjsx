@@ -16,9 +16,6 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
         Lanes.React.Mixins.ReadEditingState
     ]
 
-    bindEvents: ->
-        model: "change:#{@props.name} change:#{@props.name}_data"
-
     handleImageChange: (ev) ->
         ev.preventDefault()
         @asset.blob = ev.target.files[0]
@@ -47,6 +44,7 @@ class Lanes.Components.ImageAsset extends Lanes.React.Component
 
     render: ->
         Component = if @asset.hasImage then @renderImage else @blankImage
+
         className = _.classnames('image-asset', @props.className, {
             'with-image': @asset.hasImage
         })
