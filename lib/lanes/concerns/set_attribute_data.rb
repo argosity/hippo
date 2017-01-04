@@ -2,6 +2,7 @@ module Lanes::Concerns
 
     module ApiAttributeAccess
 
+        DEFAULT_BLACKLISTED = {}
 
         extend ActiveSupport::Concern
 
@@ -42,7 +43,7 @@ module Lanes::Concerns
             # @param attributes [Array of symbols] attributes that are not safe for the API to set
             def blacklist_attributes( *attributes )
                 options = attributes.extract_options!
-                self.blacklisted_attributes ||= {}
+                self.blacklisted_attributes ||= DEFAULT_BLACKLISTED.clone
                 attributes.each{|attr| self.blacklisted_attributes[ attr.to_sym ] = options }
             end
 

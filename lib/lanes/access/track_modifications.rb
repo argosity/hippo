@@ -5,7 +5,10 @@ module Lanes::Concerns
     # The class_name for the created_by and updated_by is set to {Lanes::Configuration#user_model}
     module TrackModifications
         extend ActiveSupport::Concern
-
+        ApiAttributeAccess::DEFAULT_BLACKLISTED.merge(
+            created_at: nil, updated_at: nil,
+            created_by_id: nil, updated_by_id: nil
+        )
         included do
             class_attribute :record_modifications, :instance_writer=>false
             self.record_modifications = true
@@ -13,7 +16,6 @@ module Lanes::Concerns
             belongs_to :created_by, :class_name=>Lanes::User
             belongs_to :updated_by, :class_name=>Lanes::User
 
-            self.blacklist_attributes :created_at, :updated_at, :created_by_id, :updated_by_id
             before_update :record_update_modifications
             before_create :record_create_modifications
 
