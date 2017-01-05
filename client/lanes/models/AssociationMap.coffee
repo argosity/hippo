@@ -37,12 +37,14 @@ class Lanes.Models.AssociationMap
             model._cache[name] = new Proxy( this, this.getOptions(name, model) )
 
     replace: (parent, name, model) ->
+        parent._changing = true
+        parent._previousAttributes[name] = parent[name]
         parent._cache[name] = model
         model.parent = parent if model.hasAttribute?('parent') or model.parent?
         model.parent_association = name if model.hasAttribute?('parent_association') or model.parent_association?
-
         parent.trigger("change", parent, {})
         parent.trigger("change:#{name}", model, {})
+        parent._changing = false
 
     getOptions: (name, model) ->
         definition = @definitions[name]
@@ -161,11 +163,11 @@ class Lanes.Models.AssociationMap
                 @_setModel(model, name, value, options, fn_name)
 
     _setModel: (model, name, value, options, fn_name) ->
-        model.set(this.pk(name), value.id, options) if value.id
 
         if Lanes.u.isModel(value)
             @replace(model, name, value)
         else
+            model.set(this.pk(name), value.id, options) if value.id
             model[name]?[fn_name]( value )
         if options?.silent isnt true
             model.trigger("change:#{name}", value, {})
