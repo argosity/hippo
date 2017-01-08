@@ -22,7 +22,7 @@ module Lanes
             self.set_defaults(settings)
         end
 
-        def self.new(args = {}, &block)
+        def self.create(args = {}, &block)
             args[:from] = SystemSettings.for_ext(:lanes).dig('smtp', 'from')
             set_defaults unless @@configured
             Mail::Message.new(args, &block)
