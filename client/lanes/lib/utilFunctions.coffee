@@ -15,6 +15,16 @@ distillTypes = (type, ns) ->
     _.reduce( type.split( '.' ), ( ( memo, val ) -> return if memo then memo[ val ] else null ),  ns )
 
 Lanes.u = {
+
+    utcToLocalDate: (val) ->
+        new Date(val.getTime() - (val.getTimezoneOffset() * 60000))
+
+    dateToUTC: (val) ->
+        new Date(
+            val.getUTCFullYear(), val.getUTCMonth(),   val.getUTCDate(),
+            val.getUTCHours(),    val.getUTCMinutes(), val.getUTCSeconds()
+        )
+
     cleanBsSizes: (props) ->
         _.omit(props, @getBsSizeProps() )
 
