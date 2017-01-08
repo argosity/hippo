@@ -16,19 +16,22 @@ class Lanes.Components.DateTime extends Lanes.React.Component
     handleKeyDown: (ev) ->
         @props.onEnter() if ev.key is 'Enter'
 
-    handleDateTimeChange: (val) ->
-        @fieldMixinSetValue({target: {value: val}})
-
     renderDisplay: (props) ->
         clean = LC.Form.FieldMixin.statics.cleanSizeProps(props)
         <BS.FormControl.Static {...clean}>
-            {_.moment(@model[@props.name]).format(@props.format)}
+            {@getDateValue().format(this.props.format)}
         </BS.FormControl.Static>
+
+    getDateValue: ->
+        _.moment.utc(@fieldMixinGetValue())
+
+    handleDateTimeChange: (val) ->
+        @fieldMixinSetValue({target: {value: Lanes.u.utcToLocalDate(val)}})
 
     renderEdit: (props) ->
         props = _.extend({
             ref:       'control'
-            value:     _.moment(@fieldMixinGetValue() || new Date()).toDate()
+            value:     Lanes.u.dateToUTC(@getDateValue().toDate())
             onChange:  @handleDateTimeChange
         }, @props)
         props = _.omit(LC.Form.FieldMixin.statics.cleanSizeProps(props), 'writable')
