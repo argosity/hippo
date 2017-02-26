@@ -14,3 +14,11 @@ require_relative 'api/root'
 Lanes.config.get(:environment) do
     require_relative("api/test_specs") unless Lanes.env.production?
 end
+
+module Lanes
+
+    module API
+        mattr_accessor :webpack
+    end
+
+end

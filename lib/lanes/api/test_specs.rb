@@ -41,8 +41,8 @@ module Lanes
 
         ext = Extensions.controlling
         TestSpecs.current = TestSpecs.new(ext)
-        Root.sprockets.append_path(ext.root_path.join("spec"))
-        Root.sprockets.append_path(Jasmine::Core.path)
+        # Root.sprockets.append_path(ext.root_path.join("spec"))
+        # Root.sprockets.append_path(Jasmine::Core.path)
 
         routes.draw do
 

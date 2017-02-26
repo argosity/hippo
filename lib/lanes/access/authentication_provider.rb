@@ -2,6 +2,14 @@ module Lanes
     module API
         class AuthenticationProvider
 
+            def self.user_for_request(request)
+                token = request.params['jwt']
+                uid = token ?
+                          JWT.decode(token, Lanes.config.session_secret_key_base, true, { :algorithm => 'HS256' })
+                              .first['uid'] : nil
+                uid ? Lanes::User.where(id: uid).first : nil
+            end
+
             attr_reader :request
 
             def initialize(request)
@@ -9,13 +17,7 @@ module Lanes
             end
 
             def current_user
-                @current_user ||= (
-                    if Lanes.env.test? && request.env['HTTP_X_TESTING_USER'].present?
-                        Lanes::User.where(login: request.env['HTTP_X_TESTING_USER']).first
-                    else
-                        Lanes::User.where(id: request.session['user_id']).first
-                    end
-                )
+                @current_user ||= AuthenticationProvider.user_for_request(request)
             end
 
             def error_message

@@ -43,7 +43,7 @@ module Lanes
                 self.before = extension
             end
 
-            def client_bootstrap_data(view)
+            def client_bootstrap_data
                 {}
             end
 
@@ -131,3 +131,6 @@ module Lanes
 
     end
 end
+
+require_relative("../access/extension")
+require_relative("../workspace/extension")

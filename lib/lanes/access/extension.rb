@@ -1,4 +1,5 @@
 require_relative '../workspace/extension'
+require_relative '../access'
 
 module Lanes
     module Access
@@ -31,11 +32,11 @@ module Lanes
                     { id: role.to_s.demodulize.underscore, name: role.to_s.demodulize }
                 end
             end
-            def client_bootstrap_data(view)
+            def client_bootstrap_data
                 data = { roles: roles_for_client }
-                if (user_id = view.session['user_id']) && (user = Lanes::User.where( id: user_id ).first)
-                    data.merge!(user.workspace_data)
-                end
+                # if (user_id = view.session['user_id']) && (user = Lanes::User.where( id: user_id ).first)
+                #     data.merge!(user.workspace_data)
+                # end
                 data
             end
 
