@@ -2,14 +2,15 @@ notification :growl
 
 require "lanes/guard_tasks"
 
+
 Lanes::GuardTasks.run(self, name: 'lanes') do | tests |
 
-    tests.client do
+    # tests.client do
 
-    end
+    # end
 
-    tests.server do
+    # tests.server do
 
-    end
+    # end
 
 end

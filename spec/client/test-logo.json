@@ -1,0 +1,41 @@
+{
+    "id": 119,
+    "owner_type": "Lanes::SystemSettings",
+    "owner_id": 1,
+    "order": null,
+    "file_data": {
+        "medium": {
+            "id": "1lzc/4hnw/ewi4/c9f79fadcdafa664472fca1cabe0a157.png",
+            "storage": "store",
+            "metadata": {
+                "size": 4752,
+                "width": 204,
+                "height": 36,
+                "filename": "shrine20170224-28463-1ar7l4m20170224-28463-1widnrj20170224-28463-1bmd8sh.png",
+                "mime_type": "image/png"
+            }
+        },
+        "original": {
+            "id": "kyng/0f46/io5b/bf6a2d733d06754918ebb0fd7febeac9.png",
+            "storage": "store",
+            "metadata": {
+                "size": 4752,
+                "width": 204,
+                "height": 36,
+                "filename": "shrine20170224-28463-1ar7l4m20170224-28463-1widnrj.png",
+                "mime_type": "image/png"
+            }
+        },
+        "thumbnail": {
+            "id": "nd1j/qkps/hbac/09a7ce5d6fc108183f7d3e9d5b9b9ae8.png",
+            "storage": "store",
+            "metadata": {
+                "size": 4752,
+                "width": 204,
+                "height": 36,
+                "filename": "shrine20170224-28463-1ar7l4m20170224-28463-1widnrj20170224-28463-1bmd8sh20170224-28463-7nl4mb.png",
+                "mime_type": "image/png"
+            }
+        }
+    }
+}

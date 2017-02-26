@@ -1,0 +1,25 @@
+{
+  "name": "inuit-lists",
+  "version": "0.1.0",
+  "description": "Base list styles for the inuitcss framework",
+  "main": "_base.lists.scss",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inuitcss/base.lists.git"
+  },
+  "author": "Harry Roberts <harry@csswizardry.com>",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/inuitcss/base.lists/issues"
+  },
+  "homepage": "https://github.com/inuitcss/base.lists",
+  "keywords": [
+    "inuitcss",
+    "oocss",
+    "css"
+  ],
+  "dependencies": {
+    "inuit-defaults": "~0.2.0",
+    "inuit-mixins": "~0.2.2"
+  }
+}

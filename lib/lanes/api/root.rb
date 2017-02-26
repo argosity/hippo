@@ -11,12 +11,13 @@ module Lanes
             Lanes.config.get(:environment) do | env |
                 set :environment, env
             end
-            register SprocketsExtension
+#            register SprocketsExtension
             helpers RequestWrapper
             helpers HelperMethods
             helpers FormattedReply
+
             use Rack::Session::Cookie,
-                :key => 'lanes.session',
+                :key => 'rack.session',
                 :secret => Lanes.config.session_secret_key_base
             not_found do
                 Oj.dump({ message: "endpoint not found", success: false  })
@@ -39,6 +40,7 @@ module Lanes
                 end
                 require_relative './default_routes'
                 Lanes::Configuration.apply
+                API::Cable.configure
             end
 
             configure do
@@ -58,10 +60,10 @@ module Lanes
                     end
 
                 end
-                use Rack::Protection, allow_if: -> (env) {
-                    path = env['PATH_INFO']
-                    cors_resources.any?{|r| r.matches_path?(path) }
-                }
+                # use Rack::Protection, allow_if: -> (env) {
+                #     path = env['PATH_INFO']
+                #     cors_resources.any?{|r| r.matches_path?(path) }
+                # }
 
             end
         end

@@ -1,5 +1,5 @@
 Lanes::Screen.define_group "system-settings" do | group |
-    group.title       = "System Settings"
+    group.title       = "Settings"
     group.description = "Modify system settings"
     group.icon        = "wrench"
 end
@@ -13,8 +13,7 @@ Lanes::Screen.for_extension 'access' do | screens |
         screen.group_id    = "system-settings"
         screen.model_class = "User"
         screen.view_class  = "UserManagement"
-        screen.url_prefix  = 'lanes/access/screens'
-        screen.js  = 'user-management.js'
-        screen.css = 'user-management.css'
+        screen.asset       = 'lanes/access/screens/user-management'
     end
+
 end

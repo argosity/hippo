@@ -1,0 +1,110 @@
+exports[`Workspace Navbar renders a tab 1`] = `
+<li
+  className="grommetux-tab"
+  id={undefined}>
+  <button
+    aria-expanded={undefined}
+    aria-label={undefined}
+    aria-selected={undefined}
+    className="grommetux-button grommetux-button--plain grommetux-tab__button"
+    disabled={false}
+    href={undefined}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    role="tab"
+    type="button">
+    <label
+      className="grommetux-tab__label"
+      htmlFor={undefined}>
+      title
+    </label>
+  </button>
+</li>
+`;
+
+exports[`Workspace Navbar renders and adds/removes tabs 1`] = `
+<div
+  role="tablist">
+  <ul
+    className="grommetux-tabs grommetux-tabs--justify-start grommetux-tabs--responsive">
+    <li
+      className="grommetux-tab"
+      id={undefined}>
+      <button
+        aria-expanded={undefined}
+        aria-label={undefined}
+        aria-selected={undefined}
+        className="grommetux-button grommetux-button--plain grommetux-tab__button"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        role="tab"
+        type="button">
+        <label
+          className="grommetux-tab__label"
+          htmlFor={undefined}>
+          title
+        </label>
+      </button>
+    </li>
+    <li
+      className="grommetux-tab"
+      id={undefined}>
+      <button
+        aria-expanded={undefined}
+        aria-label={undefined}
+        aria-selected={undefined}
+        className="grommetux-button grommetux-button--plain grommetux-tab__button"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        role="tab"
+        type="button">
+        <label
+          className="grommetux-tab__label"
+          htmlFor={undefined}>
+          title
+        </label>
+      </button>
+    </li>
+    <li
+      className="grommetux-tab"
+      id={undefined}>
+      <button
+        aria-expanded={undefined}
+        aria-label={undefined}
+        aria-selected={undefined}
+        className="grommetux-button grommetux-button--plain grommetux-tab__button"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        role="tab"
+        type="button">
+        <label
+          className="grommetux-tab__label"
+          htmlFor={undefined}>
+          title
+        </label>
+      </button>
+    </li>
+  </ul>
+  <div
+    aria-label="Tab Contents"
+    role="tabpanel" />
+</div>
+`;

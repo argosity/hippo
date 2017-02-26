@@ -15,8 +15,11 @@ module Lanes
             ext.route(self)
         end
 
-        put Lanes.config.api_path + '/system-settings.json',
+        put Lanes.config.api_path + '/lanes/system-settings.json',
             &SystemSettings.update_handler
+
+        get Lanes.config.api_path + '/lanes/system-settings.json',
+            &SystemSettings.get_handler
 
         post Lanes.config.api_path + '/asset',
              &API::Handlers::Asset.saver

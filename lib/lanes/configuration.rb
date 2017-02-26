@@ -4,6 +4,8 @@ require 'pathname'
 require 'shrine'
 require 'active_job'
 require 'jobba'
+require 'webpack_driver'
+
 
 module Lanes
 
@@ -45,7 +47,8 @@ module Lanes
         end
 
         def self.apply
-            identifier = Lanes::Extensions.controlling.identifier
+            controlling_ext = Lanes::Extensions.controlling
+
             ActiveJob::Base.queue_adapter = Lanes.env.test? ? :test : :resque
             Lanes::Job::FailureLogger.configure
 
@@ -53,14 +56,23 @@ module Lanes
 
             Jobba.configure do |config|
                 config.redis_options = Lanes.config.redis
-                config.namespace = "#{identifier}::jobba"
+                config.namespace = "#{controlling_ext.identifier}::jobba"
             end
-            API::Cable.configure
-            Resque.redis.namespace = "#{identifier}::resque"
+
+            Resque.redis.namespace = "#{controlling_ext.identifier}::resque"
             Resque.redis = Lanes.config.redis
 
             Lanes::SystemSettings.for_ext('lanes').apply!
             Extensions.each{|ext| ext.apply_configuration }
+
+            if Kernel.const_defined?(:Guard) and ::Guard.const_defined?(:Jest)
+                ::Guard::Jest.logger = Lanes.logger
+            end
+
+            WebpackDriver.config do | config |
+                config.directory = Pathname.new(__FILE__).dirname.join('..', '..')
+                # config.logger = Lanes.logger
+            end
         end
 
     end
@@ -87,8 +99,8 @@ module Lanes
         # prefix to use for all urls
         config_option :mounted_at, '/'
 
-        # The initial view class to display
-        config_option :root_view, 'Lanes.Workspace.Layout'
+        # The initial id of the screen that should be displayed
+        config_option :root_view, 'workspace-layout'
 
         # Screen to display on load (if workspace extension is used)
         config_option :initial_workspace_screen_id, ''
@@ -106,6 +118,7 @@ module Lanes
         def api_path
             mounted_at + 'api'
         end
+
     end
 
     class << self

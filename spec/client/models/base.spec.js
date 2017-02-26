@@ -1,0 +1,82 @@
+import { autorun } from 'mobx';
+import { Ship, Container, Box, } from '../test-models';
+
+describe("BaseModel Test", () => {
+
+    it('translates assignments to a hasMany field into reset()', () => {
+        const container = new Container();
+        const originalBoxes = container.boxes;
+        container.boxes = [
+            { width: 42 },
+        ];
+        expect(container.boxes).toBe(originalBoxes);
+    });
+
+    it('translates assignments of a belongsTo', () => {
+        const boat = new Ship({ name: 'BOATY', container: { name: 'box-1' } });
+        expect(boat.container).toBeInstanceOf(Container);
+        expect(boat.container.name).toEqual('box-1');
+        expect(boat.container.vessel).toBe(boat);
+        boat.container = { name: 'Ceci n’est pas une récipient' };
+        expect(boat.container).toBeInstanceOf(Container);
+        expect(boat.container.name).toEqual('Ceci n’est pas une récipient');
+        expect(boat.container.vessel).toBe(boat);
+        boat.container = null;
+
+    });
+
+    it('computes the syncUrl', () => {
+        const box = new Box({ id: 11, width: 5 });
+        const spy = jest.fn();
+        autorun(() => spy(box.syncUrl));
+        expect(spy).toHaveBeenCalledWith('/api/test/boxes/11');
+        expect(box.id).toEqual(11);
+        expect(box.identifier).toEqual(11);
+        expect(box.isNew).toEqual(false);
+        expect(box.syncUrl).toEqual('/api/test/boxes/11');
+        box.id = 42;
+        expect(spy).toHaveBeenCalledTimes(2);
+        expect(spy).toHaveBeenCalledWith('/api/test/boxes/42');
+        expect(box.syncUrl).toEqual('/api/test/boxes/42');
+    });
+
+    it('sets isNew depending on primary Key', () => {
+        const box = new Box();
+        expect(box.identifier).toEqual(undefined);
+        expect(box.isNew).toBe(true);
+        box.id = 42;
+        expect(box.id).toEqual(42);
+        expect(box.isNew).toBe(false);
+    });
+
+    it('rejects unsettable', () => {
+        const box = new Box({ bad: 1 });
+        expect(box.bad).toBeUndefined();
+        box.update({ bad: 22 });
+        expect(box.bad).toBeUndefined();
+    });
+
+    it('re-fetches record', () => {
+        const box = new Box({ id: 1 });
+        expect(box.isNew).toBe(false);
+        box.fetch();
+        expect(fetch).lastCalledWith(
+            '/api/test/boxes/1.json?l=1&q%5Bid%5D=1',
+            { headers: { 'Content-Type': 'application/json' }, method: 'GET' },
+        );
+    });
+
+    it('validates and records "type" in schema', () => {
+        const box = new Box();
+        box.id = 23;
+        expect(Box.propertyOptions.id.type).toEqual('number');
+        expect(() => (box.id = 'red')).toThrow('Bad Type');
+        expect(box.id).toEqual(23);
+
+        const container = new Container();
+        container.id = 'test';
+        expect(() => (container.id = 42)).toThrow('Bad Type');
+        expect(container.id).toEqual('test');
+    });
+
+});

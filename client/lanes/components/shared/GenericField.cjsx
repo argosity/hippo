@@ -1,5 +1,0 @@
-Lanes.Components.GenericField = {
-
-
-
-}

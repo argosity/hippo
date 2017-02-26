@@ -1,5 +1,9 @@
 require 'active_record'
 
+module Lanes
+    ROOT_PATH = Pathname.new(__FILE__).dirname.join('..')
+end
+
 require_relative "lanes/version"
 require_relative "lanes/environment"
 require_relative "lanes/configuration"
