@@ -65,13 +65,8 @@ module Lanes
             Lanes::SystemSettings.for_ext('lanes').apply!
             Extensions.each{|ext| ext.apply_configuration }
 
-            if Kernel.const_defined?(:Guard) and ::Guard.const_defined?(:Jest)
+            if Kernel.const_defined?(:Guard) && ::Guard.const_defined?(:Jest)
                 ::Guard::Jest.logger = Lanes.logger
-            end
-
-            WebpackDriver.config do | config |
-                config.directory = Pathname.new(__FILE__).dirname.join('..', '..')
-                # config.logger = Lanes.logger
             end
         end
 
