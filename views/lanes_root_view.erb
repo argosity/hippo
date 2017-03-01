@@ -61,7 +61,7 @@
 
     <body>
         <div class="loading">Loading&#8230;</div>
-        <div id="root" />
+        <div id="lanes-root" />
         <%= lanes_javascript_tags %>
         <script type="text/json" id="bootstrap-data"><%= Lanes::API.to_json(Lanes::Extensions.client_bootstrap_data) %></script>
     </body>
