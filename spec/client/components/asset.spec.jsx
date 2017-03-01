@@ -9,8 +9,8 @@ import { Snapshot } from '../test-utils';
 describe("Asset Component", () => {
     it('renders and matches snapshot', () => {
         const image = new TestImage();
-        const asset = mount(<Asset model={image} property="asset" />);
+        const asset = mount(<Asset model={image} name="asset" />);
         expect(asset).toHaveRendered('Dropzone');
-        expect(Snapshot(<Asset model={image} property="asset" />)).toMatchSnapshot();
+        expect(Snapshot(<Asset model={image} name="asset" />)).toMatchSnapshot();
     });
 });
