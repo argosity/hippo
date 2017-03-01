@@ -1,11 +1,12 @@
 {
-  "name": "lanes",
-  "version": "1.0.0",
+  "name": "lanes-framework",
+  "version": "0.6.3",
   "description": "Lanes",
   "main": "index.js",
-  "repository": "git@github.com:argosity/lanes.git",
+  "repository": "https://github.com/argosity/lanes",
   "author": "Nathan Stitt <nathan@stitt.org>",
   "license": "MIT",
+  "files": [ "client" ],
   "dependencies": {
     "classnames": "^2.2.5",
     "domtastic": "^0.12.3",
@@ -35,9 +36,8 @@
     "serializr": "^1.1.9",
     "validator": "^6.2.1",
     "whatwg-fetch": "^2.0.2",
-    "when-dom-ready": "^1.2.4"
-  },
-  "devDependencies": {
+    "when-dom-ready": "^1.2.4",
+
     "babel-core": "^6.21.0",
     "babel-eslint": "latest",
     "babel-jest": "^18.0.0",
