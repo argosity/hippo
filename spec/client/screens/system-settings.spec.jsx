@@ -1,24 +1,22 @@
 import React from 'react';
 
-import SnapShot   from 'react-test-renderer';
+import { Snapshot } from '../test-utils';
 
 import Settings from 'lanes/screens/system-settings';
-
+import Instance from 'lanes/screens/instance';
 import { getTestScreen } from '../test-models';
 
 
 describe('SystemSettings Screen', () => {
+    let definition;
+    let instance;
+
+    beforeEach(() => {
+        definition = getTestScreen();
+        instance = new Instance({ definition, isActive: true });
+    });
 
     it('renders', () => {
-        const settings = shallow(<Settings screen={getTestScreen()} />);
-        console.log(settings.debug());
-
-        /* expect(options.context.uistate.screenMenuPreference).toEqual('');
-         * navbar.find('.screens-menu-toggle').simulate('click');
-         * expect(options.context.uistate.screenMenuPreference).toEqual('menu-wide');
-         * navbar.find('.screens-menu-toggle').simulate('click');
-         * expect(options.context.uistate.screenMenuPreference).toEqual('menu-narrow');
-         * navbar.find('.screens-menu-toggle').simulate('click');
-         * expect(options.context.uistate.screenMenuPreference).toEqual('menu-hidden');*/
+        expect(Snapshot(<Settings screen={instance} />)).toMatchSnapshot();
     });
 });

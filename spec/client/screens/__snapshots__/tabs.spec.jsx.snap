@@ -1,7 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Workspace Navbar renders a tab 1`] = `
 <li
   className="grommetux-tab"
-  id={undefined}>
+  id={undefined}
+>
   <button
     aria-expanded={undefined}
     aria-label={undefined}
@@ -15,10 +18,12 @@ exports[`Workspace Navbar renders a tab 1`] = `
     onMouseDown={[Function]}
     onMouseUp={[Function]}
     role="tab"
-    type="button">
+    type="button"
+  >
     <label
       className="grommetux-tab__label"
-      htmlFor={undefined}>
+      htmlFor={undefined}
+    >
       title
     </label>
   </button>
@@ -27,12 +32,15 @@ exports[`Workspace Navbar renders a tab 1`] = `
 
 exports[`Workspace Navbar renders and adds/removes tabs 1`] = `
 <div
-  role="tablist">
+  role="tablist"
+>
   <ul
-    className="grommetux-tabs grommetux-tabs--justify-start grommetux-tabs--responsive">
+    className="grommetux-tabs grommetux-tabs--justify-start grommetux-tabs--responsive"
+  >
     <li
       className="grommetux-tab"
-      id={undefined}>
+      id={undefined}
+    >
       <button
         aria-expanded={undefined}
         aria-label={undefined}
@@ -46,17 +54,20 @@ exports[`Workspace Navbar renders and adds/removes tabs 1`] = `
         onMouseDown={[Function]}
         onMouseUp={[Function]}
         role="tab"
-        type="button">
+        type="button"
+      >
         <label
           className="grommetux-tab__label"
-          htmlFor={undefined}>
+          htmlFor={undefined}
+        >
           title
         </label>
       </button>
     </li>
     <li
       className="grommetux-tab"
-      id={undefined}>
+      id={undefined}
+    >
       <button
         aria-expanded={undefined}
         aria-label={undefined}
@@ -70,17 +81,20 @@ exports[`Workspace Navbar renders and adds/removes tabs 1`] = `
         onMouseDown={[Function]}
         onMouseUp={[Function]}
         role="tab"
-        type="button">
+        type="button"
+      >
         <label
           className="grommetux-tab__label"
-          htmlFor={undefined}>
+          htmlFor={undefined}
+        >
           title
         </label>
       </button>
     </li>
     <li
       className="grommetux-tab"
-      id={undefined}>
+      id={undefined}
+    >
       <button
         aria-expanded={undefined}
         aria-label={undefined}
@@ -94,10 +108,12 @@ exports[`Workspace Navbar renders and adds/removes tabs 1`] = `
         onMouseDown={[Function]}
         onMouseUp={[Function]}
         role="tab"
-        type="button">
+        type="button"
+      >
         <label
           className="grommetux-tab__label"
-          htmlFor={undefined}>
+          htmlFor={undefined}
+        >
           title
         </label>
       </button>
@@ -105,6 +121,7 @@ exports[`Workspace Navbar renders and adds/removes tabs 1`] = `
   </ul>
   <div
     aria-label="Tab Contents"
-    role="tabpanel" />
+    role="tabpanel"
+  />
 </div>
 `;
