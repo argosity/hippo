@@ -3,7 +3,6 @@ require 'erb'
 
 module Lanes
 
-
     class Webpack
 
         TMP = Pathname.new(Dir.pwd).join('tmp')
@@ -12,16 +11,17 @@ module Lanes
         extend Forwardable
         def_delegators :@process, :port, :environment, :stop, :alive?, :start, :wait
 
-        attr_reader   :generated_asset_dir
+        attr_reader :generated_asset_dir
 
         def self.server
-            Webpack.new(
-                WebpackDriver::DevServer.new(
-                    '--port', '8889', '--hot', '--config',
-                    Pathname.new(__FILE__).dirname
-                        .join('..','js','webpack.config.js').expand_path.to_s
-                )
+            config = WebpackDriver::Configuration.new(
+                Pathname.new(__FILE__).dirname.join('..','js','webpack.config.js'),
+                directory: Pathname.new(__FILE__).dirname.join('..', '..'),
+                cmd_line_flags: ['--hot', '--inline'],
+                logger: Lanes.logger
             )
+
+            Webpack.new(config)
         end
 
         attr_reader :process
@@ -30,19 +30,22 @@ module Lanes
             Lanes.env.production? ? '' : "http://localhost:#{API::Root.settings.port}"
         end
 
-        def initialize(process)
-            @process = process
+        def initialize(config)
+
             @generated_asset_dir = Pathname.new(Dir.mktmpdir)
             generated_asset_dir.join('lanes').mkpath
             write_asset_files
-            puts "RB Roots: "
+
             puts Extensions.map{|ext| ext.root_path.join('client').to_s }.join(',')
 
-            @process.environment.merge!(
-                LANES_EXT_ROOTS: Extensions.map{|ext| ext.root_path.join('client').to_s }.join(','),
+            config.environment.merge!(
+                LANES_EXT_ROOTS: Extensions.map{|ext|
+                    ext.root_path.join('client').to_s
+                }.join(','),
                 LANES_GENERATED_DIR: generated_asset_dir.to_s
             )
 
+            @process = ::WebpackDriver::DevServer.new(config)
         end
 
         def write_asset_files

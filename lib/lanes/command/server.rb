@@ -6,18 +6,11 @@ require 'guard/jest'
 require_relative '../webpack'
 require_relative 'jest_runner'
 
-require_relative '../access/extension'
-
 module Lanes
     module Command
 
         class Server < Thor::Group
             include Thor::Actions
-
- #           class_option  :port, type: :numeric
-
-            # cattr_accessor :staging_dir #, :config
-#            class_option :webpack
 
             def launch
                 say "Launching testing server at http://localhost:8888/", :green
@@ -26,43 +19,32 @@ module Lanes
 
                 API.webpack = Lanes::Webpack.server
 
-                threads = Array.new()
+                threads = []
                 Thread.abort_on_exception = true
                 threads << Thread.new { API::Root.run! }
-                threads << Thread.new {
-                    until API::Root.running?
-                        sleep 1
-                    end
-                    trap("INT") {
-                        puts "trapped in subthread"; exit
+                threads << Thread.new do
+                    sleep 1 until API::Root.running?
+                    trap("INT") do
+                        Lanes.logger.warn("trapped in subthread")
                         API.webpack.stop!
-                    }
-                    puts "ok, trap registered"
-                }
+                        exit
+                    end
+                    Lanes.logger.info "ok, ctrl-c trap registered"
+                end
 
                 API.webpack.start
 
-                # sleep(1)
+                sleep(1) # give webpack a bit of time to fail if it's going to
 
                 unless API.webpack.alive?
                     puts API.webpack.messages
+                    exit 1
                 end
 
-#                puts @@webpack.assets.keys
+                Guard.start
 
-
-#                Guard.start
-
-#                API.webpack.wait # stop
-
-                threads.each do |thread|
-                    thread.join
-                end
-
-
+                API.webpack.stop
             end
         end
-
     end
-
 end
