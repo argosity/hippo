@@ -14,9 +14,9 @@ Some of it's features are:
 
 * **Real-Time data updates**: Whenever a CRUD operation is performed on a model, the web-server will relay the event to client observers that have registered for updates. By default a model is registered for updates whenever it's bound to a view, which works to prevent unwanted updates and allows records to be garbage collected. Updates are performed by long-pulling via the message-bus gem. A client-side identity map is also used so that only one copy of the model for a given id exists and is updated.
 
-* **Next-Gen web-framework**: Derived from ampersand state, the web framework completely written in CoffeeScript and uses defined properties to implement data getter and setters. This means that it's IE 9+ only. It's heavily influenced by Backbone, Ampersand and a bit of Marrionette.
+* **Next-Gen web-framework**: Client is built in React using [mobex-decorated-models](https://github.com/nathanstitt/mobx-decorated-models).
 
-* **Integrated continual testing environment**: When ran in development mode, Lanes watches for file changes and runs the appropriate spec for both your client and server code automatically. Minispec is utilized for the Ruby models, and client code tested via Jasmine.
+* **Integrated continual testing environment**: When ran in development mode, Lanes watches for file changes and runs the appropriate spec for both your client and server code automatically. Minispec is utilized for the Ruby models, and client code tested via Jest.
 
 * **Role-driven security**: Models can be marked as readable, writeable, or deletable for roles. Additionally, fields can be marked as read-only or invisible to prevent unauthorized access.
 
@@ -29,7 +29,7 @@ Some of it's features are:
 
 The standard instructions are always good:
 
- 1. Fork it ( http://github.com/argosity/stockor-core/fork )
+ 1. Fork it ( http://github.com/argosity/lanes/fork )
  2. Create your feature branch (`git checkout -b my-new-feature`)
  3. Commit your changes (`git commit -am 'Add some feature'`)
  4. Push to the branch (`git push origin my-new-feature`)
