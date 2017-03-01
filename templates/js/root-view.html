@@ -59,13 +59,13 @@
     </head>
 
     <body>
-        <div id="lanes-root">
-          <div class="loading">Loading&#8230;</div>
-          <script type="text/json" id="bootstrap-data">
-            <%= Lanes::API.to_json(
-                Lanes::Extensions.client_bootstrap_data
-                ) %>
-          </script>
-        </div>
+      <div class="loading">Loading&#8230;</div>
+      <div id="lanes-root">
+        <script type="text/json" id="bootstrap-data">
+          <%= Lanes::API.to_json(
+              Lanes::Extensions.client_bootstrap_data
+              ) %>
+        </script>
+      </div>
     </body>
 </html>
