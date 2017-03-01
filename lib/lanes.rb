@@ -1,4 +1,5 @@
 require 'active_record'
+require 'pathname'
 
 module Lanes
     ROOT_PATH = Pathname.new(__FILE__).dirname.join('..')
