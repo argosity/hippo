@@ -3,6 +3,8 @@ require 'oj'
 require 'rack/protection'
 require 'rack/cors'
 
+require_relative "../access/authentication_provider"
+
 module Lanes
     module API
         class Root < Sinatra::Application
@@ -35,9 +37,6 @@ module Lanes
                 require_relative 'routing'
                 Extensions.load_controlling_config
                 # late load in case an extension has provided an alternative implementation
-                unless API.const_defined?(:AuthenticationProvider)
-                    require "lanes/api/null_authentication_provider"
-                end
                 require_relative './default_routes'
                 Lanes::Configuration.apply
                 API::Cable.configure
