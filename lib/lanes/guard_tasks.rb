@@ -7,6 +7,7 @@ require "uri"
 # require_relative "lanes_guard_plugin"
 
 # require_relative "hot_reload_plugin"
+require_relative 'command/jest'
 
 module Lanes
     module GuardTasks
@@ -20,9 +21,6 @@ module Lanes
             def server(&block)
                 @server_matches = block
             end
-            # def lanes_plugin(&block)
-            #     @hot_reload = block
-            # end
         end
 
 
@@ -31,30 +29,19 @@ module Lanes
             matchers = CustomMatchers.new
             yield matchers
 
+            jest_options = options.merge(
+                logger: Lanes.logger,
+                silent: false,
+                jest_cmd: './node_modules/.bin/jest',
+                config_file: ::Lanes::Command::Jest.new.configure.config_file
+            )
+
+            dsl.guard :jest, jest_options
+
 
             minitest_options = {
               all_on_start: false, test_folders: 'spec/server'
             }
-
-            jest_options = options.merge(
-                silent: false,
-                jest_cmd: './node_modules/jest-cli/bin/jest.js',
-                config_file:'./lib/js/jest.config.js'
-            )
-
-            # coffee_files = %r{^client/(.+?)\.(js|coffee|cjsx)$}
-
-#            dsl.guard :lanes_guard_plugin
-
-
-
-            dsl.guard :jest, jest_options do
-                # dsl.watch(%r{client/lanes/(.+?)\.(js|jsx)$}) do |m|
-                #     "spec/client/#{m[1]}.spec.#{m[2]}"
-                # end
-#                matchers.client_matches.call if matchers.client_matches
-            end
-
             dsl.guard :minitest, minitest_options do
                 dsl.watch(%r{^spec/server/spec_helper\.rb}) { 'test' }
                 dsl.watch(%r{^spec/server/.*_spec\.rb})
