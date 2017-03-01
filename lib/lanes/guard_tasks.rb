@@ -1,24 +1,25 @@
 require_relative "../lanes"
-require 'guard/jasmine'
+# require 'guard/jasmine'
+require "guard/jest"
 require 'guard/minitest'
 require "net/http"
 require "uri"
-require_relative "hot_reload_plugin"
+# require_relative "lanes_guard_plugin"
+
+# require_relative "hot_reload_plugin"
+require_relative 'command/jest'
 
 module Lanes
     module GuardTasks
 
         class CustomMatchers
-            attr_reader :client_matches, :server_matches, :hot_reload
+            attr_reader :client_matches, :server_matches#, :hot_reload
 
             def client(&block)
                 @client_matches = block
             end
             def server(&block)
                 @server_matches = block
-            end
-            def hot_reload(&block)
-                @hot_reload = block
             end
         end
 
@@ -28,32 +29,19 @@ module Lanes
             matchers = CustomMatchers.new
             yield matchers
 
-            jasmine_options = options.merge({
-               keep_failed: false,
-               port: 8888, server_mount: '/spec',
-               server_env: 'development',
-               server: :puma, spec_dir: "spec/#{app_name}",
-               console: :always, debug: false
-            })
+            jest_options = options.merge(
+                logger: Lanes.logger,
+                silent: false,
+                jest_cmd: './node_modules/.bin/jest',
+                config_file: ::Lanes::Command::Jest.new.configure.config_file
+            )
+
+            dsl.guard :jest, jest_options
 
 
             minitest_options = {
-              all_on_start: true, test_folders: 'spec/server'
+              all_on_start: false, test_folders: 'spec/server'
             }
-            coffee_files = %r{^client/(.+?)\.(js|coffee|cjsx)$}
-
-            dsl.guard :hot_reload, port: jasmine_options[:port] do
-                dsl.watch(coffee_files)
-                dsl.watch(%r{\.scss$})
-                matchers.hot_reload.call if matchers.hot_reload
-            end
-
-            dsl.guard :jasmine, jasmine_options do
-                dsl.watch(coffee_files){ |m| "spec/#{m[0]}Spec.#{m[2]}" }
-                dsl.watch(%r{^spec/.*(?:_s|S)pec\.(?:js|coffee|cjsx)$}){|m| p m[0]; m[0]}
-                matchers.client_matches.call if matchers.client_matches
-            end
-
             dsl.guard :minitest, minitest_options do
                 dsl.watch(%r{^spec/server/spec_helper\.rb}) { 'test' }
                 dsl.watch(%r{^spec/server/.*_spec\.rb})

@@ -6,15 +6,21 @@ module Lanes
             end
 
             def lanes_javascript_tags
-                javascript_tag('lanes/vendor') + "\n" + javascript_tag('lanes')
+                assets = API.webpack.assets.map do | k |
+                    "<script src=\"http://localhost:#{API.webpack.port}/#{k}\"></script>"
+                end
+                assets.join("\n")
+
+                # "<script src=\"http://localhost:#{API.webpack.port}/lanes.js\"></script>"
+                # javascript_tag('lanes/vendor') + "\n" + javascript_tag('lanes')
             end
 
             def lanes_stylesheet_tags
-                stylesheet_tag('lanes')
+                # stylesheet_tag('lanes')
             end
 
             def client_bootstrap_data(mergedWith: {})
-                API.to_json(Extensions.client_bootstrap_data(self).merge(mergedWith))
+                API.to_json(Extensions.client_bootstrap_data.merge(mergedWith))
             end
 
             def csrf_token
@@ -35,7 +41,7 @@ module Lanes
             end
 
             def data
-                @json_data ||= Oj.load( request.body.read )
+                @json_data ||= Oj.load( request.body.read ) || {}
             end
 
             def request_origin

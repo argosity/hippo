@@ -4,9 +4,7 @@ module Lanes::API::Handlers
 
         def self.saver
             lambda do
-
-                path = "#{params['extension_id']}/#{params['owner_type']}"
-                model = path.underscore.camelize.constantize
+                model = params['owner_type'].underscore.camelize.constantize
 
                 authentication = Lanes::API::AuthenticationProvider.new(request)
                 authentication.wrap_model_access(model, self) do

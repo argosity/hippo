@@ -28,6 +28,11 @@ module Lanes
         long_desc Command.usage_from_file("server")
         register Command::Server,  'serve', 'serve', 'Run the app in development/testing mode'
 
+        long_desc "start the Jest test server"
+        register Command::Jest,  'jest', 'jest', 'Start the Jest test server for client code'
+
+        register Command::Guard,  'guard', 'guard', 'Start the Guard server'
+
         long_desc Command.usage_from_file("db")
         register Command::Db,  'db', 'db', 'Database commands'
 

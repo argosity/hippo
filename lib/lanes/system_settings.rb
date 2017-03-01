@@ -50,6 +50,17 @@ module Lanes
                 config.save!
             end
 
+            def get_handler
+                lambda do
+                    wrap_reply do
+                        std_api_reply :get,
+                                      Lanes::SystemSettings.config.as_json(
+                                          include: ['logo', 'print_logo']
+                                      )
+                    end
+                end
+            end
+
             def update_handler
                 lambda do
                     wrap_reply do
@@ -82,7 +93,7 @@ module Lanes
 
         end
 
-        SystemSettings.on_change(:lanes) do
+        SystemSettings.on_change(:lanes) do |msg|
             Lanes::SystemSettings.clear_cache!(msg)
         end
 

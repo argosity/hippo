@@ -7,3 +7,6 @@
 //= require ./screens
 //= require ./extension/LateLoaded
 //= require ./Boot
+
+import Config from './config';
+import Boot from './boot';

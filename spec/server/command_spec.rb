@@ -29,6 +29,9 @@ describe Lanes::Command do
             next unless path.file?
             diff = Diffy::Diff.new(path.to_s, generated.to_s, source: 'files', context: 1)
             assert diff.to_s.empty?, "#{relative}\n #{diff}"
+            # if !diff.to_s.empty? # update
+            #     path.write(generated.read)
+            # end
         end
     end
 

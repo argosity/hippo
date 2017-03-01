@@ -6,6 +6,7 @@ module Lanes
         ALL=Array.new
 
         class << self
+            include Enumerable
 
             def load_screens
                 each do | ext |
@@ -90,22 +91,18 @@ module Lanes
                 Lanes.logger.error "Unable to find controlling extension. #{sorted} are loaded"
             end
 
-            def client_bootstrap_data(view)
+            def client_bootstrap_data
                 data = {
                   api_path: Lanes.config.api_path,
                   root_path: Lanes.config.mounted_at,
-                  root_view:  Lanes.config.root_view,
-                  csrf_token: view.session[:csrf],
+                  root_view: Lanes.config.root_view,
                   environment: Lanes.config.environment,
-                  system_settings: Lanes::SystemSettings.config.as_json(
-                      include: ['logo', 'print_logo']
-                  ),
                   assets_path_prefix: Lanes.config.assets_path_prefix,
                   controlling_extension: controlling.identifier,
                   initial_workspace_screen_id: Lanes.config.initial_workspace_screen_id
                 }
                 each do | ext |
-                    ext_data  = ext.client_bootstrap_data(view)
+                    ext_data  = ext.client_bootstrap_data
                     data[ext.identifier] = ext_data unless ext_data.nil?
                 end
                 return data

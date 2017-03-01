@@ -86,17 +86,9 @@ module Lanes
             attr_accessor_with_default :group_id
             attr_accessor_with_default :extension
             attr_accessor_with_default :view_class
-            attr_accessor_with_default :url_prefix, lambda {
-                "#{@extension_id}/screens"
-            }
             attr_accessor_with_default :model_class
             attr_accessor_with_default :model_access, 'read'
-            attr_accessor_with_default :js, lambda {
-                has_file_matching?('index.{js,coffee,cjsx}') ? @identifier + '.js' : nil
-            }
-            attr_accessor_with_default :css, lambda {
-                has_file_matching?('index.{css,scss}') ? @identifier + '.css' : nil
-            }
+            attr_accessor_with_default :asset
 
             def initialize(id, extension_id)
                 self.identifier = id
@@ -114,26 +106,23 @@ module Lanes
                 ext.root_path.join('client', url_prefix, identifier)
             end
 
-            def url_path_for(type)
-                "#{url_prefix}/#{self.send(type)}"
+            def as_json
+                {
+                    id:    identifier,
+                    title: title,
+                    icon:  icon,
+                    model: model_class,
+                    view:  view_class,
+                    access: model_access,
+                    group_id: group_id,
+                    extension: extension,
+                    description: description,
+                    asset: asset
+                }
             end
 
             def to_json
-                Oj.dump({
-                            id:    identifier,
-                            title: title,
-                            icon:  icon,
-                            model: model_class,
-                            view:  view_class,
-                            js:    js,
-                            css:   css,
-                            assets: [js, css].reject{|asset| asset.blank? },
-                            access: model_access,
-                            group_id: group_id,
-                            extension: extension,
-                            url_prefix: url_prefix,
-                            description: description
-                        }, mode: :compat)
+                Oj.dump(as_json, mode: :compat)
             end
         end
 

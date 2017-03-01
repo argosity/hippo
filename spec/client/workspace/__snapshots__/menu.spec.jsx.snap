@@ -1,0 +1,315 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Workspace Menu has groups with screens 1`] = `
+<nav
+  className="grommetux-box grommetux-box--direction-column grommetux-box--justify-between grommetux-box--align-start grommetux-box--responsive grommetux-box--pad-none grommetux-menu grommetux-menu--column grommetux-menu--primary grommetux-menu--inline"
+  id={undefined}
+  onClick={undefined}
+  role={undefined}
+  style={Object {}}
+  tabIndex={undefined}
+>
+  <div
+    className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <header
+      className="grommetux-box grommetux-box--direction-row grommetux-box--align-end grommetux-box--pad-horizontal-medium grommetux-header"
+      id={undefined}
+      onClick={undefined}
+      role={undefined}
+      style={Object {}}
+      tabIndex={undefined}
+    >
+      <h4
+        className="grommetux-heading grommetux-heading--strong"
+      >
+        Group # 0
+        <i
+          className="icon icon-grp-0"
+          onClick={undefined}
+          style={undefined}
+        />
+      </h4>
+    </header>
+  </div>
+  <a
+    aria-label={undefined}
+    className="grommetux-anchor"
+    href={undefined}
+    onClick={[Function]}
+  >
+    title
+    <i
+      className="icon icon-red"
+      onClick={undefined}
+      style={undefined}
+    />
+  </a>
+</nav>
+`;
+
+exports[`Workspace Menu has renders a menu option 1`] = `
+<a
+  aria-label={undefined}
+  className="grommetux-anchor"
+  href={undefined}
+  onClick={[Function]}
+>
+  title
+  <i
+    className="icon icon-red"
+    onClick={undefined}
+    style={undefined}
+  />
+</a>
+`;
+
+exports[`Workspace Menu renders groups 1`] = `
+<div
+  className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--separator-right grommetux-background-color-index-brand grommetux-background-color-index--pending grommetux-sidebar grommetux-sidebar--full grommetux-sidebar--small"
+  id={undefined}
+  onClick={undefined}
+  role={undefined}
+  style={Object {}}
+  tabIndex={undefined}
+>
+  <div
+    className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <header
+      className="grommetux-box grommetux-box--direction-row grommetux-box--justify-between grommetux-box--align-center grommetux-box--pad-horizontal-medium grommetux-header grommetux-header--large"
+      id={undefined}
+      onClick={undefined}
+      role={undefined}
+      style={Object {}}
+      tabIndex={undefined}
+    >
+      Logo
+    </header>
+  </div>
+  <nav
+    className="grommetux-box grommetux-box--direction-column grommetux-box--justify-between grommetux-box--align-start grommetux-box--responsive grommetux-box--pad-none grommetux-menu grommetux-menu--column grommetux-menu--primary grommetux-menu--inline"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <div
+      className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
+      id={undefined}
+      onClick={undefined}
+      role={undefined}
+      style={Object {}}
+      tabIndex={undefined}
+    >
+      <header
+        className="grommetux-box grommetux-box--direction-row grommetux-box--align-end grommetux-box--pad-horizontal-medium grommetux-header"
+        id={undefined}
+        onClick={undefined}
+        role={undefined}
+        style={Object {}}
+        tabIndex={undefined}
+      >
+        <h4
+          className="grommetux-heading grommetux-heading--strong"
+        >
+          Group # 0
+          <i
+            className="icon icon-grp-0"
+            onClick={undefined}
+            style={undefined}
+          />
+        </h4>
+      </header>
+    </div>
+  </nav>
+  <nav
+    className="grommetux-box grommetux-box--direction-column grommetux-box--justify-between grommetux-box--align-start grommetux-box--responsive grommetux-box--pad-none grommetux-menu grommetux-menu--column grommetux-menu--primary grommetux-menu--inline"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <div
+      className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
+      id={undefined}
+      onClick={undefined}
+      role={undefined}
+      style={Object {}}
+      tabIndex={undefined}
+    >
+      <header
+        className="grommetux-box grommetux-box--direction-row grommetux-box--align-end grommetux-box--pad-horizontal-medium grommetux-header"
+        id={undefined}
+        onClick={undefined}
+        role={undefined}
+        style={Object {}}
+        tabIndex={undefined}
+      >
+        <h4
+          className="grommetux-heading grommetux-heading--strong"
+        >
+          Group # 1
+          <i
+            className="icon icon-grp-1"
+            onClick={undefined}
+            style={undefined}
+          />
+        </h4>
+      </header>
+    </div>
+  </nav>
+  <nav
+    className="grommetux-box grommetux-box--direction-column grommetux-box--justify-between grommetux-box--align-start grommetux-box--responsive grommetux-box--pad-none grommetux-menu grommetux-menu--column grommetux-menu--primary grommetux-menu--inline"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <div
+      className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
+      id={undefined}
+      onClick={undefined}
+      role={undefined}
+      style={Object {}}
+      tabIndex={undefined}
+    >
+      <header
+        className="grommetux-box grommetux-box--direction-row grommetux-box--align-end grommetux-box--pad-horizontal-medium grommetux-header"
+        id={undefined}
+        onClick={undefined}
+        role={undefined}
+        style={Object {}}
+        tabIndex={undefined}
+      >
+        <h4
+          className="grommetux-heading grommetux-heading--strong"
+        >
+          Group # 2
+          <i
+            className="icon icon-grp-2"
+            onClick={undefined}
+            style={undefined}
+          />
+        </h4>
+      </header>
+    </div>
+  </nav>
+  <nav
+    className="grommetux-box grommetux-box--direction-column grommetux-box--justify-between grommetux-box--align-start grommetux-box--responsive grommetux-box--pad-none grommetux-menu grommetux-menu--column grommetux-menu--primary grommetux-menu--inline"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <div
+      className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
+      id={undefined}
+      onClick={undefined}
+      role={undefined}
+      style={Object {}}
+      tabIndex={undefined}
+    >
+      <header
+        className="grommetux-box grommetux-box--direction-row grommetux-box--align-end grommetux-box--pad-horizontal-medium grommetux-header"
+        id={undefined}
+        onClick={undefined}
+        role={undefined}
+        style={Object {}}
+        tabIndex={undefined}
+      >
+        <h4
+          className="grommetux-heading grommetux-heading--strong"
+        >
+          Group # 3
+          <i
+            className="icon icon-grp-3"
+            onClick={undefined}
+            style={undefined}
+          />
+        </h4>
+      </header>
+    </div>
+  </nav>
+  <nav
+    className="grommetux-box grommetux-box--direction-column grommetux-box--justify-between grommetux-box--align-start grommetux-box--responsive grommetux-box--pad-none grommetux-menu grommetux-menu--column grommetux-menu--primary grommetux-menu--inline"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <div
+      className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
+      id={undefined}
+      onClick={undefined}
+      role={undefined}
+      style={Object {}}
+      tabIndex={undefined}
+    >
+      <header
+        className="grommetux-box grommetux-box--direction-row grommetux-box--align-end grommetux-box--pad-horizontal-medium grommetux-header"
+        id={undefined}
+        onClick={undefined}
+        role={undefined}
+        style={Object {}}
+        tabIndex={undefined}
+      >
+        <h4
+          className="grommetux-heading grommetux-heading--strong"
+        >
+          Group # 4
+          <i
+            className="icon icon-grp-4"
+            onClick={undefined}
+            style={undefined}
+          />
+        </h4>
+      </header>
+    </div>
+  </nav>
+  <footer
+    className="grommetux-box grommetux-box--direction-row grommetux-box--align-center grommetux-box--pad-horizontal-medium grommetux-footer grommetux-footer--large"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <a
+      aria-hidden="true"
+      className="grommetux-skip-link-anchor"
+      id="skip-link-footer"
+      tabIndex="-1"
+    >
+      Footer
+    </a>
+    <a
+      aria-label={undefined}
+      className="grommetux-anchor"
+      href={undefined}
+      onClick={[Function]}
+    >
+      <h3
+        className="grommetux-heading grommetux-heading--strong grommetux-heading--margin-none"
+      >
+        Log Out
+      </h3>
+    </a>
+  </footer>
+</div>
+`;

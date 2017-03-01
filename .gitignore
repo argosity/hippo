@@ -17,6 +17,7 @@ spec/reports
 test/tmp
 test/version_tmp
 npm-build/node_modules
+node_modules
 tmp
 db/schema*
 client/lanes/vendor/development/calendar.scss

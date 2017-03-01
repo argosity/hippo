@@ -1,9 +1,5 @@
 require_relative "handlers/asset.rb"
 
-unless Lanes.env.production?
-    require_relative("test_specs")
-end
-
 module Lanes
     API.routes.draw do
         # WS endpoint must come first
@@ -15,8 +11,11 @@ module Lanes
             ext.route(self)
         end
 
-        put Lanes.config.api_path + '/system-settings.json',
+        put Lanes.config.api_path + '/lanes/system-settings.json',
             &SystemSettings.update_handler
+
+        get Lanes.config.api_path + '/lanes/system-settings.json',
+            &SystemSettings.get_handler
 
         post Lanes.config.api_path + '/asset',
              &API::Handlers::Asset.saver

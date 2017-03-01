@@ -1,3 +1,7 @@
+import React from 'react';
+
+export {React};
+
 //=require_self
 //=require ./jasmine-react
 //=require ./TestObjects
@@ -5,5 +9,3 @@
 //=require ./Helpers
 //=require ./StubRouter
 //=require ./BeforeEach
-
-Lanes.Test = ( Lanes.Test || {} );

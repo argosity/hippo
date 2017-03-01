@@ -1,0 +1,14 @@
+@import "~grommet/scss/grommet-core/settings";
+
+#lanes-root {
+    .asset {
+        .drop-zone {
+            min-height: 200px;
+            padding: 0.5rem;
+            cursor: pointer;
+            &-active {
+                background-color: $selected-background-color;
+            }
+        }
+    }
+}

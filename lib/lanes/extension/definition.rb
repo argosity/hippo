@@ -43,7 +43,7 @@ module Lanes
                 self.before = extension
             end
 
-            def client_bootstrap_data(view)
+            def client_bootstrap_data
                 {}
             end
 

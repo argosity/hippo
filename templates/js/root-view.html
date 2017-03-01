@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
+        <title><%= Lanes::Extensions.controlling.title %></title>
+        <style>
+          .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            font-size: 2.8rem;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+            transition: opacity .5s ease-in-out;
+          }
+
+          .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.3);
+          }
+
+          .loading:after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -3em;
+            margin-left: -3em;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+          }
+
+          @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          .loading.complete {
+            opacity: 0;
+          }
+        </style>
+    </head>
+
+    <body>
+      <div class="loading">Loading&#8230;</div>
+      <div id="lanes-root">
+        <script type="text/json" id="bootstrap-data">
+          <%= Lanes::API.to_json(
+              Lanes::Extensions.client_bootstrap_data
+              ) %>
+        </script>
+      </div>
+    </body>
+</html>
