@@ -1,7 +1,7 @@
 import React        from 'react';
 import ReactDOM     from 'react-dom';
 import whenDomReady from 'when-dom-ready';
-
+import { delay } from 'lodash'
 import { AppContainer } from 'react-hot-loader';
 import { withAsyncComponents } from 'react-async-component';
 
@@ -31,7 +31,12 @@ whenDomReady().then(() => {
     if (Root) return;
     /* global document: true  */
     Root = document.getElementById('lanes-root');
-    Config.bootstrap(JSON.parse(document.getElementById('bootstrap-data').innerHTML))
+    Config.bootstrap(JSON.parse(document.getElementById('bootstrap-data').innerHTML));
     /* global document: false */
     renderer(Workspace);
+    const loading = document.querySelector('.loading');
+    if (loading) {
+        loading.classList.add('complete');
+        delay(() => loading.parentNode.removeChild(loading), 400);
+    }
 });
