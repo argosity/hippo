@@ -61,7 +61,8 @@ Gem::Specification.new do |spec|
     spec.add_dependency "resque",                 "~> 1.25"
     spec.add_dependency "sanitize",               "~> 3.0"
     spec.add_dependency "sass",                   "~> 3.4"
-    spec.add_dependency "webpack_driver",         "~> 0.1.1"
+    spec.add_dependency "webpack_driver",         "~> 0.2"
+    spec.add_dependency "knitter",                "~> 0.2"
 
 #    spec.add_dependency "sprockets",              "3.6.3"
 #    spec.add_dependency "sprockets-helpers",      "~> 1.2"
