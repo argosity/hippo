@@ -3,7 +3,7 @@ require_relative "minitest_assertions"
 require "active_record_mocks"
 
 require 'lanes/command'
-require 'lanes/workspace/extension'
+
 require 'mocha/mini_test'
 
 require "shrine/storage/memory"
