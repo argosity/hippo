@@ -1,5 +1,5 @@
 import React from 'react';
-import { toInteger } from 'lodash';
+import { isNil, toInteger } from 'lodash';
 import { observable, action, computed } from 'mobx';
 import { observer }   from 'mobx-react';
 
@@ -31,7 +31,7 @@ export default class UserManagement extends React.PureComponent {
     @action.bound
     onRowEdit(index) {
         let id = '';
-        if (index) {
+        if (!isNil(index)) {
             const row = this.query.results.rows[index];
             id = row[this.query.info.visibleIdentifierField.dataIndex];
         }
@@ -48,7 +48,7 @@ export default class UserManagement extends React.PureComponent {
     })
 
     @computed get editingRowIndex() {
-        if (!this.editingId) return undefined;
+        if (isNil(this.editingId)) return undefined;
         const field = this.query.info.visibleIdentifierField;
         const id = (field.isNumeric) ? toInteger(this.editingId) : this.editingId;
         return this.query.results.searchFieldValues(field, id).index;

@@ -83,10 +83,12 @@ export default class ArrayResult extends Result {
         const model = new this.query.src(this.rowAsObject(index)); // eslint-disable-line new-cap
         model.save = wrap(
             model.save, (orig, options) =>
-                orig.call(model, options).then((updated) => {
+                orig.call(model, options).then(() => {
                     const row = this.rows[index];
-                    this.query.info.loadableFields.forEach(f => (row[f.dataIndex] = updated[f.id]));
-                    return updated;
+                    this.query.info.loadableFields.forEach(
+                        f => (row[f.dataIndex] = model[f.id]),
+                    );
+                    return model;
                 }),
         );
         return model;
