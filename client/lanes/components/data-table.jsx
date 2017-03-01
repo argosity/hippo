@@ -5,19 +5,24 @@ import { observer } from 'mobx-react';
 import cn from 'classnames';
 import EditIcon from 'grommet/components/icons/base/Edit';
 import NextIcon from 'grommet/components/icons/base/CaretNext';
+import Button   from 'grommet/components/Button';
 
-import { Column, Table, AutoSizer, InfiniteLoader, defaultTableRowRenderer } from 'react-virtualized';
+import {
+    Column, Table, AutoSizer, InfiniteLoader, defaultTableRowRenderer
+} from 'react-virtualized';
 import 'react-virtualized/styles.css';
-
 import './data-table/table-styles.scss';
 
 import Query from '../models/query';
-import Row from './data-table/row';
 import HeaderCell from './data-table/header-cell';
 
-
 function renderEditTriangle({ rowIndex, columnData: { onEdit }}) {
-    return <NextIcon onClick={partial(onEdit, rowIndex)} />;
+    return (
+        <Button
+            plain icon={<NextIcon />}
+            onClick={partial(onEdit, rowIndex)}
+        />
+    );
 }
 
 
@@ -165,7 +170,6 @@ export default class DataTable extends React.Component {
 
     render() {
         const { query } = this;
-
         return (
             <div className="data-table">
                 <InfiniteLoader
