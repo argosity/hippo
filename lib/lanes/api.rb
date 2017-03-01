@@ -9,11 +9,9 @@ require_relative 'api/cable'
 require_relative 'api/sprockets_extension'
 require_relative 'api/helper_methods'
 require_relative 'api/pub_sub'
+require_relative 'api/handlers/user_session';
+require_relative 'api/handlers/asset';
 require_relative 'api/root'
-
-Lanes.config.get(:environment) do
-    require_relative("api/test_specs") unless Lanes.env.production?
-end
 
 module Lanes
 

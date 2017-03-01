@@ -131,6 +131,3 @@ module Lanes
 
     end
 end
-
-require_relative("../access/extension")
-require_relative("../workspace/extension")
