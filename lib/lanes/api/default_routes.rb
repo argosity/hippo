@@ -1,9 +1,5 @@
 require_relative "handlers/asset.rb"
 
-unless Lanes.env.production?
-    require_relative("test_specs")
-end
-
 module Lanes
     API.routes.draw do
         # WS endpoint must come first
