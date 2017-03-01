@@ -8,8 +8,8 @@ import DocumentIcon from 'grommet/components/icons/base/DocumentCloud';
 import Field        from 'grommet/components/FormField';
 import Dropzone     from 'react-dropzone';
 
-import { titleize }  from '../../lib/util';
-import { BaseModel } from '../../models/base';
+import { titleize }  from '../lib/util';
+import { BaseModel } from '../models/base';
 
 import './asset.scss';
 

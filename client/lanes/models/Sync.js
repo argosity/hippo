@@ -63,9 +63,9 @@ function peformMobxyRequest(mobx, options) {
     return perform(mobx.syncUrl, options)
         .then((json) => {
             extend(mobx, {
-                errors            : json.errors,
-                syncInProgress    : undefined,
-                lastServerMessage : json.message,
+                errors:            json.errors,
+                syncInProgress:    undefined,
+                lastServerMessage: json.message,
             });
 
             // sometimes the polyfill seems to set a `:success` property?
