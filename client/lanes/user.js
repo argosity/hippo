@@ -7,7 +7,7 @@ import {
 
 import Config from './config';
 
-@modelDecorator('lanes-access/user-session')
+@modelDecorator('lanes/user-session')
 class Session extends BaseModel {
     @identifier id;
     @field login;
@@ -18,7 +18,7 @@ class Session extends BaseModel {
 }
 
 
-@modelDecorator('lanes-access/user')
+@modelDecorator('lanes/user')
 export class User extends BaseModel {
 
     @identifier({ type: 'number' }) id;

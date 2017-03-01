@@ -8,4 +8,15 @@ Lanes::API.routes.for_extension 'lanes' do
         end
     end
 
+    post "user-sessions.json", &Lanes::API::Handlers::UserSession.create
+    get "user-sessions/test.json", &Lanes::API::Handlers::UserSession.check
+
+    delete "user-sessions/:id.json" do
+        wrap_reply do
+            { success: true, message: "Logout succeeded", data: {}, token: '' }
+        end
+    end
+
+    resources Lanes::User
+
 end
