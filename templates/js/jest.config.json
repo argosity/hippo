@@ -1,0 +1,14 @@
+{
+    "rootDir": "<%= lanes_root_path %>",
+    "preset": "<rootDir>/lib/js/jest.config.json",
+    "roots": [
+        "<%= extension_path %>/client",
+        "<%= extension_path %>/spec",
+        "<rootDir>/client"
+    ],
+    "modulePaths": [
+        "<%= extension_path %>/client",
+        "<rootDir>/client",
+        "<rootDir>/lib/js/jest/stubs"
+    ]
+}
