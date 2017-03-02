@@ -3,11 +3,6 @@
     "notify": false,
     "testMatch": [ "**/?(*.)(spec|test).js?(x)" ],
     "moduleFileExtensions": [ "js", "jsx", "json" ],
-    "setupTestFrameworkScriptFile": "<rootDir>/lib/js/jest/setup.js",
-    "modulePaths": [
-        "<rootDir>/client",
-        "<rootDir>/lib/js/jest/stubs"
-    ],
     "transform": {
         "^.+\\.jsx?$": "babel-jest"
     },

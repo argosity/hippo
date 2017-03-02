@@ -26,7 +26,7 @@ module Lanes
                 [ "Gemfile", "Rakefile", "Guardfile", "config.ru",
                   "config/database.yml"
                 ].each{ |f| template(f) }
-                [ ".eslintrc.js", ".babelrc", ".rubocop.yml"
+                [ ".eslintrc.js", ".rubocop.yml"
                 ].each{ |f| template("../#{f}", f) }
                 template "lib/namespace.rb", "lib/#{identifier}.rb"
                 template "lib/namespace/version.rb", "lib/#{identifier}/version.rb"
@@ -34,6 +34,7 @@ module Lanes
                 template "lib/namespace/base_model.rb", "lib/#{identifier}/model.rb"
                 template "config/screens.rb"
                 template "config/routes.rb"
+                template "config/webpack.config.js"
                 template "config/lanes.rb"
                 template "gitignore",".gitignore"
 
@@ -66,12 +67,12 @@ module Lanes
                 yarn = Knitter::Yarn.new(self.destination_root)
                 yarn.init
                 [
-                    'lanes-framework',
                     'jest',
-                    'babel-jest',
+                    'lanes-framework',
+                    'react-router',
                     'webpack-dev-server'
                 ].each do | package_name |
-                    say(sprintf('    %-20s…', package_name), nil, false)
+                    say(sprintf('    %-20s', package_name + '…'), nil, false)
                     package = Knitter::Package.new(package_name, yarn: yarn)
                     package.add
                     say 'done', :green

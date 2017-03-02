@@ -11,9 +11,7 @@ module Lanes
                 say "Launching testing server at http://localhost:8888/", :green
                 require 'lanes/api'
                 Lanes::Configuration.apply
-
-                API.webpack = Lanes::Webpack.server
-
+                API.webpack = Lanes::Webpack.new
                 threads = []
                 Thread.abort_on_exception = true
                 threads << Thread.new { API::Root.run! }
@@ -26,19 +24,14 @@ module Lanes
                     end
                     Lanes.logger.info "ok, ctrl-c trap registered"
                 end
-
                 API.webpack.start
-
                 sleep(1) # give webpack a bit of time to fail if it's going to
-
                 unless API.webpack.alive?
                     puts API.webpack.messages
                     exit 1
                 end
-
-                Guard.start
-
-                API.webpack.stop
+                Guard.start # will block until complete
+                API.webpack.stop # stop webpack after guard completes
             end
         end
     end

@@ -1,14 +1,19 @@
 {
-    "rootDir": "<%= lanes_root_path %>",
-    "preset": "<rootDir>/lib/js/jest.config.json",
+    "preset": "<%= lanes_root_path %>/lib/js/jest.config.json",
     "roots": [
         "<%= extension_path %>/client",
-        "<%= extension_path %>/spec",
-        "<rootDir>/client"
+        "<%= extension_path %>/spec"
     ],
+    "setupTestFrameworkScriptFile": "<%= lanes_root_path %>/lib/js/jest/setup.js",
+    "transform": {
+        "^.+\\.jsx?$": "babel-jest"
+    },
     "modulePaths": [
-        "<%= extension_path %>/client",
-        "<rootDir>/client",
-        "<rootDir>/lib/js/jest/stubs"
-    ]
+        <%= module_paths.map{|mod| "\"#{mod}\"" }.join(", ") %>,
+        "<%= lanes_root_path %>/lib/js/jest/stubs"
+    ],
+    "moduleNameMapper": {
+        "\\.(css|less|scss)$": "<rootDir>/lib/js/jest/styleMock.js",
+        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/lib/js/jest/fileMock.js"
+    }
 }

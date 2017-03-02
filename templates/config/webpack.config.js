@@ -1,25 +1,18 @@
-// Responsible for reporting status back to webpack-driver
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
-// const roots = process.env.LANES_EXT_ROOTS || './client';
-// const controlling_root = process.env.LANES_CONTROLLER_DIR;
-        // roots.split(',').concat([
-        //     'node_modules',
-        //     generated_dir,
-        // ]),
 
 const config = {
     entry: {
         lanes: [
             'react-hot-loader/patch',
-            'lanes/entry.js',
+            process.env.ENTRY,
         ],
     },
     output: {
         path: __dirname,
         publicPath: '/',
-        filename: 'lanes.js',
+        filename: `${process.env.EXTENSION_ID}/.js`,
     },
     resolve: {
         modules: process.env.LANES_MODULES.split(':'),
@@ -28,7 +21,26 @@ const config = {
     module: {
         rules: [
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-            { loader: 'babel-loader', test: /\.jsx?$/, exclude: /node_modules/ },
+            {
+                loader: 'babel-loader',
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                options: {
+                    plugins: [
+                        'react-hot-loader/babel',
+                        'babel-plugin-transform-decorators-legacy',
+                        'babel-plugin-transform-class-properties',
+                        'babel-plugin-transform-function-bind',
+                        'babel-plugin-transform-react-jsx',
+                        'babel-plugin-transform-runtime',
+                    ].map(require.resolve),
+                    presets: [
+                        [require.resolve('babel-preset-es2015'), { modules: false }],
+                        require.resolve('babel-preset-react'),
+                        require.resolve('babel-preset-stage-1'),
+                    ],
+                },
+            },
             { test: /\.scss$/,
                 use: [
                     'style-loader',
@@ -49,7 +61,6 @@ const config = {
             name: 'vendor', minChunks: Infinity, filename: '[name].[hash].js',
         }),
         new HtmlWebpackPlugin({
-            title: 'My App',
             filename: 'index.html',
             template: `${process.env.GENERATED_CONFIG_DIR}/root-view.tmpl.html`,
         }),
@@ -71,18 +82,19 @@ const config = {
         }],
         stats: {
             colors: true,
+            profile: true,
             hash: false,
             version: false,
             timings: false,
-            assets: false,
+            assets: true,
             chunks: false,
             modules: false,
-            reasons: false,
+            reasons: true,
             children: false,
-            source: false,
-            errors: false,
+            source: true,
+            errors: true,
             errorDetails: false,
-            warnings: false,
+            warnings: true,
             publicPath: false,
         },
     },
