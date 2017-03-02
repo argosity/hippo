@@ -1,10 +1,5 @@
 require 'guard/cli'
-require 'webpack_driver'
-require 'puma/cli'
-require 'guard/jest'
-#require 'lanes/api'
 require_relative '../webpack'
-require_relative 'jest_runner'
 
 module Lanes
     module Command

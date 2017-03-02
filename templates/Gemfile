@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # For development while Lanes is evolving track master branch
-gem "lanes", git: "https://github.com/argosity/lanes", branch: 'next-gen'
+gem "lanes", git: "https://github.com/argosity/lanes", branch: 'master'
 
 # gem "lanes", '<%= Lanes::VERSION %>'
 

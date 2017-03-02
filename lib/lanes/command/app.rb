@@ -65,7 +65,12 @@ module Lanes
                 say 'Installing node modules', :green
                 yarn = Knitter::Yarn.new(self.destination_root)
                 yarn.init
-                ['lanes-framework', 'jest', 'webpack-dev-server'].each do | package_name |
+                [
+                    'lanes-framework',
+                    'jest',
+                    'babel-jest',
+                    'webpack-dev-server'
+                ].each do | package_name |
                     say(sprintf('    %-20s…', package_name), nil, false)
                     package = Knitter::Package.new(package_name, yarn: yarn)
                     package.add

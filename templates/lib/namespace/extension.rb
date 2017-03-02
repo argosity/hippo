@@ -14,7 +14,7 @@ module <%= namespace %>
         # is returned from this method, it will be passed to
         # the setBootstrapData method in client/<%= identifier %>/Extension.coffee
         # when the app boots
-        def client_bootstrap_data(view)
+        def client_bootstrap_data
             nil
         end
     end
