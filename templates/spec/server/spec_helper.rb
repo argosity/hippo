@@ -1,4 +1,4 @@
-require_relative '../../lib/<%= namespace %>'
+require_relative '../../lib/<%= identifier %>'
 require 'lanes/spec_helper'
 
 
