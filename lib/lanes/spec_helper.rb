@@ -1,154 +1,88 @@
-require 'minitest/autorun'
 require 'rack/test'
 require 'lanes'
 require 'lanes/api'
 require 'hashie/mash'
 require 'active_record'
 require 'active_record/fixtures'
-require 'minitest/around/unit'
-require 'minitest/around/spec'
-require 'minitest/spec'
-require 'minitest/autorun'
-require 'mocha/mini_test'
 
 LANES_ENV = "test"
-I18n.enforce_available_locales = true
-Lanes::DB.establish_connection
-Lanes.logger = Logger.new(
-    File.open('log/test.log', File::WRONLY | File::APPEND | File::CREAT )
-)
-ActiveRecord::Base.logger = Lanes.logger
-ActiveSupport::Dependencies.mechanism = :require
-ActiveSupport.test_order = :random
 
-module Lanes
+RSpec.configure do |config|
 
-    class DummyUser
-        def can_read?(*args)
-            true
-        end
-        def can_write?(*args)
-            true
-        end
-        def can_delete?(*args)
-            true
-        end
+
+    # Use color in STDOUT
+    config.color = true
+
+
+    # rspec-expectations config goes here. You can use an alternate
+    # assertion/expectation library such as wrong or the stdlib/minitest
+    # assertions if you prefer.
+    config.expect_with :rspec do |expectations|
+        # This option will default to `true` in RSpec 4. It makes the `description`
+        # and `failure_message` of custom matchers include text for helper methods
+        # defined using `chain`, e.g.:
+        #     be_bigger_than(2).and_smaller_than(4).description
+        #     # => "be bigger than 2 and smaller than 4"
+        # ...rather than:
+        #     # => "be bigger than 2"
+        expectations.include_chain_clauses_in_custom_matcher_descriptions = true
     end
 
-    class TestCase < ActiveSupport::TestCase
-        include Lanes
-
-        include ActiveRecord::TestFixtures
-        self.fixture_path = Lanes::Extensions.controlling.root_path.join('spec','fixtures')
-
-        self.use_transactional_tests = true
-        fixtures :all
-
-        def admin
-            lanes_users(:admin)
-        end
-
-        extend MiniTest::Spec::DSL
-        register_spec_type self do |desc|
-            desc < Lanes::Model if desc.is_a? Class
-        end
-
+    # rspec-mocks config goes here. You can use an alternate test double
+    # library (such as bogus or mocha) by changing the `mock_with` option here.
+    config.mock_with :rspec do |mocks|
+        # Prevents you from mocking or stubbing a method that does not exist on
+        # a real object. This is generally recommended, and will default to
+        # `true` in RSpec 4.
+        mocks.verify_partial_doubles = true
     end
 
-    class ApiTestCase < TestCase
-        include Rack::Test::Methods
+    # The settings below are suggested to provide a good initial experience
+    # with RSpec, but feel free to customize to your heart's content.
+=begin
+  # These two settings work together to allow you to limit a spec run
+  # to individual examples or groups you care about by tagging them with
+  # `:focus` metadata. When nothing is tagged with `:focus`, all examples
+  # get run.
+  config.filter_run :focus
+  config.run_all_when_everything_filtered = true
 
-        teardown do
-            @current_user = nil
-        end
+  # Limits the available syntax to the non-monkey patched syntax that is
+  # recommended. For more details, see:
+  #   - http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax
+  #   - http://teaisaweso.me/blog/2013/05/27/rspecs-new-message-expectation-syntax/
+  #   - http://myronmars.to/n/dev-blog/2014/05/notable-changes-in-rspec-3#new__config_option_to_disable_rspeccore_monkey_patching
+  config.disable_monkey_patching!
 
-        def app
-            Lanes::API::Root.new
-        end
+  # This setting enables warnings. It's recommended, but in some cases may
+  # be too noisy due to issues in dependencies.
+  config.warnings = true
 
-        def json_body
-            Hashie::Mash.new Oj.load( last_response.body )
-        end
+  # Many RSpec users commonly either run the entire suite or an individual
+  # file, and it's useful to allow more verbose output when running an
+  # individual spec file.
+  if config.files_to_run.one?
+    # Use the documentation formatter for detailed output,
+    # unless a formatter has already been configured
+    # (e.g. via a command-line flag).
+    config.default_formatter = 'doc'
+  end
 
-        def json_data
-            json_body['data']
-        end
+  # Print the 10 slowest examples and example groups at the
+  # end of the spec run, to help surface which specs are running
+  # particularly slow.
+  config.profile_examples = 10
 
-        [ :delete, :get ].each do |name|
-            define_method(name) do |uri, params = {}, env = {}, &block|
-                session = env['rack.session'] ||= {}
-                session[:user_id] = @current_user.id if @current_user
-                params.stringify_keys!
-                super(uri, params, env, &block)
-            end
-        end
+  # Run specs in random order to surface order dependencies. If you find an
+  # order dependency and want to debug it, you can fix the order by providing
+  # the seed, which is printed after each run.
+  #     --seed 1234
+  config.order = :random
 
-        [ :put, :post, :patch].each do |name|
-            define_method(name) do |uri, params = {}, env = {}, &block|
-                session = env['rack.session'] ||= {}
-                session[:user_id] = @current_user.id if @current_user
-                params = Oj.dump(params, mode: :compat) if params.is_a?(Hash)
-                super(uri, params, env, &block)
-            end
-        end
-
-        def login!(user=admin)
-            @current_user = user
-        end
-
-        def assert_ok
-            assert last_response.ok?, "Request failed with #{last_response.status}"
-        end
-        def refute_ok
-            refute last_response.ok?, "Request succeeded with status #{last_response.status}, expected non-2XX"
-        end
-    end
+  # Seed global randomization in this process using the `--seed` CLI option.
+  # Setting this allows you to use `--seed` to deterministically reproduce
+  # test failures related to randomization by passing the same `--seed` value
+  # as the one that triggered the failure.
+  Kernel.srand config.seed
+=end
 end
-
-module MiniTest
-    module Assertions
-
-        def assert_logs_matching( regex, failure_message=nil, &block )
-            old_logger = Lanes.logger
-            begin
-                output = ""
-                Lanes.logger=Logger.new( StringIO.new(output) )
-                yield
-                assert_match( regex, output, failure_message )
-            ensure
-                Lanes.logger=old_logger
-            end
-        end
-
-
-        def assert_saves( model )
-            assert model.save, "#{model.class} failed to save: #{model.errors.full_messages.join(',')}"
-        end
-
-        def refute_saves( model, *errors )
-            refute model.save, "#{model.class} saved successfully when it should not have"
-            errors.each do |error|
-                if model.errors[error.to_sym].empty?
-                    raise MiniTest::Assertion, "expected #{model.class} to have an error on #{error}"
-                end
-            end
-
-        end
-
-        def assert_event_fires( klass, event, &block )
-            @event_results = []
-            klass.observe(event) do | *args |
-                @event_results = args
-            end
-            yield
-            raise MiniTest::Assertion, "Event #{event} was not fired" if @event_results.empty?
-        end
-
-        def last_event_results
-            @event_results
-        end
-    end
-end
-
-
-require_relative 'access/test_fixture_extensions'
