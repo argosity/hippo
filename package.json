@@ -1,6 +1,6 @@
 {
   "name": "lanes-framework",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "Lanes",
   "main": "index.js",
   "repository": "https://github.com/argosity/lanes",
