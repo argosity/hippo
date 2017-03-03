@@ -1,10 +1,19 @@
 require 'puma/control_cli'
 require 'resque/tasks'
 require_relative '../lanes'
+require_relative 'command/jest'
 
 desc "Run the puma server in development mode"
 task :dev do
     Puma::ControlCLI.new(['start']).run
+end
+
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec) do |t|
+      t.pattern = Dir.glob('spec/server/**/*_spec.rb')
+  end
+rescue LoadError
 end
 
 desc "Open an irb session configured with the Lanes environment"
@@ -52,4 +61,8 @@ namespace :assets do
         require_relative 'api/sprockets_extension'
         Lanes::API::SprocketsExtension.compile!
     end
+end
+
+task :test => [:spec] do
+    ::Lanes::Command::Jest.new.configure.single_run
 end

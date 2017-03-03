@@ -1,13 +1,7 @@
-require_relative "../lanes"
-# require 'guard/jasmine'
-require "guard/jest"
-require 'guard/minitest'
-require "net/http"
-require "uri"
-# require_relative "lanes_guard_plugin"
-
-# require_relative "hot_reload_plugin"
+require_relative '../lanes'
 require_relative 'command/jest'
+require 'guard/jest'
+require 'guard/rspec'
 
 module Lanes
     module GuardTasks
@@ -35,19 +29,19 @@ module Lanes
                 jest_cmd: './node_modules/.bin/jest',
                 config_file: ::Lanes::Command::Jest.new.configure.config_file
             )
-
             dsl.guard :jest, jest_options
 
 
-            minitest_options = {
-              all_on_start: false, test_folders: 'spec/server'
+            rspec_options = {
+                all_on_start: false,
+                cmd: 'bundle exec rspec'
             }
-            dsl.guard :minitest, minitest_options do
-                dsl.watch(%r{^spec/server/spec_helper\.rb}) { 'test' }
+            dsl.guard :rspec, rspec_options do
+#                dsl.watch(%r{^spec/server/spec_helper\.rb}) { 'spec' }
                 dsl.watch(%r{^spec/server/.*_spec\.rb})
-                dsl.watch(%r{^spec/fixtures/#{app_name}/(.+)s\.yml})   { |m| "spec/server/#{m[1]}_spec.rb" }
-                dsl.watch(%r{^lib/#{app_name}/(.+)\.rb})               { |m| "spec/server/#{m[1]}_spec.rb" }
-                matchers.server_matches.call if matchers.server_matches
+                # dsl.watch(%r{^spec/fixtures/#{app_name}/(.+)s\.yml})   { |m| "spec/server/#{m[1]}_spec.rb" }
+                # dsl.watch(%r{^lib/#{app_name}/(.+)\.rb})               { |m| "spec/server/#{m[1]}_spec.rb" }
+                # matchers.server_matches.call if matchers.server_matches
             end
 
         end

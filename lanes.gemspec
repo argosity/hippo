@@ -24,9 +24,9 @@ Gem::Specification.new do |spec|
 
     spec.required_ruby_version = ">= 2.0"
 
-    spec.add_dependency "activejob",              "~> 5.0"
-    spec.add_dependency "activerecord",           "~> 5.0"
-    spec.add_dependency "actioncable",            "~> 5.0"
+    spec.add_dependency "activejob",              "~> 5.0.2"
+    spec.add_dependency "activerecord",           "~> 5.0.2"
+    spec.add_dependency "actioncable",            "~> 5.0.2"
     spec.add_dependency "mail",                   "~> 2.6"
 
     spec.add_dependency "sinatra",                "~> 2.0.0.beta2"
@@ -43,14 +43,17 @@ Gem::Specification.new do |spec|
     spec.add_dependency "execjs",                 "~> 2.6"
     spec.add_dependency "fastimage",              "~> 2.0"
     spec.add_dependency "guard",                  "~> 2.13"
+
+    spec.add_dependency "rspec-rails",            "~> 3.5"
+
     spec.add_dependency "guard-jest",             "~> 0.1"
-    spec.add_dependency "guard-minitest",         "~> 2.3"
+    spec.add_dependency "guard-rspec",            "~> 4.7"
     spec.add_dependency "hashie",                 "~> 3.3"
 
     spec.add_dependency "jobba",                  "~> 1.4"
     spec.add_dependency "jwt",                    "~> 1.5"
     spec.add_dependency "mini_magick",            "~> 4.3.6"
-    spec.add_dependency "minitest-around",        "~> 0.2"
+
     spec.add_dependency "oj",                     "~> 2.1"
     spec.add_dependency "pg",                     "~> 0.8"
     spec.add_dependency "rake",                   "~> 12.0"
