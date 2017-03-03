@@ -36,6 +36,9 @@ module Lanes
                 template "config/screens.rb"
                 template "config/routes.rb"
                 template "config/webpack.config.js"
+                template "config/jest.config.json"
+                template "config/jest/babel-transform.js"
+                template "config/webpack.config.js"
                 template "config/lanes.rb"
                 template "gitignore",".gitignore"
 
