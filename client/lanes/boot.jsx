@@ -1,7 +1,7 @@
 import React        from 'react';
 import ReactDOM     from 'react-dom';
 import whenDomReady from 'when-dom-ready';
-import { delay } from 'lodash'
+import { delay } from 'lodash';
 import { AppContainer } from 'react-hot-loader';
 import { withAsyncComponents } from 'react-async-component';
 
