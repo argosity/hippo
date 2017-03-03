@@ -23,8 +23,9 @@ module Lanes
             end
 
             def create_files
-                [ "Gemfile", "Rakefile", "Guardfile", "config.ru",
-                  "config/database.yml"
+                [
+                    "Gemfile", "Rakefile", "Guardfile", "config.ru",
+                    ".babelrc", "config/database.yml"
                 ].each{ |f| template(f) }
                 [ ".eslintrc.js", ".rubocop.yml"
                 ].each{ |f| template("../#{f}", f) }
