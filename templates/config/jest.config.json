@@ -1,0 +1,14 @@
+{
+    "rootDir": "/Users/nas/code/show-maker",
+    "verbose": true,
+    "notify": false,
+    "testMatch": [ "**/?(*.)(spec|test).js?(x)" ],
+    "moduleFileExtensions": [ "js", "jsx", "json" ],
+    "setupTestFrameworkScriptFile": "<rootDir>/spec/client/setup.js",
+    "moduleNameMapper": {
+        "\\.(css|less|scss)$": "identity-obj-proxy"
+    },
+    "transform": {
+        "^.+\\.jsx?$": "<rootDir>/config/jest/babel-transform.js"
+    }
+}
