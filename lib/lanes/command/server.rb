@@ -1,6 +1,5 @@
 require 'guard/cli'
-require_relative '../webpack'
-
+require_relative '../guard_tasks'
 module Lanes
     module Command
 
@@ -11,7 +10,18 @@ module Lanes
                 say "Launching testing server at http://localhost:8888/", :green
                 require 'lanes/api'
                 Lanes::Configuration.apply
-                API.webpack = Lanes::Webpack.new
+
+                config = ClientConfig.new
+                config.invoke_all
+
+                API.webpack = Lanes::Command::Webpack.new
+                API.webpack.config = config
+                API.webpack.invoke_all# startup
+
+                ::Lanes::GuardTasks.client_config = config
+
+
+#                API.webpack.configure
                 threads = []
                 Thread.abort_on_exception = true
                 threads << Thread.new { API::Root.run! }
@@ -24,14 +34,13 @@ module Lanes
                     end
                     Lanes.logger.info "ok, ctrl-c trap registered"
                 end
-                API.webpack.start
                 sleep(1) # give webpack a bit of time to fail if it's going to
-                unless API.webpack.alive?
+                unless API.webpack.process.alive?
                     puts API.webpack.messages
                     exit 1
                 end
                 Guard.start # will block until complete
-                API.webpack.stop # stop webpack after guard completes
+                API.webpack.process.stop # stop webpack after guard completes
             end
         end
     end
