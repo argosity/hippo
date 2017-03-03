@@ -5,6 +5,7 @@ require 'guard/rspec'
 
 module Lanes
     module GuardTasks
+        mattr_accessor :client_config
 
         class CustomMatchers
             attr_reader :client_matches, :server_matches#, :hot_reload
@@ -23,14 +24,15 @@ module Lanes
             matchers = CustomMatchers.new
             yield matchers
 
+            config = client_config || ::Lanes::Command::Jest.new.configure.config
+
             jest_options = options.merge(
                 logger: Lanes.logger,
                 silent: false,
                 jest_cmd: './node_modules/.bin/jest',
-                config_file: ::Lanes::Command::Jest.new.configure.config_file
+                config_file: config.directory.join('jest.config.json')
             )
             dsl.guard :jest, jest_options
-
 
             rspec_options = {
                 all_on_start: false,

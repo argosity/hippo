@@ -31,6 +31,10 @@ module Lanes
         long_desc "start the Jest test server"
         register Command::Jest,  'jest', 'jest', 'Start the Jest test server for client code'
 
+        long_desc "start the webpack dev server"
+        register Command::Webpack, 'webpack', 'webpack', 'Start the Webpack Dev Server'
+
+        long_desc "start the guard test runner"
         register Command::Guard,  'guard', 'guard', 'Start the Guard server'
 
         long_desc Command.usage_from_file("db")

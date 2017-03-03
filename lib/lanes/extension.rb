@@ -17,13 +17,6 @@ module Lanes
                 end
             end
 
-            def asset_paths(controller, additional)
-                map { |ext| ext.root_path.join('client').to_s }.reverse + [
-                    controller.root_path.join('node_modules').to_s,
-                    additional
-                ]
-            end
-
             # lock the current controlling extension so that it can't
             # be changed by other extensions that are loaded later
             def lock_controlling!
