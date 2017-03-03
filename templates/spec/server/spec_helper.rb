@@ -1,16 +1,8 @@
 require_relative '../../lib/<%= namespace %>'
 require 'lanes/spec_helper'
 
-module <%= namespace %>
 
-    # Add more helper methods to be used by all tests here...
-
-    class TestCase < Lanes::TestCase
-        include <%= namespace %>
-    end
-
-    class ApiTestCase < Lanes::ApiTestCase
-        include <%= namespace %>
-    end
+# Configure RSpec to your liking
+RSpec.configure do |config|
 
 end
