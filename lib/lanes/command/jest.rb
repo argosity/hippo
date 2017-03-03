@@ -39,10 +39,13 @@ module Lanes
                 self
             end
 
+            def single_run
+                exec("$(npm bin)/jest --config #{config_file};")
+            end
+
             def start
                 say 'Starting Jest', :green
                 say Dir.pwd, :yellow
-                puts "$(npm bin)/jest --watch --config #{config_file};"
                 exec("$(npm bin)/jest --watch --config #{config_file};")
             end
         end
