@@ -3,8 +3,8 @@ import classnames from 'classnames';
 import { observer } from 'mobx-react';
 import { Grid } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
-
 import Screens from '../screens';
+import ScreenInstances from '../screens/instance';
 
 const ScreenView = observer((props) => {
     const { screen: Screen, ...rest } = props;
@@ -26,7 +26,7 @@ export default class Screen extends React.Component {
     componentDidMount() {
         const { screenId } = this.props.params;
         if (screenId) {
-            const definition = Screens.getDefinition(screenId);
+            const definition = Screens.all.get(screenId);
             if (definition) { definition.display(); }
         }
     }
@@ -40,7 +40,7 @@ export default class Screen extends React.Component {
                 align="stretch"
                 flex="grow"
             >
-                {Screens.displaying.map(s =>
+                {ScreenInstances.displaying.map(s =>
                     <ScreenView key={s.id} {...this.props.params} screen={s} />)}
             </Box>
 

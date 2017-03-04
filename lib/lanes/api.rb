@@ -11,6 +11,7 @@ require_relative 'api/helper_methods'
 require_relative 'api/pub_sub'
 require_relative 'api/handlers/user_session';
 require_relative 'api/handlers/asset';
+require_relative 'api/handlers/screens';
 require_relative 'api/root'
 
 module Lanes

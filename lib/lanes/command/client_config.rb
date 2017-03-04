@@ -28,14 +28,15 @@ module Lanes
                 @extension_path = controlling_extension.root_path
             end
 
-            def set_module_paths
-                @module_paths = Extensions.map { |e| e.root_path.join('client').to_s }.reverse + [
-                    controlling_extension.root_path.join('node_modules').to_s
-                ]
-            end
-
             def make_temp_dir
                 @directory = Pathname.new(Dir.mktmpdir)
+            end
+
+            def set_module_paths
+                @module_paths = Extensions.map { |e| e.root_path.join('client').to_s }.reverse + [
+                    controlling_extension.root_path.join('node_modules').to_s,
+                    directory.to_s
+                ]
             end
 
             def write_asset_files
@@ -46,6 +47,9 @@ module Lanes
 
                 template('root-view.html',
                          directory.join('root-view.tmpl.html'), verbose: false)
+
+                template('screens.js',
+                         directory.join('lanes/screen-definitions.js'), verbose: false)
 
                 # set the mtime to the past, otherwise Webpack will build repeatedly for a second
                 FileUtils.touch directory.join('index.html').to_s, mtime: Time.now - 1.minute

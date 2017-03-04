@@ -78,7 +78,7 @@ const config = {
         historyApiFallback: true,
         proxy: [{
             context: '/api',
-            target: 'http://localhost:4567',
+            target: 'http://localhost:9292',
         }],
         stats: {
             colors: true,

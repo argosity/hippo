@@ -15,14 +15,17 @@ module Lanes
             end
 
             def define(id)
-                definition = ( DEFINITIONS[id] ||= Definition.new(id, @extension_id) )
+                definition = (DEFINITIONS[id] ||= Definition.new(id, @extension_id))
                 yield definition
             end
         end
 
         class << self
+
+            include Enumerable
+
             def [](config)
-                if DEFINITIONS.has_key?(config)
+                if DEFINITIONS.key?(config)
                     DEFINITIONS[config]
                 else
                     nil
@@ -49,12 +52,9 @@ module Lanes
             end
 
             def config_file
-                Lanes::Extensions.controlling.root_path.join("config","screens.rb")
+                Lanes::Extensions.controlling.root_path.join("config", "screens.rb")
             end
 
-            def uncache_file_on_update(asset)
-                asset.depend_on(config_file) if config_file.exist?
-            end
         end
 
 
@@ -96,6 +96,10 @@ module Lanes
                 @extension    = extension_id.underscore.camelize
             end
 
+            def group
+                GROUPS[@group_id]
+            end
+
             def has_file_matching?(pattern)
                 Pathname.glob(root_path.join(pattern)).any?
             end
@@ -104,6 +108,11 @@ module Lanes
                 ext = Lanes::Extensions.for_identifier(@extension_id)
                 raise "Unable to find extension '#{@extension_id}' for screen group" unless ext
                 ext.root_path.join('client', url_prefix, identifier)
+            end
+
+            def model
+                ext = Lanes::Extensions.for_identifier(@extension_id)
+                (@extension_id.camelize + '::' + @model_class).constantize
             end
 
             def as_json

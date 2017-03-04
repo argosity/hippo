@@ -1,5 +1,5 @@
 import { autorun, observable } from 'mobx';
-import { get, delay, extend, filter } from 'lodash';
+import { get, delay, extend, filter, map, uniq } from 'lodash';
 
 import { classify, logger } from '../lib/util';
 import Config from '../config'
@@ -16,13 +16,12 @@ import Group from './group';
 import { createAsyncComponent } from 'react-async-component';
 
 export { createAsyncComponent };
+import Registry from './index';
 
-const All = observable.map();
+import Groups from './group';
 
 @modelDecorator('lanes/screen/definition')
 export default class ScreenDefinition extends BaseModel {
-
-    static all = All;
 
     @identifier({ type: 'string' }) id;
     @session title;
@@ -37,17 +36,17 @@ export default class ScreenDefinition extends BaseModel {
     @session model;
     @session({ type: 'object' }) component;
     @session asset;
-//    @session({ type: 'array' }) assets;
+
     @session url;
 
     static register(json, comp) {
-        let screen = All.get(json.id);
+        let screen = Registry.all.get(json.id);
         if (screen) {
             screen.update(json);
         } else {
             screen = new ScreenDefinition(json);
-            All.set(screen.id, screen);
-            const group = Group.forId(screen.group_id);
+            Registry.all.set(screen.id, screen);
+            const group = Groups.forId(screen.group_id);
             if (group) { group.screens.push(screen); }
         }
         screen.component = comp;
