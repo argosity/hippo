@@ -34,6 +34,9 @@ module Lanes
         long_desc "start the webpack dev server"
         register Command::Webpack, 'webpack', 'webpack', 'Start the Webpack Dev Server'
 
+        long_desc "start the Puma server"
+        register Command::Puma, 'puma', 'puma', 'Start the Puma(Sinata) Server'
+
         long_desc "start the guard test runner"
         register Command::Guard,  'guard', 'guard', 'Start the Guard server'
 

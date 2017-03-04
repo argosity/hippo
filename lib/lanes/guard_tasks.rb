@@ -1,5 +1,6 @@
 require_relative '../lanes'
 require_relative 'command/jest'
+require_relative 'reloadable_sinatra.rb'
 require 'guard/jest'
 require 'guard/rspec'
 
@@ -8,7 +9,7 @@ module Lanes
         mattr_accessor :client_config
 
         class CustomMatchers
-            attr_reader :client_matches, :server_matches#, :hot_reload
+            attr_reader :client_matches, :server_matches
 
             def client(&block)
                 @client_matches = block
@@ -46,6 +47,10 @@ module Lanes
                 # matchers.server_matches.call if matchers.server_matches
             end
 
+            dsl.guard :reloadable_sinatra do
+                dsl.watch(%r{^lib/.*\.rb})
+
+            end
         end
 
     end
