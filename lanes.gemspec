@@ -29,9 +29,9 @@ Gem::Specification.new do |spec|
     spec.add_dependency "actioncable",            "~> 5.0.2"
     spec.add_dependency "mail",                   "~> 2.6"
 
-    spec.add_dependency "sinatra",                "~> 2.0.0.beta2"
+    spec.add_dependency "sinatra",                "~> 2.0.0.rc1"
     spec.add_dependency "rack",                   "~> 2.0"
-    spec.add_dependency "rack-protection",        "~> 2.0.0.beta2"
+    spec.add_dependency "rack-protection",        "~> 2.0.0.rc1"
 
     spec.add_dependency "rack-cors",              "~> 0.4"
     spec.add_dependency "rack-test",              "~> 0.6"
