@@ -41,6 +41,8 @@ module Lanes
                 template "config/webpack.config.js"
                 template "config/lanes.rb"
                 template "gitignore",".gitignore"
+                template "spec/client/setup.js"
+                template "spec/server/spec_helper.rb"
 
                 create_file "log/.gitkeep",""
                 create_file "tmp/.gitkeep",""
@@ -59,12 +61,6 @@ module Lanes
                 template "client/styles.scss",      "#{client_dir}/styles.scss"
             end
 
-            def create_spec_helpers
-                template "spec/client/setup.js",
-                         "spec/client/setup.js"
-                template "spec/server/spec_helper.rb",
-                         "spec/server/spec_helper.rb"
-            end
 
             def knitterize
                 say 'Installing node modules', :green
