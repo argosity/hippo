@@ -1,7 +1,6 @@
 require 'forwardable'
 require 'fileutils'
 require 'pathname'
-require 'erb'
 
 module Lanes
 
@@ -16,7 +15,7 @@ module Lanes
 
             attr_reader :wpd_config
 
-            class_option :wait, :type => :boolean, default: false,
+            class_option :wait, :type => :boolean, default: true,
                          desc: "Whether to keep running and wait for exit"
 
             def make_config

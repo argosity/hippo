@@ -30,6 +30,6 @@ module Lanes
 
     end
 
-    API.set_root_view :lanes_root_view
+    # API.set_root_view :lanes_root_view
 
 end

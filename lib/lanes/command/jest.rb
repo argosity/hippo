@@ -1,11 +1,7 @@
-require 'guard/cli'
-require 'webpack_driver'
-require 'puma/cli'
-require 'guard/jest'
 require_relative './client_config'
 require_relative '../extension'
 require_relative '../command'
-require 'irb'
+
 module Lanes
     module Command
 
