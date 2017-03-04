@@ -1,10 +1,10 @@
 require_relative 'spec_helper'
 
-class <%= class_name %>Spec < <%= namespace %>::TestCase
+describe <%= class_name %> do
 
     it "can be instantiated" do
         model = <%= class_name %>.new
-        model.must_be_instance_of(<%= class_name %>)
+        expect( model ).to be_an(<%= class_name %>)
     end
 
 end
