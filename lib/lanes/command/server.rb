@@ -21,17 +21,11 @@ module Lanes
 
                 ::Lanes::GuardTasks.client_config = config
 
-
                 # threads = []
                 # Thread.abort_on_exception = true
                 # threads << Thread.new { API::Root.run! }
                 # threads << Thread.new do
                 #     sleep 1 until API::Root.running?
-                #     trap("INT") do
-                #         Lanes.logger.warn("trapped in subthread")
-                #         API.webpack.stop!
-                #         exit
-                #     end
                 #     Lanes.logger.info "ok, ctrl-c trap registered"
                 # end
                 sleep(1) # give webpack a bit of time to fail if it's going to

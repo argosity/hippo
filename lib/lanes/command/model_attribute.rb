@@ -13,7 +13,8 @@ module Lanes
       attr_writer   :index_name
 
       class << self
-        def parse(column_definition)
+          def parse(column_definition)
+
           name, type, has_index = column_definition.split(':')
 
           # if user provided "name:index" instead of "name:string:index"
@@ -63,6 +64,10 @@ module Lanes
         @has_index      = INDEX_OPTIONS.include?(index_type)
         @has_uniq_index = UNIQ_INDEX_OPTIONS.include?(index_type)
         @attr_options   = attr_options
+      end
+
+      def decorator
+          name == 'id' ? 'identifier' : 'field'
       end
 
       def field_type

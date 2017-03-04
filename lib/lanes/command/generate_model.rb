@@ -38,10 +38,10 @@ module Lanes
 
             def create_client
                 self.fields.unshift ModelAttribute.parse("id:integer")
-                template "client/models/Model.coffee",
-                         "#{client_dir}/models/#{class_name}.coffee"
-                template "spec/client/models/ModelSpec.coffee",
-                         "#{spec_dir}/models/#{class_name}Spec.coffee"
+                template "client/models/model.js",
+                         "#{client_dir}/models/#{file_name}.js"
+                template "spec/client/models/model.spec.js",
+                         "#{spec_dir}/models/#{file_name}.spec.js"
             end
 
             def add_route
