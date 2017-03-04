@@ -39,11 +39,11 @@ module Lanes
                 return false if current_user.nil?
                 case request.request_method
                 when 'GET'
-                    klass.can_read_attributes?(request.params,current_user)
-                when 'POST','PATCH','PUT'
-                    klass.can_write_attributes?(request.params,current_user)
+                    klass.can_read_attributes?(request.params, current_user)
+                when 'POST', 'PATCH', 'PUT'
+                    klass.can_write_attributes?(request.params, current_user)
                 when 'DELETE'
-                    klass.can_delete_attributes?(request.params,current_user)
+                    klass.can_delete_attributes?(request.params, current_user)
                 else
                     false
                 end

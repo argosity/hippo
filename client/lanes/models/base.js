@@ -24,30 +24,6 @@ export {
     field, session, identifier,
 } from './decorators';
 
-// const ModelsMap = new Map();
-
-// lookupModelUsing((propertyName, propertyOptions = {}) =>
-//     ModelsMap[propertyOptions.className] ||
-//                  ModelsMap[capitalize(propertyName)] ||
-//                  ModelsMap[capitalize(singular(propertyName))],
-// );
-
-// rememberModelUsing((klass) => {
-//     invariant(
-//         klass.identifiedBy,
-//         `${klass.name} lacks a static identifiedBy property, use model decorator to auto-set it`,
-//     );
-//     ModelsMap[klass.identifiedBy] = klass;
-// });
-
-// const REPLACEABLE_PROP_TYPES = {
-//     hasMany: true, array: true,
-// };
-
-// function propIsReplacable(prop) {
-//     return !!REPLACEABLE_PROP_TYPES[prop.type] || REPLACEABLE_PROP_TYPES[get(prop, 'options.type')];
-// }
-
 export {
     observable, computed,
 };
@@ -56,14 +32,6 @@ export class BaseModel {
     static findDerived(name) {
         return findModel(name);
     }
-
-    // static get replaceableKeys() {
-    //     const replaceable = [];
-    //     this.$schema.forEach((prop, name) => {
-    //         if (propIsReplacable(prop)) { replaceable.push(name); }
-    //     });
-    //     return replaceable;
-    // }
 
     static get assignableKeys() {
         return this.$schema.keys();

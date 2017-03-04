@@ -20,7 +20,7 @@ Lanes::Screen.for_extension 'lanes' do | screens |
         screen.description = "Add/Remove/Modify User Accounts"
         screen.icon        = "group"
         screen.group_id    = "system-settings"
-        screen.model_class = "User"
+        screen.model_class = "SystemSettings"
         screen.view_class  = "UserManagement"
         screen.asset       = 'lanes/access/screens/user-management'
     end
@@ -30,7 +30,7 @@ Lanes::Screen.for_extension 'lanes' do | screens |
         screen.description = "Update System Settings"
         screen.icon        = "cogs"
         screen.group_id    = "system-settings"
-        screen.model_class = "User"
+        screen.model_class = "SystemSettings"
         screen.asset       = 'lanes/screens/system-settings'
     end
 

@@ -6,10 +6,11 @@ module Lanes
             end
 
             def lanes_javascript_tags
-                assets = API.webpack.assets.map do | k |
-                    "<script src=\"http://localhost:#{API.webpack.port}/#{k}\"></script>"
-                end
-                assets.join("\n")
+                []
+                # assets = API.webpack.assets.map do | k |
+                #     "<script src=\"http://localhost:#{API.webpack.port}/#{k}\"></script>"
+                # end
+                # assets.join("\n")
 
                 # "<script src=\"http://localhost:#{API.webpack.port}/lanes.js\"></script>"
                 # javascript_tag('lanes/vendor') + "\n" + javascript_tag('lanes')
