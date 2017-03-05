@@ -1,13 +1,13 @@
 import { observable, action, computed, extendShallowObservable, intercept, observer } from 'mobx';
 import invariant from 'invariant';
 import { extend, each, isArray } from 'lodash';
-import { buildCollection } from 'mobx-decorated-models';
+import { createCollection } from 'mobx-decorated-models';
 
 import Sync from './sync';
 
 function extendAry(modelClass, models = [], options) {
     invariant(isArray(models), 'models must be an array');
-    const ary = buildCollection(extend({ model: modelClass }, options));
+    const ary = createCollection(extend({ model: modelClass }, options));
 
     if (models.length) {
         ary.replace(models);
