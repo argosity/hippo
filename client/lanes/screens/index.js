@@ -32,7 +32,7 @@ export default Screens;
 
 let previousLoggedIn = null;
 autorun(() => {
-    if (user.isLoggedIn !== previousLoggedIn){
+    if (user.isLoggedIn !== previousLoggedIn) {
         previousLoggedIn = user.isLoggedIn;
         Screens.refresh();
     }

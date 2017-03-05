@@ -21,7 +21,7 @@ export default class ScreensGroup extends BaseModel {
     @session({ type: 'array' }) screens;
 
     static forId(groupId) {
-        return All.find((g)=> g.id === groupId);
+        return All.find(g=> g.id === groupId);
     }
     static register(json) {
         let group = this.forId(json.id);
@@ -34,18 +34,4 @@ export default class ScreensGroup extends BaseModel {
         return group;
     }
 
-    // constructor() {
-    //     super();
-    // }
-
-    // @computed get screens() {
-
-    //     // return this.cache || (this.cache = new Lanes.Models.SubCollection( Lanes.Screens.Definitions.all, {
-    //     //     filter: screen => {
-    //     //         return (screen.group_id === this.id) &&
-    //     //             (!screen.model_type || Lanes.current_user.hasAccess(screen.access, screen.model_type));
-    //     //     },
-    //     //     watched: ['group_id']
-    //     // }));
-    // }
 }
