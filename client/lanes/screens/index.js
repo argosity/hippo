@@ -1,5 +1,5 @@
 import { observable, autorun } from 'mobx';
-import { map, uniq } from 'lodash';
+import { map, uniq, compact } from 'lodash';
 import Group from './group';
 import Config from '../config';
 import Sync from '../models/sync';
@@ -15,7 +15,7 @@ const Screens = observable({
     groups: observable.map(),
 
     get activeGroups() {
-        return uniq(map(this.active, s => Group.forId(s.group_id)));
+        return uniq(compact(map(this.active, s => Group.forId(s.group_id))));
     },
 
     refresh() {
