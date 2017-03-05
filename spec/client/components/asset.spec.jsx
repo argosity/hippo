@@ -4,7 +4,7 @@ import { Col } from 'react-flexbox-grid';
 import Asset from 'lanes/components/asset';
 
 import { TestImage } from '../test-models';
-import { Snapshot } from '../test-utils';
+import { Snapshot } from 'lanes/testing/screens';
 
 describe("Asset Component", () => {
     it('renders and matches snapshot', () => {

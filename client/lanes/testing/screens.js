@@ -1,6 +1,16 @@
 import React from 'react';
 import SnapShot   from 'react-test-renderer';
 
+import Screens from 'lanes/screens';
+import ScreenDefinitions from 'lanes/screen-definitions';
+
+export { Screens, ScreenDefinitions };
+
+export function getScreenInstance(screenId) {
+    return Screens.all.get(screenId).display();
+}
+
+
 class TestRouter {
     constructor() {
         Object.assign(this, {

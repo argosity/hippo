@@ -5,6 +5,6 @@
 #     group.icon        = "heart"
 # end
 
-Lanes::Screen.for_extension '<%= namespace %>' do | screens |
+Lanes::Screen.for_extension '<%= identifier %>' do | screens |
 
 end

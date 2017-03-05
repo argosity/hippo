@@ -65,6 +65,7 @@ module Lanes
             attr_accessor_with_default :title
             attr_accessor_with_default :description
             attr_accessor_with_default :icon
+            attr_accessor_with_default :order
 
             def to_json
                 Oj.dump({
@@ -115,6 +116,10 @@ module Lanes
                 (@extension_id.camelize + '::' + @model_class).constantize
             end
 
+            def asset_path
+                (asset && asset =~ /\//) ? asset : "#{@extension_id}/screens/#{asset || identifier}"
+            end
+
             def as_json
                 {
                     id:    identifier,
@@ -126,7 +131,7 @@ module Lanes
                     group_id: group_id,
                     extension: extension,
                     description: description,
-                    asset: asset
+                    asset: asset_path
                 }
             end
 

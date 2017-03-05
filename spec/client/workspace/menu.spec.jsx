@@ -6,7 +6,7 @@ import Menu       from 'lanes/workspace/menu';
 import MenuGroup  from 'lanes/workspace/menu-group';
 import MenuOption from 'lanes/workspace/menu-option';
 
-import { Snapshot } from '../test-utils';
+import { Snapshot } from 'lanes/testing/screens';
 import { getTestScreen } from '../test-models';
 
 describe('Workspace Menu', () => {

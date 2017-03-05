@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Snapshot } from '../test-utils';
+import { Snapshot } from 'lanes/testing/screens';
 
 import Settings from 'lanes/screens/system-settings';
 import Instance from 'lanes/screens/instance';

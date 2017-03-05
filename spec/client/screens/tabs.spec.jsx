@@ -5,7 +5,7 @@ import Tabs, { ScreenTab } from 'lanes/workspace/tabs';
 import Instance    from 'lanes/screens/instance';
 
 import { getTestScreen } from '../test-models';
-import { Context, Snapshot } from '../test-utils';
+import { Context, Snapshot } from 'lanes/testing/screens';
 
 const addTab = () =>
     new Instance({ definition: getTestScreen() });
