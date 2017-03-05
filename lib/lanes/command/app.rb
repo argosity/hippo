@@ -27,7 +27,8 @@ module Lanes
                     "Gemfile", "Rakefile", "Guardfile", "config.ru",
                     ".babelrc", "config/database.yml"
                 ].each{ |f| template(f) }
-                [ ".eslintrc.js", ".rubocop.yml"
+                [
+                    ".eslintrc.js", ".rubocop.yml", "spec/.eslintrc.js"
                 ].each{ |f| template("../#{f}", f) }
                 template "lib/namespace.rb", "lib/#{identifier}.rb"
                 template "lib/namespace/version.rb", "lib/#{identifier}/version.rb"
