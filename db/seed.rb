@@ -1,5 +1,7 @@
 module Lanes
-    module Access
+
+    module DBSeed
+
         user = Lanes::User.where(login: 'admin').first
         if user.nil?
             user = Lanes::User.create!(name: "Admin", email: "admin@test.com",
@@ -8,4 +10,5 @@ module Lanes
 
         end
     end
+
 end
