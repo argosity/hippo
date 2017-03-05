@@ -14,7 +14,7 @@ module AppyApp
         # is returned from this method, it will be passed to
         # the setBootstrapData method in client/appy-app/Extension.coffee
         # when the app boots
-        def client_bootstrap_data(view)
+        def client_bootstrap_data
             nil
         end
     end

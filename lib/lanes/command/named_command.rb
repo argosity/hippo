@@ -19,7 +19,7 @@ module Lanes
 
             def set_variables
                 @class_name = name.underscore.camelize
-                @spec_dir   = "spec/#{identifier}"
+                @spec_dir   = "spec/client"
                 @client_dir = "client/#{identifier}"
             end
 

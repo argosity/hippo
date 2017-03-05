@@ -2,9 +2,10 @@ development:
   adapter: postgresql
   database: appy-app_dev
   host: /tmp
-  pool:  <%= ENV["DB_POOL"] || 12 %>
+  pool:  5
 
 test:
   adapter: postgresql
   database: appy-app_test
   host: /tmp
+  pool:  5

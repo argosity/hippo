@@ -1,10 +1,10 @@
 require_relative 'spec_helper'
 
-class TestTestSpec < AppyApp::TestCase
+describe appy-app::TestTest do
 
     it "can be instantiated" do
-        model = TestTest.new
-        model.must_be_instance_of(TestTest)
+        model = appy-app::TestTest.new
+        expect( model ).to be_an(appy-app::TestTest)
     end
 
 end

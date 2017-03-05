@@ -1,26 +1,16 @@
 import React from 'react';
-import {Row, Col} from 'react-flexbox-grid';
-import { isNil, forIn, get, isEmpty, negate } from 'lodash';
-import Formous from 'formous';
+import { Row } from 'react-flexbox-grid';
+import { isNil, forIn, get } from 'lodash';
+
 import { observer }   from 'mobx-react';
 import { action, observable, computed } from 'mobx';
 
-import FormField from 'grommet/components/FormField';
-import TextInput from 'grommet/components/TextInput';
-
-import Paragraph from 'grommet/components/Paragraph';
 import Button    from 'grommet/components/Button';
-
-import Columns from 'grommet/components/Columns';
-import Warning from 'lanes/components/warning-notification'
+import Warning from 'lanes/components/warning-notification';
 import Field from 'lanes/components/form-field';
-
-import Box from 'grommet/components/Box';
 
 import { WithValidatedFields, validEmail, nonBlank, validation } from 'lanes/lib/form-validation';
 import Query from 'lanes/models/query';
-import { User } from 'lanes/user';
-
 
 
 @observer

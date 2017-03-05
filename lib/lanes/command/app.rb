@@ -11,6 +11,8 @@ module Lanes
             class_option  :title,     type: :string
             attr_reader   :title
 
+            class_option :packages, type: :boolean, default: true, desc: "install npm packages"
+
             def load_namespace # override
                 @namespace  = name.underscore.camelize
                 @identifier = @namespace.underscore.dasherize
@@ -28,7 +30,7 @@ module Lanes
                     ".babelrc", "config/database.yml"
                 ].each{ |f| template(f) }
                 [
-                    ".eslintrc.js", ".rubocop.yml", "spec/.eslintrc.js"
+                    ".eslintrc.js", ".rubocop.yml", "spec/client/.eslintrc.js"
                 ].each{ |f| template("../#{f}", f) }
                 template "lib/namespace.rb", "lib/#{identifier}.rb"
                 template "lib/namespace/version.rb", "lib/#{identifier}/version.rb"
@@ -63,9 +65,10 @@ module Lanes
 
 
             def knitterize
-                say 'Installing node modules', :green
                 yarn = Knitter::Yarn.new(self.destination_root)
                 yarn.init
+                return unless options[:packages]
+                say 'Installing node modules', :green
                 [
                     'jest',
                     'lanes-framework',

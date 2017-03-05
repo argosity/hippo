@@ -5,7 +5,7 @@
 #     group.icon        = "heart"
 # end
 
-Lanes::Screen.for_extension 'AppyApp' do | screens |
+Lanes::Screen.for_extension 'appy-app' do | screens |
     screens.define "ready-set-go" do | screen |
         screen.title       = "Ready Set Go"
         screen.description = ""
@@ -13,10 +13,7 @@ Lanes::Screen.for_extension 'AppyApp' do | screens |
         screen.group_id    = ""
         screen.model_class = ""
         screen.view_class  = "ReadySetGo"
-        # screen.model_access = "write" # defaults to "read"
-        # Can optionally explicity set files to be included
-        # screen.js          = "ready-set-go.js"
-        # screen.css         = "ready-set-go.css"
+        screen.asset       = "ready-set-go"
     end
 
 end

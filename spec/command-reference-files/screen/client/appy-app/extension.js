@@ -1,7 +1,7 @@
 // This is the client-side version of AppyApp::Extension
-import { BaseModel, modelDecorator, identifier } from './models/base';
+import { BaseModel, identifiedBy, identifier } from './models/base';
 
-@modelDecorator('extensions/appy-app');
+@identifiedBy('extensions/appy-app');
 class AppyAppExtension extends BaseModel {
 
     // must match the server-side identier in config/screens.rb

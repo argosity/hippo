@@ -5,6 +5,6 @@
 #     group.icon        = "heart"
 # end
 
-Lanes::Screen.for_extension 'AppyApp' do | screens |
+Lanes::Screen.for_extension 'appy-app' do | screens |
 
 end

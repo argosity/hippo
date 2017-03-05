@@ -1,19 +1,6 @@
-//=require ./models/Base
-//=require ./components/Base
-//=require_tree ./models
-//=require_tree ./components
-//=require ./screens/Base
-//=require ./Extension
-
 /*
- Files located in the above directories are part of the default
- Javascript build and are downloaded to the client on the initial
- request.
+  This is the main entry point for your application
+  By default it simply imports the standard lanes boot file
+*/
 
- Accordingly, only essential files should be included here. Code that
- relates to a screen should be placed in the "screens" directory,
- where it will be loaded dynamically when the screen is displayed.
-
- Alternatively, feel free to modify the require statements above to
- only include the paths you need.
- */
+import 'lanes/boot';
