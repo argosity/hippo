@@ -1,7 +1,7 @@
 import { observable, autorun } from 'mobx';
 import { extend, get, find } from 'lodash';
 import {
-    BaseModel, modelDecorator, session,
+    BaseModel, identifiedBy, session,
     belongsTo, identifier, computed,
 } from '../models/base';
 
@@ -39,7 +39,7 @@ class InstanceCollection {
 const displaying = new InstanceCollection();
 export { displaying };
 
-@modelDecorator('lanes/screen-view')
+@identifiedBy('lanes/screen-view')
 export default class Instance extends BaseModel {
 
     static get displaying() {

@@ -7,7 +7,7 @@ import { getDefaultModelSchema } from 'serializr';
 import { action, computed, observable as mobxObservable, intercept } from 'mobx';
 
 import {
-    modelDecorator as mobxModelDecorator,
+    identifiedBy as mobxModelDecorator,
     field as mobxField,
     session as mobxSession,
     identifier as mobxIdentifier,

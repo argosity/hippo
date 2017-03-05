@@ -35,7 +35,7 @@ module Lanes
                 wpd_config.environment.merge!(
                     EXTENSION_ID: config.controlling_extension.identifier,
                     LANES_MODULES: config.module_paths.join(':'),
-                    ENTRY: 'show-maker/index.js',
+                    ENTRY: "#{config.controlling_extension.identifier}/index.js",
                     GENERATED_CONFIG_DIR: config.directory.to_s
                 )
 

@@ -1,11 +1,11 @@
 import { isNil, get, includes, extend, pick } from 'lodash';
 import { titleize } from '../../lib/util';
 import {
-    BaseModel, modelDecorator, field, session,
+    BaseModel, identifiedBy, field, session,
     belongsTo, hasMany, identifier, computed, observable,
 } from '../base';
 
-@modelDecorator('lanes/query/field')
+@identifiedBy('lanes/query/field')
 export default class Field extends BaseModel {
 
     @identifier({ type: 'string' }) id;

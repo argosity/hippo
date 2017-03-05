@@ -1,11 +1,11 @@
 import {
-    BaseModel, modelDecorator, session,
+    BaseModel, identifiedBy, session,
     belongsTo, identifier,
 } from '../base';
 
 import Types from './types';
 
-@modelDecorator('lanes/query/operators/operator')
+@identifiedBy('lanes/query/operators/operator')
 export default class Operator extends BaseModel {
 
     @identifier({ type: 'string' }) id;
@@ -24,7 +24,7 @@ export default class Operator extends BaseModel {
 }
 
 
-// @modelDecorator('lanes/query/operators')
+// @identifiedBy('lanes/query/operators')
 // export default class Operators extends BaseModel {
 
 //     @session({ type: 'array' }) operators;

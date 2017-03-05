@@ -1,12 +1,12 @@
 import {
-    BaseModel, modelDecorator, identifier, belongsTo, field, computed,
+    BaseModel, identifiedBy, identifier, belongsTo, field, computed,
 } from './base';
 
 import { merge } from 'lodash';
 import Sync from './sync';
 import Asset from './asset';
 
-@modelDecorator('lanes/system-settings')
+@identifiedBy('lanes/system-settings')
 export default class SystemSettings extends BaseModel {
 
     @identifier id;

@@ -1,5 +1,4 @@
-Lanes::API.routes.draw do
-
+Lanes::API.routes.for_extension '<%= identifier %>' do
 
 
 end

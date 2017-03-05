@@ -1,13 +1,13 @@
 import { observable } from 'mobx';
 import { get } from 'lodash';
 import {
-    BaseModel, modelDecorator, session,
+    BaseModel, identifiedBy, session,
     belongsTo, identifier, computed,
 } from '../models/base';
 
 const All = observable.array();
 
-@modelDecorator('ScreensGroup')
+@identifiedBy('ScreensGroup')
 export default class ScreensGroup extends BaseModel {
 
     static all = All;

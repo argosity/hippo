@@ -2,12 +2,12 @@ import { pick, merge, bindAll } from 'lodash';
 import { action } from 'mobx';
 
 import {
-    BaseModel, modelDecorator, field, session, identifier, computed,
+    BaseModel, identifiedBy, field, session, identifier, computed,
 } from './models/base';
 
 import Config from './config';
 
-@modelDecorator('lanes/user-session')
+@identifiedBy('lanes/user-session')
 class Session extends BaseModel {
     @identifier id;
     @field login;
@@ -18,7 +18,7 @@ class Session extends BaseModel {
 }
 
 
-@modelDecorator('lanes/user')
+@identifiedBy('lanes/user')
 export class User extends BaseModel {
 
     @identifier({ type: 'number' }) id;

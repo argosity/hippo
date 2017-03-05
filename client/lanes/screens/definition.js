@@ -6,7 +6,7 @@ import Config from '../config'
 import RequestAssets from '../lib/request-assets';
 import Extensions from '../extensions';
 import {
-    BaseModel, modelDecorator, session,
+    BaseModel, identifiedBy, session,
     belongsTo, identifier, computed,
 } from '../models/base';
 import User from '../user';
@@ -20,7 +20,7 @@ import Registry from './index';
 
 import Groups from './group';
 
-@modelDecorator('lanes/screen/definition')
+@identifiedBy('lanes/screen/definition')
 export default class ScreenDefinition extends BaseModel {
 
     @identifier({ type: 'string' }) id;

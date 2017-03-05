@@ -47,7 +47,7 @@
     "lodash": "^4.17.4",
     "loglevel": "^1.4.1",
     "mobx": "^3.0.0",
-    "mobx-decorated-models": "^0.4.4",
+    "mobx-decorated-models": "^0.4.5",
     "mobx-react": "^4.1.0",
     "node-sass": "^4.5.0",
     "pluralize": "^3.1.0",

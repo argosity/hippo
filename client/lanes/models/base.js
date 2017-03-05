@@ -15,7 +15,7 @@ import Config from '../config';
 import ModelCollection from './collection';
 
 export {
-    modelDecorator, belongsTo, hasMany,
+    identifiedBy, belongsTo, hasMany,
 } from 'mobx-decorated-models';
 export {
     action, autorun,

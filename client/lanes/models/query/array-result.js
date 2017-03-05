@@ -7,7 +7,7 @@ import {
     hasMany,
     computed,
     session,
-    modelDecorator,
+    identifiedBy,
     observable,
     action,
 
@@ -15,7 +15,7 @@ import {
 
 import { autorun, reaction } from 'mobx';
 
-@modelDecorator('lanes/query/array-result')
+@identifiedBy('lanes/query/array-result')
 export default class ArrayResult extends Result {
 
     @belongsTo query;
@@ -338,7 +338,7 @@ export default class ArrayResult extends Result {
 
 
 
-// @modelDecorator('lanes/query/array-result/page')
+// @identifiedBy('lanes/query/array-result/page')
 // class Page extends BaseModel {
 
 //     // @session pageNum;

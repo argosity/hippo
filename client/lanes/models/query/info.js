@@ -1,7 +1,7 @@
 import { map, filter, find, } from 'lodash';
 
 import {
-    BaseModel, modelDecorator, field, session,
+    BaseModel, identifiedBy, field, session,
     belongsTo, hasMany, identifier, computed, observable,
 } from '../base';
 

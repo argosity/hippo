@@ -4,7 +4,7 @@ import { autorun } from 'mobx';
 
 import { classify } from '../lib/util';
 import {
-    BaseModel, modelDecorator, field, session, identifier, computed, belongsTo
+    BaseModel, identifiedBy, field, session, identifier, computed, belongsTo
 } from './base';
 import Config from '../config';
 const IMAGES = [
@@ -15,7 +15,7 @@ const IS_IMAGE = content_type => !!(content_type && (-1 !== IMAGES.indexOf(conte
 
 const UPDATE_METHODS = { POST: true, PUT: true, PATCH: true }
 
-@modelDecorator('lanes/asset')
+@identifiedBy('lanes/asset')
 export default class Asset extends BaseModel {
 
     @identifier id;

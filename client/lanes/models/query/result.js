@@ -3,10 +3,10 @@ import { isFunction } from 'lodash';
 import {
     BaseModel,
     belongsTo,
-    modelDecorator,
+    identifiedBy,
 } from '../base';
 
-@modelDecorator('lanes/query/result')
+@identifiedBy('lanes/query/result')
 export default class Result extends BaseModel {
 
     @belongsTo({ type: 'lanes/query' }) query;

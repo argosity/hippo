@@ -1,13 +1,13 @@
 import { get, compact, first, filter, find } from 'lodash';
 
 import {
-    BaseModel, modelDecorator, field, session, autorun,
+    BaseModel, identifiedBy, field, session, autorun,
     belongsTo, hasMany, identifier, computed, observable,
 } from '../base';
 
 
 
-@modelDecorator('lanes/query/clause')
+@identifiedBy('lanes/query/clause')
 export default class Clause extends BaseModel {
 
 

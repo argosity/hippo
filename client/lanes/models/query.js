@@ -1,6 +1,6 @@
 import { filter, get, isString } from 'lodash';
 import {
-    BaseModel, modelDecorator, field, session,
+    BaseModel, identifiedBy, field, session,
     belongsTo, hasMany, identifier, computed, observable,
 } from './base';
 import { autorun, action } from 'mobx';
@@ -13,7 +13,7 @@ import Field       from './query/field';
 import ArrayResult from './query/array-result';
 
 // needs to inherit from Base so network events will be listened to
-@modelDecorator('lanes/query')
+@identifiedBy('lanes/query')
 export default class Query extends BaseModel {
 
     @belongsTo src;

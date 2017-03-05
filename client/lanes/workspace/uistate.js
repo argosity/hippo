@@ -1,6 +1,6 @@
 import { pick, findIndex } from 'lodash';
 import {
-    BaseModel, modelDecorator, field, session, belongsTo, hasMany, identifier, computed,
+    BaseModel, identifiedBy, field, session, belongsTo, hasMany, identifier, computed,
 } from '../models/base';
 
 const MENU_NARROW_WIDTH = 60;
@@ -18,7 +18,7 @@ const VALID_MENU_PREFS = [
 ];
 
 
-modelDecorator('UIState')
+identifiedBy('UIState')
 export default class UIState extends BaseModel {
 
     @session screenMenuPreference = '';

@@ -1,7 +1,7 @@
 // This is the client-side version of <%= namespace %>::Extension
-import { BaseModel, modelDecorator, identifier } from './models/base';
+import { BaseModel, identifiedBy, identifier } from './models/base';
 
-@modelDecorator('extensions/<%= identifier %>');
+@identifiedBy('extensions/<%= identifier %>');
 class <%= namespace %>Extension extends BaseModel {
 
     // must match the server-side identier in config/screens.rb
