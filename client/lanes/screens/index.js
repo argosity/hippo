@@ -15,6 +15,9 @@ const Screens = observable({
     groups: observable.map(),
 
     get activeGroups() {
+        if (Group.enabled_group_ids) {
+            return map(Group.enabled_group_ids, gid => Group.forId(gid));
+        }
         return uniq(compact(map(this.active, s => Group.forId(s.group_id))));
     },
 

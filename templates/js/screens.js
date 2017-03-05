@@ -19,4 +19,7 @@ const Screens = {};
     );
 <% end %>
 
+<% if Lanes::Screen.enabled_group_ids %>
+Group.enabled_group_ids = [<%= Lanes::Screen.enabled_group_ids.map{ |gid| "'#{gid}'" }.join(',') %>];
+<% end %>
 export default Screens;

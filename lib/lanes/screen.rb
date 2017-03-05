@@ -7,7 +7,9 @@ module Lanes
     module Screen
 
         GROUPS=Hash.new{|h,k| g=Group.new; g.identifier=k; h[k]=g }
-        DEFINITIONS=Hash.new #{|h,k| d=Definition.new; d.identifier=k; h[k]=d }
+        DEFINITIONS=Hash.new
+
+        mattr_accessor :enabled_group_ids
 
         class DefinitionList
             def initialize(extension_id)
