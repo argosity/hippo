@@ -49,7 +49,7 @@ module Lanes
 
             dsl.guard :reloadable_sinatra do
                 dsl.watch(%r{^lib/.*\.rb})
-
+                dsl.watch(%r{^config/.*\.rb})
             end
         end
 
