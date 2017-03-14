@@ -22,8 +22,10 @@ const Screens = observable({
     },
 
     refresh() {
-        Sync.perform(`${Config.api_path}/lanes/screens`).then(({ data: { screens: screenIds } }) => {
-            this.active.replace(map(screenIds, id => this.all.get(id)));
+        Sync.perform(`${Config.api_path}/lanes/screens`).then(({ data }) => {
+            if (data) {
+                this.active.replace(map(data.screens, id => this.all.get(id)));
+            }
         });
     },
 
