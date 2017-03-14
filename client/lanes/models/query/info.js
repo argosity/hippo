@@ -1,10 +1,5 @@
-import { map, filter, find, } from 'lodash';
-
-import {
-    BaseModel, identifiedBy, field, session,
-    belongsTo, hasMany, identifier, computed, observable,
-} from '../base';
-
+import { filter, reduce } from 'lodash';
+import { computed } from 'mobx';
 
 export default class Info {
 
@@ -14,6 +9,10 @@ export default class Info {
 
     @computed get syncUrl() {
         return this.query.customSyncUrl || this.query.src.syncUrl;
+    }
+
+    @computed get minWidth() {
+        return reduce(this.visibleFields, (sum, f) => sum + f.width, 0);
     }
 
     // the index of fields marked as visible

@@ -1,17 +1,14 @@
 import Sync from 'lanes/models/sync';
 
-import { first, map, find, range, shuffle } from 'lodash';
-import { autorun } from 'mobx';
+import { map, find, range, shuffle } from 'lodash';
 
-import Operators from 'lanes/models/query/operators';
-import Clause    from 'lanes/models/query/clause';
-import Field     from 'lanes/models/query/field';
-import Query     from 'lanes/models/query';
+import Clause from 'lanes/models/query/clause';
+import Query  from 'lanes/models/query';
 
 import { Box } from '../test-models';
 
 jest.mock('lanes/models/sync');
-
+jest.useFakeTimers();
 describe('Model Queries', () => {
     let query;
 
@@ -29,6 +26,23 @@ describe('Model Queries', () => {
         });
     });
 
+    it('autoloads query when changed', () => {
+        query.fetch = jest.fn();
+        query.autoFetch = true;
+        expect(query.fetch).toHaveBeenCalled();
+        query.clauses[0].value = 'test value';
+        jest.runAllTimers();
+        expect(query.fetch).toHaveBeenCalledTimes(2);
+        query.clauses[0].value = 'test two value';
+        jest.runAllTimers();
+        expect(query.fetch).toHaveBeenCalledTimes(3);
+
+        query.autoFetch = false;
+        query.clauses[0].value = 'yet another value';
+        jest.runAllTimers();
+        expect(query.fetch).toHaveBeenCalledTimes(3);
+    });
+
     it('calculates fields', () => {
         const q = new Query({ src: Box });
         expect(q.src).toEqual(Box);
@@ -38,7 +52,20 @@ describe('Model Queries', () => {
         expect(clause.query).toBe(q);
     });
 
+    it('calculates min width', () => {
+        expect(query.info.minWidth).toEqual(400);
+    });
+
     it('calculates visible index', () => {
+        expect(map(query.info.visibleFields, 'id')).toEqual([
+            'computed', 'label', 'width', 'height',
+        ]);
+        expect(query.fields[0].visibleIndex).toBeNull();
+        expect(query.fields[1].visibleIndex).toEqual(1);
+        expect(query.fields[2].visibleIndex).toEqual(2);
+        expect(query.fields[3].visibleIndex).toEqual(3);
+        expect(query.fields[4].visibleIndex).toEqual(4);
+        expect(query.fields[5].visibleIndex).toBeNull();
         expect(query.info.visibleIndexes).toEqual([1, 2, 3, 4]);
     });
 
@@ -102,14 +129,6 @@ describe('Model Queries', () => {
         });
     });
 
-    it('calculates visibleIndex', () => {
-        expect(query.fields[0].visibleIndex).toEqual(null);
-        expect(query.fields[1].visibleIndex).toEqual(0);
-        expect(query.fields[2].visibleIndex).toEqual(1);
-        expect(query.fields[3].visibleIndex).toEqual(2);
-        expect(query.fields[4].visibleIndex).toEqual(3);
-    });
-
     it('calculates dataIndex', () => {
         expect(query.fields[0].queryable).toBe(false);
         expect(query.fields[1].queryable).toBe(true);
@@ -118,6 +137,15 @@ describe('Model Queries', () => {
         expect(query.fields[2].dataIndex).toEqual(1);
         expect(query.fields[3].dataIndex).toEqual(2);
         expect(query.fields[4].dataIndex).toEqual(3);
+    });
+
+    it('updates a row when its model saves', () => {
+        range(0, 5).forEach(i => query.results.rows.push([i, 'blank', i]));
+        const model = query.results.modelForRow(2);
+        model.syncData = { width: 33, height: 33, depth: 33 };
+        expect(query.results.rows[2]).toEqual([
+            2, 'blank', 33, 33, 33,
+        ]);
     });
 
     describe('loading', () => {
