@@ -17,7 +17,7 @@ describe('Network sync', () => {
 
     it('makes request using options', () => {
         Sync.perform('/foo', { fields: ['test'] });
-        expect(fetch).lastCalledWith('/foo.json?f%5B0%5D=test', expect.any(Object));
+        expect(fetch).lastCalledWith('/foo.json?f%5B%5D=test', expect.any(Object));
         Sync.perform('/foo', { with: 'test' });
         expect(fetch).lastCalledWith('/foo.json?w=test', expect.any(Object));
         Sync.perform('/foo', { query: { bar: 'baz' } });
@@ -31,10 +31,10 @@ describe('Network sync', () => {
         Sync.forModel(box, 'GET').then(() => expect(box.width).toEqual(12));
     });
 
-    fit('saves a model', () => {
+    it('saves a model', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: { width: 12, height: 12, depth: 10 } }));
         const box = new Box({ id: 11, width: 5 });
-        const body = JSON.stringify(box.dataForSync());
+        const body = JSON.stringify(box.syncData);
         Sync.forModel(box).then(() => expect(box.width).toEqual(12));
         expect(fetch).lastCalledWith(
             '/api/test/boxes/11.json',

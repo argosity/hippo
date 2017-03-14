@@ -1,4 +1,4 @@
-import { autorun } from 'mobx';
+import { autorun, observe } from 'mobx';
 import { Ship, Container, Box, } from '../test-models';
 
 describe("BaseModel Test", () => {
@@ -38,6 +38,15 @@ describe("BaseModel Test", () => {
         expect(spy).toHaveBeenCalledTimes(2);
         expect(spy).toHaveBeenCalledWith('/api/test/boxes/42');
         expect(box.syncUrl).toEqual('/api/test/boxes/42');
+    });
+
+    it('is set from sync', () => {
+        const box = new Box({ id: 11, width: 5 });
+        expect(box.syncData).toEqual({ id: 11, height: 1, depth: 1, width: 5 });
+        const spy = jest.fn();
+        observe(box, 'syncData', spy);
+        box.syncData = { id: 2 };
+        expect(spy).toHaveBeenCalled();
     });
 
     it('sets isNew depending on primary Key', () => {
