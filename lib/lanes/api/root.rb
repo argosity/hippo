@@ -35,10 +35,10 @@ module Lanes
                 set :views, Pathname.new(__FILE__).dirname.join("../../../views")
                 set :show_exceptions, false
                 require_relative 'routing'
-                Extensions.load_controlling_config
-                # late load in case an extension has provided an alternative implementation
-                require_relative './default_routes'
                 Lanes::Configuration.apply
+                Extensions.load_controlling_config
+
+                require_relative './default_routes'
                 API::Cable.configure
             end
 
