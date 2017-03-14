@@ -13,6 +13,9 @@ module Lanes
             class_option :watch, :type => :boolean, default: false,
                          desc: "Whether to keep running and watch for file changes"
 
+            class_option :debug, :type => :boolean, default: false
+
+
             def configure
                 @config = ClientConfig.new
                 @config.invoke_all
@@ -27,7 +30,9 @@ module Lanes
                 say 'Starting Jest', :green
                 say Dir.pwd, :yellow
                 cmd = "$(npm bin)/jest --config #{config_file}"
-                cmd << "  --watch" if options[:watch]
+                options.each do |key, value|
+                    cmd << " --#{key}" if value
+                end
                 exec(cmd)
             end
         end
