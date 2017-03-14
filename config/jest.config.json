@@ -1,14 +1,19 @@
 {
-    "rootDir": "./",
+    "rootDir": ".",
     "verbose": true,
     "notify": false,
     "testMatch": [ "**/?(*.)(spec|test).js?(x)" ],
-    "moduleFileExtensions": [ "js", "jsx", "json" ],
+    "moduleFileExtensions": [ "", "js", "jsx", "json", "css", "less", "scss" ],
     "setupTestFrameworkScriptFile": "<rootDir>/spec/client/setup.js",
+    "transformIgnorePatterns": [
+        "/node_modules/(?!flexboxgrid)"
+    ],
     "moduleNameMapper": {
-        "\\.(css|less|scss)$": "identity-obj-proxy"
+        "\\.(css|less|scss)$": "identity-obj-proxy",
+        "flexboxgrid": "identity-obj-proxy"
     },
     "transform": {
-        "^.+\\.jsx?$": "<rootDir>/config/jest/babel-transform.js"
+        "^.+\\.jsx?$": "<rootDir>/config/jest/babel-transform.js",
+        "^.+\\.yml$":  "<rootDir>/config/jest/yaml-transform.js"
     }
 }
