@@ -1,29 +1,28 @@
 import qs from 'qs';
 import 'whatwg-fetch'; // fetch polyfill
-import { autorun } from 'mobx';
-import { includes, isEmpty, merge, extend } from 'lodash';
 
-import { logger } from '../lib/util'
+import { includes, isEmpty, merge, extend, isArray, isObject } from 'lodash';
 
-import Config from 'lanes/config';
+import Config     from '../config';
+import { logger } from '../lib/util';
 
 const methodMap = {
-    create  : 'POST',
-    update  : 'PUT',
-    patch   : 'PATCH',
-    destroy : 'DELETE',
-    read    : 'GET',
+    create:  'POST',
+    update:  'PUT',
+    patch:   'PATCH',
+    destroy: 'DELETE',
+    read:    'GET',
 };
 
 const paramsMap = {
-    fields  : 'f',
-    with    : 'w',
-    query   : 'q',
-    include : 'i',
-    order   : 'o',
-    limit   : 'l',
-    start   : 's',
-    format  : 'df',
+    fields:  'f',
+    with:    'w',
+    query:   'q',
+    include: 'i',
+    order:   'o',
+    limit:   'l',
+    start:   's',
+    format:  'df',
 };
 
 function perform(urlPrefix, defaultOptions = {}) {
@@ -67,24 +66,22 @@ function peformMobxyRequest(mobx, options) {
                 syncInProgress:    undefined,
                 lastServerMessage: json.message,
             });
-
-            // sometimes the polyfill seems to set a `:success` property?
-            if (false === json[':success']) { merge(mobx, { errors: json[':message'] }); }
-
+            // sometimes the polyfill (or fetch iteself) sets a `:success` property?
+            if (false === json[':success']) { merge(mobx, { errors: { fetch: json[':message'] } }); }
             return json;
         }).catch((e) => {
             logger.warn(e);
             extend(mobx, {
-                errors            : { network: e },
-                syncInProgress    : undefined,
-                lastServerMessage : e.toString(),
+                errors:            { network: e },
+                syncInProgress:     undefined,
+                lastServerMessage:  e.toString(),
             });
-            return mobx;
+            return {};
         });
 }
 
 function forCollection(collection, options = {}) {
-    return peformMobxyRequest(collection, options)
+    return peformMobxyRequest(collection, options);
 }
 
 function forModel(model, options = {}) {
@@ -93,10 +90,17 @@ function forModel(model, options = {}) {
         method: methodMap[action],
     }, options);
     if (includes(['POST', 'PUT', 'PATCH'], requestOptions.method)) {
-        requestOptions.body = JSON.stringify(options.json || model.dataForSync(options));
+        requestOptions.body = JSON.stringify(options.json || model.syncData);
     }
     return peformMobxyRequest(model, requestOptions)
-        .then(json => (json.data && model.setFromSync(json.data)));
+        .then((json) => {
+            if (isArray(json.data) && json.data.length) {
+                model.syncData = json.data[0];  // eslint-disable-line no-param-reassign
+            } else if (isObject(json.data)) {
+                model.syncData = json.data;  // eslint-disable-line no-param-reassign
+            }
+            return model;
+        });
 }
 
 export default {

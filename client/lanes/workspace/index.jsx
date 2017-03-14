@@ -1,22 +1,19 @@
 import React from 'react';
 
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { bindAll } from 'lodash';
 import { Router, Route, browserHistory } from 'react-router';
 
 import App   from 'grommet/components/App';
-import Split from 'grommet/components/Split';
 import Sidebar from 'react-sidebar';
 
 import 'lanes/screen-definitions.js';
 import Menu        from './menu';
-import Content     from './content';
 import Screen      from './screen';
 import LoginDialog from '../access/login-dialog';
 
 import './styles.scss';
-
 
 const DOCKED_WIDTH_BREAKPOINT = 950;
 

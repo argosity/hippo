@@ -46,9 +46,7 @@ module Lanes
                     options[:total_count] = count_query_records(query)
                 end
                 query = add_modifiers_to_query(query)
-                if params[:id]
-                    query  = query.first!
-                end
+                query = query.first! if params[:id]
                 std_api_reply(:retrieve, query, options)
             end
 
@@ -61,10 +59,10 @@ module Lanes
             end
 
             def perform_multiple_destroy
-                query = model.where( id: data.map{|rec|rec['id']} )
+                query = model.where(id: data.map{|rec|rec['id']})
                 query = add_access_limits_to_query(query)
                 success = true
-                query.each do | record |
+                query.each do |record|
                     if current_user.can_delete?(record, record.id)
                         success = false unless record.destroy
                     end
@@ -74,13 +72,11 @@ module Lanes
             end
 
             def perform_multiple_updates
-
-                query = model.where( id: data.map{|rec|rec['id']} )
+                query = model.where(id: data.map {|rec|rec['id'] })
                 query = add_access_limits_to_query(query)
-
                 success = true
-                query.each do | record |
-                    record_data = data.detect{ |rd| rd['id'] == record.id }
+                query.each do |record|
+                    record_data = data.detect { |rd| rd['id'] == record.id }
                     next unless record_data
                     if current_user.can_write?(record, record.id)
                         record.set_attribute_data(record_data, current_user)
@@ -121,17 +117,20 @@ module Lanes
             end
             def query_limit_size
                 limit = max_query_results_size
-                params[:l] ? [ params[:l].to_i, limit ].min : limit
+                requested_limit ? [requested_limit, limit].min : limit
             end
             def query_offset
                 params[:s]
+            end
+            def requested_limit
+                params[:l].to_i
             end
 
             # reply options
 
             # Should the result include the total number of available records
             def should_include_total_count?
-                params[:l] && params[:s] && ! params[:id]
+                requested_limit && params[:s] && !params[:id]
             end
 
             # Extract options that are suitable for use in 'as_json'
@@ -144,7 +143,9 @@ module Lanes
                 end
 
                 if requested_fields.any?
-                    options[:methods] = requested_fields.select{|f| model.has_exported_method?(f, current_user) }
+                    options[:methods] = requested_fields.select do |f|
+                        model.has_exported_method?(f, current_user)
+                    end
                 end
                 options[:format] = reply_with_array? ? 'array' : 'object'
                 options
@@ -155,9 +156,10 @@ module Lanes
                 if association.is_a?(Hash)
                     association.each do |include_name, sub_associations|
                         if model_class.has_exported_association?(include_name, current_user) &&
-                           ( reflection = model_class.reflect_on_association( include_name.to_sym ) )
+                           (reflection = model_class.reflect_on_association(include_name.to_sym))
+
                             sub_includes = includes[include_name.to_sym] = {}
-                            allowed = build_allowed_associations( sub_associations, reflection.klass )
+                            allowed = build_allowed_associations(sub_associations, reflection.klass)
                             unless allowed.empty?
                                 sub_includes[:include] ||= []
                                 sub_includes[:include] << allowed
@@ -165,13 +167,13 @@ module Lanes
                         end
                     end
                 elsif association.is_a?(Array)
-                    association.each do | sub_association |
+                    association.each do |sub_association|
                         if model_class.has_exported_association?(sub_association, current_user)
-                            includes.merge! build_allowed_associations( sub_association, model_class )
+                            includes.merge! build_allowed_associations(sub_association, model_class)
                         end
                     end
                 else
-                    includes[ association.to_sym ] = {} if  model_class.has_exported_association?(association, current_user)
+                    includes[association.to_sym] = {} if  model_class.has_exported_association?(association, current_user)
                 end
                 includes
             end
@@ -180,35 +182,28 @@ module Lanes
 
             def add_access_limits_to_query(query)
                 if model.respond_to?(:access_limits_for_query)
-                    query = model.access_limits_for_query(query, current_user, params)
+                    model.access_limits_for_query(query, current_user, params)
                 else
                     query
                 end
             end
 
             def build_query(query = model.all)
-                if params[:id]
-                    query = query.where(id: params[:id])
-                end
+                query = query.where(id: params[:id]) if params[:id]
                 if params[:nested_attribute]
                     query = query.where(params[:nested_attribute])
                 end
                 query = add_access_limits_to_query(query)
-
-                if query_params.present?
-                    query = add_params_to_query(query)
-                end
+                query = add_params_to_query(query) if query_params.present?
                 query
             end
 
             def count_query_records(query)
-                model.from('('+query.to_sql+') q').count
+                query.unscope(:select).count
             end
 
             def add_scopes_to_query(query)
-                if query_scopes.present?
-                    query = add_scope_to_query(query)
-                end
+                query = add_scope_to_query(query) if query_scopes.present?
                 query
             end
 
@@ -219,7 +214,7 @@ module Lanes
                     allowed_includes = include_associations.each_with_object([]) do |desired, results|
                         if desired.is_a?(Hash)
                             nested = {}
-                            desired.each do | name, sub_associations |
+                            desired.each do |name, sub_associations|
                                 nested[name.to_sym] = sub_associations if model.has_exported_association?(name, current_user)
                             end
                             results.push(nested) unless nested.empty?
@@ -230,7 +225,7 @@ module Lanes
                     query = query.includes(allowed_includes) unless allowed_includes.empty?
                 end
                 if sort_order.present?
-                    sort_order.each do | fld, dir |
+                    sort_order.each do |fld, dir|
                         query = model.append_sort_to_query(
                             query, fld, dir.downcase.to_sym
                         )
@@ -239,26 +234,24 @@ module Lanes
                 query
             end
 
-
             def max_query_results_size
                 250 # should be enough for everybody, amirite?
             end
 
             def add_scope_to_query(query)
-                query_scopes.each do | name, arg |
-                    if model.has_exported_scope?(name, current_user)
-                        args = [name]
-                        args.push( arg ) unless arg.blank?
-                        query = query.send( *args )
-                    end
+                query_scopes.each do |name, arg|
+                    next unless model.has_exported_scope?(name, current_user)
+                    args = [name]
+                    args.push(arg) unless arg.blank?
+                    query = query.send(*args)
                 end
                 query
             end
 
             def add_params_to_query(query)
-                query_params.each do | field, value |
-                    next unless ( field = convert_field_to_arel(field) )
-                    if value.is_a?(Hash) && value.has_key?('value')
+                query_params.each do |field, value|
+                    next unless (field = convert_field_to_arel(field))
+                    if value.is_a?(Hash) && value.key?('value')
                         op = value['op']
                         value = value['value']
                     end
@@ -287,20 +280,18 @@ module Lanes
             end
 
             # complete list: https://github.com/rails/arel/blob/master/lib/arel/predications.rb
-            def field_to_predicate( field, value, op = nil )
+            def field_to_predicate(field, value, op = nil)
                 case op
                 when nil, 'eq' then field.eq(value)
-                when 'like' then field.matches( value )
+                when 'like' then field.matches(value)
                 when 'ne'   then field.not_eq(value)
                 when 'lt'   then field.lt(value)
-                when 'in'   then field.in( Range.new( *value ) )
+                when 'in'   then field.in(Range.new(*value))
                 when 'gt'   then field.gt(value)
                 else
-                    value =~ /%/ ? field.matches( value ) : field.eq( value )
+                    value =~ /%/ ? field.matches(value) : field.eq(value)
                 end
             end
-
-
         end
     end
 end

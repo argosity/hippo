@@ -3,7 +3,7 @@ import {
 } from 'mobx-decorated-models';
 import invariant from 'invariant';
 import {
-    isEmpty, isNil, find, invoke, get, extend, merge, assign, pick,
+    isEmpty, isNil, find, invoke, get, extend, assign, pick,
 } from 'lodash';
 
 import { action, observable, computed, autorun } from 'mobx';
@@ -29,6 +29,7 @@ export {
 };
 
 export class BaseModel {
+
     static findDerived(name) {
         return findModel(name);
     }
@@ -85,11 +86,6 @@ export class BaseModel {
 
     set(attrs) {
         assign(this, pick(attrs, this.constructor.assignableKeys));
-
-        // this.constructor.replaceableKeys.forEach((key) => {
-        //     if (attrs[key]) { this[key].replace(attrs[key]); }
-        // });
-        // return this;
     }
 
     @action reset() {
@@ -99,23 +95,23 @@ export class BaseModel {
         });
     }
 
-    setFromSync(data) {
+    set syncData(data) {
         return this.update(data);
     }
 
-    dataForSync() {
+    @computed
+    get syncData() {
         return this.serialize();
     }
 
     fetch(options = {}) {
-        invariant((!this.isNew), 'Unable to fetch record without it’s identifier being set');
-        return Sync.forModel(
-            this, merge(options, {
-                limit:  1,
-                method: 'GET',
-                query:  { [`${this.constructor.identifierName}`]: this.identifier },
-            }),
-        );
+        invariant((!this.isNew || options.query),
+                  'Unable to fetch record without it’s identifier being set or a query');
+        const fetchOptions = extend(options, { limit: 1, method: 'GET' });
+        if (!fetchOptions.query) {
+            fetchOptions.query = { [`${this.constructor.identifierName}`]: this.identifier };
+        }
+        return Sync.forModel(this, fetchOptions);
     }
 
     save(options = {}) {
@@ -126,3 +122,5 @@ export class BaseModel {
         return Sync.forModel(this, extend(options, { action: 'destroy' }));
     }
 }
+
+export default BaseModel;

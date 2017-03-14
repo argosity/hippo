@@ -2,16 +2,14 @@ import React from 'react';
 import { merge } from 'lodash';
 import {
     BaseModel,
-    modelDecorator,
+    identifiedBy,
     observable,
     field, session, belongsTo, hasMany, identifier, computed,
 } from 'lanes/models/base';
 import BaseExtension from 'lanes/extensions/base';
 import ScreenDefinition from 'lanes/screens/definition';
-import UiState  from 'lanes/workspace/uistate';
 
-
-@modelDecorator('test/boat')
+@identifiedBy('test/boat')
 export class Ship extends BaseModel {
     @identifier({ type: 'string' }) name;
 
@@ -19,7 +17,7 @@ export class Ship extends BaseModel {
 }
 
 
-@modelDecorator('test/model/image')
+@identifiedBy('test/model/image')
 export class TestImage extends BaseModel {
     @identifier id;
     @belongsTo({ inverseOf: 'owner', model: 'lanes/asset' }) asset;
@@ -31,7 +29,7 @@ export class TestImage extends BaseModel {
 }
 
 
-@modelDecorator('test/box')
+@identifiedBy('test/box')
 export class Box extends BaseModel {
 
     @session visibleIdentifier;
@@ -51,7 +49,7 @@ export class Box extends BaseModel {
     @belongsTo container;
 }
 
-@modelDecorator('test/container')
+@identifiedBy('test/container')
 export class Container extends BaseModel {
 
     @identifier({ type: 'string' }) id;
@@ -70,7 +68,7 @@ export class Container extends BaseModel {
     @belongsTo({ model: 'boat' }) watercraft;
 
     @computed get areaInUse() {
-        return this.boxes.reduce((acc, box) => (acc += box.volume), 0);
+        return this.boxes.reduce((acc, box) => (acc + box.volume), 0);
     }
 }
 
