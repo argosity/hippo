@@ -10,7 +10,6 @@ import { Container } from '../test-models';
 
 jest.mock('lanes/models/sync');
 
-
 describe("DataTable Component", () => {
     let query;
 

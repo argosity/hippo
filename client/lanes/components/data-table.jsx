@@ -1,15 +1,12 @@
 import React from 'react';
-import { pick, extend, map, bindAll, partial, toInteger, isNumber } from 'lodash';
+import { pick, extend, defaults, map, bindAll, partial, toInteger, isNumber, } from 'lodash';
 import { action, computed, observable, autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import cn from 'classnames';
-import EditIcon from 'grommet/components/icons/base/Edit';
+
 import NextIcon from 'grommet/components/icons/base/CaretNext';
 import Button   from 'grommet/components/Button';
 
-import {
-    Column, Table, AutoSizer, InfiniteLoader, defaultTableRowRenderer
-} from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import './data-table/table-styles.scss';
 
@@ -25,22 +22,27 @@ function renderEditTriangle({ rowIndex, columnData: { onEdit }}) {
     );
 }
 
-
 @observer
 export default class DataTable extends React.Component {
 
     static defaultProps = {
         canCreate: false,
         editRowIndex: null,
+        fetchOnMount: false,
+        style: {},
     }
 
     static propTypes = {
+        style:     React.PropTypes.object,
         query:     React.PropTypes.instanceOf(Query).isRequired,
         canCreate: React.PropTypes.bool,
         editor:    React.PropTypes.func,
         onEdit:    React.PropTypes.func,
         editRowIndex: React.PropTypes.number,
     }
+
+    @observable editIndex;
+    @observable query;
 
     constructor(props) {
         super(props);
@@ -63,6 +65,19 @@ export default class DataTable extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.editIndex = nextProps.editRowIndex;
+    }
+
+    get rowProps() {
+        const props = {};
+        if (this.props.onRowClick) { props.onRowClick = this.onRowClick; }
+        return props;
+    }
+
+    @action.bound
+    onRowClick({ index }) {
+        this.query.results.fetchModelForRow(index).then((model) => {
+            this.props.onRowClick({ index, model });
+        });
     }
 
     @action.bound
@@ -88,6 +103,14 @@ export default class DataTable extends React.Component {
     }
 
     @action.bound
+    getRowClassName({ index }) {
+        if (index < 0) {
+            return 'header';
+        }
+        return index % 2 === 0 ? 'e' : 'o';
+    }
+
+    @action.bound
     setSortField(index, ascending) {
         this.query.setSort({ index, ascending });
     }
@@ -100,8 +123,8 @@ export default class DataTable extends React.Component {
         const definitions = map(this.query.info.visibleFields, f =>
             extend({
                 key: f.id,
-                dataKey: f.dataIndex,
                 columnData: f,
+                dataKey: f.visibleIndex,
                 headerRenderer: this.headerRenderer,
             }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink')),
         );
@@ -118,26 +141,30 @@ export default class DataTable extends React.Component {
         return definitions;
     }
 
+    get wrapperStyles() {
+        return defaults({
+            minWidth:  this.query.info.minWidth,
+            minHeight: 400,
+        }, this.props.styles);
+    }
+
     rowAtIndex({ index }) {
         return this.props.query.results.rows[index];
     }
-
-    @observable editIndex;
-    @observable query;
 
     calculateRowHeight({ index }) {
         return (this.editIndex === index) ? this.props.editor.desiredHeight || 40 : 40;
     }
 
     rowRenderer(props) {
-        const { index, className, style } = props;
+        const { index, className, key } = props;
+        extend(props, this.rowProps);
         if (this.editIndex === index) {
             const { editor: Editor } = this.props;
             return (
                 <div
-                    key={props.key}
-                    style={props.style}
-                    className={cn(props.className, 'editing')}
+                    key={key}
+                    className={cn(className, 'editing')}
                 >
                     <Editor
                         key={props.index}
@@ -170,8 +197,12 @@ export default class DataTable extends React.Component {
 
     render() {
         const { query } = this;
+
         return (
-            <div className="data-table">
+            <div
+                className={cn('data-table', { selectable: this.props.onRowClick })}
+                style={this.wrapperStyles}
+            >
                 <InfiniteLoader
                     keyChange={this.gridRenderKey}
                     minimumBatchSize={this.query.pageSize}
@@ -179,11 +210,11 @@ export default class DataTable extends React.Component {
                     loadMoreRows={this.loadMoreRows}
                     rowCount={query.results.totalCount}
                 >
-                    {({ onRowsRendered, registerChild }) => (
-                         <AutoSizer
-                             updateKey={this.gridRenderKey}
-                         >
-                            {({ height, width }) => (
+                    {({ onRowsRendered, registerChild }) =>
+                        <AutoSizer
+                            updateKey={this.gridRenderKey}
+                        >
+                            {({ height, width }) =>
                                 <Table
                                     height={height}
                                     width={width}
@@ -193,17 +224,17 @@ export default class DataTable extends React.Component {
                                     }}
                                     rowHeight={this.calculateRowHeight}
                                     rowGetter={this.rowAtIndex}
+                                    estimatedRowSize={40}
                                     headerHeight={50}
+                                    rowClassName={this.getRowClassName}
                                     onRowsRendered={onRowsRendered}
                                     rowRenderer={this.rowRenderer}
                                     rowCount={query.results.rows.length}
                                     keyChange={this.gridRenderKey}
                                 >
                                     {map(this.columnDefinitions, props => <Column {...props} />)}
-                                </Table>
-                             )}
-                        </AutoSizer>
-                     )}
+                                </Table>}
+                        </AutoSizer>}
                 </InfiniteLoader>
             </div>
         );

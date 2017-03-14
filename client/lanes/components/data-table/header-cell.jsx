@@ -1,5 +1,5 @@
 import React from 'react';
-import { range, map, uniqueId, last } from 'lodash';
+import { last } from 'lodash';
 import { action, computed } from 'mobx';
 import { observer } from 'mobx-react';
 
@@ -31,11 +31,6 @@ export default class SortingHeaderCell extends React.Component {
         }
     }
 
-    /* @action.bound
-     * onAdd() {
-     *     this.props.onAdd(this.field);
-     * }*/
-
     @computed get displayAdd() {
         return !!(this.props.onAdd && this.field === last(this.field.query.info.visibleFields));
     }
@@ -64,13 +59,6 @@ export default class SortingHeaderCell extends React.Component {
         return this.field.query.sortAscending ? <AscIcon /> : <DescIcon />;
     }
     render() {
-
-//        const { children: field } = this.props;
-        //const { label, query, dataKey: fieldIndex } = this.props;
-        /* const field = query.info.visibleFields[fieldIndex - 1];
-         * if (!field){
-         *     debugger
-         * }*/
         let label = <span>{this.field.label}</span>;
 
         if (this.field.sortable) {
@@ -100,8 +88,6 @@ export default class SortingHeaderCell extends React.Component {
             );
         }
         return label;
-
-//        return <div>{content}</div>;
     }
 
 }
