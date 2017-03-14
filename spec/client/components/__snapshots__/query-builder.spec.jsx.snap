@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Query Builder Component renders and matches snapshot 1`] = `
+<div
+  className="query-builder"
+>
+  <div
+    className="grommetux-box grommetux-box--direction-row grommetux-box--responsive grommetux-box--pad-between-small"
+    id={undefined}
+    onClick={undefined}
+    role={undefined}
+    style={Object {}}
+    tabIndex={undefined}
+  >
+    <div
+      className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-menu grommetux-menu--column grommetux-menu--large grommetux-menu--controlled grommetux-menu__control"
+      id={undefined}
+      onClick={undefined}
+      role={undefined}
+      style={Object {}}
+      tabIndex={undefined}
+    >
+      <button
+        aria-label="Open  Menu"
+        className="grommetux-button grommetux-button--plain"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        <span
+          className="grommetux-button__icon"
+        >
+          <span>
+            <svg
+              aria-label="down"
+              className="grommetux-control-icon grommetux-control-icon-down grommetux-control-icon--responsive"
+              height="24px"
+              role="img"
+              version="1.1"
+              viewBox="0 0 24 24"
+              width="24px"
+            >
+              <polyline
+                fill="none"
+                points="7.086 3.174 17.086 13.174 7.086 23.174"
+                stroke="#000000"
+                strokeWidth="2"
+                transform="scale(1 -1) rotate(-89 -1.32 0)"
+              />
+            </svg>
+             
+            IsAdmin?
+             
+            Starts With
+          </span>
+        </span>
+      </button>
+    </div>
+    <input
+      autoComplete="off"
+      autoFocus={true}
+      className="grommetux-text-input grommetux-input"
+      defaultValue={undefined}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      placeholder={undefined}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+      value=""
+    />
+  </div>
+</div>
+`;
