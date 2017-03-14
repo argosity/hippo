@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import { isNil, forIn, get } from 'lodash';
 
 import { observer }   from 'mobx-react';
@@ -9,7 +9,7 @@ import Button    from 'grommet/components/Button';
 import Warning from 'lanes/components/warning-notification';
 import Field from 'lanes/components/form-field';
 
-import { WithValidatedFields, validEmail, nonBlank, validation } from 'lanes/lib/form-validation';
+import { addFormFieldValidations, validEmail, nonBlank, validation } from 'lanes/lib/forms';
 import Query from 'lanes/models/query';
 
 
@@ -31,6 +31,26 @@ class EditForm extends React.PureComponent {
             valid:  React.PropTypes.bool,
         }).isRequired,
         setDefaultValues: React.PropTypes.func.isRequired,
+    }
+
+    static desiredHeight = 300
+
+    static formValidations = {
+        login: nonBlank,
+        name:  nonBlank,
+        email: validEmail,
+        password: validation({
+            alsoTest: ['password_confirm'],
+            test: () => true,
+        }),
+        password_confirm: validation({
+            message: 'must match password',
+            test: (value, fields) => {
+                const password = get(fields, 'password.value');
+                if (isNil(password)) { return true; }
+                return (password === value);
+            },
+        }),
     }
 
     constructor(props) {
@@ -100,22 +120,4 @@ class EditForm extends React.PureComponent {
     }
 }
 
-export default WithValidatedFields({
-    login: nonBlank,
-    name:  nonBlank,
-    email: validEmail,
-    password: validation({
-        alsoTest: ['password_confirm'],
-        test: () => true,
-    }),
-    password_confirm: validation({
-        message: 'must match password',
-        test: (value, fields) => {
-            const password = get(fields, 'password.value');
-            if (isNil(password)) { return true; }
-            return (password === value);
-        },
-    }),
-}, EditForm, {
-    desiredHeight: 300,
-});
+export default addFormFieldValidations(EditForm, 'desiredHeight');

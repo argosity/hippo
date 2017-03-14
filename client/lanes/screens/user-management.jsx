@@ -10,9 +10,7 @@ import DataTable from 'lanes/components/data-table';
 import { User } from 'lanes/user';
 import Query from 'lanes/models/query';
 
-import Editor from './edit-form';
-
-const BASEPATH = '/user-management';
+import Editor from './user-management/edit-form';
 
 @observer
 export default class UserManagement extends React.PureComponent {

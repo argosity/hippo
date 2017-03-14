@@ -22,7 +22,7 @@ Lanes::Screen.for_extension 'lanes' do | screens |
         screen.group_id    = "system-settings"
         screen.model_class = "SystemSettings"
         screen.view_class  = "UserManagement"
-        screen.asset       = 'lanes/access/screens/user-management'
+        screen.asset       = 'lanes/screens/user-management'
     end
 
     screens.define "system-settings" do | screen |
