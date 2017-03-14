@@ -5,11 +5,11 @@ import { titleize } from 'lanes/lib/util';
 import DocumentIcon from 'grommet/components/icons/base/DocumentCloud'
 import Dropzone from 'react-dropzone';
 
-import AssetModel from '../../models/asset';
-import { BaseModel } from '../../models/base';
+import AssetModel from '../models/asset';
+import { BaseModel } from '../models/base';
 
 import { Col } from 'react-flexbox-grid';
-import './style.scss';
+import './asset.scss';
 import classnames from 'classnames';
 import Field from 'grommet/components/FormField';
 
@@ -61,10 +61,9 @@ export default class Asset extends React.PureComponent {
         const { model: _, label: __, name: ___, className, ...col } = this.props;
 
         return (
-
             <Col
                 {...col}
-                className={classnames(className, 'asset')}
+                className={classnames(className, 'asset', 'form-field')}
             >
                 <Field label={this.label} >
                     <Dropzone
