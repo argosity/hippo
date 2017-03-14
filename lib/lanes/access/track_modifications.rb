@@ -9,20 +9,18 @@ module Lanes::Concerns
             created_at: nil, updated_at: nil,
             created_by_id: nil, updated_by_id: nil
         )
-        included do
-            class_attribute :record_modifications, :instance_writer=>false
-            self.record_modifications = true
-
-            belongs_to :created_by, :class_name=>Lanes::User
-            belongs_to :updated_by, :class_name=>Lanes::User
-
-            before_update :record_update_modifications
-            before_create :record_create_modifications
-
-            self.export_scope :with_user_logins
-        end
-
         module ClassMethods
+
+            def tracks_user_modifications
+                belongs_to :created_by, :class_name=>'Lanes::User'
+                belongs_to :updated_by, :class_name=>'Lanes::User'
+
+                before_update :record_update_modifications
+                before_create :record_create_modifications
+
+                self.export_scope :with_user_logins
+            end
+
 
             def with_user_logins
                 q = self; t = table_name
