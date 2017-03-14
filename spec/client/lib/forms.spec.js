@@ -1,4 +1,15 @@
-import { buildValidations, nonBlank, validEmail, hasLength, validation } from 'lanes/lib/form-validation';
+import React from 'react';
+import {
+    addFormFieldValidations, buildValidations,
+    nonBlank, validEmail, hasLength, validation
+} from 'lanes/lib/form-validation';
+
+class TestForm extends React.PureComponent {
+    static formValidations = {
+            name: nonBlank,
+    }
+    static foo = 'bar'
+}
 
 describe('Form Validation functions', () => {
     it('builds tests using blank', () => {
@@ -42,5 +53,10 @@ describe('Form Validation functions', () => {
         expect(name.tests[0].critical).toBe(false);
         expect(name.tests[0].test('a')).toBe(true);
         expect(test).toHaveBeenCalledWith('a');
+    });
+    it('can use a component', () => {
+        let wrapped;
+        expect(() => (wrapped = addFormFieldValidations(TestForm, 'foo'))).not.toThrow();
+        expect(wrapped.foo).toEqual('bar');
     });
 });
