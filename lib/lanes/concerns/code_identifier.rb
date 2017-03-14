@@ -25,8 +25,8 @@ module Lanes
                     if from
                         before_validation(:on=>:create) do
                             source = self[from]
-                            unless source.blank?
-                                self.code ||= Lanes::Strings.code_identifier( source, length:max_length, padding: '' )
+                            if code.blank? && !source.blank?
+                                self.code = Lanes::Strings.code_identifier(source, length:max_length, padding: '')
                             end
                         end
                     end
