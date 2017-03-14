@@ -125,4 +125,5 @@ module Lanes
     # We can only use the TrackModifications concern after the User model is defined
     Model.send(:include, Concerns::TrackModifications )
 
+    User.tracks_user_modifications
 end
