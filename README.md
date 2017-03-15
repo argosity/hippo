@@ -4,6 +4,8 @@ Lanes is a web framework that aims to make writing single page apps as simple as
 
 Read more at [lanesframework.org](http://lanesframework.org/)
 
+[![Build Status](https://travis-ci.org/argosity/lanes.svg?branch=master)](https://travis-ci.org/argosity/lanes)
+
 It's extracted from the Stockor ERP application and is still very much a work in progress.
 
 Some of it's features are:

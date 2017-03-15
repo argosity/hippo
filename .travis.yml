@@ -1,0 +1,17 @@
+sudo: required
+dist: trusty
+language: ruby
+cache: bundler
+addons:
+  postgresql: "9.6"
+services:
+  - postgresql
+  - redis-server
+rvm:
+  - "2.4.0"
+script:
+  - bundle exec rake ci
+env:
+  global:
+    - DATABASE_URL=postgres://travis@127.0.0.1:5432/travis
+    - REDIS_URL=redis://localhost:6379

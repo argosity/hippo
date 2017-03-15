@@ -29,3 +29,8 @@ task :doc => 'db:environment' do
     Rake::Task["db:schema:dump"].invoke
     Rake::Task["yard"].invoke
 end
+
+task :ci => ['db:migrate', 'db:seed'] do
+    sh %{bundle exec lanes jest}
+    sh %{$(npm bin)/eslint client spec/client/}
+end
