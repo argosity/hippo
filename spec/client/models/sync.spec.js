@@ -1,8 +1,7 @@
 import Sync from 'lanes/models/sync';
-import { Box, Container } from '../test-models';
+import { Box } from '../test-models';
 
 describe('Network sync', () => {
-
     it('makes a request', () => {
         fetch.mockResponseOnce(JSON.stringify({ access_token: '12345' }));
         Sync.perform('/foo')
@@ -11,7 +10,7 @@ describe('Network sync', () => {
             });
         expect(fetch).toHaveBeenCalledWith(
             '/foo.json',
-            { headers: { "Content-Type": "application/json"} },
+            { headers: { 'Content-Type': 'application/json' } },
         );
     });
 

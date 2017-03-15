@@ -1,8 +1,6 @@
 import { observable } from 'mobx';
-import { get } from 'lodash';
 import {
-    BaseModel, identifiedBy, session,
-    belongsTo, identifier, computed,
+    BaseModel, identifiedBy, session, identifier,
 } from '../models/base';
 
 const All = observable.array();
@@ -21,7 +19,7 @@ export default class ScreensGroup extends BaseModel {
     @session({ type: 'array' }) screens;
 
     static forId(groupId) {
-        return All.find(g=> g.id === groupId);
+        return All.find(g => g.id === groupId);
     }
     static register(json) {
         let group = this.forId(json.id);

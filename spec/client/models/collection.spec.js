@@ -1,8 +1,7 @@
-import { Box, Container } from '../test-models';
-import { autorun, action, observable, computed } from 'mobx';
+import { autorun } from 'mobx';
+import { Box } from '../test-models';
 
-describe("Model Collection Test", () => {
-
+describe('Model Collection Test', () => {
     it('adds items specific for each model', () => {
         const collection = Box.Collection.create();
         expect(Box.identifiedBy).toEqual('test/box');

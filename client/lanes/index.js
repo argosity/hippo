@@ -1,1 +1,0 @@
-import Boot from './boot';

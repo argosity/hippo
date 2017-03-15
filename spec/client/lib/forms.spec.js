@@ -1,12 +1,12 @@
 import React from 'react';
 import {
     addFormFieldValidations, buildValidations,
-    nonBlank, validEmail, hasLength, validation
-} from 'lanes/lib/form-validation';
+    nonBlank, validEmail, hasLength, validation,
+} from 'lanes/lib/forms';
 
 class TestForm extends React.PureComponent {
     static formValidations = {
-            name: nonBlank,
+        name: nonBlank,
     }
     static foo = 'bar'
 }

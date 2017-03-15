@@ -1,7 +1,6 @@
 import * as Util from 'lanes/lib/util';
 
 describe('Util helper functions', () => {
-
     it('dasherize', () => {
         expect(Util.dasherize('bar baz bing')).toEqual('bar-baz-bing');
     });
@@ -40,5 +39,4 @@ describe('Util helper functions', () => {
         expect(Util.isBlank(undefined)).toBe(true);
         expect(Util.isBlank(null)).toBe(true);
     });
-
 });

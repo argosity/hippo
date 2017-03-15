@@ -1,5 +1,5 @@
 import { observable, autorun } from 'mobx';
-import { extend, get, find } from 'lodash';
+import { get } from 'lodash';
 import {
     BaseModel, identifiedBy, session,
     belongsTo, identifier, computed,
@@ -17,7 +17,7 @@ class InstanceCollection {
     onLengthChange() {
         const len = this.models.length;
         if (!len) { return; }
-        if (len === 1) {
+        if (1 === len) {
             this.active = this.models[0];
         } else if (!this.active) {
             this.active = this.models[len - 1];
@@ -50,7 +50,7 @@ export default class Instance extends BaseModel {
     }
 
     @session({ type: 'object' }) props = {};
-    @belongsTo({ model: 'lanes/screen/definition'}) definition;
+    @belongsTo({ model: 'lanes/screen/definition' }) definition;
 
     @identifier({ type: 'string' }) id;
 
@@ -63,7 +63,7 @@ export default class Instance extends BaseModel {
         this.props.screen = this;
 
         displaying.add(this);
-        if (attrs.isActive){
+        if (attrs.isActive) {
             displaying.active = this;
         }
     }
@@ -84,7 +84,7 @@ export default class Instance extends BaseModel {
         let code = get(this.model, 'visibleIdentifier', '');
         if (code) { code = `::${code}`; }
         let { title } = this.definition;
-        if (title.length > 12) { title = `${title.slice(0, 10)}…`; }
+        if (12 < title.length) { title = `${title.slice(0, 10)}…`; }
         return title + code;
     }
 

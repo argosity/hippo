@@ -1,8 +1,7 @@
 import { autorun, observe } from 'mobx';
-import { Ship, Container, Box, } from '../test-models';
+import { Ship, Container, Box } from '../test-models';
 
-describe("BaseModel Test", () => {
-
+describe('BaseModel Test', () => {
     it('translates assignments to a hasMany field into reset()', () => {
         const container = new Container();
         const originalBoxes = container.boxes;
@@ -22,7 +21,6 @@ describe("BaseModel Test", () => {
         expect(boat.container.name).toEqual('Ceci n’est pas une récipient');
         expect(boat.container.vessel).toBe(boat);
         boat.container = null;
-
     });
 
     it('computes the syncUrl', () => {
@@ -87,5 +85,4 @@ describe("BaseModel Test", () => {
         expect(() => (container.id = 42)).toThrow('Bad Type');
         expect(container.id).toEqual('test');
     });
-
 });

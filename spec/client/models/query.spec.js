@@ -231,7 +231,7 @@ describe('Model Queries', () => {
 
     describe('sorting', () => {
         beforeEach(() => {
-            query.results.reset()
+            query.results.reset();
             shuffle(range(0, 5)).forEach(
                 i => query.results.rows.push([i, `${i} l`, 10 + i, 10 + i, 10 + i]),
             );
@@ -262,5 +262,4 @@ describe('Model Queries', () => {
             );
         });
     });
-
 });

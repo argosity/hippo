@@ -1,4 +1,3 @@
-import React from 'react';
 import { merge } from 'lodash';
 import {
     BaseModel,
@@ -72,25 +71,22 @@ export class Container extends BaseModel {
     }
 }
 
-export function getTestScreen(attrs = {}){
+export function getTestScreen(attrs = {}) {
     return ScreenDefinition.register(merge({
-        id: 'test', title: 'title', icon: 'red', component: {},
-        model: 'test/box', view:  'view_class', assets: ['test.js', 'test.css'],
-        access: 'test/box', group_id: 'group_id', extension_id: 'test',
-        url_prefix: 'test', description: 'description'
+        id: 'test',
+        title: 'title',
+        icon: 'red',
+        component: {},
+        model: 'test/box',
+        view:  'view_class',
+        assets: ['test.js', 'test.css'],
+        access: 'test/box',
+        group_id: 'group_id',
+        extension_id: 'test',
+        url_prefix: 'test',
+        description: 'description',
     }, attrs));
 }
-
-// export class ReactContext {
-//     constructor() {
-//         const container = document.createElement('div');
-//         this.context = { viewport, uistate };
-//         this.childContextTypes = {
-//             viewport: React.PropTypes.object,
-//             uistate:  React.PropTypes.object,
-//         };
-//     }
-// }
 
 export class TestExtension extends BaseExtension {
     get identifier() { return 'test'; }

@@ -2,7 +2,7 @@
 
 exports[`Asset Component renders and matches snapshot 1`] = `
 <div
-  className="asset"
+  className="asset form-field"
 >
   <div
     className="grommetux-form-field grommetux-form-field--size-medium"

@@ -1,10 +1,8 @@
+import { merge } from 'lodash';
 import {
     BaseModel, identifiedBy, identifier, belongsTo, field, computed,
 } from './base';
-
-import { merge } from 'lodash';
-import Sync from './sync';
-import Asset from './asset';
+import Sync  from './sync';
 
 @identifiedBy('lanes/system-settings')
 export default class SystemSettings extends BaseModel {

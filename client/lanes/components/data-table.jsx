@@ -1,5 +1,6 @@
 import React from 'react';
-import { pick, extend, defaults, map, bindAll, partial, toInteger, isNumber, } from 'lodash';
+import { pick, extend, defaults, map, bindAll, partial, toInteger, isNumber } from 'lodash';
+import { defaultTableRowRenderer, Table, InfiniteLoader, AutoSizer, Column } from 'react-virtualized';
 import { action, computed, observable, autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import cn from 'classnames';
@@ -219,9 +220,9 @@ export default class DataTable extends React.Component {
                                     height={height}
                                     width={width}
                                     ref={(table) => {
-                                        registerChild(table);
-                                        this.tableRef = table;
-                                    }}
+                                            registerChild(table);
+                                            this.tableRef = table;
+                                        }}
                                     rowHeight={this.calculateRowHeight}
                                     rowGetter={this.rowAtIndex}
                                     estimatedRowSize={40}

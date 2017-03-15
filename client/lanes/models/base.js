@@ -1,13 +1,13 @@
 import {
-    findModel
+    findModel,
 } from 'mobx-decorated-models';
 import invariant from 'invariant';
 import {
-    isEmpty, isNil, find, invoke, get, extend, assign, pick,
+    isEmpty, isNil, find, extend, assign, pick,
 } from 'lodash';
 
-import { action, observable, computed, autorun } from 'mobx';
-import { capitalize, singular, underscored } from '../lib/util';
+import { action, observable, computed } from 'mobx';
+
 import pluralize from 'pluralize';
 
 import Sync from './sync';

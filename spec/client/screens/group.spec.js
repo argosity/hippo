@@ -1,6 +1,6 @@
 import ScreensGroup from 'lanes/screens/group';
 import { autorun } from 'mobx';
-import { Box, TestExtension, getTestScreen } from '../test-models';
+import { getTestScreen } from '../test-models';
 
 jest.mock('lanes/lib/request-assets');
 

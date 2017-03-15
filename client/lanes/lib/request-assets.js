@@ -8,7 +8,7 @@ class AssetLoader {
         const completed = {};
         const onComplete = (url, success, error = false) => {
             finished += 1;
-            completed[url] = { success: success === true, error };
+            completed[url] = { success: true === success, error };
             if (finished === urls.length) { cb(completed); }
         };
 
@@ -24,7 +24,7 @@ class AssetLoader {
 }
 
 export default function RequestAssets(...urlArgs) {
-    const urls = ((urlArgs.length === 1) && isArray(urlArgs[0])) ? urlArgs[0] : urlArgs;
+    const urls = ((1 === urlArgs.length) && isArray(urlArgs[0])) ? urlArgs[0] : urlArgs;
     return new Promise((resolve, reject) =>
         new AssetLoader(urls, (completed) => {
             const failures = pick(completed, status => !status.success);

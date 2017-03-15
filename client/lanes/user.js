@@ -2,7 +2,7 @@ import { pick, merge, bindAll } from 'lodash';
 import { action } from 'mobx';
 
 import {
-    BaseModel, identifiedBy, field, session, identifier, computed,
+    BaseModel, identifiedBy, field, identifier, computed,
 } from './models/base';
 
 import Config from './config';
@@ -19,7 +19,7 @@ class Session extends BaseModel {
 
 
 @identifiedBy('lanes/user')
-export class User extends BaseModel {
+export class UserModel extends BaseModel {
 
     @identifier({ type: 'number' }) id;
     @field login;
@@ -67,7 +67,7 @@ export class User extends BaseModel {
     }
 }
 
-const current_user = new User();
+const current_user = new UserModel();
 
 export default current_user;
 

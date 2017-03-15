@@ -1,24 +1,14 @@
-import { autorun, observable } from 'mobx';
-import { get, delay, extend, filter, map, uniq } from 'lodash';
-
-import { classify, logger } from '../lib/util';
-import Config from '../config'
-import RequestAssets from '../lib/request-assets';
 import Extensions from '../extensions';
 import {
-    BaseModel, identifiedBy, session,
-    belongsTo, identifier, computed,
+    BaseModel, identifiedBy, session, identifier, computed,
 } from '../models/base';
-import User from '../user';
+
 import Instance, { displaying } from './instance';
+
+import Registry from './index';
 import Group from './group';
 
-import { createAsyncComponent } from 'react-async-component';
-
-export { createAsyncComponent };
-import Registry from './index';
-
-import Groups from './group';
+export { createAsyncComponent } from 'react-async-component';
 
 @identifiedBy('lanes/screen/definition')
 export default class ScreenDefinition extends BaseModel {
@@ -46,7 +36,7 @@ export default class ScreenDefinition extends BaseModel {
         } else {
             screen = new ScreenDefinition(json);
             Registry.all.set(screen.id, screen);
-            const group = Groups.forId(screen.group_id);
+            const group = Group.forId(screen.group_id);
             if (group) { group.screens.push(screen); }
         }
         screen.component = comp;
@@ -61,19 +51,12 @@ export default class ScreenDefinition extends BaseModel {
         return BaseModel.findDerived(this.model);
     }
 
-    // load(cb) {
-    //     this.loadFn((comp) => {
-    //         this.component = comp.default ? comp.default : comp;
-    //         cb(this.component);
-    //     });
-    // }
-
     @computed get instances() {
-        return displaying.findInstance(this.id); // displaying, instance => (instance.screen === this));
+        return displaying.findInstance(this.id);
     }
 
     display() {
-        let instance = displaying.findInstance(this.id); //this.instances[0];
+        let instance = displaying.findInstance(this.id); // this.instances[0];
         if (!instance) {
             instance = new Instance({ definition: this, isActive: true });
         }
@@ -81,48 +64,4 @@ export default class ScreenDefinition extends BaseModel {
         return instance;
     }
 
-//    loadScreen() {
-
-        // return new Promise((resolve, reject) => {
-        //     this.isLoading = true;
-        //     let attempt = 0;
-        //     const onViewLoaded = (view) => {
-        //         this.isLoading = false;
-        //         resolve(view);
-        //     };
-        //     const done = () => {
-        //         if (this.screen) {
-        //             onViewLoaded(this.screen);
-        //         } else if (attempt < 3) {
-        //             attempt += 1;
-        //             delay(done, 500 * attempt);
-        //         } else {
-        //             reject(`Screen ${this.view} not definied after file retrieval`);
-        //         }
-        //     };
-        //     const err = (msg) => {
-        //         logger.warn(msg);
-        //         this.isLoading = false;
-        //         reject(msg);
-        //     };
-        //     return RequestAssets(...this.asset_paths).then(done, err);
-        // });
-//    }
-    // display(defaultProps) {
-    //     const props = extend({}, defaultProps, { screen: this });
-    //     const display = (resolve) => {
-    //         const sv = new ScreenView(props);
-    //         sv.active = true;
-    //         return resolve(sv);
-    //     };
-    //     return this.ensureLoaded().then(() =>
-    //         new Promise((resolve) => {
-    //             if (Lanes.current_user.isLoggedIn) {
-    //                 return display(resolve);
-    //             } else {
-    //                 return Lanes.current_user.on('change:isLoggedIn', () => display(resolve));
-    //             }
-    //         })
-    //     );
-    // }
 }

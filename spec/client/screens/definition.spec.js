@@ -1,5 +1,3 @@
-import RequestAssets from 'lanes/lib/request-assets';
-import { onLoadCallback } from 'lanes/screens/definition';
 import { Box, TestExtension, getTestScreen } from '../test-models';
 
 jest.mock('lanes/lib/request-assets');

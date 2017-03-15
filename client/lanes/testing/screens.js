@@ -1,3 +1,5 @@
+/* global jest */
+
 import React from 'react';
 import SnapShot   from 'react-test-renderer';
 
@@ -27,9 +29,9 @@ class TestRouter {
 }
 
 function makeContext() {
-        return {
-            router: new TestRouter()
-        };
+    return {
+        router: new TestRouter(),
+    };
 }
 
 function childContextTypes() {
@@ -50,7 +52,7 @@ export function Snapshot(el) {
         static childContextTypes = childContextTypes();
 
         getChildContext() {
-            return this._childContext || ( this._childContext = makeContext() );
+            return this._childContext || (this._childContext = makeContext());
         }
 
         render() {

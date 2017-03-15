@@ -1,11 +1,7 @@
 import { get, compact, first, filter, find, uniqueId } from 'lodash';
-
 import {
-    BaseModel, identifiedBy, field, session, autorun,
-    belongsTo, hasMany, identifier, computed, observable,
+    BaseModel, identifiedBy, autorun, belongsTo, computed, observable,
 } from '../base';
-import { action } from 'mobx';
-
 
 @identifiedBy('lanes/query/clause')
 export default class Clause extends BaseModel {

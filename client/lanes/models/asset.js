@@ -1,19 +1,18 @@
 import { includes, get, isEmpty } from 'lodash';
 import qs from 'qs';
 import { autorun } from 'mobx';
-
-import { classify } from '../lib/util';
 import {
-    BaseModel, identifiedBy, field, session, identifier, computed, belongsTo
+    BaseModel, identifiedBy, field, session, identifier, computed,
 } from './base';
 import Config from '../config';
+
 const IMAGES = [
     'image/png', 'image/jpeg', 'image/gif',
 ];
 
 const IS_IMAGE = content_type => !!(content_type && (-1 !== IMAGES.indexOf(content_type)));
 
-const UPDATE_METHODS = { POST: true, PUT: true, PATCH: true }
+const UPDATE_METHODS = { POST: true, PUT: true, PATCH: true };
 
 @identifiedBy('lanes/asset')
 export default class Asset extends BaseModel {
@@ -27,7 +26,7 @@ export default class Asset extends BaseModel {
     @session({ type: 'object' }) file_data;
     @session metadata;
 
-    @field({ type: 'object'}) owner;
+    @field({ type: 'object' }) owner;
     @field owner_association_name;
 
     constructor(props) {

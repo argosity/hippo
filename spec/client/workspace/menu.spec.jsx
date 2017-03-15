@@ -1,7 +1,7 @@
-import React from 'react';
 import { each, range } from 'lodash';
 
 import Group      from 'lanes/screens/group';
+import Screen     from 'lanes/screens/definition';
 import Menu       from 'lanes/workspace/menu';
 import MenuGroup  from 'lanes/workspace/menu-group';
 import MenuOption from 'lanes/workspace/menu-option';
@@ -11,9 +11,15 @@ import { getTestScreen } from '../test-models';
 
 describe('Workspace Menu', () => {
     beforeEach(() => {
-        each(range(0, 5), i =>
-            Group.register({ id: `group-${i}`, title: `Group # ${i}`, icon: `grp-${i}` }),
-        );
+        Group.enabled_group_ids = [];
+        each(range(0, 5), (i) => {
+            const gid = `group-${i}`;
+            Group.enabled_group_ids.push(gid);
+            Group.register({ id: gid, title: `Group # ${i}`, icon: `grp-${i}` });
+            Screen.register({
+                group_id: gid, icon: 'unknown', id: `screen-${i}`, title: `test screen for ${i}`
+            });
+        });
     });
 
     it('renders with a logout button', () => {
@@ -21,7 +27,7 @@ describe('Workspace Menu', () => {
         expect(menu).toHaveRendered('Logout');
     });
 
-    it('renders groups', () => {
+    fit('renders groups', () => {
         const menu = shallow(<Menu />);
         expect(menu.find('Group').length).toEqual(5);
         expect(Snapshot(<Menu />)).toMatchSnapshot();

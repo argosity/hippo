@@ -1,9 +1,8 @@
-import { filter, get, isString, extend } from 'lodash';
+import { get, isString, extend } from 'lodash';
+import { action, reaction, observe } from 'mobx';
 import {
-    BaseModel, identifiedBy, field, session,
-    belongsTo, hasMany, identifier, computed, observable,
+    BaseModel, identifiedBy, field, belongsTo, hasMany, identifier, computed, observable,
 } from './base';
-import { autorun, action, reaction, observe } from 'mobx';
 
 import Info        from './query/info';
 import Types       from './query/types';

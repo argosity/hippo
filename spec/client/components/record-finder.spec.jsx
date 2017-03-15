@@ -27,15 +27,10 @@ describe("RecordFinder Component", () => {
         props = {
             onRecordFound: jest.fn(),
             name: 'name',
-            fields: {
-                name: {
-                    value: 'ONE',
-                    events: {}
-                }
-            },
-            query
-        }
-
+            recordsTitle: 'Foos',
+            fields: { name: { value: 'ONE', events: {} } },
+            query,
+        };
         range(0, 5).forEach(
             i => query.results.rows.push([i, `name ${i}`, `location ${i}`]),
         );
@@ -45,7 +40,6 @@ describe("RecordFinder Component", () => {
         const finder = mount(
             <RecordFinder {...props} />,
         );
-        console.log(finder.debug())
         expect(finder).toHaveRendered('TextInput');
     });
 });

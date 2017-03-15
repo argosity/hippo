@@ -24,22 +24,21 @@
  */
 
 (function() {
-
-  var matchers = {};
-  var priv = {};
+    const matchers = {};
+    const priv = {};
 
   /**
    * @inner
    * @param  {Object} object
    * @param  {Function} fn
    */
-  priv.each = function(object, fn) {
-    for (var key in object) {
-      if (object.hasOwnProperty(key)) {
-        fn.call(this, object[key], key, object);
-      }
-    }
-  };
+    priv.each = function(object, fn) {
+        for (const key in object) {
+            if (object.hasOwnProperty(key)) {
+                fn.call(this, object[key], key, object);
+            }
+        }
+    };
 
   /**
    * @inner
@@ -48,12 +47,12 @@
    * @param  {*} memo
    * @return {*} memo
    */
-  priv.reduce = function(object, fn, memo) {
-    priv.each.call(this, object, function(el, ix, list) {
-      memo = fn(memo, el, ix, list);
-    });
-    return memo;
-  };
+    priv.reduce = function(object, fn, memo) {
+        priv.each.call(this, object, (el, ix, list) => {
+            memo = fn(memo, el, ix, list);
+        });
+        return memo;
+    };
 
   /**
    * @inner
@@ -61,29 +60,27 @@
    * @param  {Function} fn
    * @return {Boolean}
    */
-  priv.all = function(array, fn) {
-    var i;
-    var len = array.length;
-    for (i = 0; i < len; i++) {
-      if (fn.call(this, array[i], i, array) === false) {
-        return false;
-      }
-    }
-    return true;
-  };
+    priv.all = function(array, fn) {
+        let i;
+        const len = array.length;
+        for (i = 0; i < len; i++) {
+            if (false === fn.call(this, array[i], i, array)) {
+                return false;
+            }
+        }
+        return true;
+    };
 
   /**
    * @inner
    * @param  {String} matcherName
    * @return {Boolean}
    */
-  priv.expectAllMembers = function(matcherName) {
-    return priv.all.call(this, this.actual, function(item) {
-      return matchers[matcherName].call({
-        actual: item
-      });
-    });
-  };
+    priv.expectAllMembers = function(matcherName) {
+        return priv.all.call(this, this.actual, item => matchers[matcherName].call({
+            actual: item,
+        }));
+    };
 
   /**
    * Assert subject is of type
@@ -92,9 +89,9 @@
    * @param  {String} type
    * @return {Boolean}
    */
-  priv.is = function(subject, type) {
-    return Object.prototype.toString.call(subject) === '[object ' + type + ']';
-  };
+    priv.is = function(subject, type) {
+        return Object.prototype.toString.call(subject) === `[object ${type}]`;
+    };
 
   /**
    * Assert subject is an HTML Element with the given node type
@@ -103,9 +100,9 @@
    * @param  {String} type
    * @return {Boolean}
    */
-  priv.isHtmlElementOfType = function(subject, type) {
-    return subject && subject.nodeType === type;
-  };
+    priv.isHtmlElementOfType = function(subject, type) {
+        return subject && subject.nodeType === type;
+    };
 
   /**
    * Convert Array-like Object to true Array
@@ -113,9 +110,9 @@
    * @param  {*} list
    * @return {Array}
    */
-  priv.toArray = function(list) {
-    return [].slice.call(list);
-  };
+    priv.toArray = function(list) {
+        return [].slice.call(list);
+    };
 
   /**
    * @inner
@@ -124,14 +121,14 @@
    * @param  (*) ...
    * @return {Boolean}
    */
-  priv.assertMember = function( /* matcherName, memberName, ... */ ) {
-    var args = priv.toArray(arguments);
-    var matcherName = args.shift();
-    var memberName = args.shift();
-    return priv.is(this.actual, 'Object') && matchers[matcherName].apply({
-      actual: this.actual[memberName]
-    }, args);
-  };
+    priv.assertMember = function(/* matcherName, memberName, ... */) {
+        const args = priv.toArray(arguments);
+        const matcherName = args.shift();
+        const memberName = args.shift();
+        return priv.is(this.actual, 'Object') && matchers[matcherName].apply({
+            actual: this.actual[memberName],
+        }, args);
+    };
 
   /**
    * @summary
@@ -145,15 +142,15 @@
    * @param  {*}       actual The expected value.
    * @return {String}         The message to display on failure.
    */
-  priv.formatFailMessage = function(util, name, args, pass, actual) {
-    if (name.search(/^toHave/) === -1) {
-      return util.buildFailureMessage.apply(null, [name, pass, actual].concat(args));
-    }
-    var memberName = args.shift();
-    return util.buildFailureMessage.apply(null, [name, pass, actual].concat(args))
-      .replace('Expected', 'Expected member "' + memberName + '" of')
+    priv.formatFailMessage = function(util, name, args, pass, actual) {
+        if (-1 === name.search(/^toHave/)) {
+            return util.buildFailureMessage.apply(null, [name, pass, actual].concat(args));
+        }
+        const memberName = args.shift();
+        return util.buildFailureMessage.apply(null, [name, pass, actual].concat(args))
+      .replace('Expected', `Expected member "${memberName}" of`)
       .replace(' to have ', ' to be ');
-  };
+    };
 
   /**
    * @summary
@@ -163,25 +160,25 @@
    * @param  {Object} v1Matchers
    * @return {Object} v2Matchers
    */
-  priv.adaptMatchers = function(v1Matchers) {
-    return priv.reduce(v1Matchers, function(v2Matchers, matcher, name) {
-      v2Matchers[name] = function(util) {
-        return {
-          compare: function(actual /*, expected, ...*/ ) {
-            var args = priv.toArray(arguments).slice(1);
-            var pass = matcher.apply({
-              actual: actual
-            }, args);
-            return {
-              pass: pass,
-              message: priv.formatFailMessage(util, name, args, pass, actual)
+    priv.adaptMatchers = function(v1Matchers) {
+        return priv.reduce(v1Matchers, (v2Matchers, matcher, name) => {
+            v2Matchers[name] = function(util) {
+                return {
+                    compare(actual /* , expected, ...*/) {
+                        const args = priv.toArray(arguments).slice(1);
+                        const pass = matcher.apply({
+                            actual,
+                        }, args);
+                        return {
+                            pass,
+                            message: priv.formatFailMessage(util, name, args, pass, actual),
+                        };
+                    },
+                };
             };
-          }
-        };
-      };
-      return v2Matchers;
-    }, {});
-  };
+            return v2Matchers;
+        }, {});
+    };
 
   /**
    * @file Arrays
@@ -200,9 +197,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeArray = function() {
-    return this.actual instanceof Array;
-  };
+    matchers.toBeArray = function() {
+        return this.actual instanceof Array;
+    };
 
   /**
    * @alias
@@ -214,9 +211,9 @@
    * @param {Number} size
    * @return {Boolean}
    */
-  matchers.toBeArrayOfSize = function(size) {
-    return priv.is(this.actual, 'Array') && this.actual.length === size;
-  };
+    matchers.toBeArrayOfSize = function(size) {
+        return priv.is(this.actual, 'Array') && this.actual.length === size;
+    };
 
   /**
    * @alias
@@ -227,9 +224,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeEmptyArray = function() {
-    return matchers.toBeArrayOfSize.call(this, 0);
-  };
+    matchers.toBeEmptyArray = function() {
+        return matchers.toBeArrayOfSize.call(this, 0);
+    };
 
   /**
    * @alias
@@ -240,20 +237,20 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeNonEmptyArray = function() {
-    return priv.is(this.actual, 'Array') && this.actual.length > 0;
-  };
+    matchers.toBeNonEmptyArray = function() {
+        return priv.is(this.actual, 'Array') && 0 < this.actual.length;
+    };
 
   /**
    * @inner
    * @param {String} toBeX
    * @return {Function}
    */
-  priv.createToBeArrayOfXsMatcher = function(toBeX) {
-    return function() {
-      return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, toBeX);
+    priv.createToBeArrayOfXsMatcher = function(toBeX) {
+        return function() {
+            return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, toBeX);
+        };
     };
-  };
 
   /**
    * @alias
@@ -264,9 +261,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeArrayOfObjects = function() {
-    return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, 'toBeObject');
-  };
+    matchers.toBeArrayOfObjects = function() {
+        return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, 'toBeObject');
+    };
 
   /**
    * @alias
@@ -277,9 +274,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeArrayOfStrings = function() {
-    return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, 'toBeString');
-  };
+    matchers.toBeArrayOfStrings = function() {
+        return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, 'toBeString');
+    };
 
   /**
    * @alias
@@ -290,9 +287,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeArrayOfNumbers = function() {
-    return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, 'toBeNumber');
-  };
+    matchers.toBeArrayOfNumbers = function() {
+        return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, 'toBeNumber');
+    };
 
   /**
    * @alias
@@ -303,9 +300,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeArrayOfBooleans = function() {
-    return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, 'toBeBoolean');
-  };
+    matchers.toBeArrayOfBooleans = function() {
+        return priv.is(this.actual, 'Array') && priv.expectAllMembers.call(this, 'toBeBoolean');
+    };
 
   /**
    * @file Booleans
@@ -323,9 +320,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeBoolean = function() {
-    return matchers.toBeTrue.call(this) || matchers.toBeFalse.call(this);
-  };
+    matchers.toBeBoolean = function() {
+        return matchers.toBeTrue.call(this) || matchers.toBeFalse.call(this);
+    };
 
   /**
    * @alias
@@ -336,9 +333,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeTrue = function() {
-    return this.actual === true || this.actual instanceof Boolean && this.actual.valueOf() === true;
-  };
+    matchers.toBeTrue = function() {
+        return true === this.actual || this.actual instanceof Boolean && true === this.actual.valueOf();
+    };
 
   /**
    * @alias
@@ -349,9 +346,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeFalse = function() {
-    return this.actual === false || this.actual instanceof Boolean && this.actual.valueOf() === false;
-  };
+    matchers.toBeFalse = function() {
+        return false === this.actual || this.actual instanceof Boolean && false === this.actual.valueOf();
+    };
 
   /**
    * @file Browser
@@ -370,9 +367,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeWindow = function() {
-    return this.actual && typeof this.actual === 'object' && this.actual.window === this.actual;
-  };
+    matchers.toBeWindow = function() {
+        return this.actual && 'object' === typeof this.actual && this.actual.window === this.actual;
+    };
 
   /**
    * @alias
@@ -384,9 +381,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeDocument = function() {
-    return this.actual && typeof this.actual === 'object' && this.actual instanceof window.HTMLDocument;
-  };
+    matchers.toBeDocument = function() {
+        return this.actual && 'object' === typeof this.actual && this.actual instanceof window.HTMLDocument;
+    };
 
   /**
    * @alias
@@ -397,9 +394,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeHtmlNode = function() {
-    return priv.isHtmlElementOfType(this.actual, 1);
-  };
+    matchers.toBeHtmlNode = function() {
+        return priv.isHtmlElementOfType(this.actual, 1);
+    };
 
   /**
    * @alias
@@ -410,9 +407,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeHtmlTextNode = function() {
-    return priv.isHtmlElementOfType(this.actual, 3);
-  };
+    matchers.toBeHtmlTextNode = function() {
+        return priv.isHtmlElementOfType(this.actual, 3);
+    };
 
   /**
    * @alias
@@ -423,9 +420,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeHtmlCommentNode = function() {
-    return priv.isHtmlElementOfType(this.actual, 8);
-  };
+    matchers.toBeHtmlCommentNode = function() {
+        return priv.isHtmlElementOfType(this.actual, 8);
+    };
 
   /**
    * @file Dates
@@ -444,9 +441,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeDate = function() {
-    return this.actual instanceof Date;
-  };
+    matchers.toBeDate = function() {
+        return this.actual instanceof Date;
+    };
 
   /**
    * @alias
@@ -457,12 +454,12 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeIso8601 = function() {
-    return matchers.toBeString.call(this)
-      && this.actual.length >= 10
-      && new Date(this.actual).toString() !== 'Invalid Date'
+    matchers.toBeIso8601 = function() {
+        return matchers.toBeString.call(this)
+      && 10 <= this.actual.length
+      && 'Invalid Date' !== new Date(this.actual).toString()
       && new Date(this.actual).toISOString().slice(0, this.actual.length) === this.actual;
-  };
+    };
 
   /**
    * @alias
@@ -474,9 +471,9 @@
    * @param {Date} date
    * @return {Boolean}
    */
-  matchers.toBeBefore = function(date) {
-    return matchers.toBeDate.call(this) && matchers.toBeDate.call({ actual: date }) && this.actual.getTime() < date.getTime();
-  };
+    matchers.toBeBefore = function(date) {
+        return matchers.toBeDate.call(this) && matchers.toBeDate.call({ actual: date }) && this.actual.getTime() < date.getTime();
+    };
 
   /**
    * @alias
@@ -488,9 +485,9 @@
    * @param {Date} date
    * @return {Boolean}
    */
-  matchers.toBeAfter = function(date) {
-    return matchers.toBeBefore.call({ actual: date }, this.actual);
-  };
+    matchers.toBeAfter = function(date) {
+        return matchers.toBeBefore.call({ actual: date }, this.actual);
+    };
 
   /**
    * @file Errors
@@ -508,15 +505,15 @@
    *
    * @return {Boolean}
    */
-  matchers.toThrowError = function() {
-    var threwError = false;
-    try {
-      this.actual();
-    } catch (e) {
-      threwError = true;
-    }
-    return threwError;
-  };
+    matchers.toThrowError = function() {
+        let threwError = false;
+        try {
+            this.actual();
+        } catch (e) {
+            threwError = true;
+        }
+        return threwError;
+    };
 
   /**
    * @alias
@@ -528,15 +525,15 @@
    * @param  {String} type
    * @return {Boolean}
    */
-  matchers.toThrowErrorOfType = function(type) {
-    var threwErrorOfType = false;
-    try {
-      this.actual();
-    } catch (e) {
-      threwErrorOfType = (e.name === type);
-    }
-    return threwErrorOfType;
-  };
+    matchers.toThrowErrorOfType = function(type) {
+        let threwErrorOfType = false;
+        try {
+            this.actual();
+        } catch (e) {
+            threwErrorOfType = (e.name === type);
+        }
+        return threwErrorOfType;
+    };
 
   /**
    * @file Numbers
@@ -554,9 +551,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeNumber = function() {
-    return !isNaN(parseFloat(this.actual)) && !priv.is(this.actual, 'String');
-  };
+    matchers.toBeNumber = function() {
+        return !isNaN(parseFloat(this.actual)) && !priv.is(this.actual, 'String');
+    };
 
   /**
    * @alias
@@ -567,9 +564,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeEvenNumber = function() {
-    return matchers.toBeNumber.call(this) && this.actual % 2 === 0;
-  };
+    matchers.toBeEvenNumber = function() {
+        return matchers.toBeNumber.call(this) && 0 === this.actual % 2;
+    };
 
   /**
    * @alias
@@ -580,9 +577,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeOddNumber = function() {
-    return matchers.toBeNumber.call(this) && this.actual % 2 !== 0;
-  };
+    matchers.toBeOddNumber = function() {
+        return matchers.toBeNumber.call(this) && 0 !== this.actual % 2;
+    };
 
   /**
    * @alias
@@ -601,9 +598,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeCalculable = function() {
-    return !isNaN(this.actual * 2);
-  };
+    matchers.toBeCalculable = function() {
+        return !isNaN(this.actual * 2);
+    };
 
   /**
    * @alias
@@ -616,9 +613,9 @@
    * @param {Number} ceiling
    * @return {Boolean}
    */
-  matchers.toBeWithinRange = function(floor, ceiling) {
-    return matchers.toBeNumber.call(this) && this.actual >= floor && this.actual <= ceiling;
-  };
+    matchers.toBeWithinRange = function(floor, ceiling) {
+        return matchers.toBeNumber.call(this) && this.actual >= floor && this.actual <= ceiling;
+    };
 
   /**
    * @alias
@@ -629,9 +626,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeWholeNumber = function() {
-    return matchers.toBeNumber.call(this) && (this.actual === 0 || this.actual % 1 === 0);
-  };
+    matchers.toBeWholeNumber = function() {
+        return matchers.toBeNumber.call(this) && (0 === this.actual || 0 === this.actual % 1);
+    };
 
   /**
    * @file Objects
@@ -649,11 +646,9 @@
    * @param  {Object} object
    * @return {Number}
    */
-  priv.countMembers = function(object) {
-    return priv.reduce(object, function(memo, el, ix) {
-      return memo + 1;
-    }, 0);
-  };
+    priv.countMembers = function(object) {
+        return priv.reduce(object, (memo, el, ix) => memo + 1, 0);
+    };
 
   /**
    * @alias
@@ -665,9 +660,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeObject = function() {
-    return this.actual instanceof Object;
-  };
+    matchers.toBeObject = function() {
+        return this.actual instanceof Object;
+    };
 
   /**
    * @alias
@@ -678,9 +673,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeEmptyObject = function() {
-    return priv.is(this.actual, 'Object') && priv.countMembers(this.actual) === 0;
-  };
+    matchers.toBeEmptyObject = function() {
+        return priv.is(this.actual, 'Object') && 0 === priv.countMembers(this.actual);
+    };
 
   /**
    * @alias
@@ -691,9 +686,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeNonEmptyObject = function() {
-    return priv.is(this.actual, 'Object') && priv.countMembers(this.actual) > 0;
-  };
+    matchers.toBeNonEmptyObject = function() {
+        return priv.is(this.actual, 'Object') && 0 < priv.countMembers(this.actual);
+    };
 
   /**
    * @alias
@@ -706,18 +701,18 @@
    * @param  {Object} other
    * @return {Boolean}
    */
-  matchers.toImplement = function(other) {
-    if (!priv.is(this.actual, 'Object') || !priv.is(other, 'Object')) {
-      return false;
-    }
-    for (var key in other) {
-      if (key in this.actual) {
-        continue;
-      }
-      return false;
-    }
-    return true;
-  };
+    matchers.toImplement = function(other) {
+        if (!priv.is(this.actual, 'Object') || !priv.is(other, 'Object')) {
+            return false;
+        }
+        for (const key in other) {
+            if (key in this.actual) {
+                continue;
+            }
+            return false;
+        }
+        return true;
+    };
 
   /**
    * @alias
@@ -729,9 +724,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeFunction = function() {
-    return this.actual instanceof Function;
-  };
+    matchers.toBeFunction = function() {
+        return this.actual instanceof Function;
+    };
 
   /**
    * @file Strings
@@ -749,9 +744,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeString = function() {
-    return priv.is(this.actual, 'String');
-  };
+    matchers.toBeString = function() {
+        return priv.is(this.actual, 'String');
+    };
 
   /**
    * @alias
@@ -762,9 +757,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeEmptyString = function() {
-    return this.actual === '';
-  };
+    matchers.toBeEmptyString = function() {
+        return '' === this.actual;
+    };
 
   /**
    * @alias
@@ -775,9 +770,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeNonEmptyString = function() {
-    return matchers.toBeString.call(this) && this.actual.length > 0;
-  };
+    matchers.toBeNonEmptyString = function() {
+        return matchers.toBeString.call(this) && 0 < this.actual.length;
+    };
 
   /**
    * @alias
@@ -788,7 +783,7 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeHtmlString = function() {
+    matchers.toBeHtmlString = function() {
     // <           start with opening tag "<"
     //  (          start group 1
     //    "[^"]*"  allow string in "double quotes"
@@ -799,8 +794,8 @@
     //  )          end group 1
     //  *          0 or more
     // >           end with closing tag ">"
-    return matchers.toBeString.call(this) && this.actual.search(/<("[^"]*"|'[^']*'|[^'">])*>/) !== -1;
-  };
+        return matchers.toBeString.call(this) && -1 !== this.actual.search(/<("[^"]*"|'[^']*'|[^'">])*>/);
+    };
 
   /**
    * @alias
@@ -811,16 +806,16 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeJsonString = function() {
-    var isParseable;
-    var json;
-    try {
-      json = JSON.parse(this.actual);
-    } catch (e) {
-      isParseable = false;
-    }
-    return isParseable !== false && json !== null;
-  };
+    matchers.toBeJsonString = function() {
+        let isParseable;
+        let json;
+        try {
+            json = JSON.parse(this.actual);
+        } catch (e) {
+            isParseable = false;
+        }
+        return false !== isParseable && null !== json;
+    };
 
   /**
    * @alias
@@ -831,9 +826,9 @@
    *
    * @return {Boolean}
    */
-  matchers.toBeWhitespace = function() {
-    return matchers.toBeString.call(this) && this.actual.search(/\S/) === -1;
-  };
+    matchers.toBeWhitespace = function() {
+        return matchers.toBeString.call(this) && -1 === this.actual.search(/\S/);
+    };
 
   /**
    * @alias
@@ -845,14 +840,14 @@
    * @param  {String} expected
    * @return {Boolean}
    */
-  matchers.toStartWith = function(expected) {
-    if (!matchers.toBeNonEmptyString.call(this) || !matchers.toBeNonEmptyString.call({
-      actual: expected
-    })) {
-      return false;
-    }
-    return this.actual.slice(0, expected.length) === expected;
-  };
+    matchers.toStartWith = function(expected) {
+        if (!matchers.toBeNonEmptyString.call(this) || !matchers.toBeNonEmptyString.call({
+            actual: expected,
+        })) {
+            return false;
+        }
+        return this.actual.slice(0, expected.length) === expected;
+    };
 
   /**
    * @alias
@@ -864,14 +859,14 @@
    * @param  {String} expected
    * @return {Boolean}
    */
-  matchers.toEndWith = function(expected) {
-    if (!matchers.toBeNonEmptyString.call(this) || !matchers.toBeNonEmptyString.call({
-      actual: expected
-    })) {
-      return false;
-    }
-    return this.actual.slice(this.actual.length - expected.length, this.actual.length) === expected;
-  };
+    matchers.toEndWith = function(expected) {
+        if (!matchers.toBeNonEmptyString.call(this) || !matchers.toBeNonEmptyString.call({
+            actual: expected,
+        })) {
+            return false;
+        }
+        return this.actual.slice(this.actual.length - expected.length, this.actual.length) === expected;
+    };
 
   /**
    * @alias
@@ -883,11 +878,11 @@
    * @param  {String} other
    * @return {Boolean}
    */
-  matchers.toBeLongerThan = function(other) {
-    return matchers.toBeString.call(this) && matchers.toBeString.call({
-      actual: other
-    }) && this.actual.length > other.length;
-  };
+    matchers.toBeLongerThan = function(other) {
+        return matchers.toBeString.call(this) && matchers.toBeString.call({
+            actual: other,
+        }) && this.actual.length > other.length;
+    };
 
   /**
    * @alias
@@ -899,11 +894,11 @@
    * @param  {String} other
    * @return {Boolean}
    */
-  matchers.toBeShorterThan = function(other) {
-    return matchers.toBeString.call(this) && matchers.toBeString.call({
-      actual: other
-    }) && this.actual.length < other.length;
-  };
+    matchers.toBeShorterThan = function(other) {
+        return matchers.toBeString.call(this) && matchers.toBeString.call({
+            actual: other,
+        }) && this.actual.length < other.length;
+    };
 
   /**
    * @alias
@@ -915,11 +910,11 @@
    * @param  {String} other
    * @return {Boolean}
    */
-  matchers.toBeSameLengthAs = function(other) {
-    return matchers.toBeString.call(this) && matchers.toBeString.call({
-      actual: other
-    }) && this.actual.length === other.length;
-  };
+    matchers.toBeSameLengthAs = function(other) {
+        return matchers.toBeString.call(this) && matchers.toBeString.call({
+            actual: other,
+        }) && this.actual.length === other.length;
+    };
 
   /**
    * ArrayMembers
@@ -938,9 +933,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveArray = function(memberName) {
-    return priv.assertMember.call(this, 'toBeArray', memberName);
-  };
+    matchers.toHaveArray = function(memberName) {
+        return priv.assertMember.call(this, 'toBeArray', memberName);
+    };
 
   /**
    * @alias
@@ -955,9 +950,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveArrayOfBooleans = function(memberName) {
-    return priv.assertMember.call(this, 'toBeArrayOfBooleans', memberName);
-  };
+    matchers.toHaveArrayOfBooleans = function(memberName) {
+        return priv.assertMember.call(this, 'toBeArrayOfBooleans', memberName);
+    };
 
   /**
    * @alias
@@ -972,9 +967,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveArrayOfNumbers = function(memberName) {
-    return priv.assertMember.call(this, 'toBeArrayOfNumbers', memberName);
-  };
+    matchers.toHaveArrayOfNumbers = function(memberName) {
+        return priv.assertMember.call(this, 'toBeArrayOfNumbers', memberName);
+    };
 
   /**
    * @alias
@@ -989,9 +984,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveArrayOfObjects = function(memberName) {
-    return priv.assertMember.call(this, 'toBeArrayOfObjects', memberName);
-  };
+    matchers.toHaveArrayOfObjects = function(memberName) {
+        return priv.assertMember.call(this, 'toBeArrayOfObjects', memberName);
+    };
 
   /**
    * @alias
@@ -1007,9 +1002,9 @@
    * @param  {Number} size
    * @return {Boolean}
    */
-  matchers.toHaveArrayOfSize = function(memberName, size) {
-    return priv.assertMember.call(this, 'toBeArrayOfSize', memberName, size);
-  };
+    matchers.toHaveArrayOfSize = function(memberName, size) {
+        return priv.assertMember.call(this, 'toBeArrayOfSize', memberName, size);
+    };
 
   /**
    * @alias
@@ -1024,9 +1019,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveNonEmptyArray = function(memberName) {
-    return priv.assertMember.call(this, 'toBeNonEmptyArray', memberName);
-  };
+    matchers.toHaveNonEmptyArray = function(memberName) {
+        return priv.assertMember.call(this, 'toBeNonEmptyArray', memberName);
+    };
 
   /**
    * @alias
@@ -1041,9 +1036,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveEmptyArray = function(memberName) {
-    return priv.assertMember.call(this, 'toBeEmptyArray', memberName);
-  };
+    matchers.toHaveEmptyArray = function(memberName) {
+        return priv.assertMember.call(this, 'toBeEmptyArray', memberName);
+    };
 
   /**
    * @alias
@@ -1058,9 +1053,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveArrayOfStrings = function(memberName) {
-    return priv.assertMember.call(this, 'toBeArrayOfStrings', memberName);
-  };
+    matchers.toHaveArrayOfStrings = function(memberName) {
+        return priv.assertMember.call(this, 'toBeArrayOfStrings', memberName);
+    };
 
   /**
    * BooleanMembers
@@ -1079,9 +1074,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveBoolean = function(memberName) {
-    return priv.assertMember.call(this, 'toBeBoolean', memberName);
-  };
+    matchers.toHaveBoolean = function(memberName) {
+        return priv.assertMember.call(this, 'toBeBoolean', memberName);
+    };
 
   /**
    * @alias
@@ -1096,9 +1091,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveFalse = function(memberName) {
-    return priv.assertMember.call(this, 'toBeFalse', memberName);
-  };
+    matchers.toHaveFalse = function(memberName) {
+        return priv.assertMember.call(this, 'toBeFalse', memberName);
+    };
 
   /**
    * @alias
@@ -1113,9 +1108,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveTrue = function(memberName) {
-    return priv.assertMember.call(this, 'toBeTrue', memberName);
-  };
+    matchers.toHaveTrue = function(memberName) {
+        return priv.assertMember.call(this, 'toBeTrue', memberName);
+    };
 
   /**
    * BrowserMembers
@@ -1134,9 +1129,9 @@
    * @param {Boolean} memberName
    * @return {Boolean}
    */
-  matchers.toHaveHtmlNode = function(memberName) {
-    return priv.assertMember.call(this, 'toBeHtmlNode', memberName);
-  };
+    matchers.toHaveHtmlNode = function(memberName) {
+        return priv.assertMember.call(this, 'toBeHtmlNode', memberName);
+    };
 
   /**
    * DateMembers
@@ -1155,9 +1150,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveDate = function(memberName) {
-    return priv.assertMember.call(this, 'toBeDate', memberName);
-  };
+    matchers.toHaveDate = function(memberName) {
+        return priv.assertMember.call(this, 'toBeDate', memberName);
+    };
 
   /**
    * @alias
@@ -1173,9 +1168,9 @@
    * @param  {Date} date
    * @return {Boolean}
    */
-  matchers.toHaveDateAfter = function(memberName, date) {
-    return priv.assertMember.call(this, 'toBeDateAfter', memberName, date);
-  };
+    matchers.toHaveDateAfter = function(memberName, date) {
+        return priv.assertMember.call(this, 'toBeDateAfter', memberName, date);
+    };
 
   /**
    * @alias
@@ -1191,9 +1186,9 @@
    * @param  {Date} date
    * @return {Boolean}
    */
-  matchers.toHaveDateBefore = function(memberName, date) {
-    return priv.assertMember.call(this, 'toBeDateBefore', memberName, date);
-  };
+    matchers.toHaveDateBefore = function(memberName, date) {
+        return priv.assertMember.call(this, 'toBeDateBefore', memberName, date);
+    };
 
   /**
    * @alias
@@ -1208,9 +1203,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveIso8601 = function(memberName) {
-    return priv.assertMember.call(this, 'toBeIso8601', memberName);
-  };
+    matchers.toHaveIso8601 = function(memberName) {
+        return priv.assertMember.call(this, 'toBeIso8601', memberName);
+    };
 
   /**
    * NumberMembers
@@ -1229,9 +1224,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveNumber = function(memberName) {
-    return priv.assertMember.call(this, 'toBeNumber', memberName);
-  };
+    matchers.toHaveNumber = function(memberName) {
+        return priv.assertMember.call(this, 'toBeNumber', memberName);
+    };
 
   /**
    * @alias
@@ -1248,9 +1243,9 @@
    * @param  {Number} ceiling
    * @return {Boolean}
    */
-  matchers.toHaveNumberWithinRange = function(memberName, floor, ceiling) {
-    return priv.assertMember.call(this, 'toBeWithinRange', memberName, floor, ceiling);
-  };
+    matchers.toHaveNumberWithinRange = function(memberName, floor, ceiling) {
+        return priv.assertMember.call(this, 'toBeWithinRange', memberName, floor, ceiling);
+    };
 
   /**
    * @alias
@@ -1265,9 +1260,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveCalculable = function(memberName) {
-    return priv.assertMember.call(this, 'toBeCalculable', memberName);
-  };
+    matchers.toHaveCalculable = function(memberName) {
+        return priv.assertMember.call(this, 'toBeCalculable', memberName);
+    };
 
   /**
    * @alias
@@ -1282,9 +1277,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveEvenNumber = function(memberName) {
-    return priv.assertMember.call(this, 'toBeEvenNumber', memberName);
-  };
+    matchers.toHaveEvenNumber = function(memberName) {
+        return priv.assertMember.call(this, 'toBeEvenNumber', memberName);
+    };
 
   /**
    * @alias
@@ -1299,9 +1294,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveOddNumber = function(memberName) {
-    return priv.assertMember.call(this, 'toBeOddNumber', memberName);
-  };
+    matchers.toHaveOddNumber = function(memberName) {
+        return priv.assertMember.call(this, 'toBeOddNumber', memberName);
+    };
 
   /**
    * @alias
@@ -1316,9 +1311,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveWholeNumber = function(memberName) {
-    return priv.assertMember.call(this, 'toBeWholeNumber', memberName);
-  };
+    matchers.toHaveWholeNumber = function(memberName) {
+        return priv.assertMember.call(this, 'toBeWholeNumber', memberName);
+    };
 
   /**
    * ObjectMembers
@@ -1337,9 +1332,9 @@
    * @param {Boolean} memberName
    * @return {Boolean}
    */
-  matchers.toHaveMethod = function(memberName) {
-    return priv.assertMember.call(this, 'toBeFunction', memberName);
-  };
+    matchers.toHaveMethod = function(memberName) {
+        return priv.assertMember.call(this, 'toBeFunction', memberName);
+    };
 
   /**
    * @alias
@@ -1354,9 +1349,9 @@
    * @param {Boolean} memberName
    * @return {Boolean}
    */
-  matchers.toHaveObject = function(memberName) {
-    return priv.assertMember.call(this, 'toBeObject', memberName);
-  };
+    matchers.toHaveObject = function(memberName) {
+        return priv.assertMember.call(this, 'toBeObject', memberName);
+    };
 
   /**
    * @alias
@@ -1372,9 +1367,9 @@
    * @param {Boolean} memberName
    * @return {Boolean}
    */
-  matchers.toHaveEmptyObject = function(memberName) {
-    return priv.assertMember.call(this, 'toBeEmptyObject', memberName);
-  };
+    matchers.toHaveEmptyObject = function(memberName) {
+        return priv.assertMember.call(this, 'toBeEmptyObject', memberName);
+    };
 
   /**
    * @alias
@@ -1390,9 +1385,9 @@
    * @param {Boolean} memberName
    * @return {Boolean}
    */
-  matchers.toHaveNonEmptyObject = function(memberName) {
-    return priv.assertMember.call(this, 'toBeNonEmptyObject', memberName);
-  };
+    matchers.toHaveNonEmptyObject = function(memberName) {
+        return priv.assertMember.call(this, 'toBeNonEmptyObject', memberName);
+    };
 
   /**
    * @alias
@@ -1408,9 +1403,9 @@
    * @param {Boolean} memberName
    * @return {Boolean}
    */
-  matchers.toHaveMember = function(memberName) {
-    return memberName && priv.is(this.actual, 'Object') && memberName in this.actual;
-  };
+    matchers.toHaveMember = function(memberName) {
+        return memberName && priv.is(this.actual, 'Object') && memberName in this.actual;
+    };
 
   /**
    * StringMembers
@@ -1429,9 +1424,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveEmptyString = function(memberName) {
-    return priv.assertMember.call(this, 'toBeEmptyString', memberName);
-  };
+    matchers.toHaveEmptyString = function(memberName) {
+        return priv.assertMember.call(this, 'toBeEmptyString', memberName);
+    };
 
   /**
    * @alias
@@ -1446,9 +1441,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveHtmlString = function(memberName) {
-    return priv.assertMember.call(this, 'toBeHtmlString', memberName);
-  };
+    matchers.toHaveHtmlString = function(memberName) {
+        return priv.assertMember.call(this, 'toBeHtmlString', memberName);
+    };
 
   /**
    * @alias
@@ -1463,9 +1458,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveJsonString = function(memberName) {
-    return priv.assertMember.call(this, 'toBeJsonString', memberName);
-  };
+    matchers.toHaveJsonString = function(memberName) {
+        return priv.assertMember.call(this, 'toBeJsonString', memberName);
+    };
 
   /**
    * @alias
@@ -1480,9 +1475,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveNonEmptyString = function(memberName) {
-    return priv.assertMember.call(this, 'toBeNonEmptyString', memberName);
-  };
+    matchers.toHaveNonEmptyString = function(memberName) {
+        return priv.assertMember.call(this, 'toBeNonEmptyString', memberName);
+    };
 
   /**
    * @alias
@@ -1497,9 +1492,9 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveString = function(memberName) {
-    return priv.assertMember.call(this, 'toBeString', memberName);
-  };
+    matchers.toHaveString = function(memberName) {
+        return priv.assertMember.call(this, 'toBeString', memberName);
+    };
 
   /**
    * @alias
@@ -1515,9 +1510,9 @@
    * @param  {String} other
    * @return {Boolean}
    */
-  matchers.toHaveStringLongerThan = function(memberName, other) {
-    return priv.assertMember.call(this, 'toBeLongerThan', memberName, other);
-  };
+    matchers.toHaveStringLongerThan = function(memberName, other) {
+        return priv.assertMember.call(this, 'toBeLongerThan', memberName, other);
+    };
 
   /**
    * @alias
@@ -1533,9 +1528,9 @@
    * @param  {String} other
    * @return {Boolean}
    */
-  matchers.toHaveStringSameLengthAs = function(memberName, other) {
-    return priv.assertMember.call(this, 'toBeSameLengthAs', memberName, other);
-  };
+    matchers.toHaveStringSameLengthAs = function(memberName, other) {
+        return priv.assertMember.call(this, 'toBeSameLengthAs', memberName, other);
+    };
 
   /**
    * @alias
@@ -1551,9 +1546,9 @@
    * @param  {String} other
    * @return {Boolean}
    */
-  matchers.toHaveStringShorterThan = function(memberName, other) {
-    return priv.assertMember.call(this, 'toBeShorterThan', memberName, other);
-  };
+    matchers.toHaveStringShorterThan = function(memberName, other) {
+        return priv.assertMember.call(this, 'toBeShorterThan', memberName, other);
+    };
 
   /**
    * @alias
@@ -1568,19 +1563,18 @@
    * @param  {String} memberName
    * @return {Boolean}
    */
-  matchers.toHaveWhitespaceString = function(memberName) {
-    return priv.assertMember.call(this, 'toBeWhitespace', memberName);
-  };
+    matchers.toHaveWhitespaceString = function(memberName) {
+        return priv.assertMember.call(this, 'toBeWhitespace', memberName);
+    };
 
   // Create adapters for the original matchers so they can be compatible with Jasmine 2.0.
-  var matchersV2 = priv.adaptMatchers(matchers);
+    const matchersV2 = priv.adaptMatchers(matchers);
 
-  beforeEach(function() {
-    if (typeof this.addMatchers === 'function') {
-      this.addMatchers(matchers);
-    } else if (typeof jasmine.addMatchers === 'function') {
-      jasmine.addMatchers(matchersV2);
-    }
-  });
-
+    beforeEach(function() {
+        if ('function' === typeof this.addMatchers) {
+            this.addMatchers(matchers);
+        } else if ('function' === typeof jasmine.addMatchers) {
+            jasmine.addMatchers(matchersV2);
+        }
+    });
 }());

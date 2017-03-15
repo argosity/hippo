@@ -1,17 +1,13 @@
 import {
     isEmpty, isNil, extend, map, bindAll, omit, range, has,
 } from 'lodash';
+import { autorun, reaction, observe } from 'mobx';
+
 import Sync from '../sync';
 import Result from './result';
 import {
-    belongsTo,
-    computed,
-    identifiedBy,
-    observable,
-    action,
+    belongsTo, computed, identifiedBy, observable, action,
 } from '../base';
-
-import { autorun, reaction, observe } from 'mobx';
 
 @identifiedBy('lanes/query/array-result')
 export default class ArrayResult extends Result {

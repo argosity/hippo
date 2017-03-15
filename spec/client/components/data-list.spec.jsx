@@ -6,6 +6,7 @@ import Query     from 'lanes/models/query';
 import DataList from 'lanes/components/data-list';
 
 import { Container } from '../test-models';
+import { Snapshot } from 'lanes/testing/screens';
 
 jest.mock('lanes/models/sync');
 
@@ -29,9 +30,7 @@ describe("DataList Component", () => {
 
     it('renders', () => {
         const Row = ({ row }) => <div data-id={row[0]}>{row[1]}</div>;
-        const table = mount(
-            <DataList query={query} rowComponent={Row} />,
-        );
-        expect(table).toHaveRendered('div[data-id=1]');
+        const list = mount(<DataList query={query} rowComponent={Row} />);
+        expect(list).toHaveRendered('List');
     });
 });

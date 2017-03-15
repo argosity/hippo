@@ -1,5 +1,5 @@
 import {
-    negate, isNil, isString, mapValues, extend, forIn, has, isFunction, pick,
+    negate, isNil, isString, mapValues, extend, forIn, isFunction, pick,
 } from 'lodash';
 import isEmail from 'validator/lib/isEmail';
 import Formous from 'formous';
@@ -7,7 +7,7 @@ import Formous from 'formous';
 import { isBlank } from './util';
 
 function buildTest(defaultOptions, defaultMessage, test) {
-    const { test: defaultTest, critical, message, name, ...otherOptions } = defaultOptions;
+    const { test: defaultTest, critical, message, ...otherOptions } = defaultOptions;
     return extend({
         tests: [{
             test: test || defaultTest,
@@ -46,9 +46,8 @@ export function buildValidations(options = {}) {
 
 export function setFieldValue(field, value) {
     if (!field.events) { return; }
-    field.cid = Math.random()
+    extend(field, { cid: Math.random(), value });
     field.events.onChange({ target: { value: isNil(value) ? '' : value } });
-    field.value = value;
 }
 
 export function setFieldValues(fields, values) {

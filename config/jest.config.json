@@ -6,7 +6,7 @@
     "moduleFileExtensions": [ "", "js", "jsx", "json", "css", "less", "scss" ],
     "setupTestFrameworkScriptFile": "<rootDir>/spec/client/setup.js",
     "transformIgnorePatterns": [
-        "/node_modules/(?!flexboxgrid)"
+        "/node_modules/(?!flexboxgrid|domtastic)"
     ],
     "moduleNameMapper": {
         "\\.(css|less|scss)$": "identity-obj-proxy",

@@ -1,14 +1,6 @@
-import { autorun } from 'mobx';
-import { Box, Container } from '../test-models';
-import {
-    observable, computed, belongsTo, hasMany, identifier,
-    BaseModel, modelDecorator, field, session,
-} from 'lanes/models/base';
-
 import Asset from 'lanes/models/asset';
 import LogoJson from '../test-logo.json';
 
-import { unresolvedAssociations } from 'mobx-decorated-models';
 import { TestImage } from '../test-models';
 
 describe('Asset Test', () => {

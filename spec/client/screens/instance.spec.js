@@ -1,7 +1,10 @@
 import Instance from 'lanes/screens/instance';
-import { Box, TestExtension, getTestScreen } from '../test-models';
-jest.mock('lanes/lib/request-assets');
 import ScreenDefinition from 'lanes/screens/definition';
+
+import { Box, getTestScreen } from '../test-models';
+
+jest.mock('lanes/lib/request-assets');
+
 describe('Screen Instance', () => {
     let screen;
     let instance;

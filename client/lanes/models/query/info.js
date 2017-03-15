@@ -1,4 +1,4 @@
-import { filter, reduce } from 'lodash';
+import { filter, reduce, find } from 'lodash';
 import { computed } from 'mobx';
 
 export default class Info {
