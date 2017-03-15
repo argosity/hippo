@@ -29,7 +29,7 @@
     "domtastic": "^0.12.3",
     "enzyme": "^2.7.0",
     "eslint": "^3.13.1",
-    "eslint-config-argosity": "^1.0.0",
+    "eslint-config-argosity": "1.0.5",
     "flexboxgrid": "^6.3.1",
     "formous": "^0.9.2",
     "grommet": "^1.2.1",
