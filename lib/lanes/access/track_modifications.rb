@@ -9,7 +9,11 @@ module Lanes::Concerns
             created_at: nil, updated_at: nil,
             created_by_id: nil, updated_by_id: nil
         )
+
         module ClassMethods
+            def should_record_user_modifications?
+                record_user_modifications
+            end
 
             def tracks_user_modifications
                 belongs_to :created_by, :class_name=>'Lanes::User'
@@ -19,6 +23,9 @@ module Lanes::Concerns
                 before_create :record_create_modifications
 
                 self.export_scope :with_user_logins
+
+                class_attribute :record_user_modifications
+                self.record_user_modifications = true
             end
 
 
@@ -50,7 +57,7 @@ module Lanes::Concerns
         end
 
         def record_create_modifications
-            if self.record_modifications
+            if self.class.should_record_user_modifications?
                 _record_user_to_column('updated_by_id')
                 _record_user_to_column('created_by_id')
             end
@@ -58,7 +65,7 @@ module Lanes::Concerns
         end
 
         def record_update_modifications
-            if self.record_modifications && should_record_timestamps?
+            if self.class.should_record_user_modifications? && should_record_timestamps?
                 _record_user_to_column('updated_by_id')
             end
             true
