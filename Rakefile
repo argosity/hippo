@@ -6,6 +6,7 @@ require 'yard-activerecord'
 require_relative 'yard_ext/all'
 require 'guard'
 require 'lanes/rake_tasks'
+require 'knitter'
 Dir.glob('tasks/*.rake').each { |r| load r}
 
 Rake::TestTask.new do |t|
@@ -31,6 +32,6 @@ task :doc => 'db:environment' do
 end
 
 task :ci => ['db:migrate', 'db:seed'] do
-    sh %{bundle exec lanes jest}
     sh %{$(npm bin)/eslint client spec/client/}
+    sh %{bundle exec lanes jest}
 end

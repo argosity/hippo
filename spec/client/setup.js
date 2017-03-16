@@ -8,4 +8,4 @@ global.expect.extend(matchers);
 global.shallow = shallow;
 global.mount   = mount;
 global.fetch   = require('lanes/testing/mocks/fetch');
-global.React   = require('React');
+global.React   = require('react');
