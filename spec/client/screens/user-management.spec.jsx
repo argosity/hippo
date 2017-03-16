@@ -22,7 +22,11 @@ describe('User Management Screen', () => {
                 [i, `login-${i}`, `name ${i}`, `email-${i}@test.com`],
             ),
         });
+        Element.prototype.getBoundingClientRect = jest.fn(() => ({
+            width: 800, height: 1024,
+        }));
         screen = mount(<UserScreen screen={instance} />);
+        return new Promise(resolve => setTimeout(resolve, 3));
     });
 
     it('renders rows', () => {
