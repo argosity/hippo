@@ -1,4 +1,4 @@
-import { pick, merge, bindAll } from 'lodash';
+import { pick, merge } from 'lodash';
 import { action } from 'mobx';
 
 import {
