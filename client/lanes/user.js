@@ -12,8 +12,12 @@ class Session extends BaseModel {
     @identifier id;
     @field login;
     @field password;
-    setFromSync(data) {
+    set syncData(data) {
         this.data = data;
+    }
+    @computed
+    get syncData() {
+        return this.serialize();
     }
 }
 
@@ -31,11 +35,6 @@ export class UserModel extends BaseModel {
     @field access;
 
     @computed get isLoggedIn() { return !!Config.access_token; }
-
-    constructor(attrs = {}) {
-        super(attrs);
-        bindAll(this, 'setFromSessionRequest');
-    }
 
     @action logout() {
         const req = new Session({ id: this.id });
@@ -56,6 +55,7 @@ export class UserModel extends BaseModel {
         return req.fetch().then(this.setFromSessionRequest);
     }
 
+    @action.bound
     setFromSessionRequest(req) {
         merge(this, pick(req, 'errors', 'lastServerMessage'));
         if (req.isValid) {
@@ -70,71 +70,3 @@ export class UserModel extends BaseModel {
 const current_user = new UserModel();
 
 export default current_user;
-
-
-    //     static initClass() {
-
-    //         this.prototype.derived = {
-    //             roles: {
-    //                 fn() { return []; }
-    //             },
-    //             isLoggedIn: {
-    //                 fn() { return false; }
-    //             },
-    //             allRoles: {
-    //                 fn() { return new Lanes.Models.Role.Collection; }
-    //             }
-    //         };
-
-    //         this.prototype.session = {
-    //             access_data: 'object',
-    //             id:          'integer',
-    //             login:       'string',
-    //             name:        'string',
-    //             email:       'string',
-    //             role_names:  'array',
-    //             options:     'object',
-    //             password:    'string'
-    //         };
-    //     }
-
-    //     constructor(attributes, access) {
-    //         super(...arguments);
-    //         this.access_data = access;
-    //     }
-
-    //     api_path() { return '/users'; }
-    //     hasAccess() { return true; }
-    //     canRead(model, field) { return true; }
-    //     canWrite(model, field) { return true; }
-    //     canDelete(model)        { return true; }
-    // };
-    // undefined.initClass();
-
-
-// let CURRENT_USER = null;
-
-// Object.defineProperty(Lanes, 'current_user', {
-
-//     set(user) {
-//         let events = null;
-//         if (CURRENT_USER) {
-//             events = CURRENT_USER._events;
-//         }
-//         if (_.some(events)) {
-//             for (let key in events) {
-//                 const callbacks = events[key];
-//                 if (user._events[key]) {
-//                     user._events[key] = user._events[key].concat(callbacks);
-//                 } else {
-//                     user._events[key] = callbacks;
-//                 }
-//             }
-//         }
-//         return CURRENT_USER = user;
-//     },
-
-//     get() {
-//         return CURRENT_USER;
-//     }
-// });
