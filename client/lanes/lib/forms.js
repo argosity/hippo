@@ -7,7 +7,7 @@ import Formous from 'formous';
 import { isBlank } from './util';
 
 function buildTest(defaultOptions, defaultMessage, test) {
-    const { test: defaultTest, critical, message, ...otherOptions } = defaultOptions;
+    const { test: defaultTest, critical, message, name: _, ...otherOptions } = defaultOptions;
     return extend({
         tests: [{
             test: test || defaultTest,
