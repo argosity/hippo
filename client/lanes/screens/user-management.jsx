@@ -7,7 +7,7 @@ import Heading from 'grommet/components/Heading';
 
 import Screen from 'lanes/components/screen';
 import DataTable from 'lanes/components/data-table';
-import { User } from 'lanes/user';
+import { UserModel } from 'lanes/user';
 import Query from 'lanes/models/query';
 
 import Editor from './user-management/edit-form';
@@ -37,7 +37,8 @@ export default class UserManagement extends React.PureComponent {
     }
 
     @observable query = new Query({
-        src: User,
+        src: UserModel,
+        autoFetch: true,
         fields: [
             { id: 'id', visible: false },
             { id: 'login', width: 150, flexGrow: 0 },
@@ -51,7 +52,6 @@ export default class UserManagement extends React.PureComponent {
         const id = (field.isNumeric) ? toInteger(this.editingId) : this.editingId;
         return this.query.results.searchFieldValues(field, id).index;
     }
-
 
     render() {
         return (

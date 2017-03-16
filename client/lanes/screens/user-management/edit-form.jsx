@@ -20,6 +20,7 @@ class EditForm extends React.PureComponent {
         query:      React.PropTypes.instanceOf(Query).isRequired,
         rowIndex:   React.PropTypes.number.isRequired,
         onComplete: React.PropTypes.func.isRequired,
+
         fields: React.PropTypes.shape({
             login: React.PropTypes.object,
             name:  React.PropTypes.object,
@@ -35,7 +36,7 @@ class EditForm extends React.PureComponent {
 
     static desiredHeight = 300
 
-    static formValidations = {
+    static formFields = {
         login: nonBlank,
         name:  nonBlank,
         email: validEmail,
@@ -91,19 +92,17 @@ class EditForm extends React.PureComponent {
 
 
     render() {
-        const {
-            fields: { login, name, email, password, password_confirm },
-        } = this.props;
+        const { fields } = this.props;
 
         return (
             <div className="user-edit-form">
                 <Warning message={this.errorMessage} />
                 <Row middle='sm'>
-                    <Field md={4} xs={6} name="login" field={login} />
-                    <Field md={4} xs={6} name="name" field={name} />
-                    <Field md={4} xs={6} name="email" field={email} />
-                    <Field md={4} xs={6} type="password" name="password" field={password} />
-                    <Field md={4} xs={6} type="password" name="password_confirm" field={password_confirm} />
+                    <Field md={4} xs={6} name="login" fields={fields} />
+                    <Field md={4} xs={6} name="name" fields={fields} />
+                    <Field md={4} xs={6} name="email" fields={fields} />
+                    <Field md={4} xs={6} type="password" name="password" fields={fields} />
+                    <Field md={4} xs={6} type="password" name="password_confirm" fields={fields} />
                     <Col md={4} xs={6}>
                         <Row  middle="xs" around="xs">
                             <Button label="Cancel" onClick={this.onCancel} accent />
