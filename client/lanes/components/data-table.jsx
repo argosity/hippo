@@ -158,13 +158,14 @@ export default class DataTable extends React.Component {
     }
 
     rowRenderer(props) {
-        const { index, className, key } = props;
+        const { index, className, key, style } = props;
         extend(props, this.rowProps);
         if (this.editIndex === index) {
             const { editor: Editor } = this.props;
             return (
                 <div
                     key={key}
+                    style={style}
                     className={cn(className, 'editing')}
                 >
                     <Editor
@@ -219,10 +220,7 @@ export default class DataTable extends React.Component {
                                 <Table
                                     height={height}
                                     width={width}
-                                    ref={(table) => {
-                                            registerChild(table);
-                                            this.tableRef = table;
-                                        }}
+                                    ref={(table) => { registerChild(table); this.tableRef = table; }}
                                     rowHeight={this.calculateRowHeight}
                                     rowGetter={this.rowAtIndex}
                                     estimatedRowSize={40}
