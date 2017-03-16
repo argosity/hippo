@@ -21,7 +21,7 @@ describe('Login Dialog', () => {
         const dialog = shallow(<LoginDialog />);
         expect(User.isLoggedIn).toEqual(true);
         expect(dialog).not.toHaveRendered('LoginForm');
-        User.logout().then(() => {
+        return User.logout().then(() => {
             expect(dialog).not.toHaveRendered('LoginForm');
         });
     });
