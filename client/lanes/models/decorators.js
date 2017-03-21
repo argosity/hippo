@@ -1,5 +1,5 @@
 import {
-    isEmpty, isArray, isNumber, isObject, isString, partial, defaults, isNil,
+    isEmpty, isArray, isNumber, isObject, isString, partial, defaults, isNil, isDate,
 } from 'lodash';
 import invariant from 'invariant';
 
@@ -16,6 +16,13 @@ const VALIDATORS = {
     string: isString,
     array:  isArray,
     object: isObject,
+    date:   isDate,
+};
+
+const COERCE = {
+    date(val) {
+        return isDate(val) ? val : new Date(val);
+    },
 };
 
 function addLazyInitializer(target, fn) {
@@ -25,7 +32,8 @@ function addLazyInitializer(target, fn) {
 function validateChangeType(validator, propertyName, change) {
     if (isNil(change.newValue)) { return change; }
     invariant(VALIDATORS[validator], `Unknown TypeCheck: ${validator} does not exist`);
-    invariant(VALIDATORS[validator](change.newValue),
+    const value  = COERCE[validator] ? COERCE[validator](change.newValue) : change.newValue;
+    invariant(VALIDATORS[validator](value),
               `Bad Type: Attempted to set ${propertyName} to '${change.newValue}' which is not ${validator}`);
     return change;
 }
