@@ -76,11 +76,8 @@ export default class ArrayResult extends Result {
     }
 
     fetchModelForRow(index, syncOptions = {}) {
-        const model = this.modelForRow(index);
-        if (isEmpty(syncOptions) && isEmpty(this.query.syncOptions)) {
-            return Promise.resolve(model);
-        }
-        return model.fetch(extend(syncOptions, this.query.syncOptions));
+        return this.modelForRow(index)
+            .fetch(extend({}, this.query.syncOptions, syncOptions));
     }
 
     onQuerySortChange() {
@@ -150,13 +147,13 @@ export default class ArrayResult extends Result {
             }
         });
 
-        const options = {
+        const options = extend({}, this.query.syncOptions, {
             start,
             limit,
             total_count: 't',
             format: 'array',
             fields: map(this.query.info.loadableFields, 'id'),
-        };
+        });
 
         if (!isEmpty(query)) {
             options.query = query;
