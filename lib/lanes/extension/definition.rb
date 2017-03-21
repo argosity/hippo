@@ -127,6 +127,8 @@ module Lanes
                 end
             end
 
+            def on_dev_console
+            end
         end
 
     end

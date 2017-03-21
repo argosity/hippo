@@ -66,3 +66,9 @@ end
 task :test => [:spec] do
     ::Lanes::Command::Jest.new.configure.single_run
 end
+
+task :ci => ['db:migrate', 'db:seed'] do
+    sh %{node node_modules/eslint/bin/eslint.js client spec/client/}
+    sh %{bundle exec lanes jest}
+    sh %{bundle exec rspec}
+end
