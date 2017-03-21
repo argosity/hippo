@@ -3,9 +3,10 @@
 #lanes-root {
     .asset {
         .drop-zone {
-            min-height: 200px;
+            height: 200px;
             padding: 0.5rem;
             cursor: pointer;
+            overflow: scroll;
             &-active {
                 background-color: $selected-background-color;
             }
