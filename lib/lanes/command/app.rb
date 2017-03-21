@@ -30,7 +30,7 @@ module Lanes
                     ".babelrc", "config/database.yml"
                 ].each{ |f| template(f) }
                 [
-                    ".eslintrc.js", ".rubocop.yml", "spec/client/.eslintrc.js"
+                    ".eslintrc.js", ".rubocop.yml", "spec/client/.eslintrc.js", "config/index.html"
                 ].each{ |f| template("../#{f}", f) }
                 template "lib/namespace.rb", "lib/#{identifier}.rb"
                 template "lib/namespace/version.rb", "lib/#{identifier}/version.rb"
@@ -39,10 +39,12 @@ module Lanes
                 template "config/screens.rb"
                 template "config/routes.rb"
                 template "config/webpack.config.js"
+
                 template "config/jest.config.json"
                 template "config/jest/babel-transform.js"
                 template "config/lanes.rb"
-                template "gitignore",".gitignore"
+                template ".gitignore"
+
                 template "spec/client/setup.js"
                 template "spec/server/spec_helper.rb"
 

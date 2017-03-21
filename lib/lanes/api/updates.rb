@@ -6,7 +6,7 @@ module Lanes
             @relaying_messages = false
 
             def self.user_info_for_change(model)
-                if model.has_attribute?(:updated_by_id)
+                if model.class.reflect_on_aggregation(:updated_by)
                     model.updated_by.as_json(only:[:id,:name,:email])
                 else
                     {}

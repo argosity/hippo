@@ -6,16 +6,16 @@ const config = {
     entry: {
         lanes: [
             'react-hot-loader/patch',
-            process.env.ENTRY,
+            '<%= "#{Lanes::Extensions.controlling.identifier}/index.js" %>',
         ],
     },
     output: {
         path: __dirname,
         publicPath: '/',
-        filename: `${process.env.EXTENSION_ID}/.js`,
+        filename: '<%= Lanes::Extensions.controlling.identifier + '.js' %>',
     },
     resolve: {
-        modules: process.env.LANES_MODULES.split(':'),
+        modules: ["<%= module_paths.join('","') %>"],
         extensions: ['.js', '.jsx'],
     },
     module: {
@@ -62,7 +62,7 @@ const config = {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: `${process.env.GENERATED_CONFIG_DIR}/root-view.tmpl.html`,
+            template: '<%= directory.join('index.html') %>',
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

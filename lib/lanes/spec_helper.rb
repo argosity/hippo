@@ -6,9 +6,15 @@ require 'active_record'
 require 'active_record/fixtures'
 
 LANES_ENV = "test"
+module Fixtures
+    def fixtures_path
+        Lanes::Extensions.controlling.root_path.join('spec', 'fixtures')
+    end
+end
 
 RSpec.configure do |config|
 
+    config.include Fixtures
 
     # Use color in STDOUT
     config.color = true

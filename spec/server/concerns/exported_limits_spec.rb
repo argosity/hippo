@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-class ExportedLimitsTest < Lanes::TestCase
+describe "Exporting Limits" do
     module FakeScope
         extend ActiveSupport::Concern
         class_methods do

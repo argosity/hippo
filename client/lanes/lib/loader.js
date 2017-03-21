@@ -1,9 +1,5 @@
-import { logger } from './util';
-
-// https://pie.gd/test/script-link-events/
-
 let doc = window.document;
-export function setDocument(newDocument){
+export function setDocument(newDocument) {
     doc = newDocument;
 }
 

@@ -4,7 +4,7 @@ require "find"
 
 describe Lanes::SystemSettings do
 
-    setup do
+    before(:each) do
         # needed because otherwise the rollback will leave configs without a db record
         Lanes::SystemSettings.instance_variable_set(:@config, nil)
     end

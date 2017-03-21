@@ -13,8 +13,6 @@ module Lanes::Concerns
 
             def from_api_path(path)
                 name = path.underscore.camelize.singularize
-
-                name = "Lanes::#{name}" unless name=~/^Lanes/
                 name.safe_constantize
             end
 

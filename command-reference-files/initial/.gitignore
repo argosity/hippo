@@ -1,4 +1,4 @@
 node_modules
 public/assets
-tmp/cache
+tmp/*
 log/*log

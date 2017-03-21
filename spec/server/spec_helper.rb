@@ -31,10 +31,10 @@ module TestingModels
             with_columns do |t|
                 t.integer :bt_id
                 t.string :name, :number
-                t.track_modifications
+                t.track_modifications null: true
             end
-            belongs_to :bt, class_name: 'Tmbt', export: { writable: true }
-            has_many   :hm, class_name: 'Tmhm', export: { writable: true }
+            belongs_to :bt, class_name: 'Tmbt'
+            has_many   :hm, class_name: 'Tmhm'
         end
 
         Temping.create :tmbt, parent_class: Lanes::Model do
@@ -48,11 +48,11 @@ module TestingModels
                 t.integer :test_model_id
                 t.string :description, :secret_field, :notes
             end
-            blacklist_attributes :secret_field
+            belongs_to :test_model
         end
 
         yield
-
+    ensure
         Temping.teardown
     end
 end

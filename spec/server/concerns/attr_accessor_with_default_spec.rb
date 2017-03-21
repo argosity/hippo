@@ -1,6 +1,6 @@
 require "lanes/spec_helper"
 
-class AttrAccessorWithDefaultTest < Lanes::TestCase
+describe "Attr Accessor With Default" do
 
     Shared = Struct.new(:value)
 
@@ -17,48 +17,47 @@ class AttrAccessorWithDefaultTest < Lanes::TestCase
         non_shared "Foo"
     end
 
-    def test_access
+    it "sets up access" do
         a = AttrTestClass.new
         b = AttrTestClass.new
 
-        assert_equal 42, b.as_proc
+        expect(b.as_proc).to be(42)
 
-        assert_equal "default string", b.non_copying
+        expect(b.non_copying).to eq("default string")
 
         b.non_copying = "A new string"
 
-        assert_equal "default string", a.non_copying
+        expect(a.non_copying).to eq("default string")
         a.non_copying = "third value"
-        assert_equal "A new string", b.non_copying
+        expect(b.non_copying).to eq("A new string")
 
-
-        assert_equal "default", a.shared.value
-        assert_equal "default", b.shared.value
+        expect(a.shared.value).to eq("default")
+        expect(b.shared.value).to eq("default")
 
         a.shared.value = "a new value"
 
-        assert_equal "a new value", a.shared.value
-        assert_equal "a new value", b.shared.value
+        expect(a.shared.value).to eq("a new value")
+        expect(b.shared.value).to eq("a new value")
 
         a.non_shared.value = "a new value"
-        assert_equal "a new value", a.non_shared.value
-        assert_equal "default", b.non_shared.value
+        expect(a.non_shared.value).to eq("a new value")
+        expect(b.non_shared.value).to eq("default")
     end
 
     def test_inheritance
         a = Inherited.new
         b = AttrTestClass.new
-        assert_kind_of String, a.non_shared
-        assert_kind_of Shared, b.non_shared
-        assert_equal "Foo", a.non_shared
-        assert_equal "default", b.non_shared.value
+        expect(a.non_shared).to be_a(String)
+        expect(b.non_shared).to be_a(String)
+        expect(a.non_shared.value).to eq("Foo")
+        expect(b.non_shared.value).to eq("default")
     end
 
     def test_nils
         a = AttrTestClass.new
-        assert_nil a.startingnil
+        expect( a.startingnil ).to be_nil
         a.startingnil = 22
-        assert_equal 22, a.startingnil
+        expect(aa.startingnil).to eq(22)
     end
 
 end

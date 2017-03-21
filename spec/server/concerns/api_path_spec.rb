@@ -1,14 +1,20 @@
 require_relative "../spec_helper"
 
-class ApiPathTest < Lanes::TestCase
+describe "ApiPath" do
 
     include TestingModels
 
-    def test_path_generation
-        assert_equal 'test-models', TestModel.api_path
+    around do |example|
+        with_testing_models do
+            example.run
+        end
     end
 
-    def testing_path_to_model
-        assert_equal TestModel, Lanes::Model.from_api_path('test-models')
+    it "generates path" do
+        expect('test-models').to eq(TestModel.api_path)
+    end
+
+    it "converts path to model" do
+        expect(TestModel).to eq(Lanes::Model.from_api_path('test-models'))
     end
 end

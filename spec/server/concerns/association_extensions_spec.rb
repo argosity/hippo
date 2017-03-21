@@ -1,25 +1,24 @@
 require_relative "../spec_helper"
 
-class AssociationExtensionsTest < Lanes::TestCase
+describe "AssociationExtensions" do
 
     include TestingModels
 
-    def test_adding_event_listener_requires_inverse
-        err = assert_raise(ArgumentError) do
-            TestModel.has_one(:tmhm,:listen=>{:save=>:on_save})
+    around(:each) do |example|
+        with_testing_models do
+            example.run
         end
-        assert_match( /does not have an inverse_of specified./, err.message )
     end
 
-
-    def test_exports_associations
-        TestModel.expects(:export_associations).with(:tmhm,{})
-        TestModel.has_one(:tmhm, export: true)
+    it "adds event listener that requires inverse" do
+        expect {
+            TestModel.has_one(:tmhm, :listen=>{:save=>:on_save})
+        }.to raise_error(ArgumentError, /the association does not have an inverse_of/)
     end
 
-    def test_does_not_allow_other_garbage
-        assert_raise(ArgumentError) do
+    it "does not allow other garbage" do
+        expect {
             TestModel.has_one(:tmhm,:blarg=>true)
-        end
+        }.to raise_error(ArgumentError, /Unknown key/)
     end
 end

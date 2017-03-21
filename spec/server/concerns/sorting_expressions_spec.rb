@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-class SortingExpressionsTest < Lanes::TestCase
+describe "Sorting Expressions" do
 
     include TestingModels
 

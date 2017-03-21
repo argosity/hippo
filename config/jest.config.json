@@ -1,12 +1,20 @@
 {
-    "rootDir": ".",
     "verbose": true,
     "notify": false,
     "testMatch": [ "**/?(*.)(spec|test).js?(x)" ],
-    "moduleFileExtensions": [ "", "js", "jsx", "json", "css", "less", "scss" ],
+    "rootDir": "<%= controlling_extension.root_path %>",
     "setupTestFrameworkScriptFile": "<rootDir>/spec/client/setup.js",
+    "moduleFileExtensions": [ "", "js", "jsx", "json", "css", "less", "scss" ],
     "transformIgnorePatterns": [
-        "/node_modules/(?!flexboxgrid|domtastic)"
+        "/node_modules/(?!flexboxgrid)"
+    ],
+    "roots": [
+        "<%= extension_path %>/client",
+        "<%= extension_path %>/spec"
+    ],
+    "modulePaths": [
+        <%= module_paths.map{|mod| "\"#{mod}\"" }.join(", ") %>,
+        "<%= lanes_root_path %>/lib/js/jest/stubs"
     ],
     "moduleNameMapper": {
         "\\.(css|less|scss)$": "identity-obj-proxy",

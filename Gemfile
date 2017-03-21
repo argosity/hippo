@@ -4,7 +4,7 @@ gem "yard-activerecord",
     git: 'https://github.com/nathanstitt/yard-activerecord',
     branch: 'develop'
 
-gem "temping", git: 'https://github.com/nathanstitt/temping.git', branch: 'parent-class'
+gem "temping", '~> 3.9.0'
 
 gem 'puma'
 gem 'pry-byebug'

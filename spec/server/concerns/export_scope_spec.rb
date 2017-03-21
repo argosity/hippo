@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-class ExportScopeTest < Lanes::TestCase
+describe "Export Scopes" do
     include TestingModels
 
     def test_scope_method_creation

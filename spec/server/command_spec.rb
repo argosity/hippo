@@ -30,10 +30,6 @@ describe Lanes::Command do
         reference.find.each do | path |
             relative = path.relative_path_from(reference)
             generated = generated_path.join(relative)
-            unless generated.exist?
-                puts generated
-                binding.irb
-            end
             expect(generated).to exist, "File was not created: #{relative}"
 
             next unless path.file?

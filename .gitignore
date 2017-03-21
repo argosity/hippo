@@ -20,5 +20,3 @@ npm-build/node_modules
 node_modules
 tmp
 db/schema*
-client/lanes/vendor/development/calendar.scss
-client/lanes/vendor/production/calendar.scss

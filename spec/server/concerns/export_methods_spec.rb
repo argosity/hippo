@@ -1,28 +1,34 @@
 require_relative "../spec_helper"
 
-class ExportMethodsTest < Lanes::TestCase
+describe "Exporting Methods" do
     include TestingModels
 
-    def test_simple_delegation
+    around(:each) do |example|
+        with_testing_models do
+            example.run
+        end
+    end
 
-        refute TestModel.new.respond_to? :bt_description
+    it 'can use simple delegation' do
+
+        expect(TestModel.new).to_not respond_to(:bt_description)
 
         TestModel.send :delegate_and_export, "bt_description"
 
         md = TestModel.new
-        assert md.respond_to? :bt_description, "Didn't add transaction_description method"
-        assert_nil md.bt_description
-        md.build_bt( description: "test123" )
-        assert_equal "test123", md.bt_description
+        expect(md).to respond_to(:bt_description)
+        expect(md.bt_description).to be_nil
+        md.build_bt( description: "test123")
+        expect(md.bt_description).to eq("test123")
 
-        assert TestModel.has_exported_method?( :bt_description, nil ), "Didn't export method"
+        expect(TestModel.has_exported_method?( :bt_description, nil )).to be(true)
     end
 
     def test_dependancy_calculation
         TestModel.send :delegate_and_export, "bt_description"
         TestModel.send :delegate_and_export, "bt_notes", optional: false
-        assert_includes TestModel.exported_method_dependancies([]), :bt
-        assert_includes TestModel.exported_method_dependancies(['bt_description']), :bt
+        expect(TestModel.exported_method_dependancies([])).to include(:bt)
+        expect(TestModel.exported_method_dependancies(['bt_description'])).to include(:bt)
     end
 
 end

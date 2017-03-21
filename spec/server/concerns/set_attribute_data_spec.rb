@@ -1,8 +1,9 @@
 require_relative "../spec_helper"
 
-class SetAttributeDataTest < Lanes::TestCase
+describe "Setting Attribute Data" do
 
     include TestingModels
+
     def setup
         @user = DummyUser.new
     end
