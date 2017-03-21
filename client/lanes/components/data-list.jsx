@@ -21,7 +21,7 @@ export default class DataList extends React.Component {
 
     static propTypes = {
         query: React.PropTypes.instanceOf(Query).isRequired,
-        rowComponent: React.PropTypes.func.isRequired,
+        rowComponent: React.PropTypes.func,
         rowHeight: React.PropTypes.oneOfType([
             React.PropTypes.number, React.PropTypes.func,
         ]),
@@ -66,7 +66,7 @@ export default class DataList extends React.Component {
 
     render() {
         const { query } = this;
-        const { rowHeight } = this.props;
+        const { rowHeight, rowRenderer, ...listProps } = this.props;
         return (
             <Box className="data-list" align='stretch' direction='row' flex>
                 <InfiniteLoader
@@ -82,16 +82,14 @@ export default class DataList extends React.Component {
                         >
                             {({ height, width }) =>
                                 <List
+                                    {...listProps}
                                     height={height}
                                     width={width}
-                                    ref={(list) => {
-                                        registerChild(list);
-                                        this.listRef = list;
-                                    }}
+                                    ref={(list) => { registerChild(list); this.listRef = list; }}
                                     rowHeight={rowHeight}
                                     headerHeight={50}
                                     onRowsRendered={onRowsRendered}
-                                    rowRenderer={this.rowRenderer}
+                                    rowRenderer={rowRenderer || this.rowRenderer}
                                     rowCount={query.results.rows.length}
                                     keyChange={query.results.updateKey}
                                 />}
