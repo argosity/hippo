@@ -14,7 +14,8 @@ module Lanes
 
             ROOT = Pathname.new(__FILE__).dirname.join("..", "..", "..")
             def self.source_root
-                ROOT.join("templates", "js")
+                ext = Lanes::Extensions.controlling
+                ext.root_path.join('config')
             end
 
             def apply_lanes_config
@@ -29,7 +30,8 @@ module Lanes
             end
 
             def make_temp_dir
-                @directory = Pathname.new(Dir.mktmpdir)
+                @directory = controlling_extension.root_path.join('tmp')
+                @directory.mkdir unless @directory.exist?
             end
 
             def set_module_paths
@@ -41,18 +43,17 @@ module Lanes
 
             def write_asset_files
                 say "Generating config in #{directory}", :green
-
+                opts = { verbose: false, force: true }
+                template('index.html',
+                         directory.join('index.html'), opts)
+                template('webpack.config.js',
+                         directory.join('webpack.config.js'), opts)
                 template('jest.config.json',
-                         directory.join('jest.config.json'), verbose: false)
-
-                template('root-view.html',
-                         directory.join('root-view.tmpl.html'), verbose: false)
-
-                template('screens.js',
-                         directory.join('lanes/screen-definitions.js'), verbose: false)
-
-                # set the mtime to the past, otherwise Webpack will build repeatedly for a second
-                FileUtils.touch directory.join('index.html').to_s, mtime: Time.now - 1.minute
+                         directory.join('jest.config.json'), opts)
+                template(ROOT.join('templates','js', 'screens.js'),
+                         directory.join('lanes/screen-definitions.js'), opts)
+                # set the mtime to the past, otherwise Webpack will build repeatedly as it starts up
+                FileUtils.touch directory.join('index.html').to_s, mtime: Time.now - 10.minute
             end
         end
     end

@@ -26,7 +26,7 @@ module Lanes
 
             def configure
                 @wpd_config = WebpackDriver::Configuration.new(
-                    config.extension_path.join('config', 'webpack.config.js'),
+                    config.directory.join('webpack.config.js'),
                     cmd_line_flags: ['--hot', '--inline'],
                     logger: Lanes.logger,
                     directory: config.controlling_extension.root_path
