@@ -75,6 +75,7 @@ module Lanes
                     'jest',
                     'lanes-framework',
                     'react-router',
+                    'webpack',
                     'webpack-dev-server'
                 ].each do | package_name |
                     say(sprintf('    %-20s', package_name + '…'), nil, false)
