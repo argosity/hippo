@@ -1,5 +1,5 @@
 import {
-    negate, isNil, isString, mapValues, extend, forIn, isFunction, pick,
+    negate, isNil, isString, mapValues, extend, forIn, isFunction, pick, isNumber,
 } from 'lodash';
 import isEmail from 'validator/lib/isEmail';
 import Formous from 'formous';
@@ -22,6 +22,10 @@ function buildTest(defaultOptions, defaultMessage, test) {
 export function hasLength(len) {
     return options =>
         buildTest(options, `must be of length ${len}`, s => s.length >= len);
+}
+
+export function numberValue(options = {}) {
+    return buildTest(options, 'must be a number', isNumber);
 }
 
 export function stringValue(options = {}) {
