@@ -58,8 +58,9 @@ end
 
 namespace :assets do
     task :precompile do
-        require_relative 'api/sprockets_extension'
-        Lanes::API::SprocketsExtension.compile!
+        require 'lanes/command/webpack'
+        wp = Lanes::Command::Webpack.new([], compile: true)
+        wp.invoke_all
     end
 end
 
