@@ -3,7 +3,7 @@ import {
 } from 'mobx-decorated-models';
 import invariant from 'invariant';
 import {
-    isEmpty, isNil, find, extend, assign, pick,
+    isEmpty, isNil, find, extend, assign, pick, map,
 } from 'lodash';
 
 import { action, observable, computed } from 'mobx';
@@ -12,6 +12,7 @@ import pluralize from 'pluralize';
 
 import Sync from './sync';
 import Config from '../config';
+import { toSentence, humanize } from '../lib/util';
 import ModelCollection from './collection';
 
 export {
@@ -66,6 +67,10 @@ export class BaseModel {
     @observable syncInProgress = false;
     @observable lastServerMessage = '';
     @observable errors = {};
+
+    @computed get errorMessage() {
+        return toSentence(map(this.errors, (v, k) => `${humanize(k)} ${v}`));
+    }
 
     @computed get isValid() {
         return isNil(this.errors) || isEmpty(this.errors);

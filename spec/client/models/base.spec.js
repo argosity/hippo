@@ -85,4 +85,11 @@ describe('BaseModel Test', () => {
         expect(() => (container.id = 42)).toThrow('Bad Type');
         expect(container.id).toEqual('test');
     });
+
+    it('generates an error message from errors', () => {
+        const box = new Box();
+        expect(box.errorMessage).toEqual('');
+        box.errors = { foo: 'cannot be blank', baz: 'is very invalid' };
+        expect(box.errorMessage).toEqual('Foo cannot be blank and Baz is very invalid');
+    });
 });
