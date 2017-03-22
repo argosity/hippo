@@ -18,6 +18,8 @@ module Lanes
             class_option :wait, :type => :boolean, default: true,
                          desc: "Whether to keep running and wait for exit"
 
+            class_option :compile, :type => :boolean, default: false
+
             def make_config
                 return if @config
                 @config = ClientConfig.new
@@ -27,25 +29,22 @@ module Lanes
             def configure
                 @wpd_config = WebpackDriver::Configuration.new(
                     config.directory.join('webpack.config.js'),
-                    cmd_line_flags: ['--hot', '--inline'],
                     logger: Lanes.logger,
-                    directory: config.controlling_extension.root_path
+                    directory: config.controlling_extension.root_path,
+                    cmd_line_flags: (options[:compile] ? [] : ['--hot', '--inline']),
+                    environment: { NODE_ENV: options[:compile] ? 'production' : 'development' }
                 )
-
-                wpd_config.environment.merge!(
-                    EXTENSION_ID: config.controlling_extension.identifier,
-                    LANES_MODULES: config.module_paths.join(':'),
-                    ENTRY: "#{config.controlling_extension.identifier}/index.js",
-                    GENERATED_CONFIG_DIR: config.directory.to_s
-                )
-
                 self
             end
 
+            def create_process
+                @process = options[:compile] ? ::WebpackDriver::Compile.new(wpd_config) :
+                               ::WebpackDriver::DevServer.new(wpd_config)
+            end
+
             def startup
-                @process = ::WebpackDriver::DevServer.new(wpd_config)
-                @process.start
-                @process.wait if options[:wait]
+                process.start
+                process.wait if options[:wait]
             end
 
         end
