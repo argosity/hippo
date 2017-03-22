@@ -123,7 +123,7 @@ module Lanes
                 params[:s]
             end
             def requested_limit
-                params[:l].to_i
+                params.key?(:l) ? params[:l].to_i : nil
             end
 
             # reply options
