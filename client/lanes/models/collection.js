@@ -1,11 +1,11 @@
 import { observable } from 'mobx';
 import invariant from 'invariant';
-import { extend, each, isArray } from 'lodash';
+import { extend, each, isArray, isObject } from 'lodash';
 import { createCollection } from 'mobx-decorated-models';
 
 import Sync from './sync';
 
-function extendAry(modelClass, models = [], options) {
+function extendAry(modelClass, models = [], options = {}) {
     invariant(isArray(models), 'models must be an array');
     const ary = createCollection(extend({ model: modelClass }, options));
 
@@ -33,17 +33,18 @@ function extendAry(modelClass, models = [], options) {
             return ary;
         });
     };
+    if (options.fetch) {
+        ary.fetch(isObject(options.fetch) ? options.fetch : {});
+    }
     return ary;
 }
 
 export default class ModelCollection {
-
     constructor(model) {
         this.$model = model;
         this.$collection = extendAry(model, [], {}, this);
         return this;
     }
-
     create(models = [], options = {}) {
         return extendAry(this.$model, models, options, this);
     }
