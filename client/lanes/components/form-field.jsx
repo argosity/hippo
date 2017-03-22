@@ -1,27 +1,45 @@
 import React from 'react';
-import { get, partial } from 'lodash';
+import { observer } from 'mobx-react';
+import { get, partial, map, find } from 'lodash';
 import classnames from 'classnames';
 import { Col, getColumnProps } from 'react-flexbox-grid';
 import Field     from 'grommet/components/FormField';
 import TextInput from 'grommet/components/TextInput';
 import DateTime  from 'grommet/components/DateTime';
+import Select from 'grommet/components/Select';
 
 import { titleize } from '../lib/util';
 
 import './form-field.scss';
 import FieldValidation from './field-validation';
 
-const Text = props =>
-    <TextInput {...props} onDOMChange={props.onChange} />;
 const onDateChange = (props, date) =>
     props.onChange({ target: { value: date } });
+
+const onSelectChange = (props, { value: { id } }) =>
+    props.onChange({ target: { value: id } });
+
+
+const Text = props =>
+    <TextInput {...props} onDOMChange={props.onChange} />;
 const Date = props =>
     <DateTime {...props} onChange={partial(onDateChange, props)} />;
 
+const SelectField = observer(({ collection, value, ...otherProps }) =>
+    <Select
+        {...otherProps}
+        value={value ? get(find(collection, { id: value }), 'label', '') : ''}
+        options={collection}
+        onChange={partial(onSelectChange, otherProps)}
+    />,
+);
+
 const TypesMapping = {
-    text: Text,
-    date: Date,
+    text:   Text,
+    date:   Date,
+    select: SelectField,
 };
+
 
 export default class FormField extends React.PureComponent {
     static defaultProps = {
