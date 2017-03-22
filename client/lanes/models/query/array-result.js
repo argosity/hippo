@@ -76,8 +76,9 @@ export default class ArrayResult extends Result {
     }
 
     fetchModelForRow(index, syncOptions = {}) {
-        return this.modelForRow(index)
-            .fetch(extend({}, this.query.syncOptions, syncOptions));
+        const model = this.modelForRow(index);
+        return model.isNew ? Promise.resolve(model) :
+            model.fetch(extend({}, this.query.syncOptions, syncOptions));
     }
 
     onQuerySortChange() {
