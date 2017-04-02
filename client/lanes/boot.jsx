@@ -1,4 +1,4 @@
-import React        from 'react';
+import React        from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM     from 'react-dom';
 import whenDomReady from 'when-dom-ready';
 import { delay } from 'lodash';
@@ -22,7 +22,7 @@ function renderer(Body) {
 
 if (module.hot) {
     module.hot.accept('lanes/workspace', () => {
-        const WSNext = require('lanes/workspace').default;
+        const WSNext = require('lanes/workspace').default; // eslint-disable-line global-require
         renderer(WSNext);
     });
 }

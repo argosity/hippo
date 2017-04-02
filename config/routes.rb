@@ -19,6 +19,12 @@ Lanes::API.routes.for_extension 'lanes' do
         end
     end
 
+    get 'bootstrap.json' do
+        wrap_reply do
+            { success: true, data: Lanes::Extensions.client_bootstrap_data }
+        end
+    end
+
     resources Lanes::User
 
 end
