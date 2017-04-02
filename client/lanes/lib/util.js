@@ -1,7 +1,7 @@
 import logger from 'loglevel';
 import {
     trim, isDate, isNaN, isError, isElement, isFunction, isBoolean, isRegExp,
-    isNumber, isObject, isEmpty, isNil, isString,
+    isNumber, isObject, isEmpty, isNil, isString, each,
 } from 'lodash';
 import pluralize from 'pluralize';
 
@@ -45,6 +45,15 @@ export function humanize(str) {
                            .replace(/_/g, ' ')));
 }
 
+export function renameProperties(object, keyMap) {
+    each(keyMap, (to, from) => {
+        if (object[from]) {
+            object[to] = object[from]; // eslint-disable-line no-param-reassign
+            delete object[from];       // eslint-disable-line no-param-reassign
+        }
+    });
+    return object;
+}
 
 export function toSentence(sentence, comma = ', ', nd = ' and ') {
     let words = isString(sentence) ? sentence.split(' ') : sentence;

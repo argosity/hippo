@@ -17,7 +17,7 @@ describe('Util helper functions', () => {
         expect(Util.toSentence(['bar', 'baz', 'bing'])).toEqual('bar, baz and bing');
     });
 
-    fit('classify', () => {
+    it('classify', () => {
         expect(Util.classify('bar baz bing')).toEqual('BarBazBing');
         expect(Util.classify('bar/baz-bing')).toEqual('Bar::BazBing');
     });
@@ -38,5 +38,11 @@ describe('Util helper functions', () => {
         expect(Util.isBlank('test')).toBe(false);
         expect(Util.isBlank(undefined)).toBe(true);
         expect(Util.isBlank(null)).toBe(true);
+    });
+
+    it('renames properties', () => {
+        expect(
+            Util.renameProperties({ a: 1, b: 2, c: 3 }, { a: 'z', b: 'y' }),
+        ).toEqual({ z: 1, y: 2, c: 3 });
     });
 });
