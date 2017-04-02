@@ -48,7 +48,6 @@ function perform(urlPrefix, defaultOptions = {}) {
     if (!options.headers) { options.headers = {}; }
 
     options.headers['Content-Type'] = 'application/json';
-
     return fetch(url, options)
         .then(resp => resp.json())
         .then((json) => {
@@ -57,9 +56,9 @@ function perform(urlPrefix, defaultOptions = {}) {
         });
 }
 
-function peformMobxyRequest(mobx, options) {
+function peformMobxyRequest(mobx, options = {}) {
     mobx.syncInProgress = options;  // eslint-disable-line no-param-reassign
-    return perform(mobx.syncUrl, options)
+    return perform(options.url || mobx.syncUrl, options)
         .then((json) => {
             extend(mobx, {
                 errors:            json.errors,
@@ -89,6 +88,7 @@ function forModel(model, options = {}) {
     const requestOptions = merge({
         method: methodMap[action],
     }, options);
+
     if (includes(['POST', 'PUT', 'PATCH'], requestOptions.method)) {
         requestOptions.body = JSON.stringify(options.json || model.syncData);
     }
