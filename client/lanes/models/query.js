@@ -1,7 +1,7 @@
-import { get, isString, extend } from 'lodash';
+import { get, isString, find, extend, toPairs } from 'lodash';
 import { action, reaction, observe } from 'mobx';
 import {
-    BaseModel, identifiedBy, field, belongsTo, hasMany, identifier, computed, observable,
+    BaseModel, identifiedBy, field, belongsTo, hasMany, identifier, computed, session,
 } from './base';
 
 import Info        from './query/info';
@@ -18,19 +18,19 @@ export default class Query extends BaseModel {
     @belongsTo src;
 
     @identifier id;
-    @observable pageSize = 20;
+    @session pageSize = 20;
 
-    @observable initialField;
-    @observable idIndex;
-    @observable initialFieldIndex;
+    @session initialField;
+    @session idIndex;
+    @session initialFieldIndex;
 
-    @observable sortField;
-    @observable sortAscending = false;
+    @session sortField;
+    @session sortAscending = false;
 
-    @observable results;
-    @observable customSyncUrl;
+    @session results;
+    @session customSyncUrl;
 
-    @observable autoFetch = false;
+    @session autoFetch = false;
 
     @field({ type: 'object' }) syncOptions = {};
 
@@ -61,6 +61,11 @@ export default class Query extends BaseModel {
         this.results = new ArrayResult({ query: this });
         if (0 === this.clauses.length) {
             this.clauses.push({ });
+        }
+        if (attrs.sort) {
+            const [fieldId, dir] = toPairs(attrs.sort)[0];
+            this.sortField = find(this.fields, { id: fieldId });
+            this.sortAscending = ('ASC' === dir);
         }
         if (this.autoFetch) { this._startAutoFetch(); }
         observe(this, 'autoFetch', this._onAutoFetchChange);
