@@ -20,8 +20,10 @@ const VALIDATORS = {
 };
 
 const COERCE = {
-    date(val) {
-        return isDate(val) ? val : new Date(val);
+    date(change) {
+        if (!isDate(change.newValue)) {
+            change.newValue = new Date(change.newValue); // eslint-disable-line no-param-reassign
+        }
     },
 };
 
@@ -32,8 +34,8 @@ function addLazyInitializer(target, fn) {
 function validateChangeType(validator, propertyName, change) {
     if (isNil(change.newValue)) { return change; }
     invariant(VALIDATORS[validator], `Unknown TypeCheck: ${validator} does not exist`);
-    const value  = COERCE[validator] ? COERCE[validator](change.newValue) : change.newValue;
-    invariant(VALIDATORS[validator](value),
+    if (COERCE[validator]) { COERCE[validator](change); }
+    invariant(VALIDATORS[validator](change.newValue),
               `Bad Type: Attempted to set ${propertyName} to '${change.newValue}' which is not ${validator}`);
     return change;
 }
