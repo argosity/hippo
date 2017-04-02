@@ -7,21 +7,21 @@ import Field     from 'grommet/components/FormField';
 import TextInput from 'grommet/components/TextInput';
 import DateTime  from 'grommet/components/DateTime';
 import Select from 'grommet/components/Select';
-
+import moment from 'moment';
 import { titleize } from '../lib/util';
 
 import './form-field.scss';
 import FieldValidation from './field-validation';
 
 const onDateChange = (props, date) =>
-    props.onChange({ target: { value: date } });
+    props.onChange({ target: { value: moment(date, props.format || 'M/D/YYYY h:mm a').toDate() } });
 
 const onSelectChange = (props, { value: { id } }) =>
     props.onChange({ target: { value: id } });
 
-
 const Text = props =>
     <TextInput {...props} onDOMChange={props.onChange} />;
+
 const Date = props =>
     <DateTime {...props} onChange={partial(onDateChange, props)} />;
 
