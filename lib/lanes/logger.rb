@@ -52,43 +52,16 @@ module Lanes
         private
 
         def _create_logger
-
-            if defined?(::Rails)
-                # Rails.logger
-            else
-                # if Lanes.env.production?
-                #     dest = if FileTest.writable?("log/production.log")
-                #                "log/production.log"
-                #            else
-                #                STDOUT
-                #            end
-                #     logger = ::Logger.new(dest)
-                #     logger.level = ::Logger::WARN
-                #     logger
-                # else
-
-                    logger = ::Logger.new MultiDestinationLogger.new
-                    logger.formatter = proc do |severity, datetime, progname, msg|
-                        sprintf "%5.5s %s\n", severity, msg
-                    end
-
-                    # logger.formatter = proc do |severity, datetime, progname, msg|
-                    #     # sprintf "%5.5s %s\n", severity, msg
-                    # end
-
-#                    original_formatter = Logger::Formatter.new
-                    # logger.formatter = proc { |severity, datetime, progname, msg|
-                    #     original_formatter.call(severity, datetime, progname, msg.dump)
-                    # }
-
-                    logger.level = ::Logger::INFO
-                    logger
-                # end
+            logger = ::Logger.new MultiDestinationLogger.new
+            logger.formatter = proc do |severity, datetime, progname, msg|
+                sprintf "%5.5s %s\n", severity, msg
             end
+            if ENV['LOG']
+                logger.level = ::Logger.const_get(ENV['LOG'].upcase)
+            else
+                logger.level = ::Logger::INFO
+            end
+            logger
         end
-
-
     end
-
-
 end

@@ -33,7 +33,7 @@ module Lanes
             def records_for_reply(data, type, options)
                 return [] if :destroy == type
                 if options[:format] == 'array'
-                    data.pluck( *requested_fields )
+                    data.pluck(*requested_fields)
                 else
                     data.as_json(options)
                 end

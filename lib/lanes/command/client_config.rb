@@ -19,6 +19,7 @@ module Lanes
             end
 
             def apply_lanes_config
+                Command.load_current_extension(raise_on_fail:true)
                 Lanes::Configuration.apply
                 Lanes::Extensions.load_controlling_config
             end

@@ -1,3 +1,5 @@
+require_relative './formatted_reply'
+
 module Lanes
     module API
 

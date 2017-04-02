@@ -20,6 +20,10 @@ module Lanes
 
             class_option :compile, :type => :boolean, default: false
 
+            def set_production_env
+                Lanes.config.environment = :production if options[:compile]
+            end
+
             def make_config
                 return if @config
                 @config = ClientConfig.new
