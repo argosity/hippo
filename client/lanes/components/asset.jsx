@@ -1,17 +1,16 @@
 import React from 'react';
-import { observable, action, computed } from 'mobx';
+import { Col } from 'react-flexbox-grid';
+import { action } from 'mobx';
 import { observer }   from 'mobx-react';
 import { titleize } from 'lanes/lib/util';
-import DocumentIcon from 'grommet/components/icons/base/DocumentCloud'
+import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 
-import AssetModel from '../models/asset';
-import { BaseModel } from '../models/base';
-
-import { Col } from 'react-flexbox-grid';
-import './asset.scss';
-import classnames from 'classnames';
 import Field from 'grommet/components/FormField';
+import DocumentIcon from 'grommet/components/icons/base/DocumentCloud';
+
+import { BaseModel } from '../models/base';
+import './asset.scss';
 
 @observer
 export default class Asset extends React.PureComponent {
