@@ -2,7 +2,7 @@ import qs from 'qs';
 import 'whatwg-fetch'; // fetch polyfill
 
 import { includes, isEmpty, merge, extend, isArray, isObject } from 'lodash';
-
+import { action } from 'mobx';
 import Config     from '../config';
 import { logger } from '../lib/util';
 
@@ -56,52 +56,52 @@ function perform(urlPrefix, defaultOptions = {}) {
         });
 }
 
-function peformMobxyRequest(mobx, options = {}) {
-    mobx.syncInProgress = options;  // eslint-disable-line no-param-reassign
-    return perform(options.url || mobx.syncUrl, options)
-        .then((json) => {
-            extend(mobx, {
+const peformMobxyRequest = action('SyncforModel', (mobxObj, options = {}) => {
+    mobxObj.syncInProgress = options;  // eslint-disable-line no-param-reassign
+    return perform(options.url || mobxObj.syncUrl, options)
+        .then(action('syncSuccessHandler', (json) => {
+            extend(mobxObj, {
                 errors:            json.errors,
                 syncInProgress:    undefined,
                 lastServerMessage: json.message,
             });
             // sometimes the polyfill (or fetch iteself) sets a `:success` property?
-            if (false === json[':success']) { merge(mobx, { errors: { fetch: json[':message'] } }); }
+            if (false === json[':success']) { merge(mobxObj, { errors: { fetch: json[':message'] } }); }
             return json;
-        }).catch((e) => {
+        })).catch(action('syncErrorHandler', (e) => {
             logger.warn(e);
-            extend(mobx, {
+            extend(mobxObj, {
                 errors:            { network: e },
                 syncInProgress:     undefined,
                 lastServerMessage:  e.toString(),
             });
             return {};
-        });
-}
+        }));
+});
 
 function forCollection(collection, options = {}) {
     return peformMobxyRequest(collection, options);
 }
 
-function forModel(model, options = {}) {
-    const action = options.action || (model.isNew ? 'create' : 'update');
+const forModel = action('SyncforModel', (model, options = {}) => {
+    const httpAction = options.action || (model.isNew ? 'create' : 'update');
     const requestOptions = merge({
-        method: methodMap[action],
+        method: methodMap[httpAction],
     }, options);
 
     if (includes(['POST', 'PUT', 'PATCH'], requestOptions.method)) {
         requestOptions.body = JSON.stringify(options.json || model.syncData);
     }
     return peformMobxyRequest(model, requestOptions)
-        .then((json) => {
+        .then(action('syncModelSuccessHandler', (json) => {
             if (isArray(json.data) && json.data.length) {
                 model.syncData = json.data[0];  // eslint-disable-line no-param-reassign
             } else if (isObject(json.data)) {
                 model.syncData = json.data;  // eslint-disable-line no-param-reassign
             }
             return model;
-        });
-}
+        }));
+});
 
 export default {
     forModel,
