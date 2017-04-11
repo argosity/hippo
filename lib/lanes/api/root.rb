@@ -44,15 +44,15 @@ module Lanes
 
             configure do
                 cors_resources = []
-
                 if API::Root::CORS_PATHS.any?
-                    use Rack::Cors, debug: !Lanes.env.production? do
-
+                    use Rack::Cors, debug: !Lanes.env.production?, logger: Lanes.logger do
                         API::Root::CORS_PATHS.each do | path, options |
                             allow do
                                 cors_resources.push  Rack::Cors::Resource.new('', path)
                                 origins options[:origins]
-                                resource path, :methods => options[:methods], :headers => :any
+                                resource path,
+                                         :methods => options[:methods].map(&:to_sym) + [:options],
+                                         :headers => :any
                             end
                         end
 
