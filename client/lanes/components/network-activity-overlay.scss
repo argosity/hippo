@@ -1,0 +1,52 @@
+$gray-light: lightGrey !default;
+$well-border: darkGrey !default;
+$border-radius-large: 8px !default;
+$body-bg: white !default;
+$font-size-large: 15px !default;
+$gray-darker: lighten(#000, 13.5%) !default;
+
+.network-activity-overlay {
+  position: absolute;
+  z-index: 11;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  .mask {
+    background-color: white;
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &.rounded {
+      .mask { border-radius: $border-radius-large; }
+  }
+
+  .message {
+    width: 450px;
+    max-width: 90%;
+    min-height: 65px;
+    line-height: 3rem;
+    border: 2px solid $well-border;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2rem;
+    position: relative;
+    top: 25%;
+    border-radius: $border-radius-large;
+    padding: 10px;
+    box-shadow: 6px 7px 5px $gray-light;
+    background-color: $body-bg;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span { margin-left: 1rem; }
+  }
+
+}
