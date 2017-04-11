@@ -24,8 +24,10 @@ export function hasLength(len) {
         buildTest(options, `must be of length ${len}`, s => s.length >= len);
 }
 
+const NUMBER = /^[+-]?(\d*\.)?\d+$/;
+
 export function numberValue(options = {}) {
-    return buildTest(options, 'must be a number', isNumber);
+    return buildTest(options, 'must be a number', v => NUMBER.test(v));
 }
 
 export function stringValue(options = {}) {
@@ -33,7 +35,7 @@ export function stringValue(options = {}) {
 }
 
 export function validEmail(options = {}) {
-    return buildTest(options, 'must be a valid email', isEmail);
+    return buildTest(options, 'must be a valid email', email => isEmail(email || ''));
 }
 
 export function nonBlank(options = {}) {
@@ -46,6 +48,10 @@ export function validation(options = {}) {
 
 export function buildValidations(options = {}) {
     return mapValues(options, (v, name) => (isFunction(v) ? v({ name }) : v));
+}
+
+export function testWith(fn, msg='is invalid') {
+    return buildTest({}, msg, fn);
 }
 
 export function setFieldValue(field, value) {
