@@ -5,12 +5,11 @@ import Extensions from './extensions';
 
 class Config {
 
-    @observable api_host = '';
+    @observable api_host = window.location.origin;
     @observable api_path = '/api';
     @observable access_token;
     @observable root_view;
-    @observable assets_path_prefix = '/assets'
-
+    @observable assets_path_prefix = '/asset';
 
     constructor() {
         autorun(() => this.onTokenChange());
