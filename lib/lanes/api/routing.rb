@@ -38,13 +38,12 @@ module Lanes
 
                 prefix = options[:parent_attribute] ? options[:parent_attribute] + '/' : ''
 
-                configured_routes = Hash.new{|hsh, key| hsh[key] = []}
+                valid_methods = []
 
                 bind = lambda{ |method, route, wrapper_method = method|
-                    route = route + format
-                    configured_routes[route].push(method)
-                    self.send( method, route,
-                               &RequestWrapper.send(wrapper_method, model, controller, options) )
+                    valid_methods.push(method)
+                    self.send(method, route + format,
+                              &RequestWrapper.send(wrapper_method, model, controller, options))
                 }
 
                 # show
@@ -72,13 +71,10 @@ module Lanes
 
                 end
 
-                if options[:cors]
+                if options[:cors] && valid_methods.any?
                     cors = options[:cors].is_a?(Hash) ? otions[:cors] : {origins: options[:cors]}
-
-                    configured_routes.each do | route, methods |
-                        enable_cors route, cors.merge(methods: methods)
-                    end
-
+                    enable_cors "#{prefix}#{path}/?:id?#{format}",
+                                cors.merge(methods: valid_methods)
                 end
 
             end
