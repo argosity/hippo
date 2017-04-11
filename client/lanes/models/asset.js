@@ -31,6 +31,7 @@ export default class Asset extends BaseModel {
 
     constructor(props) {
         super(props);
+
         autorun(() => {
             if (this.isDirty && UPDATE_METHODS[get(this.owner, 'syncInProgress.method')]) {
                 this.save();
@@ -39,7 +40,7 @@ export default class Asset extends BaseModel {
     }
 
     @computed get baseUrl() {
-        return `${Config.api_path}/asset`;
+        return Config.api_host + Config.api_path + Config.assets_path_prefix;
     }
 
     @computed get isDirty() {
@@ -83,7 +84,13 @@ export default class Asset extends BaseModel {
         if (!isEmpty(query)) {
             url += `?${qs.stringify(query, { arrayFormat: 'brackets' })}`;
         }
-        return fetch(url, { method: 'POST', body: form });
+        return fetch(url, { method: 'POST', body: form })
+            .then(resp => resp.json())
+            .then(json => this.set(json.data))
+            .then(() => {
+                this.file = undefined;
+                return this;
+            });
     }
 
 }
