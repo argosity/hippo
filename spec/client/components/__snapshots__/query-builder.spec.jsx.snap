@@ -48,7 +48,7 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
               <polyline
                 fill="none"
                 points="7.086 3.174 17.086 13.174 7.086 23.174"
-                stroke="#000000"
+                stroke="#000"
                 strokeWidth="2"
                 transform="scale(1 -1) rotate(-89 -1.32 0)"
               />
