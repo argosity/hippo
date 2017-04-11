@@ -109,7 +109,7 @@ module Lanes
             end
 
             def load_controlling_config
-                config_file = self.controlling.root_path.join('config','lanes.rb')
+                config_file = self.controlling.root_path.join('config','initialize.rb')
                 if config_file.exist?
                     require config_file
                 end

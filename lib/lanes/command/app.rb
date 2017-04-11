@@ -42,7 +42,7 @@ module Lanes
 
                 template "config/jest.config.json"
                 template "config/jest/babel-transform.js"
-                template "config/lanes.rb"
+                template "config/initialize.rb"
                 template ".gitignore"
 
                 template "spec/client/setup.js"
