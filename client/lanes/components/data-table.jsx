@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { pick, extend, defaults, map, bindAll, partial, toInteger, isNumber } from 'lodash';
 import { defaultTableRowRenderer, Table, InfiniteLoader, AutoSizer, Column } from 'react-virtualized';
 import { action, computed, observable, autorun } from 'mobx';
@@ -34,12 +35,12 @@ export default class DataTable extends React.Component {
     }
 
     static propTypes = {
-        style:     React.PropTypes.object,
-        query:     React.PropTypes.instanceOf(Query).isRequired,
-        canCreate: React.PropTypes.bool,
-        editor:    React.PropTypes.func,
-        onEdit:    React.PropTypes.func,
-        editRowIndex: React.PropTypes.number,
+        style:     PropTypes.object,
+        query:     PropTypes.instanceOf(Query).isRequired,
+        canCreate: PropTypes.bool,
+        editor:    PropTypes.func,
+        onEdit:    PropTypes.func,
+        editRowIndex: PropTypes.number,
     }
 
     @observable editIndex;

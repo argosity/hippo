@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { get } from 'lodash';
@@ -21,12 +22,12 @@ import QueryLayer from './record-finder/query-layer';
 @observer
 export default class RecordFinder extends React.PureComponent {
     static propTypes = {
-        query: React.PropTypes.instanceOf(Query).isRequired,
-        name:  React.PropTypes.string.isRequired,
-        label: React.PropTypes.string,
-        recordsTitle: React.PropTypes.string.isRequired,
-        onRecordFound: React.PropTypes.func.isRequired,
-        fields: React.PropTypes.object.isRequired,
+        query: PropTypes.instanceOf(Query).isRequired,
+        name:  PropTypes.string.isRequired,
+        label: PropTypes.string,
+        recordsTitle: PropTypes.string.isRequired,
+        onRecordFound: PropTypes.func.isRequired,
+        fields: PropTypes.object.isRequired,
     }
 
     @observable showingSearch = false;

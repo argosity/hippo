@@ -1,13 +1,15 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 export class JobStatus extends React.Component {
     static registerForPubSub = true;
     static listenNetworkEvents = true;
 
     static propTypes = {
         job: Lanes.PropTypes.State,
-        onlyExecuting: React.PropTypes.bool,
-        message: React.PropTypes.string
+        onlyExecuting: PropTypes.bool,
+        message: PropTypes.string
     };
 
     static modelBindings = { job: 'props' };    statusMessage() {

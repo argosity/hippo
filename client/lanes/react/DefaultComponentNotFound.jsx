@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { classify } from '../lib/util';
 
 export default class DefaultComponentNotFound extends React.Component {
 
     static propTypes = {
-        extension: React.PropTypes.shape({
-            identifier: React.PropTypes.string,
+        extension: PropTypes.shape({
+            identifier: PropTypes.string,
         }),
     }
 

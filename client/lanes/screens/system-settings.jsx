@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observable, action, computed } from 'mobx';
 import { observer }   from 'mobx-react';
 
@@ -21,7 +22,7 @@ export default class SystemSettings extends React.PureComponent {
     @observable settings = new Settings();
 
     static propTypes = {
-        screen:    React.PropTypes.instanceOf(ScreenInstance).isRequired,
+        screen:    PropTypes.instanceOf(ScreenInstance).isRequired,
     }
 
     constructor(props) {

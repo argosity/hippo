@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { isNil, toInteger } from 'lodash';
 import { observable, action, computed } from 'mobx';
 import { observer }   from 'mobx-react';
@@ -18,7 +19,7 @@ export default class UserManagement extends React.PureComponent {
     @observable editingId;
 
     static contextTypes = {
-        router: React.PropTypes.object,
+        router: PropTypes.object,
     }
 
     constructor(props) {

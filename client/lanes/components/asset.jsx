@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Col } from 'react-flexbox-grid';
 import { action } from 'mobx';
 import { observer }   from 'mobx-react';
@@ -21,10 +22,10 @@ export default class Asset extends React.PureComponent {
     }
 
     static propTypes = {
-        model:   React.PropTypes.instanceOf(BaseModel).isRequired,
-        name: React.PropTypes.string.isRequired,
-        label:    React.PropTypes.string,
-        className: React.PropTypes.string,
+        model:   PropTypes.instanceOf(BaseModel).isRequired,
+        name: PropTypes.string.isRequired,
+        label:    PropTypes.string,
+        className: PropTypes.string,
     }
 
     @action.bound

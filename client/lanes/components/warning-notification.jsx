@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Notification from 'grommet/components/Notification';
 
 export default function WarningNotification(props) {
@@ -9,5 +10,5 @@ export default function WarningNotification(props) {
 }
 
 WarningNotification.propTypes = {
-    message: React.PropTypes.string
+    message: PropTypes.string
 };

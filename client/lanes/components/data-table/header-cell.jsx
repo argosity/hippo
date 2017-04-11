@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { last } from 'lodash';
 import { action, computed } from 'mobx';
 import { observer } from 'mobx-react';
@@ -18,8 +19,8 @@ export default class SortingHeaderCell extends React.Component {
     }
 
     static propTypes = {
-        onAdd: React.PropTypes.func,
-        field: React.PropTypes.instanceOf(Field).isRequired,
+        onAdd: PropTypes.func,
+        field: PropTypes.instanceOf(Field).isRequired,
     }
 
     @action.bound

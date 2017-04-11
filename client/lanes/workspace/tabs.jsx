@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import Icon from '../components/icon';
@@ -10,10 +11,10 @@ import Tab from 'grommet/components/Tab';
 @observer
 export class ScreenTab extends React.Component {
     static propTypes = {
-        screen: React.PropTypes.shape({
-            title: React.PropTypes.string.isRequired,
-            definition: React.PropTypes.shape({
-                icon:    React.PropTypes.string.isRequired,
+        screen: PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            definition: PropTypes.shape({
+                icon:    PropTypes.string.isRequired,
             }).isRequired,
         }).isRequired,
     }

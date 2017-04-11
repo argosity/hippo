@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 Lanes.Components.Form.InputFieldMixin = {
 
     mixins: [
@@ -7,9 +9,9 @@ Lanes.Components.Form.InputFieldMixin = {
     ],
 
     propTypes: {
-        onlyNumeric:  React.PropTypes.bool,
-        selctOnFocus: React.PropTypes.bool,
-        onEnter: React.PropTypes.func
+        onlyNumeric:  PropTypes.bool,
+        selctOnFocus: PropTypes.bool,
+        onEnter: PropTypes.func
     },
 
     focus() {

@@ -1,8 +1,10 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 export class ResizeSensor extends BaseComponent {
     static propTypes =
-        {onResize: React.PropTypes.func.isRequired};
+        {onResize: PropTypes.func.isRequired};
     render() {
         return (
             <Lanes.Vendor.ComponentResize

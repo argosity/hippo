@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 export class FakeInputEvent {
     constructor(value) {
         this.target = {value};
@@ -10,7 +12,7 @@ export class FakeInputEvent {
 
 export class Checkbox extends React.Component {
     static propTypes =
-        {supportIndeterminate: React.PropTypes.bool};
+        {supportIndeterminate: PropTypes.bool};
 
     static mixins = [
         Lanes.Components.Form.InputFieldMixin

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import { observer } from 'mobx-react';
 import { action }   from 'mobx';
 import Box          from 'grommet/components/Box';
@@ -18,10 +20,10 @@ import OperatorModel from '../models/query/operator';
 class Radio extends React.PureComponent {
 
     static propTypes = {
-        name: React.PropTypes.string.isRequired,
-        onSelect: React.PropTypes.func.isRequired,
-        model: React.PropTypes.instanceOf(BaseModel).isRequired,
-        clause: React.PropTypes.instanceOf(ClauseModel).isRequired,
+        name: PropTypes.string.isRequired,
+        onSelect: PropTypes.func.isRequired,
+        model: PropTypes.instanceOf(BaseModel).isRequired,
+        clause: PropTypes.instanceOf(ClauseModel).isRequired,
     }
 
     @action.bound
@@ -48,7 +50,7 @@ class Radio extends React.PureComponent {
 class ClauseFilter extends React.PureComponent {
 
     static propTypes = {
-        clause: React.PropTypes.instanceOf(ClauseModel).isRequired,
+        clause: PropTypes.instanceOf(ClauseModel).isRequired,
     }
 
     render() {
@@ -65,7 +67,7 @@ class ClauseFilter extends React.PureComponent {
 class Clause extends React.PureComponent {
 
     static propTypes = {
-        clause: React.PropTypes.instanceOf(ClauseModel).isRequired,
+        clause: PropTypes.instanceOf(ClauseModel).isRequired,
     }
 
     @action.bound
@@ -125,8 +127,8 @@ export default class QueryBuilder extends React.PureComponent {
     }
 
     static propTypes = {
-        autoFetch: React.PropTypes.bool,
-        query: React.PropTypes.instanceOf(Query).isRequired,
+        autoFetch: PropTypes.bool,
+        query: PropTypes.instanceOf(Query).isRequired,
     }
 
     constructor(props) {

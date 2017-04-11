@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import { uniqueId, extend } from 'lodash';
 import classnames from 'classnames';
 
@@ -8,14 +10,14 @@ const DEFAULT_TOOLTIP_PROPS = { placement: 'top', trigger: 'click' };
 export default class Icon extends React.Component {
 
     static propTypes = {
-        type:         React.PropTypes.string.isRequired,
-        animated:     React.PropTypes.bool,
-        spinner:      React.PropTypes.bool,
-        className:    React.PropTypes.string,
-        tooltip:      React.PropTypes.oneOfType([
-            React.PropTypes.string, React.PropTypes.element
+        type:         PropTypes.string.isRequired,
+        animated:     PropTypes.bool,
+        spinner:      PropTypes.bool,
+        className:    PropTypes.string,
+        tooltip:      PropTypes.oneOfType([
+            PropTypes.string, PropTypes.element
         ]),
-        tooltipProps: React.PropTypes.object,
+        tooltipProps: PropTypes.object,
     };
 
     static defaultProps = {

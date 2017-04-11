@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { observer }   from 'mobx-react';
 
@@ -13,9 +14,9 @@ export default class Screen extends React.Component {
     }
 
     static propTypes = {
-        screen:    React.PropTypes.instanceOf(ScreenInstance).isRequired,
-        children:  React.PropTypes.node.isRequired,
-        className: React.PropTypes.string,
+        screen:    PropTypes.instanceOf(ScreenInstance).isRequired,
+        children:  PropTypes.node.isRequired,
+        className: PropTypes.string,
     }
 
     render() {

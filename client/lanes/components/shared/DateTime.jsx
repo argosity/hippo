@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 export default class DateTime extends React.Component {
     static mixins = [
         Lanes.Components.Form.FieldMixin
@@ -7,8 +9,8 @@ export default class DateTime extends React.Component {
     static fieldClassName = 'date-time';
 
     static propTypes = {
-        unlabled: React.PropTypes.bool,
-        format:   React.PropTypes.string
+        unlabled: PropTypes.bool,
+        format:   PropTypes.string
     };
     getDefaultProps() {
         return (

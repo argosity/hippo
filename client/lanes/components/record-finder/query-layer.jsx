@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import { observer }   from 'mobx-react';
 import { action, observable, computed } from 'mobx';
 
@@ -17,9 +19,9 @@ export default class QueryLayer extends React.PureComponent {
 
 
     static propTypes = {
-        title: React.PropTypes.string.isRequired,
-        onClose: React.PropTypes.func.isRequired,
-        onRecordSelect: React.PropTypes.func.isRequired,
+        title: PropTypes.string.isRequired,
+        onClose: PropTypes.func.isRequired,
+        onRecordSelect: PropTypes.func.isRequired,
     }
 
     onSearchClose() {

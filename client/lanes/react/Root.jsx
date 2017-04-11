@@ -1,9 +1,11 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 export default class Root extends React.Component {
 
     static childContextTypes = {
-        viewport: React.PropTypes.object,
+        viewport: PropTypes.object,
     }
 
     getChildContext() {

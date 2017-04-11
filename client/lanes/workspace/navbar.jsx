@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { get, bindAll } from 'lodash';
 
 import Config from '../config';
@@ -14,7 +15,7 @@ function Logo() {
 export default class Navbar extends React.Component {
 
     static contextTypes = {
-        uistate: React.PropTypes.object.isRequired,
+        uistate: PropTypes.object.isRequired,
     }
 
     constructor(props) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { bindAll } from 'lodash';
 import { observer } from 'mobx-react';
@@ -13,10 +14,10 @@ import Icon   from '../components/icon';
 export default class Group extends React.Component {
 
     static propTypes = {
-        group: React.PropTypes.shape({
-            active: React.PropTypes.bool.isRequired,
-            title:  React.PropTypes.string.isRequired,
-            icon:   React.PropTypes.string.isRequired,
+        group: PropTypes.shape({
+            active: PropTypes.bool.isRequired,
+            title:  PropTypes.string.isRequired,
+            icon:   PropTypes.string.isRequired,
         }).isRequired,
     }
 

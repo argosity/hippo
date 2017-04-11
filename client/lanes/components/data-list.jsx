@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindAll } from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -20,10 +21,10 @@ export default class DataList extends React.Component {
     }
 
     static propTypes = {
-        query: React.PropTypes.instanceOf(Query).isRequired,
-        rowComponent: React.PropTypes.func,
-        rowHeight: React.PropTypes.oneOfType([
-            React.PropTypes.number, React.PropTypes.func,
+        query: PropTypes.instanceOf(Query).isRequired,
+        rowComponent: PropTypes.func,
+        rowHeight: PropTypes.oneOfType([
+            PropTypes.number, PropTypes.func,
         ]),
     }
 

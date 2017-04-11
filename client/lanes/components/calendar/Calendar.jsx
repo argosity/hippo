@@ -1,17 +1,19 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 export default class Calendar extends React.Component {
     static statics =
         {Events: Lanes.Vendor.Dayz.EventsCollection};
 
     static propTypes = {
-        display:           React.PropTypes.oneOf(['month', 'week', 'day']),
-        date:              React.PropTypes.object.isRequired,
-        dayComponent:      React.PropTypes.func,
-        events:            React.PropTypes.instanceOf(Lanes.Vendor.Dayz.EventsCollection),
-        dayLabelComponent: React.PropTypes.func,
-        onDayClick:        React.PropTypes.func,
-        onEventClick:      React.PropTypes.func
+        display:           PropTypes.oneOf(['month', 'week', 'day']),
+        date:              PropTypes.object.isRequired,
+        dayComponent:      PropTypes.func,
+        events:            PropTypes.instanceOf(Lanes.Vendor.Dayz.EventsCollection),
+        dayLabelComponent: PropTypes.func,
+        onDayClick:        PropTypes.func,
+        onEventClick:      PropTypes.func
     };
     render() {
         return (

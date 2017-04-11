@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
 import { isNil, forIn, get } from 'lodash';
 
@@ -17,21 +18,21 @@ import Query from 'lanes/models/query';
 class EditForm extends React.PureComponent {
 
     static propTypes = {
-        query:      React.PropTypes.instanceOf(Query).isRequired,
-        rowIndex:   React.PropTypes.number.isRequired,
-        onComplete: React.PropTypes.func.isRequired,
+        query:      PropTypes.instanceOf(Query).isRequired,
+        rowIndex:   PropTypes.number.isRequired,
+        onComplete: PropTypes.func.isRequired,
 
-        fields: React.PropTypes.shape({
-            login: React.PropTypes.object,
-            name:  React.PropTypes.object,
-            password:  React.PropTypes.object,
-            password_confirm: React.PropTypes.object,
+        fields: PropTypes.shape({
+            login: PropTypes.object,
+            name:  PropTypes.object,
+            password:  PropTypes.object,
+            password_confirm: PropTypes.object,
         }).isRequired,
-        formState: React.PropTypes.shape({
-            touchd: React.PropTypes.bool,
-            valid:  React.PropTypes.bool,
+        formState: PropTypes.shape({
+            touchd: PropTypes.bool,
+            valid:  PropTypes.bool,
         }).isRequired,
-        setDefaultValues: React.PropTypes.func.isRequired,
+        setDefaultValues: PropTypes.func.isRequired,
     }
 
     static desiredHeight = 300

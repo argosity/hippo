@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import { bindAll } from 'lodash';
 import { observer } from 'mobx-react';
 import Icon from 'lanes/components/icon';
@@ -10,15 +12,15 @@ import Anchor from 'grommet/components/Anchor';
 export default class MenuOption extends React.Component {
 
     static propTypes = {
-        screen: React.PropTypes.shape({
-            title:   React.PropTypes.string.isRequired,
-            icon:    React.PropTypes.string.isRequired,
-            display: React.PropTypes.func.isRequired,
+        screen: PropTypes.shape({
+            title:   PropTypes.string.isRequired,
+            icon:    PropTypes.string.isRequired,
+            display: PropTypes.func.isRequired,
         }).isRequired,
     }
 
     static contextTypes = {
-        viewport: React.PropTypes.object,
+        viewport: PropTypes.object,
     }
 
     constructor() {

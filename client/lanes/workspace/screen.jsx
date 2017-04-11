@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { observer } from 'mobx-react';
 import { Grid } from 'react-flexbox-grid';
@@ -18,8 +19,8 @@ ScreenView.displayName = 'ScreenView';
 export default class Screen extends React.Component {
 
     static propTypes = {
-        params: React.PropTypes.shape({
-            screenId: React.PropTypes.string,
+        params: PropTypes.shape({
+            screenId: PropTypes.string,
         }).isRequired,
     }
 

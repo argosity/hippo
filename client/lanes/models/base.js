@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
     findModel,
 } from 'mobx-decorated-models';
@@ -30,6 +31,10 @@ export {
 };
 
 export class BaseModel {
+
+    static get propType() {
+        return PropTypes.instanceOf(this);
+    }
 
     static findDerived(name) {
         return findModel(name);
@@ -89,8 +94,9 @@ export class BaseModel {
         return this.isNew ? path : `${path}/${this.identifier}`;
     }
 
-    set(attrs) {
+    set(attrs = {}) {
         assign(this, pick(attrs, this.constructor.assignableKeys));
+        return this;
     }
 
     @action reset() {
