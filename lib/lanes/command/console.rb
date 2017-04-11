@@ -12,6 +12,7 @@ module Lanes
                 DB.establish_connection
                 ActiveRecord::Base.logger = Logger.new STDOUT
                 Configuration.apply
+                Lanes::Extensions.load_controlling_config
                 ext.on_dev_console
                 ARGV.clear
                 IRB.start
