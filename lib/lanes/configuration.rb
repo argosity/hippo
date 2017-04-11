@@ -5,12 +5,14 @@ require 'shrine'
 require 'active_job'
 require 'jobba'
 require 'webpack_driver'
-
+require 'yaml'
+require 'hashie/mash'
 
 module Lanes
 
     class Configuration
         include Concerns::AttrAccessorWithDefault
+        cattr_reader :secrets
 
         # Since changing a config value inadvertently
         # can have pretty drastic consequences that might not be
@@ -48,6 +50,10 @@ module Lanes
 
         def self.apply
             controlling_ext = Lanes::Extensions.controlling
+            secrets = controlling_ext.root_path.join('config', 'secrets.yml')
+            @@secrets = Hashie::Mash.new(
+                secrets.exist? ? YAML.load(ERB.new(secrets.read).result) : {}
+            )
 
             ActiveJob::Base.queue_adapter = Lanes.env.test? ? :test : :resque
             Lanes::Job::FailureLogger.configure
@@ -68,6 +74,7 @@ module Lanes
             if Kernel.const_defined?(:Guard) && ::Guard.const_defined?(:Jest)
                 ::Guard::Jest.logger = Lanes.logger
             end
+
         end
 
     end
