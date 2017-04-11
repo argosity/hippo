@@ -66,6 +66,7 @@
     "react-virtualized": "^9.0.0",
     "rsvp": "^3.3.3",
     "sass-loader": "^4.1.1",
+    "sprintf-js": "^1.0.3",
     "style-loader": "^0.13.1",
     "validator": "^6.2.1",
     "webpack": "v2.2.0-rc.4",
