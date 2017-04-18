@@ -17,10 +17,10 @@ module Lanes
         get Lanes.config.api_path + '/lanes/system-settings.json',
             &SystemSettings.get_handler
 
-        post Lanes.config.api_path + '/asset',
+        post Lanes.config.api_path + Lanes.config.assets_path_prefix,
              &API::Handlers::Asset.saver
 
-        get Lanes.config.api_path + '/asset/*',
+        get Lanes.config.api_path + Lanes.config.assets_path_prefix + '/*',
             &API::Handlers::Asset.getter
 
         post Lanes.config.api_path + '/dev-file-change.json' do
