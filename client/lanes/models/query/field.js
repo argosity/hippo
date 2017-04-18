@@ -20,6 +20,7 @@ export default class Field extends BaseModel {
     @session sortable   = true;
     @session textAlign  = 'left';
 
+    @session defaultValue;
     @session fetchIndex;
     @session sortBy;
 
