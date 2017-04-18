@@ -126,7 +126,7 @@ export default class DataTable extends React.Component {
             extend({
                 key: f.id,
                 columnData: f,
-                dataKey: f.visibleIndex,
+                dataKey: f.dataIndex,
                 headerRenderer: this.headerRenderer,
             }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink')),
         );

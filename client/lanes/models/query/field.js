@@ -45,20 +45,6 @@ export default class Field extends BaseModel {
         return includes(['number'], this.queryType);
     }
 
-    @computed get visibleIndex() {
-        if (!this.visible) { return null; }
-        let index = 0;
-        for (let i = 0; i < this.query.fields.length; i += 1) {
-            if (this.query.fields[i].visible) {
-                index += 1;
-                if (this.query.fields[i] === this) {
-                    return index;
-                }
-            }
-        }
-        return null;
-    }
-
     @computed get dataIndex() {
         if (!this.loadable) { return null; }
 
