@@ -31,7 +31,6 @@ whenDomReady().then(() => {
     if (Root) return;
     /* global document: true  */
     Root = document.getElementById('lanes-root');
-    Config.bootstrap(JSON.parse(document.getElementById('bootstrap-data').innerHTML));
     /* global document: false */
     renderer(Workspace);
     const loading = document.querySelector('.loading');

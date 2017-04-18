@@ -19,7 +19,7 @@ module Lanes
             end
 
             def apply_lanes_config
-                Command.load_current_extension(raise_on_fail:true)
+                Command.load_current_extension
                 Lanes::Configuration.apply
                 Lanes::Extensions.load_controlling_config
             end
@@ -51,7 +51,9 @@ module Lanes
                          directory.join('webpack.config.js'), opts)
                 template('jest.config.json',
                          directory.join('jest.config.json'), opts)
-                template(ROOT.join('templates','js', 'screens.js'),
+                template(ROOT.join('templates','js', 'config-data.js'),
+                         directory.join('lanes/config-data.js'), opts)
+                template(ROOT.join('templates','js', 'screen-definitions.js'),
                          directory.join('lanes/screen-definitions.js'), opts)
                 # set the mtime to the past, otherwise Webpack will build repeatedly as it starts up
                 FileUtils.touch directory.join('index.html').to_s, mtime: Time.now - 10.minute
