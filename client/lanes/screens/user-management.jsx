@@ -22,11 +22,6 @@ export default class UserManagement extends React.PureComponent {
         router: PropTypes.object,
     }
 
-    constructor(props) {
-        super(props);
-        this.query.fetch();
-    }
-
     @action.bound
     onRowEdit(index) {
         let id = '';
@@ -42,6 +37,7 @@ export default class UserManagement extends React.PureComponent {
         autoFetch: true,
         fields: [
             { id: 'id', visible: false },
+            { id: 'role_names', visible: false, defaultValue: [] },
             { id: 'login', width: 150, flexGrow: 0 },
             'name', 'email',
         ],
