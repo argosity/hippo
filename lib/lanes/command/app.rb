@@ -30,7 +30,7 @@ module Lanes
                     ".babelrc", "config/database.yml"
                 ].each{ |f| template(f) }
                 [
-                    ".eslintrc.js", ".rubocop.yml", "spec/client/.eslintrc.js", "config/index.html"
+                    ".eslintrc.js", ".rubocop.yml", "spec/client/.eslintrc.js", "views/index.html"
                 ].each{ |f| template("../#{f}", f) }
                 template "lib/namespace.rb", "lib/#{identifier}.rb"
                 template "lib/namespace/version.rb", "lib/#{identifier}/version.rb"

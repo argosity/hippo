@@ -4,9 +4,9 @@ const path = require('path');
 
 const config = {
     entry: {
-        lanes: [
+        app: [
             'react-hot-loader/patch',
-            process.env.ENTRY,
+            '<%%= "#{Lanes::Extensions.controlling.identifier}/index.js" %>',
         ],
     },
     output: {
@@ -62,7 +62,8 @@ const config = {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: `${process.env.GENERATED_CONFIG_DIR}/root-view.tmpl.html`,
+            template: '<%%= directory.join('index.html') %>',
+            chunks: ['app'],
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
