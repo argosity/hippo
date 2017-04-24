@@ -31,24 +31,26 @@ module Lanes::Concerns
             def attr_accessor_with_default( name, default=nil )
                 attr_writer name
                 attr_add_default_setting_method(name)
-                attr_reader_with_default( name, default )
+                attr_reader_with_default(name, default)
             end
 
             def attr_add_default_setting_method(name)
                 module_eval do
-                    define_singleton_method(name) do | value |
-                        attr_reader_with_default( name, value )
+                    define_singleton_method(name) do |value = nil|
+                        attr_reader_with_default(name, value) if value
+                        instance_variable_get("@#{name}".to_sym)
                     end
                 end
             end
 
             def attr_reader_with_default( name, default )
+                instance_var = "@#{name.to_s}".to_sym
+                instance_variable_set(instance_var, default)
                 module_eval do
-                    define_method( name ) do
+                    define_method(name) do
                         class << self; self; end.class_eval do
-                            attr_reader( name )
+                            attr_reader(name)
                         end
-                        instance_var = "@#{name.to_s}".to_sym
                         if instance_variable_defined?(instance_var)
                             instance_variable_get(instance_var)
                         else
