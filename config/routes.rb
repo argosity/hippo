@@ -8,8 +8,6 @@ Lanes::API.routes.for_extension 'lanes' do
         end
     end
 
-    get 'screens.json', &Lanes::API::Handlers::Screens.get
-
     post "user-sessions.json", &Lanes::API::Handlers::UserSession.create
     get "user-sessions/test.json", &Lanes::API::Handlers::UserSession.check
 
