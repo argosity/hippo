@@ -3,7 +3,7 @@ import {
 } from 'lodash';
 import invariant from 'invariant';
 
-import { intercept } from 'mobx';
+import { intercept, isObservableArray, isObservableObject } from 'mobx';
 
 import {
     field as mobxField,
@@ -14,8 +14,8 @@ import {
 const VALIDATORS = {
     number: isNumber,
     string: isString,
-    array:  isArray,
-    object: isObject,
+    array(a) { return isArray(a) || isObservableArray(a); },
+    object(o) { return isObject(o) || isObservableObject(o); },
     date:   isDate,
 };
 
