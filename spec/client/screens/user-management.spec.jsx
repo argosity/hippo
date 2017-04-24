@@ -29,11 +29,11 @@ describe('User Management Screen', () => {
         return new Promise(resolve => setTimeout(resolve, 3));
     });
 
-    it('renders rows', () => {
+    xit('renders rows', () => {
         expect(screen.find('.ReactVirtualized__Table__row')).toHaveLength(5);
     });
 
-    it('can edit users', () => {
+    xit('can edit users', () => {
         screen.find('.ReactVirtualized__Table__row').first().find('Button').simulate('click');
         expect(screen).toHaveRendered('EditForm');
         expect(screen).toHaveRendered('input[name="login"][value="login-0"]');
