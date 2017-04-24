@@ -27,10 +27,6 @@ module Lanes
             class_attribute :before
             class_attribute :after
 
-            def self.components(*names)
-                Components.enable(*names)
-            end
-
             def initialize
                 self.add_to_load_path
             end
@@ -47,40 +43,8 @@ module Lanes
                 {}
             end
 
-            def stylesheet_include
-                self.identifier + '/styles'
-            end
-
-            def javascript_include
-                self.identifier
-            end
-
-            def client_namespace
-                identifier.underscore.camelize
-            end
-
-            def client_paths
-                [ root_path.join('client') ]
-            end
-
-            def standard_client_path
-                root_path.join('client', identifier )
-            end
-
-            def static_paths
-                client_paths.each_with_object(Array.new) do |path, result|
-                    Lanes.config.static_asset_types.each do | prefix |
-                        result << path.join(prefix) if path.join(prefix).exist?
-                    end
-                end
-            end
-
-            def each_static_asset
-                static_paths.each do | path |
-                    path.find.each do | entry |
-                        yield entry.relative_path_from(path) if entry.file?
-                    end
-                end
+            def view_templates
+                ['index.html']
             end
 
             def route(route_set)
@@ -88,9 +52,6 @@ module Lanes
                 if routes_config.exist?
                     require routes_config
                 end
-            end
-
-            def on_boot
             end
 
             def add_to_load_path
@@ -106,28 +67,19 @@ module Lanes
                      require config_file
                  end
             end
+
+            def client_extension_path
+                "#{identifier}/extension"
+            end
         end
 
         class Base < Definition
             identifier "lanes"
             title "Lanes Application"
             root_path Pathname.new(__FILE__).dirname.join("..","..","..").expand_path
-            def stylesheet_include
-                nil
-            end
 
-            def javascript_include
-                nil
-            end
-
-            def on_boot
-                if Lanes.env.test? && Extensions.controlling.class == self.class
-                    Extensions.lock_controlling!
-                    require_relative("../workspace/extension")
-                end
-            end
-
-            def on_dev_console
+            def client_extension_path
+                "lanes/extensions/lanes"
             end
         end
 
