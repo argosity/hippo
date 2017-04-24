@@ -24,14 +24,18 @@ function extendAry(modelClass, models = [], options = {}) {
             set(val) { return this.$map.set(prop, val); },
         });
     });
-    Object.defineProperty(ary, 'syncUrl', {
-        get() { return modelClass.syncUrl; },
+    Object.defineProperties(ary, {
+        syncUrl: {
+            get() { return modelClass.syncUrl; },
+        },
+        syncData: {
+            set(rows) {
+                this.replace(rows);
+            },
+        },
     });
     ary.fetch = function(fetchOptions = {}) {
-        return Sync.forCollection(this, fetchOptions).then((json) => {
-            each(json.data, rec => ary.push(rec));
-            return ary;
-        });
+        return Sync.forCollection(this, fetchOptions);
     };
     if (options.fetch) {
         ary.fetch(isObject(options.fetch) ? options.fetch : {});
