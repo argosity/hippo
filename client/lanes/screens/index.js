@@ -1,41 +1,34 @@
-import { observable, autorun } from 'mobx';
-import { map, uniq, compact } from 'lodash';
+import { observable, computed } from 'mobx';
+import { map, filter, intersection } from 'lodash';
 import Group from './group';
 import Config from '../config';
-import Sync from '../models/sync';
-
-import user from '../user';
 
 const Screens = observable({
 
     all: observable.map(),
 
-    active: observable.array(),
-
-    groups: observable.map(),
+    active_screen_ids: observable.array(),
 
     get activeGroups() {
-        if (Group.enabled_group_ids) {
-            return map(Group.enabled_group_ids, gid => Group.forId(gid));
-        }
-        return uniq(compact(map(this.active, s => Group.forId(s.group_id))));
+        const gids = Group.enabled_group_ids || map(Group.all, 'id');
+        const groups = map(gids, gid => Group.forId(gid));
+        return filter(groups, group => intersection(group.screens, this.active).length);
     },
 
-    refresh() {
-        Sync.perform(`${Config.api_path}/lanes/screens`).then(({ data }) => {
-            if (data) {
-                this.active.replace(map(data.screens, id => this.all.get(id)));
-            }
-        });
+    @computed get active() {
+        return map(this.active_screen_ids, id => this.all.get(id));
+    },
+
+    configure(screen_ids) {
+        this.active_screen_ids.replace(screen_ids);
+    },
+
+    reset() {
+        this.active_screen_ids.clear();
     },
 
 });
+
+Config.screens = Screens;
+
 export default Screens;
-
-let previousLoggedIn = null;
-autorun(() => {
-    if (user.isLoggedIn !== previousLoggedIn) {
-        previousLoggedIn = user.isLoggedIn;
-        Screens.refresh();
-    }
-});
