@@ -1,27 +1,17 @@
-require 'jwt'
-require_relative '../../access/user'
+require_relative '../../user'
 
 module Lanes::API::Handlers
 
 
     module UserSession
-        def self.user_for_token(token)
-            payload = JWT.decode token, Lanes.config.session_secret_key_base, true, { :algorithm => 'HS256' }
-            if payload.length && (uid = payload[0]['uid'])
-                return Lanes::User.where(id: uid).first
-            end
-        end
-
 
         def self.create
             lambda do
                 wrap_reply(with_transaction: false) do
                     user = Lanes::User.where(login: data['login']).first
-                    Lanes.logger.warn "Found User: #{user.id}"
-
                     if user && user.authenticate(data['password'])
-                        token = JWT.encode({'uid' => user.id}, Lanes.config.session_secret_key_base, 'HS256')
-                        { success: true, message: "Login succeeded", data: user.workspace_data, token: token }
+                        { success: true, message: "Login succeeded",
+                          data: user.workspace_data.merge(token: user.jwt_token) }
                     else
                         { success: false, message: "Login failed", errors: { login: 'failed' }, data: {} }
                     end

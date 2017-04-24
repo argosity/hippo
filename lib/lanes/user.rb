@@ -1,10 +1,11 @@
+require 'jwt'
+
 module Lanes
 
     class User < Lanes::Model
-        self.table_name = 'lanes_users'
 
         has_secure_password
-        validates :login, :name, :email, presence: true
+        validates :login, :name, :email, presence: true, uniqueness: { case_sensitive: false }
         validates :email, email: true, uniqueness: { case_sensitive: false }
         validates :password, length: { minimum: 6 }, allow_nil: true
 
@@ -16,8 +17,9 @@ module Lanes
 
         def workspace_data
             my_data = attributes.slice('id','login','name','email','created_at',
-              'created_by','updated_at','updated_by','role_names', 'options')
-            { user: my_data, access: Access.for_user(self) }
+                                       'created_by','updated_at','updated_by','role_names', 'options')
+            screens = Lanes::Screen.select{|s| s.viewable_by?(self) }.map{|s| s.identifier }
+            { user: my_data, access: Access.for_user(self), screens: screens }
         end
 
         # @param model [Lanes::Model]
@@ -41,7 +43,7 @@ module Lanes
             roles.can_delete?(model, id)
         end
 
-        # We override the default implementation so that we can gaurantee
+        # We override the default implementation so that we can guarantee
         # that the current user can always update their own information
         USER_EDITABLE_ATTRIBUTES=[:name, :email, :password]
         def setting_attribute_is_allowed?(name, user)
@@ -55,6 +57,18 @@ module Lanes
         end
 
 
+        def jwt_token
+            JWT.encode({'uid' => id}, Lanes.config.session_secret_key_base, 'HS256')
+        end
+
+        def self.for_jwt_token(token)
+            payload = JWT.decode(
+                token, Lanes.config.session_secret_key_base, true, { :algorithm => 'HS256' }
+            ).first
+            if payload.length && (uid = payload[0]['uid'])
+                return where(id: uid).first
+            end
+        end
 
         # If all that's needed is the user's id, see `current_id`,
         # that method does not not attempt to instantiate a User

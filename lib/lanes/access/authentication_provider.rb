@@ -4,10 +4,7 @@ module Lanes
 
             def self.user_for_request(request)
                 token = request.params['jwt']
-                uid = token ?
-                          JWT.decode(token, Lanes.config.session_secret_key_base, true, { :algorithm => 'HS256' })
-                              .first['uid'] : nil
-                uid ? Lanes::User.where(id: uid).first : nil
+                token ? User.for_jwt_token(token) : nil
             end
 
             attr_reader :request
