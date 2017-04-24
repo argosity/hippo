@@ -13,7 +13,6 @@ module Lanes
             Lanes.config.get(:environment) do | env |
                 set :environment, env
             end
-#            register SprocketsExtension
             helpers RequestWrapper
             helpers HelperMethods
             helpers FormattedReply
@@ -32,11 +31,12 @@ module Lanes
             end
 
             configure do
-                set :views, Pathname.new(__FILE__).dirname.join("../../../views")
                 set :show_exceptions, false
                 require_relative 'routing'
                 Lanes::Configuration.apply
                 Extensions.load_controlling_config
+
+                set :views, Extensions.controlling.root_path.join('views')
 
                 require_relative './default_routes'
                 API::Cable.configure
