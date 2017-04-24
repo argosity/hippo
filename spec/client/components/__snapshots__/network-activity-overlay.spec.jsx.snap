@@ -7,25 +7,29 @@ exports[`Network Activity Overlay matches snapshot 1`] = `
   <div
     className="mask"
   >
-    <svg
-      aria-label="Spinning"
-      className="grommetux-icon-spinning grommetux-icon-spinning--medium grommetux-icon-spinning--responsive"
-      role="img"
-      version="1.1"
-      viewBox="0 0 48 48"
+    <div
+      className="message"
     >
-      <circle
-        cx="24"
-        cy="24"
-        fill="none"
-        r="21"
-        stroke="#979797"
-        strokeWidth="6"
-      />
-    </svg>
-    <span>
-      Deleting…
-    </span>
+      <svg
+        aria-label="Spinning"
+        className="grommetux-icon-spinning grommetux-icon-spinning--medium grommetux-icon-spinning--responsive"
+        role="img"
+        version="1.1"
+        viewBox="0 0 48 48"
+      >
+        <circle
+          cx="24"
+          cy="24"
+          fill="none"
+          r="21"
+          stroke="#979797"
+          strokeWidth="6"
+        />
+      </svg>
+      <span>
+        Deleting…
+      </span>
+    </div>
   </div>
 </div>
 `;
