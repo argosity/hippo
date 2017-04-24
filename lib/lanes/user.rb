@@ -118,9 +118,14 @@ module Lanes
             Thread.current[:lanes_current_user] = prev_user
         end
 
+        def self.seed_admin_account
+            where(login: 'admin').first || create!(name: "Admin", email: "admin@test.com",
+                                                   password: 'password',
+                                                   login: 'admin', role_names: ['administrator'])
+        end
     end
 
-    require_relative "track_modifications"
+    require_relative "access/track_modifications"
 
     # We can only use the TrackModifications concern after the User model is defined
     Model.send(:include, Concerns::TrackModifications )
