@@ -89,6 +89,6 @@ export function getTestScreen(attrs = {}) {
 }
 
 export class TestExtension extends BaseExtension {
-    get identifier() { return 'test'; }
+    get id() { return 'test'; }
 }
 TestExtension.register();
