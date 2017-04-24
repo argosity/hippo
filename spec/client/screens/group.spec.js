@@ -12,6 +12,7 @@ describe('Screens Group', () => {
 
     it('can be registered', () => {
         const spy = jest.fn();
+        ScreensGroup.all.clear();
         autorun(() => { spy(ScreensGroup.all.length); });
         const group = ScreensGroup.register({ id: 'test' });
         expect(ScreensGroup.all).toHaveLength(1);
