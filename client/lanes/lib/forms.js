@@ -1,6 +1,7 @@
 import {
-    negate, isNil, isString, mapValues, extend, forIn, isFunction, pick, isNumber,
+    negate, isNil, isString, mapValues, extend, forIn, isFunction, pick, isBoolean,
 } from 'lodash';
+import moment from 'moment'
 import isEmail from 'validator/lib/isEmail';
 import Formous from 'formous';
 
@@ -38,8 +39,16 @@ export function validEmail(options = {}) {
     return buildTest(options, 'must be a valid email', email => isEmail(email || ''));
 }
 
+export function booleanValue(options = {}) {
+    return buildTest(options, 'must be true or false', isBoolean);
+}
+
 export function nonBlank(options = {}) {
     return buildTest(options, 'is required', negate(isBlank));
+}
+
+export function dateValue(options = {}) {
+    return buildTest(options, 'must be valid date', v => moment(v, options.format).isValid());
 }
 
 export function validation(options = {}) {
@@ -54,6 +63,12 @@ export function testWith(fn, msg='is invalid') {
     return buildTest({}, msg, fn);
 }
 
+const passEverything = () => true;
+
+export function anyValue() {
+    return buildTest({}, '', passEverything);
+}
+
 export function setFieldValue(field, value) {
     if (!field.events) { return; }
     extend(field, { cid: Math.random(), value });
@@ -64,6 +79,11 @@ export function setFieldValues(fields, values) {
     forIn(fields, (field, name) => {
         setFieldValue(field, values[name]);
     });
+}
+
+export function persistFieldValues(fields, model) {
+    forIn(fields, (field, name) => (model[name] = field.value)); // eslint-disable-line
+    return Promise.resolve(model);
 }
 
 export function addFormFieldValidations(component, ...staticProps) {
