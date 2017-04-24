@@ -114,8 +114,13 @@ module Lanes
             end
 
             def model
+                return nil if @model_class.blank?
                 ext = Lanes::Extensions.for_identifier(@extension_id)
                 (@extension_id.camelize + '::' + @model_class).constantize
+            end
+
+            def viewable_by?(user)
+                model.nil? || user.can_read?(self)
             end
 
             def asset_path
