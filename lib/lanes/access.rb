@@ -42,7 +42,6 @@ module Lanes
 
 end
 
-require_relative 'access/user'
 require_relative 'access/authentication_provider'
 require_relative 'access/locked_fields'
 require_relative 'access/role'
