@@ -9,7 +9,7 @@ export default {
 
     register(Klass) {
         const instance = new Klass();
-        this.instances.set(instance.identifier, instance);
+        this.instances.set(instance.id, instance);
         return invoke(instance, 'onRegistered');
     },
 
@@ -45,10 +45,3 @@ export default {
     },
 
 };
-
-function __guardMethod__(obj, methodName, transform) {
-    if ('undefined' !== typeof obj && null !== obj && 'function' === typeof obj[methodName]) {
-        return transform(obj, methodName);
-    }
-    return undefined;
-}
