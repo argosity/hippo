@@ -1,10 +1,10 @@
+import Config from 'lanes/config';
 import Sync from 'lanes/models/sync';
 
 import { map, find, range, shuffle } from 'lodash';
 
 import Clause from 'lanes/models/query/clause';
 import Query  from 'lanes/models/query';
-
 import { Box } from '../test-models';
 
 jest.mock('lanes/models/sync');
@@ -54,19 +54,6 @@ describe('Model Queries', () => {
 
     it('calculates min width', () => {
         expect(query.info.minWidth).toEqual(400);
-    });
-
-    it('calculates visible index', () => {
-        expect(map(query.info.visibleFields, 'id')).toEqual([
-            'computed', 'label', 'width', 'height',
-        ]);
-        expect(query.fields[0].visibleIndex).toBeNull();
-        expect(query.fields[1].visibleIndex).toEqual(1);
-        expect(query.fields[2].visibleIndex).toEqual(2);
-        expect(query.fields[3].visibleIndex).toEqual(3);
-        expect(query.fields[4].visibleIndex).toEqual(4);
-        expect(query.fields[5].visibleIndex).toBeNull();
-        expect(query.info.visibleIndexes).toEqual([1, 2, 3, 4]);
     });
 
     it('has operators that can calculate valid types', () => {
@@ -137,15 +124,6 @@ describe('Model Queries', () => {
         expect(query.fields[2].dataIndex).toEqual(1);
         expect(query.fields[3].dataIndex).toEqual(2);
         expect(query.fields[4].dataIndex).toEqual(3);
-    });
-
-    it('updates a row when its model saves', () => {
-        range(0, 5).forEach(i => query.results.rows.push([i, 'blank', i]));
-        const model = query.results.modelForRow(2);
-        model.syncData = { width: 33, height: 33, depth: 33 };
-        expect(query.results.rows[2]).toEqual([
-            2, 'blank', 33, 33, 33,
-        ]);
     });
 
     describe('loading', () => {
