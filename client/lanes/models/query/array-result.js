@@ -13,32 +13,32 @@ import {
 export default class ArrayResult extends Result {
 
     @belongsTo query;
-    @observable updateKey;
     @observable totalCount = 0;
     @observable rows;
     @observable isLoading;
-
+    @observable rowUpdateCount = 0;
     @observable sortAscending;
     @observable sortField;
 
     constructor(attrs) {
         super(attrs);
-        bindAll(this, 'onUpdated', 'onQuerySortChange');
+        bindAll(this, 'onQuerySortChange');
         this.rows = observable.shallowArray([]);
         this.sortField = this.query.sortField;
         this.sortAscending = this.query.sortAscending;
-        autorun(this.onUpdated);
+
         reaction(
             () => [this.query.sortField, this.query.sortAscending],
             this.onQuerySortChange,
         );
     }
 
-    onUpdated() {
-        this.updateKey = [
+    @computed get updateKey() {
+        return [
             this.rows.length,
             (this.sortField ? this.sortField.id : 'none'),
             this.sortAscending,
+            this.rowUpdateCount,
         ].join('-');
     }
 
@@ -60,17 +60,24 @@ export default class ArrayResult extends Result {
     rowAsObject(index) {
         const row = this.rows[index];
         const obj = {};
-        this.query.info.loadableFields.forEach(f => (obj[f.id] = row[f.dataIndex]));
+        this.query.info.loadableFields.forEach(
+            f => (obj[f.id] = (row[f.dataIndex] || f.defaultValue)),
+        );
         return obj;
     }
 
     modelForRow(index) {
         const model = new this.query.src(this.rowAsObject(index)); // eslint-disable-line new-cap
-        observe(model, 'syncData', ({ newValue: update }) => {
-            const row = this.rows[index];
-            this.query.info.loadableFields.forEach((f) => {
-                if (has(update, f.id)) { row[f.dataIndex] = update[f.id]; }
-            });
+        observe(model, 'syncInProgress', ({ newValue, oldValue }) => {
+            if (newValue && !oldValue && newValue.isUpdate) {
+                newValue.whenComplete(() => {
+                    const row = this.rows[index];
+                    this.query.info.loadableFields.forEach((f) => {
+                        if (model[f.id]) { row[f.dataIndex] = model[f.id]; }
+                    });
+                    this.rowUpdateCount += 1;
+                });
+            }
         });
         return model;
     }
@@ -171,7 +178,8 @@ export default class ArrayResult extends Result {
         this.syncInProgress = options;
 
         return Sync.perform(this.query.info.syncUrl, options).then((resp) => {
-            this.rows.splice(start, Math.max(limit, resp.data.length), ...resp.data);
+            const rows = resp.data || [];
+            this.rows.splice(start, Math.max(limit, rows.length), ...rows);
             this.totalCount = resp.total;
             delete this.syncInProgress;
             return this;
