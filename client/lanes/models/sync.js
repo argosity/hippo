@@ -1,7 +1,7 @@
 import qs from 'qs';
 import 'whatwg-fetch'; // fetch polyfill
 
-import { includes, isEmpty, merge, extend, isArray, isObject } from 'lodash';
+import { includes, isEmpty, merge, extend, over } from 'lodash';
 import { action } from 'mobx';
 import Config     from '../config';
 import { logger } from '../lib/util';
@@ -24,6 +24,29 @@ const paramsMap = {
     start:   's',
     format:  'df',
 };
+
+function isUpdate(method) {
+    return includes(['POST', 'PUT', 'PATCH'], method);
+}
+
+class SyncProgess {
+    constructor(options) {
+        extend(this, options);
+        this._whenComplete = [];
+    }
+    whenComplete(fn) {
+        this._whenComplete.push(fn);
+    }
+    get isCreate() { return 'POST' === this.method;  }
+    get isUpdate() { return isUpdate(this.method); }
+}
+
+function invokeWhenComplete(json, progress) {
+    return progress._whenComplete.reverse().reduce((p, fn) => p.then(() => {
+        const ret = fn(json);
+        return (ret && ret.then) ? ret : Promise.resolve();
+    }), Promise.resolve());
+}
 
 function perform(urlPrefix, defaultOptions = {}) {
     const query   = {};
@@ -57,18 +80,26 @@ function perform(urlPrefix, defaultOptions = {}) {
 }
 
 const peformMobxyRequest = action('SyncforModel', (mobxObj, options = {}) => {
-    mobxObj.syncInProgress = options;  // eslint-disable-line no-param-reassign
+    mobxObj.syncInProgress = new SyncProgess(options);  // eslint-disable-line no-param-reassign
     return perform(options.url || mobxObj.syncUrl, options)
         .then(action('syncSuccessHandler', (json) => {
             extend(mobxObj, {
                 errors:            json.errors,
-                syncInProgress:    undefined,
+                syncData:          json.data,
                 lastServerMessage: json.message,
             });
             // sometimes the polyfill (or fetch iteself) sets a `:success` property?
             if (false === json[':success']) { merge(mobxObj, { errors: { fetch: json[':message'] } }); }
             return json;
-        })).catch(action('syncErrorHandler', (e) => {
+        }))
+        .then(action('whenComplete', json => invokeWhenComplete(json, mobxObj.syncInProgress)))
+        .then(action('syncDoneHandler', () => {
+            extend(mobxObj, {
+                syncInProgress: undefined,
+            });
+            return mobxObj;
+        }))
+        .catch(action('syncErrorHandler', (e) => {
             logger.warn(e);
             extend(mobxObj, {
                 errors:            { network: e },
@@ -89,18 +120,10 @@ const forModel = action('SyncforModel', (model, options = {}) => {
         method: methodMap[httpAction],
     }, options);
 
-    if (includes(['POST', 'PUT', 'PATCH'], requestOptions.method)) {
+    if (isUpdate(requestOptions.method)) {
         requestOptions.body = JSON.stringify(options.json || model.syncData);
     }
-    return peformMobxyRequest(model, requestOptions)
-        .then(action('syncModelSuccessHandler', (json) => {
-            if (isArray(json.data) && json.data.length) {
-                model.syncData = json.data[0];  // eslint-disable-line no-param-reassign
-            } else if (isObject(json.data)) {
-                model.syncData = json.data;  // eslint-disable-line no-param-reassign
-            }
-            return model;
-        }));
+    return peformMobxyRequest(model, requestOptions);
 });
 
 export default {
