@@ -128,7 +128,7 @@ export default class DataTable extends React.Component {
             extend({
                 key: f.id,
                 columnData: f,
-                dataKey: f.dataIndex,
+                dataKey: f.dataIndex || f.id,
                 headerRenderer: this.headerRenderer,
             }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink')),
         );
@@ -202,7 +202,6 @@ export default class DataTable extends React.Component {
 
     render() {
         const { query } = this;
-
         return (
             <div
                 className={cn('data-table', { selectable: this.props.onRowClick })}
