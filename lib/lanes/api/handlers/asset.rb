@@ -21,12 +21,9 @@ module Lanes::API::Handlers
                                     owner.send("build_#{params['owner_association']}")
                                 end
                             end
-
-                    asset.update(file: params['file'])
-
+                    asset.file = params['file']
                     json_reply std_api_reply asset.new_record? ? :update : :create,
-                                             asset,
-                                             success: asset.save
+                                             asset, success: asset.save
                 end
             end
         end
