@@ -1,2 +1,6 @@
 export React from 'react';
-export SnapShot from 'react-test-renderer';
+
+export { getScreenInstance, Snapshot } from './screens';
+
+jest.mock('lanes/config');
+jest.mock('lanes/models/sync');
