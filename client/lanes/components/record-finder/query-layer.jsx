@@ -41,26 +41,31 @@ export default class QueryLayer extends React.PureComponent {
             <Layer
                 closer
                 pad="small"
+                padding={{ bottom: 'small' }}
             >
-
                 <Box
-                    direction='row'
-                    justify='start'
-                    align='center'
-                    margin={{ top: 'small' }}
-                    flex='grow'
+                    direction='column'
+                    margin={{ bottom: 'small' }}
                 >
-                    <Box flex="grow">
-                        <Heading tag="h3" margin="none">Find {title}</Heading>
+                    <Box
+                        direction='row'
+                        justify='start'
+                        align='center'
+                        margin={{ top: 'small' }}
+                        flex='grow'
+                    >
+                        <Box flex="grow">
+                            <Heading tag="h3" margin="none">Find {title}</Heading>
+                        </Box>
+                        <Button plain icon={<CloseIcon />} onClick={onClose} />
                     </Box>
-                    <Button plain icon={<CloseIcon />} onClick={onClose} />
+                    <QueryBuilder query={query} autoFetch />
+                    <DataTable
+                        onRowClick={this.onRecordSelect}
+                        query={query} autoFetch
+                        style={{ minHeight: 400 }}
+                    />
                 </Box>
-                <QueryBuilder query={query} autoFetch />
-                <DataTable
-                    onRowClick={this.onRecordSelect}
-                    query={query} autoFetch
-                    style={{ minHeight: 400 }}
-                />
             </Layer>
         );
     }
