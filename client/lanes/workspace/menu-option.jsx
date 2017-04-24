@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { bindAll } from 'lodash';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import Icon from 'lanes/components/icon';
 
@@ -23,15 +23,10 @@ export default class MenuOption extends React.Component {
         viewport: PropTypes.object,
     }
 
-    constructor() {
-        super();
-        bindAll(this, 'activateScreen');
-    }
-
-    activateScreen(ev) {
+    @action.bound
+    activateScreen() {
         this.props.screen.display();
     }
-
 
     render() {
         const { screen } = this.props;

@@ -8,8 +8,9 @@ import Heading from 'grommet/components/Heading';
 import Header  from 'grommet/components/Header';
 
 import MenuOption from './menu-option';
-import Menu    from 'grommet/components/Menu';
+import Menu from 'grommet/components/Menu';
 import Icon   from '../components/icon';
+
 @observer
 export default class Group extends React.Component {
 
