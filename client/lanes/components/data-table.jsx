@@ -30,7 +30,6 @@ export default class DataTable extends React.Component {
     static defaultProps = {
         canCreate: false,
         editRowIndex: null,
-        fetchOnMount: false,
         style: {},
     }
 
@@ -68,6 +67,9 @@ export default class DataTable extends React.Component {
     componentWillReceiveProps(nextProps) {
         this.editIndex = nextProps.editRowIndex;
     }
+
+    componentWillMount() { this.query.open(); }
+    componentWillUnmount() { this.query.close(); }
 
     get rowProps() {
         const props = {};

@@ -40,6 +40,9 @@ export default class DataList extends React.Component {
         );
     }
 
+    componentWillMount() { this.query.open(); }
+    componentWillUnmount() { this.query.close(); }
+
     rowRenderer(props) {
         const { rowComponent: Row } = this.props;
         const row = this.query.results.rows[props.index];

@@ -67,12 +67,22 @@ export default class Query extends BaseModel {
             this.sortField = find(this.fields, { id: fieldId });
             this.sortAscending = ('ASC' === dir);
         }
-        if (this.autoFetch) { this._startAutoFetch(); }
         observe(this, 'autoFetch', this._onAutoFetchChange);
     }
 
     @computed get fingerprint() {
         return this.clauses.map(o => o.fingerprint).join(';');
+    }
+
+    open() {
+        if (this.autoFetch) { this._startAutoFetch(); }
+    }
+
+    close() {
+        if (this.autoFetchDisposer) {
+            this.autoFetchDisposer();
+            this.autoFetchDisposer = undefined;
+        }
     }
 
     @action.bound
