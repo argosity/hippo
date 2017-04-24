@@ -5,8 +5,9 @@ module Lanes
             include Enumerable
 
             def initialize(user)
-                @role_names = user.role_names
-                @roles = user.role_names.map{ |name|
+                @role_names = user.role_names.clone
+                @role_names << 'basic_user'
+                @roles = @role_names.map{ |name|
                     "Lanes::Access::Roles::#{name.classify}".safe_constantize
                 }.compact.map{ |klass| klass.new(user) }
             end
@@ -83,4 +84,5 @@ end
 
 
 require_relative "roles/support"
+require_relative "roles/basic_user"
 require_relative "roles/administrator"
