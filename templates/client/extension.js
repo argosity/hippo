@@ -1,8 +1,9 @@
-// This is the client-side version of <%= namespace %>::Extension
-import { BaseModel, identifiedBy, identifier } from './models/base';
+import {
+    BaseExtension, identifiedBy, identifier,
+} from 'lanes/extensions/base';
 
-@identifiedBy('extensions/<%= identifier %>');
-class <%= namespace %>Extension extends BaseModel {
+@identifiedBy('extensions/<%= identifier %>')
+export default class Extension extends BaseExtension {
 
     // must match the server-side identier in config/screens.rb
     // and lib/<%= identifier %>/extension.rb
@@ -19,17 +20,13 @@ class <%= namespace %>Extension extends BaseModel {
     // All extenensions have been given their data and Lanes has completed startup
     onAvailable() { }
 
-
     // Data that is provided by <%= namespace %>::Extension#client_bootstrap_data
     // in lib/<%= identifier %>/extension.rb is passed to this method
     // the Base class will simply store the provided data as @data
     setBootstrapData() { return super.setBootstrapData(...arguments); }
 
-    // Routes that should be established go here
-    getRoutes() { return null; }
-
-    // The root component that should be shown for this extension.
-    // Will not be called if a different extension has included this one and it is the
-    // "controlling" extension
-    rootComponent(viewport) { return null; }
+    // A React component that should be rendered as part of the settings screen
+    get systemSettingsComponent() {
+        return null;
+    }
 }
