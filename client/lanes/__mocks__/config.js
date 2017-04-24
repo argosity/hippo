@@ -8,4 +8,10 @@ window.localStorage = {
 
 const config = jest.genMockFromModule('lanes/config');
 
-module.exports = config;
+config.bootstrapUserData = jest.fn();
+config.reset = jest.fn();
+Object.defineProperty(config, 'api_path', {
+    value: '/api'
+});
+
+export default config;
