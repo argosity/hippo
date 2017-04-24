@@ -4,7 +4,7 @@ import {
 } from 'mobx-decorated-models';
 import invariant from 'invariant';
 import {
-    isEmpty, isNil, find, extend, assign, pick, map,
+    isEmpty, isNil, find, extend, assign, pick, map, isArray,
 } from 'lodash';
 
 import { action, observable, computed } from 'mobx';
@@ -69,12 +69,14 @@ export class BaseModel {
         if (!isEmpty(attrs)) { this.set(attrs); }
     }
 
+    get isModel() { return true; }
+
     @observable syncInProgress = false;
     @observable lastServerMessage = '';
     @observable errors = {};
 
     @computed get errorMessage() {
-        return toSentence(map(this.errors, (v, k) => `${humanize(k)} ${v}`));
+        return this.errors ? toSentence(map(this.errors, (v, k) => `${humanize(k)} ${v}`)) : '';
     }
 
     @computed get isValid() {
@@ -104,7 +106,13 @@ export class BaseModel {
     }
 
     set syncData(data) {
-        return this.update(data);
+        if (!data) { return this; }
+        if (isArray(data) && data.length) {
+            this.update(data[0]);
+        } else {
+            this.update(data);
+        }
+        return this;
     }
 
     @computed
