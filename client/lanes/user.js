@@ -1,4 +1,4 @@
-import { pick, merge } from 'lodash';
+import { pick, merge, includes } from 'lodash';
 import { action } from 'mobx';
 
 import {
@@ -12,6 +12,7 @@ class Session extends BaseModel {
     @identifier id;
     @field login;
     @field password;
+
     set syncData(data) {
         this.data = data;
     }
@@ -21,6 +22,7 @@ class Session extends BaseModel {
     }
 }
 
+const ADMIN = 'administrator';
 
 @identifiedBy('lanes/user')
 export class UserModel extends BaseModel {
@@ -31,8 +33,20 @@ export class UserModel extends BaseModel {
     @field email;
     @field password;
     @field password_confirm;
+    @field({ type: 'array' }) role_names;
+    @field({ type: 'object' }) access;
 
-    @field access;
+    set is_admin(val) {
+        if (val) {
+            if (!includes(this.role_names, ADMIN)) { this.role_names.push(ADMIN); }
+        } else {
+            this.role_names.remove(ADMIN);
+        }
+    }
+
+    get is_admin() {
+        return includes(this.role_names, ADMIN);
+    }
 
     @computed get isLoggedIn() { return !!Config.access_token; }
 
@@ -40,7 +54,7 @@ export class UserModel extends BaseModel {
         const req = new Session({ id: this.id });
         return req.destroy().then(() => {
             this.reset();
-            Config.access_token = '';
+            Config.reset();
             return this;
         });
     }
@@ -59,14 +73,21 @@ export class UserModel extends BaseModel {
     setFromSessionRequest(req) {
         merge(this, pick(req, 'errors', 'lastServerMessage'));
         if (req.isValid) {
-            this.set(req.data.user);
-            this.access = req.data.access;
+            Config.data = req.data;
+            Config.persistToStorage();
+            Config.bootstrapUserData();
             this.errors = {};
         }
         return this;
     }
+
+    toJSON() {
+        return merge(this.serialize(), { is_admin: this.is_admin });
+    }
+
 }
 
 const current_user = new UserModel();
+Config.user = current_user;
 
 export default current_user;
