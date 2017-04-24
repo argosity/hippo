@@ -35,13 +35,17 @@ module Lanes
             Lanes.redis_connection.publish('lanes-system-configuration-update', self.id)
         end
 
+        def for_ext(extension_id)
+            ExtensionSettings.new(extension_id, settings[extension_id.to_s])
+        end
+
         class << self
             def config
-                @config ||= SystemSettings.find_or_create_by(id: Lanes.config.configuration_id)
+                @config ||= SystemSettings.find_or_create_by(configuration_id: Lanes.config.configuration_id)
             end
 
             def for_ext(extension_id)
-                ExtensionSettings.new(extension_id, config.settings[extension_id.to_s])
+                config.for_ext(extension_id)
             end
 
             def persist!(extension_id, update)
@@ -51,25 +55,28 @@ module Lanes
             end
 
             def get_handler
-                lambda do
-                    wrap_reply do
-                        std_api_reply :get,
-                                      Lanes::SystemSettings.config.as_json(
-                                          include: ['logo', 'print_logo']
-                                      )
-                    end
+
+                Lanes::API::RequestWrapper.with_authenticated_user(
+                    role: 'administrator', with_transaction: false
+                ) do |user, req|
+                    req.std_api_reply :get,
+                                  Lanes::SystemSettings.config.as_json(
+                                      include: ['logo', 'print_logo']
+                                  )
                 end
             end
 
             def update_handler
-                lambda do
-                    wrap_reply do
-                        config = SystemSettings.config
-                        if data['settings'].is_a?(Hash)
-                            config.update_attributes!(settings: data['settings'])
-                        end
-                        std_api_reply :update, { settings: config.settings }, success: true
+
+                Lanes::API::RequestWrapper.with_authenticated_user(
+                    role: 'administrator', with_transaction: false
+                ) do |user, req|
+                    #                    wrap_reply do
+                    config = SystemSettings.config
+                    if req.data['settings'].is_a?(Hash)
+                        config.update_attributes!(settings: req.data['settings'])
                     end
+                    req.std_api_reply :update, { settings: config.settings }, success: true
                 end
             end
 
@@ -78,23 +85,26 @@ module Lanes
                 Lanes::SystemSettings.instance_variable_set(:@config, nil)
             end
 
-            def on_change(extension_id, call_now: false, &block)
+            def on_change(call_now: false)
                 Thread.new do
-                    Lanes.redis_connection(cache:false).subscribe(
+                    Lanes.redis_connection(cache: false).subscribe(
                         'lanes-system-configuration-update') do |on|
                         on.message do |channel, msg|
                             ActiveRecord::Base.connection_pool.with_connection do
-                                yield SystemSettings.for_ext(extension_id)
+                                yield SystemSettings.find(msg)
                             end
                         end
+                    end
+                    if call_now
+                        yield SystemSettings.config
                     end
                 end
             end
 
         end
 
-        SystemSettings.on_change(:lanes) do |msg|
-            Lanes::SystemSettings.clear_cache!(msg)
+        SystemSettings.on_change do |msg|
+            Lanes::SystemSettings.clear_cache!
         end
 
     end
