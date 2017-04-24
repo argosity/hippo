@@ -1,6 +1,6 @@
 import { includes, get, isEmpty } from 'lodash';
 import qs from 'qs';
-import { autorun } from 'mobx';
+import { observe } from 'mobx';
 import {
     BaseModel, identifiedBy, field, session, identifier, computed,
 } from './base';
@@ -32,11 +32,19 @@ export default class Asset extends BaseModel {
     constructor(props) {
         super(props);
 
-        autorun(() => {
-            if (this.isDirty && UPDATE_METHODS[get(this.owner, 'syncInProgress.method')]) {
-                this.save();
-            }
-        });
+        observe(this, 'owner', ({ newValue: owner }) => {
+            if (this.ownerSaveDisposer) { this.ownerSaveDisposer(); }
+            if (!owner || !owner.isModel) { return; }
+            this.ownerSaveDisposer = observe(owner, 'syncInProgress', ({ newValue, oldValue }) => {
+                if (this.isDirty &&
+                    !this.syncInProgress &&
+                    !oldValue &&
+                    newValue && newValue.isUpdate
+                   ) {
+                    newValue.whenComplete(() => this.save());
+                }
+            });
+        }, true);
     }
 
     @computed get baseUrl() {
@@ -87,11 +95,10 @@ export default class Asset extends BaseModel {
         }
         return fetch(url, { method: 'POST', body: form })
             .then(resp => resp.json())
-            .then(json => this.set(json.data))
-            .then(() => {
+            .then((json) => {
                 this.file = undefined;
-                return this;
-            });
+                return json;
+            }).then(json => this.set(json.data));
     }
 
 }
