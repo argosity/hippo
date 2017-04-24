@@ -13,4 +13,7 @@ Lanes::GuardTasks.run(self, name: 'lanes') do | tests |
 
     # end
 
+    tests.server do
+        watch(%r{^templates/print/*}) { "spec/server/print/form_spec.rb" }
+    end
 end
