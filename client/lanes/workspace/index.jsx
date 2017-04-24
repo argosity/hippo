@@ -8,7 +8,9 @@ import { Router, Route, browserHistory } from 'react-router';
 import App   from 'grommet/components/App';
 import Sidebar from 'react-sidebar';
 
-import 'lanes/screen-definitions.js';
+import 'lanes/config-data';
+import 'lanes/screen-definitions';
+
 import Menu        from './menu';
 import Screen      from './screen';
 import LoginDialog from '../access/login-dialog';
