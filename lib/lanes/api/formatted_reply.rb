@@ -6,7 +6,11 @@ module Lanes
             # populates them appropriately
 
             def std_api_reply(type, data, options = {})
-                json = { success: options[:success].nil? ? true : options[:success] }
+                json = {
+                    success: options[:success].nil? ? true : options[:success],
+                }
+                json[:errors] = options[:errors] if options[:errors]
+
                 if data.is_a?(ActiveRecord::Base)
                     record_active_record_errors(data, json)
                 end
@@ -14,15 +18,16 @@ module Lanes
                     json[:total] = options.delete(:total_count)
                 end
                 json.merge(
-                  message: options[:messsage] || json_status_str(data, type.to_s.capitalize, json[:success]),
-                  data: json[:success] ? records_for_reply(data, type, options) : []
+                    message: options[:message] || json_status_str(data, type.to_s.capitalize, json[:success]),
+
+                    data: json[:success] ? records_for_reply(data, type, options) : []
                 )
             end
 
             def record_active_record_errors(model, json = {})
                 return if model.errors.none?
                 json[:success] = false
-                json[:errors] = {}
+                json[:errors] ||= {}
                 model.errors.each{ | attr, message |
                     json[:errors][attr] = message
                 }
