@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
-import { isNil, forIn, get } from 'lodash';
+import { isNil, forIn, get, pick, mapValues, keys, extend } from 'lodash';
 
 import { observer }   from 'mobx-react';
 import { action, observable, computed } from 'mobx';
@@ -10,7 +10,7 @@ import Button    from 'grommet/components/Button';
 import Warning from 'lanes/components/warning-notification';
 import Field from 'lanes/components/form-field';
 
-import { addFormFieldValidations, validEmail, nonBlank, validation } from 'lanes/lib/forms';
+import { addFormFieldValidations, validEmail, nonBlank, validation, booleanValue, } from 'lanes/lib/forms';
 import Query from 'lanes/models/query';
 
 
@@ -21,7 +21,6 @@ class EditForm extends React.PureComponent {
         query:      PropTypes.instanceOf(Query).isRequired,
         rowIndex:   PropTypes.number.isRequired,
         onComplete: PropTypes.func.isRequired,
-
         fields: PropTypes.shape({
             login: PropTypes.object,
             name:  PropTypes.object,
@@ -35,9 +34,10 @@ class EditForm extends React.PureComponent {
         setDefaultValues: PropTypes.func.isRequired,
     }
 
-    static desiredHeight = 300
+    static desiredHeight = 400
 
     static formFields = {
+        is_admin: booleanValue,
         login: nonBlank,
         name:  nonBlank,
         email: validEmail,
@@ -49,7 +49,7 @@ class EditForm extends React.PureComponent {
             message: 'must match password',
             test: (value, fields) => {
                 const password = get(fields, 'password.value');
-                if (isNil(password)) { return true; }
+                if (!password) { return true; }
                 return (password === value);
             },
         }),
@@ -57,15 +57,19 @@ class EditForm extends React.PureComponent {
 
     constructor(props) {
         super(props);
+
         this.user = this.props.query.results.modelForRow(this.props.rowIndex);
     }
 
     componentDidMount() {
-        this.props.setDefaultValues(this.user.serialize());
+        this.props.setDefaultValues(this.user.toJSON());
     }
+
     @action.bound
     onSave() {
-        forIn(this.props.fields, (field, name) => (this.user[name] = field.value));
+        this.user.set(
+            pick(mapValues(this.props.fields, 'value'), keys(this.constructor.formFields)),
+        );
         this.user.save().then(this.onSaved);
     }
 
@@ -104,8 +108,9 @@ class EditForm extends React.PureComponent {
                     <Field md={4} xs={6} name="email" fields={fields} />
                     <Field md={4} xs={6} type="password" name="password" fields={fields} />
                     <Field md={4} xs={6} type="password" name="password_confirm" fields={fields} />
+                    <Field md={4} xs={6} type="checkbox" name="is_admin" fields={fields} />
                     <Col md={4} xs={6}>
-                        <Row  middle="xs" around="xs">
+                        <Row middle="xs" around="xs">
                             <Button label="Cancel" onClick={this.onCancel} accent />
                             <Button
                                 label="Save"
