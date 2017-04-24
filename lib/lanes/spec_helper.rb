@@ -4,6 +4,40 @@ require 'lanes/api'
 require 'hashie/mash'
 require 'active_record'
 require 'active_record/fixtures'
+require 'rack/test'
+require 'mail'
+require 'factory_girl'
+require 'faker'
+require 'database_cleaner'
+require "shrine/storage/memory"
+require 'vcr'
+
+VCR.configure do |config|
+    config.cassette_library_dir = "fixtures/vcr_cassettes"
+    config.hook_into :webmock
+    config.configure_rspec_metadata!
+end
+
+Lanes::Concerns::AssetUploader.storages = {
+    cache: Shrine::Storage::Memory.new,
+    store: Shrine::Storage::Memory.new,
+}
+
+VCR_OPTS = {
+    record: ENV["VCR_RECORD"].try(:to_sym) || :none, # This should default to :none before pushing
+    allow_unused_http_interactions: false
+}
+
+
+module RackSpecMixin
+  include Rack::Test::Methods
+  def app
+      Lanes::API::Root
+  end
+  def last_response_json
+      Oj.load(last_response.body)
+  end
+end
 
 LANES_ENV = "test"
 module Fixtures
@@ -13,12 +47,26 @@ module Fixtures
 end
 
 RSpec.configure do |config|
+    config.include FactoryGirl::Syntax::Methods
 
     config.include Fixtures
+
+    config.include RackSpecMixin, :api => true
 
     # Use color in STDOUT
     config.color = true
 
+    config.before(:suite) do
+        FactoryGirl.find_definitions
+        DatabaseCleaner.strategy = :transaction
+        DatabaseCleaner.clean_with(:truncation)
+    end
+
+    config.around(:each) do |example|
+        DatabaseCleaner.cleaning do
+            example.run
+        end
+    end
 
     # rspec-expectations config goes here. You can use an alternate
     # assertion/expectation library such as wrong or the stdlib/minitest

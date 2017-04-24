@@ -6,12 +6,7 @@ require "shrine/storage/memory"
 require 'rspec/expectations'
 
 require "shrine"
-require "shrine/storage/file_system"
 
-Lanes::Concerns::AssetUploader.storages = {
-    cache: Shrine::Storage::Memory.new,
-    store: Shrine::Storage::Memory.new,
-}
 
 RSpec.configure do |config|
   config.after do
@@ -23,6 +18,18 @@ require 'lanes/db/migrations'
 ActiveRecord::ConnectionAdapters::PostgreSQL::Table.class_eval do
     include ::Lanes::DB::Migrations::TableDefinitionHelpers
 end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.hook_into :webmock
+end
+
+
+Shrine.storages = {
+  cache: Shrine::Storage::Memory.new,
+  store: Shrine::Storage::Memory.new,
+}
+
 
 module TestingModels
 
