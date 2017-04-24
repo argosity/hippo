@@ -2,7 +2,10 @@ import { observable, computed } from 'mobx';
 import { titleize, humanize } from '../lib/util';
 import Extensions from './index';
 
-export default class BaseExtension {
+export { identifiedBy, identifier } from '../models/base';
+
+
+export class BaseExtension {
 
     @observable data;
 
