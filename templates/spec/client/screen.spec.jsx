@@ -1,13 +1,12 @@
-import React from 'react';
+import { React, Snapshot, getScreenInstance } from 'lanes/testing/index';
 import <%= class_name %> from '<%= identifier %>/screens/<%= screen_id %>';
-import { Snapshot, getScreenInstance } from 'lanes/testing/screens';
 
-const screenInstance = getScreenInstance('events');
+const screenInstance = getScreenInstance('<%= screen_id %>');
 
 describe('Screen <%= class_name %>', () => {
     it('renders and matches snapshot', () => {
         const screen = shallow(<<%= class_name %> screen={screenInstance} />);
-        expect(screen).toHaveRendered('Screen');
+        expect(screen).toHaveRendered('<%= class_name %>');
         expect(Snapshot(<<%= class_name %> screen={screenInstance} />)).toMatchSnapshot();
     });
 });
