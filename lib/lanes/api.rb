@@ -9,9 +9,9 @@ require_relative 'api/cable'
 require_relative 'api/sprockets_extension'
 require_relative 'api/helper_methods'
 require_relative 'api/pub_sub'
-require_relative 'api/handlers/user_session';
-require_relative 'api/handlers/asset';
-require_relative 'api/handlers/screens';
+require_relative 'api/handlers/user_session'
+require_relative 'api/handlers/asset'
+require_relative 'api/handlers/print'
 require_relative 'api/root'
 
 module Lanes

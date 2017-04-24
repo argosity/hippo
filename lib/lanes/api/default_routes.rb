@@ -23,6 +23,9 @@ module Lanes
         get Lanes.config.api_path + Lanes.config.assets_path_prefix + '/*',
             &API::Handlers::Asset.getter
 
+        get Lanes.config.api_path + Lanes.config.print_path_prefix + '/:template_id/:model_id',
+            &API::Handlers::Print.getter
+
         post Lanes.config.api_path + '/dev-file-change.json' do
             API::PubSub.publish("file-change", data)
             "OK"

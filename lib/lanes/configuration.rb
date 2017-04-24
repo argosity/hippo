@@ -98,6 +98,9 @@ module Lanes
         # url prefix to use for assets
         config_option :assets_path_prefix, "/assets"
 
+        # url prefix to use for generated pdf's
+        config_option :print_path_prefix, "/print"
+
         # prefix to use for all urls
         config_option :mounted_at, '/'
 
