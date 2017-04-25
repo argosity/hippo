@@ -64,8 +64,8 @@ module Lanes
         def self.for_jwt_token(token)
             payload = JWT.decode(
                 token, Lanes.config.session_secret_key_base, true, { :algorithm => 'HS256' }
-            ).first
-            if payload.length && (uid = payload[0]['uid'])
+            )
+            if payload.length && (uid = payload.first['uid'])
                 return where(id: uid).first
             end
         end
