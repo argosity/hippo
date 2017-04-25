@@ -21,10 +21,9 @@ module Lanes
 
 
         def self.run(dsl, options, &block)
-            app_name = options[:name] || Pathname.getwd.basename.to_s
             matchers = CustomMatchers.new
             yield matchers
-
+            identifier = ::Lanes::Extensions.controlling.identifier
             config = client_config || ::Lanes::Command::Jest.new.configure.config
 
             jest_options = options.merge(
@@ -40,11 +39,11 @@ module Lanes
                 cmd: 'bundle exec rspec'
             }
             dsl.guard :rspec, rspec_options do
-#                dsl.watch(%r{^spec/server/spec_helper\.rb}) { 'spec' }
+                dsl.watch(%r{^spec/server/spec_helper\.rb}) { 'spec' }
                 dsl.watch(%r{^spec/server/.*_spec\.rb})
-                # dsl.watch(%r{^spec/fixtures/#{app_name}/(.+)s\.yml})   { |m| "spec/server/#{m[1]}_spec.rb" }
-                # dsl.watch(%r{^lib/#{app_name}/(.+)\.rb})               { |m| "spec/server/#{m[1]}_spec.rb" }
-                # matchers.server_matches.call if matchers.server_matches
+                dsl.watch(%r{^spec/fixtures/#{identifier}(.+)s\.yml})   { |m| "spec/server/#{m[1]}_spec.rb" }
+                dsl.watch(%r{^lib/#{identifier}/(.+)\.rb})              { |m| "spec/server/#{m[1]}_spec.rb" }
+                matchers.server_matches.call if matchers.server_matches
             end
 
             dsl.guard :reloadable_sinatra do
