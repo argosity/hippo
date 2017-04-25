@@ -5,7 +5,7 @@ import Extensions from './index';
 export { identifiedBy, identifier } from '../models/base';
 
 
-export default class BaseExtension {
+export class BaseExtension {
 
     @observable data;
 

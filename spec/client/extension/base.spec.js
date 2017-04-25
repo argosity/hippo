@@ -1,7 +1,7 @@
-import Base from 'lanes/extensions/base';
+import { BaseExtension } from 'lanes/extensions/base';
 import { observable } from 'mobx';
 
-class TestExtension extends Base {
+class TestExtension extends BaseExtension {
 
     @observable identifier = 'foo-bar-baz';
 
