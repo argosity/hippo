@@ -30,7 +30,7 @@ module Lanes
             end
         end
 
-        after_commit :notify_updated
+        after_commit :notify_updated, on: :update
         def notify_updated
             Lanes.redis_connection.publish('lanes-system-configuration-update', self.id)
         end
