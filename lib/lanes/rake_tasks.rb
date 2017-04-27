@@ -1,12 +1,6 @@
-require 'puma/control_cli'
 require 'resque/tasks'
 require_relative '../lanes'
 require_relative 'command/jest'
-
-desc "Run the puma server in development mode"
-task :dev do
-    Puma::ControlCLI.new(['start']).run
-end
 
 begin
   require 'rspec/core/rake_task'
