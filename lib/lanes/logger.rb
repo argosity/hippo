@@ -9,9 +9,6 @@ module Lanes
             @targets.push(
                 File.open("log/#{Lanes.config.environment}.log", "a")
             ) if File.writable?("log")
-            Lanes.config.get(:environment) do
-                @targets.each{|t| t.sync = ! Lanes.env.production? }
-            end
         end
 
         def write(*args)
