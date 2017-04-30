@@ -1,6 +1,7 @@
 require_relative '../lanes'
 require_relative 'command/jest'
 require_relative 'reloadable_sinatra.rb'
+require_relative 'reloadable_view.rb'
 require 'guard/jest'
 require 'guard/rspec'
 
@@ -50,6 +51,11 @@ module Lanes
                 dsl.watch(%r{^lib/.*\.rb})
                 dsl.watch(%r{^config/.*\.rb})
             end
+
+            dsl.guard :reloadable_view do
+                dsl.watch(%r{^views/(.*\.html)}) { |m| m[1] }
+            end
+
         end
 
     end

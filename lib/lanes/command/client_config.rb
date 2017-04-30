@@ -1,3 +1,5 @@
+require_relative './webpack_view';
+
 module Lanes
     module Command
 
@@ -47,9 +49,10 @@ module Lanes
                 opts = { verbose: false, force: true }
 
                 Lanes::Extensions.controlling.view_templates.each do |tmpl|
-                    template("views/#{tmpl}", directory.join(tmpl), opts)
+                    tmpl = WebpackView.new(tmpl)
+                    tmpl.write
                     # set the mtime to the past, otherwise Webpack will build repeatedly as it starts up
-                    FileUtils.touch directory.join(tmpl).to_s, mtime: Time.now - 10.minute
+                    FileUtils.touch tmpl.destination.to_s, mtime: Time.now - 10.minute
                 end
 
                 template('config/webpack.config.js',

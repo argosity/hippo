@@ -5,7 +5,7 @@ module ::Guard
 
     class ReloadableSinatra < ::Guard::Plugin
         def start
-            puts "RELOAD"
+            Lanes.logger.info "RELOADING WebServer"
             @puma = ::Lanes::Command::Puma.new
             @puma.start
         end
