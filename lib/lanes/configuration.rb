@@ -20,10 +20,10 @@ module Lanes
         def self.config_option( name, default, options={} )
             define_method( "#{name}=" ) do | value |
                 old_value = self.send( name )
-                if old_value && !options[:silent]
+                if value != old_value && !options[:silent]
                     Lanes.logger.info "Config option #{name} changed from '#{old_value.inspect}' to '#{value.inspect}'"
                 end
-                instance_variable_set( "@#{name}", value )
+                instance_variable_set("@#{name}", value)
                 if @observers.has_key?(name)
                     @observers[name].each{ |cb| cb.call(value, old_value) }
                 end
