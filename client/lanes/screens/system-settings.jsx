@@ -73,6 +73,9 @@ export default class SystemSettings extends React.PureComponent {
                     />
                 </Header>
                 <Heading>{this.props.screen.definition.title}</Heading>
+                {this.extensionPanels}
+
+                <Heading tag="h3">Images</Heading>
                 <Row>
                     <Col sm={4} xs={12}>
                         <Asset model={this.settings} name="logo" />
@@ -83,9 +86,8 @@ export default class SystemSettings extends React.PureComponent {
                 </Row>
                 <MailerConfig
                     settings={this.settings.settings}
-                    registerForSave={panel => this.extensionPanelRefs.set('mail', panel)} />
-
-                {this.extensionPanels}
+                    registerForSave={panel => this.extensionPanelRefs.set('mail', panel)}
+                />
             </Screen>
         );
     }
