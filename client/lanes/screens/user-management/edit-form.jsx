@@ -109,6 +109,8 @@ class EditForm extends React.PureComponent {
                     <Field md={4} xs={6} type="password" name="password" fields={fields} />
                     <Field md={4} xs={6} type="password" name="password_confirm" fields={fields} />
                     <Field md={4} xs={6} type="checkbox" name="is_admin" fields={fields} />
+                </Row>
+                <Row>
                     <Col md={4} xs={6}>
                         <Row middle="xs" around="xs">
                             <Button label="Cancel" onClick={this.onCancel} accent />
