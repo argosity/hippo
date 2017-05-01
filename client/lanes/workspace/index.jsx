@@ -53,6 +53,7 @@ class Workspace extends React.Component {
             >
                 <LoginDialog />
                 <Sidebar
+                    styles={{ sidebar: { zIndex: 5 } }}
                     sidebar={<Menu />}
                     open={this.sidebarOpen}
                     docked={this.sidebarDocked}
@@ -82,22 +83,3 @@ export default function WorkspaceRoot() {
         </Router>
     );
 }
-
-//    <Viewport />
-/* <div className="layout">
-    <Navbar  />
-    <div className={this.pageClasses()}>
-    <Menu />
-    </div>
-    </div>
-  */
-
-//=require ./mixins
-//=require ./Extension
-//=require ./UIState
-//=require ./ScreensMenu
-//=require ./Tabs
-//=require ./ScreenView
-//=require ./Navbar
-//=require ./Layout
-//=require ./FirstRun
