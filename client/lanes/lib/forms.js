@@ -1,10 +1,10 @@
 import {
-    negate, isNil, isString, mapValues, extend, forIn, isFunction, pick, isBoolean,
+    negate, isNil, isString, mapValues, extend, forIn, isFunction, pick, isBoolean, get, keys,
 } from 'lodash';
 import moment from 'moment'
 import isEmail from 'validator/lib/isEmail';
 import Formous from 'formous';
-
+import { when } from 'mobx';
 import { isBlank } from './util';
 
 function buildTest(defaultOptions, defaultMessage, test) {
@@ -71,14 +71,23 @@ export function anyValue() {
 
 export function setFieldValue(field, value) {
     if (!field.events) { return; }
-    extend(field, { cid: Math.random(), value });
+
     field.events.onChange({ target: { value: isNil(value) ? '' : value } });
 }
 
-export function setFieldValues(fields, values) {
-    forIn(fields, (field, name) => {
-        setFieldValue(field, values[name]);
-    });
+export function setFieldValues(props, values) {
+    props.setFieldValues(pick(values, keys(props.fields)));
+}
+
+export function setFieldsFromModel(props, model) {
+    if (get(model, 'syncInProgress.isFetch')) {
+        when(
+            () => !get(model, 'syncInProgress.isFetch'),
+            () => setFieldValues(props, model),
+        );
+    } else {
+        setFieldValues(props, model);
+    }
 }
 
 export function persistFieldValues(fields, model) {
