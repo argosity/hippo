@@ -37,7 +37,8 @@ class SyncProgess {
     whenComplete(fn) {
         this._whenComplete.push(fn);
     }
-    get isCreate() { return 'POST' === this.method;  }
+    get isFetch() { return 'GET' === this.method; }
+    get isCreate() { return 'POST' === this.method; }
     get isUpdate() { return isUpdate(this.method); }
 }
 
