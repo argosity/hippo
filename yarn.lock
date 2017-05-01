@@ -2566,9 +2566,9 @@ formidable@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.1.1.tgz#96b8886f7c3c3508b932d6bd70c4d3a88f35f1a9"
 
-formous@^0.9.2:
+"formous@https://github.com/nathanstitt/formous.git#devel":
   version "0.9.2"
-  resolved "https://registry.yarnpkg.com/formous/-/formous-0.9.2.tgz#95ee1b64648cc6e414085eafcf6e5f4e32c2c9da"
+  resolved "https://github.com/nathanstitt/formous.git#defd7f0d3c484a1793bc4b39028f2debff1351b8"
   dependencies:
     immutable "^3.8.1"
     invariant "^2.2.1"
