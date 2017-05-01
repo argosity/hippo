@@ -24,9 +24,9 @@ Gem::Specification.new do |spec|
 
     spec.required_ruby_version = ">= 2.0"
 
-    spec.add_dependency "activejob",              "~> 5.0"
-    spec.add_dependency "activerecord",           "~> 5.0"
-    spec.add_dependency "actioncable",            "~> 5.0"
+    spec.add_dependency "activejob",              "~> 5.0.0"
+    spec.add_dependency "activerecord",           "~> 5.0.0"
+    spec.add_dependency "actioncable",            "~> 5.0.0"
     spec.add_dependency "mail",                   "~> 2.6"
     spec.add_dependency "liquid",                 "~> 4.0"
     spec.add_dependency 'erb_latex',              "~> 1.0"
