@@ -55,9 +55,7 @@ export default class SystemSettings extends React.PureComponent {
 
     @action.bound
     onSave() {
-        for (const panel of this.extensionPanelRefs.values()) {
-            invoke(panel, 'onSave');
-        }
+        this.extensionPanelRefs.forEach(panel => invoke(panel, 'onSave'));
         this.settings.save();
     }
 
