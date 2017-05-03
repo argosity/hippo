@@ -90,8 +90,8 @@ export function setFieldsFromModel(props, model) {
     }
 }
 
-export function persistFieldValues(fields, model) {
-    forIn(fields, (field, name) => (model[name] = field.value)); // eslint-disable-line
+export function persistFieldValues(props, model) {
+    forIn(props.fields, (field, name) => (model[name] = field.value)); // eslint-disable-line
     return Promise.resolve(model);
 }
 
