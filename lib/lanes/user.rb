@@ -56,6 +56,10 @@ module Lanes
             ( attr[:id] && attr[:id].to_i == user.id ) ? true : super
         end
 
+        # @return [Boolan] does the user have the "administrator" role?
+        def admin?
+            roles.include? 'administrator'
+        end
 
         def jwt_token
             JWT.encode({'uid' => id}, Lanes.config.session_secret_key_base, 'HS256')
