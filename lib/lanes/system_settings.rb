@@ -18,16 +18,6 @@ module Lanes
             def persist!
                 SystemSettings.persist!(@extension_id, self.to_h)
             end
-            def apply!
-                require 'shrine/storage/file_system'
-                ext = Extensions.controlling
-                Lanes::Concerns::AssetUploader.storages = {
-                    cache: Shrine::Storage::FileSystem.new(ext.root_path,
-                                                           prefix: "tmp/cache"),
-                    store: Shrine::Storage::FileSystem.new(ext.root_path,
-                                                           prefix: "public/files")
-                }
-            end
         end
 
         after_commit :notify_updated, on: :update
@@ -41,7 +31,7 @@ module Lanes
 
         class << self
             def config
-                @config ||= SystemSettings.find_or_create_by(configuration_id: Lanes.config.configuration_id)
+                SystemSettings.first_or_create
             end
 
             def for_ext(extension_id)
@@ -55,7 +45,6 @@ module Lanes
             end
 
             def get_handler
-
                 Lanes::API::RequestWrapper.with_authenticated_user(
                     role: 'administrator', with_transaction: false
                 ) do |user, req|
@@ -67,11 +56,9 @@ module Lanes
             end
 
             def update_handler
-
                 Lanes::API::RequestWrapper.with_authenticated_user(
                     role: 'administrator', with_transaction: false
                 ) do |user, req|
-                    #                    wrap_reply do
                     config = SystemSettings.config
                     if req.data['settings'].is_a?(Hash)
                         config.update_attributes!(settings: req.data['settings'])
@@ -80,35 +67,6 @@ module Lanes
                 end
             end
 
-            def clear_cache!(msg)
-                Lanes.logger.debug "SystemSettings cache reset"
-                Lanes::SystemSettings.instance_variable_set(:@config, nil)
-            end
-
-            def on_change(call_now: false)
-                Thread.new do
-                    Lanes.redis_connection(cache: false).subscribe(
-                        'lanes-system-configuration-update') do |on|
-                        on.message do |channel, msg|
-                            ActiveRecord::Base.connection_pool.with_connection do
-                                yield SystemSettings.find(msg)
-                            end
-                        end
-                    end
-                    if call_now
-                        yield SystemSettings.config
-                    end
-                end
-            end
-
         end
-
-        SystemSettings.on_change do |msg|
-            Lanes::SystemSettings.clear_cache!
-        end
-
     end
-
-
-
 end

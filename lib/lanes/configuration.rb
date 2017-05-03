@@ -113,10 +113,6 @@ module Lanes
         # types of assets to include into compiled package
         config_option :static_asset_types, ['images','fonts']
 
-        # id is used to load a settings object from the DB.
-        # For testing or other uses it can be changed here
-        config_option :configuration_id, (ENV['LANES_CONFIG_ID'] || 1)
-
         # Configuration for action cable
         config_option :cable, { 'adapter' => 'redis' }
 
