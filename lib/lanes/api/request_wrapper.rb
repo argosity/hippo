@@ -57,7 +57,7 @@ module Lanes
                     lambda do
                         authentication = Lanes::API::AuthenticationProvider.new(request)
                         user = authentication.current_user
-                        if user and ( role.nil? or user.roles.include?(role) )
+                        if user && (role.nil? || user.roles.include?(role))
                             wrap_reply(options) do
                                 yield authentication.current_user, self
                             end
