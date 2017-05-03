@@ -47,6 +47,9 @@ module Lanes
                 ['index.html']
             end
 
+            def on_dev_console
+            end
+
             def route(route_set)
                 routes_config = root_path.join('config','routes.rb')
                 if routes_config.exist?
