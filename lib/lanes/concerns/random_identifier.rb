@@ -15,7 +15,7 @@ module Lanes::Concerns
             # @param field_name [Symbol] which field should the hash_code be stored in
             # @param length [Integer] how long the hash_code should be
 
-            def has_random_identifier(field_name: :random_identifier, length: 12)
+            def has_random_identifier(field_name: :identifier, length: 12)
 
                 validates field_name,
                           presence: {
