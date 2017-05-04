@@ -76,7 +76,7 @@ export default class ArrayResult extends Result {
                         if (model[f.id]) { row[f.dataIndex] = model[f.id]; }
                     });
                     this.rowUpdateCount += 1;
-                });
+                }, 99);
             }
         });
         return model;
