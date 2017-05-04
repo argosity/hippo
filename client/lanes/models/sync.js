@@ -1,7 +1,7 @@
 import qs from 'qs';
 import 'whatwg-fetch'; // fetch polyfill
 
-import { includes, isEmpty, merge, extend, over } from 'lodash';
+import { includes, isEmpty, merge, extend, sortBy } from 'lodash';
 import { action } from 'mobx';
 import Config     from '../config';
 import { logger } from '../lib/util';
@@ -34,8 +34,8 @@ class SyncProgess {
         extend(this, options);
         this._whenComplete = [];
     }
-    whenComplete(fn) {
-        this._whenComplete.push(fn);
+    whenComplete(fn, precendence = 1) {
+        this._whenComplete.push({ fn, precendence });
     }
     get isFetch() { return 'GET' === this.method; }
     get isCreate() { return 'POST' === this.method; }
@@ -43,7 +43,8 @@ class SyncProgess {
 }
 
 function invokeWhenComplete(json, progress) {
-    return progress._whenComplete.reverse().reduce((p, fn) => p.then(() => {
+    const calls = sortBy(progress._whenComplete, 'precendence');
+    return calls.reduce((p, { fn }) => p.then(() => {
         const ret = fn(json);
         return (ret && ret.then) ? ret : Promise.resolve();
     }), Promise.resolve());
