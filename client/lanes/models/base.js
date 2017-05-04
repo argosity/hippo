@@ -55,9 +55,9 @@ export class BaseModel {
         return `${Config.api_path}/${pluralize(this.identifiedBy)}`;
     }
 
-    static get identifierName() {
+    static get identifierFieldName() {
         const field = find(this.$schema.values(), { type: 'identifier' });
-        invariant(field, 'identifierName called on a model that has not designated one with `@identifier`');
+        invariant(field, 'identifierFieldName called on a model that has not designated one with `@identifier`');
         return field.name;
     }
 
@@ -84,16 +84,16 @@ export class BaseModel {
     }
 
     @computed get isNew() {
-        return isNil(this.identifier);
+        return isNil(this.identifierFieldValue);
     }
 
-    @computed get identifier() {
-        return this[this.constructor.identifierName];
+    @computed get identifierFieldValue() {
+        return this[this.constructor.identifierFieldName];
     }
 
     @computed get syncUrl() {
         const path = this.constructor.syncUrl;
-        return this.isNew ? path : `${path}/${this.identifier}`;
+        return this.isNew ? path : `${path}/${this.identifierFieldValue}`;
     }
 
     set(attrs = {}) {
@@ -125,7 +125,7 @@ export class BaseModel {
                   'Unable to fetch record without it’s identifier being set or a query');
         const fetchOptions = extend(options, { limit: 1, method: 'GET' });
         if (!fetchOptions.query) {
-            fetchOptions.query = { [`${this.constructor.identifierName}`]: this.identifier };
+            fetchOptions.query = { [`${this.constructor.identifierFieldName}`]: this.identifierFieldValue };
         }
         return Sync.forModel(this, fetchOptions);
     }
