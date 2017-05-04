@@ -7,6 +7,7 @@ require 'jobba'
 require 'webpack_driver'
 require 'yaml'
 require 'hashie/mash'
+require 'shrine/storage/file_system'
 
 module Lanes
 
@@ -75,6 +76,12 @@ module Lanes
                 ::Guard::Jest.logger = Lanes.logger
             end
 
+            ::Lanes::Concerns::AssetUploader.storages = {
+                cache: Shrine::Storage::FileSystem.new(controlling_ext.root_path,
+                                                       prefix: "tmp/cache"),
+                store: Shrine::Storage::FileSystem.new(controlling_ext.root_path,
+                                                       prefix: "public/files")
+            }
         end
 
     end
