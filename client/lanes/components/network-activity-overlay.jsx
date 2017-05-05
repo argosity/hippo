@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { autorun, action } from 'mobx';
 import Spinning from 'grommet/components/icons/Spinning';
 import CircleInformationIcon from 'grommet/components/icons/base/CircleInformation';
@@ -23,7 +23,7 @@ export default class NetworkActivityOverlay extends React.PureComponent {
     }
 
     static propTypes = {
-        model:   BaseModel.propType.isRequired,
+        model:   MobxPropTypes.observableObject,
         message: PropTypes.string,
         timeout: PropTypes.number,
         visible: PropTypes.bool,
