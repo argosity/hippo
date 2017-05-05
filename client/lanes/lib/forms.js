@@ -26,13 +26,17 @@ export function hasLength(len) {
 }
 
 const NUMBER = /^[+-]?(\d*\.)?\d+$/;
-
 export function numberValue(options = {}) {
     return buildTest(options, 'must be a number', v => NUMBER.test(v));
 }
 
 export function stringValue(options = {}) {
     return buildTest(options, 'must be a string', isString);
+}
+
+const PHONE = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+export function validPhone(options = {}) {
+    return buildTest(options, 'must be a phone number', v => PHONE.test(v));
 }
 
 export function validEmail(options = {}) {
