@@ -11,7 +11,7 @@ export default class SelectFieldWrapper extends React.PureComponent {
     onSelectChange({ value: { id } }) {
         const ev = { target: { value: id } };
         this.props.onChange(ev);
-        defer(() => this.props.onBlur(ev));
+        this.props.onBlur(ev);
     }
 
     @computed get value() {

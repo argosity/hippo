@@ -5,7 +5,7 @@ import {
     observable,
     field, session, belongsTo, hasMany, identifier, computed,
 } from 'lanes/models/base';
-import BaseExtension from 'lanes/extensions/base';
+import { BaseExtension } from 'lanes/extensions/base';
 import ScreenDefinition from 'lanes/screens/definition';
 
 @identifiedBy('test/boat')

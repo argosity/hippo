@@ -11,7 +11,6 @@ export default class DateWrapper extends React.PureComponent {
     static childContextTypes = { onDropChange: PropTypes.func }
     @observable isSelecting;
     @observable dateValue;
-    @observable isFocused;
 
     getChildContext() {
         return { onDropChange: this.onDropChange };
@@ -21,8 +20,6 @@ export default class DateWrapper extends React.PureComponent {
         const ev = { target: { value: moment(this.dateValue, this.props.format, true).toDate() } };
         if (this.isSelecting && !active) {
             this.props.onBlur(ev);
-        } else if (active) {
-            this.props.onFocus(ev);
         }
         this.isSelecting = active;
     }
@@ -32,12 +29,8 @@ export default class DateWrapper extends React.PureComponent {
         this.props.onChange({ target: { value: this.dateValue } });
     }
 
-    @action.bound onFocus() {
-        this.isFocused = true;
-    }
 
     @action.bound onBlur(ev) {
-        this.isFocused = false;
         this.dateValue = moment(ev.target.value, this.props.format).toDate();
         const event = { target: { value: this.dateValue } };
         this.props.onChange(event);
@@ -48,7 +41,6 @@ export default class DateWrapper extends React.PureComponent {
         return (
             <DateTime
                 {...this.props}
-                onFocus={this.onFocus}
                 onChange={this.onDateChange}
                 onBlur={this.onBlur}
             />

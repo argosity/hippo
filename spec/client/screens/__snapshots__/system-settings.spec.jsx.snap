@@ -77,6 +77,11 @@ exports[`SystemSettings Screen renders 1`] = `
   >
     title
   </h1>
+  <h3
+    className="grommetux-heading"
+  >
+    Images
+  </h3>
   <div
     className="row"
   >

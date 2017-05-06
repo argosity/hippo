@@ -8,52 +8,33 @@ import { action, observable, computed } from 'mobx';
 
 import Button    from 'grommet/components/Button';
 import Warning from 'lanes/components/warning-notification';
-import Field from 'lanes/components/form-field';
 
-import { addFormFieldValidations, validEmail, nonBlank, validation, booleanValue, } from 'lanes/lib/forms';
 import Query from 'lanes/models/query';
+
+import { Form, Field, FieldDefinitions, nonBlank, validEmail, booleanValue, field  } from 'lanes/components/form';
+
+//import { FormFields, nonBlank, booleanValue, validEmail, field } from 'lanes/lib/forms';
+//import { Form, Field } from 'lanes/components/form';
 
 
 @observer
-class EditForm extends React.PureComponent {
+export default class EditForm extends React.PureComponent {
 
     static propTypes = {
         query:      PropTypes.instanceOf(Query).isRequired,
         rowIndex:   PropTypes.number.isRequired,
         onComplete: PropTypes.func.isRequired,
-        fields: PropTypes.shape({
-            login: PropTypes.object,
-            name:  PropTypes.object,
-            password:  PropTypes.object,
-            password_confirm: PropTypes.object,
-        }).isRequired,
-        formState: PropTypes.shape({
-            touchd: PropTypes.bool,
-            valid:  PropTypes.bool,
-        }).isRequired,
-        setDefaultValues: PropTypes.func.isRequired,
     }
 
     static desiredHeight = 400
 
-    static formFields = {
+    fields = new FieldDefinitions({
         is_admin: booleanValue,
         login: nonBlank,
         name:  nonBlank,
         email: validEmail,
-        password: validation({
-            alsoTest: ['password_confirm'],
-            test: () => true,
-        }),
-        password_confirm: validation({
-            message: 'must match password',
-            test: (value, fields) => {
-                const password = get(fields, 'password.value');
-                if (!password) { return true; }
-                return (password === value);
-            },
-        }),
-    }
+        password: field,
+    })
 
     constructor(props) {
         super(props);
@@ -62,14 +43,12 @@ class EditForm extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.props.setDefaultValues(this.user.toJSON());
+        this.fields.setFromModel(this.user);
     }
 
     @action.bound
     onSave() {
-        this.user.set(
-            pick(mapValues(this.props.fields, 'value'), keys(this.constructor.formFields)),
-        );
+        this.fields.persistTo(this.user);
         this.user.save().then(this.onSaved);
     }
 
@@ -87,28 +66,19 @@ class EditForm extends React.PureComponent {
         this.props.onComplete();
     }
 
-    @observable
-    errorMessage = ''
-
-
-    @computed get isSavable() {
-        return this.props.formState.valid && !this.user.syncInProgress;
-    }
-
 
     render() {
-        const { fields } = this.props;
+        const { fields } = this;
 
         return (
-            <div className="user-edit-form">
+            <Form tag="div" className="user-edit-form" fields={fields}>
                 <Warning message={this.errorMessage} />
                 <Row middle='sm'>
-                    <Field md={4} xs={6} name="login" fields={fields} />
-                    <Field md={4} xs={6} name="name" fields={fields} />
-                    <Field md={4} xs={6} name="email" fields={fields} />
-                    <Field md={4} xs={6} type="password" name="password" fields={fields} />
-                    <Field md={4} xs={6} type="password" name="password_confirm" fields={fields} />
-                    <Field md={4} xs={6} type="checkbox" name="is_admin" fields={fields} />
+                    <Field md={4} xs={6} name="login" />
+                    <Field md={4} xs={6} name="name"  />
+                    <Field md={4} xs={6} name="email" />
+                    <Field md={4} xs={6} type="password" name="password" />
+                    <Field md={4} xs={6} type="checkbox" name="is_admin" />
                 </Row>
                 <Row>
                     <Col md={4} xs={6}>
@@ -116,15 +86,13 @@ class EditForm extends React.PureComponent {
                             <Button label="Cancel" onClick={this.onCancel} accent />
                             <Button
                                 label="Save"
-                                onClick={this.isSavable ? this.onSave : null}
+                                onClick={fields.isValid ? this.onSave : null}
                                 primary
                             />
                         </Row>
                     </Col>
                 </Row>
-            </div>
+            </Form>
         );
     }
 }
-
-export default addFormFieldValidations(EditForm, 'desiredHeight');

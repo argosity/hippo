@@ -34,8 +34,8 @@ export default class Info {
         return filter(this.query.fields, f => f.loadable);
     }
 
-    @computed get visibleIdentifierField() {
-        const property = this.query.src.visibleIdentifier || this.query.src.identifierName;
+    @computed get identifierField() {
+        const property = this.query.src.identifierFieldName;
         return find(this.query.fields, { id: property });
     }
 

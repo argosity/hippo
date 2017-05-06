@@ -1,23 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { get } from 'lodash';
+import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Col, getColumnProps } from 'react-flexbox-grid';
 
 import Field     from 'grommet/components/FormField';
 import NumberInput from 'grommet/components/NumberInput';
 
-import { titleize } from '../lib/util';
+import { titleize } from '../../lib/util';
+import FormFieldPropType from './field-prop-type';
 
-import FieldValidation from './field-validation';
+import DateWrapper     from './fields/date-wrapper';
+import SelectWrapper   from './fields/select-wrapper';
+import TextWrapper     from './fields/text-wrapper';
+import CheckBoxWrapper from './fields/checkbox-wrapper';
 
-import DateWrapper     from './form-field/date-wrapper';
-import SelectWrapper   from './form-field/select-wrapper';
-import TextWrapper     from './form-field/text-wrapper';
-import CheckBoxWrapper from './form-field/checkbox-wrapper';
-
-import './form-field/form-field.scss';
+import './fields/form-field.scss';
 
 const TypesMapping = {
     text:     TextWrapper,
@@ -28,12 +27,11 @@ const TypesMapping = {
 
 };
 
-
+@inject('formFields') @observer
 export default class FormField extends React.PureComponent {
     static defaultProps = {
         label:     '',
         className: '',
-        fields:    null,
         type:      'text',
     }
 
@@ -44,23 +42,22 @@ export default class FormField extends React.PureComponent {
     static propTypes = Object.assign({
         label: PropTypes.string,
         name:  PropTypes.string.isRequired,
-        fields: FieldValidation,
+        formFields: FormFieldPropType,
         className: PropTypes.string,
         type: PropTypes.string,
     }, Col.PropTypes)
 
     render() {
         const {
-            name, className, autoFocus, type, children, label,
-            fields: { [`${name}`]: field },
-            ...otherProps
+            name, className, autoFocus, type, children, label, formFields, ...otherProps
         } = getColumnProps(this.props);
         const InputTag = TypesMapping[type] || TypesMapping.text;
+        const field = formFields.get(name);
         return (
             <div className={classnames('form-field', className)}>
                 <Field
                     label={label || titleize(name)}
-                    error={get(field, 'failProps.errorText')}
+                    error={field.invalidMessage}
                 >
                     <InputTag
                         name={name}

@@ -27,7 +27,7 @@ export default class UserManagement extends React.PureComponent {
         let id = '';
         if (!isNil(index)) {
             const row = this.query.results.rows[index];
-            id = row[this.query.info.visibleIdentifierField.dataIndex];
+            id = row[this.query.info.identifierField.dataIndex];
         }
         this.editingId = id;
     }
@@ -45,7 +45,7 @@ export default class UserManagement extends React.PureComponent {
 
     @computed get editingRowIndex() {
         if (isNil(this.editingId)) return undefined;
-        const field = this.query.info.visibleIdentifierField;
+        const field = this.query.info.identifierField;
         const id = (field.isNumeric) ? toInteger(this.editingId) : this.editingId;
         return this.query.results.searchFieldValues(field, id).index;
     }

@@ -49,7 +49,7 @@ export default class ArrayResult extends Result {
 
     isIndexSaved(index) {
         const row = this.rows[index];
-        return (row && row[this.query.info.visibleIdentifierField.dataIndex]);
+        return (row && row[this.query.info.identifierField.dataIndex]);
     }
 
     removeRow(index) {
