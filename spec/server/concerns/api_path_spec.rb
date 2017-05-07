@@ -15,6 +15,6 @@ describe "ApiPath" do
     end
 
     it "converts path to model" do
-        expect(TestModel).to eq(Lanes::Model.from_api_path('test-models'))
+        expect(TestModel).to eq(Hippo::Model.from_api_path('test-models'))
     end
 end

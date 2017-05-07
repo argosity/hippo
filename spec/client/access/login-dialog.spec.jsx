@@ -1,11 +1,11 @@
-jest.mock('lanes/models/sync');
-jest.mock('lanes/config');
+jest.mock('hippo/models/sync');
+jest.mock('hippo/config');
 
 import React  from 'react';
 
-import User        from 'lanes/user';
-import Config      from 'lanes/config';
-import LoginDialog from 'lanes/access/login-dialog';
+import User        from 'hippo/user';
+import Config      from 'hippo/config';
+import LoginDialog from 'hippo/access/login-dialog';
 
 describe('Login Dialog', () => {
     beforeEach(() => (Config.access_token = '0123456789'));

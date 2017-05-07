@@ -2,7 +2,7 @@ require_relative "../appy-app"
 
 module AppyApp
 
-    class Extension < Lanes::Extensions::Definition
+    class Extension < Hippo::Extensions::Definition
 
         identifier "appy-app"
 

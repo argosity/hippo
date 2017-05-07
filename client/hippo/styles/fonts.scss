@@ -1,0 +1,23 @@
+$fa-css-prefix: "icon";
+
+$hippo-icon-font: 'FontAwesome';
+
+@import "./fonts/font-awesome";
+
+button, a.btn, [role=button] {
+    .icon:not(.flush) {
+        margin-right: 0.5em;
+    }
+    &.icon:before{
+        font-family: $hippo-icon-font;
+    }
+}
+
+
+// replace glyphicons with fa
+.glyphicon {
+    @extend .icon;
+    &.glyphicon-ok:before           { content: $fa-var-check;                }
+    &.glyphicon-warning-sign:before { content: $fa-var-exclamation-triangle; }
+    &.glyphicon-error:before        { content: $fa-var-exclamation;          }
+}

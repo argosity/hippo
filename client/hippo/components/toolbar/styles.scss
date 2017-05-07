@@ -1,0 +1,74 @@
+.hippo-toolbar {
+
+    background-color: $navbar-default-bg;
+
+    border: 1px solid transparent;
+    border-radius: $border-radius-base;
+    border-color: $navbar-default-border;
+    margin-bottom: $navbar-margin-bottom;
+    padding-right: $navbar-padding-horizontal;
+    padding-left:  $navbar-padding-horizontal;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+
+    .navbar-btn {
+        &.save > a {
+            width: 100%;
+            @extend .btn;
+            @extend .btn-primary;
+            // the save button needs to be clicable even if disabled
+            &.disabled {
+                pointer-events: all;
+                cursor: pointer;
+            }
+        }
+    }
+    .spacer {
+        flex: 1;
+    }
+    .control {
+        width: 120px;
+        margin-right: 10px;
+    }
+    .arrow {
+        border-style: solid;
+
+        border-left-color: transparent;
+        border-right-color: transparent;
+
+        border-bottom-color: $popover-title-bg;
+        border-top-color: $popover-title-bg !important;
+
+        border-width: 0 9px 9px;
+        height: 0;
+        left: 7px;
+        margin-top: 10px;
+        opacity: 1;
+        position: absolute;
+        top: -18px;
+        transition: all 0.25s ease 0s;
+        width: 0;
+        z-index: 10;
+    }
+
+    label {
+        margin-bottom: 0;
+    }
+    input {
+        margin: 0 0.25rem 0 0;
+    }
+    .toggle {
+        label {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+        }
+    }
+    @import "./changes-notification";
+}

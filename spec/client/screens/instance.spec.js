@@ -1,9 +1,9 @@
-import Instance from 'lanes/screens/instance';
-import ScreenDefinition from 'lanes/screens/definition';
+import Instance from 'hippo/screens/instance';
+import ScreenDefinition from 'hippo/screens/definition';
 
 import { Box, getTestScreen } from '../test-models';
 
-jest.mock('lanes/lib/request-assets');
+jest.mock('hippo/lib/request-assets');
 
 describe('Screen Instance', () => {
     let screen;

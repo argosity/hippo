@@ -1,12 +1,12 @@
 require_relative "spec_helper"
 require_relative "./assertions"
-require "lanes/cli"
+require "hippo/cli"
 require "diffy"
 require "find"
 
-describe Lanes::Command do
+describe Hippo::Command do
     let(:app_name)  { "appy-app" }
-    let(:lanes)     { Pathname.new(__FILE__).dirname.join('..','..','bin','lanes') }
+    let(:hippo)     { Pathname.new(__FILE__).dirname.join('..','..','bin','hippo') }
     let(:generated_path) { Pathname.pwd }
     let(:reference_path) { Pathname(__FILE__).dirname.join("..","..", "command-reference-files") }
 
@@ -17,7 +17,7 @@ describe Lanes::Command do
                 RSpec::Mocks.with_temporary_scope do
                     allow_any_instance_of(Knitter::Yarn).to receive(:init).and_return(true)
                     allow_any_instance_of(Knitter::Yarn).to receive(:add).and_return(true)
-                    expect("#{lanes} new #{app_name} --no-packages").to execute_successfully
+                    expect("#{hippo} new #{app_name} --no-packages").to execute_successfully
                     Dir.chdir(app_name) do
                         t.call
                     end
@@ -44,7 +44,7 @@ describe Lanes::Command do
     it "generates an application" do
         reference = reference_path.join('initial')
         gemfile = reference.join("Gemfile")
-        gemfile.write gemfile.read.gsub(/gem \"lanes\", \'\d+\.\d+\.\d+\'/, "gem \"lanes\", '#{Lanes::VERSION}'")
+        gemfile.write gemfile.read.gsub(/gem \"hippo\", \'\d+\.\d+\.\d+\'/, "gem \"hippo\", '#{Hippo::VERSION}'")
 
         compare_generated(reference)
         generated_path.find.each do | path |
@@ -55,18 +55,18 @@ describe Lanes::Command do
     end
 
     it "generates a screen" do
-        expect("#{lanes} gen screen ready-set-go").to execute_successfully
+        expect("#{hippo} gen screen ready-set-go").to execute_successfully
         compare_generated(reference_path.join('screen'))
     end
 
     it "generates a model" do
         ENV['MIGRATION_TIMESTAMP']='20150218032025'
-        expect("#{lanes} gen model test-test name:string email:string").to execute_successfully
+        expect("#{hippo} gen model test-test name:string email:string").to execute_successfully
         compare_generated(reference_path.join('model'))
     end
 
     it "generates a component" do
-        expect("#{lanes} gen component big").to execute_successfully
+        expect("#{hippo} gen component big").to execute_successfully
         compare_generated(reference_path.join('component'))
     end
 

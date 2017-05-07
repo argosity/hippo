@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Snapshot } from 'lanes/testing/screens';
+import { Snapshot } from 'hippo/testing/screens';
 
-import Settings from 'lanes/screens/system-settings';
-import Instance from 'lanes/screens/instance';
+import Settings from 'hippo/screens/system-settings';
+import Instance from 'hippo/screens/instance';
 import { getTestScreen } from '../test-models';
 
 

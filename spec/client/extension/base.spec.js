@@ -1,4 +1,4 @@
-import { BaseExtension } from 'lanes/extensions/base';
+import { BaseExtension } from 'hippo/extensions/base';
 import { observable } from 'mobx';
 
 class TestExtension extends BaseExtension {

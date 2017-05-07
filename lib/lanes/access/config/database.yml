@@ -1,9 +1,0 @@
-development:
-  adapter: postgresql
-  database: lanes_dev
-  host: /tmp
-
-test:
-  adapter: postgresql
-  database: lanes_dev
-  host: /tmp

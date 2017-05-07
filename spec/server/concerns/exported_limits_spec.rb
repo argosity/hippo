@@ -11,8 +11,8 @@ describe "Exporting Limits" do
 
     class Base
         include FakeScope
-        include Lanes::Concerns::ExportScope
-        include Lanes::Concerns::ExportMethods
+        include Hippo::Concerns::ExportScope
+        include Hippo::Concerns::ExportMethods
     end
 
     class LimitsTestingModel < Base

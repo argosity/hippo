@@ -1,27 +1,27 @@
 require_relative "spec_helper"
-require "lanes/cli"
+require "hippo/cli"
 require "find"
 
-describe Lanes::SystemSettings do
+describe Hippo::SystemSettings do
 
     before(:each) do
         # needed because otherwise the rollback will leave configs without a db record
-        Lanes::SystemSettings.instance_variable_set(:@config, nil)
+        Hippo::SystemSettings.instance_variable_set(:@config, nil)
     end
 
     def test_getting_config
-        assert_kind_of Lanes::SystemSettings::ExtensionSettings, Lanes::SystemSettings.for_ext('foo')
+        assert_kind_of Hippo::SystemSettings::ExtensionSettings, Hippo::SystemSettings.for_ext('foo')
     end
 
     def test_persisting_config
-        settings = Lanes::SystemSettings.for_ext('foo')
+        settings = Hippo::SystemSettings.for_ext('foo')
         settings.foo = 'bar'
         settings.persist!
-        assert_equal({foo: 'bar'}, Lanes::SystemSettings.for_ext('foo').to_h)
+        assert_equal({foo: 'bar'}, Hippo::SystemSettings.for_ext('foo').to_h)
     end
 
     def test_logos
-        settings = Lanes::SystemSettings.new
+        settings = Hippo::SystemSettings.new
         Tempfile.open do |tf1|
             tf1.write fixtures_path.join('logo.png').read
             tf1.rewind

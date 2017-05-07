@@ -1,7 +1,7 @@
 require_relative "spec_helper"
 require 'active_job/test_helper'
 
-class TestJob < Lanes::Job
+class TestJob < Hippo::Job
 
     def perform
         sleep 0.1

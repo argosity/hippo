@@ -1,5 +1,5 @@
 require_relative '../../lib/<%= identifier %>'
-require 'lanes/spec_helper'
+require 'hippo/spec_helper'
 
 
 # Configure RSpec to your liking

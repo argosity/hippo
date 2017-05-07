@@ -1,4 +1,4 @@
-class CreateAssets < ActiveRecord::Migration[4.2]
+class CreateAssets < ActiveRecord::Migration[5.0]
     def change
 
         create_table "assets" do |t|

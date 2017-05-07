@@ -1,4 +1,4 @@
-import * as Util from 'lanes/lib/util';
+import * as Util from 'hippo/lib/util';
 
 describe('Util helper functions', () => {
     it('dasherize', () => {

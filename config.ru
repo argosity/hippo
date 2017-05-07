@@ -1,5 +1,5 @@
 require 'bundler'
 Bundler.require
-require 'lanes/api'
+require 'hippo/api'
 
-run Lanes::API::Root
+run Hippo::API::Root

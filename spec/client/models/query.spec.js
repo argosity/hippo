@@ -1,13 +1,13 @@
-import Config from 'lanes/config';
-import Sync from 'lanes/models/sync';
+import Config from 'hippo/config';
+import Sync from 'hippo/models/sync';
 
 import { map, find, range, shuffle } from 'lodash';
 
-import Clause from 'lanes/models/query/clause';
-import Query  from 'lanes/models/query';
+import Clause from 'hippo/models/query/clause';
+import Query  from 'hippo/models/query';
 import { Box } from '../test-models';
 
-jest.mock('lanes/models/sync');
+jest.mock('hippo/models/sync');
 jest.useFakeTimers();
 describe('Model Queries', () => {
     let query;

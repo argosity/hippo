@@ -1,12 +1,12 @@
 import { each, range } from 'lodash';
 
-import Group      from 'lanes/screens/group';
-import Screen     from 'lanes/screens/definition';
-import Menu       from 'lanes/workspace/menu';
-import MenuGroup  from 'lanes/workspace/menu-group';
-import MenuOption from 'lanes/workspace/menu-option';
+import Group      from 'hippo/screens/group';
+import Screen     from 'hippo/screens/definition';
+import Menu       from 'hippo/workspace/menu';
+import MenuGroup  from 'hippo/workspace/menu-group';
+import MenuOption from 'hippo/workspace/menu-option';
 
-import { Snapshot } from 'lanes/testing/screens';
+import { Snapshot } from 'hippo/testing/screens';
 import { getTestScreen } from '../test-models';
 
 describe('Workspace Menu', () => {

@@ -2,7 +2,7 @@ require_relative "../<%= identifier %>"
 
 module <%= namespace %>
 
-    class Extension < Lanes::Extensions::Definition
+    class Extension < Hippo::Extensions::Definition
 
         identifier "<%= identifier %>"
 

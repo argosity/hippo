@@ -1,6 +1,6 @@
-require "lanes/guard_tasks"
+require "hippo/guard_tasks"
 
-Lanes::GuardTasks.run(self, name: "<%= name %>") do | tests |
+Hippo::GuardTasks.run(self, name: "<%= name %>") do | tests |
 
     tests.client do
 

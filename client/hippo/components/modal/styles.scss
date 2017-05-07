@@ -1,0 +1,12 @@
+.hippo-modal {
+
+
+    .modal-body {
+        @include flexbox();
+        @include flex-direction(column);
+    }
+
+    .grid-component .grid-body {
+        height: initial;
+    }
+}

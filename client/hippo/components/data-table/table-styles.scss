@@ -1,0 +1,34 @@
+@import "~grommet/scss/grommet-core/settings";
+#hippo-root {
+    .data-table {
+        flex: 1;
+        max-width: 100%;
+        width: 100%;
+        border-collapse: collapse;
+
+        .ReactVirtualized__Table__headerRow {
+            font-weight: $text-font-weight;
+
+            border-bottom: 1px solid $border-color;
+
+            #{$dark-background-context} {
+                border-color: $colored-border-color;
+            }
+
+            #{$light-background-context} {
+                border-color: $border-color;
+            }
+        }
+
+        .ReactVirtualized__Table__row {
+            transition: 0.4s height;
+            &.editing {
+                border-top: 1px solid $border-color;
+                border-bottom: 1px solid $border-color;
+            }
+            &.o {
+                background-color: lighten($border-color, 75%);
+            }
+        }
+    }
+}

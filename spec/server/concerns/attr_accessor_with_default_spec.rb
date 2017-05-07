@@ -1,11 +1,11 @@
-require "lanes/spec_helper"
+require "hippo/spec_helper"
 
 describe "Attr Accessor With Default" do
 
     Shared = Struct.new(:value)
 
     class AttrTestClass
-        include Lanes::Concerns::AttrAccessorWithDefault
+        include Hippo::Concerns::AttrAccessorWithDefault
         attr_accessor_with_default :as_proc, Proc.new{ 42 }
         attr_accessor_with_default :non_copying, ->{ "default string" }
         attr_accessor_with_default :shared, Shared.new('default')

@@ -1,0 +1,6 @@
+//=require ./all
+<% if Hippo.env.development?
+    require_asset "./development"
+else
+    require_asset "./production"
+end %>

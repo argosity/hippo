@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Screen from 'lanes/components/screen';
+import Screen from 'hippo/components/screen';
 
 @observer
 export default class <%= screen_class %> extends React.PureComponent {

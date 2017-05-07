@@ -1,14 +1,14 @@
 import React from 'react';
 import { first, map, find, range } from 'lodash';
 import { autorun } from 'mobx';
-import Sync from 'lanes/models/sync';
-import Query     from 'lanes/models/query';
+import Sync from 'hippo/models/sync';
+import Query     from 'hippo/models/query';
 
-import DataTable from 'lanes/components/data-table';
+import DataTable from 'hippo/components/data-table';
 
 import { Container } from '../test-models';
 
-jest.mock('lanes/models/sync');
+jest.mock('hippo/models/sync');
 
 describe("DataTable Component", () => {
     let query;

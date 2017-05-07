@@ -1,5 +1,0 @@
-<% Lanes::Components.enabled_with_dependencies(self) do | component |
-    require_asset "lanes/components/#{component}"
-end %>
-
-<% Lanes::Screen.uncache_file_on_update(self) %>

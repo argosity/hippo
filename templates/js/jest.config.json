@@ -6,6 +6,6 @@
     ],
     "modulePaths": [
         <%= module_paths.map{|mod| "\"#{mod}\"" }.join(", ") %>,
-        "<%= lanes_root_path %>/lib/js/jest/stubs"
+        "<%= hippo_root_path %>/lib/js/jest/stubs"
     ]
 }

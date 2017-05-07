@@ -1,0 +1,8 @@
+/*
+  Intended to be included from a screen definition.
+  includes certain base variables and styles that would be useful for the screen
+*/
+@import "hippo/styles/bootstrap/variables";
+@import "hippo/styles/bootstrap/mixins";
+@import "hippo/styles/variables";
+@import "hippo/styles/mixins/all";

@@ -2,7 +2,7 @@ import React from 'react';
 import {
     nonBlank, validEmail, hasLength,
     FormFields, FormFieldPropType,
-} from 'lanes/components/form';
+} from 'hippo/components/form';
 
 describe('Form Validation functions', () => {
     it('validates fields', () => {

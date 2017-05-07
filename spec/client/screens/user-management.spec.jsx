@@ -1,11 +1,11 @@
-import UserScreen from 'lanes/screens/user-management';
-import Instance  from 'lanes/screens/instance';
+import UserScreen from 'hippo/screens/user-management';
+import Instance  from 'hippo/screens/instance';
 import { map, range } from 'lodash';
-import Sync from 'lanes/models/sync';
+import Sync from 'hippo/models/sync';
 
 import { getTestScreen } from '../test-models';
 
-jest.mock('lanes/models/sync');
+jest.mock('hippo/models/sync');
 
 describe('User Management Screen', () => {
     let definition;

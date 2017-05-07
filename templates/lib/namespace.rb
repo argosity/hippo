@@ -1,4 +1,4 @@
-require "lanes"
+require "hippo"
 require 'require_all'
 require_relative "<%= identifier %>/version.rb"
 require_relative "<%= identifier %>/extension.rb"
@@ -7,7 +7,7 @@ require_relative "<%= identifier %>/extension.rb"
 module <%= namespace %>
 
     def self.system_settings
-        Lanes::SystemSettings.for_ext('<%= identifier %>')
+        Hippo::SystemSettings.for_ext('<%= identifier %>')
     end
 
 end

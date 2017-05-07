@@ -1,12 +1,12 @@
 require_relative "spec_helper"
 
-describe Lanes::Asset do
+describe Hippo::Asset do
 
     include TestingModels
 
     around(:each) do |example|
         with_testing_models do
-            TestModel.has_one :asset, as: :owner, :class_name=>'Lanes::Asset'
+            TestModel.has_one :asset, as: :owner, :class_name=>'Hippo::Asset'
             example.run
         end
     end

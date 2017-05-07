@@ -3,9 +3,9 @@ require_relative '../spec_helper'
 
 describe "Printing tempaltes" do
 
-    class TestPrinter < Lanes::Templates::Latex
-        model ::Lanes::User
-        extension_id :lanes
+    class TestPrinter < Hippo::Templates::Latex
+        model ::Hippo::User
+        extension_id :hippo
         identifier :foo
         def root_path
             Pathname.new(__FILE__).dirname.join('../../fixtures')
@@ -22,7 +22,7 @@ describe "Printing tempaltes" do
     end
 
     it "can find templates by id" do
-        expect(Lanes::Templates::Latex.for_identifier(:foo)).to eq(TestPrinter)
+        expect(Hippo::Templates::Latex.for_identifier(:foo)).to eq(TestPrinter)
     end
 
 

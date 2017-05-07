@@ -1,1 +1,1 @@
-Lanes::User.seed_admin_account
+Hippo::User.seed_admin_account

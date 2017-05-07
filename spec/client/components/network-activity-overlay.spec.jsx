@@ -1,8 +1,8 @@
 import React from 'react';
 
-import NetworkActivityOverlay from 'lanes/components/network-activity-overlay';
+import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import { Box } from '../test-models';
-import { Snapshot } from 'lanes/testing/screens';
+import { Snapshot } from 'hippo/testing/screens';
 
 jest.useFakeTimers();
 

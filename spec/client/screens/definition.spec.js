@@ -1,6 +1,6 @@
 import { Box, TestExtension, getTestScreen } from '../test-models';
 
-jest.mock('lanes/lib/request-assets');
+jest.mock('hippo/lib/request-assets');
 
 jest.useFakeTimers();
 

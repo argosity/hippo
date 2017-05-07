@@ -1,14 +1,14 @@
 import React from 'react';
 import { range } from 'lodash';
 
-import Query     from 'lanes/models/query';
+import Query     from 'hippo/models/query';
 
-import DataList from 'lanes/components/data-list';
+import DataList from 'hippo/components/data-list';
 
 import { Container } from '../test-models';
-import { Snapshot } from 'lanes/testing/screens';
+import { Snapshot } from 'hippo/testing/screens';
 
-jest.mock('lanes/models/sync');
+jest.mock('hippo/models/sync');
 
 describe("DataList Component", () => {
     let query;

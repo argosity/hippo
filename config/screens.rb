@@ -1,10 +1,10 @@
-Lanes::Screen.define_group "system-settings" do | group |
+Hippo::Screen.define_group "system-settings" do | group |
     group.title       = "Settings"
     group.description = "Modify system settings"
     group.icon        = "wrench"
 end
 
-Lanes::Screen.for_extension 'lanes' do | screens |
+Hippo::Screen.for_extension 'hippo' do | screens |
 
     # screens.define "user-preferences" do | screen |
     #     screen.title       = "User Preferences"
@@ -22,7 +22,7 @@ Lanes::Screen.for_extension 'lanes' do | screens |
         screen.group_id    = "system-settings"
         screen.model_class = "SystemSettings"
         screen.view_class  = "UserManagement"
-        screen.asset       = 'lanes/screens/user-management'
+        screen.asset       = 'hippo/screens/user-management'
     end
 
     screens.define "system-settings" do | screen |
@@ -31,11 +31,11 @@ Lanes::Screen.for_extension 'lanes' do | screens |
         screen.icon        = "cogs"
         screen.group_id    = "system-settings"
         screen.model_class = "SystemSettings"
-        screen.asset       = 'lanes/screens/system-settings'
+        screen.asset       = 'hippo/screens/system-settings'
     end
 
     # screens.define "workspace-layout" do | screen |
-    #     screen.url_prefix  = 'lanes/workspace'
+    #     screen.url_prefix  = 'hippo/workspace'
     #     screen.js  = 'index.jsx'
     #     # screen.css = 'styles.scss'
     # end

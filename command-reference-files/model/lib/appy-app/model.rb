@@ -2,7 +2,7 @@ module AppyApp
 
     # All models in AppyApp will inherit from
     # this common base class.
-    class Model < Lanes::Model
+    class Model < Hippo::Model
 
         self.abstract_class = true
 

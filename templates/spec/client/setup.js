@@ -1,10 +1,10 @@
 // Code included here will be ran to setup your specs.
 // it's a usefull spot to setup globals or custom matchers
-import matchers from 'lanes/testing/matchers';
+import matchers from 'hippo/testing/matchers';
 import { shallow, mount } from 'enzyme';
-import { fetch } from 'lanes/testing/mocks/fetch';
+import { fetch } from 'hippo/testing/mocks/fetch';
 import React from 'react';
-import 'lanes/testing';
+import 'hippo/testing';
 
 global.expect.extend(matchers);
 

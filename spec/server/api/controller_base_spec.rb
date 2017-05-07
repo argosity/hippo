@@ -1,5 +1,5 @@
 require_relative "../spec_helper"
-require 'lanes/access/user'
+require 'hippo/access/user'
 
 
 class GodUser
@@ -19,7 +19,7 @@ class NullAuthProvider
     end
 end
 
-describe "ControllerBase" do # < Lanes::TestCase
+describe "ControllerBase" do # < Hippo::TestCase
     include TestingModels
 
     around(:each) do |example|
@@ -31,8 +31,8 @@ describe "ControllerBase" do # < Lanes::TestCase
 
     it "can retrieve" do
         1.upto(10){|i| TestModel.create!(id: i, name:'test') }
-        controller = Lanes::API::ControllerBase.new(TestModel,
-                                                    Lanes::API::AuthenticationProvider.new({}),
+        controller = Hippo::API::ControllerBase.new(TestModel,
+                                                    Hippo::API::AuthenticationProvider.new({}),
                                                     {id: 1})
         expect(controller.send(:perform_retrieval))
             .to match(
@@ -43,7 +43,7 @@ describe "ControllerBase" do # < Lanes::TestCase
 
     it "can make a single update" do
         person = TestModel.create!(id: 21, name:'Joe')
-        controller = Lanes::API::ControllerBase.new(TestModel,
+        controller = Hippo::API::ControllerBase.new(TestModel,
                                                     NullAuthProvider.new,
                                                     {id: person.id}, {name:'Bob'})
         expect(controller.send(:perform_single_update))
@@ -61,7 +61,7 @@ describe "ControllerBase" do # < Lanes::TestCase
         def TestModel.access_limits_for_query(query, user, params)
             query.where(name:'Joe')
         end
-        controller = Lanes::API::ControllerBase.new(TestModel,
+        controller = Hippo::API::ControllerBase.new(TestModel,
                                                     NullAuthProvider.new,
                                                     {},
                                                     [{'id'=>1}, {'id'=>2}])
@@ -76,7 +76,7 @@ describe "ControllerBase" do # < Lanes::TestCase
 
     it 'can destroy a single record' do
         TestModel.create!(id: 1, name:'Joe')
-        controller = Lanes::API::ControllerBase.new(TestModel,
+        controller = Hippo::API::ControllerBase.new(TestModel,
                                                     NullAuthProvider.new,
                                                     {id: 1}, {})
         expect(controller.send(:perform_single_destroy))
@@ -89,7 +89,7 @@ describe "ControllerBase" do # < Lanes::TestCase
         TestModel.create!(id: 1, name:'Joe')
         TestModel.create!(id: 2, name:'Bob')
 
-        controller = Lanes::API::ControllerBase.new(TestModel,
+        controller = Hippo::API::ControllerBase.new(TestModel,
                                                     NullAuthProvider.new,
                                                     {},
                                                     [{'id'=>1}, {'id'=>2}])

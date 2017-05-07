@@ -1,5 +1,5 @@
-require "lanes/spec_helper"
-require 'lanes/command'
+require "hippo/spec_helper"
+require 'hippo/command'
 require "temping"
 require "shrine/storage/memory"
 
@@ -14,9 +14,9 @@ RSpec.configure do |config|
   end
 
 end
-require 'lanes/db/migrations'
+require 'hippo/db/migrations'
 ActiveRecord::ConnectionAdapters::PostgreSQL::Table.class_eval do
-    include ::Lanes::DB::Migrations::TableDefinitionHelpers
+    include ::Hippo::DB::Migrations::TableDefinitionHelpers
 end
 
 VCR.configure do |config|
@@ -34,7 +34,7 @@ Shrine.storages = {
 module TestingModels
 
     def with_testing_models
-        Temping.create :test_model, parent_class: Lanes::Model do
+        Temping.create :test_model, parent_class: Hippo::Model do
             with_columns do |t|
                 t.integer :bt_id
                 t.string :name, :number
@@ -44,13 +44,13 @@ module TestingModels
             has_many   :hm, class_name: 'Tmhm'
         end
 
-        Temping.create :tmbt, parent_class: Lanes::Model do
+        Temping.create :tmbt, parent_class: Hippo::Model do
             with_columns do |t|
                 t.string :description, :secret_field, :notes
             end
         end
 
-        Temping.create :Tmhm, parent_class: Lanes::Model do
+        Temping.create :Tmhm, parent_class: Hippo::Model do
             with_columns do |t|
                 t.integer :test_model_id
                 t.string :description, :secret_field, :notes
@@ -65,7 +65,7 @@ module TestingModels
 end
 
 
-# class Lanes::TestCase
+# class Hippo::TestCase
 
 #     def fixtures_path
 #         Pathname.new(__FILE__).dirname.join("..","fixtures").expand_path

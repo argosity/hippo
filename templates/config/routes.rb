@@ -1,4 +1,4 @@
-Lanes::API.routes.for_extension '<%= identifier %>' do
+Hippo::API.routes.for_extension '<%= identifier %>' do
 
 
 end

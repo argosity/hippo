@@ -1,9 +1,9 @@
 require_relative "spec_helper"
 
-describe Lanes::Strings do
+describe Hippo::Strings do
 
     # just 'cuz
-    Str = Lanes::Strings
+    Str = Hippo::Strings
 
     def test_random_is_of_proper_length
         assert_equal 12, Str.random.length

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Col } from 'react-flexbox-grid';
-import Asset from 'lanes/components/asset';
+import Asset from 'hippo/components/asset';
 
 import { TestImage } from '../test-models';
-import { Snapshot } from 'lanes/testing/screens';
+import { Snapshot } from 'hippo/testing/screens';
 
 describe("Asset Component", () => {
     it('renders and matches snapshot', () => {

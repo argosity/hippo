@@ -1,0 +1,14 @@
+<% if !Hippo.config.initial_workspace_screen_id.blank? &&
+      screen = Hippo::Screen[Hippo.config.initial_workspace_screen_id]
+require_asset screen.js
+end %>
+
+<% Hippo::Screen.each_group do | spec | %>
+Hippo.Screens.Definitions.groups.add( <%= spec.to_json %> );
+<% end %>
+
+<% Hippo::Screen.each do | spec | %>
+Hippo.Screens.Definitions.register( <%= spec.to_json %> );
+<% end %>
+
+<% Hippo::Screen.uncache_file_on_update(self) %>

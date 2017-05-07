@@ -4,15 +4,15 @@ const path = require('path');
 
 const config = {
     entry: {
-        lanes: [
+        hippo: [
             'react-hot-loader/patch',
-            '<%= "#{Lanes::Extensions.controlling.identifier}/index.js" %>',
+            '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
         ],
     },
     output: {
         path: __dirname,
         publicPath: '/',
-        filename: '<%= Lanes::Extensions.controlling.identifier + '.js' %>',
+        filename: '<%= Hippo::Extensions.controlling.identifier + '.js' %>',
     },
     resolve: {
         modules: ["<%= module_paths.join('","') %>"],

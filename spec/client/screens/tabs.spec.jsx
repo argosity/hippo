@@ -1,11 +1,11 @@
 import React from 'react';
 import { each, range } from 'lodash';
 
-import Tabs, { ScreenTab } from 'lanes/workspace/tabs';
-import Instance    from 'lanes/screens/instance';
+import Tabs, { ScreenTab } from 'hippo/workspace/tabs';
+import Instance    from 'hippo/screens/instance';
 
 import { getTestScreen } from '../test-models';
-import { Context, Snapshot } from 'lanes/testing/screens';
+import { Context, Snapshot } from 'hippo/testing/screens';
 
 const addTab = () =>
     new Instance({ definition: getTestScreen() });

@@ -1,8 +1,8 @@
 require_relative "spec_helper"
 
-describe Lanes::Numbers do
+describe Hippo::Numbers do
 
-    Num = Lanes::Numbers
+    Num = Hippo::Numbers
 
 
     def test_percnum

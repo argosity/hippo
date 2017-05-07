@@ -1,4 +1,4 @@
-require "lanes"
+require "hippo"
 require 'require_all'
 require_relative "appy-app/version.rb"
 require_relative "appy-app/extension.rb"
@@ -7,7 +7,7 @@ require_relative "appy-app/extension.rb"
 module AppyApp
 
     def self.system_settings
-        Lanes::SystemSettings.for_ext('appy-app')
+        Hippo::SystemSettings.for_ext('appy-app')
     end
 
 end

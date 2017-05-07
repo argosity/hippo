@@ -1,9 +1,9 @@
 notification :growl
 
-require "lanes/guard_tasks"
+require "hippo/guard_tasks"
 
 
-Lanes::GuardTasks.run(self, name: 'lanes') do | tests |
+Hippo::GuardTasks.run(self, name: 'hippo') do | tests |
 
     # tests.client do
 

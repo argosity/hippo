@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  database: hippo_dev
+  host: /tmp
+
+test:
+  adapter: postgresql
+  database: hippo_dev
+  host: /tmp

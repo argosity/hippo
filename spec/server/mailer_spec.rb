@@ -1,11 +1,11 @@
 require_relative "spec_helper"
 
-describe Lanes::Mailer do
+describe Hippo::Mailer do
 
     before do
         # needed because otherwise the rollback will leave configs without a db record
-        Lanes::SystemSettings.instance_variable_set(:@config, nil)
-        settings = Lanes::SystemSettings.for_ext('lanes')
+        Hippo::SystemSettings.instance_variable_set(:@config, nil)
+        settings = Hippo::SystemSettings.for_ext('hippo')
         settings.smtp = {
             'server' => 'foo.test.com'
         }
@@ -14,14 +14,14 @@ describe Lanes::Mailer do
 
     def test_it_configures_itself
         # calling new forces a config
-        Lanes::Mailer.new
+        Hippo::Mailer.new
         assert_equal 'foo.test.com',
                      Mail::Configuration.instance.delivery_method.settings[:address]
 
     end
 
     def test_sending_an_email
-        Lanes::Mailer.deliver do
+        Hippo::Mailer.deliver do
             to 'test@test.com'
             from 'you@you.com'
             subject 'testing'

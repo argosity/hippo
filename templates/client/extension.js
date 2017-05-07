@@ -1,6 +1,6 @@
 import {
     BaseExtension, identifiedBy, identifier,
-} from 'lanes/extensions/base';
+} from 'hippo/extensions/base';
 
 @identifiedBy('extensions/<%= identifier %>')
 export default class Extension extends BaseExtension {
@@ -10,14 +10,14 @@ export default class Extension extends BaseExtension {
     @identifier id = '<%= identifier %>';
 
     // This method is called when the extension is registered
-    // Not all of Lanes will be available yet
+    // Not all of Hippo will be available yet
     onRegistered() { }
 
-    // This method is called after Lanes is completly loaded
+    // This method is called after Hippo is completly loaded
     // and all extensions are registered
     onInitialized() { }
 
-    // All extenensions have been given their data and Lanes has completed startup
+    // All extenensions have been given their data and Hippo has completed startup
     onAvailable() { }
 
     // Data that is provided by <%= namespace %>::Extension#client_bootstrap_data

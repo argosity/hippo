@@ -1,6 +1,6 @@
 {
     "id": 119,
-    "owner_type": "Lanes::SystemSettings",
+    "owner_type": "Hippo::SystemSettings",
     "owner_id": 1,
     "order": null,
     "file_data": {

@@ -11,7 +11,7 @@ describe "PubSub" do
 
 
 
-    #         class A < Lanes::Model
+    #         class A < Hippo::Model
     #             has_additional_events :test_one
     #             def on_save_b(*args)
     #             end
@@ -20,7 +20,7 @@ describe "PubSub" do
     #         end
     #         m.create_table do |t|
     #             t.model_name :A
-    #             t.parent_class "Lanes::Model"
+    #             t.parent_class "Hippo::Model"
     #             t.belongs_to :b_model, class_name: "B", listen: { save: :on_save_b },
     #                          inverse_of: :a_model
 
@@ -33,13 +33,13 @@ describe "PubSub" do
     #             end
     #         end
 
-    #         class B < Lanes::Model
+    #         class B < Hippo::Model
     #             def on_save_a(*args)
     #             end
     #         end
     #         table = m.create_table do |t|
     #             t.model_name :B
-    #             t.parent_class "Lanes::Model"
+    #             t.parent_class "Hippo::Model"
     #             t.has_one :a_model, class_name: "A", listen: { save: 'on_save_a' },
     #                          inverse_of: :b_model
     #             t.layout do | l |
@@ -47,12 +47,12 @@ describe "PubSub" do
     #             end
     #         end
 
-    #         class EventTester < Lanes::Model
+    #         class EventTester < Hippo::Model
     #         end
 
     #         m.create_table do |t|
     #             t.model_name :EventTester
-    #             t.parent_class "Lanes::Model"
+    #             t.parent_class "Hippo::Model"
     #             t.has_many   :a_models, class_name: 'A', inverse_of: :event_tester
 
     #             t.layout do |l|

@@ -2,14 +2,14 @@ import React from 'react';
 import { range } from 'lodash';
 
 
-import Query     from 'lanes/models/query';
+import Query     from 'hippo/models/query';
 
-import { Snapshot } from 'lanes/testing/screens';
-import RecordFinder from 'lanes/components/record-finder';
+import { Snapshot } from 'hippo/testing/screens';
+import RecordFinder from 'hippo/components/record-finder';
 
 import { Container } from '../test-models';
 
-jest.mock('lanes/models/sync');
+jest.mock('hippo/models/sync');
 
 describe("RecordFinder Component", () => {
     let query;

@@ -1,18 +1,18 @@
 ---
 title: React
-heading: Lanes.React.Component
+heading: Hippo.React.Component
 ---
 
-Lanes uses [React](reactjs.com) for the view layer.  It provides an easy-to-use data bindings between it and the data layouer's {% doc_link model %}
+Hippo uses [React](reactjs.com) for the view layer.  It provides an easy-to-use data bindings between it and the data layouer's {% doc_link model %}
 
 A simple example of a React component bound to a data model:
 
 ``` coffee
 
-class MyView extends Lanes.React.Component
+class MyView extends Hippo.React.Component
 
     propTypes:
-        model: Lanes.PropTypes.Model.isRequired
+        model: Hippo.PropTypes.Model.isRequired
 
     render: ->
         <h1>Hello {@model.name}</h1>
@@ -23,24 +23,24 @@ Note a few interesting things about this component compared to a standard React 
 
 # propType validators
 
-As show above, Lanes provides validators for it's data types.  These include:
+As show above, Hippo provides validators for it's data types.  These include:
 
 
-  * `Lanes.PropTypes.Model` Verifies that the property is an instance of `Lanes.Models.Base`
-  * `Lanes.PropTypes.State` Checks that the property is an instance of `Lanes.Models.State`.  State objects are like models, but do not have the ability to be retreived from or saved to the server.  They're usefull for storing lightweight session objects.
-  * `Lanes.PropTypes.Collection` Like the models above but for collections.
+  * `Hippo.PropTypes.Model` Verifies that the property is an instance of `Hippo.Models.Base`
+  * `Hippo.PropTypes.State` Checks that the property is an instance of `Hippo.Models.State`.  State objects are like models, but do not have the ability to be retreived from or saved to the server.  They're usefull for storing lightweight session objects.
+  * `Hippo.PropTypes.Collection` Like the models above but for collections.
 
 Each of the validators also has a `.isRequired` helper, just like React's built in ones.
 
 # dataObjects
 
-Lanes data bindings for components will be automatically setup for any prop that is named `model`.
+Hippo data bindings for components will be automatically setup for any prop that is named `model`.
 
 If a property named `model` is given, it will be mapped to the `@model` instance.  Other properties can also be setup by specifying attributes for `dataObject`  In this example, a '@bank` and `@customer` objects are mapped.
 
 ``` coffee
 
-class MyView extends Lanes.React.Component
+class MyView extends Hippo.React.Component
 
     dataObjects:
         bank: 'props'
@@ -57,16 +57,16 @@ As you can see, the bank mapping will be read from the props, while the customer
 
 # events
 
-By default, Lanes will listen for all events on both models and collections.
+By default, Hippo will listen for all events on both models and collections.
 
-Every time the events fires, Lanes will call `setState` on the component, causing a re-render.  While React is great about making the re-render as efficient as possible, it can sometimes be a good idea to only listen for events that the compoent will be interested int.
+Every time the events fires, Hippo will call `setState` on the component, causing a re-render.  While React is great about making the re-render as efficient as possible, it can sometimes be a good idea to only listen for events that the compoent will be interested int.
 
 The events bound can be modified by using the `bindDataEvents` attribute.  For instance this component will only render when the name is changed.  This makes sense since that's the only attribute of the model that is used.
 
 
 ``` coffee
 
-class MyView extends Lanes.React.Component
+class MyView extends Hippo.React.Component
 
     bindDataEvents:
         model: 'change:name'
@@ -77,7 +77,7 @@ class MyView extends Lanes.React.Component
 
 ```
 
-The complete list of events Lanes listens to is:
+The complete list of events Hippo listens to is:
 
   * Models:
     * `change`:   an attribute was modified
@@ -97,13 +97,13 @@ The complete list of events Lanes listens to is:
 
 # setDataState
 
-When a bound event is fired for a model, Lanes will call setState on the model with the affected model as the key. Sometimes a component would rather have other information injected into state, or perhaps wants to selectively ignore some changes.
+When a bound event is fired for a model, Hippo will call setState on the model with the affected model as the key. Sometimes a component would rather have other information injected into state, or perhaps wants to selectively ignore some changes.
 
 Components can do so by implementing a `setDataState` method.  If this method exists, it is soley responsible for calling `setState` to trigger a `render`
 
 ``` coffee
 
-class MyView extends Lanes.React.Component
+class MyView extends Hippo.React.Component
 
     setDataState: (newState) ->
         if newState.model?.name == 'Bob'
@@ -118,14 +118,14 @@ class MyView extends Lanes.React.Component
 
 Publish/Subscribe often abbreviated as simply PubSub is a mechanism where amodel can subscribe to updates for itself and be notified when other users modify it.
 
-By default whenever a model is bound to a React component, Lanes will also subscribe that model to updates.  When model is unbound or the component is unmounted, Lanes will remove the model from receiving updates as well.  This applies only to Models, not State object or Collections.
+By default whenever a model is bound to a React component, Hippo will also subscribe that model to updates.  When model is unbound or the component is unmounted, Hippo will remove the model from receiving updates as well.  This applies only to Models, not State object or Collections.
 
-Set `pubsub: false` if Lanes should not bind any models, or to an object with keys for the models that should not be bound
+Set `pubsub: false` if Hippo should not bind any models, or to an object with keys for the models that should not be bound
 
 
 ``` coffee
 
-class MyView extends Lanes.React.Component
+class MyView extends Hippo.React.Component
 
     pubsub:
         model: false

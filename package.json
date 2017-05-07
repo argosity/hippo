@@ -1,9 +1,9 @@
 {
-  "name": "lanes-framework",
+  "name": "hippo-fw",
   "version": "0.7.0",
-  "description": "Lanes",
+  "description": "Hippo is a framework for easily writing single page web applications",
   "main": "index.js",
-  "repository": "https://github.com/argosity/lanes",
+  "repository": "https://github.com/argosity/hippo",
   "author": "Nathan Stitt <nathan@stitt.org>",
   "license": "MIT",
   "files": [

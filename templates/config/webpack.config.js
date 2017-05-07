@@ -6,7 +6,7 @@ const config = {
     entry: {
         app: [
             'react-hot-loader/patch',
-            '<%%= "#{Lanes::Extensions.controlling.identifier}/index.js" %>',
+            '<%%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
         ],
     },
     output: {
@@ -15,7 +15,7 @@ const config = {
         filename: `${process.env.EXTENSION_ID}/.js`,
     },
     resolve: {
-        modules: process.env.LANES_MODULES.split(':'),
+        modules: process.env.HIPPO_MODULES.split(':'),
         extensions: ['.js', '.jsx'],
     },
     module: {

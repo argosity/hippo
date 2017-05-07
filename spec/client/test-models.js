@@ -4,9 +4,9 @@ import {
     identifiedBy,
     observable,
     field, session, belongsTo, hasMany, identifier, computed,
-} from 'lanes/models/base';
-import { BaseExtension } from 'lanes/extensions/base';
-import ScreenDefinition from 'lanes/screens/definition';
+} from 'hippo/models/base';
+import { BaseExtension } from 'hippo/extensions/base';
+import ScreenDefinition from 'hippo/screens/definition';
 
 @identifiedBy('test/boat')
 export class Ship extends BaseModel {
@@ -19,7 +19,7 @@ export class Ship extends BaseModel {
 @identifiedBy('test/model/image')
 export class TestImage extends BaseModel {
     @identifier id;
-    @belongsTo({ inverseOf: 'owner', model: 'lanes/asset' }) asset;
+    @belongsTo({ inverseOf: 'owner', model: 'hippo/asset' }) asset;
     @observable syncInProgress = false;
 
     save() {

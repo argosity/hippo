@@ -1,10 +1,10 @@
 import React from 'react';
 
-import QueryBuilder from 'lanes/components/query-builder';
+import QueryBuilder from 'hippo/components/query-builder';
 
 import { Box } from '../test-models';
-import { Snapshot } from 'lanes/testing/screens';
-import Query from 'lanes/models/query';
+import { Snapshot } from 'hippo/testing/screens';
+import Query from 'hippo/models/query';
 
 jest.useFakeTimers();
 

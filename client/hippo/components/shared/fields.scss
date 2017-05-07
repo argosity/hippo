@@ -1,0 +1,58 @@
+@import "hippo/styles/bootstrap/variables";
+@import "hippo/styles/bootstrap/mixins";
+
+$hippo-field-margin: 6px;
+
+
+
+.hippo-field {
+    .form-control {
+        height: inherit;
+    }
+    .control-label {
+        display: block;
+        min-height: 18px;
+    }
+
+    &.display {
+        .form-group {
+            border-bottom: 1px solid $input-border;
+            min-height: 57px; // 55 + 1px border
+        }
+        &.toggle {
+            .form-group { border-bottom: 0; }
+            .react-toggle { cursor: inherit; }
+        }
+
+    }
+    &.align-right{
+        .control-label, .value, .rw-widget input {text-align: right; }
+    }
+    &.align-center{
+        .control-label, .value, .rw-widget input { text-align: center; }
+    }
+
+    &.select {
+        .form-control-feedback { right: 30px; }
+    }
+    .form-group {
+        background-color: rgba(255, 255, 255, 1);
+        transition: background-color 1000ms linear;
+        input { transition: background-color 1000ms linear; }
+    }
+    &.changeset .form-group {
+        $color-rgba: rgba(255, 241, 72, .6);
+        border-color: darken($color-rgba, 10%);
+        background-color: $color-rgba;
+        outline: 0;
+        @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+        input {
+            background-color: darken($color-rgba, 20%);
+        }
+    }
+
+    .rw-datetimepicker {
+        &.rw-has-both { padding-right: 0; }
+        .rw-select { @include hidden-print; }
+    }
+}

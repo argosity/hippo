@@ -1,0 +1,31 @@
+@import "styles/variables";
+@import "styles/fonts";
+@import "styles/mixins/all";
+
+html { height: 100%;     }
+body { margin: 0; height: 100%; }
+.hippo-root {
+    height: 100%;
+    .hippo > div { height: 100%; }
+}
+
+.hippo {
+  height: 100%;
+  @import "styles/global";
+
+<% Hippo::Extensions.each_asset(phase: :all, type: :css) do | asset | %>
+  @import "<%= asset %>";
+<% end %>
+
+@import "hippo/components/shared/styles";
+
+<% Hippo::Components.enabled_with_dependencies(self) do | component | %>
+  @import "hippo/components/<%= component %>/styles";
+<% end %>
+
+<% if !Hippo.config.initial_workspace_screen_id.blank? &&
+      screen = Hippo::Screen[Hippo.config.initial_workspace_screen_id] %>
+  @import "<%= screen.css.remove(/\.css$/) + "/index.scss" %>";
+<% end %>
+
+}

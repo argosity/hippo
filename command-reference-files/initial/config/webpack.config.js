@@ -4,9 +4,9 @@ const path = require('path');
 
 const config = {
     entry: {
-        lanes: [
+        app: [
             'react-hot-loader/patch',
-            process.env.ENTRY,
+            '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
         ],
     },
     output: {
@@ -15,7 +15,7 @@ const config = {
         filename: `${process.env.EXTENSION_ID}/.js`,
     },
     resolve: {
-        modules: process.env.LANES_MODULES.split(':'),
+        modules: process.env.HIPPO_MODULES.split(':'),
         extensions: ['.js', '.jsx'],
     },
     module: {
@@ -62,7 +62,8 @@ const config = {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: `${process.env.GENERATED_CONFIG_DIR}/root-view.tmpl.html`,
+            template: '<%= directory.join('index.html') %>',
+            chunks: ['app'],
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

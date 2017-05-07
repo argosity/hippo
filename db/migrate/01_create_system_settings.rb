@@ -1,4 +1,4 @@
-class CreateSystemSettings < ActiveRecord::Migration[4.2]
+class CreateSystemSettings < ActiveRecord::Migration[5.0]
     def change
 
         create_table "system_settings" do |t|

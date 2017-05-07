@@ -1,0 +1,5 @@
+<% Hippo::Components.enabled_with_dependencies(self) do | component |
+    require_asset "hippo/components/#{component}"
+end %>
+
+<% Hippo::Screen.uncache_file_on_update(self) %>

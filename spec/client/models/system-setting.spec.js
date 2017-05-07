@@ -1,10 +1,10 @@
-import SystemSettings from 'lanes/models/system-setting';
-import Asset from 'lanes/models/asset';
+import SystemSettings from 'hippo/models/system-setting';
+import Asset from 'hippo/models/asset';
 
 const TEST_SETTINGS = {
     id: 1,
     logo: { file_data: { foo: 'bar' } },
-    settings: { lanes: { smtp: { login: 'test', server: 'test.test.test', password: 'test' } } },
+    settings: { hippo: { smtp: { login: 'test', server: 'test.test.test', password: 'test' } } },
 };
 
 describe('SystemSettings Model', () => {

@@ -1,4 +1,4 @@
-import Asset from 'lanes/models/asset';
+import Asset from 'hippo/models/asset';
 import LogoJson from '../test-logo.json';
 
 import { TestImage } from '../test-models';

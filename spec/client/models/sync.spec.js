@@ -1,4 +1,4 @@
-import Sync from 'lanes/models/sync';
+import Sync from 'hippo/models/sync';
 import { Box } from '../test-models';
 
 describe('Network sync', () => {

@@ -1,8 +1,8 @@
-import { UserModel } from 'lanes/user';
-import Config from 'lanes/config';
+import { UserModel } from 'hippo/user';
+import Config from 'hippo/config';
 
-jest.mock('lanes/models/sync');
-jest.mock('lanes/config');
+jest.mock('hippo/models/sync');
+jest.mock('hippo/config');
 
 describe('User Model', () => {
     it('can log in and out', () => {

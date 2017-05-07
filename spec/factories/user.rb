@@ -1,5 +1,5 @@
 FactoryGirl.define do
-    factory :user, class: Lanes::User do
+    factory :user, class: Hippo::User do
         name { Faker::Name.name }
         email { Faker::Internet.email }
         login { Faker::Internet.user_name }

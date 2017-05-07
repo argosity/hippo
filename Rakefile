@@ -5,7 +5,7 @@ require 'yard'
 require 'yard-activerecord'
 require_relative 'yard_ext/all'
 require 'guard'
-require 'lanes/rake_tasks'
+require 'hippo/rake_tasks'
 require 'knitter'
 Dir.glob('tasks/*.rake').each { |r| load r}
 
@@ -23,6 +23,11 @@ YARD::Rake::YardocTask.new do |t|
                  "--readme=README.md"]
 end
 
+task :npmrelease do
+    sh "npm-release #{Hippo::VERSION}"
+end
+
+task :release => :npmrelease
 
 task :doc => 'db:environment' do
     ENV['SCHEMA']       = 'db/schema.rb'

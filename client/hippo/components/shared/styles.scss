@@ -1,0 +1,64 @@
+@import "./fields";
+@import "./fieldset";
+@import "./resize-sensor";
+@import "./overlay";
+@import "./image-asset";
+@import "./throbber";
+@import "hippo/vendor/styles/toggle";
+@import "hippo/vendor/styles/widgets";
+
+.record-finder {
+    .icon { cursor: pointer; }
+}
+
+.alert {
+    .icon {
+        margin-right: 5px;
+    }
+}
+
+.badge.count {
+    &.super {
+        padding: 2px 2px 0;
+        position: relative;
+        font-size: 70%;
+        top: -6px;
+        right: 5px;
+    }
+}
+
+.requesting-spinner {
+    @extend .icon;
+    @extend .icon-spinner;
+    @extend .icon-spin;
+    display: none;
+    &.active {
+        display: inline;
+    }
+}
+
+.job-executing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .progress { width: 100%; }
+}
+
+.icon {
+    &.with-action {
+        cursor: pointer;
+        &:hover{ text-shadow: 1px 2px 2px #666666; }
+    }
+}
+
+.hippo-panel-heading {
+    display: flex;
+    align-items: center;
+    .spacer {
+        flex: 1;
+    }
+    > *:not(.panel-title){
+        margin-left: 0.5rem;
+    }
+}

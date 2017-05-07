@@ -1,6 +1,6 @@
 /*
   This is the main entry point for your application
-  By default it simply imports the standard lanes boot file
+  By default it simply imports the standard hippo boot file
 */
 
-import 'lanes/boot';
+import 'hippo/boot';

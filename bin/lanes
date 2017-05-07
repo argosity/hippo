@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require_relative '../lib/lanes/cli'
-
-Lanes::CLI.start(ARGV)

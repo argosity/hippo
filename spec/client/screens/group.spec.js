@@ -1,8 +1,8 @@
-import ScreensGroup from 'lanes/screens/group';
+import ScreensGroup from 'hippo/screens/group';
 import { autorun } from 'mobx';
 import { getTestScreen } from '../test-models';
 
-jest.mock('lanes/lib/request-assets');
+jest.mock('hippo/lib/request-assets');
 
 
 describe('Screens Group', () => {

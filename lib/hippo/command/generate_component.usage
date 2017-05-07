@@ -1,0 +1,11 @@
+Stubs out a new Component. 
+
+When executed inside a project called "Blog":
+
+`hippo generate component comment`
+
+Hippo will create:
+····················
+
+  * Component: client/components/Comment.coffee
+  * Spec: spec/<app>/components/CommentSpec.coffee
