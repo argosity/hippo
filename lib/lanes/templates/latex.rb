@@ -20,7 +20,6 @@ module Lanes
 
             end
 
-
             attr_accessor_with_default :model
             attr_accessor_with_default :identifier
 
@@ -61,7 +60,7 @@ module Lanes
             end
 
             def extension
-                '.tex'
+                '.tex.erb'
             end
 
             def render
