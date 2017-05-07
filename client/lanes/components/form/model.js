@@ -25,7 +25,6 @@ class Field {
     @action.bound
     onChange(ev) {
         this.value = ev.target.value;
-        if (false === this.isValid) { this.runTest(); }
     }
 
     @action.bound
