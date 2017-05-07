@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { get } from 'lodash';
 
-import { setFieldValue } from 'lanes/lib/forms';
+import { Form, Field, FormFieldPropType, nonBlank } from 'lanes/components/form';
 
 import Button from 'grommet/components/Button';
 import SearchIcon from 'grommet/components/icons/base/Search';
@@ -14,12 +14,10 @@ import { Col } from 'react-flexbox-grid';
 import { titleize } from '../lib/util';
 import Query from '../models/query';
 
-import FormField from './form-field';
-
 import './record-finder/record-finder.scss';
 import QueryLayer from './record-finder/query-layer';
 
-@observer
+@inject('formFields') @observer
 export default class RecordFinder extends React.PureComponent {
     static propTypes = {
         query: PropTypes.instanceOf(Query).isRequired,
@@ -27,7 +25,7 @@ export default class RecordFinder extends React.PureComponent {
         label: PropTypes.string,
         recordsTitle: PropTypes.string.isRequired,
         onRecordFound: PropTypes.func.isRequired,
-        fields: PropTypes.object.isRequired,
+        formFields: FormFieldPropType,
     }
 
     @observable showingSearch = false;
@@ -45,7 +43,7 @@ export default class RecordFinder extends React.PureComponent {
     @action.bound
     onRecordSelect(model) {
         this.showingSearch = false;
-        setFieldValue(this.field, model[this.props.name]);
+        this.props.formFields.get(this.props.name).value = model[this.props.name]
         this.props.onRecordFound(model);
     }
 
@@ -74,7 +72,7 @@ export default class RecordFinder extends React.PureComponent {
         } = this.props;
 
         return (
-            <FormField
+            <Field
                 className='record-finder'
                 onKeyPress={this.onKeyPress}
                 {...otherProps}
@@ -91,7 +89,7 @@ export default class RecordFinder extends React.PureComponent {
                     icon={<SearchIcon />}
                     onClick={this.onSearchClick}
                 />
-            </FormField>
+            </Field>
         );
     }
 }
