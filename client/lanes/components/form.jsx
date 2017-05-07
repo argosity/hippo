@@ -20,7 +20,7 @@ export function hasLength(length) {
     return buildTest(options, {
         message: `must be of length ${length}`,
         test(s) {
-            return s.length >= this.length;
+            return s && (s.length >= this.length);
         },
     });
 }
@@ -36,7 +36,7 @@ export function stringValue(options) {
 
 const PHONE = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
 export function validPhone(options = {}) {
-    return buildTest(options, { message: 'must be a phone number', test: v => PHONE.test(v) });
+    return buildTest(options, { message: 'need 10 digit phone number', test: v => PHONE.test(v) });
 }
 
 export function validEmail(options) {
