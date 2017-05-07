@@ -4,6 +4,7 @@ import {
 } from 'lodash';
 import moment from 'moment';
 import isEmail from 'validator/lib/isEmail';
+import isURL from 'validator/lib/isURL';
 import { isBlank } from '../lib/util';
 
 export Form from './form/wrapper';
@@ -41,6 +42,10 @@ export function validPhone(options = {}) {
 
 export function validEmail(options) {
     return buildTest(options, { message: 'must be a valid email', test: email => isEmail(email || '') });
+}
+
+export function validURL(options) {
+    return buildTest(options, { message: 'must be a valid address', test: url => isURL(url || '') });
 }
 
 export function booleanValue(options = {}) {
