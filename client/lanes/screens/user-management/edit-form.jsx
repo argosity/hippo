@@ -13,10 +13,6 @@ import Query from 'lanes/models/query';
 
 import { Form, Field, FieldDefinitions, nonBlank, validEmail, booleanValue, field  } from 'lanes/components/form';
 
-//import { FormFields, nonBlank, booleanValue, validEmail, field } from 'lanes/lib/forms';
-//import { Form, Field } from 'lanes/components/form';
-
-
 @observer
 export default class EditForm extends React.PureComponent {
 
