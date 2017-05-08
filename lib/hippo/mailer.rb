@@ -4,10 +4,10 @@ module Hippo
 
     module Mailer
 
-        def self.create(args = {})
+        def self.create
             config = SystemSettings.for_ext(:hippo)['smtp'] || {}
             delivery = delivery_method_config(config)
-            Mail::Message.new(args) do
+            Mail::Message.new do
                 from "\"#{config['from_name']}\" <#{config['from_email']}>"
                 delivery_method delivery
             end
