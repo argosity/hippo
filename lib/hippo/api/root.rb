@@ -32,13 +32,12 @@ module Hippo
 
             configure do
                 set :show_exceptions, false
-                require_relative 'routing'
+
                 Hippo::Configuration.apply
                 Extensions.load_controlling_config
 
                 set :views, Extensions.controlling.root_path.join('views')
-
-                require_relative './default_routes'
+                require_relative './routing'
                 API::Cable.configure
             end
 
@@ -59,11 +58,10 @@ module Hippo
                     end
 
                 end
-                # use Rack::Protection, allow_if: -> (env) {
-                #     path = env['PATH_INFO']
-                #     cors_resources.any?{|r| r.matches_path?(path) }
-                # }
-
+                use Rack::Protection, allow_if: -> (env) {
+                    path = env['PATH_INFO']
+                    cors_resources.any?{|r| r.matches_path?(path) }
+                }
             end
         end
     end

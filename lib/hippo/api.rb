@@ -12,6 +12,7 @@ require_relative 'api/pub_sub'
 require_relative 'api/handlers/user_session'
 require_relative 'api/handlers/asset'
 require_relative 'api/handlers/print'
+require_relative 'api/route_set'
 require_relative 'api/root'
 
 module Hippo
