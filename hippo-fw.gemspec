@@ -36,8 +36,8 @@ Gem::Specification.new do |spec|
     spec.add_dependency 'webmock',                "~> 3.0"
     spec.add_dependency "database_cleaner",       "~> 1.3"
     spec.add_dependency 'vcr',                    "~> 3.0"
-    spec.add_dependency "sinatra",                "~> 2.0.0.rc2"
-    spec.add_dependency "rack-protection",        "~> 2.0.0.rc2"
+    spec.add_dependency "sinatra",                "~> 2.0.0"
+    spec.add_dependency "rack-protection",        "~> 2.0.0"
     spec.add_dependency "rack",                   "~> 2.0"
 
     spec.add_dependency "rack-cors",              "~> 0.4"
