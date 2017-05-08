@@ -7,6 +7,8 @@ require_relative 'yard_ext/all'
 require 'guard'
 require 'hippo/rake_tasks'
 require 'knitter'
+require "bump/tasks"
+
 Dir.glob('tasks/*.rake').each { |r| load r}
 
 Rake::TestTask.new do |t|
