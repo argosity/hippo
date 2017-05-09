@@ -2,32 +2,34 @@ require_relative "spec_helper"
 
 describe Hippo::Mailer do
 
-    before do
-        # needed because otherwise the rollback will leave configs without a db record
-        Hippo::SystemSettings.instance_variable_set(:@config, nil)
-        settings = Hippo::SystemSettings.for_ext('hippo')
-        settings.smtp = {
-            'server' => 'foo.test.com'
-        }
-        settings.persist!
-    end
-
-    def test_it_configures_itself
-        # calling new forces a config
-        Hippo::Mailer.new
-        assert_equal 'foo.test.com',
-                     Mail::Configuration.instance.delivery_method.settings[:address]
-
-    end
-
-    def test_sending_an_email
-        Hippo::Mailer.deliver do
-            to 'test@test.com'
-            from 'you@you.com'
-            subject 'testing'
-            body 'hello'
+    class TestEmail < Hippo::Templates::Mail
+        extension_id :hippo
+        def root_path
+            Pathname.new(__FILE__).dirname.join('../fixtures')
         end
-        assert_equal(1, Mail::TestMailer.deliveries.length)
+        def to
+            'bob@test.com'
+        end
+        def subject
+            'Hello test'
+        end
     end
 
+    it 'can send an email' do
+        mail = Hippo::Mailer.create
+        mail.to 'test@test.com'
+        mail.from 'you@you.com'
+        mail.subject 'testing'
+        mail.body 'hello'
+        expect { mail.deliver }.to change { Mail::TestMailer.deliveries.length }.by(1)
+    end
+
+    it 'can send using a template' do
+        mail = Hippo::Mailer.from_template(TestEmail.new)
+        expect { mail.deliver }.to change { Mail::TestMailer.deliveries.length }.by(1)
+        mail = Mail::TestMailer.deliveries.last
+        expect(mail.to).to eq(['bob@test.com'])
+        expect(mail.subject).to eq('Hello test')
+        expect(mail.body.raw_source).to eq("Hello, I am mail\n")
+    end
 end
