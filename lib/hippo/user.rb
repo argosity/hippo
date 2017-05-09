@@ -5,8 +5,9 @@ module Hippo
     class User < Hippo::Model
 
         has_secure_password
-        validates :login, :name, :email, presence: true, uniqueness: { case_sensitive: false }
-        validates :email, email: true, uniqueness: { case_sensitive: false }
+        validates :login, :name, presence: true, uniqueness: { case_sensitive: false }
+        validates :email, presence: true, email: true, uniqueness: { case_sensitive: false }
+
         validates :password, length: { minimum: 6 }, allow_nil: true
 
         whitelist_attributes :password
