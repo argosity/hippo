@@ -6,7 +6,7 @@ module Hippo
         class << self
 
             def create
-                config = SystemSettings.for_ext(:hippo)['smtp'] || {}
+                config = SystemSettings.for_ext(:smtp)
                 delivery = delivery_method_config(config)
                 Mail::Message.new do
                     from "\"#{config['from_name']}\" <#{config['from_email']}>"
@@ -15,12 +15,14 @@ module Hippo
             end
 
             def delivery_method_config(config)
-                return {
+                {
                     via: Hippo.env.production? ? :smtp : :test,
                     config: {
-                        address: config['server'],
-                        user_name: config['login'],
-                        password: config['password']
+                        address: config['address'],
+                        user_name: config['user_name'],
+                        password: config['password'],
+                        enable_starttls_auto: true,
+                        port: 587
                     }
                 }
             end
