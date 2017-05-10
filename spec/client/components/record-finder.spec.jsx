@@ -1,7 +1,6 @@
 import React from 'react';
 import { range } from 'lodash';
 
-
 import Query     from 'hippo/models/query';
 
 import { Snapshot } from 'hippo/testing/screens';
@@ -10,11 +9,17 @@ import RecordFinder from 'hippo/components/record-finder';
 import { Container } from '../test-models';
 
 jest.mock('hippo/models/sync');
+import { FieldDefinitions, stringValue } from 'hippo/components/form';
 
 describe("RecordFinder Component", () => {
     let query;
     let props;
+    let formFields;
+
     beforeEach(() => {
+        formFields = new FieldDefinitions({
+            name: stringValue,
+        });
         query = new Query({
             src: Container,
             fields: [
@@ -28,7 +33,7 @@ describe("RecordFinder Component", () => {
             onRecordFound: jest.fn(),
             name: 'name',
             recordsTitle: 'Foos',
-            fields: { name: { value: 'ONE', events: {} } },
+            formFields,
             query,
         };
         range(0, 5).forEach(

@@ -27,22 +27,14 @@ describe('Workspace Menu', () => {
         expect(menu).toHaveRendered('Logout');
     });
 
-    fit('renders groups', () => {
-        const menu = shallow(<Menu />);
-        expect(menu.find('Group').length).toEqual(5);
-        expect(Snapshot(<Menu />)).toMatchSnapshot();
-    });
-
     it('has groups with screens', () => {
         const group = shallow(<MenuGroup group={Group.all[0]} />);
         expect(group).not.toHaveRendered('MenuOption');
-
         getTestScreen({ id: 'new', group_id: Group.all[0].id });
-        expect(group).toHaveRendered('MenuOption');
         expect(Snapshot(<MenuGroup group={Group.all[0]} />)).toMatchSnapshot();
     });
 
-    it('has renders a menu option', () => {
+    it('has renders menu options', () => {
         const screen = getTestScreen();
         const option = shallow(<MenuOption screen={screen} />);
         expect(option).toHaveRendered(`Anchor[path="/${screen.id}/"]`);

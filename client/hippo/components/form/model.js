@@ -1,7 +1,9 @@
-/* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["field", "model"] }] */
-import { observable, computed, when, action, } from 'mobx';
+/* eslint no-param-reassign: ["error", {
+  "props": true, "ignorePropertyModificationsFor": ["field", "model"]
+}] */
+import { observable, computed, when, action } from 'mobx';
 import {
-    extend, isObject, isFunction, mapValues, every, find, get,
+    extend, isObject, isFunction, mapValues, every, get,
 } from 'lodash';
 
 class Field {

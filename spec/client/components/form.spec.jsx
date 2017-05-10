@@ -1,12 +1,12 @@
 import React from 'react';
 import {
     nonBlank, validEmail, hasLength,
-    FormFields, FormFieldPropType,
+    FormFieldPropType, FieldDefinitions,
 } from 'hippo/components/form';
 
 describe('Form Validation functions', () => {
     it('validates fields', () => {
-        const form = new FormFields({
+        const form = new FieldDefinitions({
             name: hasLength({ length: 3, default: 'onee' }),
             email: validEmail,
         });
@@ -47,6 +47,7 @@ describe('Form Validation functions', () => {
         expect(test.test('@test.com')).toBe(false);
         expect(test.test('test@test.com')).toBe(true);
     });
+
     it('tests hasLength', () => {
         const len = hasLength(3);
         expect(len.test('a')).toBe(false);
@@ -54,10 +55,10 @@ describe('Form Validation functions', () => {
     });
 
     it('validates prop types', () => {
-        const form = new FormFields({ name: nonBlank });
+        const formFields = new FieldDefinitions({ name: nonBlank });
         const validator = FormFieldPropType;
         expect(validator({ name: 'name' })).toBeInstanceOf(Error);
-        expect(validator({ name: 'no-field', form })).toBeInstanceOf(Error);
-        expect(validator({ name: 'name', form })).toBeNull();
+        expect(validator({ name: 'no-field', formFields })).toBeInstanceOf(Error);
+        expect(validator({ name: 'name', formFields })).toBeNull();
     });
 });

@@ -1,6 +1,4 @@
-import Config from 'hippo/config';
 import Sync from 'hippo/models/sync';
-
 import { map, find, range, shuffle } from 'lodash';
 
 import Clause from 'hippo/models/query/clause';
@@ -86,8 +84,8 @@ describe('Model Queries', () => {
         expect(map(clause.validOperators, 'id')).toEqual(['eq', 'lt', 'gt']);
     });
 
-    it('can read visible identifier field', () => {
-        expect(query.info.visibleIdentifierField.id).toEqual('id');
+    it('can read identifier field', () => {
+        expect(query.info.identifierField.id).toEqual('id');
     });
 
     it('converts a row to object', () => {

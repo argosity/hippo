@@ -1,5 +1,5 @@
 require_relative "../spec_helper"
-require 'hippo/access/user'
+require 'hippo/user'
 
 
 class GodUser

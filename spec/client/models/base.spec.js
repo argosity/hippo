@@ -29,7 +29,7 @@ describe('BaseModel Test', () => {
         autorun(() => spy(box.syncUrl));
         expect(spy).toHaveBeenCalledWith('/api/test/boxes/11');
         expect(box.id).toEqual(11);
-        expect(box.identifier).toEqual(11);
+        expect(box.identifierFieldValue).toEqual(11);
         expect(box.isNew).toEqual(false);
         expect(box.syncUrl).toEqual('/api/test/boxes/11');
         box.id = 42;
@@ -61,16 +61,6 @@ describe('BaseModel Test', () => {
         expect(box.bad).toBeUndefined();
         box.update({ bad: 22 });
         expect(box.bad).toBeUndefined();
-    });
-
-    it('re-fetches record', () => {
-        const box = new Box({ id: 1 });
-        expect(box.isNew).toBe(false);
-        box.fetch();
-        expect(fetch).lastCalledWith(
-            '/api/test/boxes/1.json?l=1&q%5Bid%5D=1',
-            { headers: { 'Content-Type': 'application/json' }, method: 'GET' },
-        );
     });
 
     it('validates and records "type" in schema', () => {

@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { get } from 'lodash';
 
-import { Form, Field, FormFieldPropType, nonBlank } from 'hippo/components/form';
+import { Field, FormFieldPropType } from 'hippo/components/form';
 
 import Button from 'grommet/components/Button';
 import SearchIcon from 'grommet/components/icons/base/Search';

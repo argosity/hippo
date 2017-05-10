@@ -1,3 +1,4 @@
+/* global jest */
 export React from 'react';
 
 export { getScreenInstance, Snapshot } from './screens';

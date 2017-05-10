@@ -1,7 +1,14 @@
 import Sync from 'hippo/models/sync';
+import Config from 'hippo/config';
 import { Box } from '../test-models';
 
+jest.unmock('hippo/models/sync');
+
 describe('Network sync', () => {
+    beforeEach(() => {
+        Config.api_host = '';
+    });
+
     it('makes a request', () => {
         fetch.mockResponseOnce(JSON.stringify({ access_token: '12345' }));
         Sync.perform('/foo')

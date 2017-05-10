@@ -1,6 +1,6 @@
 import { observable } from 'mobx';
 import invariant from 'invariant';
-import { extend, each, isArray, isObject, isEmpty } from 'lodash';
+import { extend, isArray, isObject } from 'lodash';
 import { createCollection } from 'mobx-decorated-models';
 
 import Sync from './sync';
@@ -50,9 +50,6 @@ export default class ModelCollection {
         return this;
     }
     create(models = [], options = {}) {
-        if (isObject(models) && isEmpty(options)) {
-            return extendAry(this.$model, [], models, this);
-        }
         return extendAry(this.$model, models, options, this);
     }
 }

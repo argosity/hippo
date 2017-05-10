@@ -1,12 +1,12 @@
-import { observable, autorun, observe } from 'mobx';
-import { keysIn, pick, assign, isString } from 'lodash';
+import { observable, observe } from 'mobx';
+import { keysIn, pick, assign, get } from 'lodash';
 import Extensions from './extensions';
 
 const STORAGE_KEY = 'hippo-user-data';
 
 class Config {
 
-    @observable api_host = window.location.origin;
+    @observable api_host = get(window, 'location.origin', '');
     @observable api_path = '/api';
     @observable access_token;
     @observable root_view;

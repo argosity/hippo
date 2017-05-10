@@ -1,7 +1,7 @@
 import {
-    isEmpty, isNil, extend, map, bindAll, omit, range, has,
+    isEmpty, isNil, extend, map, bindAll, omit, range,
 } from 'lodash';
-import { autorun, reaction, observe } from 'mobx';
+import { reaction, observe } from 'mobx';
 
 import Sync from '../sync';
 import Result from './result';
