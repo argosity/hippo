@@ -13,11 +13,6 @@ module Hippo
             long_desc Command.usage_from_file("generate_screen")
             method_options( GenerateScreen::OPTIONS )
             register Command::GenerateScreen, 'screen', 'screen [NAME]', 'Creates a new Screen'
-
-            long_desc Command.usage_from_file("generate_component")
-            method_options( GenerateComponent::OPTIONS )
-            register Command::GenerateComponent, 'component', 'component [NAME]', 'Creates a new Component to be shared between screens'
-
         end
 
     end

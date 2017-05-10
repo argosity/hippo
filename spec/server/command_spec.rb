@@ -65,9 +65,4 @@ describe Hippo::Command do
         compare_generated(reference_path.join('model'))
     end
 
-    it "generates a component" do
-        expect("#{hippo} gen component big").to execute_successfully
-        compare_generated(reference_path.join('component'))
-    end
-
 end

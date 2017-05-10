@@ -59,6 +59,7 @@ module Hippo
                     empty_directory "#{client_dir}/#{path.basename}"
                     create_file "#{client_dir}/#{path.basename}/.gitkeep"
                 end
+                create_file "#{client_dir}/components/.gitkeep", ""
                 template "client/models/base.js",   "#{client_dir}/models/base.js"
                 template "client/index.js",         "#{client_dir}/index.js"
                 template "client/extension.js",     "#{client_dir}/extension.js"
@@ -73,7 +74,7 @@ module Hippo
                 say 'Installing node modules', :green
                 [
                     'jest',
-                    'hippo-framework',
+                    'hippo-fw',
                     'react-router',
                     'webpack',
                     'webpack-dev-server'

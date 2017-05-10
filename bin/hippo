@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/hippo/cli'
+require 'rubygems'
+require 'hippo'
+require 'hippo/cli'
 
 Hippo::CLI.start(ARGV)
