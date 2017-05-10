@@ -30,12 +30,12 @@ describe Hippo::Asset do
         expect(@model.asset.file_data.keys).to eq(["original", "medium", "thumbnail"])
         expect(
             @model.asset.file_data['original']['metadata'].without('filename')
-        ).to eq({
-                "size"=>42228,
-                "mime_type"=>"image/png",
-                "width"=>500,
-                "height"=>223
-                })
+        ).to include(
+                 "mime_type" =>"image/png",
+                 "size"      => a_value_within(100).of(42200), # different magic versions will be different size
+                 "width"     =>500,
+                 "height"    =>223
+                )
 
     end
 
