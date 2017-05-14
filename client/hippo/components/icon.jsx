@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 const DEFAULT_TOOLTIP_PROPS = { placement: 'top', trigger: 'click' };
 
-export default class Icon extends React.Component {
+export default class Icon extends React.PureComponent {
 
     static propTypes = {
         type:         PropTypes.string.isRequired,
