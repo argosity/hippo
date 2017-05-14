@@ -66,7 +66,9 @@ task :lint do
     sh %{node node_modules/eslint/bin/eslint.js client spec/client/}
 end
 
-task :ci => [:lint, 'db:migrate', 'db:seed'] do
+task :ci => [:lint] do
+    sh %{bundle exec hippo db migrate}
+    sh %{bundle exec hippo db seed}
     sh %{bundle exec hippo jest}
     sh %{bundle exec rspec}
 end
