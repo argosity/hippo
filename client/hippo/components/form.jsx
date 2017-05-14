@@ -44,8 +44,13 @@ export function validEmail(options) {
     return buildTest(options, { message: 'must be a valid email', test: email => isEmail(email || '') });
 }
 
-export function validURL(options) {
-    return buildTest(options, { message: 'must be a valid address', test: url => isURL(url || '') });
+export function validURL(options = {}) {
+    return buildTest(options, {
+        message: 'must be a valid address',
+        test(url) {
+            return (options.allowBlank && !url) || isURL(url || '');
+        },
+    });
 }
 
 export function booleanValue(options = {}) {
