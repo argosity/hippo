@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    nonBlank, validEmail, hasLength,
+    nonBlank, validEmail, hasLength, validURL,
     FormFieldPropType, FieldDefinitions,
 } from 'hippo/components/form';
 
@@ -60,5 +60,13 @@ describe('Form Validation functions', () => {
         expect(validator({ name: 'name' })).toBeInstanceOf(Error);
         expect(validator({ name: 'no-field', formFields })).toBeInstanceOf(Error);
         expect(validator({ name: 'name', formFields })).toBeNull();
+    });
+
+    it('tests url', () => {
+        let url = validURL();
+        expect(url.test('bad-url')).toBe(false);
+        expect(url.test('')).toBe(false);
+        url = validURL({ allowBlank: true });
+        expect(url.test('')).toBe(true);
     });
 });
