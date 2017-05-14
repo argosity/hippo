@@ -1,0 +1,50 @@
+.master-detail-wrapper {
+
+    @keyframes slideOutLeft {
+        from { transform: translate3d(0, 0, 0);    }
+        to   { transform: translate3d(-50%, 0, 0); }
+    }
+
+    @keyframes slideInLeft {
+        from { transform: translate3d(-70%, 0, 0); }
+        to   { transform: translate3d(0, 0, 0);    }
+    }
+
+    display: flex;
+    flex: 1;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+    .master,
+    .detail {
+        flex: 1;
+        display: flex;
+        animation-duration: 0.49s;
+        animation-fill-mode: both;
+    }
+    .detail {
+        display: none;
+    }
+    &.has-detail {
+        width: 200%;
+        animation-name: slideOutLeft;
+        .master {
+
+        }
+        .detail {
+            display: flex;
+        }
+    }
+    &.detail-visible {
+        width: 100%;
+        animation-name: initial;
+        .master {
+            display: none;
+        }
+    }
+    &.detail-removed {
+        animation-name: slideInLeft;
+        .master {
+            display: flex
+        }
+    }
+}

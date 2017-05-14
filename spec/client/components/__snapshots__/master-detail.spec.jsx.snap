@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Master Detail Component renders and matches snapshot 1`] = `
+<div
+  className="master-detail-wrapper has-detail"
+>
+  <div
+    className="master"
+  >
+    <h1>
+      Hi, i am master
+    </h1>
+  </div>
+  <div
+    className="detail"
+  >
+    <h1>
+      Hi, i am detail
+    </h1>
+  </div>
+</div>
+`;
