@@ -3,7 +3,7 @@
 }] */
 import { observable, computed, when, action } from 'mobx';
 import {
-    extend, isObject, isFunction, mapValues, every, get,
+    extend, isObject, isFunction, mapValues, every, get, filter,
 } from 'lodash';
 
 class Field {
@@ -62,8 +62,12 @@ export default class FormFieldDefinitions {
         );
     }
 
+    @computed get invalidFields() {
+        return filter(this.fields.values(), { isValid: false });
+    }
+
     @computed get isValid() {
-        return every(this.fields.values(), 'isValid');
+        return 0 === this.invalidFields.length;
     }
 
     @computed get isTouched() {
