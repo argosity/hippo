@@ -1,15 +1,5 @@
 module Hippo
     module API
-        # def self.on_root_view_set(proc)
-        #     # set_root_view(view)
-        #     # API::Root.get Hippo.config.mounted_at + '?*' do
-        #     #     if request.accept? 'text/html'
-        #     #         erb :hippo_root_view
-        #     #     else
-        #     #         pass
-        #     #     end
-        #     # end
-        # end
 
         class RoutingBlock
             def initialize(ext_id)

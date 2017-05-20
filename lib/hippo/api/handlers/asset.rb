@@ -28,11 +28,19 @@ module Hippo::API::Handlers
             end
         end
 
-        def self.getter
+        def self.file_getter
             root = Hippo::Extensions.controlling.root_path.join('public', 'files')
             lambda do
-                send_file(root.join( params['splat'].first ).to_s)
+                send_file(root.join(params['splat'].first).to_s)
             end
         end
+
+        def self.asset_getter
+            root = Hippo::Extensions.controlling.root_path.join('public', 'assets')
+            lambda do
+                send_file(root.join(params['splat'].first).to_s)
+            end
+        end
+
     end
 end

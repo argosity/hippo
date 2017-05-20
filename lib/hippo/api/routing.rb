@@ -25,7 +25,10 @@ module Hippo
                      &API::Handlers::Asset.saver
 
                 get Hippo.config.api_path + Hippo.config.assets_path_prefix + '/*',
-                    &API::Handlers::Asset.getter
+                    &API::Handlers::Asset.file_getter
+
+                get Hippo.config.assets_path_prefix + '/*',
+                    &API::Handlers::Asset.asset_getter
 
                 get Hippo.config.api_path + Hippo.config.print_path_prefix + '/:template_id/:model_id.pdf',
                     &API::Handlers::Print.getter
@@ -34,6 +37,8 @@ module Hippo
                     API::PubSub.publish("file-change", data)
                     "OK"
                 end
+
+
             end
             route_root_view.call if route_root_view
             Hippo.logger.debug "Setup routing"
