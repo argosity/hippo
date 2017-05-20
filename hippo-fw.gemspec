@@ -67,7 +67,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "require_all",            "~> 1.3"
     spec.add_dependency "resque",                 "~> 1.27"
     spec.add_dependency "sanitize",               "~> 3.0"
-    spec.add_dependency "webpack_driver",         "~> 0.2"
+    spec.add_dependency "webpack_driver",         "~> 0.3"
     spec.add_dependency "knitter",                "~> 0.2.2"
 
     spec.add_dependency "thor",                   "~> 0.19"

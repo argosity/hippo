@@ -290,7 +290,7 @@ babel-core@^6.0.0, babel-core@^6.21.0, babel-core@^6.24.0:
     slash "^1.0.0"
     source-map "^0.5.0"
 
-babel-eslint@latest:
+babel-eslint@^7.1.0, babel-eslint@latest:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-7.2.1.tgz#079422eb73ba811e3ca0865ce87af29327f8c52f"
   dependencies:
@@ -2173,10 +2173,11 @@ eslint-config-airbnb@^14.1.0:
   dependencies:
     eslint-config-airbnb-base "^11.1.0"
 
-eslint-config-argosity@1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/eslint-config-argosity/-/eslint-config-argosity-1.0.5.tgz#8c386b80b1ed1ebd02a5a8cad88059e093b36e13"
+eslint-config-argosity@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-argosity/-/eslint-config-argosity-1.1.1.tgz#57541ac295a08103c093590bb95162a07bf14ba5"
   dependencies:
+    babel-eslint "^7.1.0"
     eslint-config-airbnb "^14.1.0"
     eslint-config-airbnb-base "^11.1.1"
     eslint-plugin-import "^2.2.0"

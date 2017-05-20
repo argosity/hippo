@@ -1,7 +1,6 @@
 require_relative '../hippo'
 require_relative 'command/jest'
 require_relative 'reloadable_sinatra.rb'
-require_relative 'reloadable_view.rb'
 require 'guard/jest'
 require 'guard/rspec'
 
@@ -19,7 +18,6 @@ module Hippo
                 @server_matches = block
             end
         end
-
 
         def self.run(dsl, options, &block)
             matchers = CustomMatchers.new
@@ -42,21 +40,15 @@ module Hippo
             dsl.guard :rspec, rspec_options do
                 dsl.watch(%r{^spec/server/spec_helper\.rb}) { 'spec' }
                 dsl.watch(%r{^spec/server/.*_spec\.rb})
-                dsl.watch(%r{^spec/fixtures/#{identifier}(.+)s\.yml})   { |m| "spec/server/#{m[1]}_spec.rb" }
-                dsl.watch(%r{^lib/#{identifier}/(.+)\.rb})              { |m| "spec/server/#{m[1]}_spec.rb" }
+                dsl.watch(%r{^lib/#{identifier}/(.+)\.rb}) { |m| "spec/server/#{m[1]}_spec.rb" }
+                dsl.watch(%r{^spec/fixtures/#{identifier}(.+)s\.yml}) { |m| "spec/server/#{m[1]}_spec.rb" }
                 matchers.server_matches.call if matchers.server_matches
             end
 
             dsl.guard :reloadable_sinatra do
                 dsl.watch(%r{^lib/.*\.rb})
-                dsl.watch(%r{^config/.*\.rb})
+                dsl.watch(%r{^config/.*})
             end
-
-            dsl.guard :reloadable_view do
-                dsl.watch(%r{^views/(.*\.html)}) { |m| m[1] }
-            end
-
         end
-
     end
 end

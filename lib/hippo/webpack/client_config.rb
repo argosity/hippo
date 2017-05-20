@@ -1,8 +1,5 @@
-require_relative './webpack_view';
-
 module Hippo
-    module Command
-
+    class Webpack
         class ClientConfig < Thor::Group
             include Thor::Actions
 
@@ -14,21 +11,17 @@ module Hippo
 
             attr_reader :module_paths
 
-            ROOT = Pathname.new(__FILE__).dirname.join("..", "..", "..")
-            def self.source_root
-                ext = Hippo::Extensions.controlling
-                ext.root_path
-            end
+            ROOT = Pathname.new(__FILE__).dirname.join('..', '..', '..')
 
-            def apply_hippo_config
-                Command.load_current_extension
+            def self.source_root
                 Hippo::Configuration.apply
                 Hippo::Extensions.load_controlling_config
+                Hippo::Extensions.controlling.root_path
             end
 
             def set_vars
+                @controlling_extension = Hippo::Extensions.controlling
                 @hippo_root_path = ROOT
-                @controlling_extension = Command.load_current_extension(raise_on_fail: true)
                 @extension_path = controlling_extension.root_path
             end
 
@@ -48,15 +41,13 @@ module Hippo
                 say "Generating config in #{directory}", :green
                 opts = { verbose: false, force: true }
 
-                Hippo::Extensions.controlling.view_templates.each do |tmpl|
-                    tmpl = WebpackView.new(tmpl)
-                    tmpl.write
-                    # set the mtime to the past, otherwise Webpack will build repeatedly as it starts up
-                    FileUtils.touch tmpl.destination.to_s, mtime: Time.now - 10.minute
-                end
+                # Hippo::Extensions.controlling.view_templates.each do |tmpl|
+                #     tmpl = WebpackView.new(tmpl)
+                #     tmpl.write
+                #     # set the mtime to the past, otherwise Webpack will build repeatedly as it starts up
+                #     FileUtils.touch tmpl.destination.to_s, mtime: Time.now - 10.minute
+                # end
 
-                template('config/webpack.config.js',
-                         directory.join('webpack.config.js'), opts)
                 template('config/jest.config.json',
                          directory.join('jest.config.json'), opts)
                 template(ROOT.join('templates','js', 'config-data.js'),

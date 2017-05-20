@@ -17,11 +17,11 @@ module Hippo
                 end
             end
 
-            # lock the current controlling extension so that it can't
-            # be changed by other extensions that are loaded later
-            def lock_controlling!
-                self.controlling_locked=true
-            end
+            # # lock the current controlling extension so that it can't
+            # # be changed by other extensions that are loaded later
+            # def lock_controlling!
+            #     self.controlling_locked=true
+            # end
 
             def add(klass)
                 @cached_instances = nil
@@ -100,6 +100,12 @@ module Hippo
                 if config_file.exist?
                     require config_file
                 end
+            end
+
+            def client_module_paths
+                map { |e| e.root_path.join('client').to_s }.reverse + [
+                    controlling.root_path.join('node_modules').to_s
+                ]
             end
 
         end

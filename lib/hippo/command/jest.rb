@@ -1,4 +1,3 @@
-require_relative './client_config'
 require_relative '../extension'
 require_relative '../command'
 

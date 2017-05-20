@@ -3,8 +3,6 @@ require 'oj'
 require 'rack/protection'
 require 'rack/cors'
 
-require_relative "../access/authentication_provider"
-
 module Hippo
     module API
         class Root < Sinatra::Application
@@ -34,9 +32,9 @@ module Hippo
                 set :show_exceptions, false
 
                 Hippo::Configuration.apply
-                Extensions.load_controlling_config
-
-                set :views, Extensions.controlling.root_path.join('views')
+                Hippo::Extensions.load_controlling_config
+                set :views, Hippo::Extensions.controlling.root_path.join('views')
+                set :webpack, Hippo::Webpack.new
                 require_relative './routing'
                 API::Cable.configure
             end

@@ -5,19 +5,11 @@ module Hippo
                 Extensions.controlling.title
             end
 
-            def hippo_javascript_tags
-                []
-                # assets = API.webpack.assets.map do | k |
-                #     "<script src=\"http://localhost:#{API.webpack.port}/#{k}\"></script>"
-                # end
-                # assets.join("\n")
-
-                # "<script src=\"http://localhost:#{API.webpack.port}/hippo.js\"></script>"
-                # javascript_tag('hippo/vendor') + "\n" + javascript_tag('hippo')
-            end
-
-            def hippo_stylesheet_tags
-                # stylesheet_tag('hippo')
+            def javascript_tags(*entries)
+                Root.webpack.wait_until_available
+                entries.map { |entry|
+                    "<script src=\"#{Root.webpack.host}/assets/#{Root.webpack.file(entry)}\"></script>"
+                }.join("\n")
             end
 
             def client_bootstrap_data(mergedWith: {})
