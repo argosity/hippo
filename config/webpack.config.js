@@ -10,12 +10,15 @@ const config = {
         ],
     },
     output: {
-        path: __dirname,
-        publicPath: '/',
-        filename: '<%= Hippo::Extensions.controlling.identifier + '.js' %>',
+        path: '<%= config_directory.join('..','public', 'assets') %>',
+        publicPath: '<%= Hippo.env.production? ? '/assets/' : 'http://test.hippo.dev:8889/assets/' %>',
+        filename: '[name]-[hash].js',
     },
     resolve: {
-        modules: ["<%= module_paths.join('","') %>"],
+        modules: [
+            "<%= Hippo::Extensions.client_module_paths.join('","') %>",
+            "<%= generated_directory.to_s %>",
+        ],
         extensions: ['.js', '.jsx'],
     },
     module: {
@@ -59,10 +62,6 @@ const config = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor', minChunks: Infinity, filename: '[name].[hash].js',
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: '<%= directory.join('index.html') %>',
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

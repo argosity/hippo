@@ -2173,9 +2173,9 @@ eslint-config-airbnb@^14.1.0:
   dependencies:
     eslint-config-airbnb-base "^11.1.0"
 
-eslint-config-argosity@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-argosity/-/eslint-config-argosity-1.1.1.tgz#57541ac295a08103c093590bb95162a07bf14ba5"
+eslint-config-argosity@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-argosity/-/eslint-config-argosity-1.1.2.tgz#dceb590f5549d9273a37953600d65db26ef9e92d"
   dependencies:
     babel-eslint "^7.1.0"
     eslint-config-airbnb "^14.1.0"

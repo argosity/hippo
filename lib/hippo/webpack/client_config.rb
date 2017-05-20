@@ -40,14 +40,6 @@ module Hippo
             def write_asset_files
                 say "Generating config in #{directory}", :green
                 opts = { verbose: false, force: true }
-
-                # Hippo::Extensions.controlling.view_templates.each do |tmpl|
-                #     tmpl = WebpackView.new(tmpl)
-                #     tmpl.write
-                #     # set the mtime to the past, otherwise Webpack will build repeatedly as it starts up
-                #     FileUtils.touch tmpl.destination.to_s, mtime: Time.now - 10.minute
-                # end
-
                 template('config/jest.config.json',
                          directory.join('jest.config.json'), opts)
                 template(ROOT.join('templates','js', 'config-data.js'),

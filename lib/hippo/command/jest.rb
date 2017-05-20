@@ -1,5 +1,6 @@
 require_relative '../extension'
 require_relative '../command'
+require_relative '../webpack/client_config'
 
 module Hippo
     module Command
@@ -16,7 +17,7 @@ module Hippo
 
 
             def configure
-                @config = ClientConfig.new
+                @config = Hippo::Webpack::ClientConfig.new
                 @config.invoke_all
                 self
             end
