@@ -6,7 +6,8 @@ import { isNil, forIn, get, pick, mapValues, keys, extend } from 'lodash';
 import { observer }   from 'mobx-react';
 import { action, observable, computed } from 'mobx';
 
-import Button    from 'grommet/components/Button';
+import Box    from 'grommet/components/Box';
+import Button from 'grommet/components/Button';
 import Warning from 'hippo/components/warning-notification';
 
 import Query from 'hippo/models/query';
@@ -22,7 +23,7 @@ export default class EditForm extends React.PureComponent {
         onComplete: PropTypes.func.isRequired,
     }
 
-    static desiredHeight = 400
+    static desiredHeight = 300
 
     fields = new FieldDefinitions({
         is_admin: booleanValue,
@@ -62,10 +63,8 @@ export default class EditForm extends React.PureComponent {
         this.props.onComplete();
     }
 
-
     render() {
         const { fields } = this;
-
         return (
             <Form tag="div" className="user-edit-form" fields={fields}>
                 <Warning message={this.errorMessage} />
@@ -75,17 +74,15 @@ export default class EditForm extends React.PureComponent {
                     <Field md={4} xs={6} name="email" />
                     <Field md={4} xs={6} type="password" name="password" />
                     <Field md={4} xs={6} type="checkbox" name="is_admin" />
-                </Row>
-                <Row>
                     <Col md={4} xs={6}>
-                        <Row middle="xs" around="xs">
+                        <Box justify="around" direction="row">
                             <Button label="Cancel" onClick={this.onCancel} accent />
                             <Button
                                 label="Save"
                                 onClick={fields.isValid ? this.onSave : null}
                                 primary
                             />
-                        </Row>
+                        </Box>
                     </Col>
                 </Row>
             </Form>
