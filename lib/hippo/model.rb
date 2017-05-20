@@ -1,4 +1,5 @@
 require_relative 'concerns/all'
+require 'activerecord-multi-tenant'
 
 module Hippo
 
@@ -18,6 +19,11 @@ module Hippo
         include Concerns::Queries
         include Concerns::SortingExpressions
         include Concerns::RandomIdentifer
+
+        def self.belongs_to_tenant
+            belongs_to :tenant, class_name: 'Hippo::Tenant'
+            multi_tenant :tenant
+        end
 
     end
 

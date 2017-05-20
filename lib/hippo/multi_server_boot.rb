@@ -1,26 +1,30 @@
 module Hippo
     module MultiServiceBoot
         def self.perform
-            require 'hippo/api'
-            Hippo::Configuration.apply
+            Tenant.system.perform do
+                Hippo::DB.establish_connection
 
-            config = Hippo::Command::ClientConfig.new
-            config.invoke_all
+                require 'hippo/api'
+                Hippo::Configuration.apply
 
-            API.webpack = Hippo::Command::Webpack.new([], wait: false)
-            API.webpack.config = config
+                config = Hippo::Command::ClientConfig.new
+                config.invoke_all
 
-            API.webpack.invoke_all# startup
+                API.webpack = Hippo::Command::Webpack.new([], wait: false)
+                API.webpack.config = config
 
-            Hippo::GuardTasks.client_config = config
+                API.webpack.invoke_all# startup
 
-            sleep(1) # give webpack a bit of time to fail if it's going to
-            unless API.webpack.process.alive?
-                puts API.webpack.messages
-                exit 1
+                Hippo::GuardTasks.client_config = config
+
+                sleep(1) # give webpack a bit of time to fail if it's going to
+                unless API.webpack.process.alive?
+                    puts API.webpack.messages
+                    exit 1
+                end
+                Guard.start # will block until complete
+                API.webpack.process.stop # stop webpack after guard completes
             end
-            Guard.start # will block until complete
-            API.webpack.process.stop # stop webpack after guard completes
         end
     end
 end

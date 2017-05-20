@@ -77,6 +77,85 @@ exports[`SystemSettings Screen renders 1`] = `
   >
     title
   </h1>
+  <div
+    className="tenant-edit-form"
+  >
+    <h3
+      className="grommetux-heading"
+    >
+      Account
+    </h3>
+    <div
+      className="row"
+    >
+      <div
+        className="form-field col-md-4 col-xs-6"
+      >
+        <div
+          className="grommetux-form-field grommetux-form-field--size-medium"
+          onClick={[Function]}
+        >
+          <label
+            className="grommetux-form-field__label"
+            htmlFor={undefined}
+          >
+            Identifier
+          </label>
+          <span
+            className="grommetux-form-field__contents"
+          >
+            <input
+              autoComplete="off"
+              autoFocus={undefined}
+              className="grommetux-text-input grommetux-input"
+              defaultValue={undefined}
+              name="slug"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              placeholder={undefined}
+              type="text"
+              value=""
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        className="form-field col-md-4 col-xs-6"
+      >
+        <div
+          className="grommetux-form-field grommetux-form-field--size-medium"
+          onClick={[Function]}
+        >
+          <label
+            className="grommetux-form-field__label"
+            htmlFor={undefined}
+          >
+            Name
+          </label>
+          <span
+            className="grommetux-form-field__contents"
+          >
+            <input
+              autoComplete="off"
+              autoFocus={undefined}
+              className="grommetux-text-input grommetux-input"
+              defaultValue={undefined}
+              name="name"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              placeholder={undefined}
+              type="text"
+              value=""
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
   <h3
     className="grommetux-heading"
   >

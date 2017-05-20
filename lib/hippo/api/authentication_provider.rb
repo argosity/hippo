@@ -57,6 +57,7 @@ module Hippo
             end
 
             def wrap_model_access(model, req, options = {})
+                fail_request(req) and return unless Tenant.current
                 if allowed_access_to?(model, options)
                     ::Hippo::User.scoped_to(current_user) do | user |
                         yield

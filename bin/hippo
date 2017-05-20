@@ -4,4 +4,6 @@ require 'rubygems'
 require 'hippo'
 require 'hippo/cli'
 
+
 Hippo::CLI.start(ARGV)
+#

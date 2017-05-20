@@ -1,28 +1,59 @@
-Hippo::API.routes.for_extension 'hippo' do
+module Hippo::API
 
-    get 'job-statuses/:id.json' do
-        wrap_reply do
-            status = Hippo::Job.status_for_id(params[:id])
-            raise ActiveRecord::RecordNotFound unless status
-            std_api_reply :update, status, success: true
+    routes.for_extension 'hippo' do
+        get 'job-statuses/:id.json' do
+            wrap_reply do
+                status = Hippo::Job.status_for_id(params[:id])
+                raise ActiveRecord::RecordNotFound unless status
+                std_api_reply :update, status, success: true
+            end
         end
+
+        post "user-sessions.json", &Hippo::API::Handlers::UserSession.create
+        get "user-sessions/test.json", &Hippo::API::Handlers::UserSession.check
+
+        delete "user-sessions/:id.json" do
+            wrap_reply do
+                { success: true, message: "Logout succeeded", data: {}, token: '' }
+            end
+        end
+
+        get 'bootstrap.json' do
+            wrap_reply do
+                { success: true, data: Hippo::Extensions.client_bootstrap_data }
+            end
+        end
+
+        resources Hippo::User
+        resources Hippo::Tenant, controller: Hippo::API::Handlers::Tenant
     end
 
-    post "user-sessions.json", &Hippo::API::Handlers::UserSession.create
-    get "user-sessions/test.json", &Hippo::API::Handlers::UserSession.check
+    routes.draw do
 
-    delete "user-sessions/:id.json" do
-        wrap_reply do
-            { success: true, message: "Logout succeeded", data: {}, token: '' }
-        end
+        put Hippo.config.api_path + '/hippo/system-settings.json',
+            &Hippo::SystemSettings.update_handler
+
+        get Hippo.config.api_path + '/hippo/system-settings.json',
+            &Hippo::SystemSettings.get_handler
+
+        post Hippo.config.api_path + Hippo.config.assets_path_prefix,
+             &Hippo::API::Handlers::Asset.saver
+
+        get Hippo.config.api_path + Hippo.config.assets_path_prefix + '/*',
+            &Hippo::API::Handlers::Asset.file_getter
+
+        get Hippo.config.assets_path_prefix + '/*',
+            &Hippo::API::Handlers::Asset.asset_getter
+
+        get Hippo.config.api_path + Hippo.config.print_path_prefix + '/:template_id/:model_id.pdf',
+            &Hippo::API::Handlers::Print.getter
+
     end
 
-    get 'bootstrap.json' do
-        wrap_reply do
-            { success: true, data: Hippo::Extensions.client_bootstrap_data }
-        end
+end
+
+Hippo::API::Routing.root_view_route ||= lambda do
+    Hippo::API::Root.get '/*' do
+        erb :index
     end
-
-    resources Hippo::User
-
 end

@@ -43,10 +43,6 @@ module Hippo
                 {}
             end
 
-            def view_templates
-                ['index.html']
-            end
-
             def on_dev_console
             end
 

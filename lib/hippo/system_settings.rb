@@ -1,6 +1,7 @@
 module Hippo
 
     class SystemSettings < Hippo::Model
+        belongs_to_tenant
 
         has_one :logo, as: :owner, class_name: 'Hippo::Asset',
                 dependent: :destroy

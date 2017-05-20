@@ -1,6 +1,5 @@
 require 'bundler/setup'
 require "bundler/gem_tasks"
-require 'rake/testtask'
 require 'yard'
 require 'yard-activerecord'
 require_relative 'yard_ext/all'
@@ -10,12 +9,6 @@ require 'knitter'
 require "bump/tasks"
 
 Dir.glob('tasks/*.rake').each { |r| load r}
-
-Rake::TestTask.new do |t|
-    t.libs << 'test'
-    t.pattern = "test/*_test.rb"
-end
-
 
 YARD::Rake::YardocTask.new do |t|
     t.files   = ['lib/skr/concerns/*.rb','lib/**/*.rb','db/schema.rb']

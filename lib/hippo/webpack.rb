@@ -2,6 +2,7 @@ require_relative './webpack/client_config'
 
 module Hippo
     class Webpack
+        mattr_accessor :stub
         attr_reader :driver, :assets, :process
 
         def initialize
@@ -18,10 +19,7 @@ module Hippo
                 cmd_line_flags: Hippo.env.production? ? [] : ['--hot', '--inline'],
                 environment: { NODE_ENV: Hippo.env.production? ? 'production' : 'development' }
             )
-
             @process = @driver.launch(development: !Hippo.env.production?)
-
-            @process.start unless Hippo.env.production?
         end
 
         def wait_until_available
@@ -35,9 +33,13 @@ module Hippo
         end
 
         def file(entry)
-            asset = @driver.process.assets[entry]
-            raise ArgumentError, "asset #{entry} was not found" unless asset
-            asset.file
+            if Webpack.stub
+                "#{entry}.js"
+            else
+                asset = @driver.process.assets[entry]
+                raise ArgumentError, "asset '#{entry}' was not found" unless asset
+                asset.file
+            end
         end
 
         def host

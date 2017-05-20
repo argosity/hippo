@@ -11,6 +11,9 @@ require 'faker'
 require 'database_cleaner'
 require "shrine/storage/memory"
 require 'vcr'
+require 'hippo/tenant'
+
+TEST_TENANT = Hippo::Tenant.find_by_slug('test') || Hippo::Tenant.create!(slug: 'test', name: 'testing tenant', email: 'test@test.com')
 
 VCR.configure do |config|
     config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
@@ -46,9 +49,26 @@ module Fixtures
     end
 end
 
+FactoryGirl.definition_file_paths = Hippo::Extensions.map do |ext|
+    ext.root_path.join('spec/factories')
+end
+
+module ApiHelper
+    def ApiHelper.included(mod)
+        mod.around(:each) do |example|
+            begin
+                Hippo::Webpack.stub = true
+                example.run
+            ensure
+                Hippo::Webpack.stub = false
+            end
+        end
+    end
+end
+
 RSpec.configure do |config|
     config.include FactoryGirl::Syntax::Methods
-
+    config.include ApiHelper, api: true
     config.include Fixtures
 
     config.include RackSpecMixin, :api => true
@@ -62,8 +82,10 @@ RSpec.configure do |config|
     end
 
     config.around(:each) do |example|
-        DatabaseCleaner.cleaning do
-            example.run
+        TEST_TENANT.perform do
+            DatabaseCleaner.cleaning do
+                example.run
+            end
         end
     end
 

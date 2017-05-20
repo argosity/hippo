@@ -50,7 +50,7 @@ module Hippo
         end
 
         def self.apply
-            controlling_ext = Hippo::Extensions.controlling
+            controlling_ext = Hippo::Extensions.bootstrap
             secrets = controlling_ext.root_path.join('config', 'secrets.yml')
             @@secrets = Hashie::Mash.new(
                 secrets.exist? ? YAML.load(ERB.new(secrets.read).result) : {}
@@ -68,20 +68,24 @@ module Hippo
 
             Resque.redis.namespace = "#{controlling_ext.identifier}::resque"
             Resque.redis = Hippo.config.redis
-
-            Hippo::SystemSettings.for_ext('hippo').apply!
-            Extensions.each{|ext| ext.apply_configuration }
-
-            if Kernel.const_defined?(:Guard) && ::Guard.const_defined?(:Jest)
-                ::Guard::Jest.logger = Hippo.logger
-            end
-
-            ::Hippo::Concerns::AssetUploader.storages = {
-                cache: Shrine::Storage::FileSystem.new(controlling_ext.root_path,
-                                                       prefix: "tmp/cache"),
-                store: Shrine::Storage::FileSystem.new(controlling_ext.root_path,
-                                                       prefix: "public/files")
+            Hippo::Concerns::AssetUploader.storages = {
+                cache: Shrine::Storage::FileSystem.new(
+                    controlling_ext.root_path,
+                    prefix: "tmp/cache"
+                ),
+                store: Shrine::Storage::FileSystem.new(
+                    controlling_ext.root_path,
+                    prefix: "public/files"
+                )
             }
+            Hippo::Tenant.system.perform do
+                Hippo::SystemSettings.for_ext('hippo').apply!
+                Extensions.each{|ext| ext.apply_configuration }
+
+                if Kernel.const_defined?(:Guard) && ::Guard.const_defined?(:Jest)
+                    ::Guard::Jest.logger = Hippo.logger
+                end
+            end
         end
 
     end

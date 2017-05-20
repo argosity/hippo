@@ -5,6 +5,8 @@ module Hippo
 
             class BasicUser < Role
 
+                self.read << Hippo::Tenant
+
             end
 
         end

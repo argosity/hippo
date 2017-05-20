@@ -3,10 +3,12 @@ require 'jwt'
 module Hippo
 
     class User < Hippo::Model
-
+        belongs_to_tenant
         has_secure_password
-        validates :login, :name, presence: true, uniqueness: { case_sensitive: false }
-        validates :email, presence: true, email: true, uniqueness: { case_sensitive: false }
+        validates :login, :name, presence: true,
+                  uniqueness: { scope: :tenant, case_sensitive: false }
+        validates :email, presence: true, email: true,
+                  uniqueness: { scope: :tenant, case_sensitive: false }
 
         validates :password, length: { minimum: 6 }, allow_nil: true
 
@@ -138,9 +140,12 @@ module Hippo
         end
 
         def self.seed_admin_account
-            where(login: 'admin').first || create!(name: "Admin", email: "admin@test.com",
-                                                   password: 'password',
-                                                   login: 'admin', role_names: ['administrator'])
+            where(login: 'admin').first ||
+                create!(
+                    name: "Admin", email: "admin@test.com",
+                    password: 'password',
+                    login: 'admin', role_names: ['administrator']
+                )
         end
     end
 

@@ -19,6 +19,7 @@ require_relative "hippo/numbers"
 require_relative "hippo/concerns/all"
 require_relative "hippo/validators/all"
 require_relative "hippo/model"
+require_relative 'hippo/tenant'
 require_relative "hippo/system_settings"
 require_relative "hippo/asset"
 require_relative "hippo/extension"

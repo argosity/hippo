@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
-        <title>Hippo Application</title>
+        <title><%= Hippo::Extensions.controlling.title %></title>
         <style>
           .loading {
             position: fixed;
@@ -62,8 +62,11 @@
       <div class="loading">Loading&#8230;</div>
       <div id="hippo-root">
         <script type="text/json" id="bootstrap-data">
-          {}
+          <%= Hippo::API.to_json(
+              Hippo::Extensions.client_bootstrap_data
+              ) %>
         </script>
+        <%= javascript_tags :hippo %>
       </div>
     </body>
 </html>

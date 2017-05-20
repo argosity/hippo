@@ -16,7 +16,7 @@ import {Row, Col} from 'react-flexbox-grid';
 import ScreenInstance from 'hippo/screens/instance';
 import Extensions from '../extensions';
 import MailerConfig from './system-settings/mailer-config';
-
+import TenantSettings from  './system-settings/tenant';
 import './system-settings/system-settings.scss';
 
 @observer
@@ -56,6 +56,7 @@ export default class SystemSettings extends React.PureComponent {
     @action.bound
     onSave() {
         this.extensionPanelRefs.forEach(panel => invoke(panel, 'onSave'));
+        this.tenantSettings.onSave()
         this.settings.save();
     }
 
@@ -71,8 +72,7 @@ export default class SystemSettings extends React.PureComponent {
                     />
                 </Header>
                 <Heading>{this.props.screen.definition.title}</Heading>
-                {this.extensionPanels}
-
+                <TenantSettings ref={ts => this.tenantSettings = ts} />
                 <Heading tag="h3">Images</Heading>
                 <Row>
                     <Col sm={4} xs={12}>
@@ -86,6 +86,7 @@ export default class SystemSettings extends React.PureComponent {
                     settings={this.settings.settings}
                     registerForSave={panel => this.extensionPanelRefs.set('mail', panel)}
                 />
+                {this.extensionPanels}
             </Screen>
         );
     }

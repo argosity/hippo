@@ -3,19 +3,17 @@ import Group from 'hippo/screens/group';
 
 <% Hippo::Screen.each_group do | group | %>
 Group.register( <%= group.to_json %> );
-<% end %>
+<% end -%>
 
 const Screens = {};
 
-<% Hippo::Screen.each do | screen | %>
-    Screens['<%= screen.identifier %>'] = <%= screen.to_json %>;
-    Definition.register(
-        Screens['<%= screen.identifier %>'],
-        createAsyncComponent({ resolve: () =>
-                               System.import(<%= "'#{screen.asset_path}'" %>)
-                             })
-    );
-<% end %>
+<% Hippo::Screen.each do | screen | -%>
+Screens['<%= screen.identifier %>'] = <%= screen.to_json %>;
+Definition.register(
+    Screens['<%= screen.identifier %>'],
+    createAsyncComponent({ resolve: () => System.import(<%= "'#{screen.asset_path}'" %>) }),
+);
+<% end -%>
 
 <% if Hippo::Screen.enabled_group_ids %>
 Group.enabled_group_ids = [<%= Hippo::Screen.enabled_group_ids.map{ |gid| "'#{gid}'" }.join(',') %>];

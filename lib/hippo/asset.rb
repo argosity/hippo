@@ -1,6 +1,7 @@
 module Hippo
 
     class Asset < Hippo::Model
+        belongs_to_tenant
 
         include Hippo::Concerns::AssetUploader[:file]
 
