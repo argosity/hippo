@@ -3,8 +3,9 @@
 }] */
 import { observable, computed, when, action } from 'mobx';
 import {
-    extend, isObject, isFunction, mapValues, every, get, filter,
+    extend, isObject, isFunction, mapValues, every, get, filter, isNil,
 } from 'lodash';
+
 
 class Field {
     name: '';
@@ -79,7 +80,7 @@ export default class FormFieldDefinitions {
     }
 
     set(values) {
-        this.fields.forEach((field, name) => (field.value = values[name]));
+        this.fields.forEach((field, name) => (field.value = isNil(values[name]) ? '' : values[name]));
     }
 
     setFromModel(model) {
