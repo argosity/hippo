@@ -14,8 +14,8 @@ module Hippo
                 root_path.join('mail', filename)
             end
 
-            def self.create(record)
-                Hippo::Mailer.from_template(self.new(record))
+            def self.create(*arg)
+                Hippo::Mailer.from_template(self.new(*arg))
             end
         end
     end
