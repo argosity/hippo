@@ -11,6 +11,7 @@ module Hippo
 
             def start
                 say 'Starting Guard', :green
+                Command.load_current_extension
                 ::Guard.start
             end
         end
