@@ -22,6 +22,12 @@ module Hippo
             @process = @driver.launch(development: !Hippo.env.production?)
         end
 
+        def start
+            if Hippo.env.development? && !Hippo::Webpack.stub
+                process.start
+            end
+        end
+
         def wait_until_available
             return if Hippo.env.production?
             Hippo.logger.warn("waiting while compilation in progress") if busy?

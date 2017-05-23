@@ -63,9 +63,7 @@ module Hippo::API
         end
 
         def initialize(*args)
-            if Hippo.env.development? && !Hippo::Webpack.stub
-                Hippo::API::Root.webpack.process.start
-            end
+            Hippo::API::Root.webpack.start
             super(*args)
         end
 
