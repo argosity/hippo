@@ -33,6 +33,6 @@ pre {
     padding: 0.5rem;
     display: none;
     &.is-active {
-        display: block;
+        display: flex;
     }
 }
