@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "activejob",                 "~> 5.0.0"
     spec.add_dependency "activerecord",              "~> 5.0.0"
     spec.add_dependency "actioncable",               "~> 5.0.0"
-    spec.add_dependency "activerecord-multi-tenant", "~> 0.5"
+#    spec.add_dependency "activerecord-multi-tenant", "~> 0.5"
     spec.add_dependency "mail",                      "~> 2.6"
     spec.add_dependency "liquid",                    "~> 4.0"
     spec.add_dependency 'erb_latex',                 "~> 1.0"
@@ -68,7 +68,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "require_all",               "~> 1.3"
     spec.add_dependency "resque",                    "~> 1.27"
     spec.add_dependency "sanitize",                  "~> 3.0"
-    spec.add_dependency "webpack_driver",            "~> 0.3"
+    spec.add_dependency "webpack_driver",            "~> 0.3.5"
     spec.add_dependency "knitter",                   "~> 0.2.2"
 
     spec.add_dependency "thor",                      "~> 0.19"
