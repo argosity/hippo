@@ -1,5 +1,5 @@
 import {
-    isEmpty, isNil, extend, map, bindAll, omit, range,
+    isEmpty, isNil, extend, map, bindAll, omit, inRange, find, range,
 } from 'lodash';
 import { reaction, observe } from 'mobx';
 
@@ -15,10 +15,10 @@ export default class ArrayResult extends Result {
     @belongsTo query;
     @observable totalCount = 0;
     @observable rows;
-    @observable isLoading;
     @observable rowUpdateCount = 0;
     @observable sortAscending;
     @observable sortField;
+    @observable.shallow loadingRows = [];
 
     constructor(attrs) {
         super(attrs);
@@ -139,14 +139,12 @@ export default class ArrayResult extends Result {
     }
 
     isRowLoading(index) {
-        return !!(this.rows.length > index && this.rows[index].isLoading);
+        return !!find(this.loadingRows, ([start, end]) => inRange(index, start, end));
     }
 
     fetch({ start = this.rows.length, limit = this.query.pageSize } = {}) {
-        if (start + limit >= this.rows.length) {
-            range(this.rows.length, start + limit).forEach(() => this.rows.push([]));
-        }
-        range(start, start + limit).forEach(i => (this.rows[i].isLoading = true));
+        const inProgress = [start, start + limit];
+        this.loadingRows.push(inProgress);
 
         const query = {};
         this.query.clauses.forEach((clause) => {
@@ -179,8 +177,12 @@ export default class ArrayResult extends Result {
 
         return Sync.perform(this.query.info.syncUrl, options).then((resp) => {
             const rows = resp.data || [];
+            if (start + limit >= this.rows.length) {
+                range(this.rows.length, start + limit).forEach(() => this.rows.push([]));
+            }
             this.rows.splice(start, Math.max(limit, rows.length), ...rows);
             this.totalCount = resp.total;
+            this.loadingRows.remove(inProgress);
             delete this.syncInProgress;
             return this;
         });
