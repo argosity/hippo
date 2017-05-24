@@ -25,6 +25,10 @@ module Hippo
             multi_tenant :tenant
         end
 
+        # will be overridden if models call belongs_to_tenant
+        def self.scoped_by_tenant?
+            false
+        end
     end
 
 end

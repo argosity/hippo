@@ -73,7 +73,7 @@ module Hippo
                 token, Hippo.config.session_secret_key_base, true, { :algorithm => 'HS256' }
             )
             if payload.length && (uid = payload.first['uid'])
-                return where(id: uid).first
+                return where(id: uid, tenant: Tenant.current).first
             end
         end
 

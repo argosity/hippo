@@ -183,6 +183,9 @@ module Hippo
             # query options
 
             def add_access_limits_to_query(query)
+                if Hippo::Tenant.current && model.scoped_by_tenant?
+                    query = query.where(tenant_id: Tenant.current.id)
+                end
                 if model.respond_to?(:access_limits_for_query)
                     model.access_limits_for_query(query, current_user, params)
                 else
