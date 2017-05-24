@@ -31,7 +31,7 @@ module Hippo
             # @param perc_or_num [BigDecimal,String, Integer] any value that BigDecimal will accept
             def initialize( perc_or_num )
                 @is_perc    = !! perc_or_num.to_s.match( /\%\s*$/ )
-                @right_side = BigDecimal.new( perc_or_num, 5 )
+                @right_side = BigDecimal.new( perc_or_num.gsub(/[^0-9\.\-]/, ''), 5 )
                 if is_percentage?
                     @right_side *= 0.01
                 end
