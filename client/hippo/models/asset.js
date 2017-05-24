@@ -31,7 +31,6 @@ export default class Asset extends BaseModel {
 
     constructor(props) {
         super(props);
-
         observe(this, 'owner', ({ newValue: owner }) => {
             if (this.ownerSaveDisposer) { this.ownerSaveDisposer(); }
             if (!owner || !owner.isModel) { return; }
@@ -53,6 +52,10 @@ export default class Asset extends BaseModel {
 
     @computed get isDirty() {
         return !!this.file;
+    }
+
+    @computed get exists() {
+        return !!(this.file || this.id);
     }
 
     @computed get isImage() {

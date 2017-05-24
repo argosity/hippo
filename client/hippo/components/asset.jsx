@@ -45,7 +45,7 @@ export default class Asset extends React.PureComponent {
     }
 
     preview() {
-        if (this.asset) {
+        if (this.asset && this.asset.exists) {
             return this.asset.isImage ?
                 <img src={this.asset.previewUrl} alt="" /> :
                 <DocumentIcon size="xlarge" type="status" />;
