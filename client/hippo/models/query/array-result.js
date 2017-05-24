@@ -177,8 +177,8 @@ export default class ArrayResult extends Result {
 
         return Sync.perform(this.query.info.syncUrl, options).then((resp) => {
             const rows = resp.data || [];
-            if (start + limit >= this.rows.length) {
-                range(this.rows.length, start + limit).forEach(() => this.rows.push([]));
+            if (start > this.rows.length) {
+                range(this.rows.length, start).forEach(() => this.rows.push([]));
             }
             this.rows.splice(start, Math.max(limit, rows.length), ...rows);
             this.totalCount = resp.total;
