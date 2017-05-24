@@ -5,8 +5,6 @@ import { delay } from 'lodash';
 import { AppContainer } from 'react-hot-loader';
 import { withAsyncComponents } from 'react-async-component';
 
-import Config from './config';
-
 const Workspace = require('hippo/workspace').default;
 
 let Root;
