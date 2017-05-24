@@ -32,13 +32,13 @@ VCR_OPTS = {
 
 
 module RackSpecMixin
-  include Rack::Test::Methods
-  def app
-      Hippo::API::Root
-  end
-  def last_response_json
-      Oj.load(last_response.body)
-  end
+    include Rack::Test::Methods
+    def app
+        Hippo::API::Root
+    end
+    def last_response_json
+        Oj.load(last_response.body)
+    end
 end
 
 HIPPO_ENV = "test"
