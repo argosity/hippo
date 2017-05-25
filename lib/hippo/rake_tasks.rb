@@ -66,9 +66,10 @@ task :lint do
     sh %{node node_modules/eslint/bin/eslint.js client spec/client/}
 end
 
-task :ci => [:lint] do
+task :ci do
     sh %{bundle exec hippo db migrate}
     sh %{bundle exec hippo db seed}
     sh %{bundle exec hippo jest}
     sh %{bundle exec rspec}
+    Rake::Task["lint"].invoke
 end
