@@ -11,10 +11,6 @@ const CACHE = observable({
 @identifiedBy('hippo/tenant')
 export default class Tenant extends BaseModel {
 
-    static get subdomain() {
-        return get(window, 'location.hostname', '').split('.')[0];
-    }
-
     @computed static get current() {
         if (!CACHE.Tenant) {
             CACHE.Tenant = new Tenant();
@@ -24,6 +20,7 @@ export default class Tenant extends BaseModel {
     }
 
     @identifier id;
-    @field slug = Tenant.subdomain;
+    @field slug = Tenant.slug;
     @field name;
+
 }

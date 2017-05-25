@@ -23,9 +23,7 @@ module Hippo
         end
 
         def start
-            if Hippo.env.development? && !Hippo::Webpack.stub
-                process.start
-            end
+            process.start if Hippo.env.development? && !Hippo::Webpack.stub
         end
 
         def wait_until_available
@@ -38,13 +36,16 @@ module Hippo
             driver.process.in_progress?
         end
 
-        def file(entry)
+        def file(entry, raise_on_not_found: true)
             if Webpack.stub
                 "#{entry}.js"
             else
                 asset = @driver.process.assets[entry]
-                raise ArgumentError, "asset '#{entry}' was not found" unless asset
-                asset.file
+                if asset
+                    asset.file
+                elsif !raise_on_not_found
+                    raise ArgumentError, "asset '#{entry}' was not found"
+                end
             end
         end
 

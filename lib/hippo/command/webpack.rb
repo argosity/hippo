@@ -28,7 +28,7 @@ module Hippo
 
             def startup
                 process = webpack.process
-                process.start if options[:compile]
+                process.start
                 process.wait
             end
 

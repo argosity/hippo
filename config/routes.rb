@@ -42,7 +42,7 @@ module Hippo::API
         get Hippo.config.api_path + Hippo.config.assets_path_prefix + '/*',
             &Hippo::API::Handlers::Asset.file_getter
 
-        get Hippo.config.assets_path_prefix + '/*',
+        get Hippo.config.assets_path_prefix + '/:asset.js',
             &Hippo::API::Handlers::Asset.asset_getter
 
         get Hippo.config.api_path + Hippo.config.print_path_prefix + '/:template_id/:model_id.pdf',

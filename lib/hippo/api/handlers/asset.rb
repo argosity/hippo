@@ -37,8 +37,26 @@ module Hippo::API::Handlers
 
         def self.asset_getter
             root = Hippo::Extensions.controlling.root_path.join('public', 'assets')
-            lambda do
-                send_file(root.join(params['splat'].first).to_s)
+            webpack = Hippo::API::Root.webpack
+            if Hippo.env.production?
+                lambda do
+                    file = webpack.file(params['asset'].to_sym, raise_on_not_found: false)
+                    if file
+                        redirect "/assets/#{file}"
+                    else
+                        halt 404
+                    end
+                end
+            else
+                lambda do
+                    webpack.wait_until_available
+                    file = webpack.file(params['asset'].to_sym, raise_on_not_found: false)
+                    if file
+                        redirect "http://#{env['SERVER_NAME']}:#{webpack.process.port}/assets/#{file}"
+                    else
+                        halt 404
+                    end
+                end
             end
         end
 
