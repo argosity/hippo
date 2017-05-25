@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import { observable } from 'mobx';
 import {
     BaseModel, identifiedBy, field, identifier, computed,
