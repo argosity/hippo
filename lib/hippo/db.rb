@@ -55,3 +55,5 @@ module Hippo
     ActiveRecord::Base.logger = Hippo.logger
 
 end
+
+require_relative './db/migrations'

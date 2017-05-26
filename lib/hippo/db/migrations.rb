@@ -1,4 +1,5 @@
 require 'pathname'
+require 'scenic'
 
 module Hippo
     module DB
@@ -25,8 +26,14 @@ module Hippo
     end
 end
 
+ActiveRecord::ConnectionAdapters::AbstractAdapter.include ::Hippo::DB::Migrations::TableDefinitionHelpers
 
+module ::Scenic
+    class Definition
+        def full_path
+            Pathname.pwd.join(path)
+        end
+    end
 
-ActiveRecord::ConnectionAdapters::PostgreSQL::ColumnMethods.class_eval do
-    include ::Hippo::DB::Migrations::TableDefinitionHelpers
 end
+::Scenic.load

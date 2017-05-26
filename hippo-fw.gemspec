@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "actioncable",               "~> 5.0.0"
 #    spec.add_dependency "activerecord-multi-tenant", "~> 0.5"
     spec.add_dependency "mail",                      "~> 2.6"
+    spec.add_dependency "scenic",                    "~> 1.4"
     spec.add_dependency "liquid",                    "~> 4.0"
     spec.add_dependency 'erb_latex',                 "~> 1.0"
     spec.add_dependency 'shrine-memory',             "~> 0.2"
