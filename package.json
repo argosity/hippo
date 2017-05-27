@@ -52,6 +52,7 @@
     "mobx-react": "^4.1.0",
     "node-sass": "^4.5.0",
     "pluralize": "^3.1.0",
+    "popper.js": "^1.9.9",
     "prop-types": "^15.5.8",
     "qs": "^6.3.0",
     "react": "^15.4.2",
