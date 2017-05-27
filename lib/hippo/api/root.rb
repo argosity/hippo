@@ -35,6 +35,7 @@ module Hippo::API
             Hippo::Extensions.load_controlling_config
             set :views, Hippo::Extensions.controlling.root_path.join('views')
             set :webpack, Hippo::Webpack.new
+            webpack.start
             require_relative './routing'
             Cable.configure
             cors_resources = []
@@ -56,15 +57,11 @@ module Hippo::API
                 end
 
             end
+
             use Rack::Protection, allow_if: -> (env) {
                 path = env['PATH_INFO']
                 cors_resources.any?{|r| r.matches_path?(path) }
             }
-        end
-
-        def initialize(*args)
-            Hippo::API::Root.webpack.start
-            super(*args)
         end
 
     end
