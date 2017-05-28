@@ -45,15 +45,12 @@ export default class FormField extends React.PureComponent {
         type:      'text',
     }
 
-    field = new FormFieldModel(this.props.name, this.props);
-
     focus() {
         if (this.inputRef) { this.inputRef.focus(); }
     }
 
-    constructor(props) {
-        super(props);
-        this.field = props.formState.setField(props.name, props);
+    componentWillMount() {
+        this.field = this.props.formState.setField(this.props.name, this.props);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -65,7 +62,7 @@ export default class FormField extends React.PureComponent {
     render() {
         const {
             name, className, autoFocus, type, children, label,
-            validate: _, formState: __, ...otherProps
+            validate: _, formState: __, help: ___, ...otherProps
         } = getColumnProps(this.props);
         const InputTag = TypesMapping[type] || TypesMapping.text;
 
@@ -74,7 +71,7 @@ export default class FormField extends React.PureComponent {
                 <Field
                     label={label || titleize(name)}
                     error={this.field.invalidMessage}
-                    help={this.field.helpMessage}
+                    help={this.field.help}
                 >
                     <InputTag
                         name={name}

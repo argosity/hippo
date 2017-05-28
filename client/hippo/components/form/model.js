@@ -12,7 +12,7 @@ export class FormField {
     @observable value = '';
     @observable message = '';
     @observable isChanged = '';
-    @observable helpMessage;
+    @observable help;
     @observable validate;
     @observable default;
 
@@ -26,7 +26,7 @@ export class FormField {
 
     update(attrs) {
         each(pick(attrs, [
-            'name', 'default', 'message', 'validate',
+            'name', 'default', 'help', 'validate',
         ]), (v, k) => {
             this[k] = isFunction(v) ? v.call(this) : v;
         });
