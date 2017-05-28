@@ -26,7 +26,7 @@ export default class SystemSettings extends React.PureComponent {
     extensionPanelRefs = new Map();
 
     static propTypes = {
-        screen:    PropTypes.instanceOf(ScreenInstance).isRequired,
+        screen: PropTypes.instanceOf(ScreenInstance).isRequired,
     }
 
     renderExtPanel(ext) {

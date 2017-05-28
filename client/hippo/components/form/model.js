@@ -3,31 +3,39 @@
 }] */
 import { observable, computed, when, action } from 'mobx';
 import {
-    extend, isObject, isFunction, mapValues, every, get, filter, isNil,
+    pick, isFunction, mapValues, every, get, filter, isNil, each,
 } from 'lodash';
 
-
-class Field {
+export class FormField {
     name: '';
     @observable isTouched = false
     @observable value = '';
     @observable message = '';
+    @observable isChanged = '';
+    @observable helpMessage;
+    @observable validate;
+    @observable default;
 
     constructor(name, attrs) {
         this.name = name;
-        let extendWith = isFunction(attrs) ? attrs() : attrs;
-        if (!isObject(extendWith)) {
-            extendWith = { test: extendWith };
-        }
-        extend(this, extendWith);
+        this.update(attrs);
         if (this.default) {
             this.value = this.default;
         }
     }
 
+    update(attrs) {
+        each(pick(attrs, [
+            'name', 'default', 'message', 'validate',
+        ]), (v, k) => {
+            this[k] = isFunction(v) ? v.call(this) : v;
+        });
+    }
+
     @action.bound
-    onChange(ev) {
-        this.value = ev.target.value;
+    onChange({ target: { value: updatedValue } }) {
+        this.isChanged = (this.value !== updatedValue);
+        this.value = updatedValue;
     }
 
     @action.bound
@@ -36,11 +44,12 @@ class Field {
     }
 
     @computed get isValid() {
-        return !!(!this.test || this.test(this.value));
+        if (!this.validate) { return true; }
+        return !!this.validate.test(this.value);
     }
 
     @computed get invalidMessage() {
-        return (!this.isValid && this.isTouched) ? this.message : null;
+        return (!this.isValid && this.isTouched) ? this.validate.message : null;
     }
 
     get events() {
@@ -53,13 +62,13 @@ class Field {
 }
 
 
-export default class FormFieldDefinitions {
+export class FormState {
 
     fields = observable.map();
 
-    constructor(fields) {
+    setFields(fields) {
         this.fields.replace(
-            mapValues(fields, (field, name) => new Field(name, field)),
+            mapValues(fields, (field, name) => new FormField(name, field)),
         );
     }
 

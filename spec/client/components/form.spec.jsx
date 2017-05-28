@@ -1,23 +1,22 @@
 import React from 'react';
 import {
-    nonBlank, validEmail, hasLength, validURL,
-    FormFieldPropType, FieldDefinitions,
+    nonBlank, validEmail, hasLength, validURL, FormState,
 } from 'hippo/components/form';
 
 describe('Form Validation functions', () => {
     it('validates fields', () => {
-        const form = new FieldDefinitions({
-            name: hasLength({ length: 3, default: 'onee' }),
-            email: validEmail,
+        const form = new FormState();
+        form.setFields({
+            email: { validate: validEmail },
+            name:  { validate: hasLength({ length: 3 }) },
         });
+        expect(form.fields.get('email').isValid).toBe(false);
         expect(form.isValid).toBe(false);
         expect(form.isTouched).toBe(false);
 
         expect(form.get('email').isValid).toBe(false);
         form.get('email').value = 'test@test.com';
         expect(form.get('email').isValid).toBe(true);
-
-        expect(form.isValid).toBe(true);
 
         form.fields.get('email').isTouched = true;
         expect(form.isTouched).toBe(true);
@@ -52,14 +51,6 @@ describe('Form Validation functions', () => {
         const len = hasLength(3);
         expect(len.test('a')).toBe(false);
         expect(len.test('abc')).toBe(true);
-    });
-
-    it('validates prop types', () => {
-        const formFields = new FieldDefinitions({ name: nonBlank });
-        const validator = FormFieldPropType;
-        expect(validator({ name: 'name' })).toBeInstanceOf(Error);
-        expect(validator({ name: 'no-field', formFields })).toBeInstanceOf(Error);
-        expect(validator({ name: 'name', formFields })).toBeNull();
     });
 
     it('tests url', () => {

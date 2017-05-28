@@ -153,7 +153,7 @@ export default class ArrayResult extends Result {
             }
         });
 
-        const options = extend({}, this.query.syncOptions, {
+        const options = extend({}, omit(this.query.syncOptions, 'include'), {
             start,
             limit,
             total_count: 't',

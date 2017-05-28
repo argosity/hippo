@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { get } from 'lodash';
 
-import { Field, FormFieldPropType } from 'hippo/components/form';
+import { Field } from 'hippo/components/form';
 
 import Button from 'grommet/components/Button';
 import SearchIcon from 'grommet/components/icons/base/Search';
@@ -17,7 +17,8 @@ import Query from '../models/query';
 import './record-finder/record-finder.scss';
 import QueryLayer from './record-finder/query-layer';
 
-@inject('formFields') @observer
+@inject('formState')
+@observer
 export default class RecordFinder extends React.PureComponent {
     static propTypes = {
         query: PropTypes.instanceOf(Query).isRequired,
@@ -25,7 +26,6 @@ export default class RecordFinder extends React.PureComponent {
         label: PropTypes.string,
         recordsTitle: PropTypes.string.isRequired,
         onRecordFound: PropTypes.func.isRequired,
-        formFields: FormFieldPropType,
     }
 
     @observable showingSearch = false;
@@ -43,7 +43,7 @@ export default class RecordFinder extends React.PureComponent {
     @action.bound
     onRecordSelect(model) {
         this.showingSearch = false;
-        this.props.formFields.get(this.props.name).value = model[this.props.name]
+        this.props.formState.get(this.props.name).value = model[this.props.name]
         this.props.onRecordFound(model);
     }
 
@@ -54,7 +54,7 @@ export default class RecordFinder extends React.PureComponent {
 
 
     get field() {
-        return this.props.fields[this.props.name];
+        return this.props.formState.fields.get(this.props.name);
     }
 
     loadCurrentSelection() {

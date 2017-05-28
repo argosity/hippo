@@ -2,30 +2,36 @@ import React from 'react';
 
 import { Provider, observer } from 'mobx-react';
 
-import FormFields from './model';
+import { FormState } from './model';
 
 @observer
 export default class FormWrapper extends React.PureComponent {
 
     static propTypes = {
         children: React.PropTypes.node.isRequired,
-        fields: React.PropTypes.instanceOf(FormFields),
+        state: React.PropTypes.instanceOf(FormState),
         tag: React.PropTypes.string,
         className: React.PropTypes.string,
     }
 
+    static get defaultProps() {
+        return {
+            state: new FormState(),
+        };
+    }
+
     renderTagless() {
         return (
-            <Provider formFields={this.props.fields}>
+            <Provider formState={this.props.state}>
                 {this.props.children}
             </Provider>
         );
     }
 
     renderTagged() {
-        const { tag: Tag, fields, children, ...otherProps } = this.props;
+        const { tag: Tag, state, children, ...otherProps } = this.props;
         return (
-            <Provider formFields={fields}>
+            <Provider formState={state}>
                 <Tag {...otherProps}>
                     {children}
                 </Tag>

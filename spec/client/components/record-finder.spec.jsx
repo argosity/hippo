@@ -9,17 +9,15 @@ import RecordFinder from 'hippo/components/record-finder';
 import { Container } from '../test-models';
 
 jest.mock('hippo/models/sync');
-import { FieldDefinitions, stringValue } from 'hippo/components/form';
+import { FormState, stringValue } from 'hippo/components/form';
 
 describe("RecordFinder Component", () => {
     let query;
     let props;
-    let formFields;
+    let formState;
 
     beforeEach(() => {
-        formFields = new FieldDefinitions({
-            name: stringValue,
-        });
+        formState = new FormState();
         query = new Query({
             src: Container,
             fields: [
@@ -33,7 +31,7 @@ describe("RecordFinder Component", () => {
             onRecordFound: jest.fn(),
             name: 'name',
             recordsTitle: 'Foos',
-            formFields,
+            formState,
             query,
         };
         range(0, 5).forEach(

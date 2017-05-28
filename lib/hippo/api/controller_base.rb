@@ -61,7 +61,7 @@ module Hippo
             end
 
             def perform_multiple_destroy
-                query = model.where(id: data.map{|rec|rec['id']})
+                query = model.where(id: data.map { |rec| rec['id'] })
                 query = add_access_limits_to_query(query)
                 success = true
                 query.each do |record|
@@ -74,7 +74,7 @@ module Hippo
             end
 
             def perform_multiple_updates
-                query = model.where(id: data.map {|rec|rec['id'] })
+                query = model.where(id: data.map { |rec| rec['id'] })
                 query = add_access_limits_to_query(query)
                 success = true
                 query.each do |record|

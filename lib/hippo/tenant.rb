@@ -29,6 +29,9 @@ module Hippo
             )
         end
 
+        def self.switch(condition)
+            MultiTenant.current_tenant = self.find_by(condition)
+        end
       protected
 
         def auto_assign_slug

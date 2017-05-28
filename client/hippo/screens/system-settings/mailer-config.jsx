@@ -4,32 +4,26 @@ import { observer } from 'mobx-react';
 import { Row } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
 
-import { Form, Field, FieldDefinitions, nonBlank, validEmail  } from 'hippo/components/form';
+import { Form, Field, FormState, nonBlank, validEmail  } from 'hippo/components/form';
 
 @observer
 export default class MailerConfig extends React.PureComponent {
 
-    fields = new FieldDefinitions({
-        user_name:  nonBlank,
-        password:   nonBlank,
-        address:    nonBlank,
-        from_email: validEmail,
-        from_name:  nonBlank,
-    })
+    formState = new FormState()
 
     @action.bound
     onSave() {
         if (!this.props.settings.smtp) { this.props.settings.smtp = {}; }
-        this.fields.persistTo(this.props.settings.smtp);
+        this.formState.persistTo(this.props.settings.smtp);
     }
 
     componentWillMount() {
         this.props.registerForSave(this);
-        this.fields.set(this.props.settings.smtp || {});
+        this.formState.set(this.props.settings.smtp || {});
     }
 
     componentWillReceiveProps(nextProps) {
-        this.fields.set(nextProps.settings.smtp || {});
+        this.formState.set(nextProps.settings.smtp || {});
     }
 
 
@@ -37,13 +31,13 @@ export default class MailerConfig extends React.PureComponent {
         return (
             <div className="section">
                 <Heading tag="h3">Email settings</Heading>
-                <Form fields={this.fields}>
+                <Form state={this.formState}>
                     <Row className="section">
-                        <Field md={4} xs={6} name="user_name" />
-                        <Field md={4} xs={6} name="password" type="password" />
-                        <Field md={4} xs={6} name="address" label="Server Address" />
-                        <Field md={4} xs={6} name="from_email" label="From Email" />
-                        <Field md={4} xs={6} name="from_name" label="From Name" />
+                        <Field md={4} xs={6} name="user_name" validate={nonBlank} />
+                        <Field md={4} xs={6} name="password" type="password" validate={nonBlank} />
+                        <Field md={4} xs={6} name="address" label="Server Address" validate={nonBlank} />
+                        <Field md={4} xs={6} name="from_email" label="From Email" validate={validEmail} />
+                        <Field md={4} xs={6} name="from_name" label="From Name" validate={nonBlank} />
                     </Row>
                 </Form>
             </div>

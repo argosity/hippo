@@ -12,7 +12,7 @@ import Warning from 'hippo/components/warning-notification';
 
 import Query from 'hippo/models/query';
 
-import { Form, Field, FieldDefinitions, nonBlank, validEmail, booleanValue, field  } from 'hippo/components/form';
+import { Form, Field, FormState, nonBlank, validEmail, booleanValue, field  } from 'hippo/components/form';
 
 @observer
 export default class EditForm extends React.PureComponent {
@@ -25,13 +25,7 @@ export default class EditForm extends React.PureComponent {
 
     static desiredHeight = 300
 
-    fields = new FieldDefinitions({
-        is_admin: booleanValue,
-        login: nonBlank,
-        name:  nonBlank,
-        email: validEmail,
-        password: field,
-    })
+    formState = new FormState();
 
     constructor(props) {
         super(props);
@@ -40,12 +34,12 @@ export default class EditForm extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.fields.setFromModel(this.user);
+        this.formState.setFromModel(this.user);
     }
 
     @action.bound
     onSave() {
-        this.fields.persistTo(this.user);
+        this.formState.persistTo(this.user);
         this.user.save().then(this.onSaved);
     }
 
@@ -64,22 +58,21 @@ export default class EditForm extends React.PureComponent {
     }
 
     render() {
-        const { fields } = this;
         return (
-            <Form tag="div" className="user-edit-form" fields={fields}>
+            <Form tag="div" className="user-edit-form" state={this.formState}>
                 <Warning message={this.errorMessage} />
                 <Row middle='sm'>
-                    <Field md={4} xs={6} name="login" />
-                    <Field md={4} xs={6} name="name"  />
-                    <Field md={4} xs={6} name="email" />
+                    <Field md={4} xs={6} name="login" validate={nonBlank} />
+                    <Field md={4} xs={6} name="name"  validate={nonBlank} />
+                    <Field md={4} xs={6} name="email" validate={validEmail} />
                     <Field md={4} xs={6} type="password" name="password" />
-                    <Field md={4} xs={6} type="checkbox" name="is_admin" />
+                    <Field md={4} xs={6} type="checkbox" name="is_admin" validate={booleanValue} />
                     <Col md={4} xs={6}>
                         <Box justify="around" direction="row">
                             <Button label="Cancel" onClick={this.onCancel} accent />
                             <Button
                                 label="Save"
-                                onClick={fields.isValid ? this.onSave : null}
+                                onClick={this.formState.isValid ? this.onSave : null}
                                 primary
                             />
                         </Box>

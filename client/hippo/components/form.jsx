@@ -9,8 +9,7 @@ import { isBlank } from '../lib/util';
 
 export Form from './form/wrapper';
 export Field from './form/fields';
-export FieldDefinitions from './form/model';
-export FormFieldPropType from './form/field-prop-type';
+export { FormField, FormState } from './form/model';
 
 function buildTest(options, defaultOptions) {
     return merge({}, defaultOptions, options);
