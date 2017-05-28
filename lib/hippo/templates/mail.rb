@@ -14,6 +14,10 @@ module Hippo
                 root_path.join('mail', filename)
             end
 
+            def variables
+                { 'product_name' => Hippo.config.product_name }
+            end
+
             def self.create(*arg)
                 Hippo::Mailer.from_template(self.new(*arg))
             end

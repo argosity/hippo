@@ -14,7 +14,7 @@ module Hippo
             end
 
             def root_path
-                Hippo::Extensions.for_identifier(extension_id.to_s).root_path.join('templates')
+                Hippo::ROOT_PATH.join('templates')
             end
 
             def pathname
