@@ -9,10 +9,18 @@ module Hippo::API::Handlers
 
         # isn't really a create, but FE will think it's creating because we don't expose the id
         def create
-            Hippo::Tenant.current.assign_attributes(data.slice(*PUBLIC_ATTRS))
-            std_api_reply(:update, Hippo::Tenant.current,
+            tenant = Hippo::Tenant.current
+            tenant.assign_attributes(data.slice(*PUBLIC_ATTRS))
+            success = tenant.save
+            if success
+                Hippo::Tenant.system.perform do
+                    Hippo::Templates::TenantChange.create(tenant).deliver
+                end
+            end
+            std_api_reply(:update, tenant,
                           only: PUBLIC_ATTRS,
-                          success: Hippo::Tenant.current.save)
+                          success: success)
         end
     end
+
 end
