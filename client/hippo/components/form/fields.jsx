@@ -51,8 +51,9 @@ export default class FormField extends React.PureComponent {
         if (this.inputRef) { this.inputRef.focus(); }
     }
 
-    componentWillMount() {
-        this.props.formState.fields.set(this.props.name, this.field);
+    constructor(props) {
+        super(props);
+        this.field = props.formState.setField(props.name, props);
     }
 
     componentWillReceiveProps(nextProps) {

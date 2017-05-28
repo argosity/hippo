@@ -66,10 +66,23 @@ export class FormState {
 
     fields = observable.map();
 
+    @action
     setFields(fields) {
         this.fields.replace(
             mapValues(fields, (field, name) => new FormField(name, field)),
         );
+    }
+
+    @action
+    setField(name, attrs) {
+        let field = this.fields.get(name);
+        if (field) {
+            field.update(attrs);
+        } else {
+            field = new FormField(name, attrs);
+            this.fields.set(name, field);
+        }
+        return field;
     }
 
     @computed get invalidFields() {
@@ -84,8 +97,14 @@ export class FormState {
         return !every(this.fields.values(), { isTouched: false });
     }
 
-    get(name) {
-        return this.fields.get(name);
+    get(path, defaultValue) {
+        const [name, ...rest] = path.split('.');
+        const field = this.fields.get(name);
+        if (!field) { return defaultValue; }
+        if (rest.length) {
+            return get(field, rest.join('.'), defaultValue);
+        }
+        return field;
     }
 
     set(values) {

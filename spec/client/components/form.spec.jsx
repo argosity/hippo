@@ -10,11 +10,11 @@ describe('Form Validation functions', () => {
             email: { validate: validEmail },
             name:  { validate: hasLength({ length: 3 }) },
         });
-        expect(form.fields.get('email').isValid).toBe(false);
+        expect(form.get('email.isValid')).toBe(false);
         expect(form.isValid).toBe(false);
         expect(form.isTouched).toBe(false);
 
-        expect(form.get('email').isValid).toBe(false);
+        expect(form.get('email.isValid')).toBe(false);
         form.get('email').value = 'test@test.com';
         expect(form.get('email').isValid).toBe(true);
 
