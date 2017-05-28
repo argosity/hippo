@@ -72,7 +72,14 @@ module Hippo
             #
             # @param [options] options for additional checks
             # @option opts [Boolean] :with_transaction rollback DB transaction if exceptions occur
-            def wrap_reply(options = {with_transaction: true})
+            # @option opts [Boolean] :require_tenant return error if tenant is not found
+            def wrap_reply(options = { with_transaction: true, require_tenant: true })
+                if options[:require_tenant] && Hippo::Tenant.current.nil?
+                    return json_reply(
+                               { success: false, message: "invalid address",
+                                 errors: { address: 'invalid' } }
+                           )
+                end
                 response = { success: false, message: "No response was generated" }
                 log_request
                 if options[:with_transaction]
