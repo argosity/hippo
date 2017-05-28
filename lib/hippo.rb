@@ -1,5 +1,6 @@
 require 'active_record'
 require 'pathname'
+require 'require_all'
 
 module Hippo
     ROOT_PATH = Pathname.new(__FILE__).dirname.join('..')
@@ -30,6 +31,8 @@ require_relative "hippo/templates/base"
 require_relative "hippo/templates/liquid"
 require_relative "hippo/templates/latex"
 require_relative "hippo/templates/mail"
+require_rel      'hippo/templates/*.rb'
+
 require_relative "hippo/mailer"
 require_relative 'hippo/user'
 require_relative "hippo/access"
