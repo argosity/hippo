@@ -20,4 +20,8 @@ export class BaseExtension {
     setBootstrapData(data) {
         this.data = data;
     }
+
+    @computed get domain() {
+        return window.location.hostname.split('.').slice(-2).join('.');
+    }
 }

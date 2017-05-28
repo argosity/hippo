@@ -2,7 +2,7 @@ import { observable } from 'mobx';
 import {
     BaseModel, identifiedBy, field, identifier, computed,
 } from './base';
-
+import Config from '../config';
 const CACHE = observable({
     Tenant: undefined,
 });
@@ -22,4 +22,7 @@ export default class Tenant extends BaseModel {
     @field slug = Tenant.slug;
     @field name;
 
+    @computed get domain() {
+        return `${this.slug}.${Config.website_domain}`;
+    }
 }

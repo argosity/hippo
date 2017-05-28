@@ -12,6 +12,8 @@ class Config {
     @observable root_view;
     @observable assets_path_prefix = '/assets';
     @observable user;
+    @observable website_domain;
+    @observable product_name;
     @observable screens;
 
     constructor() {

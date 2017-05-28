@@ -12,6 +12,10 @@ module Hippo
 
         before_validation :auto_assign_slug, on: :create
 
+        def domain
+            self.slug + '.' + Hippo.config.website_domain
+        end
+
         def perform
             MultiTenant.with(self) do
                 yield
@@ -32,6 +36,7 @@ module Hippo
         def self.switch(condition)
             MultiTenant.current_tenant = self.find_by(condition)
         end
+
       protected
 
         def auto_assign_slug

@@ -107,15 +107,16 @@ module Hippo
 
 
             def client_bootstrap_data
-                data = {
-                  api_path: Hippo.config.api_path,
-                  root_path: Hippo.config.mounted_at,
-                  root_view: Hippo.config.root_view,
-                  environment: Hippo.config.environment,
-                  assets_path_prefix: Hippo.config.assets_path_prefix,
-                  controlling_extension: controlling.identifier,
-                  initial_workspace_screen_id: Hippo.config.initial_workspace_screen_id
-                }
+                data = {}
+                %w{
+                  api_path environment website_domain product_name assets_path_prefix
+                }.each do |config|
+                    data[config.to_sym] = Hippo.config.send(config)
+                end
+                data.merge(
+                    controlling_extension: controlling.identifier,
+                    initial_workspace_screen_id: Hippo.config.initial_workspace_screen_id
+                )
                 each do | ext |
                     ext_data  = ext.client_bootstrap_data
                     data[ext.identifier] = ext_data unless ext_data.nil?

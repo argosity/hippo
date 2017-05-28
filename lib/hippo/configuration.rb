@@ -127,6 +127,10 @@ module Hippo
         # Configuration for action cable
         config_option :cable, { 'adapter' => 'redis' }
 
+        config_option :website_domain, 'test.com'
+
+        config_option :product_name, 'Hippo Funtime'
+
         def api_path
             mounted_at + 'api'
         end
