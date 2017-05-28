@@ -64,15 +64,15 @@ function perform(urlPrefix, defaultOptions = {}) {
     });
 
     let url = `${Config.api_host}${urlPrefix}.json`;
-    if (Config.access_token) {
-        query.jwt = Config.access_token;
-    }
     if (!isEmpty(query)) {
         url += `?${qs.stringify(query, { arrayFormat: 'brackets' })}`;
     }
     if (!options.headers) { options.headers = {}; }
 
     options.headers['Content-Type'] = 'application/json';
+    if (Config.access_token) {
+        options.headers['Authorization'] = Config.access_token;
+    }
     return fetch(url, options)
         .then(resp => resp.json())
         .then((json) => {

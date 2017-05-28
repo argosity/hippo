@@ -3,7 +3,7 @@ module Hippo
         class AuthenticationProvider
 
             def self.user_for_request(request)
-                token = request.params['jwt']
+                token = request.env['HTTP_AUTHORIZATION']
                 token ? User.for_jwt_token(token) : nil
             end
 
@@ -32,6 +32,7 @@ module Hippo
             end
 
             def allowed_access_to?(klass, options = {})
+
                 return true if options[:public] == true and current_user.nil?
                 return false if current_user.nil?
                 case request.request_method
