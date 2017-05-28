@@ -1,3 +1,6 @@
+require 'thor'
+require 'active_support'
+
 module Hippo
     class Webpack
         class ClientConfig < Thor::Group
