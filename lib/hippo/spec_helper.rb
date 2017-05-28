@@ -1,3 +1,6 @@
+require 'hippo/webpack'
+Hippo::Webpack.stub = true
+
 require 'rack/test'
 require 'hippo'
 require 'hippo/api'
@@ -11,6 +14,7 @@ require 'database_cleaner'
 require "shrine/storage/memory"
 require 'vcr'
 require 'hippo/tenant'
+
 
 TEST_TENANT = Hippo::Tenant.find_by_slug('test') || Hippo::Tenant.create!(slug: 'test', name: 'testing tenant', email: 'test@test.com')
 
@@ -56,10 +60,7 @@ module ApiHelper
     def ApiHelper.included(mod)
         mod.around(:each) do |example|
             begin
-                Hippo::Webpack.stub = true
                 example.run
-            ensure
-                Hippo::Webpack.stub = false
             end
         end
     end
