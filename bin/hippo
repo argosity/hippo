@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
+Bundler.require :default, ENV['HIPPO_ENV'] || "development"
+
 require 'hippo'
 require 'hippo/cli'
 
-
 Hippo::CLI.start(ARGV)
-#
