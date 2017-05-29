@@ -9,9 +9,9 @@ import {
 export class FormField {
     name: '';
     @observable isTouched = false
+    @observable isChanged = false;
     @observable value = '';
     @observable message = '';
-    @observable isChanged = '';
     @observable help;
     @observable validate;
     @observable default;
@@ -59,6 +59,12 @@ export class FormField {
 
         };
     }
+
+    reset() {
+        this.value = '';
+        this.isTouched = false;
+        this.isChanged = false;
+    }
 }
 
 
@@ -105,6 +111,10 @@ export class FormState {
             return get(field, rest.join('.'), defaultValue);
         }
         return field;
+    }
+
+    reset() {
+        this.fields.forEach(field => field.reset());
     }
 
     set(values) {
