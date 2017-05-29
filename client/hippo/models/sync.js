@@ -71,7 +71,7 @@ function perform(urlPrefix, defaultOptions = {}) {
 
     options.headers['Content-Type'] = 'application/json';
     if (Config.access_token) {
-        options.headers['Authorization'] = Config.access_token;
+        options.headers.Authorization = Config.access_token;
     }
     return fetch(url, options)
         .then(resp => resp.json())

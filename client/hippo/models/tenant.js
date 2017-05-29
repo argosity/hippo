@@ -3,6 +3,7 @@ import {
     BaseModel, identifiedBy, field, identifier, computed,
 } from './base';
 import Config from '../config';
+
 const CACHE = observable({
     Tenant: undefined,
 });
