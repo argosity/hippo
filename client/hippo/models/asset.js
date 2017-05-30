@@ -1,5 +1,4 @@
-import { includes, get, isEmpty } from 'lodash';
-import qs from 'qs';
+import { includes, get } from 'lodash';
 import { observe } from 'mobx';
 import {
     BaseModel, identifiedBy, field, session, identifier, computed,
@@ -88,15 +87,11 @@ export default class Asset extends BaseModel {
         form.append('owner_id', this.owner.identifierFieldValue);
         form.append('owner_association', this.owner_association_name);
 
-        let url = `${Config.api_path}${Config.assets_path_prefix}`;
-        const query   = {};
+        const options = { method: 'POST', body: form, headers: {} };
         if (Config.access_token) {
-            query.jwt = Config.access_token;
+            options.headers.Authorization = Config.access_token;
         }
-        if (!isEmpty(query)) {
-            url += `?${qs.stringify(query, { arrayFormat: 'brackets' })}`;
-        }
-        return fetch(url, { method: 'POST', body: form })
+        return fetch(`${Config.api_path}${Config.assets_path_prefix}`, options)
             .then(resp => resp.json())
             .then((json) => {
                 this.file = undefined;
