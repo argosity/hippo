@@ -1,7 +1,6 @@
 module Hippo
 
     module Extensions
-        mattr_accessor :controlling_locked
 
         ALL=Array.new
 
@@ -17,19 +16,9 @@ module Hippo
                 end
             end
 
-            # # lock the current controlling extension so that it can't
-            # # be changed by other extensions that are loaded later
-            # def lock_controlling!
-            #     self.controlling_locked=true
-            # end
-
             def add(klass)
                 @cached_instances = nil
-                if Extensions.controlling_locked
-                    ALL.unshift(klass)
-                else
-                    ALL << klass
-                end
+                ALL << klass
             end
 
             def all
