@@ -13,6 +13,7 @@ module Hippo::API
         helpers RequestWrapper
         helpers HelperMethods
         helpers FormattedReply
+
         use TenantDomainRouter
         use Rack::Session::Cookie,
             :key => 'rack.session',
@@ -33,7 +34,7 @@ module Hippo::API
             set :show_exceptions, false
             Hippo::Configuration.apply
             Hippo::Extensions.load_controlling_config
-            set :views, Hippo::Extensions.controlling.root_path.join('views')
+            set :views, Hippo::Extensions.map{|ext| ext.root_path.join('views') }.reverse
             set :webpack, Hippo::Webpack.new
             webpack.start
             require_relative './routing'

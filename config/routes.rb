@@ -54,6 +54,6 @@ end
 
 Hippo::API::Routing.root_view_route ||= lambda do
     Hippo::API::Root.get '/*' do
-        erb :index
+        erb :hippo_root_view
     end
 end

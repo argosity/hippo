@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
-        <title><%= hippo_application_title %></title>
+        <title><%= Hippo::Extensions.controlling.title %></title>
         <style>
           .loading {
             position: fixed;
@@ -23,7 +23,6 @@
             border: 0;
             transition: opacity .5s ease-in-out;
           }
-
           .loading:before {
             content: '';
             display: block;
@@ -34,7 +33,6 @@
             height: 100%;
             background-color: rgba(0,0,0,0.3);
           }
-
           .loading:after {
             content: '';
             display: block;
@@ -56,13 +54,16 @@
             opacity: 0;
           }
         </style>
-        <%= hippo_stylesheet_tags %>
     </head>
-
     <body>
-        <div class="loading">Loading&#8230;</div>
-        <div id="hippo-root" />
-        <%= hippo_javascript_tags %>
-        <script type="text/json" id="bootstrap-data"><%= Hippo::API.to_json(Hippo::Extensions.client_bootstrap_data) %></script>
+      <div class="loading">Loading&#8230;</div>
+      <div id="hippo-root">
+        <script type="text/json" id="bootstrap-data">
+          <%= Hippo::API.to_json(
+              Hippo::Extensions.client_bootstrap_data
+              ) %>
+        </script>
+      </div>
+      <%= javascript_tags :app %>
     </body>
 </html>

@@ -45,6 +45,10 @@ module Hippo
                 content_type 'application/json'
                 API.to_json(response)
             end
+
+            def find_template(views, name, engine, &block)
+                views.each{ |v| super(v, name, engine, &block) }
+            end
         end
     end
 end
