@@ -4,27 +4,27 @@ const path = require('path');
 
 const entries = {
     app: [
-        '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
+        '<%= identifier %>/index.js',
     ],
 };
 
-<% unless Hippo.env.production? -%>
+<%% unless Hippo.env.production? -%>
     for (var key in entries) {
         entries[key].unshift('react-hot-loader/patch');
     }
-<% end -%>
+<%% end -%>
 
 const config = {
     entry: entries,
     output: {
-        path: '<%= config_directory.join('..','public', 'assets') %>',
-        publicPath: '<%= Hippo.env.production? ? "https://assets.#{Hippo.config.website_domain}/assets/" : 'http://test.hippo.dev:8889/assets/' %>',
+        path: '<%%= config_directory.join('..','public', 'assets') %>',
+        publicPath: '<%%= Hippo.env.production? ? "https://assets.#{Hippo.config.website_domain}/assets/" : 'http://test.hippo.dev:8889/assets/' %>',
         filename: '[name]-[hash].js',
     },
     resolve: {
         modules: [
-            "<%= Hippo::Extensions.client_module_paths.join('","') %>",
-            "<%= generated_directory.to_s %>",
+            "<%%= Hippo::Extensions.client_module_paths.join('","') %>",
+            "<%%= generated_directory.to_s %>",
         ],
         extensions: ['.js', '.jsx'],
     },
@@ -82,7 +82,7 @@ const config = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
         }),
-<% if Hippo.env.production? %>
+<%% if Hippo.env.production? %>
         new webpack.optimize.UglifyJsPlugin(), //minify everything
         new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
         new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks
@@ -93,9 +93,9 @@ const config = {
           threshold: 10240,
           minRatio: 0.8
         }),
-<% else %>
+<%% else %>
         new webpack.NamedModulesPlugin(),
-<% end %>
+<%% end %>
     ],
     node: {
         fs: 'empty',

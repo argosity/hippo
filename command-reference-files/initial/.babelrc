@@ -5,7 +5,7 @@
         "transform-class-properties",
         "transform-function-bind",
         "transform-react-jsx",
-        "transform-runtime"
+        "transform-runtime",
         "lodash"
     ],
     "presets": [

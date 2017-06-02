@@ -47,11 +47,10 @@ module Hippo
                 template "spec/client/setup.js"
                 template "spec/server/spec_helper.rb"
 
-                copy_file "../views/index.erb", "views/index.erb"
                 create_file "log/.gitkeep",""
-                create_file "db/migrate/.gitkeep",""
+                create_file "views/.gitkeep",""
                 create_file "tmp/.gitkeep",""
-                create_file "db/.gitkeep", ""
+                create_file "db/migrate/.gitkeep",""
             end
 
             def create_client_files
