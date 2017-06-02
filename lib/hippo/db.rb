@@ -23,10 +23,9 @@ module Hippo
 
         def configure_rake_environment
             ActiveRecord::Tasks::DatabaseTasks.seed_loader = Hippo::DB
-            default_schema = Extensions.controlling.root_path.join("db","schema.sql")
+            default_schema = Extensions.controlling.root_path.join("db","schema.rb")
             ENV['SCHEMA']          ||= default_schema.to_s
             ENV['DB_STRUCTURE']    ||= default_schema.to_s
-            ActiveRecord::Base.schema_format = :sql
             ActiveRecord::Base.dump_schema_after_migration = !Hippo.env.production?
             Hippo::DB.establish_connection
             ActiveRecord::Tasks::DatabaseTasks.database_configuration = ActiveRecord::Base.configurations
