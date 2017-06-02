@@ -1,6 +1,6 @@
 {
   "name": "hippo-fw",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Hippo is a framework for easily writing single page web applications",
   "main": "index.js",
   "repository": "https://github.com/argosity/hippo",
