@@ -49,6 +49,7 @@ module Hippo
 
                 copy_file "../views/index.erb", "views/index.erb"
                 create_file "log/.gitkeep",""
+                create_file "db/migrate/.gitkeep",""
                 create_file "tmp/.gitkeep",""
                 create_file "db/.gitkeep", ""
             end
