@@ -73,9 +73,7 @@ export class UserModel extends BaseModel {
     setFromSessionRequest(req) {
         merge(this, pick(req, 'errors', 'lastServerMessage'));
         if (req.isValid) {
-            Config.data = req.data;
-            Config.persistToStorage();
-            Config.bootstrapUserData();
+            Config.update(req.data);
             this.errors = {};
         }
         return this;
