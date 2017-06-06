@@ -22,7 +22,8 @@ module Hippo
             my_data = attributes.slice('id','login','name','email','created_at',
                                        'created_by','updated_at','updated_by','role_names', 'options')
             screens = Hippo::Screen.select{|s| s.viewable_by?(self) }.map{|s| s.identifier }
-            { user: my_data, access: Access.for_user(self), screens: screens }
+            { user: my_data, access: Access.for_user(self),
+              screen_ids: screens, access_token: jwt_token }
         end
 
         # @param model [Hippo::Model]
