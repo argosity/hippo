@@ -1,8 +1,8 @@
+import { AsyncStorage } from 'react-native';
 import Config from './models/config';
 
 const ConfigInstance = Config.create({
-    storage: localStorage,
-    jsonify: true,
+    storage: AsyncStorage,
 });
 
 export default ConfigInstance;
