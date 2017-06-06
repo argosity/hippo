@@ -11,7 +11,7 @@ module Hippo::API::Handlers
                     user = Hippo::User.where(login: data['login']).first
                     if user && user.authenticate(data['password'])
                         { success: true, message: "Login succeeded",
-                          data: user.workspace_data.merge(token: user.jwt_token) }
+                          data: user.workspace_data }
                     else
                         { success: false, message: "Login failed", errors: { login: 'failed' }, data: {} }
                     end
