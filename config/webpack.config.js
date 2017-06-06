@@ -3,7 +3,7 @@ const path = require('path');
 
 const config = {
     entry: {
-        hippo: [
+        app: [
             'react-hot-loader/patch',
             '<%= "#{Hippo::Extensions.controlling.identifier}/index.js" %>',
         ],
