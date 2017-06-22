@@ -7,7 +7,6 @@ module Hippo
 end
 
 require_relative "hippo/version"
-require_relative "hippo/rails"
 require_relative "hippo/environment"
 require_relative "hippo/configuration"
 require_relative "hippo/redis"

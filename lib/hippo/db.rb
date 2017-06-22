@@ -22,6 +22,8 @@ module Hippo
         end
 
         def configure_rake_environment
+            require_relative "./db/fake_rails"
+            require_relative './db/migrations'
             ActiveRecord::Tasks::DatabaseTasks.seed_loader = Hippo::DB
             default_schema = Extensions.controlling.root_path.join("db","schema.rb")
             ENV['SCHEMA']          ||= default_schema.to_s
@@ -54,5 +56,3 @@ module Hippo
     ActiveRecord::Base.logger = Hippo.logger
 
 end
-
-require_relative './db/migrations'

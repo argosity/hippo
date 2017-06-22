@@ -87,7 +87,6 @@ module Hippo
                 end
             end
         end
-
     end
 
     class DefaultConfiguration < Configuration
@@ -123,9 +122,6 @@ module Hippo
 
         # types of assets to include into compiled package
         config_option :static_asset_types, ['images','fonts']
-
-        # Configuration for action cable
-        config_option :cable, { 'adapter' => 'redis' }
 
         config_option :website_domain, 'test.com'
 
