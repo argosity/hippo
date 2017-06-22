@@ -17,6 +17,7 @@ describe('SystemSettings Screen', () => {
     });
 
     it('renders', () => {
-        expect(Snapshot(<Settings screen={instance} />)).toMatchSnapshot();
+        const settings = mount(<Settings screen={instance} />);
+        expect(settings).toHaveRendered('Screen');
     });
 });

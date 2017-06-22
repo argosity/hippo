@@ -17,8 +17,7 @@ env:
   global:
     - DATABASE_URL=postgres://travis@127.0.0.1:5432/travis
     - REDIS_URL=redis://localhost:6379
-    - TRAVIS_NODE_VERSION="6.9.2"
+    - TRAVIS_NODE_VERSION="7"
 before_install:
   - nvm install $TRAVIS_NODE_VERSION
-  - npm install yarn
-  - yarn install
+  - npm install
