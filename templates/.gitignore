@@ -2,3 +2,4 @@ node_modules
 public/assets
 tmp/cache
 log/*log
+config/secrets.yml

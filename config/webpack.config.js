@@ -33,8 +33,7 @@ const config = {
                         'babel-plugin-transform-decorators-legacy',
                         'babel-plugin-transform-class-properties',
                         'babel-plugin-transform-function-bind',
-                        'babel-plugin-transform-react-jsx',
-                        'babel-plugin-transform-runtime',
+                        'babel-plugin-transform-react-jsx'
                     ].map(require.resolve),
                     presets: [
                         [require.resolve('babel-preset-es2015'), { modules: false }],

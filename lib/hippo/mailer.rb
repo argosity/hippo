@@ -15,6 +15,7 @@ module Hippo
             end
 
             def delivery_method_config(config)
+                config = Hippo.config.secrets.smtp || {}
                 {
                     via: Hippo.env.production? ? :smtp : :test,
                     config: {
