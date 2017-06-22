@@ -26,8 +26,8 @@ Gem::Specification.new do |spec|
 
     spec.add_dependency "activejob",                 "~> 5.0.0"
     spec.add_dependency "activerecord",              "~> 5.0.0"
-    spec.add_dependency "actioncable",               "~> 5.0.0"
-#    spec.add_dependency "activerecord-multi-tenant", "~> 0.5"
+    spec.add_dependency "litecable",                 "~> 0.4.1"
+    spec.add_dependency "websocket",                 "~> 1.2.4"
     spec.add_dependency "mail",                      "~> 2.6"
     spec.add_dependency "scenic",                    "~> 1.4"
     spec.add_dependency "liquid",                    "~> 4.0"

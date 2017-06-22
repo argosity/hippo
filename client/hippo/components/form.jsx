@@ -1,6 +1,5 @@
 import {
-    negate, isNil, isString, isObject, mapValues, extend, forIn, isFunction, pick, isBoolean, get, keys,
-    merge,
+    negate, isString, isObject, isBoolean, merge,
 } from 'lodash';
 import moment from 'moment';
 import isEmail from 'validator/lib/isEmail';

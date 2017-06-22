@@ -131,6 +131,8 @@ module Hippo
 
         config_option :product_name, 'Hippo Funtime'
 
+        config_option :api_use_any_cable, false
+
         def api_path
             mounted_at + 'api'
         end

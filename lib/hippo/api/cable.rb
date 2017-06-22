@@ -1,5 +1,4 @@
-require 'action_cable'
-# require 'action_cable/subscription_adapter/postgresql'
+require "lite_cable"
 
 module Hippo
     module API
@@ -11,18 +10,20 @@ module Hippo
                 @@server.call(request.env)
             end
 
-            class Channel < ActionCable::Channel::Base
+            class Channel < LiteCable::Channel::Base
             end
 
-            class Connection < ActionCable::Connection::Base
+            class Connection < LiteCable::Connection::Base
                 identified_by :current_user
 
                 def connect
-                    unless cookies['user_id'] &&
-                            self.current_user = Hippo::User
-                                                    .where(id: cookies['user_id']).first
-                        Hippo.logger.warn("Rejecting ws connection due to unauthorized access by user_id #{cookies['user_id']}")
-
+                    token = request.params['token']
+                    begin
+                        self.current_user = User.for_jwt_token(token) if token
+                    rescue JWT::DecodeError
+                    end
+                    unless self.current_user
+                        Hippo.logger.warn("Rejecting ws connection due to unauthorized access")
                         reject_unauthorized_connection
                     end
                 end
@@ -35,18 +36,16 @@ module Hippo
             end
 
             def self.configure
+                require_relative './updates'
 
-                require_relative 'updates'
-                @@config = ActionCable::Server::Configuration.new
-                config.logger = Hippo.logger
-                config.cable = Hippo.config.cable
-                config.connection_class = -> { Connection }
-                config.allowed_request_origins = -> (host) {
-                    host
-                }
+                if Hippo.config.api_use_any_cable
 
-                ActionCable::Server::Base.config = config
-                @@server = ActionCable.server
+                else
+                    require "lite_cable/server"
+                    @@server = LiteCable::Server::Middleware.new(
+                        Hippo::API::Root, connection_class: Hippo::API::Cable::Connection
+                    )
+                end
                 Updates.relay!
             end
 

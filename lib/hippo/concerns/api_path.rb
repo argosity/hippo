@@ -8,12 +8,11 @@ module Hippo::Concerns
 
             def api_path(with_module: false)
                 path = with_module ? to_s : to_s.demodulize
-                path.pluralize.underscore.dasherize
+                path.underscore.dasherize
             end
 
             def from_api_path(path)
-                name = path.underscore.camelize.singularize
-                name.safe_constantize
+                name = path.underscore.camelize.safe_constantize
             end
 
         end

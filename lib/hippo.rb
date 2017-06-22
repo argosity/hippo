@@ -7,13 +7,11 @@ module Hippo
 end
 
 require_relative "hippo/version"
+require_relative "hippo/rails"
 require_relative "hippo/environment"
 require_relative "hippo/configuration"
 require_relative "hippo/redis"
 require_relative "hippo/logger"
-if defined?(::Rails)
-    require_relative "hippo/rails_engine"
-end
 require_relative "hippo/db"
 require_relative "hippo/strings"
 require_relative "hippo/numbers"

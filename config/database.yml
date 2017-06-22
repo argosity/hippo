@@ -2,6 +2,7 @@ development:
   adapter: postgresql
   database: hippo-dev
   host: /tmp
+  pool: 10
 
 test:
   adapter: postgresql

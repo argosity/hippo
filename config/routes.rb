@@ -1,7 +1,7 @@
 module Hippo::API
 
     routes.for_extension 'hippo' do
-        get 'job-statuses/:id.json' do
+        get 'job-status/:id.json' do
             wrap_reply do
                 status = Hippo::Job.status_for_id(params[:id])
                 raise ActiveRecord::RecordNotFound unless status
@@ -9,10 +9,10 @@ module Hippo::API
             end
         end
 
-        post "user-sessions.json", &Hippo::API::Handlers::UserSession.create
-        get "user-sessions/test.json", &Hippo::API::Handlers::UserSession.check
+        post "user-session.json", &Hippo::API::Handlers::UserSession.create
+        get "user-session/test.json", &Hippo::API::Handlers::UserSession.check
 
-        delete "user-sessions/:id.json" do
+        delete "user-session/:id.json" do
             wrap_reply do
                 { success: true, message: "Logout succeeded", data: {}, token: '' }
             end

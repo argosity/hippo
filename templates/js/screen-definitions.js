@@ -1,4 +1,4 @@
-import Definition, { createAsyncComponent } from 'hippo/screens/definition';
+import Definition, { asyncComponent } from 'hippo/screens/definition';
 import Group from 'hippo/screens/group';
 
 <% Hippo::Screen.each_group do | group | %>
@@ -11,7 +11,7 @@ const Screens = {};
 Screens['<%= screen.identifier %>'] = <%= screen.to_json %>;
 Definition.register(
     Screens['<%= screen.identifier %>'],
-    createAsyncComponent({ resolve: () => System.import(<%= "'#{screen.asset_path}'" %>) }),
+    asyncComponent({ resolve: () => System.import(<%= "'#{screen.asset_path}'" %>) }),
 );
 <% end -%>
 

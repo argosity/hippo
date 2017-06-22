@@ -20,7 +20,7 @@ module Hippo
                 @relaying_messages = true
                 Hippo::Model.observe(:save) do |model|
                     if model.changes.any?
-                        path = "/#{model.class.api_path(with_module: true)}/#{model.id}"
+                        path = "#{model.class.api_path(with_module: true)}/#{model.id}"
                         Hippo::API::PubSub.publish(path, {
                             by: self.user_info_for_change(model),
                             update: model.changes

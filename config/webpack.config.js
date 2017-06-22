@@ -10,8 +10,8 @@ const config = {
     },
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
-        publicPath: '<%= Hippo.env.production? ? '/assets/' : 'http://test.hippo.dev:8889/assets/' %>',
         filename: '[name]-[hash].js',
+        publicPath: '<%= Hippo.env.production? ? '/assets/' : 'http://test.hippo.dev:8889/assets/' %>',
     },
     resolve: {
         modules: [
@@ -44,16 +44,16 @@ const config = {
                 },
             },
             { test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            includePaths: [path.resolve('./node_modules')],
-                        },
-                    },
-                ],
+              use: [
+                  'style-loader',
+                  'css-loader',
+                  {
+                      loader: 'sass-loader',
+                      options: {
+                          includePaths: [path.resolve('./node_modules')],
+                      },
+                  },
+              ],
             },
         ],
     },
@@ -71,10 +71,12 @@ const config = {
         inline: true,
         port: 8889,
         historyApiFallback: true,
-        proxy: [{
-            context: '/api',
-            target: 'http://localhost:9292',
-        }],
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        },
+        disableHostCheck: true,
         stats: {
             colors: true,
             profile: true,

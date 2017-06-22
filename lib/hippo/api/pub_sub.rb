@@ -4,22 +4,24 @@ module Hippo
     module API
 
         class PubSub < Cable::Channel
+            identifier :pubsub
+
             PREFIX = 'ps:'
 
             def on(data)
+                Hippo.logger.info "pubsub  on: #{data['channel']}"
                 stream_from channel_prefix + data['channel']
             end
 
             def off(data)
-                channel = channel_prefix + data['channel']
-                cb = pubsub.instance_variable_get('@listener')
-                       .instance_variable_get('@subscribers')[channel].first
-                pubsub.unsubscribe(channel, cb)
+                Hippo.logger.info "pubsub off: #{data['channel']}"
+                stop_stream channel_prefix + data['channel']
             end
 
             def self.publish(channel, data)
+                Hippo.logger.info "pubsub pub: #{channel}"
                 channel = channel_prefix + channel
-           #     ActionCable.server.broadcast(channel, data.merge(channel: channel))
+                LiteCable.broadcast(channel, data.merge(channel: channel))
             end
 
             def self.channel_prefix

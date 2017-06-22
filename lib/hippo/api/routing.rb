@@ -6,7 +6,7 @@ module Hippo
 
             API.routes.draw do
                 # WS endpoint must come first
-                get Hippo.config.api_path + '/ws' do
+                get Hippo.config.api_path + '/cable' do
                     API::Cable.handle_request(request)
                 end
 

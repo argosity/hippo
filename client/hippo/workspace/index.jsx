@@ -3,9 +3,13 @@ import React from 'react';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { bindAll } from 'lodash';
-import { Router, Route, browserHistory } from 'react-router';
+import {
+    BrowserRouter as Router,
+    Route,
+} from 'react-router-dom';
 
-import App   from 'grommet/components/App';
+
+import App from 'grommet/components/App';
 import Sidebar from 'react-sidebar';
 
 import 'hippo/config-data';
@@ -18,6 +22,12 @@ import LoginDialog from '../access/login-dialog';
 import './styles.scss';
 
 const DOCKED_WIDTH_BREAKPOINT = 950;
+
+function NoMatch() {
+    return (
+        <h1>Not Found</h1>
+    );
+}
 
 @observer
 class Workspace extends React.Component {
@@ -59,27 +69,18 @@ class Workspace extends React.Component {
                     docked={this.sidebarDocked}
                     onSetOpen={this.onSetSidebarOpen}
                 >
-                    {this.props.children || "Welcome"}
+                    <Route name='screen' path="/:screenId/:identifier?" component={Screen} />
+                    <Route path="*" component={NoMatch} />
                 </Sidebar>
             </App>
         );
     }
 }
 
-
-function NoMatch() {
-    return (
-        <h1>Not Found</h1>
-    );
-}
-
 export default function WorkspaceRoot() {
     return (
-        <Router history={browserHistory}>
-            <Route path="/" component={Workspace}>
-                <Route name='screen' path="/:screenId(/:identifier)" component={Screen} />
-                <Route path="*" component={NoMatch} />
-            </Route>
+        <Router>
+            <Route path="/" component={Workspace} />
         </Router>
     );
 }

@@ -9,8 +9,6 @@ import {
 
 import { action, observable, computed } from 'mobx';
 
-import pluralize from 'pluralize';
-
 import Sync from './sync';
 import Config from '../config';
 import { toSentence, humanize } from '../lib/util';
@@ -41,7 +39,7 @@ export class BaseModel {
     }
 
     static get assignableKeys() {
-        return this.$schema.keys();
+        return Array.from(this.$schema.keys());
     }
 
     static get propertyOptions() {
@@ -52,11 +50,11 @@ export class BaseModel {
 
     static get syncUrl() {
         invariant(this.identifiedBy, 'must have an identifiedBy property in order to calulate syncUrl');
-        return `${Config.api_path}/${pluralize(this.identifiedBy)}`;
+        return `${Config.api_path}/${this.identifiedBy}`;
     }
 
     static get identifierFieldName() {
-        const field = find(this.$schema.values(), { type: 'identifier' });
+        const field = find(Array.from(this.$schema.values()), { type: 'identifier' });
         invariant(field, 'identifierFieldName called on a model that has not designated one with `@identifier`');
         return field.name;
     }
@@ -66,7 +64,9 @@ export class BaseModel {
     }
 
     constructor(attrs) {
-        if (!isEmpty(attrs)) { this.set(attrs); }
+        if (!isEmpty(attrs)) {
+            this.set(attrs);
+        }
     }
 
     get isModel() { return true; }

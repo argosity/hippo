@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
-import { isNil, forIn, get, pick, mapValues, keys, extend } from 'lodash';
 
 import { observer }   from 'mobx-react';
-import { action, observable, computed } from 'mobx';
+import { action } from 'mobx';
 
 import Box    from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
@@ -29,7 +28,6 @@ export default class EditForm extends React.PureComponent {
 
     constructor(props) {
         super(props);
-
         this.user = this.props.query.results.modelForRow(this.props.rowIndex);
     }
 
@@ -39,7 +37,7 @@ export default class EditForm extends React.PureComponent {
 
     @action.bound
     onSave() {
-        this.formState.persistTo(this.user);
+        this.refs.form.persistTo(this.user);
         this.user.save().then(this.onSaved);
     }
 
@@ -59,16 +57,21 @@ export default class EditForm extends React.PureComponent {
 
     render() {
         return (
-            <Form tag="div" className="user-edit-form" state={this.formState}>
+            <Form
+                tag="div"
+                ref="form"
+                model={this.user}
+                className="user-edit-form"
+            >
                 <Warning message={this.errorMessage} />
                 <Row middle='sm'>
                     <Field md={4} xs={6} name="login" validate={nonBlank} />
-                    <Field md={4} xs={6} name="name"  validate={nonBlank} />
+                    <Field md={4} xs={6} name="name" validate={nonBlank} />
                     <Field md={4} xs={6} name="email" validate={validEmail} />
                     <Field md={4} xs={6} type="password" name="password" />
                     <Field md={4} xs={6} type="checkbox" name="is_admin" validate={booleanValue} />
                     <Col md={4} xs={6}>
-                        <Box justify="around" direction="row">
+                        <Box direction="row">
                             <Button label="Cancel" onClick={this.onCancel} accent />
                             <Button
                                 label="Save"

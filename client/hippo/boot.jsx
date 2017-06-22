@@ -3,19 +3,14 @@ import ReactDOM     from 'react-dom';
 import whenDomReady from 'when-dom-ready';
 import { delay } from 'lodash';
 import { AppContainer } from 'react-hot-loader';
-import { withAsyncComponents } from 'react-async-component';
+import { onBoot } from './models/pub_sub';
 
 const Workspace = require('hippo/workspace').default;
 
 let Root;
-let App;
 
 function renderer(Body) {
-    withAsyncComponents(<AppContainer><Body /></AppContainer>)
-        .then((result) => {
-            App = result.appWithAsyncComponents;
-            ReactDOM.render(App, Root);
-        });
+    ReactDOM.render(<AppContainer><Body /></AppContainer>, Root);
 }
 
 if (module.hot) {
@@ -34,6 +29,11 @@ whenDomReady().then(() => {
     const loading = document.querySelector('.loading');
     if (loading) {
         loading.classList.add('complete');
-        delay(() => loading.parentNode.removeChild(loading), 400);
+        delay(() => {
+            onBoot();
+            loading.parentNode.removeChild(loading);
+
+        }, 400);
+
     }
 });

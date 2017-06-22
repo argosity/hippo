@@ -1,23 +1,30 @@
 import React from 'react';
-
-import { Provider, observer } from 'mobx-react';
-
+import PropTypes from 'prop-types';
+import { PropTypes as MobxPropTypes, Provider, observer } from 'mobx-react';
+import { observePubSub } from '../../models/pub_sub';
 import { FormState } from './model';
 
 @observer
 export default class FormWrapper extends React.PureComponent {
 
     static propTypes = {
-        children: React.PropTypes.node.isRequired,
-        state: React.PropTypes.instanceOf(FormState),
-        tag: React.PropTypes.string,
-        className: React.PropTypes.string,
+        tag: PropTypes.string,
+        className: PropTypes.string,
+        children: PropTypes.node.isRequired,
+        state: PropTypes.instanceOf(FormState),
+        model: MobxPropTypes.observableObject,
     }
 
     static get defaultProps() {
         return {
             state: new FormState(),
         };
+    }
+
+    componentDidMount() {
+        if (this.props.model) {
+            this.props.state.setFromModel(this.props.model);
+        }
     }
 
     renderTagless() {
@@ -28,8 +35,12 @@ export default class FormWrapper extends React.PureComponent {
         );
     }
 
+    persistTo(model) {
+        this.props.state.persistTo(model);
+    }
+
     renderTagged() {
-        const { tag: Tag, state, children, ...otherProps } = this.props;
+        const { tag: Tag, state, children, model: _, ...otherProps } = this.props;
         return (
             <Provider formState={state}>
                 <Tag {...otherProps}>
@@ -40,6 +51,7 @@ export default class FormWrapper extends React.PureComponent {
     }
 
     render() {
+        if (this.props.model) { observePubSub(this.props.model); }
         return this.props.tag ? this.renderTagged() : this.renderTagless();
     }
 

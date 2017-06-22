@@ -1,21 +1,16 @@
 import React from 'react';
-import classnames from 'classnames';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 import PropTypes from 'prop-types';
 import Sidebar from 'grommet/components/Sidebar';
-import Heading from 'grommet/components/Heading';
-import Footer  from 'grommet/components/Footer';
 import Header  from 'grommet/components/Header';
 import Anchor  from 'grommet/components/Anchor';
 import Menu from 'grommet/components/Menu';
 import Group   from './menu-group';
 import Screens from '../screens';
-import Icon from '../components/icon';
+
 
 import User from '../user';
-
-//const On
 
 @observer
 class Logout extends React.PureComponent {
@@ -30,8 +25,7 @@ class Logout extends React.PureComponent {
         ev.stopPropagation();
         ev.preventDefault();
         User.logout();
-        const { router } = this.context;
-        router.push('/');
+        this.context.router.history.push('/');
     }
 
     render() {

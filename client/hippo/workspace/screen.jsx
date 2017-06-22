@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { observer } from 'mobx-react';
-import { Grid } from 'react-flexbox-grid';
 import Box from 'grommet/components/Box';
 import Screens from '../screens';
 import ScreenInstances from '../screens/instance';
@@ -19,13 +17,15 @@ ScreenView.displayName = 'ScreenView';
 export default class Screen extends React.Component {
 
     static propTypes = {
-        params: PropTypes.shape({
-            screenId: PropTypes.string,
+        match: PropTypes.shape({
+            params: PropTypes.shape({
+                screenId: PropTypes.string,
+            }),
         }).isRequired,
     }
 
     componentDidMount() {
-        const { screenId } = this.props.params;
+        const { screenId } = this.props.match.params;
         if (screenId) {
             const definition = Screens.all.get(screenId);
             if (definition) { definition.display(); }
@@ -42,7 +42,7 @@ export default class Screen extends React.Component {
                 flex="grow"
             >
                 {ScreenInstances.displaying.map(s =>
-                    <ScreenView key={s.id} {...this.props.params} screen={s} />)}
+                    <ScreenView key={s.id} {...this.props.match.params} screen={s} />)}
             </Box>
 
         );
