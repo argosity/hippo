@@ -29,7 +29,6 @@ export {
 };
 
 export class BaseModel {
-
     static get propType() {
         return PropTypes.instanceOf(this);
     }
@@ -122,7 +121,7 @@ export class BaseModel {
 
     fetch(options = {}) {
         invariant((!this.isNew || options.query),
-                  'Unable to fetch record without it’s identifier being set or a query');
+            'Unable to fetch record without it’s identifier being set or a query');
         const fetchOptions = extend(options, { limit: 1, method: 'GET' });
         if (!fetchOptions.query) {
             fetchOptions.query = { [`${this.constructor.identifierFieldName}`]: this.identifierFieldValue };

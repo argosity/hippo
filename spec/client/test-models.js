@@ -30,7 +30,6 @@ export class TestImage extends BaseModel {
 
 @identifiedBy('test/box')
 export class Box extends BaseModel {
-
     @session visibleIdentifier;
 
     @session({ type: 'string' }) label;
@@ -50,7 +49,6 @@ export class Box extends BaseModel {
 
 @identifiedBy('test/container')
 export class Container extends BaseModel {
-
     @identifier({ type: 'string' }) id;
 
     @field name;

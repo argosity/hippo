@@ -29,7 +29,7 @@ export function titleize(words) {
     return (words)
         .replace(/[\W_]/g, ' ')
         .replace(/\S+/g, word => (word.charAt(0).toUpperCase() + word.slice(1)),
-    );
+        );
 }
 
 export function underscored(str) {
@@ -41,15 +41,15 @@ export function underscored(str) {
 
 export function humanize(str) {
     return capitalize(trim(underscored(str)
-                           .replace(/_id$/, '')
-                           .replace(/_/g, ' ')));
+        .replace(/_id$/, '')
+        .replace(/_/g, ' ')));
 }
 
 export function renameProperties(object, keyMap) {
     each(keyMap, (to, from) => {
         if (object[from]) {
             object[to] = object[from]; // eslint-disable-line no-param-reassign
-            delete object[from];       // eslint-disable-line no-param-reassign
+            delete object[from]; // eslint-disable-line no-param-reassign
         }
     });
     return object;

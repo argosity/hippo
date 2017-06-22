@@ -26,7 +26,6 @@ const ADMIN = 'administrator';
 
 @identifiedBy('hippo/user')
 export class UserModel extends BaseModel {
-
     @identifier({ type: 'number' }) id;
     @field login;
     @field name;
@@ -82,7 +81,6 @@ export class UserModel extends BaseModel {
     toJSON() {
         return merge(this.serialize(), { is_admin: this.is_admin });
     }
-
 }
 
 const current_user = new UserModel();

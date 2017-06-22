@@ -5,10 +5,10 @@ window.localStorage = {
     },
 };
 
-const config = jest.genMockFromModule('../models/config');
-//
-// config.bootstrapUserData = jest.fn();
-// config.reset = jest.fn();
+const Config = jest.genMockFromModule('../models/config');
+const { default: DefaultConfig } = Config;
+const config =  new DefaultConfig();
+
 Object.defineProperty(config, 'api_path', {
     value: '/api',
 });

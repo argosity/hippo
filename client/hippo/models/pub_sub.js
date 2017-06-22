@@ -1,9 +1,8 @@
 import { Atom, when, reaction } from 'mobx';
 import ActionCable from 'actioncable';
 import invariant from 'invariant';
-import { omit, invoke, mapValues } from 'lodash';
+import { invoke, mapValues } from 'lodash';
 
-import { logger } from '../lib/util';
 import User from '../user';
 import Config from '../config';
 
@@ -12,7 +11,6 @@ import PubSubCableChannel from './pub_sub/channel';
 let PubSub;
 
 class PubSubMap {
-
     constructor(modelKlass) {
         this.channel_prefix = modelKlass.identifiedBy;
         this.map = Object.create(null);
@@ -53,7 +51,7 @@ class PubSubMap {
     remove(model) {
         const { id, models } = this.forModel(model);
         const indx = models.indexOf(model);
-        invariant(-1 !== indx, "Asked to remove model from pubsub but it was never observed");
+        invariant(-1 !== indx, 'Asked to remove model from pubsub but it was never observed');
         if (1 === models.length) {
             delete this.map[id];
             PubSub.channel.unsubscribe(this.channelForId(id));
@@ -120,7 +118,6 @@ export function stop() {
 }
 
 export class PubSubAtom {
-
     constructor(model) {
         this.model = model;
         if (model.identifierFieldValue) {

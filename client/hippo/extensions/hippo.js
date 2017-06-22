@@ -5,7 +5,5 @@ import {
 
 @identifiedBy('extensions/hippo')
 export default class HippoExtension extends BaseExtension {
-
     @identifier id = 'hippo';
-
 }

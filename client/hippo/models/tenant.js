@@ -10,7 +10,6 @@ const CACHE = observable({
 
 @identifiedBy('hippo/tenant')
 export default class Tenant extends BaseModel {
-
     @computed static get current() {
         if (!CACHE.Tenant) {
             CACHE.Tenant = new Tenant();

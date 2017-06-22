@@ -8,7 +8,6 @@ import {
 
 @identifiedBy('hippo/query/result')
 export default class Result extends BaseModel {
-
     @belongsTo({ type: 'hippo/query' }) query;
 
     sortingFunction() {

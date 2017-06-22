@@ -138,7 +138,7 @@ describe('Model Queries', () => {
             query.clauses[0].value = 'test value';
             query.results.fetch();
             expect(Sync.perform).toHaveBeenLastCalledWith(
-                '/api/test/boxes', {
+                '/api/test/box', {
                     total_count: 't',
                     fields: ['id', 'label', 'width', 'height', 'depth'],
                     query:  { computed: { op: 'like', value: 'test value%' } },
@@ -227,7 +227,7 @@ describe('Model Queries', () => {
             expect(query.results.fullyLoaded).toEqual(false);
             query.setSort({ field: query.fields[2], ascending: true });
             expect(Sync.perform).toHaveBeenLastCalledWith(
-                '/api/test/boxes', {
+                '/api/test/box', {
                     total_count: 't',
                     fields: ['id', 'label', 'width', 'height', 'depth'],
                     order:  { label: 'asc' },

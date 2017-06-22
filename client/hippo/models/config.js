@@ -56,5 +56,4 @@ export default class Config {
         this.access_token = null;
         if (this.user) { this.user.reset(); }
     }
-
 }

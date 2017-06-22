@@ -82,6 +82,7 @@ RSpec.configure do |config|
     end
 
     config.around(:each) do |example|
+        Hippo.logger.level = ::Logger::WARN
         TEST_TENANT.perform do
             DatabaseCleaner.cleaning do
                 example.run

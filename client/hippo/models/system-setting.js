@@ -8,7 +8,6 @@ import Asset from './asset';
 
 @identifiedBy('hippo/system-settings')
 export default class SystemSettings extends BaseModel {
-
     @identifier id;
     @field({ type: 'object' }) settings;
 
@@ -22,5 +21,4 @@ export default class SystemSettings extends BaseModel {
     @computed get syncUrl() {
         return this.constructor.syncUrl;
     }
-
 }

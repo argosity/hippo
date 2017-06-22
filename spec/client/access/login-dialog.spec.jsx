@@ -23,6 +23,7 @@ describe('Login Dialog', () => {
         expect(dialog).not.toHaveRendered('LoginForm');
         return User.logout().then(() => {
             expect(dialog).not.toHaveRendered('LoginForm');
+            expect(Config.reset).toHaveBeenCalled();
         });
     });
 });

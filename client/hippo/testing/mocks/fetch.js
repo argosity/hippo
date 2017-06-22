@@ -30,21 +30,21 @@ fetch.Response = ResponseWrapper;
 
 fetch.mockResponse = (body, init) => {
     fetch.mockImplementation(
-    () => Promise.resolve(new ResponseWrapper(body, init)),
-  );
+        () => Promise.resolve(new ResponseWrapper(body, init)),
+    );
 };
 
 fetch.mockResponseOnce = (body, init) => {
     fetch.mockImplementationOnce(
-    () => Promise.resolve(new ResponseWrapper(body, init)),
-  );
+        () => Promise.resolve(new ResponseWrapper(body, init)),
+    );
 };
 
 fetch.mockResponses = (...responses) => {
     responses.forEach(([body, init]) => {
         fetch.mockImplementationOnce(
-      () => Promise.resolve(new ResponseWrapper(body, init)),
-    );
+            () => Promise.resolve(new ResponseWrapper(body, init)),
+        );
     });
 };
 

@@ -5,7 +5,6 @@ import {
 
 @identifiedBy('hippo/query/clause')
 export default class Clause extends BaseModel {
-
     @observable id = uniqueId('clause');
 
     @observable value;

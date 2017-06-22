@@ -11,10 +11,10 @@ describe "ApiPath" do
     end
 
     it "generates path" do
-        expect('test-models').to eq(TestModel.api_path)
+        expect('test-model').to eq(TestModel.api_path)
     end
 
     it "converts path to model" do
-        expect(TestModel).to eq(Hippo::Model.from_api_path('test-models'))
+        expect(TestModel).to eq(Hippo::Model.from_api_path('test-model'))
     end
 end

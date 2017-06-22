@@ -4,7 +4,6 @@ import {
 
 @identifiedBy('hippo/query/operators/operator')
 export default class Operator extends BaseModel {
-
     @identifier({ type: 'string' }) id;
     @session label;
     @session selected;
@@ -17,5 +16,4 @@ export default class Operator extends BaseModel {
         if (!this.types.length) { return true; }
         return !!this.types.find(t => t === field.queryType);
     }
-
 }

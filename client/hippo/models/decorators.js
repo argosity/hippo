@@ -36,20 +36,20 @@ function validateChangeType(validator, propertyName, change) {
     invariant(VALIDATORS[validator], `Unknown TypeCheck: ${validator} does not exist`);
     if (COERCE[validator]) { COERCE[validator](change); }
     invariant(VALIDATORS[validator](change.newValue),
-              `Bad Type: Attempted to set ${propertyName} to '${change.newValue}' which is not ${validator}`);
+        `Bad Type: Attempted to set ${propertyName} to '${change.newValue}' which is not ${validator}`);
     return change;
 }
 
 function addTypeSafeInterceptor(target, property, type) {
     if (isEmpty(type)) { return; }
     addLazyInitializer(target, (partial(intercept, partial.placeholder, property,
-                                        partial(validateChangeType, type, property))));
+        partial(validateChangeType, type, property))));
 }
 
 function decoratorWrapper(decorator, defaultOptions = {}) {
     return (targetOrOptions, ...args) => {
         const options = isEmpty(args) ?
-              defaults(targetOrOptions, defaultOptions) : defaultOptions;
+            defaults(targetOrOptions, defaultOptions) : defaultOptions;
 
         const wrap = (target, property, descriptor) => {
             const decorationFn = decorator(options);

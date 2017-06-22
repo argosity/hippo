@@ -27,15 +27,15 @@ describe('BaseModel Test', () => {
         const box = new Box({ id: 11, width: 5 });
         const spy = jest.fn();
         autorun(() => spy(box.syncUrl));
-        expect(spy).toHaveBeenCalledWith('/api/test/boxes/11');
+        expect(spy).toHaveBeenCalledWith('/api/test/box/11');
         expect(box.id).toEqual(11);
         expect(box.identifierFieldValue).toEqual(11);
         expect(box.isNew).toEqual(false);
-        expect(box.syncUrl).toEqual('/api/test/boxes/11');
+        expect(box.syncUrl).toEqual('/api/test/box/11');
         box.id = 42;
         expect(spy).toHaveBeenCalledTimes(2);
-        expect(spy).toHaveBeenCalledWith('/api/test/boxes/42');
-        expect(box.syncUrl).toEqual('/api/test/boxes/42');
+        expect(spy).toHaveBeenCalledWith('/api/test/box/42');
+        expect(box.syncUrl).toEqual('/api/test/box/42');
     });
 
     it('is set from sync', () => {

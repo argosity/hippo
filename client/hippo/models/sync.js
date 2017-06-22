@@ -82,7 +82,7 @@ function perform(urlPrefix, defaultOptions = {}) {
 }
 
 const peformMobxyRequest = action('SyncforModel', (mobxObj, options = {}) => {
-    mobxObj.syncInProgress = new SyncProgess(options);  // eslint-disable-line no-param-reassign
+    mobxObj.syncInProgress = new SyncProgess(options); // eslint-disable-line no-param-reassign
     return perform(options.url || mobxObj.syncUrl, options)
         .then(action('syncSuccessHandler', (json) => {
             extend(mobxObj, {

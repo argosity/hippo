@@ -3,6 +3,9 @@
 require('hippo/testing');
 const matchers = require('hippo/testing/matchers');
 const { shallow, mount } = require('enzyme');
+const log = require('loglevel');
+
+log.setLevel(log.levels.WARN);
 
 global.expect.extend(matchers);
 

@@ -2,7 +2,6 @@ import { filter, reduce, find } from 'lodash';
 import { computed } from 'mobx';
 
 export default class Info {
-
     constructor(query) {
         this.query = query;
     }
@@ -38,6 +37,4 @@ export default class Info {
         const property = this.query.src.identifierFieldName;
         return find(this.query.fields, { id: property });
     }
-
-
 }

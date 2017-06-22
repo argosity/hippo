@@ -15,7 +15,6 @@ const UPDATE_METHODS = { POST: true, PUT: true, PATCH: true };
 
 @identifiedBy('hippo/asset')
 export default class Asset extends BaseModel {
-
     @identifier id;
     @field order;
     @session file_data;
@@ -38,7 +37,7 @@ export default class Asset extends BaseModel {
                     !this.syncInProgress &&
                     !oldValue &&
                     newValue && newValue.isUpdate
-                   ) {
+                ) {
                     newValue.whenComplete(() => this.save());
                 }
             });
@@ -98,5 +97,4 @@ export default class Asset extends BaseModel {
                 return json;
             }).then(json => this.set(json.data));
     }
-
 }

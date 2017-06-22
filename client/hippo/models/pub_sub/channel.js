@@ -6,7 +6,6 @@ import { BaseModel } from '../base';
 const CHANNEL_SPLITTER = new RegExp('^(.*):(.*)/([^/]+)$');
 
 export default class PubSubCableChannel {
-
     constructor(pub_sub) {
         this.channel = pub_sub.cable.subscriptions.create(
             'pubsub', this,
