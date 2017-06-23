@@ -12,7 +12,7 @@ module Hippo::API
         post "user-session.json", &Hippo::API::Handlers::UserSession.create
         get "user-session/test.json", &Hippo::API::Handlers::UserSession.check
 
-        delete "user-session/:id.json" do
+        delete "user-session.json" do
             wrap_reply do
                 { success: true, message: "Logout succeeded", data: {}, token: '' }
             end

@@ -40,7 +40,9 @@ export default {
     setBootstrapData(bootstrapData) {
         this.controlling_id = bootstrapData.controlling_extension;
         this.instances.forEach((instance, key) => {
-            invoke(instance, 'setBootstrapData', bootstrapData[key]);
+            if (bootstrapData[key]) {
+                invoke(instance, 'setBootstrapData', bootstrapData[key]);
+            }
         });
     },
 

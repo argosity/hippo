@@ -1,4 +1,5 @@
-import { pick, merge, includes } from 'lodash';
+import { pick, merge, includes, omit } from 'lodash';
+
 import { action } from 'mobx';
 
 import {
@@ -72,7 +73,8 @@ export class UserModel extends BaseModel {
     setFromSessionRequest(req) {
         merge(this, pick(req, 'errors', 'lastServerMessage'));
         if (req.isValid) {
-            Config.update(req.data);
+            this.set(req.data.user);
+            Config.update(omit(req.data, 'user'));
             this.errors = {};
         }
         return this;
