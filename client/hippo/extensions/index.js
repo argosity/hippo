@@ -1,7 +1,7 @@
 import { invoke, each } from 'lodash';
 import { observable } from 'mobx';
 
-export default {
+const Extensions = {
 
     instances: observable.map(),
 
@@ -38,7 +38,9 @@ export default {
     },
 
     setBootstrapData(bootstrapData) {
-        this.controlling_id = bootstrapData.controlling_extension;
+        if (bootstrapData.controlling_extension) {
+            this.controlling_id = bootstrapData.controlling_extension;
+        }
         this.instances.forEach((instance, key) => {
             if (bootstrapData[key]) {
                 invoke(instance, 'setBootstrapData', bootstrapData[key]);
@@ -47,3 +49,5 @@ export default {
     },
 
 };
+
+export default Extensions;

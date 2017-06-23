@@ -25,6 +25,10 @@ export default class Extension extends BaseExtension {
     // the Base class will simply store the provided data as @data
     setBootstrapData() { return super.setBootstrapData(...arguments); }
 
+    // The root view that will be rendered when a screen is not being shown
+    // Return a different component here to customize
+    rootView() { return super.rootView(); }
+
     // A React component that should be rendered as part of the settings screen
     get systemSettingsComponent() {
         return null;

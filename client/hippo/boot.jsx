@@ -4,6 +4,7 @@ import whenDomReady from 'when-dom-ready';
 import { delay } from 'lodash';
 import { AppContainer } from 'react-hot-loader';
 import { onBoot } from './models/pub_sub';
+import './extensions/hippo';
 
 const Workspace = require('hippo/workspace').default;
 

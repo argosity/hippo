@@ -1,9 +1,9 @@
 import { observable, computed } from 'mobx';
 import { titleize, humanize } from '../lib/util';
 import Extensions from './index';
+import RootView from '../workspace/root-view';
 
 export { identifiedBy, identifier } from '../models/base';
-
 
 export class BaseExtension {
     @observable data;
@@ -22,5 +22,9 @@ export class BaseExtension {
 
     @computed get domain() {
         return window.location.hostname.split('.').slice(-2).join('.');
+    }
+
+    rootView() {
+        return RootView;
     }
 }

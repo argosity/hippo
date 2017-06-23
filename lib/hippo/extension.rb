@@ -102,9 +102,8 @@ module Hippo
                 }.each do |config|
                     data[config.to_sym] = Hippo.config.send(config)
                 end
-                data.merge(
+                data.merge!(
                     controlling_extension: controlling.identifier,
-                    initial_workspace_screen_id: Hippo.config.initial_workspace_screen_id
                 )
                 each do | ext |
                     ext_data  = ext.client_bootstrap_data

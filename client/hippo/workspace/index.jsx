@@ -6,15 +6,16 @@ import { bindAll } from 'lodash';
 import {
     BrowserRouter as Router,
     Route,
+    Switch,
 } from 'react-router-dom';
 
 
 import App from 'grommet/components/App';
 import Sidebar from 'react-sidebar';
-
 import 'hippo/config-data';
 import 'hippo/screen-definitions';
 
+import Extensions  from '../extensions';
 import Menu        from './menu';
 import Screen      from './screen';
 import LoginDialog from '../access/login-dialog';
@@ -23,9 +24,13 @@ import './styles.scss';
 
 const DOCKED_WIDTH_BREAKPOINT = 950;
 
-function NoMatch() {
+function NoMatch({ match: { path } }) {
+    const RootView = Extensions.controlling.rootView();
+    if ('/' === path && RootView) {
+        return <RootView />;
+    }
     return (
-        <h1>Not Found</h1>
+        <h1 className="not-found">{path} was not found</h1>
     );
 }
 
@@ -69,8 +74,10 @@ class Workspace extends React.Component {
                     docked={this.sidebarDocked}
                     onSetOpen={this.onSetSidebarOpen}
                 >
-                    <Route name='screen' path="/:screenId/:identifier?" component={Screen} />
-                    <Route path="*" component={NoMatch} />
+                    <Switch>
+                        <Route name='screen' path="/:screenId/:identifier?" component={Screen} />
+                        <Route component={NoMatch} />
+                    </Switch>
                 </Sidebar>
             </App>
         );
