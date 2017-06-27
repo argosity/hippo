@@ -1,0 +1,38 @@
+#hippo-root {
+    @import '~input-moment/dist/input-moment.css';
+    .date-time.component {
+
+        .tab {
+            display: none;
+            &.active { display: block; }
+        }
+
+        .tabs {
+            > * { padding: 0.23rem; }
+            margin-bottom: 10px;
+            .grommetux-control-icon { margin-right: 0.5rem; }
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            button {
+                min-width: 30px;
+                padding: 0;
+                &.next-month {
+                    &:before {
+                        content: ">";
+                        display: block;
+                    }
+                }
+                &.prev-month {
+                    &:before {
+                        content: "<";
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+}

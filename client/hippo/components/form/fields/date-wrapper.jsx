@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import moment from 'moment';
-import DateTime  from 'grommet/components/DateTime';
+import DateTime  from '../../date-time';
 
 @observer
 export default class DateWrapper extends React.PureComponent {

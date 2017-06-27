@@ -68,6 +68,7 @@
     "react-dropzone": "^3.13.3",
     "react-flexbox-grid": "git+https://github.com/nathanstitt/react-flexbox-grid.git#devel",
     "react-hot-loader": "3.0.0-beta.6",
+    "react-input-slider": "^1.6.0",
     "react-motion": "^0.5.0",
     "react-native-storage": "^0.2.2",
     "react-router": "^4.1.1",
