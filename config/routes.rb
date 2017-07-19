@@ -39,6 +39,9 @@ module Hippo::API
         post Hippo.config.api_path + Hippo.config.assets_path_prefix,
              &Hippo::API::Handlers::Asset.saver
 
+        delete Hippo.config.api_path + Hippo.config.assets_path_prefix + '/:id.json',
+               &Hippo::API::Handlers::Asset.deleter
+
         get Hippo.config.api_path + Hippo.config.assets_path_prefix + '/*',
             &Hippo::API::Handlers::Asset.file_getter
 

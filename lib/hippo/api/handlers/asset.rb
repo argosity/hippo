@@ -2,6 +2,15 @@ module Hippo::API::Handlers
 
     class Asset
 
+        def self.deleter
+            lambda do
+                asset = ::Hippo::Asset.find(params['id'])
+                asset.destroy
+                json_reply std_api_reply(:destroy, asset, {})
+            end
+        end
+
+
         def self.saver
             lambda do
                 model = params['owner_type'].underscore.camelize.constantize
