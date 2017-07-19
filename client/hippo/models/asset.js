@@ -1,5 +1,5 @@
-import { includes, get } from 'lodash';
-import { observe } from 'mobx';
+import { includes, get, extend } from 'lodash';
+import { observe, action } from 'mobx';
 import {
     BaseModel, identifiedBy, field, session, identifier, computed,
 } from './base';
@@ -17,7 +17,6 @@ const UPDATE_METHODS = { POST: true, PUT: true, PATCH: true };
 export default class Asset extends BaseModel {
     @identifier id;
     @field order;
-    @session file_data;
 
     @session file;
 
@@ -29,27 +28,50 @@ export default class Asset extends BaseModel {
 
     constructor(props) {
         super(props);
-        observe(this, 'owner', ({ newValue: owner }) => {
-            if (this.ownerSaveDisposer) { this.ownerSaveDisposer(); }
-            if (!owner || !owner.isModel) { return; }
-            this.ownerSaveDisposer = observe(owner, 'syncInProgress', ({ newValue, oldValue }) => {
-                if (this.isDirty &&
-                    !this.syncInProgress &&
-                    !oldValue &&
-                    newValue && newValue.isUpdate
-                ) {
-                    newValue.whenComplete(() => this.save());
-                }
-            });
-        }, true);
+        observe(this, 'owner', this.onOwnerChange, true);
     }
 
-    @computed get baseUrl() {
-        return Config.api_host + Config.api_path + Config.assets_path_prefix;
+    static get syncUrl() {
+        return Config.api_path + Config.assets_path_prefix;
     }
+
+
+    @action.bound
+    onOwnerChange({ newValue: owner }) {
+        if (this.ownerSaveDisposer) { this.ownerSaveDisposer(); }
+        if (!owner || !owner.isModel) { return; }
+        this.ownerSaveDisposer = observe(owner, 'syncInProgress', ({ newValue, oldValue }) => {
+            if (this.isDirty &&
+                !this.syncInProgress &&
+                !oldValue &&
+                newValue && newValue.isUpdate
+            ) {
+                newValue.whenComplete(() => this.save());
+            }
+        });
+    }
+
+    setFile(file) {
+        if (file.preview) {
+            this.file = file;
+            return Promise.resolve(this);
+        }
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = (ev) => {
+                if ('loadend' === ev.type) {
+                    extend(file, { preview: reader.result });
+                    this.file = file;
+                    resolve(this);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
 
     @computed get isDirty() {
-        return !!this.file;
+        return Boolean(this.isNew || !this.file);
     }
 
     @computed get exists() {
@@ -67,13 +89,13 @@ export default class Asset extends BaseModel {
         );
     }
 
-    @computed get previewUrl() {
+    get previewUrl() {
         return get(this, 'file.preview', this.urlFor('thumbnail'));
     }
 
     urlFor(type = 'original') {
         const url = get(this, `file_data.${type}.id`);
-        return url ? `${this.baseUrl}/${url}` : null;
+        return url ? `${Config.api_host}${this.constructor.syncUrl}/${url}` : null;
     }
 
     save() {

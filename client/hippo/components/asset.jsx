@@ -22,9 +22,9 @@ export default class Asset extends React.PureComponent {
     }
 
     static propTypes = {
-        model:   PropTypes.instanceOf(BaseModel).isRequired,
-        name: PropTypes.string.isRequired,
-        label:    PropTypes.string,
+        model:     PropTypes.instanceOf(BaseModel).isRequired,
+        name:      PropTypes.string.isRequired,
+        label:     PropTypes.string,
         className: PropTypes.string,
     }
 
@@ -33,7 +33,7 @@ export default class Asset extends React.PureComponent {
         if (!this.asset) {
             this.props.model[this.props.name] = {};
         }
-        this.asset.file = files[0];
+        this.asset.setFile(files[0]);
     }
 
     get asset() {
