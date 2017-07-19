@@ -1,0 +1,49 @@
+@import 'hippo/styles/global';
+
+.grommet .text-editor {
+
+    border: 1px solid #ddd;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .text-editor-content {
+        flex: 1;
+    }
+
+
+    .toolbar > * {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    p:not(.grommetux-paragraph) {
+        max-width: inherit;
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .content-image {
+        width: 100%;
+        height: auto;
+    }
+
+
+    button:not(.grommetux-button) {
+        min-width: inherit;
+        padding: 0;
+        border: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    header {
+        .active {
+            border-bottom: 2px solid $focus-border-color;
+        }
+    }
+}

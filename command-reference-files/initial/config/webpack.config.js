@@ -9,9 +9,9 @@ const entries = {
 };
 
 <% unless Hippo.env.production? -%>
-    for (var key in entries) {
-        entries[key].unshift('react-hot-loader/patch');
-    }
+for (var key in entries) {
+    entries[key].unshift('react-hot-loader/patch');
+}
 <% end -%>
 
 const config = {
@@ -19,7 +19,7 @@ const config = {
     output: {
         path: '<%= config_directory.join('..','public', 'assets') %>',
         publicPath: '<%= Hippo.env.production? ? "https://assets.#{Hippo.config.website_domain}/assets/" : 'http://test.hippo.dev:8889/assets/' %>',
-        filename: '[name]-[hash].js',
+                    filename: '[name]-[hash].js',
     },
     resolve: {
         modules: [
@@ -63,19 +63,19 @@ const config = {
                 },
             },
             { test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'resolve-url-loader',
-                    {
-                        loader: 'sass-loader',
-                        options: {
+              use: [
+                  'style-loader',
+                  'css-loader',
+                  'resolve-url-loader',
+                  {
+                      loader: 'sass-loader',
+                      options: {
                           includePaths: [
                               "<%= Hippo::Extensions.client_module_paths.join('","') %>",
                           ],
-                        },
-                    },
-                ],
+                      },
+                  },
+              ],
             },
         ],
     },
@@ -84,20 +84,20 @@ const config = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
         }),
-<% if Hippo.env.production? %>
+        <% if Hippo.env.production? %>
         new webpack.optimize.UglifyJsPlugin(), //minify everything
         new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
         new webpack.optimize.OccurrenceOrderPlugin(), // use smallest id for most used chuncks
         new CompressionPlugin({
-          asset: "[path].gz[query]",
-          algorithm: "gzip",
-          test: /\.(js|html)$/,
-          threshold: 10240,
-          minRatio: 0.8
+            asset: "[path].gz[query]",
+            algorithm: "gzip",
+            test: /\.(js|html)$/,
+            threshold: 10240,
+            minRatio: 0.8
         }),
-<% else %>
+        <% else %>
         new webpack.NamedModulesPlugin(),
-<% end %>
+        <% end %>
     ],
     node: {
         fs: 'empty',
