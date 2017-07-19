@@ -22,9 +22,9 @@ const CLASS_ROOT = CSSClassnames.DATE_TIME;
 export default class DateTime extends React.Component {
 
     static propTypes = {
-        value: PropTypes.object.isRequired,
+        value:    PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
         onChange: PropTypes.func.isRequired,
-        format: PropTypes.string,
+        format:   PropTypes.string,
     }
 
     static defaultProps = {
