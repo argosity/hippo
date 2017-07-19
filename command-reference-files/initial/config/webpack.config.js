@@ -70,7 +70,9 @@ const config = {
                     {
                         loader: 'sass-loader',
                         options: {
-                            includePaths: [path.resolve('./node_modules')],
+                          includePaths: [
+                              "<%= Hippo::Extensions.client_module_paths.join('","') %>",
+                          ],
                         },
                     },
                 ],
