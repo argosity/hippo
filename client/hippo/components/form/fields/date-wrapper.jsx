@@ -7,7 +7,9 @@ import DateTime  from '../../date-time';
 
 @observer
 export default class DateWrapper extends React.PureComponent {
-    static defaultProps = { format: 'M/D/YYYY h:mm a' }
+    static defaultProps = {
+        format: 'M/D/YYYY h:mm a'
+    }
     static childContextTypes = { onDropChange: PropTypes.func }
     @observable isSelecting;
     @observable dateValue;
@@ -28,7 +30,6 @@ export default class DateWrapper extends React.PureComponent {
         this.dateValue = date;
         this.props.onChange({ target: { value: this.dateValue } });
     }
-
 
     @action.bound onBlur(ev) {
         this.dateValue = moment(ev.target.value, this.props.format).toDate();

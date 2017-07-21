@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { action, observable } from 'mobx';
+import { action, observable, computed } from 'mobx';
 import { observer }   from 'mobx-react';
 import CalendarIcon from 'grommet/components/icons/base/Calendar';
 import ClockIcon from 'grommet/components/icons/base/Clock';
@@ -28,7 +28,7 @@ export default class DateTime extends React.Component {
     }
 
     static defaultProps = {
-        format: 'M/D/YYYY h:mm a',
+        format: 'M/D/YYYY',
         onDropChange: () => {},
     }
 
@@ -36,8 +36,9 @@ export default class DateTime extends React.Component {
         onDropChange: PropTypes.func,
     }
 
-    @observable value;
     @observable drop;
+    @observable dateValue;
+    @observable editingValue
 
     @action.bound
     onClose(ev) {
@@ -49,11 +50,16 @@ export default class DateTime extends React.Component {
     }
 
     @action.bound
+    onForceClose() {
+        this.setDropActivation(false);
+    }
+
+    @action.bound
     setDropActivation(dropActive) {
         const { onDropChange } =  this.context;
 
         const listeners = {
-            esc: this._onForceClose,
+            esc: this.onForceClose,
         };
 
         if (dropActive && !this.dropActive) {
@@ -85,8 +91,27 @@ export default class DateTime extends React.Component {
         }
     }
 
-    componentWillMount() {
-        this.value = moment(this.props.value || new Date());
+    @computed get value() {
+        return this.dateValue || moment(this.props.value || new Date());
+    }
+
+    set value(value) {
+        this.dateValue = value;
+    }
+
+    @action.bound
+    onInputChange(ev) {
+        this.editingValue = ev.target.value;
+    }
+
+    @action.bound
+    onInputBlur() {
+        if (this.editingValue) {
+            this.value = moment(this.editingValue, this.props.format);
+            delete this.editingValue;
+            this.onForceClose();
+            this.props.onChange(this.value);
+        }
     }
 
     componentWillUnmount() {
@@ -95,13 +120,13 @@ export default class DateTime extends React.Component {
 
     @action.bound
     onControlClick() {
-        this.setDropActivation(!this.dropActive);
+        this.setDropActivation(true);
     }
 
     @action.bound
     onDateChange(date) {
         this.value = moment(date);
-        this.props.onChange(this.value.date());
+        this.props.onChange(this.value.toDate());
     }
 
     renderDrop() {
@@ -116,7 +141,7 @@ export default class DateTime extends React.Component {
 
     render() {
         const { props: { format, dateOnly } } = this;
-        const inputValue = this.value.format(format);
+        const inputValue = this.editingValue || this.value.format(format);
         const Icon = dateOnly ? CalendarIcon : ClockIcon;
 
         return (
@@ -125,11 +150,11 @@ export default class DateTime extends React.Component {
                 className={CLASS_ROOT}
             >
                 <input
-                    readOnly
-                    type="text"
                     placeholder={format}
                     className={`${INPUT} ${CLASS_ROOT}__input`}
                     onClick={this.onControlClick}
+                    onChange={this.onInputChange}
+                    onBlur={this.onInputBlur}
                     value={inputValue || ''}
                 />
                 <Button

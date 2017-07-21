@@ -46,14 +46,15 @@ export default class TimeSelector extends React.PureComponent {
     @action.bound
     onHourChange(ev) {
         const d = getDigits(ev);
+        const m = this.props.moment;
         if (inRange(d, 1, 13)) {
-            const m = this.props.moment;
             m.hours(this.isPM ? d + 12 : d);
-            this.props.onChange(m);
             this.hour = d;
         } else {
             this.hour = 0;
+            m.hours(0);
         }
+        this.props.onChange(m);
     }
 
     @action.bound
