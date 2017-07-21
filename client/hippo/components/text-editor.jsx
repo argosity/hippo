@@ -42,7 +42,6 @@ export default class TextEditor extends React.PureComponent {
             editables: [this.content],
             defaultPlugin,
         });
-        tapEventPlugin();
     }
 
     @action.bound
