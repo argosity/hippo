@@ -9,6 +9,6 @@ class CreateUsers < ActiveRecord::Migration[5.0]
             t.timestamps null:false
         end
 
-        add_index :users, [:login, :tenant_id], unique: true
+        add_index :users, 'lower(login), tenant_id', name: 'index_users_on_login_and_tenant_id', unique: true
     end
 end

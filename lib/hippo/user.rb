@@ -14,6 +14,10 @@ module Hippo
 
         whitelist_attributes :password
 
+        def self.with_login(login)
+            where("lower(login) = ?", login.downcase)
+        end
+
         def roles
             @cached_roles ||= Access::RoleCollection.new(self)
         end
