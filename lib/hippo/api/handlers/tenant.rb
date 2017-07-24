@@ -12,7 +12,7 @@ module Hippo::API::Handlers
             tenant = Hippo::Tenant.current
             tenant.assign_attributes(data.slice(*PUBLIC_ATTRS))
             success = tenant.save
-            if success
+            if success && tenant.slug_previously_changed?
                 Hippo::Tenant.system.perform do
                     Hippo::Templates::TenantChange.create(tenant).deliver
                 end
