@@ -6,6 +6,8 @@ import { AppContainer } from 'react-hot-loader';
 import { onBoot } from './models/pub_sub';
 import './extensions/hippo';
 
+// react-tap-event-plugin is required for material-ui which is used by ory-editor-ui
+require('react-tap-event-plugin')();
 const Workspace = require('hippo/workspace').default;
 
 let Root;
