@@ -21,8 +21,11 @@ module Hippo
                 FactoryGirl.find_definitions
                 MultiTenant.current_tenant = Hippo::Tenant.system
                 ext.on_dev_console
-                ARGV.clear
-                IRB.start
+                Pry::Commands.block_command "tenant", "set current tenant to <slug>" do |slug|
+                    MultiTenant.current_tenant=Hippo::Tenant.find_by_slug!(slug)
+                    puts "Current tenant id = #{MultiTenant.current_tenant.id}"
+                end
+                Pry.start
             end
 
         end
