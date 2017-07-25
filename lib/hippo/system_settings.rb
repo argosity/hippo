@@ -35,6 +35,12 @@ module Hippo
                 SystemSettings.first_or_create
             end
 
+            def public_json
+                {
+                    'logo' => Hippo::SystemSettings.config.as_json(include: ['logo']).dig('logo', 'file_data')
+                }
+            end
+
             def for_ext(extension_id)
                 config.for_ext(extension_id)
             end
