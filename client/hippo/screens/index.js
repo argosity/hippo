@@ -1,5 +1,5 @@
-import { observable, computed } from 'mobx';
-import { map, filter, intersection } from 'lodash';
+import { observable, computed, toJS } from 'mobx';
+import { map, filter, compact, intersection } from 'lodash';
 import Group from './group';
 import Config from '../config';
 
@@ -14,7 +14,11 @@ const Screens = observable({
     },
 
     @computed get active() {
-        return map(Config.screen_ids, id => this.all.get(id));
+        return compact(map(Config.screen_ids, id => this.all.get(id)));
+    },
+
+    @computed get unGrouped() {
+        return filter(this.active, s => !s.group_id);
     },
 
     reset() {

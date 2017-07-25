@@ -16,7 +16,7 @@ export default class Config {
     @persist @observable product_name;
     @persist('list') @observable screen_ids = [];
     @persist @observable user_info;
-
+    @persist('object') @observable logo;
     @observable user;
     @observable isIntialized = false;
 
