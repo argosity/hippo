@@ -35,6 +35,10 @@ export default class Asset extends BaseModel {
         return Config.api_path + Config.assets_path_prefix;
     }
 
+    static urlForSize(data, size) {
+        const url = get(data, `${size}.id`);
+        return url ? `${Config.api_host}${this.syncUrl}/${url}` : null;
+    }
 
     @action.bound
     onOwnerChange({ newValue: owner }) {
@@ -93,9 +97,8 @@ export default class Asset extends BaseModel {
         return get(this, 'file.preview', this.urlFor('thumbnail'));
     }
 
-    urlFor(type = 'original') {
-        const url = get(this, `file_data.${type}.id`);
-        return url ? `${Config.api_host}${this.constructor.syncUrl}/${url}` : null;
+    urlFor(size = 'original') {
+        return this.constructor.urlForSize(this.file_data, size);
     }
 
     save() {
