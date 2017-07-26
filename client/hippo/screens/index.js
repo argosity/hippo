@@ -1,4 +1,4 @@
-import { observable, computed, toJS } from 'mobx';
+import { observable, computed } from 'mobx';
 import { map, filter, compact, intersection } from 'lodash';
 import Group from './group';
 import Config from '../config';
