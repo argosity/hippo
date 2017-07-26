@@ -39,6 +39,13 @@ export class FormField {
     }
 
     @action.bound
+    exposeError() {
+        if (!this.isValid) {
+            this.isTouched = true;
+        }
+    }
+
+    @action.bound
     onBlur() {
         this.isTouched = true;
     }
@@ -110,6 +117,10 @@ export class FormState {
             return get(field, rest.join('.'), defaultValue);
         }
         return field;
+    }
+
+    exposeErrors() {
+        this.fields.forEach(field => field.exposeError());
     }
 
     reset() {
