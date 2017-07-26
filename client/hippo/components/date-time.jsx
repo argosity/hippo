@@ -92,7 +92,7 @@ export default class DateTime extends React.Component {
     }
 
     @computed get value() {
-        return this.dateValue || moment(this.props.value || new Date());
+        return this.dateValue || this.props.value ? moment(this.props.value) : '';
     }
 
     set value(value) {
@@ -139,9 +139,14 @@ export default class DateTime extends React.Component {
         );
     }
 
+    @computed get inputValue() {
+        if (this.editingValue) { return this.editingValue; }
+        if (this.value) { return this.value.format(this.props.format); }
+        return '';
+    }
+
     render() {
-        const { props: { format, dateOnly } } = this;
-        const inputValue = this.editingValue || this.value.format(format);
+        const { inputValue, props: { format, dateOnly } } = this;
         const Icon = dateOnly ? CalendarIcon : ClockIcon;
 
         return (
