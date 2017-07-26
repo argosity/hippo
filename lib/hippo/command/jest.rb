@@ -17,6 +17,7 @@ module Hippo
 
 
             def configure
+                @extension ||= Command.load_current_extension(raise_on_fail:true)
                 @config = Hippo::Webpack::ClientConfig.new
                 @config.invoke_all
                 self
@@ -33,6 +34,7 @@ module Hippo
                 options.each do |key, value|
                     cmd << " --#{key}" if value
                 end
+                say cmd, :green
                 exec(cmd)
             end
         end
