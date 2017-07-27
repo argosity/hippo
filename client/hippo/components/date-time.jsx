@@ -107,10 +107,11 @@ export default class DateTime extends React.Component {
     @action.bound
     onInputBlur() {
         if (this.editingValue) {
-            this.value = moment(this.editingValue, this.props.format);
-            delete this.editingValue;
+            const value = moment(this.editingValue, this.props.format);
+            this.editingValue = '';
             this.onForceClose();
-            this.props.onChange(this.value);
+            this.props.onChange(value);
+            this.value = value;
         }
     }
 
