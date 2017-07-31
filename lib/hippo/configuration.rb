@@ -50,6 +50,8 @@ module Hippo
         end
 
         def self.apply
+            Oj.default_options = { mode: :rails, time_format: :xmlschema }
+
             controlling_ext = Hippo::Extensions.bootstrap
             secrets = controlling_ext.root_path.join('config', 'secrets.yml')
             @@secrets = Hashie::Mash.new(
