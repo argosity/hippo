@@ -34,7 +34,10 @@ module Hippo
             end
 
             def data
-                @json_data ||= Oj.load( request.body.read ) || {}
+                @json_data ||= (
+                    body = request.body.read
+                    body.present? ? Oj.load(body) : {}
+                )
             end
 
             def request_origin
