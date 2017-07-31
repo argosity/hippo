@@ -4,6 +4,8 @@ import {
     isNumber, isObject, isEmpty, isNil, isString, each,
 } from 'lodash';
 import pluralize from 'pluralize';
+import classnames from 'classnames';
+import { getColumnProps } from 'react-flexbox-grid';
 
 function lcDash(char, match, index) {
     return (0 === index ? '' : '_') + char.toLowerCase();
@@ -15,6 +17,10 @@ export function emptyFn() {}
 
 export function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function columnClasses(props, ...classes) {
+    return classnames(getColumnProps(props).className, ...classes);
 }
 
 export function dasherize(str) {
