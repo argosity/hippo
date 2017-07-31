@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: 0 */
+
 import qs from 'qs';
 import 'whatwg-fetch'; // fetch polyfill
 
@@ -82,32 +84,27 @@ function perform(urlPrefix, defaultOptions = {}) {
 }
 
 const peformMobxyRequest = action('SyncforModel', (mobxObj, options = {}) => {
-    mobxObj.syncInProgress = new SyncProgess(options); // eslint-disable-line no-param-reassign
+    mobxObj.syncInProgress = new SyncProgess(options);
     return perform(options.url || mobxObj.syncUrl, options)
         .then(action('syncSuccessHandler', (json) => {
-            extend(mobxObj, {
-                errors:            json.errors,
-                syncData:          json.data,
-                lastServerMessage: json.message,
-            });
+            mobxObj.syncData = json.data;
+            mobxObj.errors = json.errors;
+            mobxObj.lastServerMessage = json.message;
+
             // sometimes the polyfill (or fetch iteself) sets a `:success` property?
             if (false === json[':success']) { merge(mobxObj, { errors: { fetch: json[':message'] } }); }
             return json;
         }))
         .then(action('whenComplete', json => invokeWhenComplete(json, mobxObj.syncInProgress)))
         .then(action('syncDoneHandler', () => {
-            extend(mobxObj, {
-                syncInProgress: undefined,
-            });
+            mobxObj.syncInProgress = undefined;
             return mobxObj;
         }))
         .catch(action('syncErrorHandler', (e) => {
             logger.warn(e);
-            extend(mobxObj, {
-                errors:            { network: e },
-                syncInProgress:     undefined,
-                lastServerMessage:  e.toString(),
-            });
+            mobxObj.errors = { network: e };
+            mobxObj.syncInProgress = undefined;
+            mobxObj.lastServerMessage = e.toString();
             return {};
         }));
 });
