@@ -1,5 +1,5 @@
 import { omit } from 'lodash';
-
+import { action } from 'mobx';
 import { logger } from '../../lib/util';
 import { BaseModel } from '../base';
 
@@ -8,8 +8,9 @@ const CHANNEL_SPLITTER = new RegExp('^(.*):(.*)/([^/]+)$');
 export default class PubSubCableChannel {
     constructor(pub_sub) {
         this.channel = pub_sub.cable.subscriptions.create(
-            'pubsub', this,
+            'Hippo::API::PubSub', this,
         );
+        this.channel.received = this.received;
         this.pub_sub = pub_sub;
     }
 
@@ -23,11 +24,12 @@ export default class PubSubCableChannel {
         this.channel.perform('off', { channel });
     }
 
+    @action.bound
     received(data) {
         const [channel, _, modelId, id] = Array.from(
             data.channel.match(CHANNEL_SPLITTER),
         );
-        logger.info(`[pubsub] change recvd for: ${channel}`);
+
         const model = BaseModel.findDerived(modelId);
         this.pub_sub.onModelChange(model, id, omit(data, 'channel'));
     }

@@ -114,11 +114,8 @@ module Hippo
         # prefix to use for all urls
         config_option :mounted_at, '/'
 
-        # The initial id of the screen that should be displayed
-        config_option :root_view, 'workspace-layout'
-
-        # Screen to display on load (if workspace extension is used)
-        config_option :initial_workspace_screen_id, ''
+        # Configuration for action cable
+        config_option :cable, { 'adapter' => 'redis' }
 
         # types of assets to include into compiled package
         config_option :static_asset_types, ['images','fonts']
@@ -126,8 +123,6 @@ module Hippo
         config_option :website_domain, 'test.com'
 
         config_option :product_name, 'Hippo Funtime'
-
-        config_option :api_use_any_cable, false
 
         def api_path
             mounted_at + 'api'

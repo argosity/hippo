@@ -1,3 +1,5 @@
+require_relative './pub_sub'
+
 module Hippo
 
     module API

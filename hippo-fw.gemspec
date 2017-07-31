@@ -26,9 +26,10 @@ Gem::Specification.new do |spec|
 
     spec.add_dependency "activejob",                 "~> 5.1.0"
     spec.add_dependency "activerecord",              "~> 5.1.0"
-    spec.add_dependency "activerecord-multi-tenant", "~> 0.6"
+    spec.add_dependency "activerecord-multi-tenant", "~> 0.7"
 
     spec.add_dependency "litecable",                 "~> 0.4.1"
+    spec.add_dependency "anycable",                  "~> 0.4.6"
     spec.add_dependency "websocket",                 "~> 1.2.4"
     spec.add_dependency "mail",                      "~> 2.6"
     spec.add_dependency "scenic",                    "~> 1.4"
@@ -65,7 +66,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "jwt",                       "~> 1.5"
     spec.add_dependency "mini_magick",               "~> 4.3"
 
-    spec.add_dependency "oj",                        "~> 2.1"
+    spec.add_dependency "oj",                        "~> 3.3"
     spec.add_dependency "pg",                        "~> 0.8"
     spec.add_dependency "rake",                      "~> 12.0"
     spec.add_dependency "require_all",               "~> 1.3"

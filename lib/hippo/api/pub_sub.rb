@@ -3,8 +3,7 @@ require_relative 'cable'
 module Hippo
     module API
 
-        class PubSub < Cable::Channel
-            identifier :pubsub
+        class PubSub < ActionCable::Channel::Base
 
             PREFIX = 'ps:'
 
@@ -14,14 +13,16 @@ module Hippo
             end
 
             def off(data)
-                Hippo.logger.info "pubsub off: #{data['channel']}"
-                stop_stream channel_prefix + data['channel']
+                channel = channel_prefix + data['channel']
+                subscribers = pubsub
+                                  .instance_variable_get('@listener')
+                                  .instance_variable_get('@subscribers')[channel]
+                pubsub.unsubscribe(channel, subscribers.first) if subscribers.any?
             end
 
             def self.publish(channel, data)
-                Hippo.logger.info "pubsub pub: #{channel}"
                 channel = channel_prefix + channel
-                LiteCable.broadcast(channel, data.merge(channel: channel))
+                ActionCable.server.broadcast(channel, data.merge(channel: channel))
             end
 
             def self.channel_prefix

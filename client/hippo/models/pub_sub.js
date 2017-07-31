@@ -1,8 +1,8 @@
 import { Atom, when, reaction } from 'mobx';
 import ActionCable from 'actioncable';
 import invariant from 'invariant';
-import { invoke, mapValues } from 'lodash';
-
+import { isEmpty, invoke, mapValues } from 'lodash';
+import { logger } from '../lib/util';
 import User from '../user';
 import Config from '../config';
 
@@ -32,9 +32,11 @@ class PubSubMap {
 
     onChange(id, data) {
         const models = this.map[id];
-        if (models) {
+        if (!isEmpty(models)) {
             const update = mapValues(data.update, '[1]');
-            invoke(models, 'set', update);
+            for (let i = 0; i < models.length; i += 1) {
+                models[i].set(update);
+            }
         }
     }
 
@@ -43,7 +45,8 @@ class PubSubMap {
         if (!models.includes(model)) {
             models.push(model);
             if (1 === models.length) {
-                PubSub.channel.subscribe(this.channelForId(id));
+                const channel = this.channelForId(id);
+                PubSub.channel.subscribe(channel);
             }
         }
     }
@@ -93,8 +96,10 @@ PubSub = {
 
     onLoginChange() {
         if (User.isLoggedIn) {
-            const url = `${Config.api_host}${Config.api_path}/cable?token=${Config.access_token}`;
-            PubSub.cable = ActionCable.createConsumer(url);
+            const host = Config.api_host.replace(/^http/, 'ws');
+            const url = `${host}${Config.api_path}/cable?token=${Config.access_token}`;
+            ActionCable.startDebugging();
+            PubSub.cable = new ActionCable.Consumer(url);
             PubSub.channel = new PubSubCableChannel(PubSub);
         } else if (PubSub.cable) {
             PubSub.cable.disconnect();

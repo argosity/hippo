@@ -1,4 +1,4 @@
-require "lite_cable"
+require "action_cable"
 
 module Hippo
     module API
@@ -10,14 +10,13 @@ module Hippo
                 @@server.call(request.env)
             end
 
-            class Channel < LiteCable::Channel::Base
-            end
-
-            class Connection < LiteCable::Connection::Base
+            class Connection < ActionCable::Connection::Base
                 identified_by :current_user
 
                 def connect
                     token = request.params['token']
+                    Hippo.logger_debug("NEW WS CONN: #{token}")
+
                     begin
                         self.current_user = User.for_jwt_token(token) if token
                     rescue JWT::DecodeError
@@ -37,15 +36,16 @@ module Hippo
 
             def self.configure
                 require_relative './updates'
+                @@config = ActionCable::Server::Configuration.new
+                config.logger = Hippo.logger
+                config.cable = Hippo.config.cable
+                config.connection_class = -> { Connection }
+                config.allowed_request_origins = -> (host) {
+                    host
+                }
+                ActionCable::Server::Base.config = config
+                @@server = ActionCable.server
 
-                if Hippo.config.api_use_any_cable
-
-                else
-                    require "lite_cable/server"
-                    @@server = LiteCable::Server::Middleware.new(
-                        Hippo::API::Root, connection_class: Hippo::API::Cable::Connection
-                    )
-                end
                 Updates.relay!
             end
 

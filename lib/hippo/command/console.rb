@@ -1,3 +1,5 @@
+require_relative '../api/updates'
+
 module Hippo
     module Command
 
@@ -19,6 +21,7 @@ module Hippo
                     ext.root_path.join('spec/factories')
                 end
                 FactoryGirl.find_definitions
+                Hippo::API::Cable.configure
                 MultiTenant.current_tenant = Hippo::Tenant.system
                 ext.on_dev_console
                 Pry::Commands.block_command "tenant", "set current tenant to <slug>" do |slug|
