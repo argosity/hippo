@@ -38,6 +38,7 @@ export default class DateTime extends React.Component {
 
     @observable drop;
     @observable dateValue;
+
     @observable editingValue
 
     @action.bound
@@ -95,10 +96,6 @@ export default class DateTime extends React.Component {
         return this.dateValue || this.props.value ? moment(this.props.value) : '';
     }
 
-    set value(value) {
-        this.dateValue = value;
-    }
-
     @action.bound
     onInputChange(ev) {
         this.editingValue = ev.target.value;
@@ -106,12 +103,13 @@ export default class DateTime extends React.Component {
 
     @action.bound
     onInputBlur() {
-        if (this.editingValue) {
-            const value = moment(this.editingValue, this.props.format);
-            this.editingValue = '';
-            this.onForceClose();
+        if (! this.editingValue) { return; }
+        const value = moment(this.editingValue, this.props.format);
+        this.editingValue = '';
+        this.onForceClose();
+        if (value.isValid()) {
             this.props.onChange(value);
-            this.value = value;
+            this.dateValue = value;
         }
     }
 
@@ -126,8 +124,9 @@ export default class DateTime extends React.Component {
 
     @action.bound
     onDateChange(date) {
-        this.value = moment(date);
-        this.props.onChange(this.value.toDate());
+        const value = moment(date);
+        this.props.onChange(value.toDate());
+        this.dateValue = value;
     }
 
     renderDrop() {

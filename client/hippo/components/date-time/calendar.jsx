@@ -41,7 +41,6 @@ export default class Calendar extends React.PureComponent {
         m.date(i);
         if (prevMonth) m.subtract(1, 'month');
         if (nextMonth) m.add(1, 'month');
-
         this.props.onChange(m);
         this.forceUpdate();
     }
