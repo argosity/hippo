@@ -28,7 +28,6 @@ const TypesMapping = {
 
 };
 
-
 @inject('formState')
 @observer
 export default class FormField extends React.PureComponent {
