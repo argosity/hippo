@@ -3,7 +3,7 @@
 }] */
 import { observable, computed, when, action } from 'mobx';
 import {
-    pick, isFunction, mapValues, every, get, filter, isNil, each,
+    pick, isFunction, mapValues, every, get, set, filter, isNil, each,
 } from 'lodash';
 
 export class FormField {
@@ -128,7 +128,10 @@ export class FormState {
     }
 
     set(values) {
-        this.fields.forEach((field, name) => (field.value = isNil(values[name]) ? '' : values[name]));
+        this.fields.forEach((field, name) => {
+            const value = get(values, name);
+            field.value = isNil(value) ? '' : value;
+        });
     }
 
     setFromModel(model) {
@@ -143,7 +146,7 @@ export class FormState {
     }
 
     persistTo(model) {
-        this.fields.forEach((field, name) => (model[name] = field.value));
+        this.fields.forEach((field, name) => (set(model, name, field.value)));
         return Promise.resolve(model);
     }
 }
