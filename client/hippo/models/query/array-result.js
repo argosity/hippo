@@ -59,9 +59,10 @@ export default class ArrayResult extends Result {
     rowAsObject(index) {
         const row = this.rows[index];
         const obj = {};
-        this.query.info.loadableFields.forEach(
-            f => (obj[f.id] = (row[f.dataIndex] || f.defaultValue)),
-        );
+        this.query.info.loadableFields.forEach((f) => {
+            const value = row[f.dataIndex] || f.defaultValue;
+            if (!isNil(value)) { obj[f.id] = value; }
+        });
         return obj;
     }
 
