@@ -1,8 +1,7 @@
 import { Atom, when, reaction } from 'mobx';
 import ActionCable from 'actioncable';
 import invariant from 'invariant';
-import { isEmpty, invoke, mapValues } from 'lodash';
-import { logger } from '../lib/util';
+import { isEmpty, mapValues } from 'lodash';
 import User from '../user';
 import Config from '../config';
 

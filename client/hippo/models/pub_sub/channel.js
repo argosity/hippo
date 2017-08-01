@@ -26,7 +26,7 @@ export default class PubSubCableChannel {
 
     @action.bound
     received(data) {
-        const [channel, _, modelId, id] = Array.from(
+        const [_, __, modelId, id] = Array.from(
             data.channel.match(CHANNEL_SPLITTER),
         );
 
