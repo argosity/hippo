@@ -148,6 +148,7 @@ export class PubSubAtom {
 }
 
 export function observePubSub(...models) {
+    if (!PubSub.channel) { return; }
     for (let i = 0; i < models.length; i += 1) {
         const model = models[i];
         if (!model.$pubSub) {
