@@ -43,6 +43,9 @@ module RackSpecMixin
     def last_response_json
         Oj.load(last_response.body)
     end
+    def response_data
+        last_response_json['data']
+    end
 end
 
 HIPPO_ENV = "test"
