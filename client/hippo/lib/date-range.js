@@ -7,7 +7,7 @@ import {
 export default class DateRange {
     constructor(range) {
         if (isString(range) && !isEmpty(range)) {
-            [this.start, this.end] = map(range.split('..'), d => new Date(d));
+            [this.start, this.end] = map(range.split('...'), d => new Date(d));
         } else if (range) {
             this.start = range.start;
             this.end = range.end;
