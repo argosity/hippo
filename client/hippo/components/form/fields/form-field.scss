@@ -1,4 +1,12 @@
-.form-field {
+.row > .form-field {
     margin-top: 0.5rem;
     .grommetux-form-field { width: 100%; }
+}
+
+.grommetux-number-input {
+    .grommetux-button {
+        .grommetux-button__icon {
+            padding: 6px;
+        }
+    }
 }

@@ -119,14 +119,17 @@ export class FormState {
         return field;
     }
 
+    @action
     exposeErrors() {
         this.fields.forEach(field => field.exposeError());
     }
 
+    @action
     reset() {
         this.fields.forEach(field => field.reset());
     }
 
+    @action
     set(values) {
         this.fields.forEach((field, name) => {
             const value = get(values, name);
@@ -134,6 +137,7 @@ export class FormState {
         });
     }
 
+    @action
     setFromModel(model) {
         if (get(model, 'syncInProgress.isFetch')) {
             when(
