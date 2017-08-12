@@ -36,3 +36,20 @@ pre {
         display: flex;
     }
 }
+
+.sidebar-toggle {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    opacity: 0.2;
+    transistion: all 0.4s;
+    &:hover {
+        opacity: 1.0;
+    }
+    &.is-open {
+        display:none;
+    }
+}

@@ -3,18 +3,18 @@ import React from 'react';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { bindAll } from 'lodash';
+import cn from 'classnames';
 import {
     BrowserRouter as Router,
     Route,
     Switch,
 } from 'react-router-dom';
-
-
 import App from 'grommet/components/App';
 import Sidebar from 'react-sidebar';
 import 'hippo/config-data';
 import 'hippo/screen-definitions';
-
+import Button from 'grommet/components/Button';
+import CirclePlayIcon from 'grommet/components/icons/base/CirclePlay';
 import Extensions  from '../extensions';
 import Menu        from './menu';
 import Screen      from './screen';
@@ -61,19 +61,32 @@ class Workspace extends React.Component {
     onSetSidebarOpen(open) {
         this.sidebarOpen = open;
     }
+
+    @action.bound
+    toggleSidebarDocked() {
+        this.sidebarOpen = !this.sidebarOpen;
+        console.log('tog', this.sidebarOpen);
+    }
+
     render() {
         return (
-            <App
-                centered={false}
-            >
+            <App centered={false}>
                 <LoginDialog />
                 <Sidebar
                     styles={{ sidebar: { zIndex: 5 } }}
-                    sidebar={<Menu />}
+                    sidebar={<Menu onDockToggle={this.toggleSidebarDocked} />}
                     open={this.sidebarOpen}
                     docked={this.sidebarDocked}
                     onSetOpen={this.onSetSidebarOpen}
                 >
+
+                    <Button
+                        primary
+                        icon={<CirclePlayIcon />}
+                        onClick={this.toggleSidebarDocked}
+                        className={cn('sidebar-toggle', { 'is-open': this.sidebarOpen })}
+                    />
+
                     <Switch>
                         <Route name='screen' path="/:screenId/:identifier?" component={Screen} />
                         <Route component={NoMatch} />
