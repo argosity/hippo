@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import { observer }   from 'mobx-react';
-import { map, compact, invoke, each } from 'lodash';
+import { map, compact, invoke } from 'lodash';
 import Heading from 'grommet/components/Heading';
 import Header from 'grommet/components/Header';
 import Button from 'grommet/components/Button';
@@ -12,7 +12,7 @@ import Screen from 'hippo/components/screen';
 import Asset  from 'hippo/components/asset';
 import Settings from 'hippo/models/system-setting';
 
-import {Row, Col} from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import ScreenInstance from 'hippo/screens/instance';
 import Extensions from '../extensions';
 import MailerConfig from './system-settings/mailer-config';
@@ -21,7 +21,6 @@ import './system-settings/system-settings.scss';
 
 @observer
 export default class SystemSettings extends React.PureComponent {
-
     @observable settings = new Settings();
     extensionPanelRefs = new Map();
 
@@ -56,8 +55,13 @@ export default class SystemSettings extends React.PureComponent {
     @action.bound
     onSave() {
         this.extensionPanelRefs.forEach(panel => invoke(panel, 'onSave'));
-        this.tenantSettings.onSave()
+        this.tenantSettings.onSave();
         this.settings.save();
+    }
+
+    @action.bound
+    setTenantRef(ts) {
+        this.tenantSettings = ts;
     }
 
     render() {
@@ -72,7 +76,7 @@ export default class SystemSettings extends React.PureComponent {
                     />
                 </Header>
                 <Heading>{this.props.screen.definition.title}</Heading>
-                <TenantSettings ref={ts => this.tenantSettings = ts} />
+                <TenantSettings ref={this.setTenantRef} />
                 <Heading tag="h3">Images</Heading>
                 <Row>
                     <Col sm={4} xs={12}>

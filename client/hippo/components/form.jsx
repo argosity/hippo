@@ -8,7 +8,7 @@ import { isBlank } from '../lib/util';
 
 export Form from './form/wrapper';
 export Field from './form/fields';
-export { FormField, FormState } from './form/model';
+export { FormField, FormState } from './form/api';
 
 function buildTest(options, defaultOptions) {
     return merge({}, defaultOptions, options);

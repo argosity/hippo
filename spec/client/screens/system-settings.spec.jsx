@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { Snapshot } from 'hippo/testing/screens';
-
+import React from 'react'; // eslint-disable-line no-unused-vars
 import Settings from 'hippo/screens/system-settings';
 import Instance from 'hippo/screens/instance';
 import { getTestScreen } from '../test-models';

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { classify } from '../lib/util';
 
-export default class DefaultComponentNotFound extends React.Component {
-
+export default class ComponentNotFound extends React.PureComponent {
     static propTypes = {
         extension: PropTypes.shape({
             identifier: PropTypes.string,
@@ -19,5 +18,4 @@ export default class DefaultComponentNotFound extends React.Component {
             </div>
         );
     }
-
 }

@@ -1,17 +1,16 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { range } from 'lodash';
 
 import Query     from 'hippo/models/query';
 
 import { Snapshot } from 'hippo/testing/screens';
 import RecordFinder from 'hippo/components/record-finder';
-
+import { FormState } from 'hippo/components/form';
 import { Container } from '../test-models';
 
 jest.mock('hippo/models/sync');
-import { FormState, stringValue } from 'hippo/components/form';
 
-describe("RecordFinder Component", () => {
+describe('RecordFinder Component', () => {
     let query;
     let props;
     let formState;
@@ -44,5 +43,6 @@ describe("RecordFinder Component", () => {
             <RecordFinder {...props} />,
         );
         expect(finder).toHaveRendered('TextInput');
+        expect(Snapshot(<RecordFinder {...props} />)).toMatchSnapshot();
     });
 });

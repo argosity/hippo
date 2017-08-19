@@ -1,16 +1,14 @@
-import React from 'react';
-import { first, map, find, range } from 'lodash';
+import React from 'react'; // eslint-disable-line no-unused-vars
+import { range } from 'lodash';
 import { autorun } from 'mobx';
-import Sync from 'hippo/models/sync';
 import Query     from 'hippo/models/query';
-
 import DataTable from 'hippo/components/data-table';
 
 import { Container } from '../test-models';
 
 jest.mock('hippo/models/sync');
 
-describe("DataTable Component", () => {
+describe('DataTable Component', () => {
     let query;
 
     beforeEach(() => {

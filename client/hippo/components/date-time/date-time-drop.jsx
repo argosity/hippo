@@ -16,7 +16,6 @@ const CLASS_ROOT = 'date-time';
 
 @observer
 export default class DateTimeDrop extends React.Component {
-
     static propTypes = {
         value: PropTypes.object.isRequired,
         onChange: PropTypes.func.isRequired,
@@ -73,5 +72,4 @@ export default class DateTimeDrop extends React.Component {
             </Box>
         );
     }
-
 }

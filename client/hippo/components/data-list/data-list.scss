@@ -1,0 +1,10 @@
+@import "~grommet/scss/grommet-core/settings";
+#hippo-root {
+    .data-list {
+        &.selectable {
+            .ReactVirtualized__Grid__innerScrollContainer {
+                cursor: pointer;
+            }
+        }
+    }
+}

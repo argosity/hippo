@@ -17,7 +17,7 @@ describe('Workspace Menu', () => {
             Group.enabled_group_ids.push(gid);
             Group.register({ id: gid, title: `Group # ${i}`, icon: `grp-${i}` });
             Screen.register({
-                group_id: gid, icon: 'unknown', id: `screen-${i}`, title: `test screen for ${i}`
+                group_id: gid, icon: 'unknown', id: `screen-${i}`, title: `test screen for ${i}`,
             });
         });
     });
@@ -38,7 +38,6 @@ describe('Workspace Menu', () => {
         const screen = getTestScreen();
         const option = shallow(<MenuOption screen={screen} />);
         expect(option).toHaveRendered(`Anchor[path="/${screen.id}/"]`);
-        expect(option).toHaveRendered(`Icon[type="${screen.icon}"]`);
         expect(Snapshot(<MenuOption screen={screen} />)).toMatchSnapshot();
     });
 });

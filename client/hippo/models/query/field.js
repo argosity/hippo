@@ -18,7 +18,8 @@ export default class Field extends BaseModel {
     @session queryable  = true;
     @session sortable   = true;
     @session textAlign  = 'left';
-
+    @session dataType   = 'string'
+    @session cellRenderer;
     @session defaultValue;
     @session fetchIndex;
     @session sortBy;
@@ -38,7 +39,7 @@ export default class Field extends BaseModel {
     }
 
     @computed get queryType() {
-        return get(this.query.src.propertyOptions[this.id], 'type', 'string');
+        return get(this.query.src.propertyOptions[this.id], 'type', this.dataType);
     }
 
     @computed get isNumeric() {
@@ -58,5 +59,9 @@ export default class Field extends BaseModel {
             }
         }
         return null;
+    }
+
+    @computed get preferredOperator() {
+        return this.query.operators.find(o => o.isValidForField(this));
     }
 }

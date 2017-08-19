@@ -1,12 +1,8 @@
-import React from 'react';
-
-import { Col } from 'react-flexbox-grid';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import Asset from 'hippo/components/asset';
-
 import { TestImage } from '../test-models';
-import { Snapshot } from 'hippo/testing/screens';
 
-describe("Asset Component", () => {
+describe('Asset Component', () => {
     it('renders', () => {
         const image = new TestImage();
         const asset = mount(<Asset model={image} name="asset" />);

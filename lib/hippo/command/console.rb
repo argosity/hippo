@@ -22,7 +22,9 @@ module Hippo
                 end
                 FactoryGirl.find_definitions
                 Hippo::API::Cable.configure
-                MultiTenant.current_tenant = Hippo::Tenant.system
+                MultiTenant.current_tenant = Hippo::Tenant.find_by_slug(
+                    Hippo.env.development? ? 'test' : 'system'
+                )
                 ext.on_dev_console
                 Pry::Commands.block_command "tenant", "set current tenant to <slug>" do |slug|
                     MultiTenant.current_tenant=Hippo::Tenant.find_by_slug!(slug)

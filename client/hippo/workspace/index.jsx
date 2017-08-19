@@ -2,7 +2,6 @@ import React from 'react';
 
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { bindAll } from 'lodash';
 import cn from 'classnames';
 import {
     BrowserRouter as Router,
@@ -36,13 +35,11 @@ function NoMatch({ match: { path } }) {
 
 @observer
 class Workspace extends React.Component {
-
     @observable sidebarOpen   = true;
     @observable sidebarDocked = false;
 
     constructor() {
         super();
-        bindAll(this, 'onMediaQueryChanged', 'onSetSidebarOpen');
         this.mql = window.matchMedia(`(min-width: ${DOCKED_WIDTH_BREAKPOINT}px)`);
         this.mql.addListener(this.onMediaQueryChanged);
         this.onMediaQueryChanged();
@@ -52,12 +49,12 @@ class Workspace extends React.Component {
         this.mql.removeListener(this.onMediaQueryChanged);
     }
 
-    @action
+    @action.bound
     onMediaQueryChanged() {
         this.sidebarDocked = this.mql.matches;
     }
 
-    @action
+    @action.bound
     onSetSidebarOpen(open) {
         this.sidebarOpen = open;
     }
@@ -65,7 +62,6 @@ class Workspace extends React.Component {
     @action.bound
     toggleSidebarDocked() {
         this.sidebarOpen = !this.sidebarOpen;
-        console.log('tog', this.sidebarOpen);
     }
 
     render() {

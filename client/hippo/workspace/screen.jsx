@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import Box from 'grommet/components/Box';
 import Screens from '../screens';
-import ScreenInstances from '../screens/instance';
+import { displaying } from '../screens/instance';
 
 const ScreenView = observer((props) => {
     const { screen: Screen, ...rest } = props;
@@ -15,7 +15,6 @@ ScreenView.displayName = 'ScreenView';
 
 @observer
 export default class Screen extends React.Component {
-
     static propTypes = {
         match: PropTypes.shape({
             params: PropTypes.shape({
@@ -41,7 +40,7 @@ export default class Screen extends React.Component {
                 align="stretch"
                 flex="grow"
             >
-                {ScreenInstances.displaying.map(s =>
+                {displaying.models.map(s =>
                     <ScreenView key={s.id} {...this.props.match.params} screen={s} />)}
             </Box>
 

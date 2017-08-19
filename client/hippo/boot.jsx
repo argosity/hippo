@@ -35,8 +35,6 @@ whenDomReady().then(() => {
         delay(() => {
             onBoot();
             loading.parentNode.removeChild(loading);
-
         }, 400);
-
     }
 });

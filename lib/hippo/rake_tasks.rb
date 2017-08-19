@@ -63,7 +63,7 @@ task :test => [:spec] do
 end
 
 task :lint do
-    sh %{node node_modules/eslint/bin/eslint.js client spec/client/}
+    sh %{node node_modules/eslint/bin/eslint.js --ext .js --ext .jsx client spec/client/}
 end
 
 task :ci do

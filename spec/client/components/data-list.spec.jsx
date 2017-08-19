@@ -1,16 +1,12 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { range } from 'lodash';
-
 import Query     from 'hippo/models/query';
-
 import DataList from 'hippo/components/data-list';
-
 import { Container } from '../test-models';
-import { Snapshot } from 'hippo/testing/screens';
 
 jest.mock('hippo/models/sync');
 
-describe("DataList Component", () => {
+describe('DataList Component', () => {
     let query;
 
     beforeEach(() => {

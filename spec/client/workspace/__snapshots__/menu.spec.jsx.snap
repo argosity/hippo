@@ -29,10 +29,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
         className="grommetux-heading grommetux-heading--strong"
       >
         Settings
-        <i
-          className="icon icon-wrench"
-          onClick={undefined}
-          style={undefined}
+        <span
+          aria-hidden={true}
+          className="fa fa-wrench"
         />
       </h4>
     </header>
@@ -44,10 +43,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
     onClick={[Function]}
   >
     User Management
-    <i
-      className="icon icon-group"
-      onClick={undefined}
-      style={undefined}
+    <span
+      aria-hidden={true}
+      className="fa fa-group"
     />
   </a>
   <a
@@ -57,10 +55,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
     onClick={[Function]}
   >
     System Settings
-    <i
-      className="icon icon-cogs"
-      onClick={undefined}
-      style={undefined}
+    <span
+      aria-hidden={true}
+      className="fa fa-cogs"
     />
   </a>
   <a
@@ -70,10 +67,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
     onClick={[Function]}
   >
     title
-    <i
-      className="icon icon-red"
-      onClick={undefined}
-      style={undefined}
+    <span
+      aria-hidden={true}
+      className="fa fa-red"
     />
   </a>
 </nav>
@@ -87,10 +83,9 @@ exports[`Workspace Menu has renders menu options 1`] = `
   onClick={[Function]}
 >
   title
-  <i
-    className="icon icon-red"
-    onClick={undefined}
-    style={undefined}
+  <span
+    aria-hidden={true}
+    className="fa fa-red"
   />
 </a>
 `;

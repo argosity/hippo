@@ -1,5 +1,5 @@
 import { get, isString, find, extend, toPairs } from 'lodash';
-import { action, reaction, observe } from 'mobx';
+import { action, reaction, observe, observable } from 'mobx';
 import {
     BaseModel, identifiedBy, field, belongsTo, hasMany, identifier, computed, session,
 } from './base';
@@ -30,7 +30,7 @@ export default class Query extends BaseModel {
     @session customSyncUrl;
 
     @session autoFetch = false;
-
+    @observable autoFetchDisposer;
     @field({ type: 'object' }) syncOptions = {};
 
     @hasMany({ model: Clause, inverseOf: 'query' }) clauses;
@@ -53,13 +53,17 @@ export default class Query extends BaseModel {
         [
             { id: 'like', label: 'Starts With', types: Types.LIKE_QUERY_TYPES },
             { id: 'eq', label: 'Equals' },
+            { id: 'contains', label: 'Contains', types: Types.LIKE_QUERY_TYPES },
             { id: 'lt', label: 'Less Than', types: Types.LESS_THAN_QUERY_TYPES },
             { id: 'gt', label: 'More Than', types: Types.LESS_THAN_QUERY_TYPES },
         ].forEach(op => this.operators.push(op));
         this.info = new Info(this);
         this.results = new ArrayResult({ query: this });
         if (0 === this.clauses.length) {
-            this.clauses.push({ });
+            const ff = find(this.fields, { queryable: true });
+            if (ff) {
+                this.clauses.push({ field: ff, operator: ff.preferredOperator });
+            }
         }
         if (attrs.sort) {
             const [fieldId, dir] = toPairs(attrs.sort)[0];
@@ -80,13 +84,22 @@ export default class Query extends BaseModel {
     close() {
         if (this.autoFetchDisposer) {
             this.autoFetchDisposer();
-            this.autoFetchDisposer = undefined;
+            this.autoFetchDisposer = null;
         }
     }
 
     @action.bound
     fetch() {
         return this.results.fetch({ start: 0 });
+    }
+
+    get rows() {
+        return this.results.rows;
+    }
+
+    reset() {
+        this.clauses.clear();
+        this.results.reset();
     }
 
     fetchSingle(query, queryOptions = {}) {
@@ -102,10 +115,12 @@ export default class Query extends BaseModel {
             this._startAutoFetch();
         } else if (this.autoFetchDisposer) {
             this.autoFetchDisposer();
+            this.autoFetchDisposer = null;
         }
     }
 
     _startAutoFetch() {
+        if (this.autoFetchDisposer) { return; }
         this.autoFetchDisposer = reaction(
             () => this.fingerprint,
             this.fetch,

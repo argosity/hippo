@@ -9,11 +9,7 @@ import { Field } from 'hippo/components/form';
 import Button from 'grommet/components/Button';
 import SearchIcon from 'grommet/components/icons/base/Search';
 
-import { Col } from 'react-flexbox-grid';
-
-import { titleize } from '../lib/util';
 import Query from '../models/query';
-
 import './record-finder/record-finder.scss';
 import QueryLayer from './record-finder/query-layer';
 
@@ -43,7 +39,8 @@ export default class RecordFinder extends React.PureComponent {
     @action.bound
     onRecordSelect(model) {
         this.showingSearch = false;
-        this.props.formState.get(this.props.name).value = model[this.props.name]
+        const value = get(model, this.props.name);
+        this.props.formState.get(this.props.name).value = value;
         this.props.onRecordFound(model);
     }
 

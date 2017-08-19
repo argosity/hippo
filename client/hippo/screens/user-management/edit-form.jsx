@@ -11,11 +11,10 @@ import Warning from 'hippo/components/warning-notification';
 
 import Query from 'hippo/models/query';
 
-import { Form, Field, FormState, nonBlank, validEmail, booleanValue, field  } from 'hippo/components/form';
+import { Form, Field, FormState, nonBlank, validEmail, booleanValue } from 'hippo/components/form';
 
 @observer
 export default class EditForm extends React.PureComponent {
-
     static propTypes = {
         query:      PropTypes.instanceOf(Query).isRequired,
         rowIndex:   PropTypes.number.isRequired,

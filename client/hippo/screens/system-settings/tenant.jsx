@@ -1,14 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
 import Box from 'grommet/components/Box';
 import { Form, Field, FormState, nonBlank } from 'hippo/components/form';
 
 import Notification from 'grommet/components/Notification';
-import Extensions from '../../extensions';
 import Layer from 'grommet/components/Layer';
 import Paragraph from 'grommet/components/Paragraph';
 import Anchor from 'grommet/components/Anchor';
@@ -36,7 +34,6 @@ function TenantSlugChange({ oldSlug }) {
 
 @observer
 export default class TenantConfig extends React.PureComponent {
-
     formState = new FormState()
 
     @observable slugChangedFrom;

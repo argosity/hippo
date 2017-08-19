@@ -1,11 +1,10 @@
-jest.mock('hippo/models/sync');
-jest.mock('hippo/config');
-
-import React  from 'react';
-
+import React from 'react'; // eslint-disable-line no-unused-vars
 import User        from 'hippo/user';
 import Config      from 'hippo/config';
 import LoginDialog from 'hippo/access/login-dialog';
+
+jest.mock('hippo/models/sync');
+jest.mock('hippo/config');
 
 describe('Login Dialog', () => {
     beforeEach(() => (Config.access_token = '0123456789'));

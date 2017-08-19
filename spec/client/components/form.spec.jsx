@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import {
     nonBlank, validEmail, hasLength, validURL, FormState,
 } from 'hippo/components/form';
@@ -10,7 +10,7 @@ describe('Form Validation functions', () => {
             email: { validate: validEmail },
             name:  { validate: hasLength({ length: 3 }) },
         });
-        expect(form.get('email.isValid')).toBe(false);
+        expect(form.get('email').isValid).toBe(false);
         expect(form.isValid).toBe(false);
         expect(form.isTouched).toBe(false);
 

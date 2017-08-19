@@ -109,16 +109,6 @@ export class FormState {
         return !every(this.fields.values(), { isTouched: false });
     }
 
-    get(path, defaultValue) {
-        const [name, ...rest] = path.split('.');
-        const field = this.fields.get(name);
-        if (!field) { return defaultValue; }
-        if (rest.length) {
-            return get(field, rest.join('.'), defaultValue);
-        }
-        return field;
-    }
-
     @action
     exposeErrors() {
         this.fields.forEach(field => field.exposeError());
@@ -127,6 +117,16 @@ export class FormState {
     @action
     reset() {
         this.fields.forEach(field => field.reset());
+    }
+
+    get(path, defaultValue) {
+        const [name, ...rest] = path.split('.');
+        const field = this.fields.get(name);
+        if (!field) { return defaultValue; }
+        if (rest.length) {
+            return get(field, rest.join('.'), defaultValue);
+        }
+        return field;
     }
 
     @action

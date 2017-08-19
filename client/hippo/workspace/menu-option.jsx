@@ -10,7 +10,6 @@ import Anchor from 'grommet/components/Anchor';
 
 @observer
 export default class MenuOption extends React.Component {
-
     static propTypes = {
         screen: PropTypes.shape({
             title:   PropTypes.string.isRequired,
@@ -33,9 +32,8 @@ export default class MenuOption extends React.Component {
         return (
             <Anchor path={`/${screen.id}/`} onClick={this.activateScreen}>
                 {screen.title}
-                <Icon type={screen.icon} />
+                <Icon name={screen.icon} />
             </Anchor>
         );
     }
 }
-//<div>{screen.title}</div>

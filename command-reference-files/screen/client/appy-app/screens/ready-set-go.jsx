@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import Screen from 'hippo/components/screen';
 
@@ -6,7 +7,7 @@ import Screen from 'hippo/components/screen';
 export default class ReadySetGo extends React.PureComponent {
 
     static propTypes = {
-        screen: React.PropTypes.instanceOf(Screen.Instance).isRequired,
+        screen: PropTypes.instanceOf(Screen.Instance).isRequired,
     }
 
     render() {

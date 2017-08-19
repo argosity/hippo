@@ -13,7 +13,6 @@ function Logo() {
 }
 
 export default class Navbar extends React.Component {
-
     static contextTypes = {
         uistate: PropTypes.object.isRequired,
     }
@@ -36,7 +35,7 @@ export default class Navbar extends React.Component {
                     <button className="screens-menu-toggle" onClick={this.switchMenu} type="button">
                         <span className="sr-only">
                                 Toggle navbar
-                            </span>
+                        </span>
                         <i className="icon" />
                     </button>
                 </div>

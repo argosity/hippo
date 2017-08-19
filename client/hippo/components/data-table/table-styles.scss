@@ -29,6 +29,13 @@
             &.o {
                 background-color: lighten($border-color, 75%);
             }
+
         }
+        &.selectable {
+            .ReactVirtualized__Table__row {
+                cursor: pointer;
+            }
+        }
+
     }
 }

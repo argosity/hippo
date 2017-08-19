@@ -20,7 +20,6 @@ const CLASS_ROOT = CSSClassnames.DATE_TIME;
 
 @observer
 export default class DateTime extends React.Component {
-
     static propTypes = {
         value:    PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
         onChange: PropTypes.func.isRequired,
@@ -103,7 +102,7 @@ export default class DateTime extends React.Component {
 
     @action.bound
     onInputBlur() {
-        if (! this.editingValue) { return; }
+        if (!this.editingValue) { return; }
         const value = moment(this.editingValue, this.props.format);
         this.editingValue = '';
         this.onForceClose();
@@ -170,5 +169,4 @@ export default class DateTime extends React.Component {
             </div>
         );
     }
-
 }

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { observer }   from 'mobx-react';
-import { action, observable, computed } from 'mobx';
+import { action } from 'mobx';
 
 import Heading from 'grommet/components/Heading';
 import Layer   from 'grommet/components/Layer';
@@ -16,8 +16,6 @@ import QueryBuilder from '../query-builder';
 
 @observer
 export default class QueryLayer extends React.PureComponent {
-
-
     static propTypes = {
         title: PropTypes.string.isRequired,
         onClose: PropTypes.func.isRequired,
@@ -69,6 +67,4 @@ export default class QueryLayer extends React.PureComponent {
             </Layer>
         );
     }
-
-
 }

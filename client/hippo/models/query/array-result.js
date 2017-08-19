@@ -1,7 +1,7 @@
 import {
-    isEmpty, isNil, extend, map, bindAll, omit, inRange, find, range,
+    isEmpty, isNil, extend, map, bindAll, inRange, find, range,
 } from 'lodash';
-import { reaction, observe } from 'mobx';
+import { reaction, observe, toJS } from 'mobx';
 
 import Sync from '../sync';
 import Result from './result';
@@ -85,7 +85,7 @@ export default class ArrayResult extends Result {
     fetchModelForRow(index, syncOptions = {}) {
         const model = this.modelForRow(index);
         return model.isNew ? Promise.resolve(model) :
-            model.fetch(extend({}, this.query.syncOptions, syncOptions));
+            model.fetch(extend({}, toJS(this.query.syncOptions), syncOptions));
     }
 
     onQuerySortChange() {
@@ -153,7 +153,7 @@ export default class ArrayResult extends Result {
             }
         });
 
-        const options = extend({}, omit(this.query.syncOptions, 'include'), {
+        const options = extend({}, toJS(this.query.syncOptions), {
             start,
             limit,
             total_count: 't',
@@ -171,7 +171,7 @@ export default class ArrayResult extends Result {
             };
         }
 
-        extend(options, omit(this.query.info.syncOptions, 'include'));
+        extend(options, toJS(this.query.info.syncOptions));
 
         this.syncInProgress = options;
 

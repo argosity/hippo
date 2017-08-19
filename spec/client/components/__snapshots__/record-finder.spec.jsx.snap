@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecordFinder Component renders 1`] = `
+<div
+  className="form-field record-finder"
+>
+  <div
+    className="grommetux-form-field grommetux-form-field--size-medium"
+    onClick={[Function]}
+  >
+    <label
+      className="grommetux-form-field__label"
+      htmlFor={undefined}
+    >
+      Name
+    </label>
+    <span
+      className="grommetux-form-field__contents"
+    >
+      <input
+        autoComplete="off"
+        autoFocus={undefined}
+        className="grommetux-text-input grommetux-input"
+        defaultValue={undefined}
+        name="name"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onInput={[Function]}
+        onKeyDown={[Function]}
+        onKeyPress={[Function]}
+        placeholder={undefined}
+        type="text"
+        value=""
+      />
+      <button
+        aria-label={undefined}
+        className="grommetux-button grommetux-button--plain grommetux-control-icon-search"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        <span
+          className="grommetux-button__icon"
+        >
+          <svg
+            aria-label="search"
+            className="grommetux-control-icon grommetux-control-icon-search grommetux-control-icon--responsive"
+            height="24px"
+            role="img"
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="24px"
+          >
+            <path
+              d="M15,15 L22,22 L15,15 Z M9.5,17 C13.6421356,17 17,13.6421356 17,9.5 C17,5.35786438 13.6421356,2 9.5,2 C5.35786438,2 2,5.35786438 2,9.5 C2,13.6421356 5.35786438,17 9.5,17 Z"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+            />
+          </svg>
+        </span>
+      </button>
+    </span>
+  </div>
+</div>
+`;

@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, computed, observable } from 'mobx';
+import { action, computed } from 'mobx';
 import Select from 'grommet/components/Select';
-import { get, find, defer } from 'lodash';
+import { get, find } from 'lodash';
 
 @observer
 export default class SelectFieldWrapper extends React.PureComponent {

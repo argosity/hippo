@@ -12,12 +12,12 @@ import LinkPreviousIcon from 'grommet/components/icons/base/LinkPrevious';
 import LinkNextIcon from 'grommet/components/icons/base/LinkNext';
 
 const Day = ({ i, w, d, className, ...props }) => {
-    const prevMonth = w === 0 && i > 7;
+    const prevMonth = 0 === w && i > 7;
     const nextMonth = w >= 4 && i <= 14;
     const cls = cx(className, {
         'prev-month': prevMonth,
         'next-month': nextMonth,
-        'current-day': !prevMonth && !nextMonth && i === d
+        'current-day': !prevMonth && !nextMonth && i === d,
     });
 
     return <td className={cls} {...props}>{i}</td>;
@@ -26,7 +26,6 @@ const Day = ({ i, w, d, className, ...props }) => {
 
 @observer
 export default class Calendar extends React.PureComponent {
-
     static propTypes = {
         moment: PropTypes.object.isRequired,
         onChange: PropTypes.func.isRequired,
@@ -34,7 +33,7 @@ export default class Calendar extends React.PureComponent {
 
     @action.bound
     selectDate(i, w) {
-        const prevMonth = w === 0 && i > 7;
+        const prevMonth = 0 === w && i > 7;
         const nextMonth = w >= 4 && i <= 14;
         const m = this.props.moment;
 
@@ -66,9 +65,9 @@ export default class Calendar extends React.PureComponent {
         const d2 = m.clone().date(1).day();
         const d3 = m.clone().endOf('month').date();
         const days = [].concat(
-            range(d1 - d2 + 1, d1 + 1),
+            range((d1 - d2) + 1, d1 + 1),
             range(1, d3 + 1),
-            range(1, 42 - d3 - d2 + 1),
+            range(1, ((42 - d3) - d2) + 1),
         );
         const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 

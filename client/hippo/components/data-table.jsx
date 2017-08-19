@@ -15,7 +15,7 @@ import './data-table/table-styles.scss';
 import Query from '../models/query';
 import HeaderCell from './data-table/header-cell';
 
-function renderEditTriangle({ rowIndex, columnData: { onEdit }}) {
+function renderEditTriangle({ rowIndex, columnData: { onEdit } }) {
     return (
         <Button
             plain icon={<NextIcon />}
@@ -26,7 +26,6 @@ function renderEditTriangle({ rowIndex, columnData: { onEdit }}) {
 
 @observer
 export default class DataTable extends React.Component {
-
     static defaultProps = {
         canCreate: false,
         editRowIndex: null,
@@ -49,12 +48,12 @@ export default class DataTable extends React.Component {
         super(props);
         this.query = props.query;
         bindAll(this,
-                'rowRenderer',
-                'rowAtIndex',
-                'calculateRowHeight',
-                'isRowLoaded',
-                'loadMoreRows',
-                'headerRenderer',
+            'rowRenderer',
+            'rowAtIndex',
+            'calculateRowHeight',
+            'isRowLoaded',
+            'loadMoreRows',
+            'headerRenderer',
         );
         this.editIndex = props.editRowIndex;
         autorun(() => {
@@ -111,7 +110,7 @@ export default class DataTable extends React.Component {
         if (index < 0) {
             return 'header';
         }
-        return index % 2 === 0 ? 'e' : 'o';
+        return 0 === index % 2 ? 'e' : 'o';
     }
 
     @action.bound
@@ -130,7 +129,7 @@ export default class DataTable extends React.Component {
                 columnData: f,
                 dataKey: f.dataIndex || f.id,
                 headerRenderer: this.headerRenderer,
-            }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink')),
+            }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink', 'cellRenderer')),
         );
         if (this.props.editor) {
             definitions.unshift({
@@ -189,9 +188,8 @@ export default class DataTable extends React.Component {
 
     isRowLoaded({ index }) {
         return (
-            this.query.results.rows.length > index
-            && !this.query.results.isRowLoading(index)
-            && this.query.results.rows[index]
+            (this.query.results.rows.length > index) &&
+                (this.query.results.isRowLoading(index) || this.query.results.rows[index])
         );
     }
 
@@ -222,7 +220,9 @@ export default class DataTable extends React.Component {
                                 <Table
                                     height={height}
                                     width={width}
-                                    ref={(table) => { registerChild(table); this.tableRef = table; }}
+                                    ref={(table) => {
+                                        registerChild(table); this.tableRef = table;
+                                    }}
                                     rowHeight={this.calculateRowHeight}
                                     rowGetter={this.rowAtIndex}
                                     estimatedRowSize={40}

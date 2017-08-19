@@ -1,8 +1,7 @@
-import React from 'react';
-
+import React from 'react'; // eslint-disable-line no-unused-vars
+import { Snapshot } from 'hippo/testing/screens';
 import NetworkActivityOverlay from 'hippo/components/network-activity-overlay';
 import { Box } from '../test-models';
-import { Snapshot } from 'hippo/testing/screens';
 
 jest.useFakeTimers();
 

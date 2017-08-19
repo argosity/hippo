@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import DateTime from 'hippo/components/date-time/date-time-drop';
 import moment from 'moment';
 

@@ -1,7 +1,5 @@
 import Sync from 'hippo/models/sync';
 import { map, find, range, shuffle } from 'lodash';
-
-import Clause from 'hippo/models/query/clause';
 import Query  from 'hippo/models/query';
 import { Box } from '../test-models';
 
@@ -42,12 +40,9 @@ describe('Model Queries', () => {
     });
 
     it('calculates fields', () => {
-        const q = new Query({ src: Box });
-        expect(q.src).toEqual(Box);
-        expect(q.clauses).toHaveLength(1);
-        const clause = q.clauses[0];
-        expect(clause).toBeInstanceOf(Clause);
-        expect(clause.query).toBe(q);
+        expect(query.clauses).toHaveLength(1);
+        expect(query.clauses[0].field).toBe(query.fields[1]);
+        expect(query.clauses[0].operator.id).toBe('like');
     });
 
     it('calculates min width', () => {
@@ -78,7 +73,7 @@ describe('Model Queries', () => {
         const clause = query.clauses[0];
         expect(clause.field.id).toEqual('computed');
         expect(clause.operator.id).toEqual('like');
-        expect(map(clause.validOperators, 'id')).toEqual(['like', 'eq']);
+        expect(map(clause.validOperators, 'id')).toEqual(['like', 'eq', 'contains']);
         clause.field = query.fields[3];
         expect(clause.operator.id).toEqual('eq');
         expect(map(clause.validOperators, 'id')).toEqual(['eq', 'lt', 'gt']);

@@ -22,15 +22,19 @@ export default class Info {
     }
 
     @computed get visibleFields() {
-        return filter(this.query.fields, f => f.visible);
+        return filter(this.query.fields, 'visible');
     }
 
     @computed get queryableFields() {
-        return filter(this.query.fields, f => f.queryable);
+        return filter(this.query.fields, 'queryable');
+    }
+
+    @computed get visibleClauses() {
+        return filter(this.query.clauses, 'visible');
     }
 
     @computed get loadableFields() {
-        return filter(this.query.fields, f => f.loadable);
+        return filter(this.query.fields, 'loadable');
     }
 
     @computed get identifierField() {

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindAll } from 'lodash';
-import { observable } from 'mobx';
+import { partial } from 'lodash';
+import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
-
+import { autobind } from 'core-decorators';
+import cn from 'classnames';
 import Box from 'grommet/components/Box';
 
 import {
@@ -12,10 +13,10 @@ import {
 import 'react-virtualized/styles.css';
 
 import Query from '../models/query';
+import './data-list/data-list.scss';
 
 @observer
 export default class DataList extends React.Component {
-
     static defaultProps = {
         rowHeight: 40,
     }
@@ -33,32 +34,29 @@ export default class DataList extends React.Component {
     constructor(props) {
         super(props);
         this.query = props.query;
-        bindAll(this,
-                'rowRenderer',
-                'isRowLoaded',
-                'loadMoreRows',
-        );
     }
 
     componentWillMount() { this.query.open(); }
     componentWillUnmount() { this.query.close(); }
 
+    @autobind
     rowRenderer(props) {
-        const { rowComponent: Row } = this.props;
+        const { rowComponent: Row, onRowClick } = this.props;
         const row = this.query.results.rows[props.index];
         return (
-            <Row {...props} row={row} />
+            <Row {...props} row={row} onClick={partial(onRowClick, props.index, row)} />
         );
     }
 
+    @autobind
     isRowLoaded({ index }) {
         return (
-            this.query.results.rows.length > index
-            && !this.query.results.isRowLoading(index)
-            && this.query.results.rows[index]
+            (this.query.results.rows.length > index) &&
+                (this.query.results.isRowLoading(index) || this.query.results.rows[index])
         );
     }
 
+    @action.bound
     loadMoreRows({ startIndex: start, stopIndex }) {
         const limit = (stopIndex + 1) - start;
         return this.query.results.fetch({ start, limit });
@@ -72,7 +70,10 @@ export default class DataList extends React.Component {
         const { query } = this;
         const { rowHeight, rowRenderer, ...listProps } = this.props;
         return (
-            <Box className="data-list" align='stretch' direction='row' flex>
+            <Box
+                className={cn('data-list', { selectable: this.props.onRowClick })}
+                align='stretch' direction='row' flex
+            >
                 <InfiniteLoader
                     keyChange={query.results.updateKey}
                     minimumBatchSize={query.pageSize}

@@ -9,16 +9,15 @@ import User from '../user';
 
 @observer
 export default class LoginDialog extends React.Component {
-
     constructor() {
         super();
         bindAll(this, 'attemptLogin');
     }
 
     attemptLogin({ username, password }) {
-        User.attemptLogin(username, password)/* .then((session)=> {
+        User.attemptLogin(username, password);/* .then((session)=> {
                                                 if session.isValid
-                                                });*/
+                                                }); */
     }
 
     render() {
@@ -32,7 +31,6 @@ export default class LoginDialog extends React.Component {
                     secondaryText={User.lastServerMessage}
                 />
             </Layer>
-        )
+        );
     }
-
 }

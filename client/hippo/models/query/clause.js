@@ -1,26 +1,29 @@
-import { get, compact, first, filter, find, uniqueId } from 'lodash';
+import { get, compact, first, filter, uniqueId } from 'lodash';
+import { action, observe } from 'mobx';
 import {
-    BaseModel, identifiedBy, autorun, belongsTo, computed, observable,
+    BaseModel, identifiedBy, belongsTo, computed, observable, session,
 } from '../base';
 
 @identifiedBy('hippo/query/clause')
 export default class Clause extends BaseModel {
     @observable id = uniqueId('clause');
-
-    @observable value;
+    @session visible = true;
+    @session value;
     @belongsTo({ type: 'hippo/query' }) query;
 
     @belongsTo({ type: 'hippo/query/field' }) field;
     @belongsTo({ type: 'hippo/query/operator' }) operator;
 
-    @computed get description() {
-        return compact([get(this, 'field.title'), get(this, 'operator.id')]).join(' ');
-    }
-
     constructor(attrs) {
         super(attrs);
-        this.field = first(this.query.info.queryableFields);
-        autorun(this._updateOperatorOnFieldChange.bind(this));
+        if (!this.field) {
+            this.field = first(this.query.info.queryableFields);
+        }
+        observe(this, 'field', this.updateOperatorOnFieldChange, true);
+    }
+
+    @computed get description() {
+        return compact([get(this, 'field.title'), get(this, 'operator.id')]).join(' ');
     }
 
     @computed get validOperators() {
@@ -37,15 +40,20 @@ export default class Clause extends BaseModel {
 
     toParam() {
         const param = {};
-        const op = this.operator.id;
+        let op = this.operator.id;
         let value = this.value;
         if ('like' === op) { value += '%'; }
+        if ('contains' === op) {
+            op = 'like';
+            value = `%${value}%`;
+        }
         if ('n' === this.field.type) { value = parseFloat(value); }
         param[this.field.id] = 'eq' === op ? value : { op, value };
         return param;
     }
 
-    _updateOperatorOnFieldChange() {
-        this.operator = find(this.query.operators, o => o.isValidForField(this.field));
+    @action.bound
+    updateOperatorOnFieldChange() {
+        this.operator = this.field.preferredOperator;
     }
 }

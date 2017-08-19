@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-
+import { find } from 'lodash';
 import { observer } from 'mobx-react';
 import { action }   from 'mobx';
 import Box          from 'grommet/components/Box';
@@ -9,16 +9,12 @@ import Menu         from 'grommet/components/Menu';
 import RadioButton  from 'grommet/components/RadioButton';
 import TextInput    from 'grommet/components/TextInput';
 import DownIcon     from 'grommet/components/icons/base/Down';
-
-import BaseModel from '../models/base';
+import { BaseModel } from '../models/base';
 import Query         from '../models/query';
 import ClauseModel   from '../models/query/clause';
-import FieldModel    from '../models/query/field';
-import OperatorModel from '../models/query/operator';
 
 @observer
 class Radio extends React.PureComponent {
-
     static propTypes = {
         name: PropTypes.string.isRequired,
         onSelect: PropTypes.func.isRequired,
@@ -34,13 +30,13 @@ class Radio extends React.PureComponent {
 
     render() {
         const { model } = this.props;
-        const checked = (this.props.clause[this.props.name] === model);
         return (
             <RadioButton
+                id={model.id}
                 name={model.id}
                 label={model.label}
                 onChange={this.onChange}
-                checked={checked}
+                checked={(this.props.clause[this.props.name] === model)}
             />
         );
     }
@@ -48,7 +44,6 @@ class Radio extends React.PureComponent {
 
 @observer
 class ClauseFilter extends React.PureComponent {
-
     static propTypes = {
         clause: PropTypes.instanceOf(ClauseModel).isRequired,
     }
@@ -65,7 +60,6 @@ class ClauseFilter extends React.PureComponent {
 
 @observer
 class Clause extends React.PureComponent {
-
     static propTypes = {
         clause: PropTypes.instanceOf(ClauseModel).isRequired,
     }
@@ -96,7 +90,7 @@ class Clause extends React.PureComponent {
                                 <Radio
                                     key={f.id} model={f} clause={clause}
                                     onSelect={this.onSelect} name='field' />,
-                             )}
+                            )}
                         </Box>
                         <Box size="small" pad={{ between: 'small' }}>
                             {clause.validOperators.map(o =>
@@ -104,7 +98,7 @@ class Clause extends React.PureComponent {
                                     key={o.id} model={o} clause={clause}
                                     onSelect={this.onSelect} name='operator'
                                 />,
-                             )}
+                            )}
                         </Box>
                     </Box>
                 </Menu>
@@ -121,7 +115,6 @@ class Clause extends React.PureComponent {
 
 @observer
 export default class QueryBuilder extends React.PureComponent {
-
     static defaultProps = {
         autoFetch: false,
     }
@@ -134,7 +127,14 @@ export default class QueryBuilder extends React.PureComponent {
     constructor(props) {
         super(props);
         this.previousQueryAutoFetch = this.props.query.autoFetch;
-        this.props.query.autoFetch = props.autoFetch;
+        if (0 === this.props.query.info.visibleClauses.length) {
+            const field = find(this.props.query.fields, { visible: true });
+            this.props.query.clauses.push({ field, operator: field.preferredOperator });
+        }
+    }
+
+    componentWillMount() {
+        this.props.query.autoFetch = this.props.autoFetch;
     }
 
     componentWillReceiveProps(nextProps) {
@@ -149,9 +149,8 @@ export default class QueryBuilder extends React.PureComponent {
         const { query } = this.props;
         return (
             <div className="query-builder">
-                {query.clauses.map(c => <Clause key={c.id} clause={c} />)}
+                {query.info.visibleClauses.map(c => <Clause key={c.id} clause={c} />)}
             </div>
         );
     }
-
 }

@@ -90,5 +90,4 @@ export default class SortingHeaderCell extends React.Component {
         }
         return label;
     }
-
 }

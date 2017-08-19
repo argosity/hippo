@@ -1,15 +1,12 @@
-import React from 'react';
-
+import React from 'react'; // eslint-disable-line no-unused-vars
 import QueryBuilder from 'hippo/components/query-builder';
-
-import { Box } from '../test-models';
 import { Snapshot } from 'hippo/testing/screens';
 import Query from 'hippo/models/query';
+import { Box } from '../test-models';
 
 jest.useFakeTimers();
 
-describe("Query Builder Component", () => {
-
+describe('Query Builder Component', () => {
     let query;
 
     beforeEach(() => {

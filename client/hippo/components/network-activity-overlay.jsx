@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { autorun, action } from 'mobx';
+import { autorun, action, observable, computed } from 'mobx';
 import Spinning from 'grommet/components/icons/Spinning';
 import CircleInformationIcon from 'grommet/components/icons/base/CircleInformation';
 import { delay, isEmpty, includes, get } from 'lodash';
 import classnames from 'classnames';
-import { BaseModel, observable, computed } from '../models/base';
-
 import './network-activity-overlay.scss';
 
 function Indicator({ error }) {
@@ -16,7 +14,6 @@ function Indicator({ error }) {
 
 @observer
 export default class NetworkActivityOverlay extends React.PureComponent {
-
     static defaultProps = {
         timeout: 30000,
         errorTimeout: 2000,

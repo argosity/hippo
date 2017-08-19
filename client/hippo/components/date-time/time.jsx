@@ -18,7 +18,6 @@ function getDigits(ev) {
 
 @observer
 export default class TimeSelector extends React.PureComponent {
-
     static propTypes = {
         moment: PropTypes.object.isRequired,
         onChange: PropTypes.func.isRequired,

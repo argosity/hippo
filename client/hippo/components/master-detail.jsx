@@ -11,8 +11,6 @@ const DELAY_TIME = 500;
 
 @observer
 export default class MasterDetail extends React.PureComponent {
-
-
     static propTypes = {
         master: PropTypes.element.isRequired,
         detail: PropTypes.element,

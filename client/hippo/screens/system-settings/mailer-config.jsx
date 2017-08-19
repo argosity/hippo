@@ -8,7 +8,6 @@ import { Form, Field, FormState, nonBlank, validEmail  } from 'hippo/components/
 
 @observer
 export default class MailerConfig extends React.PureComponent {
-
     formState = new FormState()
 
     @action.bound
@@ -40,5 +39,4 @@ export default class MailerConfig extends React.PureComponent {
             </div>
         );
     }
-
 }
