@@ -75,7 +75,7 @@ export default class Asset extends BaseModel {
 
 
     @computed get isDirty() {
-        return Boolean(this.isNew || !this.file);
+        return Boolean(this.file);
     }
 
     @computed get exists() {
