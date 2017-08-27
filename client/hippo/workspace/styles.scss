@@ -32,6 +32,9 @@ pre {
     flex-direction: column;
     padding: 0.5rem;
     display: none;
+    min-height: min-content;
+    min-height: -moz-min-content;
+    min-height: -webkit-min-content;
     &.is-active {
         display: flex;
     }
