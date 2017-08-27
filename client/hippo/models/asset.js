@@ -117,9 +117,10 @@ export default class Asset extends BaseModel {
         }
         return fetch(`${Config.api_path}${Config.assets_path_prefix}`, options)
             .then(resp => resp.json())
+            .then(json => this.set(json.data))
             .then((json) => {
                 this.file = undefined;
                 return json;
-            }).then(json => this.set(json.data));
+            });
     }
 }
