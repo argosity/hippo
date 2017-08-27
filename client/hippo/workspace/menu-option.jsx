@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import Icon from 'hippo/components/icon';
+import Icon from '../components/icon';
 
 import Anchor from 'grommet/components/Anchor';
 
@@ -31,8 +31,8 @@ export default class MenuOption extends React.Component {
         const { screen } = this.props;
         return (
             <Anchor path={`/${screen.id}/`} onClick={this.activateScreen}>
-                {screen.title}
                 <Icon name={screen.icon} />
+                {screen.title}
             </Anchor>
         );
     }

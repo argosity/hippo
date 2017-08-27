@@ -8,6 +8,7 @@ import Sidebar from 'grommet/components/Sidebar';
 import Header  from 'grommet/components/Header';
 import Anchor  from 'grommet/components/Anchor';
 import Menu from 'grommet/components/Menu';
+import Icon from '../components/icon';
 import Group   from './menu-group';
 import Screens from '../screens';
 import MenuOption from './menu-option';
@@ -34,13 +35,13 @@ class Logout extends React.PureComponent {
         return (
             <Menu direction="column" align="start" justify="between" primary>
                 <Anchor label="Log Out" onClick={this.onLogoutClick}>
+                    <Icon name="sign-out" />
                     Log Out
                 </Anchor>
             </Menu>
         );
     }
 }
-
 
 const Logo = observer(() => {
     if (!get(Config, 'logo.thumbnail')) {
@@ -70,6 +71,7 @@ export default class WorkspaceMenu extends React.PureComponent {
             <Sidebar
                 full size="small" separator="right"
                 colorIndex="brand"
+                className="screen-selection-menu"
             >
                 <Header justify="between" size="large" pad={{ horizontal: 'medium' }}>
                     <Logo />
