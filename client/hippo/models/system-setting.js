@@ -1,9 +1,10 @@
-import { merge } from 'lodash';
+import { merge, get } from 'lodash';
+import { when } from 'mobx';
 import {
     BaseModel, identifiedBy, identifier, belongsTo, field, computed,
 } from './base';
 import Sync  from './sync';
-
+import Config from '../config';
 import Asset from './asset';
 
 @identifiedBy('hippo/system-settings')
@@ -20,5 +21,15 @@ export default class SystemSettings extends BaseModel {
 
     @computed get syncUrl() {
         return this.constructor.syncUrl;
+    }
+
+    set syncData(data) {
+        super.syncData = data;
+        if (this.logo && this.logo.isDirty) {
+            when(
+                () => !this.logo.isDirty,
+                () => { Config.logo = this.logo.file_data; },
+            );
+        }
     }
 }
