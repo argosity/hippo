@@ -2,9 +2,10 @@ import { Atom, when, reaction } from 'mobx';
 import ActionCable from 'actioncable';
 import invariant from 'invariant';
 import { isEmpty, mapValues } from 'lodash';
+import { BaseModel } from './base';
 import User from '../user';
 import Config from '../config';
-
+import Subscriptions from './pub_sub/subscription';
 import PubSubCableChannel from './pub_sub/channel';
 
 let PubSub;
@@ -75,7 +76,9 @@ PubSub = {
         this.mapForModel(model).remove(model);
     },
 
-    onModelChange(model, id, data) {
+    onModelChange(modelId, id, data) {
+        const model = BaseModel.findDerived(modelId);
+        if (!model) { return; }
         const map = this.types.get(model);
         if (map) {
             map.onChange(id, data);
@@ -95,11 +98,13 @@ PubSub = {
 
     onLoginChange() {
         if (User.isLoggedIn) {
+            if (PubSub.cable) { return; }
             const host = Config.api_host.replace(/^http/, 'ws');
             const url = `${host}${Config.api_path}/cable?token=${Config.access_token}`;
             ActionCable.startDebugging();
             PubSub.cable = new ActionCable.Consumer(url);
             PubSub.channel = new PubSubCableChannel(PubSub);
+            Subscriptions.pubSub = PubSub;
         } else if (PubSub.cable) {
             PubSub.cable.disconnect();
             delete PubSub.cable;
@@ -109,13 +114,21 @@ PubSub = {
 
 };
 
+export default PubSub;
 export function onBoot() {
-    reaction(
-        () => User.isLoggedIn,
-        PubSub.onLoginChange,
-        { fireImmediately: true },
-    );
+    PubSub.onLoginChange();
 }
+
+when(
+    () => Config.isIntialized,
+    () => {
+        reaction(
+            () => User.isLoggedIn,
+            PubSub.onLoginChange,
+            { fireImmediately: true },
+        );
+    },
+);
 
 export function stop() {
     PubSub.kill();
