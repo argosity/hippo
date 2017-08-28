@@ -1,12 +1,9 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import Icon from '../components/icon';
-
 import Anchor from 'grommet/components/Anchor';
+import Icon from '../components/icon';
 
 @observer
 export default class MenuOption extends React.Component {
