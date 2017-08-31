@@ -31,9 +31,8 @@ module Hippo
 
             def create_model
                 template "lib/namespace/model.rb", "lib/#{identifier}/models/#{file_name}.rb"
-                template "spec/server/model_spec.rb", "spec/server/#{file_name}_spec.rb"
-                template "spec/fixtures/namespace/model.yml",
-                         "spec/fixtures/#{identifier}/#{file_name}.yml"
+                template "spec/server/model_spec.rb", "spec/server/models/#{file_name}_spec.rb"
+                template "spec/factories/model.rb", "spec/factories/#{file_name}.rb"
             end
 
             def create_client
