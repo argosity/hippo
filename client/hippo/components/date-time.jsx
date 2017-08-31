@@ -128,12 +128,17 @@ export default class DateTime extends React.Component {
         this.dateValue = value;
     }
 
+    @action.bound
+    setContainerRef(r) {
+        this.containerRef = r;
+    }
+
     renderDrop() {
         return (
             <DateTimeDrop
                 {...this.props}
                 onChange={this.onDateChange}
-                value={this.value}
+                value={this.value || moment()}
             />
         );
     }
@@ -150,7 +155,7 @@ export default class DateTime extends React.Component {
 
         return (
             <div
-                ref={r => (this.containerRef = r)}
+                ref={this.setContainerRef}
                 className={CLASS_ROOT}
             >
                 <input
