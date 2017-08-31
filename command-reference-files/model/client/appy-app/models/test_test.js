@@ -1,5 +1,5 @@
 import {
-    BaseModel, identifiedBy, identifier, belongsTo, hasMany, field, computed
+    BaseModel, identifiedBy, identifier, field, session, belongsTo, hasMany,
 } from './base';
 
 @identifiedBy('appy-app/test_test')
