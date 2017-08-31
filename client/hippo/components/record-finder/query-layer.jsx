@@ -53,7 +53,7 @@ export default class QueryLayer extends React.PureComponent {
                         flex='grow'
                     >
                         <Box flex="grow">
-                            <Heading tag="h3" margin="none">Find {title}</Heading>
+                            <Heading tag="h3" margin="none">{title}</Heading>
                         </Box>
                         <Button plain icon={<CloseIcon />} onClick={onClose} />
                     </Box>
