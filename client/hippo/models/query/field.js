@@ -1,4 +1,5 @@
 import { get, includes } from 'lodash';
+import classname from 'classnames';
 import { titleize } from '../../lib/util';
 import {
     BaseModel, identifiedBy, session, belongsTo, identifier, computed, observable,
@@ -17,15 +18,14 @@ export default class Field extends BaseModel {
     @session loadable   = true;
     @session queryable  = true;
     @session sortable   = true;
-    @session textAlign  = 'left';
+    @session _className = '';
+    @session align  = 'left';
     @session dataType   = 'string'
     @session cellRenderer;
     @session defaultValue;
     @session fetchIndex;
     @session sortBy;
 
-    @observable format;
-    @observable component;
     @observable onColumnClick;
 
     @belongsTo query;
@@ -44,6 +44,22 @@ export default class Field extends BaseModel {
 
     @computed get isNumeric() {
         return includes(['number'], this.queryType);
+    }
+
+    set className(c) {
+        this._className = c;
+    }
+
+    @computed get headerClassName() {
+        return classname('header', this.className);
+    }
+
+    @computed get className() {
+        return classname(this._className, {
+            r: 'right' === this.align,
+            l: 'left' === this.align,
+            c: 'center' === this.align,
+        });
     }
 
     @computed get dataIndex() {

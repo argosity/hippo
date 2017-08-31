@@ -37,5 +37,15 @@
             }
         }
 
+        .ReactVirtualized__Table__rowColumn {
+            &.l { text-align: left; }
+            &.r { text-align: right; }
+            &.c { text-align: center; }
+        }
+        .ReactVirtualized__Table__headerColumn {
+            &.l { text-align: left; }
+            &.r { text-align: right; }
+            &.c { text-align: center; }
+        }
     }
 }
