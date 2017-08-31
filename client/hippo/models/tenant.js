@@ -4,18 +4,19 @@ import {
 } from './base';
 import Config from '../config';
 
-const CACHE = observable({
-    Tenant: undefined,
-});
+
+const CACHED = observable.box();
 
 @identifiedBy('hippo/tenant')
 export default class Tenant extends BaseModel {
     @computed static get current() {
-        if (!CACHE.Tenant) {
-            CACHE.Tenant = new Tenant();
-            CACHE.Tenant.fetch({ query: 'current' });
+        let tenant = CACHED.get();
+        if (!tenant) {
+            tenant = new Tenant();
+            CACHED.set(tenant);
+            tenant.fetch({ query: 'current' });
         }
-        return CACHE.Tenant;
+        return tenant;
     }
 
     @identifier id;
