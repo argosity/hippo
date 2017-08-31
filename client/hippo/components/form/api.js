@@ -3,7 +3,7 @@
 }] */
 import { observable, computed, when, action } from 'mobx';
 import {
-    pick, isFunction, mapValues, every, get, set, filter, isNil, each,
+    pick, isFunction, mapValues, every, get, set, filter, isNil, each, extend,
 } from 'lodash';
 
 export class FormField {
@@ -26,7 +26,7 @@ export class FormField {
 
     update(attrs) {
         each(pick(attrs, [
-            'name', 'default', 'help', 'validate',
+            'name', 'default', 'help', 'validate', 'value',
         ]), (v, k) => {
             this[k] = isFunction(v) ? v.call(this) : v;
         });
@@ -91,7 +91,7 @@ export class FormState {
         if (field) {
             field.update(attrs);
         } else {
-            field = new FormField(name, attrs);
+            field = new FormField(name, extend({}, attrs, { value: get(this.values, name) }));
             this.fields.set(name, field);
         }
         return field;
@@ -131,6 +131,7 @@ export class FormState {
 
     @action
     set(values) {
+        this.values = values;
         this.fields.forEach((field, name) => {
             const value = get(values, name);
             field.value = isNil(value) ? '' : value;

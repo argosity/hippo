@@ -28,6 +28,13 @@ describe('Form Validation functions', () => {
         expect(form.isValid).toBe(true);
     });
 
+    it('sets field values when they check in', () => {
+        const form = new FormState();
+        form.set({ foo: 'bar' });
+        form.setField('foo', { label: 'Foo' });
+        expect(form.fields.get('foo').value).toEqual('bar');
+    });
+
     it('builds tests using blank', () => {
         const test = nonBlank();
         expect(test.message).toEqual('is required');
