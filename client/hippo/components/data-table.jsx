@@ -130,7 +130,7 @@ export default class DataTable extends React.Component {
                 dataKey: f.dataIndex || f.id,
                 headerRenderer: this.headerRenderer,
             }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink',
-                    'cellRenderer', 'className', 'headerClassName'),
+                'cellRenderer', 'className', 'headerClassName'),
             ),
         );
         if (this.props.editor) {

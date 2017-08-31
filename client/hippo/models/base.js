@@ -101,7 +101,7 @@ export class BaseModel {
     }
 
     @action reset() {
-        this.constructor.assignableKeys.forEach(k => (this[k] = null));
+        this.constructor.assignableKeys.forEach((k) => { this[k] = null; });
     }
 
     set syncData(data) {
