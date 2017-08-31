@@ -1,10 +1,10 @@
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
-describe <%= identifier %>::<%= class_name %> do
+describe <%= namespace %>::<%= class_name %> do
 
     it "can be instantiated" do
-        model = <%= identifier %>::<%= class_name %>.new
-        expect( model ).to be_an(<%= identifier %>::<%= class_name %>)
+        model = <%= namespace %>::<%= class_name %>.new
+        expect(model).to be_an(<%= namespace %>::<%= class_name %>)
     end
 
 end
