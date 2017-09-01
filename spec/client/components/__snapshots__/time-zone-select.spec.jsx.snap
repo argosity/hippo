@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimeZone Component matches snapshot 1`] = `
+<div
+  className="grommetux-select"
+  onClick={[Function]}
+>
+  <input
+    className="grommetux-input grommetux-select__input"
+    placeholder="None"
+    readOnly={true}
+    value="America/Chicago"
+  />
+  <button
+    aria-label="Select Icon"
+    className="grommetux-button grommetux-button--plain grommetux-select__control"
+    disabled={false}
+    href={undefined}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    type="button"
+  >
+    <span
+      className="grommetux-button__icon"
+    >
+      <svg
+        aria-label="caret-down"
+        className="grommetux-control-icon grommetux-control-icon-caret-down grommetux-control-icon--responsive"
+        height="24px"
+        role="img"
+        version="1.1"
+        viewBox="0 0 24 24"
+        width="24px"
+      >
+        <polygon
+          fill="none"
+          points="22 8 12 20 2 8"
+          stroke="#000"
+          strokeWidth="2"
+        />
+      </svg>
+    </span>
+  </button>
+</div>
+`;

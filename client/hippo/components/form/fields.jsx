@@ -13,6 +13,8 @@ import SelectWrapper   from './fields/select-wrapper';
 import TextWrapper     from './fields/text-wrapper';
 import CheckBoxWrapper from './fields/checkbox-wrapper';
 import Label           from './fields/label';
+import TimeZoneSelect  from '../../components/time-zone-select';
+
 import './fields/form-field.scss';
 
 const TypesMapping = {
@@ -21,6 +23,7 @@ const TypesMapping = {
     label:    Label,
     select:   SelectWrapper,
     number:   NumberInput,
+    timezone: TimeZoneSelect,
     checkbox: CheckBoxWrapper,
 };
 
