@@ -16,7 +16,7 @@ describe "Tenant changes", api: true, vcr: VCR_OPTS do
                  'SERVER_NAME' => "#{tenant.slug}.example.ua",
              }
 
-        expect(tenant.reload.slug).to eq('RED')
+        expect(tenant.reload.slug).to eq('red')
         email = Mail::TestMailer.deliveries.last
         expect(email).not_to be_nil
         expect(email.body).to include(tenant.domain)

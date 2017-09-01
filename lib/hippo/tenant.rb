@@ -3,7 +3,7 @@ require 'activerecord-multi-tenant'
 module Hippo
     # Tenant
     class Tenant < Hippo::Model
-        validates :slug, uniqueness: { case_sensitive: false }
+        validates :slug, uniqueness: true
         validates :name, :presence => { message: 'for company' }
         validates :email, :presence => true
 
@@ -11,6 +11,8 @@ module Hippo
         has_many :users, class_name: 'Hippo::User', autosave: true
 
         before_validation :auto_assign_slug, on: :create
+
+        before_save :downcase_slug
 
         def domain
             self.slug + '.' + Hippo.config.website_domain
@@ -47,6 +49,10 @@ module Hippo
                 end
                 break if slug.present?
             end
+        end
+
+        def downcase_slug
+            self.slug.downcase!
         end
 
     end
