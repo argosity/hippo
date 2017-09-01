@@ -15,8 +15,6 @@ module Hippo
 
                 def connect
                     token = request.params['token']
-                    Hippo.logger_debug("NEW WS CONN: #{token}")
-
                     begin
                         self.current_user = User.for_jwt_token(token) if token
                     rescue JWT::DecodeError
