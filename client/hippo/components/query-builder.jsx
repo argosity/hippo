@@ -74,12 +74,17 @@ class Clause extends React.PureComponent {
         this.props.clause.value = ev.target.value;
     }
 
+    @action.bound
+    setMenuRef(ref) {
+        this.menuRef = ref;
+    }
+
     render() {
         const { clause } = this.props;
         return (
             <Box direction='row' pad={{ between: 'small' }}>
                 <Menu
-                    ref={ref => (this.menuRef = ref)}
+                    ref={this.setMenuRef}
                     size='large'
                     pad='small'
                     closeOnClick={false} icon={<ClauseFilter clause={clause} />}
