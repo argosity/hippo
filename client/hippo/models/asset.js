@@ -73,13 +73,12 @@ export default class Asset extends BaseModel {
         });
     }
 
-
     @computed get isDirty() {
         return Boolean(this.file);
     }
 
     @computed get exists() {
-        return !!(this.file || this.id);
+        return !!(this.file || this.file_data);
     }
 
     @computed get isImage() {
