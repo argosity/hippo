@@ -5,6 +5,8 @@ import { isEmpty, get } from 'lodash';
 import PropTypes from 'prop-types';
 import Box     from 'grommet/components/Box';
 import Sidebar from 'grommet/components/Sidebar';
+import Button from 'grommet/components/Button';
+import CloseIcon from 'grommet/components/icons/base/Close';
 import Header  from 'grommet/components/Header';
 import Anchor  from 'grommet/components/Anchor';
 import Menu from 'grommet/components/Menu';
@@ -66,6 +68,13 @@ export default class WorkspaceMenu extends React.PureComponent {
         );
     }
 
+    renderClose() {
+        if (this.props.isOpen && !this.props.isDocked) {
+            return <Button icon={<CloseIcon />} onClick={this.props.onCloseMenu} plain />;
+        }
+        return null;
+    }
+
     render() {
         return (
             <Sidebar
@@ -75,6 +84,7 @@ export default class WorkspaceMenu extends React.PureComponent {
             >
                 <Header justify="between" size="large" pad={{ horizontal: 'medium' }}>
                     <Logo />
+                    {this.renderClose()}
                 </Header>
                 {Screens.activeGroups.map(g => <Group key={g.id} group={g} />)}
                 {this.renderUnGrouped()}

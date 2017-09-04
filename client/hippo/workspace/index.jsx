@@ -70,19 +70,22 @@ class Workspace extends React.Component {
                 <LoginDialog />
                 <Sidebar
                     styles={{ sidebar: { zIndex: 5 } }}
-                    sidebar={<Menu onDockToggle={this.toggleSidebarDocked} />}
+                    sidebar={<Menu
+                        isOpen={this.sidebarOpen}
+                        isDocked={this.sidebarDocked}
+                        onCloseMenu={this.toggleSidebarDocked}
+                        onDockToggle={this.toggleSidebarDocked}
+                    />}
                     open={this.sidebarOpen}
                     docked={this.sidebarDocked}
                     onSetOpen={this.onSetSidebarOpen}
                 >
-
                     <Button
                         primary
                         icon={<CirclePlayIcon />}
                         onClick={this.toggleSidebarDocked}
                         className={cn('sidebar-toggle', { 'is-open': this.sidebarOpen })}
                     />
-
                     <Switch>
                         <Route name='screen' path="/:screenId/:identifier?" component={Screen} />
                         <Route component={NoMatch} />
