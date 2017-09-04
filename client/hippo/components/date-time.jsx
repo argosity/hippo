@@ -91,8 +91,12 @@ export default class DateTime extends React.Component {
         }
     }
 
-    @computed get value() {
-        return this.dateValue || this.props.value ? moment(this.props.value) : '';
+    get value() {
+        if (this.dateValue) { return this.dateValue; }
+        if (this.props.value && !isNaN(this.props.value.getTime())) {
+            return moment(this.props.value);
+        }
+        return '';
     }
 
     @action.bound
@@ -107,8 +111,7 @@ export default class DateTime extends React.Component {
         this.editingValue = '';
         this.onForceClose();
         if (value.isValid()) {
-            this.props.onChange(value);
-            this.dateValue = value;
+            this.onDateChange(value);
         }
     }
 
@@ -124,7 +127,7 @@ export default class DateTime extends React.Component {
     @action.bound
     onDateChange(date) {
         const value = moment(date);
-        this.props.onChange(value.toDate());
+        this.props.onChange({ target: { name: this.props.name, value } });
         this.dateValue = value;
     }
 

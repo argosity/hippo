@@ -26,9 +26,9 @@ export default class DateWrapper extends React.PureComponent {
         this.isSelecting = active;
     }
 
-    @action.bound onDateChange(date) {
-        this.dateValue = date;
-        this.props.onChange({ target: { value: this.dateValue } });
+    @action.bound onDateChange({ target: { value } }) {
+        this.dateValue = value;
+        this.props.onChange({ target: { value } });
     }
 
     @action.bound onBlur(ev) {
