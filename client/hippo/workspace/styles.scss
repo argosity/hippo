@@ -1,32 +1,6 @@
 @import '../styles/global';
 @import '~grommet/scss/aruba/index';
 
-html {
-  font-family: $brand-font-family;
-}
-
-a.anchor {
-  display: block;
-}
-
-.request-access fieldset:first-of-type {
-  padding-top: 0;
-}
-
-pre {
-  width: 100%;
-  max-width: 100%;
-}
-
-.generic-branding {
-  display: none;
-}
-
-.content-pane .grommetux-tabs {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
 .screen {
     flex: 1;
     flex-direction: column;
