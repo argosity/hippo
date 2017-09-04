@@ -1,5 +1,5 @@
 import {
-    isEmpty, isNil, extend, map, bindAll, inRange, find, range,
+    isEmpty, isNil, extend, map, bindAll, inRange, find, range, isUndefined,
 } from 'lodash';
 import { reaction, observe, toJS } from 'mobx';
 
@@ -32,13 +32,14 @@ export default class ArrayResult extends Result {
         );
     }
 
-    @computed get updateKey() {
+    @computed get fingerprint() {
         return [
+            this.query.fingerprint,
             this.rows.length,
             (this.sortField ? this.sortField.id : 'none'),
             this.sortAscending,
             this.rowUpdateCount,
-        ].join('-');
+        ].join(';');
     }
 
     insertRow() {
@@ -73,7 +74,7 @@ export default class ArrayResult extends Result {
                 newValue.whenComplete(() => {
                     const row = this.rows[index];
                     this.query.info.loadableFields.forEach((f) => {
-                        if (model[f.id]) { row[f.dataIndex] = model[f.id]; }
+                        if (!isUndefined(model[f.id])) { row[f.dataIndex] = model[f.id]; }
                     });
                     this.rowUpdateCount += 1;
                 }, 99);

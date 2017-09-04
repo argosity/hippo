@@ -119,7 +119,7 @@ export default class DataTable extends React.Component {
     }
 
     @computed get gridRenderKey() {
-        return `${this.query.results.updateKey}-${this.editIndex}`;
+        return `${this.query.results.fingerprint}-${this.editIndex}`;
     }
 
     @computed get columnDefinitions() {

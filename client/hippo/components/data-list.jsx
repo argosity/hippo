@@ -69,37 +69,48 @@ export default class DataList extends React.Component {
     render() {
         const { query } = this;
         const { rowHeight, rowRenderer, ...listProps } = this.props;
+
         return (
             <Box
                 className={cn('data-list', { selectable: this.props.onRowClick })}
-                align='stretch' direction='row' flex
+                align='stretch' flex
             >
-                <InfiniteLoader
-                    keyChange={query.results.updateKey}
-                    minimumBatchSize={query.pageSize}
-                    isRowLoaded={this.isRowLoaded}
-                    loadMoreRows={this.loadMoreRows}
-                    rowCount={query.results.totalCount}
-                >
-                    {({ onRowsRendered, registerChild }) =>
-                        <AutoSizer
-                            updateKey={query.results.updateKey}
-                        >
-                            {({ height, width }) =>
-                                <List
-                                    {...listProps}
-                                    height={height}
-                                    width={width}
-                                    ref={(list) => { registerChild(list); this.listRef = list; }}
-                                    rowHeight={rowHeight}
-                                    headerHeight={50}
-                                    onRowsRendered={onRowsRendered}
-                                    rowRenderer={rowRenderer || this.rowRenderer}
-                                    rowCount={query.results.rows.length}
-                                    keyChange={query.results.updateKey}
-                                />}
-                        </AutoSizer>}
-                </InfiniteLoader>
+
+                {this.props.header}
+
+                <Box className="body" align="stretch" flex>
+                    <InfiniteLoader
+                        keyChange={query.results.updateKey}
+                        minimumBatchSize={query.pageSize}
+                        isRowLoaded={this.isRowLoaded}
+                        loadMoreRows={this.loadMoreRows}
+                        rowCount={query.results.totalCount}
+                        keyChange={query.results.fingerprint}
+                    >
+                        {({ onRowsRendered, registerChild }) =>
+                            <AutoSizer
+                                keyChange={query.results.fingerprint}
+                                updateKey={query.results.updateKey}
+                            >
+                                {({ height, width }) =>
+                                    <List
+                                        {...listProps}
+                                        height={height}
+                                        width={width}
+                                        ref={(list) => {
+                                            registerChild(list);
+                                            this.listRef = list;
+                                        }}
+                                        rowHeight={rowHeight}
+                                        headerHeight={50}
+                                        onRowsRendered={onRowsRendered}
+                                        rowRenderer={rowRenderer || this.rowRenderer}
+                                        rowCount={query.results.rows.length}
+                                        keyChange={query.results.fingerprint}
+                                    />}
+                            </AutoSizer>}
+                    </InfiniteLoader>
+                </Box>
             </Box>
         );
     }
