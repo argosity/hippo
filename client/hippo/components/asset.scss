@@ -6,7 +6,7 @@
             height: 200px;
             padding: 0.5rem;
             cursor: pointer;
-            overflow: scroll;
+            overflow: auto;
             &-active {
                 background-color: $selected-background-color;
             }
