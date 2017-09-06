@@ -16,6 +16,11 @@ import { plugins, defaultPlugin } from './text-editor/plugins';
 import DisplayModeToggle from './text-editor/display-modes';
 import './text-editor/text-editor.scss';
 
+const editorInstance = new Editor({
+    plugins,
+    editables: [createEmptyState()],
+    defaultPlugin,
+});
 
 @observer
 export default class TextEditor extends React.PureComponent {
@@ -32,11 +37,7 @@ export default class TextEditor extends React.PureComponent {
     componentWillMount() {
         const content = toJS(this.props.defaultContent);
         this.content = isEmpty(content) ? createEmptyState() : content;
-        this.editor = new Editor({
-            plugins,
-            editables: [this.content],
-            defaultPlugin,
-        });
+        editorInstance.trigger.editable.add(this.content);
     }
 
     @action.bound
@@ -56,21 +57,21 @@ export default class TextEditor extends React.PureComponent {
             >
                 <div className="text-editor">
                     <DisplayModeToggle
-                        editor={this.editor}
+                        editor={editorInstance}
                         onSave={this.onSave}
                     >
                         {this.props.children}
                     </DisplayModeToggle>
                     <div className="text-editor-content">
                         <Editable
-                            editor={this.editor}
+                            editor={editorInstance}
                             id={this.content.id}
                             onAddImage={this.props.onAddImage}
                             onChange={this.onEditStateChange}
                         />
                     </div>
-                    <Trash editor={this.editor}/>
-                    <Toolbar editor={this.editor} />
+                    <Trash editor={editorInstance}/>
+                    <Toolbar editor={editorInstance} />
                 </div>
 
             </Provider>
