@@ -1,180 +1,132 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { action, observable, computed } from 'mobx';
-import { observer }   from 'mobx-react';
-import CalendarIcon from 'grommet/components/icons/base/Calendar';
-import ClockIcon from 'grommet/components/icons/base/Clock';
-import Button from 'grommet/components/Button';
-import CSSClassnames from 'grommet/utils/CSSClassnames';
-import { findAncestor, isDescendant } from 'grommet/utils/DOM';
-import KeyboardAccelerators from 'grommet/utils/KeyboardAccelerators';
-import Drop from 'grommet/utils/Drop';
-import moment from 'moment';
+import PropTypes    from 'prop-types';
+import { observer } from 'mobx-react';
+import { autobind } from 'core-decorators';
+import Flatpickr    from 'flatpickr';
+import { defaults, has, omit } from 'lodash';
+import { observable, action }  from 'mobx';
+import './date-time.scss';
 
-import DateTimeDrop from './date-time/date-time-drop';
-import './date-time/date-time.scss';
+const hooks = [
+    'onOpen',
+    'onMonthChange',
+    'onYearChange',
+    'onReady',
+    'onValueUpdate',
+    'onDayCreate',
+    'onBlur',
+    'onChange',
+];
 
-const INPUT = CSSClassnames.INPUT;
-const FORM_FIELD = CSSClassnames.FORM_FIELD;
-const CLASS_ROOT = CSSClassnames.DATE_TIME;
+const defaultOptions = {
+    enableTime: true,
+    format: 'M/d/Y h:iK',
+};
 
 @observer
-export default class DateTime extends React.Component {
+export default class DateTimePicker extends React.PureComponent {
     static propTypes = {
-        value:    PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
-        onChange: PropTypes.func.isRequired,
-        format:   PropTypes.string,
+        defaultValue: PropTypes.string,
+        options: PropTypes.object,
+        onChange: PropTypes.func,
+        onOpen: PropTypes.func,
+        onClose: PropTypes.func,
+        onMonthChange: PropTypes.func,
+        onYearChange: PropTypes.func,
+        onReady: PropTypes.func,
+        onValueUpdate: PropTypes.func,
+        onDayCreate: PropTypes.func,
+        value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.array,
+            PropTypes.object,
+            PropTypes.number,
+        ]),
+        children: PropTypes.node,
     }
 
     static defaultProps = {
-        format: 'M/D/YYYY',
-        onDropChange: () => {},
+        options: {},
     }
 
-    static contextTypes = {
-        onDropChange: PropTypes.func,
-    }
+    @observable node;
 
-    @observable drop;
-    @observable dateValue;
+    componentWillReceiveProps(props) {
+        const options = this.getOptions(props);
 
-    @observable editingValue
-
-    @action.bound
-    onClose(ev) {
-        const dropElement = document.querySelector(`.${DateTimeDrop.className}`);
-        if (!isDescendant(this.containerRef, ev.target) &&
-            (!dropElement || !isDescendant(dropElement, ev.target))) {
-            this.setDropActivation(false);
+        if (has(props, 'value')) {
+            this.flatpickr.setDate(props.value, false);
         }
-    }
 
-    @action.bound
-    onForceClose() {
-        this.setDropActivation(false);
-    }
+        const optionsKeys = Object.getOwnPropertyNames(options);
 
-    @action.bound
-    setDropActivation(dropActive) {
-        const { onDropChange } =  this.context;
+        for (let index = optionsKeys.length - 1; index >= 0; index--) {
+            const key = optionsKeys[index];
+            let value = options[key];
 
-        const listeners = {
-            esc: this.onForceClose,
-        };
-
-        if (dropActive && !this.dropActive) {
-            document.addEventListener('click', this.onClose);
-            KeyboardAccelerators.startListeningToKeyboard(this, listeners);
-            // If this is inside a FormField, place the drop in reference to it.
-            const control = findAncestor(this.containerRef, `.${FORM_FIELD}`) || this.containerRef;
-            this.drop = new Drop(control, this.renderDrop(), {
-                align: { top: 'bottom', left: 'left' },
-                focusControl: true,
-                context: this.context,
-            });
-            this.dropActive = true;
-            this.props.onDropChange();
-        } else if (!dropActive && this.dropActive) {
-            document.removeEventListener('click', this.onClose);
-            KeyboardAccelerators.stopListeningToKeyboard(this, listeners);
-
-            if (this.drop) {
-                this.drop.remove();
-                this.drop = undefined;
+            // Hook handlers must be set as an array
+            if (hooks.indexOf(key) !== -1 && !Array.isArray(value)) {
+                value = [value];
             }
-            this.dropActive = false;
-            this.props.onDropChange();
-        }
-
-        if (onDropChange) {
-            onDropChange(dropActive);
+            this.flatpickr.set(key, value);
         }
     }
 
-    get value() {
-        if (this.dateValue) { return this.dateValue; }
-        if (this.props.value && !isNaN(this.props.value.getTime())) {
-            return moment(this.props.value);
-        }
-        return '';
-    }
+    componentDidMount() {
+        const options = this.getOptions(this.props);
+        this.flatpickr = new Flatpickr(this.node, options);
 
-    @action.bound
-    onInputChange(ev) {
-        this.editingValue = ev.target.value;
-    }
-
-    @action.bound
-    onInputBlur() {
-        if (!this.editingValue) { return; }
-        const value = moment(this.editingValue, this.props.format);
-        this.editingValue = '';
-        this.onForceClose();
-        if (value.isValid()) {
-            this.onDateChange(value);
+        if (has(this.props, 'value')) {
+            this.flatpickr.setDate(this.props.value, false);
         }
     }
 
     componentWillUnmount() {
-        this.setDropActivation(false);
+        this.flatpickr.destroy();
+    }
+
+
+    @autobind onClose() {
+        if (this.node.blur) { this.node.blur(); }
+    }
+
+    @autobind onChange(dates) {
+        this.props.onChange({ target: { value: dates[0] } });
+    }
+
+    getOptions(props) {
+        const options = defaults({
+            ...this.props.options,
+            onClose: this.onClose,
+            onChange: this.onChange,
+            dateFormat: props.format,
+        }, defaultOptions);
+        // Add prop hooks to options
+        hooks.forEach((hook) => {
+            if (this[hook]) {
+                options[hook] = this[hook];
+            } else if (this.props[hook]) {
+                options[hook] = this.props[hook];
+            }
+        });
+        return options;
     }
 
     @action.bound
-    onControlClick() {
-        this.setDropActivation(true);
-    }
-
-    @action.bound
-    onDateChange(date) {
-        const value = moment(date);
-        this.props.onChange({ target: { name: this.props.name, value } });
-        this.dateValue = value;
-    }
-
-    @action.bound
-    setContainerRef(r) {
-        this.containerRef = r;
-    }
-
-    renderDrop() {
-        return (
-            <DateTimeDrop
-                {...this.props}
-                onChange={this.onDateChange}
-                value={this.value || moment()}
-            />
-        );
-    }
-
-    @computed get inputValue() {
-        if (this.editingValue) { return this.editingValue; }
-        if (this.value) { return this.value.format(this.props.format); }
-        return '';
+    setNode(node) {
+        this.node = node;
     }
 
     render() {
-        const { inputValue, props: { format, dateOnly } } = this;
-        const Icon = dateOnly ? CalendarIcon : ClockIcon;
+        // eslint-disable-next-line no-unused-vars
+        const { options, defaultValue, value, children, ...props } = omit(this.props, hooks);
 
         return (
-            <div
-                ref={this.setContainerRef}
-                className={CLASS_ROOT}
-            >
-                <input
-                    placeholder={format}
-                    className={`${INPUT} ${CLASS_ROOT}__input`}
-                    onClick={this.onControlClick}
-                    onChange={this.onInputChange}
-                    onBlur={this.onInputBlur}
-                    value={inputValue || ''}
-                />
-                <Button
-                    icon={<Icon />}
-                    onClick={this.onControlClick}
-                    className={`${CLASS_ROOT}__control`}
-                />
-            </div>
+            <input
+                {...props}
+                defaultValue={defaultValue}
+                ref={this.setNode}
+            />
         );
     }
 }

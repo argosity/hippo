@@ -8,7 +8,7 @@ import DateTime  from '../../date-time';
 @observer
 export default class DateWrapper extends React.PureComponent {
     static defaultProps = {
-        format: 'M/D/YYYY h:mm a',
+        format: 'M/d/Y h:iK',
     }
     static childContextTypes = { onDropChange: PropTypes.func }
     @observable isSelecting;
