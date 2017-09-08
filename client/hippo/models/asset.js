@@ -118,7 +118,12 @@ export default class Asset extends BaseModel {
             .then(resp => resp.json())
             .then(json => this.set(json.data))
             .then((json) => {
-                this.file = undefined;
+                if (this.file) {
+                    if (this.file.preview && window.URL.revokeObjectURL) {
+                        window.URL.revokeObjectURL(this.file.preview);
+                    }
+                    this.file = undefined;
+                }
                 return json;
             });
     }
