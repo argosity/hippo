@@ -20,7 +20,7 @@ const hooks = [
 
 const defaultOptions = {
     enableTime: true,
-    format: 'M/d/Y h:iK',
+    format: 'M d Y h:iK',
 };
 
 @observer
