@@ -5,13 +5,14 @@ import { observer }   from 'mobx-react';
 import { map, compact, invoke } from 'lodash';
 import Heading from 'grommet/components/Heading';
 import Header from 'grommet/components/Header';
-import Button from 'grommet/components/Button';
 import SaveIcon from 'grommet/components/icons/base/Save';
 
 import Screen from 'hippo/components/screen';
 import Asset  from 'hippo/components/asset';
 import Settings from 'hippo/models/system-setting';
 
+import Warning from '../components/warning-notification';
+import SaveButton from '../components/save-button';
 import { Row, Col } from 'react-flexbox-grid';
 import ScreenInstance from 'hippo/screens/instance';
 import Extensions from '../extensions';
@@ -68,14 +69,14 @@ export default class SystemSettings extends React.PureComponent {
         return (
             <Screen {...this.props}>
                 <Header fixed>
-                    <Button
-                        primary
-                        icon={<SaveIcon />}
-                        label='Save'
+
+                    <SaveButton
+                        model={this.settings}
                         onClick={this.onSave}
                     />
                 </Header>
                 <Heading>{this.props.screen.definition.title}</Heading>
+                <Warning message={this.settings.errorMessage} />
                 <TenantSettings ref={this.setTenantRef} />
                 <Heading tag="h3">Images</Heading>
                 <Row>
