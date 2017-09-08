@@ -52,7 +52,7 @@ module Hippo
         end
 
         def downcase_slug
-            self.slug.downcase!
+            self.slug = self.slug.downcase.gsub(/\W/, '')
         end
 
     end
