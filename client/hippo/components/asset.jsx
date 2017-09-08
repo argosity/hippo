@@ -43,6 +43,18 @@ export default class Asset extends React.PureComponent {
         return this.props.label || titleize(this.props.name);
     }
 
+    @action.bound
+    setDZRef(dz) {
+        this.dropZone = dz;
+    }
+
+    @action.bound
+    onKey(ev) {
+        if ('Enter' === ev.key) {
+            this.dropZone.open();
+        }
+    }
+
     preview() {
         if (this.asset && this.asset.exists) {
             return this.asset.isImage ?
@@ -56,6 +68,7 @@ export default class Asset extends React.PureComponent {
         );
     }
 
+
     render() {
         const { model: _, label: __, name: ___, className, ...col } = this.props;
 
@@ -64,12 +77,17 @@ export default class Asset extends React.PureComponent {
                 {...col}
                 className={classnames(className, 'asset', 'form-field')}
             >
-                <Field label={this.label} >
+                <Field
+                    label={this.label}
+                    tabIndex={0}
+                    onKeyPress={this.onKey}
+                >
                     <Dropzone
                         className="drop-zone"
                         activeClassName="drop-zone-active"
                         onDrop={this.onDrop}
                         multiple={false}
+                        ref={this.setDZRef}
                     >
                         {this.preview()}
                     </Dropzone>
