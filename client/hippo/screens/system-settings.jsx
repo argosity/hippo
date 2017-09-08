@@ -3,18 +3,16 @@ import PropTypes from 'prop-types';
 import { observable, action } from 'mobx';
 import { observer }   from 'mobx-react';
 import { map, compact, invoke } from 'lodash';
+import { Row, Col } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
 import Header from 'grommet/components/Header';
-import SaveIcon from 'grommet/components/icons/base/Save';
 
-import Screen from 'hippo/components/screen';
-import Asset  from 'hippo/components/asset';
-import Settings from 'hippo/models/system-setting';
-
+import Screen from '../../components/screen';
+import Asset  from '../../components/asset';
+import Settings from '../../models/system-setting';
 import Warning from '../components/warning-notification';
 import SaveButton from '../components/save-button';
-import { Row, Col } from 'react-flexbox-grid';
-import ScreenInstance from 'hippo/screens/instance';
+import ScreenInstance from '../../screens/instance';
 import Extensions from '../extensions';
 import MailerConfig from './system-settings/mailer-config';
 import TenantSettings from  './system-settings/tenant';
@@ -69,7 +67,6 @@ export default class SystemSettings extends React.PureComponent {
         return (
             <Screen {...this.props}>
                 <Header fixed>
-
                     <SaveButton
                         model={this.settings}
                         onClick={this.onSave}
