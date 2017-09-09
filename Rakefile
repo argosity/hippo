@@ -19,7 +19,7 @@ YARD::Rake::YardocTask.new do |t|
 end
 
 task :npmrelease do
-    sh "npm-release"
+    sh "npm publish"
 end
 
 task :release => :npmrelease
