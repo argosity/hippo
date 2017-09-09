@@ -7,12 +7,12 @@ import { Row, Col } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
 import Header from 'grommet/components/Header';
 
-import Screen from '../../components/screen';
-import Asset  from '../../components/asset';
-import Settings from '../../models/system-setting';
+import Screen from '../components/screen';
+import Asset  from '../components/asset';
+import Settings from '../models/system-setting';
 import Warning from '../components/warning-notification';
 import SaveButton from '../components/save-button';
-import ScreenInstance from '../../screens/instance';
+import ScreenInstance from '../screens/instance';
 import Extensions from '../extensions';
 import MailerConfig from './system-settings/mailer-config';
 import TenantSettings from  './system-settings/tenant';
