@@ -35,12 +35,14 @@ export default class FormField extends React.PureComponent {
         name:  PropTypes.string.isRequired,
         className: PropTypes.string,
         type: PropTypes.string,
+        tabIndex: PropTypes.number,
     }, Col.PropTypes)
 
     static defaultProps = {
         label:     '',
         className: '',
         type:      'text',
+        tabIndex: 0,
     }
 
     focus() {
@@ -64,7 +66,7 @@ export default class FormField extends React.PureComponent {
 
     render() {
         const {
-            name, className, autoFocus, type, children, label,
+            name, className, autoFocus, type, children, label, tabIndex,
             validate: _, formState: __, help: ___, ...otherProps
         } = getColumnProps(this.props);
 
@@ -79,6 +81,7 @@ export default class FormField extends React.PureComponent {
                 >
                     <InputTag
                         name={name}
+                        tabIndex={tabIndex}
                         autoFocus={autoFocus}
                         ref={this.setRef}
                         value={this.field.value || ''}

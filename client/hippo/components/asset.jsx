@@ -18,6 +18,7 @@ export default class Asset extends React.PureComponent {
     static defaultProps = {
         label: '',
         className: '',
+        tabIndex: 0,
     }
 
     static propTypes = {
@@ -25,6 +26,7 @@ export default class Asset extends React.PureComponent {
         name:      PropTypes.string.isRequired,
         label:     PropTypes.string,
         className: PropTypes.string,
+        tabIndex:  PropTypes.number,
     }
 
     @action.bound
@@ -70,7 +72,7 @@ export default class Asset extends React.PureComponent {
 
 
     render() {
-        const { model: _, label: __, name: ___, className, ...col } = this.props;
+        const { model: _, label: __, name: ___, className, tabIndex, ...col } = this.props;
 
         return (
             <Col
@@ -79,7 +81,7 @@ export default class Asset extends React.PureComponent {
             >
                 <Field
                     label={this.label}
-                    tabIndex={0}
+                    tabIndex={tabIndex}
                     onKeyPress={this.onKey}
                 >
                     <Dropzone
