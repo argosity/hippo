@@ -1,9 +1,9 @@
 import { get, isString, find, extend, toPairs } from 'lodash';
-import { action, reaction, observe, observable } from 'mobx';
+import { toJS, action, reaction, observe, observable } from 'mobx';
+import objectHash from 'object-hash';
 import {
     BaseModel, identifiedBy, field, belongsTo, hasMany, identifier, computed, session,
 } from './base';
-
 import Info        from './query/info';
 import Types       from './query/types';
 import Operator    from './query/operator';
@@ -56,6 +56,7 @@ export default class Query extends BaseModel {
             { id: 'contains', label: 'Contains', types: Types.LIKE_QUERY_TYPES },
             { id: 'lt', label: 'Less Than', types: Types.LESS_THAN_QUERY_TYPES },
             { id: 'gt', label: 'More Than', types: Types.LESS_THAN_QUERY_TYPES },
+
         ].forEach(op => this.operators.push(op));
         this.info = new Info(this);
         this.results = new ArrayResult({ query: this });
@@ -74,7 +75,10 @@ export default class Query extends BaseModel {
     }
 
     @computed get fingerprint() {
-        return this.clauses.map(o => o.fingerprint).join(';');
+        return objectHash({
+            so: toJS(this.syncOptions),
+            c: this.info.valuedClauses.map(c => c.fingerprint),
+        });
     }
 
     open() {
