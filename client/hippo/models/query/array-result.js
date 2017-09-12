@@ -2,7 +2,7 @@ import {
     isEmpty, isNil, extend, map, bindAll, inRange, find, range, isUndefined,
 } from 'lodash';
 import { reaction, observe, toJS } from 'mobx';
-
+import objectHash from 'object-hash';
 import Sync from '../sync';
 import Result from './result';
 import {
@@ -18,6 +18,7 @@ export default class ArrayResult extends Result {
     @observable sortAscending;
     @observable sortField;
     @observable.shallow loadingRows = [];
+    @observable syncInProgress;
 
     constructor(attrs) {
         super(attrs);
@@ -33,13 +34,14 @@ export default class ArrayResult extends Result {
     }
 
     @computed get fingerprint() {
-        return [
-            this.query.fingerprint,
-            this.rows.length,
-            (this.sortField ? this.sortField.id : 'none'),
-            this.sortAscending,
-            this.rowUpdateCount,
-        ].join(';');
+        return objectHash({
+            q: this.query.fingerprint,
+            sy: toJS(this.syncInProgress),
+            rl: this.rows.length,
+            sf: (this.sortField ? this.sortField.id : 'none'),
+            sa: this.sortAscending,
+            ru: this.rowUpdateCount,
+        });
     }
 
     insertRow() {
@@ -184,7 +186,7 @@ export default class ArrayResult extends Result {
             this.rows.splice(start, Math.max(limit, rows.length), ...rows);
             this.totalCount = resp.total;
             this.loadingRows.remove(inProgress);
-            delete this.syncInProgress;
+            this.syncInProgress = null;
             return this;
         });
     }
