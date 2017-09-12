@@ -291,6 +291,7 @@ module Hippo
                 when 'lt'   then field.lt(value)
                 when 'in'   then field.in(Range.new(*value))
                 when 'gt'   then field.gt(value)
+                when 'between' then field.between(Range.new(*value.split('...')))
                 else
                     value =~ /%/ ? field.matches(value) : field.eq(value)
                 end

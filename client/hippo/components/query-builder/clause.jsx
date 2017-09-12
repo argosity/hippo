@@ -1,4 +1,5 @@
 import React from 'react';
+import { defaults } from 'lodash';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
@@ -7,9 +8,12 @@ import Menu          from 'grommet/components/Menu';
 import TextInput     from 'grommet/components/TextInput';
 import ClauseModel   from '../../models/query/clause';
 import { Radio, ClauseFilter } from './clause-filter';
+import BooleanPicker from './boolean-picker';
+import DatePicker from './date-picker';
 
 const defaultHandlers = {
-
+    boolean: BooleanPicker,
+    date: DatePicker,
 };
 
 @observer
@@ -38,8 +42,13 @@ export default class Clause extends React.PureComponent {
         this.menuRef = ref;
     }
 
+    get handlers() {
+        return defaults(this.props.typeHandlers, defaultHandlers);
+    }
+
     renderInputTag() {
-        const Tag = this.props.typeHandlers[this.props.clause.field.dataType];
+        const Tag = this.handlers[this.props.clause.field.dataType];
+
         if (Tag) {
             return <Tag clause={this.props.clause} />;
         }
@@ -57,7 +66,7 @@ export default class Clause extends React.PureComponent {
         const { props: { clause } } = this;
 
         return (
-            <Box direction='row' pad={{ between: 'small' }}>
+            <Box className="clause" direction='row' pad={{ between: 'small' }} align="center">
                 <Menu
                     ref={this.setMenuRef}
                     size='large'

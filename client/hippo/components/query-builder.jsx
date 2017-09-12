@@ -4,6 +4,7 @@ import { find } from 'lodash';
 import { observer } from 'mobx-react';
 import Query from '../models/query';
 import Clause from './query-builder/clause';
+import './query-builder/query-builder.scss';
 
 @observer
 export default class QueryBuilder extends React.PureComponent {
