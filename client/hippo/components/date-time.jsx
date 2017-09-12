@@ -91,7 +91,13 @@ export default class DateTimePicker extends React.PureComponent {
     }
 
     @autobind onChange(dates) {
-        this.props.onChange({ target: { value: dates[0] } });
+        if ('range' === this.props.options.mode) {
+            if (2 === dates.length) {
+                this.props.onChange({ target: { value: dates } });
+            }
+        } else {
+            this.props.onChange({ target: { value: dates[0] } });
+        }
     }
 
     getOptions(props) {
