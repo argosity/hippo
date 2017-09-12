@@ -6,6 +6,7 @@ import {
 } from '../models/base';
 
 class InstanceCollection {
+
     @observable models = []
     @observable active;
 
@@ -32,6 +33,7 @@ class InstanceCollection {
 
     add(model) { this.models.push(model); }
     remove(model) { this.models.remove(model); }
+
 }
 
 const displaying = new InstanceCollection();
@@ -39,6 +41,7 @@ export { displaying };
 
 @identifiedBy('hippo/screen-view')
 export default class Instance extends BaseModel {
+
     static get displaying() {
         return displaying.models;
     }
@@ -93,4 +96,5 @@ export default class Instance extends BaseModel {
     remove() {
         displaying.remove(this);
     }
+
 }

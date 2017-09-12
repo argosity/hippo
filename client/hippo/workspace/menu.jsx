@@ -20,6 +20,7 @@ import Asset from '../models/asset';
 
 @observer
 class Logout extends React.PureComponent {
+
     static contextTypes = {
         router: PropTypes.object,
     }
@@ -43,6 +44,7 @@ class Logout extends React.PureComponent {
             </Menu>
         );
     }
+
 }
 
 const Logo = observer(() => {
@@ -59,6 +61,7 @@ const Logo = observer(() => {
 
 @observer
 export default class WorkspaceMenu extends React.PureComponent {
+
     renderUnGrouped() {
         if (!User.isLoggedIn || isEmpty(Screens.unGrouped)) { return null; }
         return (
@@ -92,4 +95,5 @@ export default class WorkspaceMenu extends React.PureComponent {
             </Sidebar>
         );
     }
+
 }

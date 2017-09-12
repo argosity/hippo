@@ -11,6 +11,7 @@ import Icon  from '../components/icon';
 
 @observer
 export default class Group extends React.PureComponent {
+
     static propTypes = {
         group: PropTypes.shape({
             active: PropTypes.bool.isRequired,
@@ -33,4 +34,5 @@ export default class Group extends React.PureComponent {
             </Menu>
         );
     }
+
 }

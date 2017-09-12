@@ -7,6 +7,7 @@ import DateTime  from '../../date-time';
 
 @observer
 export default class DateWrapper extends React.PureComponent {
+
     static defaultProps = {
         format: 'M/d/Y h:iK',
     }
@@ -47,4 +48,5 @@ export default class DateWrapper extends React.PureComponent {
             />
         );
     }
+
 }

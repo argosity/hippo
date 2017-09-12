@@ -20,6 +20,7 @@ import './system-settings/system-settings.scss';
 
 @observer
 export default class SystemSettings extends React.PureComponent {
+
     @observable settings = new Settings();
     extensionPanelRefs = new Map();
 
@@ -92,4 +93,5 @@ export default class SystemSettings extends React.PureComponent {
             </Screen>
         );
     }
+
 }

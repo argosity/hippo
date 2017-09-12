@@ -35,6 +35,7 @@ function NoMatch({ match: { path } }) {
 
 @observer
 class Workspace extends React.Component {
+
     @observable sidebarOpen   = true;
     @observable sidebarDocked = false;
 
@@ -94,6 +95,7 @@ class Workspace extends React.Component {
             </App>
         );
     }
+
 }
 
 export default function WorkspaceRoot() {

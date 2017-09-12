@@ -15,6 +15,7 @@ ScreenView.displayName = 'ScreenView';
 
 @observer
 export default class Screen extends React.Component {
+
     static propTypes = {
         match: PropTypes.shape({
             params: PropTypes.shape({
@@ -46,4 +47,5 @@ export default class Screen extends React.Component {
 
         );
     }
+
 }

@@ -17,6 +17,7 @@ const POSITION = function(start, end, elapsed, duration) {
 };
 
 export default class SmoothScroll {
+
     constructor(link, destination, options = {}) {
         this.link = link;
         this.destination = destination;
@@ -65,4 +66,5 @@ export default class SmoothScroll {
         }
         return step();
     }
+
 }

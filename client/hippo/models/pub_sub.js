@@ -77,6 +77,7 @@ export function stop() {
 }
 
 export class PubSubAtom {
+
     constructor(model) {
         this.model = model;
         if (model.identifierFieldValue) {
@@ -100,6 +101,7 @@ export class PubSubAtom {
     reportObserved() {
         if (this.atom) { this.atom.reportObserved(); }
     }
+
 }
 
 export function observePubSub(...models) {

@@ -2,6 +2,7 @@ import invariant from 'invariant';
 import { isEmpty, mapValues } from 'lodash';
 
 export default class PubSubMap {
+
     constructor(modelKlass, channel) {
         this.channel = channel;
         this.channel_prefix = modelKlass.identifiedBy;
@@ -54,4 +55,5 @@ export default class PubSubMap {
             models.splice(indx, 1);
         }
     }
+
 }

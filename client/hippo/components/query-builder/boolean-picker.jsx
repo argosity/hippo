@@ -6,6 +6,7 @@ import { action } from 'mobx';
 
 @observer
 export default class BooleanPicker extends React.PureComponent {
+
     @action.bound onChange(ev) {
         this.props.clause.value = ev.target.checked;
     }
@@ -23,4 +24,5 @@ export default class BooleanPicker extends React.PureComponent {
             <CheckBox checked={!!clause.value} onChange={this.onChange} />
         );
     }
+
 }

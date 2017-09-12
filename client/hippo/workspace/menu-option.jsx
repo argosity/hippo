@@ -7,6 +7,7 @@ import Icon from '../components/icon';
 
 @observer
 export default class MenuOption extends React.Component {
+
     static propTypes = {
         screen: PropTypes.shape({
             title:   PropTypes.string.isRequired,
@@ -33,4 +34,5 @@ export default class MenuOption extends React.Component {
             </Anchor>
         );
     }
+
 }

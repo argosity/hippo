@@ -6,6 +6,7 @@ import RootView from '../workspace/root-view';
 export { identifiedBy, identifier } from '../models/base';
 
 export class BaseExtension {
+
     @observable data;
 
     static register() {
@@ -27,4 +28,5 @@ export class BaseExtension {
     rootView() {
         return RootView;
     }
+
 }

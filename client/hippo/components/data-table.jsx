@@ -26,6 +26,7 @@ function renderEditTriangle({ rowIndex, columnData: { onEdit } }) {
 
 @observer
 export default class DataTable extends React.Component {
+
     static defaultProps = {
         canCreate: false,
         editRowIndex: null,
@@ -242,4 +243,5 @@ export default class DataTable extends React.Component {
             </div>
         );
     }
+
 }

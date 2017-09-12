@@ -6,6 +6,7 @@ import { get, find } from 'lodash';
 
 @observer
 export default class SelectFieldWrapper extends React.PureComponent {
+
     @action.bound
     onSelectChange({ value: { id } }) {
         const ev = { target: { value: id } };
@@ -27,4 +28,5 @@ export default class SelectFieldWrapper extends React.PureComponent {
             />
         );
     }
+
 }

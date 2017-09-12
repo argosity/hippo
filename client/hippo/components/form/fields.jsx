@@ -30,6 +30,7 @@ const TypesMapping = {
 @inject('formState')
 @observer
 export default class FormField extends React.PureComponent {
+
     static propTypes = Object.assign({
         label: PropTypes.string,
         name:  PropTypes.string.isRequired,
@@ -94,4 +95,5 @@ export default class FormField extends React.PureComponent {
             </div>
         );
     }
+
 }

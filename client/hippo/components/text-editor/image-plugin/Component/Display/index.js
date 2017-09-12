@@ -23,6 +23,7 @@ const iconStyle = {
 @inject('assets')
 @observer
 export default class Display extends React.PureComponent {
+
     @computed get asset() {
         return find(this.props.assets, asset =>
             asset.metadata && asset.metadata.nodeId === this.props.id);
@@ -77,4 +78,5 @@ export default class Display extends React.PureComponent {
         }
         return this.renderImage();
     }
+
 }

@@ -9,6 +9,7 @@ import 'ory-editor-core/lib/index.css';
 
 @observer
 export default class TextEditorRenderer extends React.PureComponent {
+
     static defaultProps = {
         assets: observable.array(),
     }
@@ -34,4 +35,5 @@ export default class TextEditorRenderer extends React.PureComponent {
             </Provider>
         );
     }
+
 }

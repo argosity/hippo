@@ -4,6 +4,7 @@ import Value from 'grommet/components/Value';
 
 @observer
 export default class LabelWrapper extends React.PureComponent {
+
     render() {
         const { value }  = this.props;
 
@@ -11,4 +12,5 @@ export default class LabelWrapper extends React.PureComponent {
             <Value value={value} />
         );
     }
+
 }

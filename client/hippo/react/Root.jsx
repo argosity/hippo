@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Root extends React.Component {
+
     static childContextTypes = {
         viewport: PropTypes.object,
     }
@@ -20,4 +21,5 @@ export default class Root extends React.Component {
             </div>
         );
     }
+
 }

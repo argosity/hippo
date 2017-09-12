@@ -25,6 +25,7 @@ const defaultOptions = {
 
 @observer
 export default class DateTimePicker extends React.PureComponent {
+
     static propTypes = {
         defaultValue: PropTypes.string,
         options: PropTypes.object,
@@ -135,4 +136,5 @@ export default class DateTimePicker extends React.PureComponent {
             />
         );
     }
+
 }

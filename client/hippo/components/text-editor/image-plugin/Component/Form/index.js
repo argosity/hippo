@@ -10,6 +10,7 @@ import Display from '../Display';
 @inject('model', 'images_attribute')
 @observer
 export default class Form extends React.PureComponent {
+
     get assets() {
         return this.props.model[this.props.images_attribute];
     }
@@ -37,4 +38,5 @@ export default class Form extends React.PureComponent {
             </div>
         );
     }
+
 }

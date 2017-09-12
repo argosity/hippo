@@ -10,14 +10,17 @@ import ScreenDefinition from 'hippo/screens/definition';
 
 @identifiedBy('test/boat')
 export class Ship extends BaseModel {
+
     @identifier({ type: 'string' }) name;
 
     @belongsTo({ model: 'test/container', inverseOf: 'vessel' }) container;
+
 }
 
 
 @identifiedBy('test/model/image')
 export class TestImage extends BaseModel {
+
     @identifier id;
     @belongsTo({ inverseOf: 'owner', model: 'hippo/asset' }) asset;
     @observable syncInProgress = false;
@@ -25,11 +28,13 @@ export class TestImage extends BaseModel {
     save() {
         this.syncInProgress = { method: 'POST' };
     }
+
 }
 
 
 @identifiedBy('test/box')
 export class Box extends BaseModel {
+
     @session visibleIdentifier;
 
     @session({ type: 'string' }) label;
@@ -45,10 +50,12 @@ export class Box extends BaseModel {
     }
 
     @belongsTo container;
+
 }
 
 @identifiedBy('test/container')
 export class Container extends BaseModel {
+
     @identifier({ type: 'string' }) id;
 
     @field name;
@@ -67,6 +74,7 @@ export class Container extends BaseModel {
     @computed get areaInUse() {
         return this.boxes.reduce((acc, box) => (acc + box.volume), 0);
     }
+
 }
 
 export function getTestScreen(attrs = {}) {
@@ -87,6 +95,8 @@ export function getTestScreen(attrs = {}) {
 }
 
 export class TestExtension extends BaseExtension {
+
     get id() { return 'test'; }
+
 }
 TestExtension.register();

@@ -10,6 +10,7 @@ import Config from './config';
 
 @identifiedBy('hippo/user-session')
 class Session extends BaseModel {
+
     @identifier id;
     @field login;
     @field password;
@@ -21,12 +22,14 @@ class Session extends BaseModel {
     get syncData() {
         return this.serialize();
     }
+
 }
 
 const ADMIN = 'administrator';
 
 @identifiedBy('hippo/user')
 export class UserModel extends BaseModel {
+
     @identifier({ type: 'number' }) id;
     @field login;
     @field name;
@@ -83,6 +86,7 @@ export class UserModel extends BaseModel {
     toJSON() {
         return merge(this.serialize(), { is_admin: this.is_admin });
     }
+
 }
 
 const current_user = new UserModel();

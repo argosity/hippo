@@ -15,6 +15,7 @@ import './asset.scss';
 
 @observer
 export default class Asset extends React.PureComponent {
+
     static defaultProps = {
         label: '',
         className: '',
@@ -97,4 +98,5 @@ export default class Asset extends React.PureComponent {
             </Col>
         );
     }
+
 }

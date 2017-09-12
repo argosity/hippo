@@ -7,6 +7,7 @@ const All = observable.array();
 
 @identifiedBy('ScreensGroup')
 export default class ScreensGroup extends BaseModel {
+
     static all = All;
 
     @identifier({ type: 'string' }) id;
@@ -30,4 +31,5 @@ export default class ScreensGroup extends BaseModel {
         }
         return group;
     }
+
 }

@@ -15,6 +15,7 @@ import { Form, Field, FormState, nonBlank, validEmail, booleanValue } from '../.
 
 @observer
 export default class EditForm extends React.PureComponent {
+
     static propTypes = {
         query:      PropTypes.instanceOf(Query).isRequired,
         rowIndex:   PropTypes.number.isRequired,
@@ -82,4 +83,5 @@ export default class EditForm extends React.PureComponent {
             </Form>
         );
     }
+
 }

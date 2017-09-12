@@ -9,6 +9,7 @@ import moment from 'moment-timezone';
 
 @observer
 export default class TimeZoneSelect extends React.PureComponent {
+
     static propTypes = {
         value: PropTypes.string,
         onChange: PropTypes.func.isRequired,
@@ -57,4 +58,5 @@ export default class TimeZoneSelect extends React.PureComponent {
             />
         );
     }
+
 }

@@ -7,6 +7,7 @@ import {
 
 @identifiedBy('hippo/query/field')
 export default class Field extends BaseModel {
+
     @identifier({ type: 'string' }) id;
     @session title;
     @session selected   = false;
@@ -80,4 +81,5 @@ export default class Field extends BaseModel {
     @computed get preferredOperator() {
         return this.query.operators.find(o => o.isValidForField(this));
     }
+
 }

@@ -32,6 +32,7 @@ function isUpdate(method) {
 }
 
 class SyncProgess {
+
     constructor(options) {
         extend(this, options);
         this._whenComplete = [];
@@ -42,6 +43,7 @@ class SyncProgess {
     get isFetch() { return 'GET' === this.method; }
     get isCreate() { return 'POST' === this.method; }
     get isUpdate() { return isUpdate(this.method); }
+
 }
 
 function invokeWhenComplete(json, progress) {

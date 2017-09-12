@@ -6,6 +6,7 @@ import { FormState } from './api';
 
 @observer
 export default class FormWrapper extends React.PureComponent {
+
     static propTypes = {
         tag: PropTypes.string,
         className: PropTypes.string,
@@ -53,4 +54,5 @@ export default class FormWrapper extends React.PureComponent {
         if (this.props.model) { observePubSub(this.props.model); }
         return this.props.tag ? this.renderTagged() : this.renderTagless();
     }
+
 }

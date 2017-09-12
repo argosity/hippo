@@ -11,6 +11,7 @@ import {
 
 @identifiedBy('hippo/query/array-result')
 export default class ArrayResult extends Result {
+
     @belongsTo query;
     @observable totalCount = 0;
     @observable rows;
@@ -190,4 +191,5 @@ export default class ArrayResult extends Result {
             return this;
         });
     }
+
 }

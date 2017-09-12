@@ -3,6 +3,7 @@ import { loadCSS, loadJS } from './loader';
 import { logger } from './util';
 
 class AssetLoader {
+
     constructor(urls, cb) {
         let finished = 0;
         const completed = {};
@@ -21,6 +22,7 @@ class AssetLoader {
             }
         });
     }
+
 }
 
 export default function RequestAssets(...urlArgs) {

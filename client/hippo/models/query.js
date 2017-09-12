@@ -14,6 +14,7 @@ import ArrayResult from './query/array-result';
 // needs to inherit from Base so network events will be listened to
 @identifiedBy('hippo/query')
 export default class Query extends BaseModel {
+
     @belongsTo src;
 
     @identifier id;
@@ -132,4 +133,5 @@ export default class Query extends BaseModel {
             { delay: 100, compareStructural: true, fireImmediately: true },
         );
     }
+
 }

@@ -5,6 +5,7 @@ import CheckBox from 'grommet/components/CheckBox';
 
 @observer
 export default class CheckBoxWrapper extends React.PureComponent {
+
     @action.bound onBlur(ev) {
         this.props.onBlur({ target: { value: ev.target.checked } });
     }
@@ -18,4 +19,5 @@ export default class CheckBoxWrapper extends React.PureComponent {
                 onBlur={this.onBlur} checked={!!this.props.value} />
         );
     }
+
 }

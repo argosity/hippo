@@ -16,6 +16,7 @@ import QueryBuilder from '../query-builder';
 
 @observer
 export default class QueryLayer extends React.PureComponent {
+
     static propTypes = {
         title: PropTypes.string.isRequired,
         onClose: PropTypes.func.isRequired,
@@ -67,4 +68,5 @@ export default class QueryLayer extends React.PureComponent {
             </Layer>
         );
     }
+
 }

@@ -13,6 +13,7 @@ import { BaseModel } from '../models/base';
 
 @observer
 export default class SaveButton extends React.PureComponent {
+
     static propTypes = {
         busy: PropTypes.bool,
         model: PropTypes.instanceOf(BaseModel),
@@ -52,4 +53,5 @@ export default class SaveButton extends React.PureComponent {
             />
         );
     }
+
 }

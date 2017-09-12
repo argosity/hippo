@@ -6,6 +6,7 @@ import {
 
 @identifiedBy('hippo/query/clause')
 export default class Clause extends BaseModel {
+
     @observable id = uniqueId('clause');
     @session visible = true;
     @session value;
@@ -57,4 +58,5 @@ export default class Clause extends BaseModel {
         this.value = this.field.defaultValue;
         this.operator = this.field.preferredOperator;
     }
+
 }

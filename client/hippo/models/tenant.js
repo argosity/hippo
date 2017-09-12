@@ -9,6 +9,7 @@ const CACHED = observable.box();
 
 @identifiedBy('hippo/tenant')
 export default class Tenant extends BaseModel {
+
     @computed static get current() {
         let tenant = CACHED.get();
         if (!tenant) {
@@ -26,4 +27,5 @@ export default class Tenant extends BaseModel {
     @computed get domain() {
         return `${this.slug}.${Config.website_domain}`;
     }
+
 }

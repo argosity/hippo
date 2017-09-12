@@ -7,6 +7,7 @@ const ERROR    = Symbol('ERROR');
 const COMPLETE = Symbol('COMPLETE');
 
 export default class Bootstrap {
+
     constructor(options = {}) {
         this.options = options;
         this.callbacks = { onReady: [] };
@@ -41,4 +42,5 @@ export default class Bootstrap {
         this.status = COMPLETE;
         this.callbacks.onReady.map(cb => cb(host, data));
     }
+
 }

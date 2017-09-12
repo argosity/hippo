@@ -9,6 +9,7 @@ import User from '../user';
 
 @observer
 export default class LoginDialog extends React.Component {
+
     constructor() {
         super();
         bindAll(this, 'attemptLogin');
@@ -33,4 +34,5 @@ export default class LoginDialog extends React.Component {
             </Layer>
         );
     }
+
 }

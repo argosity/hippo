@@ -14,6 +14,7 @@ import Field from '../../models/query/field';
 
 @observer
 export default class SortingHeaderCell extends React.Component {
+
     static defaultProps = {
         onAdd: null,
     }
@@ -90,4 +91,5 @@ export default class SortingHeaderCell extends React.Component {
         }
         return label;
     }
+
 }

@@ -34,6 +34,7 @@ function TenantSlugChange({ oldSlug }) {
 
 @observer
 export default class TenantConfig extends React.PureComponent {
+
     formState = new FormState()
 
     @observable slugChangedFrom;
@@ -84,4 +85,5 @@ export default class TenantConfig extends React.PureComponent {
             </Form>
         );
     }
+
 }

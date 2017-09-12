@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import { classify } from '../lib/util';
 
 export default class ComponentNotFound extends React.PureComponent {
+
     static propTypes = {
         extension: PropTypes.shape({
             identifier: PropTypes.string,
@@ -18,4 +19,5 @@ export default class ComponentNotFound extends React.PureComponent {
             </div>
         );
     }
+
 }

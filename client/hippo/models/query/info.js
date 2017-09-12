@@ -2,6 +2,7 @@ import { isNil, filter, reduce, find } from 'lodash';
 import { computed } from 'mobx';
 
 export default class Info {
+
     constructor(query) {
         this.query = query;
     }
@@ -45,4 +46,5 @@ export default class Info {
     @computed get valuedClauses() {
         return filter(this.query.clauses, c => !isNil(c.value));
     }
+
 }

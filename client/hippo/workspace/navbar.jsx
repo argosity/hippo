@@ -13,6 +13,7 @@ function Logo() {
 }
 
 export default class Navbar extends React.Component {
+
     static contextTypes = {
         uistate: PropTypes.object.isRequired,
     }
@@ -42,4 +43,5 @@ export default class Navbar extends React.Component {
             </div>
         );
     }
+
 }

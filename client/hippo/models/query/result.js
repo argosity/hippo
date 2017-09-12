@@ -8,6 +8,7 @@ import {
 
 @identifiedBy('hippo/query/result')
 export default class Result extends BaseModel {
+
     @belongsTo({ type: 'hippo/query' }) query;
 
     sortingFunction() {
@@ -17,4 +18,5 @@ export default class Result extends BaseModel {
     }
 
     loadFully() { return Promise.resolve(this); }
+
 }

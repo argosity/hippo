@@ -7,6 +7,7 @@ import ScreenInstance from '../screens/instance';
 
 @observer
 export default class Screen extends React.Component {
+
     static Instance = ScreenInstance;
 
     static defaultProps = {
@@ -35,4 +36,5 @@ export default class Screen extends React.Component {
             </div>
         );
     }
+
 }

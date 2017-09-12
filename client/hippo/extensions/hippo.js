@@ -7,7 +7,9 @@ import Extensions from './index';
 
 @identifiedBy('extensions/hippo')
 export default class HippoExtension extends BaseExtension {
+
     @identifier id = 'hippo';
+
 }
 
 

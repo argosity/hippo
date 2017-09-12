@@ -8,6 +8,7 @@ import './query-builder/query-builder.scss';
 
 @observer
 export default class QueryBuilder extends React.PureComponent {
+
     static defaultProps = {
         autoFetch: false,
     }
@@ -48,4 +49,5 @@ export default class QueryBuilder extends React.PureComponent {
             </div>
         );
     }
+
 }

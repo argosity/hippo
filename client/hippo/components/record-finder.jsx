@@ -16,6 +16,7 @@ import QueryLayer from './record-finder/query-layer';
 @inject('formState')
 @observer
 export default class RecordFinder extends React.PureComponent {
+
     static propTypes = {
         query: PropTypes.instanceOf(Query).isRequired,
         name:  PropTypes.string.isRequired,
@@ -89,4 +90,5 @@ export default class RecordFinder extends React.PureComponent {
             </Field>
         );
     }
+
 }

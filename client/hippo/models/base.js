@@ -29,6 +29,7 @@ export {
 };
 
 export class BaseModel {
+
     static get propType() {
         return PropTypes.instanceOf(this);
     }
@@ -136,6 +137,7 @@ export class BaseModel {
     destroy(options = {}) {
         return Sync.forModel(this, extend(options, { action: 'destroy' }));
     }
+
 }
 
 export default BaseModel;

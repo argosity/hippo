@@ -5,6 +5,7 @@ import {
 
 @identifiedBy('date-range')
 export default class DateRange {
+
     constructor(range) {
         if (isString(range) && !isEmpty(range)) {
             [this.start, this.end] = map(range.split('...'), d => new Date(d));
@@ -25,4 +26,5 @@ export default class DateRange {
     static serialize(range) {
         return (range ? range.toJSON() : '');
     }
+
 }

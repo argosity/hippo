@@ -14,6 +14,7 @@ export function getScreenInstance(screenId) {
 
 
 class TestRouter {
+
     constructor() {
         Object.assign(this, {
             isActive:   jest.fn(),
@@ -26,6 +27,7 @@ class TestRouter {
             }),
         });
     }
+
 }
 
 function makeContext() {
@@ -41,14 +43,17 @@ function childContextTypes() {
 }
 
 export class Context {
+
     constructor() {
         this.childContextTypes = childContextTypes();
         this.context = makeContext();
     }
+
 }
 
 export function Snapshot(el) {
     class Wrapper extends React.Component {
+
         static childContextTypes = childContextTypes();
 
         getChildContext() {
@@ -58,6 +63,7 @@ export function Snapshot(el) {
         render() {
             return el;
         }
+
     }
     const snapshot = SnapShot.create(React.createElement(Wrapper, {}, el));
     return snapshot.toJSON();

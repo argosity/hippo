@@ -5,6 +5,7 @@ import { logger } from '../../lib/util';
 const CHANNEL_SPLITTER = new RegExp('^(.*):(.*)/([^/]+)$');
 
 export default class PubSubCableChannel {
+
     constructor(pub_sub) {
         this.callbacks = observable.map();
         this.channel = pub_sub.cable.subscriptions.create(
@@ -53,4 +54,5 @@ export default class PubSubCableChannel {
             this.pub_sub.onModelChange(modelId, id, omit(data, 'channel'));
         }
     }
+
 }

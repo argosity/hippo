@@ -44,6 +44,7 @@ function extendAry(modelClass, models = [], options = {}) {
 }
 
 export default class ModelCollection {
+
     constructor(model) {
         this.$model = model;
         this.$collection = extendAry(model, [], {}, this);
@@ -52,4 +53,5 @@ export default class ModelCollection {
     create(models = [], options = {}) {
         return extendAry(this.$model, models, options, this);
     }
+
 }

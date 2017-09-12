@@ -7,6 +7,7 @@ import Extensions from '../extensions';
 const STORAGE_KEY = 'hippo-user-data';
 
 export default class Config {
+
     @persist @observable api_host = get(window, 'location.origin', '');
     @persist @observable api_path = '/api';
     @persist @observable access_token;
@@ -56,4 +57,5 @@ export default class Config {
         this.access_token = null;
         if (this.user) { this.user.reset(); }
     }
+
 }

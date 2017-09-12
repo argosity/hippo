@@ -15,6 +15,7 @@ import Editor from './user-management/edit-form';
 
 @observer
 export default class UserManagement extends React.PureComponent {
+
     @observable editingId;
 
     static contextTypes = {
@@ -63,4 +64,5 @@ export default class UserManagement extends React.PureComponent {
             </Screen>
         );
     }
+
 }

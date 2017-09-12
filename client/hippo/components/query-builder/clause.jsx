@@ -18,6 +18,7 @@ const defaultHandlers = {
 
 @observer
 export default class Clause extends React.PureComponent {
+
     static defaultProps = {
         typeHandlers: {},
     }
@@ -95,4 +96,5 @@ export default class Clause extends React.PureComponent {
             </Box>
         );
     }
+
 }

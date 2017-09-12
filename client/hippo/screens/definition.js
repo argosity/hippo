@@ -12,6 +12,7 @@ export { asyncComponent } from 'react-async-component';
 
 @identifiedBy('hippo/screen/definition')
 export default class ScreenDefinition extends BaseModel {
+
     @identifier({ type: 'string' }) id;
     @session title;
     @session url_prefix;
@@ -62,4 +63,5 @@ export default class ScreenDefinition extends BaseModel {
         instance.isActive = true;
         return instance;
     }
+
 }

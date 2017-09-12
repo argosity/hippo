@@ -7,6 +7,7 @@ import {
 } from 'lodash';
 
 export class FormField {
+
     name: '';
     @observable isTouched = false
     @observable isChanged = false;
@@ -72,10 +73,12 @@ export class FormField {
         this.isTouched = false;
         this.isChanged = false;
     }
+
 }
 
 
 export class FormState {
+
     fields = observable.map();
 
     @action
@@ -154,4 +157,5 @@ export class FormState {
         this.fields.forEach((field, name) => (set(model, name, field.value)));
         return Promise.resolve(model);
     }
+
 }

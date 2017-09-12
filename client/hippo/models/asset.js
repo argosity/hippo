@@ -15,6 +15,7 @@ const UPDATE_METHODS = { POST: true, PUT: true, PATCH: true };
 
 @identifiedBy('hippo/asset')
 export default class Asset extends BaseModel {
+
     @identifier id;
     @field order;
 
@@ -127,4 +128,5 @@ export default class Asset extends BaseModel {
                 return json;
             });
     }
+
 }

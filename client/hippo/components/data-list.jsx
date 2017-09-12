@@ -17,6 +17,7 @@ import './data-list/data-list.scss';
 
 @observer
 export default class DataList extends React.Component {
+
     static defaultProps = {
         rowHeight: 40,
     }
@@ -114,4 +115,5 @@ export default class DataList extends React.Component {
             </Box>
         );
     }
+
 }
