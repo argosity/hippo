@@ -52,7 +52,8 @@ export default class Query extends BaseModel {
         super(attrs);
         [
             { id: 'like', label: 'Starts With', types: Types.LIKE_QUERY_TYPES },
-            { id: 'eq', label: 'Equals' },
+            { id: 'eq', label: 'Equals', types: Types.EQUAL_TYPES },
+            { id: 'between', label: 'Between', types: Types.BETWEEN_TYPES },
             { id: 'contains', label: 'Contains', types: Types.LIKE_QUERY_TYPES },
             { id: 'lt', label: 'Less Than', types: Types.LESS_THAN_QUERY_TYPES },
             { id: 'gt', label: 'More Than', types: Types.LESS_THAN_QUERY_TYPES },

@@ -1,4 +1,4 @@
-import { filter, reduce, find } from 'lodash';
+import { isNil, filter, reduce, find } from 'lodash';
 import { computed } from 'mobx';
 
 export default class Info {
@@ -40,5 +40,9 @@ export default class Info {
     @computed get identifierField() {
         const property = this.query.src.identifierFieldName;
         return find(this.query.fields, { id: property });
+    }
+
+    @computed get valuedClauses() {
+        return filter(this.query.clauses, c => !isNil(c.value));
     }
 }

@@ -1,4 +1,4 @@
-import { get, compact, first, filter, uniqueId } from 'lodash';
+import { get, compact, first, filter, uniqueId, isNil } from 'lodash';
 import { action, observe } from 'mobx';
 import {
     BaseModel, identifiedBy, belongsTo, computed, observable, session,
@@ -35,7 +35,7 @@ export default class Clause extends BaseModel {
     }
 
     @computed get isValid() {
-        return !!(this.value && this.operator.isValidForField(this.field));
+        return Boolean(!isNil(this.value) && this.operator.isValidForField(this.field));
     }
 
     toParam() {
@@ -54,6 +54,7 @@ export default class Clause extends BaseModel {
 
     @action.bound
     updateOperatorOnFieldChange() {
+        this.value = this.field.defaultValue;
         this.operator = this.field.preferredOperator;
     }
 }
