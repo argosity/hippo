@@ -6,12 +6,12 @@ import { observer } from 'mobx-react';
 import { autobind } from 'core-decorators';
 import cn from 'classnames';
 import Box from 'grommet/components/Box';
-
 import {
     List, AutoSizer, InfiniteLoader,
 } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 
+import ActivityOverlay from './network-activity-overlay';
 import Query from '../models/query';
 import './data-list/data-list.scss';
 
@@ -75,12 +75,11 @@ export default class DataList extends React.Component {
                 className={cn('data-list', { selectable: this.props.onRowClick })}
                 align='stretch' flex
             >
-
                 {this.props.header}
-
+                <ActivityOverlay model={query.results} message="Loading…" />
                 <Box className="body" align="stretch" flex>
                     <InfiniteLoader
-                        keyChange={query.results.updateKey}
+                        keyChange={query.results.fingerprint}
                         minimumBatchSize={query.pageSize}
                         isRowLoaded={this.isRowLoaded}
                         loadMoreRows={this.loadMoreRows}
@@ -95,6 +94,7 @@ export default class DataList extends React.Component {
                                 {({ height, width }) =>
                                     <List
                                         {...listProps}
+                                        keyChange={query.results.fingerprint}
                                         height={height}
                                         width={width}
                                         ref={(list) => {
