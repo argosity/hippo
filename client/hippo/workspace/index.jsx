@@ -70,7 +70,7 @@ class Workspace extends React.Component {
             <App centered={false}>
                 <LoginDialog />
                 <Sidebar
-                    styles={{ sidebar: { zIndex: 5 } }}
+                    styles={{ sidebar: { zIndex: 60 }, overlay: { zIndex: 59 } }}
                     sidebar={<Menu
                         isOpen={this.sidebarOpen}
                         isDocked={this.sidebarDocked}
