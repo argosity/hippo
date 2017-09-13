@@ -6,8 +6,9 @@ import { isPreviewMode } from 'ory-editor-core/lib/selector/display';
 import { createStructuredSelector } from 'reselect';
 import Button from './Button';
 
-const Inner = ({ isPreviewMode: ispvm, previewMode: pvm }) => (
+const Inner = ({ className, isPreviewMode: ispvm, previewMode: pvm }) => (
     <Button
+        className={className}
         icon={<Devices />}
         label="Preview"
         active={ispvm}

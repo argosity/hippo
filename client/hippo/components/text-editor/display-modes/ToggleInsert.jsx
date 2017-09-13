@@ -6,8 +6,9 @@ import { isInsertMode } from 'ory-editor-core/lib/selector/display';
 import { createStructuredSelector } from 'reselect';
 import Button from './Button';
 
-const Inner = ({ isInsertMode: isinm, insertMode: inm }) => (
+const Inner = ({ className, isInsertMode: isinm, insertMode: inm }) => (
     <Button
+        className={className}
         icon={<AddIcon />}
         label="Add"
         active={isinm}

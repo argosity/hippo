@@ -31,8 +31,8 @@ export default class TextEditor extends React.PureComponent {
 
     static propTypes = {
         defaultContent: PropTypes.object,
+        onChange: PropTypes.func.isRequired,
         assets:  MobxPropTypes.observableArray,
-        onComplete: PropTypes.func.isRequired,
     }
 
     componentWillMount() {
@@ -41,14 +41,11 @@ export default class TextEditor extends React.PureComponent {
         editorInstance.trigger.editable.add(this.content);
     }
 
-    @action.bound
-    onSave() {
-        this.props.onComplete({ content: this.content });
-    }
 
     @action.bound
     onEditStateChange(state) {
         this.content = state;
+        this.props.onChange(state);
     }
 
     render() {

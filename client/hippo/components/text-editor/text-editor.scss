@@ -8,6 +8,7 @@
 
     .text-editor-content {
         flex: 1;
+        overflow: auto;
     }
 
 
@@ -25,11 +26,16 @@
         margin-bottom: 0;
     }
 
-    .content-image {
-        width: 100%;
-        height: auto;
+    .content-image-wrapper {
+        .image-drop-zone {
+            text-align: center;
+        }
+        .content-image {
+            max-width: 100%;
+            width: auto;
+            height: auto;
+        }
     }
-
 
     button:not(.grommetux-button) {
         min-width: inherit;
@@ -43,6 +49,9 @@
     header {
         .active {
             border-bottom: 2px solid $focus-border-color;
+        }
+        button + button {
+            margin-left: 0.5rem;
         }
     }
 }

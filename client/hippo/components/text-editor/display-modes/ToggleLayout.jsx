@@ -6,8 +6,9 @@ import { isLayoutMode } from 'ory-editor-core/lib/selector/display';
 import { createStructuredSelector } from 'reselect';
 import Button from './Button';
 
-const Inner = ({ isLayoutMode: islm, layoutMode: lm }) => (
+const Inner = ({ className, isLayoutMode: islm, layoutMode: lm }) => (
     <Button
+        className={className}
         icon={<GridIcon />}
         label="Layout"
         active={islm}

@@ -6,8 +6,9 @@ import { isResizeMode } from 'ory-editor-core/lib/selector/display';
 import { createStructuredSelector } from 'reselect';
 import Button from './Button';
 
-const Inner = ({ isResizeMode: isrsm, resizeMode: rsm }) => (
+const Inner = ({ className, isResizeMode: isrsm, resizeMode: rsm }) => (
     <Button
+        className={className}
         icon={<ResizeIcon />}
         label="Resize"
         active={isrsm}

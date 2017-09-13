@@ -1,8 +1,9 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import Button from 'grommet/components/Button';
+import cn from 'classnames';
 
-const DisplayModeButton = ({ label, icon, onClick, active, disabled }) => (
-    <span className={active ? 'active' : ''}>
+const DisplayModeButton = ({ className, label, icon, onClick, active, disabled }) => (
+    <span className={cn(className, { active })}>
         <Button
             plain
             secondary={active}

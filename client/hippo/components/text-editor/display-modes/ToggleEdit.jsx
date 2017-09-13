@@ -7,8 +7,9 @@ import { createStructuredSelector } from 'reselect';
 import EditIcon from 'grommet/components/icons/base/Edit';
 import Button from './Button';
 
-const Inner = ({ isEditMode: isedm, editMode: edm }) => (
+const Inner = ({ className, isEditMode: isedm, editMode: edm }) => (
     <Button
+        className={className}
         icon={<EditIcon />}
         label="Edit"
         active={isedm}

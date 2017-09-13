@@ -6,23 +6,23 @@ import ToggleInsert from './ToggleInsert';
 import ToggleLayout from './ToggleLayout';
 import TogglePreview from './TogglePreview';
 import ToggleResize from './ToggleResize';
-import SaveState from './SaveState';
+
 
 const Inner = (props: any) => (
     <Provider {...props}>
         <Header
             wrap
+
             margin="small"
             justify="end"
             pad={{ horizontal: 'small' }}
         >
-            <ToggleInsert />
-            <ToggleEdit />
-            <ToggleLayout />
-            <ToggleResize />
-            <TogglePreview />
+            <ToggleInsert className="insert" />
+            <ToggleEdit className="edit" />
+            <ToggleLayout className="layout" />
+            <ToggleResize className="resize" />
+            <TogglePreview className="preview" />
             {props.children}
-            <SaveState onSave={props.onSave} />
         </Header>
     </Provider>
 );
