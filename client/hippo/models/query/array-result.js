@@ -45,8 +45,8 @@ export default class ArrayResult extends Result {
         });
     }
 
-    insertRow() {
-        this.rows.unshift(Array(this.query.info.loadableFields.length));
+    insertRow(index = 0) {
+        this.rows.splice(index, 0, Array(this.query.info.loadableFields.length));
         this.totalCount += 1;
     }
 
