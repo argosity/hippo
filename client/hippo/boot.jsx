@@ -2,6 +2,7 @@ import React        from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM     from 'react-dom';
 import whenDomReady from 'when-dom-ready';
 import { delay } from 'lodash';
+import { unresolvedAssociations } from 'mobx-decorated-models';
 import { AppContainer } from 'react-hot-loader';
 import { onBoot } from './models/pub_sub';
 import './extensions/hippo';
@@ -29,6 +30,12 @@ whenDomReady().then(() => {
     Root = document.getElementById('hippo-root');
     /* global document: false */
     renderer(Workspace);
+
+    unresolvedAssociations().forEach(({ model, property }) => {
+        // eslint-disable-next-line no-console
+        console.warn(`The model for ${model.identifiedBy}(${property}) cannot be found`);
+    });
+
     const loading = document.querySelector('.loading');
     if (loading) {
         loading.classList.add('complete');
