@@ -16,12 +16,13 @@ module Hippo
 
             def create
                 config = SystemSettings.for_ext(:smtp)
+                delivery_config = delivery_method_config(config)
                 Mail::Message.new do
                     from "\"#{config['from_name']}\" <#{config['from_email']}>"
                     if Hippo.env.production?
-                        delivery_method :smtp, delivery_method_config(config)
+                        delivery_method :smtp, delivery_config
                     else
-                        delivery_method TestMailer
+                        delivery_method TestMailer, delivery_config
                     end
                 end
             end
