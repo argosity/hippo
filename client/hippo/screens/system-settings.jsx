@@ -15,6 +15,7 @@ import SaveButton from '../components/save-button';
 import ScreenInstance from '../screens/instance';
 import Extensions from '../extensions';
 import MailerConfig from './system-settings/mailer-config';
+import Config from '../config';
 import TenantSettings from  './system-settings/tenant';
 import './system-settings/system-settings.scss';
 
@@ -54,9 +55,18 @@ export default class SystemSettings extends React.PureComponent {
 
     @action.bound
     onSave() {
-        this.extensionPanelRefs.forEach(panel => invoke(panel, 'onSave'));
-        this.tenantSettings.onSave();
-        this.settings.save();
+        const saves = [];
+        ['logo', 'print_logo'].forEach((attr) => {
+            if (this.settings[attr].isDirty) { saves.push(this.settings[attr].save()); }
+        });
+        Promise.all(saves).then(() => {
+            if (saves.length) {
+                Config.logo = this.settings.logo.file_data;
+            }
+            this.extensionPanelRefs.forEach(panel => invoke(panel, 'onSave'));
+            this.tenantSettings.onSave();
+            this.settings.save();
+        });
     }
 
     @action.bound

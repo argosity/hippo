@@ -24,18 +24,4 @@ export default class SystemSettings extends BaseModel {
         return this.constructor.syncUrl;
     }
 
-    get syncData() {
-        return this.serialize();
-    }
-
-    set syncData(data) {
-        super.syncData = data;
-        if (this.logo && this.logo.isDirty) {
-            when(
-                () => !this.logo.isDirty,
-                () => { Config.logo = this.logo.file_data; },
-            );
-        }
-    }
-
 }
