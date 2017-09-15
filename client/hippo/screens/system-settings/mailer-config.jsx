@@ -33,8 +33,8 @@ export default class MailerConfig extends React.PureComponent {
                 <Heading tag="h3">Email settings</Heading>
                 <Form state={this.formState}>
                     <Row className="section">
-                        <Field md={4} xs={6} name="from_email" label="From Email" validate={validEmail} />
-                        <Field md={4} xs={6} name="from_name" label="From Name" validate={nonBlank} />
+                        <Field xs={6} name="from_email" label="From Email" validate={validEmail} />
+                        <Field xs={6} name="from_name" label="From Name" validate={nonBlank} />
                     </Row>
                 </Form>
             </div>

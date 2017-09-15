@@ -78,10 +78,10 @@ export default class SystemSettings extends React.PureComponent {
                 <TenantSettings ref={this.setTenantRef} />
                 <Heading tag="h3">Images</Heading>
                 <Row>
-                    <Col sm={4} xs={12}>
+                    <Col sm={6} xs={12}>
                         <Asset model={this.settings} name="logo" />
                     </Col>
-                    <Col sm={4} xs={12}>
+                    <Col sm={6} xs={12}>
                         <Asset model={this.settings} name="print_logo" />
                     </Col>
                 </Row>

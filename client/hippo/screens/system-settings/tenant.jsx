@@ -75,11 +75,11 @@ export default class TenantConfig extends React.PureComponent {
                 <Heading tag="h3">Account</Heading>
                 <Row>
                     <Field
-                        md={4} xs={6} name="slug"
+                        xs={6} name="slug"
                         label="Identifier"
                         validate={nonBlank}
                     />
-                    <Field md={4} xs={6} name="name" validate={nonBlank} />
+                    <Field xs={6} name="name" validate={nonBlank} />
                 </Row>
                 {this.renderIdChangeWarning()}
             </Form>
