@@ -20,7 +20,10 @@ export default class Clause extends BaseModel {
         if (!this.field) {
             this.field = first(this.query.info.queryableFields);
         }
-        observe(this, 'field', this.updateOperatorOnFieldChange, true);
+        if (!this.operator) {
+            this.operator = this.field.preferredOperator;
+        }
+        observe(this, 'field', this.updateOperatorOnFieldChange);
     }
 
     @computed get description() {

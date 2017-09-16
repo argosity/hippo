@@ -233,4 +233,17 @@ describe('Model Queries', () => {
             );
         });
     });
+
+    it('sets valued queries', () => {
+        const fingerprint = query.fingerprint;
+        query.clauses.replace([
+            { field: query.fields[0], value: 123 },
+            { field: query.fields[1] },
+        ]);
+        expect(query.info.valuedClauses).toHaveLength(1);
+        expect(query.info.valuedClauses[0].value).toEqual(123);
+        expect(query.info.valuedClauses[0].field).toEqual(query.fields[0]);
+        expect(query.fingerprint).not.toEqual(fingerprint);
+    });
+
 });
