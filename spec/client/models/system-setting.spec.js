@@ -19,15 +19,4 @@ describe('SystemSettings Model', () => {
         ss.logo = { };
         expect(ss.logo).toBeInstanceOf(Asset);
     });
-
-    it('sets Config logo when updated', () => {
-        const ss = new SystemSettings(TEST_SETTINGS);
-        ss.logo = TEST_SETTINGS.logo;
-        ss.logo.file = { mockData: true };
-        expect(ss.logo.isDirty).toEqual(true);
-        ss.syncData = { foo: 'bar' };
-        ss.logo.file = null;
-        expect(Config.logo).toEqual(ss.logo.file_data);
-        expect(ss.syncData).toMatchObject({ settings: TEST_SETTINGS.settings });
-    });
 });
