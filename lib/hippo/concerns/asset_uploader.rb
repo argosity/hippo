@@ -26,11 +26,16 @@ module Hippo::Concerns
         plugin :versions
         plugin :location_hash
 
+
         process(:store) do |io, context|
-            size_800 = resize_to_limit(io.download, 800, 800)
-            size_500 = resize_to_limit(size_800,    500, 500)
-            size_300 = resize_to_limit(size_500,    300, 300)
-            {original: size_800, medium: size_500, thumbnail: size_300}
+            if io.metadata['mime_type'] && io.metadata['mime_type'].starts_with?('image')
+                size_1000 = resize_to_limit(io.download, 1000, 1000)
+                size_600 = resize_to_limit(size_1000,     600, 600)
+                size_300 = resize_to_limit(size_600,      300, 300)
+                {original: io, large: size_1000, medium: size_600, thumbnail: size_300}
+            else
+                {original: io}
+            end
         end
 
     end
