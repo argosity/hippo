@@ -1,6 +1,5 @@
 import SystemSettings from 'hippo/models/system-setting';
 import Asset from 'hippo/models/asset';
-import Config from 'hippo/config';
 
 jest.mock('hippo/config');
 

@@ -1,10 +1,8 @@
 import { merge } from 'lodash';
-import { when } from 'mobx';
 import {
     BaseModel, identifiedBy, identifier, belongsTo, field, computed,
 } from './base';
 import Sync  from './sync';
-import Config from '../config';
 import Asset from './asset';
 
 @identifiedBy('hippo/system-settings')

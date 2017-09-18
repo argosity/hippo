@@ -245,5 +245,4 @@ describe('Model Queries', () => {
         expect(query.info.valuedClauses[0].field).toEqual(query.fields[0]);
         expect(query.fingerprint).not.toEqual(fingerprint);
     });
-
 });
