@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { PropTypes as MobxPropTypes, Provider, observer } from 'mobx-react';
 import { observePubSub } from '../../models/pub_sub';
 import { FormState } from './api';
+import Screen from '../screen';
 
 @observer
 export default class FormWrapper extends React.PureComponent {
@@ -13,6 +14,7 @@ export default class FormWrapper extends React.PureComponent {
         children: PropTypes.node.isRequired,
         state: PropTypes.instanceOf(FormState),
         model: MobxPropTypes.observableObject,
+        screen: PropTypes.instanceOf(Screen.Instance),
     }
 
     static get defaultProps() {
@@ -50,8 +52,20 @@ export default class FormWrapper extends React.PureComponent {
         );
     }
 
+    renderScreen() {
+        const { tag: _, state, children, screen, model: __, ...otherProps } = this.props;
+        return (
+            <Provider formState={state}>
+                <Screen screen={screen} {...otherProps}>
+                    {children}
+                </Screen>
+            </Provider>
+        );
+    }
+
     render() {
         if (this.props.model) { observePubSub(this.props.model); }
+        if (this.props.screen) { return this.renderScreen(); }
         return this.props.tag ? this.renderTagged() : this.renderTagless();
     }
 
