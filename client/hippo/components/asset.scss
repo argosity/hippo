@@ -2,6 +2,7 @@
 
 #hippo-root {
     .asset {
+        > .grommetux-form-field { height: 100%; }
         .drop-zone {
             height: 200px;
             padding: 0.5rem;
