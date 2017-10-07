@@ -11,15 +11,31 @@ module Hippo
 
             @config = ClientConfig.new
             @config.invoke_all
-
             @driver = WebpackDriver::Configuration.new(
                 directory: root,
                 logger: Hippo.logger,
                 file: root.join('config', 'webpack.config.js'),
-                cmd_line_flags: Hippo.env.production? ? [] : ['--hot', '--inline'],
+                cmd_line_flags: webpack_cmd_line_flags,
                 environment: { NODE_ENV: Hippo.env.production? ? 'production' : 'development' }
             )
             @process = @driver.launch(development: !Hippo.env.production?)
+        end
+
+        def webpack_cmd_line_flags
+            return [] if Hippo.env.production?
+            flags = [
+                '--hot', '--inline',
+                '--host', (ENV['HOST'] || 'localhost'),
+                '--port', '8889',
+            ]
+            if ENV['SSL_CERT_PATH'] && ENV['SSL_KEY_PATH']
+                flags += [
+                    '--https',
+                    '--cert', ENV['SSL_CERT_PATH'],
+                    '--key',  ENV['SSL_KEY_PATH']
+                ]
+            end
+            flags
         end
 
         def start
