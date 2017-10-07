@@ -38,12 +38,6 @@ export default class Query extends BaseModel {
     @hasMany({ model: Operator, inverseOf: 'query' }) operators;
     @hasMany({ model: Field, inverseOf: 'query' }) fields;
 
-    @action
-    setSort({ field: f, ascending }) {
-        this.sortField = f;
-        this.sortAscending = ascending;
-    }
-
     constructor(attrs = {}) {
         for (let i = 0; i < get(attrs, 'fields.length', 0); i += 1) {
             if (isString(attrs.fields[i])) {
@@ -74,6 +68,12 @@ export default class Query extends BaseModel {
             this.sortAscending = ('ASC' === dir);
         }
         observe(this, 'autoFetch', this._onAutoFetchChange);
+    }
+
+    @action
+    setSort({ field: f, ascending }) {
+        this.sortField = f;
+        this.sortAscending = ascending;
     }
 
     @computed get fingerprint() {
