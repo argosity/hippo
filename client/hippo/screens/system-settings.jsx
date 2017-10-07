@@ -57,7 +57,9 @@ export default class SystemSettings extends React.PureComponent {
     onSave() {
         const saves = [];
         ['logo', 'print_logo'].forEach((attr) => {
-            if (this.settings[attr].isDirty) { saves.push(this.settings[attr].save()); }
+            if (this.settings[attr] && this.settings[attr].isDirty) {
+                saves.push(this.settings[attr].save());
+            }
         });
         Promise.all(saves).then(() => {
             if (saves.length) {
