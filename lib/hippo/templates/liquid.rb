@@ -1,4 +1,5 @@
 require 'liquid'
+require_rel 'liquid/*.rb'
 
 module Hippo
 
