@@ -49,13 +49,16 @@ export default class ArrayResult extends Result {
         return new this.query.src(attrs); // eslint-disable-line new-cap
     }
 
-    insertRow({ index = 0, model = this.createModel() }) {
+    insertRow({ index = 0, model = this.createModel(), observeSave = false }) {
+        if (-1 === index) { index = this.rows.length; } // eslint-disable-line
         const row = Array(this.query.info.loadableFields.length);
         this.query.fields.forEach((f) => {
             if (!isUndefined(model[f.id])) { row[f.dataIndex] = model[f.id]; }
         });
         this.rows.splice(index, 0, row);
         this.totalCount += 1;
+        if (observeSave) { this.observeModelSave(model, index); }
+        return { model, index };
     }
 
     isIndexSaved(index) {
@@ -78,8 +81,7 @@ export default class ArrayResult extends Result {
         return obj;
     }
 
-    modelForRow(index) {
-        const model = this.createModel(this.rowAsObject(index));
+    observeModelSave(model, index) {
         observe(model, 'syncInProgress', ({ newValue, oldValue }) => {
             if (newValue && !oldValue && newValue.isUpdate) {
                 newValue.whenComplete(() => {
@@ -91,6 +93,11 @@ export default class ArrayResult extends Result {
                 }, 99);
             }
         });
+    }
+
+    modelForRow(index) {
+        const model = this.createModel(this.rowAsObject(index));
+        this.observeModelSave(model, index);
         return model;
     }
 

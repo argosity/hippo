@@ -25,7 +25,9 @@ module Hippo::API
         end
 
         resources Hippo::User
-        resources Hippo::Tenant, controller: Hippo::API::Handlers::Tenant
+        resources Hippo::Tenant,
+                  controller: Hippo::API::Handlers::Tenant,
+                  cors: '*', public: true
     end
 
     routes.draw do

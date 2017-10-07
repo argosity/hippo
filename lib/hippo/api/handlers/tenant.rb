@@ -1,14 +1,22 @@
 module Hippo::API::Handlers
 
     class Tenant < Hippo::API::ControllerBase
-        PUBLIC_ATTRS = %w{slug name}
 
-        def show
-            std_api_reply(:retrieve, Hippo::Tenant.current, only: PUBLIC_ATTRS)
+        def self.bootstrap_data
+            Hippo::Tenant.current.as_json(
+                only: PUBLIC_ATTRS
+            ).merge(
+                bootstrap: Hippo::Extensions.client_bootstrap_data
+            )
         end
 
-        # isn't really a create, but FE will think it's creating because we don't expose the id
-        def create
+        PUBLIC_ATTRS = %w{slug name email identifier}
+
+        def show
+            std_api_reply(:retrieve, Tenant.bootstrap_data, success: true)
+        end
+
+        def update
             tenant = Hippo::Tenant.current
             tenant.assign_attributes(data.slice(*PUBLIC_ATTRS))
             success = tenant.save
