@@ -5,6 +5,10 @@ module Hippo
         mattr_accessor :stub
         attr_reader :driver, :assets, :process
 
+        def self.using_ssl?
+            ENV['SSL_CERT_PATH'] && ENV['SSL_KEY_PATH']
+        end
+
         def initialize
             @assets = {}
             root = Hippo::Extensions.controlling.root_path
@@ -28,7 +32,7 @@ module Hippo
                 '--host', (ENV['HOST'] || 'localhost'),
                 '--port', '8889',
             ]
-            if ENV['SSL_CERT_PATH'] && ENV['SSL_KEY_PATH']
+            if Webpack.using_ssl?
                 flags += [
                     '--https',
                     '--cert', ENV['SSL_CERT_PATH'],

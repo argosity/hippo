@@ -45,7 +45,6 @@ module Hippo::API::Handlers
         end
 
         def self.asset_getter
-            root = Hippo::Extensions.controlling.root_path.join('public', 'assets')
             webpack = Hippo::API::Root.webpack
             if Hippo.env.production?
                 lambda do
@@ -61,7 +60,9 @@ module Hippo::API::Handlers
                     webpack.wait_until_available
                     file = webpack.file(params['asset'].to_sym, raise_on_not_found: false)
                     if file
-                        redirect "http://#{env['SERVER_NAME']}:#{webpack.process.port}/assets/#{file}"
+                        protocol = 'http'
+                        protocol += 's' if Hippo::Webpack.using_ssl?
+                        redirect "#{protocol}://#{env['SERVER_NAME']}:#{webpack.process.port}/assets/#{file}"
                     else
                         halt 404
                     end
