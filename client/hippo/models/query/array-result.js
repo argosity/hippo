@@ -45,8 +45,16 @@ export default class ArrayResult extends Result {
         });
     }
 
-    insertRow(index = 0) {
-        this.rows.splice(index, 0, Array(this.query.info.loadableFields.length));
+    createModel(attrs = {}) {
+        return new this.query.src(attrs); // eslint-disable-line new-cap
+    }
+
+    insertRow({ index = 0, model = this.createModel() }) {
+        const row = Array(this.query.info.loadableFields.length);
+        this.query.fields.forEach((f) => {
+            if (!isUndefined(model[f.id])) { row[f.dataIndex] = model[f.id]; }
+        });
+        this.rows.splice(index, 0, row);
         this.totalCount += 1;
     }
 
@@ -71,7 +79,7 @@ export default class ArrayResult extends Result {
     }
 
     modelForRow(index) {
-        const model = new this.query.src(this.rowAsObject(index)); // eslint-disable-line new-cap
+        const model = this.createModel(this.rowAsObject(index));
         observe(model, 'syncInProgress', ({ newValue, oldValue }) => {
             if (newValue && !oldValue && newValue.isUpdate) {
                 newValue.whenComplete(() => {
