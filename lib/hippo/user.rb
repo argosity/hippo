@@ -23,15 +23,16 @@ module Hippo
         end
 
         def workspace_data
-            my_data = attributes.slice('id','login','name','email','created_at',
-                                       'created_by','updated_at','updated_by','role_names', 'options')
-
-            Hippo::SystemSettings
-                .public_json
-                .merge(
-                    user: my_data, access: Access.for_user(self), access_token: jwt_token,
-                    screen_ids: Hippo::Screen.active_ids,
-                )
+            user_data = attributes.slice(
+                'id','login','name','email', 'role_names', 'options',
+                'created_at','created_by','updated_at', 'updated_by'
+            )
+            {
+                user: user_data,
+                access: Access.for_user(self),
+                access_token: jwt_token,
+                screen_ids: Hippo::Screen.active_ids,
+            }
         end
 
         # @param model [Hippo::Model]

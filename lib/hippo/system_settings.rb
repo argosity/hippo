@@ -37,7 +37,9 @@ module Hippo
 
             def public_json
                 {
-                    'logo' => Hippo::SystemSettings.config.as_json(include: ['logo']).dig('logo', 'file_data')
+                    'logo' => Hippo::SystemSettings.config
+                                  .as_json(include: ['logo'])
+                                  .dig('logo', 'file_data')
                 }
             end
 
