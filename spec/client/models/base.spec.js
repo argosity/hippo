@@ -67,12 +67,12 @@ describe('BaseModel Test', () => {
         const box = new Box();
         box.id = 23;
         expect(Box.propertyOptions.id.type).toEqual('number');
-        expect(() => (box.id = 'red')).toThrow('Bad Type');
+        expect(() => { box.id = 'red'; }).toThrow('Bad Type');
         expect(box.id).toEqual(23);
 
         const container = new Container();
         container.id = 'test';
-        expect(() => (container.id = 42)).toThrow('Bad Type');
+        expect(() => { container.id = 42; }).toThrow('Bad Type');
         expect(container.id).toEqual('test');
     });
 

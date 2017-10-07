@@ -24,7 +24,7 @@ export default class Config {
     static create(hydrationConfig) {
         const hydrate = createHydrator(hydrationConfig);
         const ConfigInstance = new Config();
-        hydrate('config', ConfigInstance).then(() => (ConfigInstance.isIntialized = true));
+        hydrate('config', ConfigInstance).then(() => { ConfigInstance.isIntialized = true; });
         return ConfigInstance;
     }
 

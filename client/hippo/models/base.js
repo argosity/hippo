@@ -44,7 +44,7 @@ export class BaseModel {
 
     static get propertyOptions() {
         const options = {};
-        this.$schema.forEach((val, name) => (options[name] = val.options));
+        this.$schema.forEach((val, name) => { options[name] = val.options; });
         return options;
     }
 
@@ -60,7 +60,8 @@ export class BaseModel {
     }
 
     static get Collection() {
-        return this.$collection || (this.$collection = new ModelCollection(this));
+        if (!this.$collection) { this.$collection = new ModelCollection(this); }
+        return this.$collection;
     }
 
     constructor(attrs) {

@@ -7,8 +7,8 @@ jest.mock('hippo/models/sync');
 jest.mock('hippo/config');
 
 describe('Login Dialog', () => {
-    beforeEach(() => (Config.access_token = '0123456789'));
-    afterEach(() => (Config.access_token = ''));
+    beforeEach(() => { Config.access_token = '0123456789'; });
+    afterEach(() => { Config.access_token = ''; });
 
     it('does not render when user isnt logged in', () => {
         expect(User.isLoggedIn).toBe(true);

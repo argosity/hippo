@@ -30,8 +30,8 @@ whenDomReady().then(() => {
     /* global document: true  */
     Root = document.getElementById('hippo-root');
     Config.update(
-        JSON.parse(document.getElementById('bootstrap-data').innerHTML)
-    )
+        JSON.parse(document.getElementById('bootstrap-data').innerHTML),
+    );
     /* global document: false */
     renderer(Workspace);
 

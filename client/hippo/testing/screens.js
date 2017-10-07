@@ -57,7 +57,8 @@ export function Snapshot(el) {
         static childContextTypes = childContextTypes();
 
         getChildContext() {
-            return this._childContext || (this._childContext = makeContext());
+            if (!this._childContext) { this._childContext = makeContext(); }
+            return this._childContext;
         }
 
         render() {

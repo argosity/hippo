@@ -49,13 +49,12 @@ export default class PopoutWindow extends React.PureComponent {
         // May not exist if server-side rendering
         if (this.props.windowImpl) {
             this.open();
-
         }
     }
 
     componentWillReceiveProps(nextProps) {
         // re-render
-        if (this.isOpen && Nextprops.children != this.props.children) {
+        if (this.isOpen && nextProps.children !== this.props.children) {
             this.reRender();
         }
     }
@@ -72,14 +71,15 @@ export default class PopoutWindow extends React.PureComponent {
         ReactDOM.render(children, this.containerEl);
     }
 
-    open(){
+    open() {
         if (this.isOpen) {
             this.reRender();
             this.popup.focus();
             return;
         }
+        // eslint-disable-next-line
         const options = map(defaults({}, this.props.options, this.defaultOptions), (v, key, o) =>
-            `${key}=${v = isFunction(v) ? v(o, this.props.windowImpl) : v}`
+            `${key}=${v = isFunction(v) ? v(o, this.props.windowImpl) : v}`, // eslint-disable-line
         ).join(',');
 
         this.popup = this.props.windowImpl.open(this.props.url, this.props.title, options);
@@ -88,7 +88,7 @@ export default class PopoutWindow extends React.PureComponent {
         this.popup.onload = this.onWindowLoad;
 
         // just in case onload fails to fire
-        if (this.popup.document.readyState === 'complete') {
+        if ('complete' === this.popup.document.readyState) {
             this.onWindowLoad();
         }
     }
@@ -102,7 +102,7 @@ export default class PopoutWindow extends React.PureComponent {
     onWindowBeforeUnLoad() {
         invoke(this.props, 'onClose');
         ReactDOM.unmountComponentAtNode(this.containerEl);
-        this.containerEl.parentNode.removeChild( this.containerEl );
+        this.containerEl.parentNode.removeChild(this.containerEl);
     }
 
     @autobind
@@ -118,7 +118,7 @@ export default class PopoutWindow extends React.PureComponent {
         ReactDOM.render(this.props.children, container);
     }
 
-    render(){
+    render() {
         return null; // don't need to render anything directly
     }
 

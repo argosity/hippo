@@ -64,7 +64,7 @@ export default class Display extends React.PureComponent {
                 <div className={cn('content-image-wrapper', { focused })}>
                     <Button onClick={this.onAddClick}>{state.src ? 'Change' : 'Add'}</Button>
                     <Dropzone
-                        ref={dz => (this.dropZone = dz)}
+                        ref={(dz) => { this.dropZone = dz; }}
                         style={{}}
                         disableClick
                         multiple={false}

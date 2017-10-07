@@ -13,7 +13,7 @@ export default class TextWrapper extends React.PureComponent {
     render() {
         return (
             <TextInput
-                ref={f => (this.inputRef = f)}
+                ref={(f) => { this.inputRef = f; }}
                 {...this.props} onDOMChange={this.props.onChange}
             />
         );
