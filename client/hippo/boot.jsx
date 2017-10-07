@@ -6,6 +6,7 @@ import { unresolvedAssociations } from 'mobx-decorated-models';
 import { AppContainer } from 'react-hot-loader';
 import { onBoot } from './models/pub_sub';
 import './extensions/hippo';
+import Config from './config';
 
 // react-tap-event-plugin is required for material-ui which is used by ory-editor-ui
 require('react-tap-event-plugin')();
@@ -28,6 +29,9 @@ whenDomReady().then(() => {
     if (Root) return;
     /* global document: true  */
     Root = document.getElementById('hippo-root');
+    Config.update(
+        JSON.parse(document.getElementById('bootstrap-data').innerHTML)
+    )
     /* global document: false */
     renderer(Workspace);
 

@@ -63,9 +63,7 @@
       <div class="loading">Loading&#8230;</div>
       <div id="hippo-root">
         <script type="text/json" id="bootstrap-data">
-          <%= Hippo::API.to_json(
-              Hippo::Extensions.client_bootstrap_data
-              ) %>
+          <%= Hippo::API.to_json(Hippo::Extensions.client_bootstrap_data) %>
         </script>
       </div>
       <%= javascript_tags :app %>
