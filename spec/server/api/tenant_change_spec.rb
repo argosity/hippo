@@ -8,14 +8,13 @@ describe "Tenant changes", api: true, vcr: VCR_OPTS do
     let!(:user) { FactoryGirl.create :user, tenant: tenant, role_names: ['administrator'] }
 
     it 'sends email when tenant identifier changes' do
-        post '/api/hippo/tenant.json', {
+        put "/api/hippo/tenant/#{tenant.identifier}.json", {
                  'slug' => 'RED'
              }.to_json, {
                  'HTTP_AUTHORIZATION' => user.jwt_token,
                  'HTTP_ACCEPT' => 'application/json',
                  'SERVER_NAME' => "#{tenant.slug}.example.ua",
              }
-
         expect(tenant.reload.slug).to eq('red')
         email = Mail::TestMailer.deliveries.last
         expect(email).not_to be_nil
