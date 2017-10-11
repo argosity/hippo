@@ -14,6 +14,10 @@ module Hippo
         def path(size)
             Hippo.config.api_path + Hippo.config.assets_path_prefix + '/' + file_data[size]['id']
         end
+
+        def url(size = 'original')
+           "https://#{Hippo::Tenant.current.slug}.#{Hippo.config.website_domain}#{path(size)}"
+        end
     end
 
 end
