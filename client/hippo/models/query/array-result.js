@@ -49,7 +49,7 @@ export default class ArrayResult extends Result {
         return new this.query.src(attrs); // eslint-disable-line new-cap
     }
 
-    insertRow({ index = 0, model = this.createModel(), observeSave = false }) {
+    insertRow({ index = 0, model = this.createModel(), observeSave = false } = {}) {
         if (-1 === index) { index = this.rows.length; } // eslint-disable-line
         const row = Array(this.query.info.loadableFields.length);
         this.query.fields.forEach((f) => {
