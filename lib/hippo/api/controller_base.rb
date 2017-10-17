@@ -132,7 +132,7 @@ module Hippo
 
             # Should the result include the total number of available records
             def should_include_total_count?
-                requested_limit && params[:s] && !params[:id]
+                requested_limit && params[:id].blank?
             end
 
             # Extract options that are suitable for use in 'as_json'
