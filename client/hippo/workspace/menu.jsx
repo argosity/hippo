@@ -4,7 +4,6 @@ import { action } from 'mobx';
 import { isEmpty, get } from 'lodash';
 import PropTypes from 'prop-types';
 import Box     from 'grommet/components/Box';
-import Sidebar from 'grommet/components/Sidebar';
 import Button from 'grommet/components/Button';
 import CloseIcon from 'grommet/components/icons/base/Close';
 import Header  from 'grommet/components/Header';
@@ -80,7 +79,7 @@ export default class WorkspaceMenu extends React.PureComponent {
 
     render() {
         return (
-            <Sidebar
+            <Box
                 full size="small" separator="right"
                 colorIndex="brand"
                 className="screen-selection-menu"
@@ -92,7 +91,7 @@ export default class WorkspaceMenu extends React.PureComponent {
                 {Screens.activeGroups.map(g => <Group key={g.id} group={g} />)}
                 {this.renderUnGrouped()}
                 <Logout />
-            </Sidebar>
+            </Box>
         );
     }
 
