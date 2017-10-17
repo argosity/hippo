@@ -65,7 +65,7 @@ export default class Query extends BaseModel {
         if (attrs.sort) {
             const [fieldId, dir] = toPairs(attrs.sort)[0];
             this.sortField = find(this.fields, { id: fieldId });
-            this.sortAscending = ('ASC' === dir);
+            this.sortAscending = ('ASC' === dir.toUpperCase());
         }
         observe(this, 'autoFetch', this._onAutoFetchChange);
     }
@@ -79,7 +79,7 @@ export default class Query extends BaseModel {
     @computed get fingerprint() {
         return objectHash({
             so: toJS(this.syncOptions),
-            c: this.info.valuedClauses.map(c => c.fingerprint),
+            vc: this.info.valuedClauses.map(c => c.fingerprint),
         });
     }
 
@@ -129,7 +129,9 @@ export default class Query extends BaseModel {
         if (this.autoFetchDisposer) { return; }
         this.autoFetchDisposer = reaction(
             () => this.fingerprint,
-            this.fetch,
+            () => {
+                this.results.reset().fetch();
+            },
             { delay: 100, compareStructural: true, fireImmediately: true },
         );
     }
