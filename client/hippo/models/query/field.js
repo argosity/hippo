@@ -24,7 +24,6 @@ export default class Field extends BaseModel {
     @session dataType   = 'string'
     @session cellRenderer;
     @session defaultValue;
-    @session fetchIndex;
     @session sortBy;
 
     @observable onColumnClick;
