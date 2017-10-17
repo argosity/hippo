@@ -12,15 +12,18 @@ import DateWrapper     from './fields/date-wrapper';
 import SelectWrapper   from './fields/select-wrapper';
 import TextWrapper     from './fields/text-wrapper';
 import CheckBoxWrapper from './fields/checkbox-wrapper';
-import Label           from './fields/label';
+import TagsWrapper     from './fields/tags-wrapper';
 import TextAreaWrapper from './fields/textarea-wrapper';
+import Label           from './fields/label';
 import TimeZoneSelect  from '../../components/time-zone-select';
+
 
 import './fields/form-field.scss';
 
 const TypesMapping = {
     text:     TextWrapper,
     date:     DateWrapper,
+    tags:     TagsWrapper,
     label:    Label,
     select:   SelectWrapper,
     number:   NumberInput,
@@ -76,7 +79,7 @@ export default class FormField extends React.PureComponent {
         const InputTag = TypesMapping[type] || TypesMapping.text;
 
         return (
-            <div className={classnames('form-field', className)}>
+            <div className={classnames('form-field', type, className)}>
                 <Field
                     label={label || titleize(name)}
                     error={this.field.invalidMessage}
