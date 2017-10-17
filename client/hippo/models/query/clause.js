@@ -1,4 +1,4 @@
-import { get, compact, first, filter, uniqueId, isNil } from 'lodash';
+import { get, compact, first, filter, uniqueId, isNil, isEmpty } from 'lodash';
 import { action, observe } from 'mobx';
 import {
     BaseModel, identifiedBy, belongsTo, computed, observable, session,
@@ -39,6 +39,7 @@ export default class Clause extends BaseModel {
     }
 
     @computed get isValid() {
+        if ('like' === this.operator.id) { return !isEmpty(this.value); }
         return Boolean(!isNil(this.value) && this.operator.isValidForField(this.field));
     }
 
