@@ -8,10 +8,10 @@ module Hippo
 
             module ClassMethods
 
-                def compose_query_using_detail_view( view: nil, join_to: nil )
+                def compose_query_using_detail_view( view: nil, join_to: nil, join_name: 'details' )
                     join_to ||= self.name.demodulize.tableize.singularize + '_' + primary_key
-                    q = joins("join #{view} as details on details.#{join_to} = #{table_name}.#{primary_key}")
-                          .select("details.*")
+                    q = joins("join #{view} as #{join_name} on #{join_name}.#{join_to} = #{table_name}.#{primary_key}")
+                          .select("#{join_name}.*")
                     if current_scope.nil? || current_scope.select_values.exclude?("#{table_name}.*")
                         q = q.select("#{table_name}.*")
                     end
