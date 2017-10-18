@@ -94,6 +94,8 @@ module Hippo
                 return nil
             end
 
+            ## Data returned will be included in the JS build;
+            ## it should not be Tenant specific
             def client_bootstrap_data
                 data = {}
                 %w{
@@ -108,7 +110,7 @@ module Hippo
                     ext_data  = ext.client_bootstrap_data
                     data[ext.identifier] = ext_data unless ext_data.nil?
                 end
-                data[:settings] = Hippo::SystemSettings.public_json
+                data[:screen_ids] = Hippo::Screen.active_ids
                 return data
             end
 

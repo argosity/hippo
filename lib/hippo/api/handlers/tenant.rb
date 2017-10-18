@@ -6,7 +6,7 @@ module Hippo::API::Handlers
             Hippo::Tenant.current.as_json(
                 only: PUBLIC_ATTRS
             ).merge(
-                bootstrap: Hippo::Extensions.client_bootstrap_data
+                settings: Hippo::SystemSettings.public_json
             )
         end
 
