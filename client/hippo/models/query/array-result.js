@@ -161,6 +161,14 @@ export default class ArrayResult extends Result {
         return !!find(this.loadingRows, ([start, end]) => inRange(index, start, end));
     }
 
+    canKeySetPage(index) {
+        return Boolean(
+            this.rows.length && this.rows.length >= index &&
+            this.query.sortField && this.query.sortField.dataIndex &&
+            !isEmpty(this.rows[index - 1]),
+        );
+    }
+
     fetch({ start = this.rows.length, limit = this.query.pageSize } = {}) {
         const inProgress = [start, start + limit];
         this.loadingRows.push(inProgress);
@@ -173,7 +181,6 @@ export default class ArrayResult extends Result {
         });
 
         const options = extend({}, toJS(this.query.syncOptions), {
-            start,
             limit,
             total_count: 't',
             format: 'array',
@@ -184,10 +191,20 @@ export default class ArrayResult extends Result {
             options.query = query;
         }
 
-        if (!isNil(this.sortField)) {
+        if (this.query.sortField) {
             options.order = {
-                [`${this.sortField.id}`]: (this.sortAscending ? 'asc' : 'desc'),
+                [`${this.query.sortField.id}`]: this.query.sortAscending ? 'asc' : 'desc',
             };
+        }
+
+        if (this.canKeySetPage(start)) {
+            const lastKey = this.rows[start - 1][this.query.sortField.dataIndex];
+            options.query[this.query.sortField.id] = {
+                op: this.query.sortAscending ? 'gt' : 'lt',
+                value: lastKey,
+            };
+        } else {
+            options.start = start;
         }
 
         extend(options, toJS(this.query.info.syncOptions));
