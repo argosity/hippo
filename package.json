@@ -37,7 +37,7 @@
     "domtastic": "^0.15.1",
     "enzyme": "^2.9.1",
     "eslint": "^4.8.0",
-    "eslint-config-argosity": "^1.2.0",
+    "eslint-config-argosity": "^1.4.0",
     "file-loader": "^0.11.2",
     "flatpickr": "^3.0.7",
     "flexboxgrid": "^6.3.1",
