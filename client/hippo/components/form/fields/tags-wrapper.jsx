@@ -1,7 +1,7 @@
 import React from 'react';
 import { isEmpty, isArray } from 'lodash';
 import { observer } from 'mobx-react';
-import { action, observable, isObservableArray } from 'mobx';
+import { action, isObservableArray } from 'mobx';
 import Tags from 'react-tag-autocomplete';
 
 @observer
@@ -31,7 +31,7 @@ export default class CheckBoxWrapper extends React.PureComponent {
     }
 
     render() {
-        const { value: _ , ...otherProps } = this.props;
+        const { value: _, ...otherProps } = this.props;
 
         return (
             <Tags

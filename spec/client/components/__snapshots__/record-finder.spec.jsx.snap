@@ -2,7 +2,7 @@
 
 exports[`RecordFinder Component renders 1`] = `
 <div
-  className="form-field record-finder"
+  className="form-field text record-finder"
 >
   <div
     className="grommetux-form-field grommetux-form-field--size-medium"

@@ -28,14 +28,14 @@ describe('Query Builder Component', () => {
     });
 
     it('autoloads query when changed', () => {
-        query.fetch = jest.fn();
+        query.results.fetch = jest.fn();
         expect(query.autoFetch).toBe(false);
         const builder = mount(<QueryBuilder query={query} autoFetch />);
         expect(query.autoFetch).toBe(true);
-        expect(query.fetch).toHaveBeenCalled();
+        expect(query.results.fetch).toHaveBeenCalled();
         query.clauses[0].value = 'test';
         jest.runAllTimers();
-        expect(query.fetch).toHaveBeenCalledTimes(2);
+        expect(query.results.fetch).toHaveBeenCalledTimes(2);
         builder.unmount();
         expect(query.autoFetch).toBe(false);
     });

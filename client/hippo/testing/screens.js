@@ -1,6 +1,7 @@
 /* global jest */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import SnapShot   from 'react-test-renderer';
 
 import Screens from 'hippo/screens';
@@ -38,7 +39,7 @@ function makeContext() {
 
 function childContextTypes() {
     return {
-        router: React.PropTypes.object,
+        router: PropTypes.object,
     };
 }
 

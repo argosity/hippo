@@ -23,20 +23,20 @@ describe('Model Queries', () => {
     });
 
     it('autoloads query when changed', () => {
-        query.fetch = jest.fn();
+        query.results.fetch = jest.fn();
         query.autoFetch = true;
-        expect(query.fetch).toHaveBeenCalled();
+        expect(query.results.fetch).toHaveBeenCalled();
         query.clauses[0].value = 'test value';
         jest.runAllTimers();
-        expect(query.fetch).toHaveBeenCalledTimes(2);
+        expect(query.results.fetch).toHaveBeenCalledTimes(2);
         query.clauses[0].value = 'test two value';
         jest.runAllTimers();
-        expect(query.fetch).toHaveBeenCalledTimes(3);
+        expect(query.results.fetch).toHaveBeenCalledTimes(3);
 
         query.autoFetch = false;
         query.clauses[0].value = 'yet another value';
         jest.runAllTimers();
-        expect(query.fetch).toHaveBeenCalledTimes(3);
+        expect(query.results.fetch).toHaveBeenCalledTimes(3);
     });
 
     it('calculates fields', () => {

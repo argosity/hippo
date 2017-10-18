@@ -2,7 +2,6 @@ import { forIn } from 'lodash';
 import { computed } from 'mobx';
 
 export function addComputedProperty(obj, name, fn) {
-
     Object.defineProperty(obj, name, {
         configurable: true,
         get() {
@@ -14,7 +13,6 @@ export function addComputedProperty(obj, name, fn) {
             return getter.get();
         },
     });
-
 }
 
 export function addMethods(properties) {
