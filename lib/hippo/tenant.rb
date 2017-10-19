@@ -41,7 +41,7 @@ module Hippo
         end
 
         def self.current
-            MultiTenant.current_tenant
+            MultiTenant.current_tenant || system
         end
 
         def self.system

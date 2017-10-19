@@ -40,7 +40,7 @@ module Hippo
 
         class << self
             def config
-                Tenant.current.system_settings || Tenant.current.system_settings.create
+                Tenant.current.system_settings || Tenant.current.create_system_settings
             end
 
             def public_json
