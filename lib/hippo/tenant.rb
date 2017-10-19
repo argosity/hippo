@@ -3,12 +3,18 @@ require 'activerecord-multi-tenant'
 module Hippo
     # Tenant
     class Tenant < Hippo::Model
+
+        PUBLIC_ATTRS = %w{slug name identifier}
+
         validates :slug, uniqueness: true
         validates :name, :presence => { message: 'for company' }
         validates :email, :presence => true
 
         has_random_identifier
         has_many :users, class_name: 'Hippo::User', autosave: true
+
+        belongs_to :system_settings, class_name: 'Hippo::SystemSettings',
+                   foreign_key: :id, primary_key: :tenant_id
 
         before_validation :auto_assign_slug, on: :create
 
@@ -22,6 +28,16 @@ module Hippo
             MultiTenant.with(self) do
                 yield
             end
+        end
+
+        def bootstrap_data
+            as_json(
+                only: PUBLIC_ATTRS,
+            ).merge(
+                bootstrap: system_settings.public_json.merge(
+                    Hippo::Extensions.tenant_bootstrap_data(self)
+                )
+            )
         end
 
         def self.current

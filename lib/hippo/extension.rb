@@ -96,7 +96,7 @@ module Hippo
 
             ## Data returned will be included in the JS build;
             ## it should not be Tenant specific
-            def client_bootstrap_data
+            def static_bootstrap_data
                 data = {}
                 %w{
                   api_path environment website_domain product_name assets_path_prefix
@@ -107,11 +107,20 @@ module Hippo
                     controlling_extension: controlling.identifier,
                 )
                 each do | ext |
-                    ext_data  = ext.client_bootstrap_data
+                    ext_data  = ext.static_bootstrap_data
                     data[ext.identifier] = ext_data unless ext_data.nil?
                 end
                 data[:screen_ids] = Hippo::Screen.active_ids
                 return data
+            end
+
+            def tenant_bootstrap_data(tenant)
+                data = {}
+                each do | ext |
+                    tenant_data  = ext.tenant_bootstrap_data(tenant)
+                    data[ext.identifier] = tenant_data unless tenant_data.nil?
+                end
+                data
             end
 
             def load_controlling_config

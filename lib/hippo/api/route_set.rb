@@ -63,8 +63,9 @@ module Hippo
 
                 if options[:cors] && valid_methods.any?
                     cors = options[:cors].is_a?(Hash) ? otions[:cors] : {origins: options[:cors]}
-                    enable_cors "#{prefix}#{path}/?:id?#{format}",
-                                cors.merge(methods: valid_methods)
+                    cors_path = "#{prefix}#{path}/?:id?#{format}"
+                    Hippo.logger.debug("CORS: #{cors_path} #{valid_methods}")
+                    enable_cors cors_path, cors.merge(methods: valid_methods)
                 end
 
             end

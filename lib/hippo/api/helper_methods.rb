@@ -12,10 +12,6 @@ module Hippo
                 }.join("\n")
             end
 
-            def client_bootstrap_data(mergedWith: {})
-                API.to_json(Extensions.client_bootstrap_data.merge(mergedWith))
-            end
-
             def csrf_token
                 Rack::Csrf.csrf_token(env)
             end

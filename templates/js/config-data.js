@@ -7,4 +7,4 @@ import <%= name %> from '<%= ext.client_extension_path %>';
 
 <% end %>
 
-Config.update(<%= Hippo::Extensions.client_bootstrap_data.to_json %>);
+Config.update(<%= Hippo::Extensions.static_bootstrap_data.to_json %>);

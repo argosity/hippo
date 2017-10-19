@@ -30,17 +30,21 @@ module Hippo
             ExtensionSettings.new(extension_id, settings[extension_id.to_s])
         end
 
+        def public_json
+            {
+                'logo' => Hippo::SystemSettings.config
+                              .as_json(include: ['logo'])
+                              .dig('logo', 'file_data')
+            }
+        end
+
         class << self
             def config
-                SystemSettings.first_or_create
+                Tenant.current.system_settings || Tenant.current.system_settings.create
             end
 
             def public_json
-                {
-                    'logo' => Hippo::SystemSettings.config
-                                  .as_json(include: ['logo'])
-                                  .dig('logo', 'file_data')
-                }
+                config.public_json
             end
 
             def for_ext(extension_id)

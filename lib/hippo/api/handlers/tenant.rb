@@ -2,18 +2,8 @@ module Hippo::API::Handlers
 
     class Tenant < Hippo::API::ControllerBase
 
-        def self.bootstrap_data
-            Hippo::Tenant.current.as_json(
-                only: PUBLIC_ATTRS
-            ).merge(
-                settings: Hippo::SystemSettings.public_json
-            )
-        end
-
-        PUBLIC_ATTRS = %w{slug name email identifier}
-
         def show
-            std_api_reply(:retrieve, Tenant.bootstrap_data, success: true)
+            std_api_reply(:retrieve, Hippo::Tenant.current.bootstrap_data, success: true)
         end
 
         def update

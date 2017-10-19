@@ -28,7 +28,7 @@ export default class Tenant extends BaseModel {
         }
     }
 
-    @identifier({ type: 'string' }) identifier = '';
+    @identifier({ type: 'string' }) identifier = 'current';
     @field name;
     @field email;
     @field slug;

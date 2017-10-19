@@ -39,7 +39,11 @@ module Hippo
                 self.before = extension
             end
 
-            def client_bootstrap_data
+            def static_bootstrap_data
+                {}
+            end
+
+            def tenant_bootstrap_data(tenant)
                 {}
             end
 
