@@ -21,11 +21,13 @@ module Hippo
             end
 
             def error_as_json
-                Hippo.logger.warn request.env['sinatra.error']
+                error = request.env['sinatra.error']
+                Hippo.logger.warn error.message
+                Hippo.logger.warn error.backtrace.join("\n    ")
                 API.to_json(
                     success: false,
-                    errors:  { exception: request.env['sinatra.error'].message },
-                    message: request.env['sinatra.error'].message
+                    errors:  { exception: error.message },
+                    message: error.message
                 )
             end
 
