@@ -8,7 +8,7 @@ module Hippo::API::Handlers
 
         def update
             tenant = Hippo::Tenant.current
-            tenant.assign_attributes(data.slice(*PUBLIC_ATTRS))
+            tenant.assign_attributes(data.slice(*Hippo::Tenant::PUBLIC_ATTRS))
             success = tenant.save
             if success && tenant.slug_previously_changed?
                 Hippo::Tenant.system.perform do
@@ -16,7 +16,7 @@ module Hippo::API::Handlers
                 end
             end
             std_api_reply(:update, tenant,
-                          only: PUBLIC_ATTRS,
+                          only: Hippo::Tenant::PUBLIC_ATTRS,
                           success: success)
         end
     end
