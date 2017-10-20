@@ -142,6 +142,14 @@ export class FormState {
     }
 
     @action
+    update(values) {
+        each(values, (v, k) => {
+            const field = this.fields.get(k);
+            if (field) { field.value = v; }
+        });
+    }
+
+    @action
     setFromModel(model) {
         if (get(model, 'syncInProgress.isFetch')) {
             when(
