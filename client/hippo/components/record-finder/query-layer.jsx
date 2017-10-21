@@ -33,7 +33,9 @@ export default class QueryLayer extends React.PureComponent {
     }
 
     render() {
-        const { visible, query, onClose, title } = this.props;
+        const {
+            visible, query, onClose, title,
+        } = this.props;
         if (!visible) { return null; }
 
         return (

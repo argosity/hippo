@@ -46,7 +46,7 @@ export default class Clause extends BaseModel {
     toParam() {
         const param = {};
         let op = this.operator.id;
-        let value = this.value;
+        let { value } = this;
         if ('like' === op) { value += '%'; }
         if ('contains' === op) {
             op = 'like';

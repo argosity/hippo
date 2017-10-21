@@ -74,7 +74,7 @@ describe('Model Queries', () => {
         expect(clause.field.id).toEqual('computed');
         expect(clause.operator.id).toEqual('like');
         expect(map(clause.validOperators, 'id')).toEqual(['like', 'eq', 'contains']);
-        clause.field = query.fields[3];
+        clause.field = find(query.fields, { id: 'width' });
         expect(clause.operator.id).toEqual('eq');
         expect(map(clause.validOperators, 'id')).toEqual(['eq', 'lt', 'gt']);
     });
@@ -235,7 +235,7 @@ describe('Model Queries', () => {
     });
 
     it('sets valued queries', () => {
-        const fingerprint = query.fingerprint;
+        const { fingerprint } = query;
         query.clauses.replace([
             { field: query.fields[0], value: 123 },
             { field: query.fields[1] },

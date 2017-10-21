@@ -73,7 +73,9 @@ export default class Asset extends React.PureComponent {
 
 
     render() {
-        const { model: _, label: __, name: ___, className, tabIndex, ...col } = this.props;
+        const {
+            model: _, label: __, name: ___, className, tabIndex, ...col
+        } = this.props;
 
         return (
             <Col

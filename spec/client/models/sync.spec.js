@@ -44,6 +44,7 @@ describe('Network sync', () => {
         Sync.forModel(box).then(() => expect(box.width).toEqual(12));
         expect(fetch).lastCalledWith(
             '/api/test/box/11.json',
-            { body, headers: { 'Content-Type': 'application/json' }, method: 'PUT' });
+            { body, headers: { 'Content-Type': 'application/json' }, method: 'PUT' },
+        );
     });
 });

@@ -42,7 +42,9 @@ export default class FormWrapper extends React.PureComponent {
     }
 
     renderTagged() {
-        const { tag: Tag, state, children, model: _, ...otherProps } = this.props;
+        const {
+            tag: Tag, state, children, model: _, ...otherProps
+        } = this.props;
         return (
             <Provider formState={state}>
                 <Tag {...otherProps}>
@@ -53,7 +55,9 @@ export default class FormWrapper extends React.PureComponent {
     }
 
     renderScreen() {
-        const { tag: _, state, children, screen, model: __, ...otherProps } = this.props;
+        const {
+            tag: _, state, children, screen, model: __, ...otherProps
+        } = this.props;
         return (
             <Provider formState={state}>
                 <Screen screen={screen} {...otherProps}>

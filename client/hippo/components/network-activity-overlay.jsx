@@ -86,7 +86,7 @@ export default class NetworkActivityOverlay extends React.PureComponent {
 
     get message() {
         const { props: { model } } = this;
-        let message = this.props.message;
+        let { message } = this.props;
         if (!message) {
             if (this.hasError) {
                 message = model.errorMessage || 'Error';

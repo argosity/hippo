@@ -34,8 +34,7 @@ export function titleize(words) {
     if ('string' !== typeof words) { return words; }
     return (words)
         .replace(/[\W_]/g, ' ')
-        .replace(/\S+/g, word => (word.charAt(0).toUpperCase() + word.slice(1)),
-        );
+        .replace(/\S+/g, word => (word.charAt(0).toUpperCase() + word.slice(1)));
 }
 
 export function underscored(str) {

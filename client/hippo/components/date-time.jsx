@@ -126,7 +126,9 @@ export default class DateTimePicker extends React.PureComponent {
 
     render() {
         // eslint-disable-next-line no-unused-vars
-        const { options, defaultValue, value, children, ...props } = omit(this.props, hooks);
+        const {
+            options: _, defaultValue, value: __, children: ___, ...props
+        } = omit(this.props, hooks);
 
         return (
             <input

@@ -54,8 +54,7 @@ export default class DataTable extends React.Component {
             'calculateRowHeight',
             'isRowLoaded',
             'loadMoreRows',
-            'headerRenderer',
-        );
+            'headerRenderer');
         this.editIndex = props.editRowIndex;
         autorun(() => {
             if (isNumber(this.editIndex) && this.tableRef) {
@@ -131,9 +130,7 @@ export default class DataTable extends React.Component {
                 dataKey: f.dataIndex || f.id,
                 headerRenderer: this.headerRenderer,
             }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink',
-                'cellRenderer', 'className', 'headerClassName'),
-            ),
-        );
+                'cellRenderer', 'className', 'headerClassName')));
         if (this.props.editor) {
             definitions.unshift({
                 key: 'edit-toggle',
@@ -163,7 +160,9 @@ export default class DataTable extends React.Component {
     }
 
     rowRenderer(props) {
-        const { index, className, key, style } = props;
+        const {
+            index, className, key, style,
+        } = props;
         extend(props, this.rowProps);
         if (this.editIndex === index) {
             const { editor: Editor } = this.props;

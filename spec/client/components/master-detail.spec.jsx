@@ -11,7 +11,8 @@ describe('Master Detail Component', () => {
             <MasterDetail
                 master={<MasterComp />}
                 detail={<DetailComp />}
-            />)).toMatchSnapshot();
+            />,
+        )).toMatchSnapshot();
     });
 
     it('renders and then can add detail', () => {

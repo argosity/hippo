@@ -19,8 +19,7 @@ describe('User Management Screen', () => {
             total: 5,
             success: true,
             data: map(range(0, 5), i =>
-                [i, `login-${i}`, `name ${i}`, `email-${i}@test.com`],
-            ),
+                [i, `login-${i}`, `name ${i}`, `email-${i}@test.com`]),
         });
         Element.prototype.getBoundingClientRect = jest.fn(() => ({
             width: 800, height: 1024,

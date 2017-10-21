@@ -40,7 +40,11 @@ export default class SaveButton extends React.PureComponent {
 
     render() {
         // eslint-disable-next-line no-unused-vars
-        const { label, icon, props: { busyLabel, busy, model, label: _, ...props } } = this;
+        const {
+            label, icon, props: {
+                label: _, busyLabel: __, busy, model: ___, ...props
+            },
+        } = this;
 
         return (
             <Button

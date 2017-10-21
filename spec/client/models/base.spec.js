@@ -40,7 +40,9 @@ describe('BaseModel Test', () => {
 
     it('is set from sync', () => {
         const box = new Box({ id: 11, width: 5 });
-        expect(box.syncData).toEqual({ id: 11, height: 1, depth: 1, width: 5 });
+        expect(box.syncData).toEqual({
+            id: 11, height: 1, depth: 1, width: 5,
+        });
         const spy = jest.fn();
         observe(box, 'syncData', spy);
         box.syncData = { id: 2 };

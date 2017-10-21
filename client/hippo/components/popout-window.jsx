@@ -78,8 +78,9 @@ export default class PopoutWindow extends React.PureComponent {
             return;
         }
         // eslint-disable-next-line
-        const options = map(defaults({}, this.props.options, this.defaultOptions), (v, key, o) =>
-            `${key}=${v = isFunction(v) ? v(o, this.props.windowImpl) : v}`, // eslint-disable-line
+        const options = map(
+            defaults({}, this.props.options, this.defaultOptions),
+            (v, key, o) => `${key}=${v = isFunction(v) ? v(o, this.props.windowImpl) : v}`, // eslint-disable-line
         ).join(',');
 
         this.popup = this.props.windowImpl.open(this.props.url, this.props.title, options);

@@ -35,6 +35,5 @@ export default function RequestAssets(...urlArgs) {
             }
             logger.warn(`${keys(failures).join(',')} failed to load`);
             return reject(failures);
-        }),
-    );
+        }));
 }

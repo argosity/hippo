@@ -18,7 +18,7 @@ class InstanceCollection {
         const len = this.models.length;
         if (!len) { return; }
         if (1 === len) {
-            this.active = this.models[0];
+            [this.active] = this.models;
         } else if (!this.active) {
             this.active = this.models[len - 1];
         }

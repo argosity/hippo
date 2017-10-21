@@ -31,7 +31,7 @@ export default class Display extends React.PureComponent {
 
     @action.bound
     onFileDrop(files) {
-        let asset = this.asset;
+        let { asset } = this;
         if (!asset) {
             this.props.assets.push({ metadata: { nodeId: this.props.id } });
             asset = this.props.assets.get(this.props.assets.length - 1);

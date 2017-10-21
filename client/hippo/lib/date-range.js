@@ -1,4 +1,4 @@
-import { isString, isEmpty, map } from 'lodash';
+import { isString, isEmpty, map, isNaN } from 'lodash';
 import {
     identifiedBy,
 } from 'mobx-decorated-models';
