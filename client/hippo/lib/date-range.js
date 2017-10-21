@@ -1,3 +1,5 @@
+import moment from 'moment';
+import { observable, computed } from 'mobx';
 import { isString, isEmpty, map, isNaN } from 'lodash';
 import {
     identifiedBy,
@@ -5,6 +7,9 @@ import {
 
 @identifiedBy('date-range')
 export default class DateRange {
+
+    @observable start;
+    @observable end;
 
     constructor(range) {
         if (isString(range) && !isEmpty(range)) {
@@ -25,6 +30,10 @@ export default class DateRange {
 
     static serialize(range) {
         return (range ? range.toJSON() : '');
+    }
+
+    @computed get isCurrent() {
+        return moment(this.end).isAfter() && moment(this.start).isBefore();
     }
 
 }
