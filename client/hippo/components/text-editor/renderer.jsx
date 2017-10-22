@@ -5,7 +5,7 @@ import { observable, toJS } from 'mobx';
 import { observer, Provider, PropTypes as MobxPropTypes } from 'mobx-react';
 import { HTMLRenderer } from 'ory-editor-renderer';
 
-import 'ory-editor-core/lib/index.css';
+import './renderer.scss';
 
 @observer
 export default class TextEditorRenderer extends React.PureComponent {
@@ -28,10 +28,13 @@ export default class TextEditorRenderer extends React.PureComponent {
             <Provider
                 assets={this.props.assets}
             >
-                <HTMLRenderer
-                    className={this.props.className} state={toJS(this.props.content)}
-                    plugins={plugins}
-                />
+                <div className="text-editor-content">
+                    <HTMLRenderer
+                        className={this.props.className}
+                        state={toJS(this.props.content)}
+                        plugins={plugins}
+                    />
+                </div>
             </Provider>
         );
     }
