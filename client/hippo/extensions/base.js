@@ -2,12 +2,12 @@ import { observable, computed } from 'mobx';
 import { titleize, humanize } from '../lib/util';
 import Extensions from './index';
 import RootView from '../workspace/root-view';
-
+import { merge } from 'lodash';
 export { identifiedBy, identifier } from '../models/base';
 
 export class BaseExtension {
 
-    @observable data;
+    @observable data = {};
 
     static register() {
         Extensions.register(this);
@@ -18,7 +18,7 @@ export class BaseExtension {
     }
 
     setBootstrapData(data) {
-        this.data = data;
+        merge(this.data, data);
     }
 
     @computed get domain() {
