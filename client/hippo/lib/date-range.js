@@ -21,7 +21,7 @@ export default class DateRange {
     }
 
     toJSON() {
-        if (this.start && this.end && !isNaN(this.start) && !isNaN(this.end)) {
+        if (this.start && this.end && !isNaN(this.start.getTime()) && !isNaN(this.end.getTime())) {
             // this strange format is what PG user and is therefore what active record expects
             return `[${this.start.toISOString()},${this.end.toISOString()})`;
         }
