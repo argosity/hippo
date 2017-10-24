@@ -1,8 +1,9 @@
 import { observable, computed } from 'mobx';
+import { merge } from 'lodash';
 import { titleize, humanize } from '../lib/util';
 import Extensions from './index';
 import RootView from '../workspace/root-view';
-import { merge } from 'lodash';
+
 export { identifiedBy, identifier } from '../models/base';
 
 export class BaseExtension {
