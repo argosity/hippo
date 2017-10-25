@@ -7,8 +7,9 @@
     flex-direction: column;
 
     .text-editor-content {
-        flex: 1;
         overflow: auto;
+        margin-bottom: 100px;
+        border: 1px solid #adadad;
     }
 
     .ory-cell-leaf {
@@ -27,17 +28,6 @@
         margin-left: 0;
         margin-top: 0;
         margin-bottom: 0;
-    }
-
-    .content-image-wrapper {
-        .image-drop-zone {
-            text-align: center;
-        }
-        .content-image {
-            max-width: 100%;
-            width: auto;
-            height: auto;
-        }
     }
 
     button:not(.grommetux-button) {

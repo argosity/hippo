@@ -10,7 +10,7 @@
   text-align: center;
 }
 
-.content-image-wrapper {
+.content-image-edit {
     border: 1px solid rgba(0, 0, 0, 0.15);
     cursor: pointer;
     &.focused {
@@ -21,5 +21,18 @@
         position: absolute;
         top: 1rem;
         right: 1rem;
+    }
+
+}
+
+.content-image-wrapper {
+    &.align-fill {
+        img { width: 100%; }
+    }
+}
+
+.image-properties-toolbar {
+    path {
+        fill: white;
     }
 }

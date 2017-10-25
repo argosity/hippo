@@ -48,8 +48,14 @@ export default class Display extends React.PureComponent {
     }
 
     renderImage() {
-        const { state: { src } } = this.props;
-        return src ? <img className="content-image" src={src} /> : <ImageIcon style={iconStyle} />;
+        const { state: { src, align = 'fill' } } = this.props;
+        const img = src ? <img className="content-image" src={src} /> : <ImageIcon style={iconStyle} />;
+
+        return (
+            <div className={cn('content-image-wrapper', `align-${align}`)}>
+                {img}
+            </div>
+        );
     }
 
     @action.bound
@@ -59,9 +65,10 @@ export default class Display extends React.PureComponent {
 
     render() {
         const { isEditMode, state, focused } = this.props;
+
         if (isEditMode) {
             return (
-                <div className={cn('content-image-wrapper', { focused })}>
+                <div className={cn('content-image-edit', { focused })}>
                     <Button onClick={this.onAddClick}>{state.src ? 'Change' : 'Add'}</Button>
                     <Dropzone
                         ref={(dz) => { this.dropZone = dz; }}

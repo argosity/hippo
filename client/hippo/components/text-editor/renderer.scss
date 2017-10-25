@@ -1,8 +1,16 @@
 @import '~ory-editor-core/lib/index.css';
 
-.text-editor-content {
+.grommet .text-editor-content {
+    flex: 1;
+    overflow: auto;
+
     .ory-cell-leaf {
         margin: 12px;
     }
-    overflow: auto;
+
+    p:not(.grommetux-paragraph) {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
 }
