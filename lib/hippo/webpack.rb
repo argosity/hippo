@@ -2,6 +2,10 @@ require_relative './webpack/client_config'
 
 module Hippo
     class Webpack
+
+        class NotFound < ArgumentError
+        end
+
         mattr_accessor :stub
         attr_reader :driver, :assets, :process
 
@@ -64,7 +68,7 @@ module Hippo
                 if asset
                     asset.file
                 elsif !raise_on_not_found
-                    raise ArgumentError, "asset '#{entry}' was not found"
+                    raise NotFound, "asset '#{entry}' was not found"
                 end
             end
         end

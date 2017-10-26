@@ -48,10 +48,15 @@ module Hippo::API::Handlers
             webpack = Hippo::API::Root.webpack
             if Hippo.env.production?
                 lambda do
-                    file = webpack.file(params['asset'].to_sym, raise_on_not_found: false)
-                    if file
-                        redirect "/assets/#{file}"
-                    else
+                    begin
+                        file = webpack.file(params['asset'].to_sym, raise_on_not_found: false)
+                        if file
+                            response['Cache-Control'] = "public, max-age=0, must-revalidate"
+                            redirect "/assets/#{file}"
+                        else
+                            halt 404
+                        end
+                    rescue Hippo::Webpack::NotFound
                         halt 404
                     end
                 end
