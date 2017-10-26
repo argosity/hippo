@@ -8,6 +8,7 @@
 
     .text-editor-content {
         overflow: auto;
+        -webkit-overflow-scrolling: touch;
         margin-bottom: 100px;
         border: 1px solid #adadad;
     }

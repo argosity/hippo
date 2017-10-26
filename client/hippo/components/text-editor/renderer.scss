@@ -3,7 +3,7 @@
 .grommet .text-editor-content {
     flex: 1;
     overflow: auto;
-
+    -webkit-overflow-scrolling: touch;
     .ory-cell-leaf {
         margin: 12px;
     }

@@ -84,6 +84,7 @@
     .grid-body {
         border-top: 1px solid $table-border-color;
         overflow: auto;
+        -webkit-overflow-scrolling: touch;
         position: relative; // for absolutely positioned row editor
         flex-grow: 1;
         height: 1px; // panel needs height to force scroll
