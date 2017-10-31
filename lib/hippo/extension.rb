@@ -99,7 +99,7 @@ module Hippo
             def static_bootstrap_data
                 data = {}
                 %w{
-                  api_path environment website_domain product_name assets_path_prefix
+                  api_path print_path_prefix environment website_domain product_name assets_path_prefix
                 }.each do |config|
                     data[config.to_sym] = Hippo.config.send(config)
                 end

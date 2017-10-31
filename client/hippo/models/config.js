@@ -13,6 +13,7 @@ export default class Config {
     @persist @observable access_token;
     @persist @observable root_view;
     @persist @observable assets_path_prefix = '/assets';
+    @persist @observable print_path_prefix = '/print';
     @persist @observable website_domain;
     @persist @observable product_name;
     @persist('list') @observable screen_ids = [];
