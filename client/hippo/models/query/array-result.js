@@ -72,7 +72,10 @@ export default class ArrayResult extends Result {
     }
 
     rowAsObject(index) {
-        const row = this.rows[index];
+        return this.convertRowToObject(this.rows[index]);
+    }
+
+    convertRowToObject(row) {
         const obj = {};
         this.query.info.loadableFields.forEach((f) => {
             const value = row[f.dataIndex] || f.defaultValue;
