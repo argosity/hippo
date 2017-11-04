@@ -3,6 +3,7 @@ import { first } from 'lodash';
 import {
     BaseModel, identifiedBy, field, identifier,
 } from './base';
+import Extensions from '../extensions';
 import Config from '../config';
 
 const CACHED = observable.box();
@@ -22,10 +23,12 @@ export default class Tenant extends BaseModel {
     }
 
     static bootstrap(data) {
+        Extensions.fireOnInitialized();
         Tenant.current.update(data);
         if (data.bootstrap) {
             Config.update(data.bootstrap);
         }
+        Extensions.fireOnAvailable();
     }
 
     @identifier({ type: 'string' }) identifier = 'current';

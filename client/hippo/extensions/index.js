@@ -22,7 +22,7 @@ const Extensions = {
     },
 
     fireOnAvailable(viewport) {
-        this.invoke('onAvailble', viewport);
+        this.invoke('onAvailable', viewport);
     },
 
     getViews() {
