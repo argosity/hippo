@@ -1,5 +1,5 @@
 import { Atom, when, reaction } from 'mobx';
-import ActionCable from 'actioncable';
+import ActionCable from '../lib/action_cable';
 import { BaseModel } from './base';
 import User from '../user';
 import Config from '../config';
