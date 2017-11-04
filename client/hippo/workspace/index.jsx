@@ -65,6 +65,22 @@ class Workspace extends React.Component {
         this.sidebarOpen = !this.sidebarOpen;
     }
 
+    get isDragSupported() {
+        return Boolean('ontouchstart' in window);
+    }
+
+    renderOpenButton() {
+        if (this.isDragSupported) { return null; }
+        return (
+            <Button
+                primary
+                icon={<CirclePlayIcon />}
+                onClick={this.toggleSidebarDocked}
+                className={cn('sidebar-toggle', { 'is-open': this.sidebarOpen })}
+            />
+        );
+    }
+
     render() {
         return (
             <App centered={false}>
@@ -81,12 +97,8 @@ class Workspace extends React.Component {
                     docked={this.sidebarDocked}
                     onSetOpen={this.onSetSidebarOpen}
                 >
-                    <Button
-                        primary
-                        icon={<CirclePlayIcon />}
-                        onClick={this.toggleSidebarDocked}
-                        className={cn('sidebar-toggle', { 'is-open': this.sidebarOpen })}
-                    />
+                    {this.renderOpenButton()}
+
                     <Switch>
                         <Route name='screen' path="/:screenId/:identifier?" component={Screen} />
                         <Route component={NoMatch} />
