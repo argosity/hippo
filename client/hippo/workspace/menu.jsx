@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action } from 'mobx';
+import { action, computed } from 'mobx';
 import { isEmpty, get } from 'lodash';
 import PropTypes from 'prop-types';
 import Box     from 'grommet/components/Box';
@@ -65,13 +65,24 @@ export default class WorkspaceMenu extends React.PureComponent {
         if (!User.isLoggedIn || isEmpty(Screens.unGrouped)) { return null; }
         return (
             <Menu direction="column" align="start" justify="between" primary>
-                {Screens.unGrouped.map(s => <MenuOption key={s.id} screen={s} />)}
+                {Screens.unGrouped.map(s =>
+                    <MenuOption
+                        onSelection={this.onMenuSelection}
+                        key={s.id} screen={s} />)}
             </Menu>
         );
     }
 
+    @action.bound onMenuSelection() {
+        if (this.canClose) { this.props.onCloseMenu(); }
+    }
+
+    @computed get canClose() {
+        return (this.props.isOpen && !this.props.isDocked);
+    }
+
     renderClose() {
-        if (this.props.isOpen && !this.props.isDocked) {
+        if (this.canClose) {
             return <Button icon={<CloseIcon />} onClick={this.props.onCloseMenu} plain />;
         }
         return null;

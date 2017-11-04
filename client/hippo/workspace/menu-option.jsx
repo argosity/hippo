@@ -9,6 +9,7 @@ import Icon from '../components/icon';
 export default class MenuOption extends React.Component {
 
     static propTypes = {
+        onSelection: PropTypes.func.isRequired,
         screen: PropTypes.shape({
             title:   PropTypes.string.isRequired,
             icon:    PropTypes.string.isRequired,
@@ -22,6 +23,7 @@ export default class MenuOption extends React.Component {
 
     @action.bound
     activateScreen() {
+        this.props.onSelection(this.props.screen);
         this.props.screen.display();
     }
 
