@@ -8,7 +8,8 @@ import Instance, { displaying } from './instance';
 import Registry from './index';
 import Group from './group';
 
-export { asyncComponent } from 'react-async-component';
+export asyncComponent from './async-loading';
+
 
 @identifiedBy('hippo/screen/definition')
 export default class ScreenDefinition extends BaseModel {

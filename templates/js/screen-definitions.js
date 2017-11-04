@@ -11,7 +11,10 @@ const Screens = {};
 Screens['<%= screen.identifier %>'] = <%= screen.to_json %>;
 Definition.register(
     Screens['<%= screen.identifier %>'],
-    asyncComponent({ resolve: () => System.import(<%= "'#{screen.asset_path}'" %>) }),
+    asyncComponent({
+        screen: <%= screen.to_json %>,
+        resolve: () => System.import(<%= "'#{screen.asset_path}'" %>)
+    }),
 );
 <% end -%>
 
