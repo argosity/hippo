@@ -2,9 +2,13 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import Spinning from 'grommet/components/icons/Spinning';
 import AlertIcon from 'grommet/components/icons/base/Alert';
 import { asyncComponent } from 'react-async-component';
+import cn from 'classnames';
 
 const ErrorComponent = ({ screen }) => (
-    <div className="async-loading error">
+    <div
+        data-screen-id={screen.definition.id}
+        className={cn('async-loading', 'error', { 'is-active': screen.isActive })}
+    >
         <div className="content">
             <AlertIcon /> Failed to load {screen.definition.title}…
         </div>
@@ -12,7 +16,10 @@ const ErrorComponent = ({ screen }) => (
 );
 
 const LoadingComponent = ({ screen }) => (
-    <div className="async-loading">
+    <div
+        data-screen-id={screen.definition.id}
+        className={cn('async-loading', 'loading', { 'is-active': screen.isActive })}
+    >
         <div className="content">
             <Spinning /> Loading {screen.definition.title}…
         </div>

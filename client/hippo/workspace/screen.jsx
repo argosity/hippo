@@ -42,7 +42,11 @@ export default class Screen extends React.Component {
                 flex="grow"
             >
                 {displaying.models.map(s =>
-                    <ScreenView key={s.id} {...this.props.match.params} screen={s} />)}
+                    <ScreenView
+                        key={s.id}
+                        {...this.props.match.params}
+                        screen={s}
+                    />)}
             </Box>
 
         );
