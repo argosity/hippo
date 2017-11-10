@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { pick, extend, defaults, map, bindAll, partial, toInteger, isNumber } from 'lodash';
+import { pick, extend, defaults, map, partial, toInteger, isNumber } from 'lodash';
 import { defaultTableRowRenderer, Table, InfiniteLoader, AutoSizer, Column } from 'react-virtualized';
 import { action, computed, observable, autorun } from 'mobx';
 import { observer } from 'mobx-react';
+import { autobind } from 'core-decorators';
 import cn from 'classnames';
-
+import 'react-virtualized/styles.css';
 import NextIcon from 'grommet/components/icons/base/CaretNext';
 import Button   from 'grommet/components/Button';
-
-import 'react-virtualized/styles.css';
+import ActivityOverlay from './network-activity-overlay';
 import './data-table/table-styles.scss';
 
 import Query from '../models/query';
@@ -23,6 +23,13 @@ function renderEditTriangle({ rowIndex, columnData: { onEdit } }) {
         />
     );
 }
+
+const queryFieldToColumn = f => extend({
+    key: f.id,
+    columnData: f,
+    dataKey: f.dataIndex || f.id,
+    headerRenderer: this.headerRenderer,
+}, pick(f, 'width', 'label', 'flexGrow', 'flexShrink', 'cellRenderer', 'className', 'headerClassName'));
 
 @observer
 export default class DataTable extends React.Component {
@@ -42,33 +49,29 @@ export default class DataTable extends React.Component {
         editRowIndex: PropTypes.number,
     }
 
-    @observable editIndex;
-    @observable query;
+    @observable editIndex = this.props.editRowIndex;
 
-    constructor(props) {
-        super(props);
-        this.query = props.query;
-        bindAll(this,
-            'rowRenderer',
-            'rowAtIndex',
-            'calculateRowHeight',
-            'isRowLoaded',
-            'loadMoreRows',
-            'headerRenderer');
-        this.editIndex = props.editRowIndex;
-        autorun(() => {
+    componentWillReceiveProps(nextProps) {
+        this.editIndex = nextProps.editRowIndex;
+    }
+
+    componentWillMount() {
+        this.query.open();
+        this.disposeRowHeightCalculator = autorun(() => {
             if (isNumber(this.editIndex) && this.tableRef) {
                 this.tableRef.recomputeRowHeights(this.editIndex);
             }
         });
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.editIndex = nextProps.editRowIndex;
+    componentWillUnmount() {
+        this.disposeRowHeightCalculator();
+        this.query.close();
     }
 
-    componentWillMount() { this.query.open(); }
-    componentWillUnmount() { this.query.close(); }
+    get query() {
+        return this.props.query;
+    }
 
     get rowProps() {
         const props = {};
@@ -123,14 +126,7 @@ export default class DataTable extends React.Component {
     }
 
     @computed get columnDefinitions() {
-        const definitions = map(this.query.info.visibleFields, f =>
-            extend({
-                key: f.id,
-                columnData: f,
-                dataKey: f.dataIndex || f.id,
-                headerRenderer: this.headerRenderer,
-            }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink',
-                'cellRenderer', 'className', 'headerClassName')));
+        const definitions = map(this.query.info.visibleFields, queryFieldToColumn);
         if (this.props.editor) {
             definitions.unshift({
                 key: 'edit-toggle',
@@ -151,15 +147,15 @@ export default class DataTable extends React.Component {
         }, this.props.styles);
     }
 
-    rowAtIndex({ index }) {
+    @autobind rowAtIndex({ index }) {
         return this.props.query.results.rows[index];
     }
 
-    calculateRowHeight({ index }) {
+    @autobind calculateRowHeight({ index }) {
         return (this.editIndex === index) ? this.props.editor.desiredHeight || 40 : 40;
     }
 
-    rowRenderer(props) {
+    @autobind rowRenderer(props) {
         const {
             index, className, key, style,
         } = props;
@@ -184,18 +180,18 @@ export default class DataTable extends React.Component {
         return defaultTableRowRenderer(props);
     }
 
-    headerRenderer({ columnData: field }) {
+    @autobind headerRenderer({ columnData: field }) {
         return <HeaderCell field={field} onAdd={this.props.canCreate ? this.onRowAdd : null} />;
     }
 
-    isRowLoaded({ index }) {
+    @autobind isRowLoaded({ index }) {
         return (
             (this.query.results.rows.length > index) &&
-                (this.query.results.isRowLoading(index) || this.query.results.rows[index])
+            (this.query.results.isRowLoading(index) || this.query.results.rows[index])
         );
     }
 
-    loadMoreRows({ startIndex: start, stopIndex }) {
+    @action.bound loadMoreRows({ startIndex: start, stopIndex }) {
         const limit = (stopIndex + 1) - start;
         return this.query.results.fetch({ start, limit });
     }
@@ -207,6 +203,8 @@ export default class DataTable extends React.Component {
                 className={cn('data-table', { selectable: this.props.onRowClick })}
                 style={this.wrapperStyles}
             >
+                <ActivityOverlay model={query.results} message="Loading…" />
+
                 <InfiniteLoader
                     keyChange={this.gridRenderKey}
                     minimumBatchSize={this.query.pageSize}
