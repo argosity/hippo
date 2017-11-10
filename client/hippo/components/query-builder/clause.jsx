@@ -3,9 +3,11 @@ import { defaults } from 'lodash';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
+import Button        from 'grommet/components/Button';
 import Box           from 'grommet/components/Box';
 import Menu          from 'grommet/components/Menu';
 import TextInput     from 'grommet/components/TextInput';
+import RefreshIcon   from 'grommet/components/icons/base/Refresh';
 import ClauseModel   from '../../models/query/clause';
 import { Radio, ClauseFilter } from './clause-filter';
 import BooleanPicker from './boolean-picker';
@@ -28,19 +30,20 @@ export default class Clause extends React.PureComponent {
         typeHandlers: PropTypes.object,
     }
 
-    @action.bound
-    onSelect() {
+    @action.bound onSelect() {
         this.menuRef._onClose();
     }
 
-    @action.bound
-    onValueChange(ev) {
+    @action.bound onValueChange(ev) {
         this.props.clause.value = ev.target.value;
     }
 
-    @action.bound
-    setMenuRef(ref) {
+    @action.bound setMenuRef(ref) {
         this.menuRef = ref;
+    }
+
+    @action.bound onRefresh() {
+        this.props.clause.query.fetch();
     }
 
     get handlers() {
@@ -49,7 +52,6 @@ export default class Clause extends React.PureComponent {
 
     renderInputTag() {
         const Tag = this.handlers[this.props.clause.field.dataType];
-
         if (Tag) {
             return <Tag clause={this.props.clause} />;
         }
@@ -67,7 +69,7 @@ export default class Clause extends React.PureComponent {
         const { props: { clause } } = this;
 
         return (
-            <Box className="clause" direction='row' pad={{ between: 'small' }} align="center">
+            <Box responsive={false} className="clause" direction='row' pad={{ between: 'small' }} align="center">
                 <Menu
                     ref={this.setMenuRef}
                     size='large'
@@ -91,6 +93,10 @@ export default class Clause extends React.PureComponent {
                     </Box>
                 </Menu>
                 {this.renderInputTag()}
+                <Button
+                    icon={<RefreshIcon />}
+                    onClick={this.onRefresh}
+                />
             </Box>
         );
     }
