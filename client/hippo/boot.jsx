@@ -41,7 +41,7 @@ whenDomReady().then(() => {
         console.warn(`The model for ${model.identifiedBy}(${property}) cannot be found`);
     });
 
-    const loading = document.querySelector('.loading');
+    const loading = document.querySelector('.hippo-app-loading');
     if (loading) {
         loading.classList.add('complete');
         delay(() => {

@@ -18,7 +18,7 @@ const ErrorComponent = ({ screen }) => (
 const LoadingComponent = ({ screen }) => (
     <div
         data-screen-id={screen.definition.id}
-        className={cn('async-loading', 'loading', { 'is-active': screen.isActive })}
+        className={cn('async-loading', 'is-loading', { 'is-active': screen.isActive })}
     >
         <div className="content">
             <Spinning /> Loading {screen.definition.title}…
