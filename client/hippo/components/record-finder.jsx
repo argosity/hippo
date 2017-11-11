@@ -8,7 +8,7 @@ import { Field } from 'hippo/components/form';
 
 import Button from 'grommet/components/Button';
 import SearchIcon from 'grommet/components/icons/base/Search';
-
+import { BaseModel } from '../models/base';
 import Query from '../models/query';
 import './record-finder/record-finder.scss';
 import QueryLayer from './record-finder/query-layer';
@@ -19,6 +19,7 @@ export default class RecordFinder extends React.PureComponent {
 
     static propTypes = {
         query: PropTypes.instanceOf(Query).isRequired,
+        model: PropTypes.instanceOf(BaseModel),
         name:  PropTypes.string.isRequired,
         label: PropTypes.string,
         recordsTitle: PropTypes.string.isRequired,
@@ -66,6 +67,7 @@ export default class RecordFinder extends React.PureComponent {
             query,
             onRecordFound: _,
             recordsTitle,
+            model,
             ...otherProps
         } = this.props;
 
@@ -73,6 +75,7 @@ export default class RecordFinder extends React.PureComponent {
             <Field
                 className='record-finder'
                 onKeyPress={this.onKeyPress}
+                readOnly={Boolean(model && !model.isNew)}
                 {...otherProps}
             >
                 <QueryLayer
