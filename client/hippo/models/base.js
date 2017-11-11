@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import {
     findModel,
 } from 'mobx-decorated-models';
+import { readonly } from 'core-decorators';
 import invariant from 'invariant';
 import {
     isEmpty, isNil, find, extend, assign, pick, map, isArray,
@@ -70,7 +71,7 @@ export class BaseModel {
         }
     }
 
-    get isModel() { return true; }
+    @readonly isModel = true;
 
     @observable syncInProgress = false;
     @observable lastServerMessage = '';
