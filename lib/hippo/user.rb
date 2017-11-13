@@ -62,11 +62,11 @@ module Hippo
         def setting_attribute_is_allowed?(name, user)
             ( !new_record? && user.id == self.id && USER_EDITABLE_ATTRIBUTES.include?(name) ) ? true : super
         end
-        def can_write_attributes?( attr, user )
-            ( !new_record? && user.id == self.id ) ? true : super
+        def can_write_attributes?(attr, user)
+            (!new_record? && user.id == self.id) ? true : super
         end
-        def self.can_write_attributes?( attr, user )
-            ( attr[:id] && attr[:id].to_i == user.id ) ? true : super
+        def self.can_write_attributes?(attr, user)
+            (attr['id'] && attr['id'].to_i == user.id) ? true : super
         end
 
         # @return [Boolan] does the user have the "administrator" role?
