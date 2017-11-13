@@ -24,13 +24,6 @@ function renderEditTriangle({ rowIndex, columnData: { onEdit } }) {
     );
 }
 
-const queryFieldToColumn = f => extend({
-    key: f.id,
-    columnData: f,
-    dataKey: f.dataIndex || f.id,
-    headerRenderer: this.headerRenderer,
-}, pick(f, 'width', 'label', 'flexGrow', 'flexShrink', 'cellRenderer', 'className', 'headerClassName'));
-
 @observer
 export default class DataTable extends React.Component {
 
@@ -126,7 +119,14 @@ export default class DataTable extends React.Component {
     }
 
     @computed get columnDefinitions() {
-        const definitions = map(this.query.info.visibleFields, queryFieldToColumn);
+        const definitions = map(this.query.info.visibleFields, f => extend({
+            key: f.id,
+            columnData: f,
+            dataKey: f.dataIndex || f.id,
+            headerRenderer: this.headerRenderer,
+        }, pick(f, 'width', 'label', 'flexGrow', 'flexShrink',
+            'cellRenderer', 'className', 'headerClassName')));
+
         if (this.props.editor) {
             definitions.unshift({
                 key: 'edit-toggle',
