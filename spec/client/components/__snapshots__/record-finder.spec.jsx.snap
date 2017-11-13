@@ -30,6 +30,7 @@ exports[`RecordFinder Component renders 1`] = `
         onKeyDown={[Function]}
         onKeyPress={[Function]}
         placeholder={undefined}
+        readOnly={false}
         tabIndex={0}
         type="text"
         value=""
