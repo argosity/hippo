@@ -31,15 +31,14 @@ module Hippo
                                       end
             end
 
-            def allowed_access_to?(klass, options = {})
-
+            def allowed_access_to?(klass, handler, options = {})
                 return true if options[:public] == true and current_user.nil?
                 return false if current_user.nil?
                 case request.request_method
                 when 'GET'
                     klass.can_read_attributes?(request.params, current_user)
                 when 'POST', 'PATCH', 'PUT'
-                    klass.can_write_attributes?(request.params, current_user)
+                    klass.can_write_attributes?(handler.data, current_user)
                 when 'DELETE'
                     klass.can_delete_attributes?(request.params, current_user)
                 else
@@ -59,8 +58,8 @@ module Hippo
 
             def wrap_model_access(model, req, options = {})
                 fail_request(req) and return unless Tenant.current
-                if allowed_access_to?(model, options)
-                    ::Hippo::User.scoped_to(current_user) do | user |
+                if allowed_access_to?(model, req, options)
+                    ::Hippo::User.scoped_to(current_user) do |user|
                         yield
                     end
                 else
