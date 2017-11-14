@@ -12,7 +12,7 @@ import ScreenDefinition from 'hippo/screens/definition';
 export class Ship extends BaseModel {
 
     @identifier({ type: 'string' }) name;
-
+    @field({ type: 'date' }) sail_date;
     @belongsTo({ model: 'test/container', inverseOf: 'vessel' }) container;
 
 }

@@ -1,4 +1,5 @@
 import { autorun, observe } from 'mobx';
+import moment from 'moment';
 import { Ship, Container, Box } from '../test-models';
 
 describe('BaseModel Test', () => {
@@ -83,5 +84,11 @@ describe('BaseModel Test', () => {
         expect(box.errorMessage).toEqual('');
         box.errors = { foo: 'cannot be blank', baz: 'is very invalid' };
         expect(box.errorMessage).toEqual('Foo cannot be blank and Baz is very invalid');
+    });
+
+    it('uses momentjs for dates', () => {
+        const ship = Ship.deserialize({ sail_date: '2012-11-14T01:03:42.415Z' });
+        expect(moment.isMoment(ship.sail_date)).toBe(true);
+        expect(ship.sail_date.toISOString()).toEqual('2012-11-14T01:03:42.415Z');
     });
 });

@@ -9,7 +9,7 @@ import {
 } from 'lodash';
 
 import { action, observable, computed } from 'mobx';
-
+import './date-type';
 import Sync from './sync';
 import Config from '../config';
 import { toSentence, humanize } from '../lib/util';

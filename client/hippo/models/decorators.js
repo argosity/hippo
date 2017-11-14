@@ -1,8 +1,8 @@
 import {
-    isEmpty, isArray, isNumber, isObject, isString, partial, defaults, isNil, isDate,
+    isEmpty, isArray, isNumber, isObject, isString, partial, defaults, isNil,
 } from 'lodash';
 import invariant from 'invariant';
-
+import moment from 'moment';
 import { intercept, isObservableArray, isObservableObject } from 'mobx';
 
 import {
@@ -16,13 +16,13 @@ const VALIDATORS = {
     string: isString,
     array(a) { return isArray(a) || isObservableArray(a); },
     object(o) { return isObject(o) || isObservableObject(o); },
-    date:   isDate,
+    date(d) { return moment.isMoment(d); },
 };
 
 const COERCE = {
     date(change) {
-        if (!isDate(change.newValue)) {
-            change.newValue = new Date(change.newValue); // eslint-disable-line no-param-reassign
+        if (!moment.isMoment(change.newValue)) {
+            change.newValue = moment(change.newValue); // eslint-disable-line no-param-reassign
         }
     },
 };
