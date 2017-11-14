@@ -5,6 +5,7 @@ import { autobind } from 'core-decorators';
 import Flatpickr    from 'flatpickr';
 import { defaults, has, omit } from 'lodash';
 import { observable, action }  from 'mobx';
+import moment from 'moment';
 import './date-time.scss';
 
 const hooks = [
@@ -75,10 +76,13 @@ export default class DateTimePicker extends React.PureComponent {
 
     componentDidMount() {
         const options = this.getOptions(this.props);
+
         this.flatpickr = new Flatpickr(this.node, options);
 
         if (has(this.props, 'value')) {
-            this.flatpickr.setDate(this.props.value, false);
+            let { value } = this.props;
+            value = moment.isMoment(this.props.value) ? value.toDate() : value;
+            this.flatpickr.setDate(value, false);
         }
     }
 
