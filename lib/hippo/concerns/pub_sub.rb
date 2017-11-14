@@ -50,10 +50,10 @@ module Hippo::Concerns
             class_attribute :_event_listeners
             base.valid_event_names = [ :save, :create, :update, :destroy ]
 
-            base.after_save    :fire_after_save_pubsub_events
-            base.after_create  :fire_after_create_pubsub_events
-            base.after_update  :fire_after_update_pubsub_events
-            base.after_destroy :fire_after_destroy_pubsub_events
+            base.before_save    :fire_save_pubsub_events
+            base.before_create  :fire_create_pubsub_events
+            base.before_update  :fire_update_pubsub_events
+            base.before_destroy :fire_destroy_pubsub_events
         end
 
         module ClassMethods
@@ -94,19 +94,19 @@ module Hippo::Concerns
 
         protected
 
-        def fire_after_destroy_pubsub_events
+        def fire_destroy_pubsub_events
             fire_pubsub_event(:update, self)
         end
 
-        def fire_after_update_pubsub_events
+        def fire_update_pubsub_events
             fire_pubsub_event(:update, self)
         end
 
-        def fire_after_create_pubsub_events
+        def fire_create_pubsub_events
             fire_pubsub_event(:create, self)
         end
 
-        def fire_after_save_pubsub_events
+        def fire_save_pubsub_events
             fire_pubsub_event(:save, self)
         end
 
