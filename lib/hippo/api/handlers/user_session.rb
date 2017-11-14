@@ -9,7 +9,6 @@ module Hippo::API::Handlers
             lambda do
                 wrap_reply(with_transaction: false) do
                     user = Hippo::User.with_login(data['login']).first
-
                     if user && user.authenticate(data['password'])
                         { success: true, message: "Login succeeded",
                           data: user.workspace_data }

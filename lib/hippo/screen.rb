@@ -69,9 +69,11 @@ module Hippo
                 yield group
             end
 
-            def active_ids
+            def ids_for_user(user)
                 Extensions.load_screens
-                for_extension(Hippo::Extensions.controlling.identifier).map(&:identifier)
+                for_extension(Hippo::Extensions.controlling.identifier).select{|s|
+                    s.viewable_by?(user)
+                }.map(&:identifier)
             end
 
             def each_group

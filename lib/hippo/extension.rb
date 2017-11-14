@@ -110,7 +110,6 @@ module Hippo
                     ext_data  = ext.static_bootstrap_data
                     data[ext.identifier] = ext_data unless ext_data.nil?
                 end
-                data[:screen_ids] = Hippo::Screen.active_ids
                 return data
             end
 

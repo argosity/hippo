@@ -31,7 +31,7 @@ module Hippo
                 user: user_data,
                 access: Access.for_user(self),
                 access_token: jwt_token,
-                screen_ids: Hippo::Screen.active_ids,
+                screen_ids: Hippo::Screen.ids_for_user(self)
             }
         end
 

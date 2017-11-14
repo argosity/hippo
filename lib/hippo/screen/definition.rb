@@ -14,6 +14,7 @@ module Hippo
             attr_accessor_with_default :view_class
             attr_accessor_with_default :model_class
             attr_accessor_with_default :model_access, 'read'
+            attr_accessor_with_default :roles, ->{ [] }
             attr_accessor_with_default :asset
 
             attr_accessor :extension_id
@@ -44,6 +45,9 @@ module Hippo
             end
 
             def viewable_by?(user)
+                if roles.present?
+                    return (roles & user.role_names).any?
+                end
                 model.nil? || user.can_read?(self)
             end
 
