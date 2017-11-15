@@ -56,9 +56,7 @@ export default class DateTimePicker extends React.PureComponent {
     componentWillReceiveProps(props) {
         const options = this.getOptions(props);
 
-        if (has(props, 'value')) {
-            this.flatpickr.setDate(props.value, false);
-        }
+        this.setValueFromProps(props);
 
         const optionsKeys = Object.getOwnPropertyNames(options);
 
@@ -76,14 +74,15 @@ export default class DateTimePicker extends React.PureComponent {
 
     componentDidMount() {
         const options = this.getOptions(this.props);
-
         this.flatpickr = new Flatpickr(this.node, options);
+        this.setValueFromProps(this.props);
+    }
 
-        if (has(this.props, 'value')) {
-            let { value } = this.props;
-            value = moment.isMoment(this.props.value) ? value.toDate() : value;
-            this.flatpickr.setDate(value, false);
-        }
+    setValueFromProps(props) {
+        if (!has(props, 'value')) { return; }
+        let { value } = props;
+        if (moment.isMoment(value)) { value = value.toDate(); }
+        this.flatpickr.setDate(value, false);
     }
 
     componentWillUnmount() {
