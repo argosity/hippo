@@ -5,7 +5,7 @@ import Select from 'grommet/components/Select';
 import { get, find } from 'lodash';
 
 @observer
-export default class SelectFieldWrapper extends React.PureComponent {
+export default class SelectFieldWrapper extends React.Component {
 
     @action.bound
     onSelectChange({ value: { id } }) {

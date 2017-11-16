@@ -9,7 +9,7 @@ import ClauseModel   from '../../models/query/clause';
 
 
 @observer
-export class Radio extends React.PureComponent {
+export class Radio extends React.Component {
 
     static propTypes = {
         name: PropTypes.string.isRequired,
@@ -40,7 +40,7 @@ export class Radio extends React.PureComponent {
 }
 
 @observer
-export class ClauseFilter extends React.PureComponent {
+export class ClauseFilter extends React.Component {
 
     static propTypes = {
         clause: PropTypes.instanceOf(ClauseModel).isRequired,

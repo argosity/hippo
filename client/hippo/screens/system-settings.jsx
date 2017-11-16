@@ -20,7 +20,7 @@ import TenantSettings from  './system-settings/tenant';
 import './system-settings/system-settings.scss';
 
 @observer
-export default class SystemSettings extends React.PureComponent {
+export default class SystemSettings extends React.Component {
 
     @observable settings = new Settings();
     extensionPanelRefs = new Map();

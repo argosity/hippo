@@ -18,7 +18,7 @@ import Config from '../config';
 import Asset from '../models/asset';
 
 @observer
-class Logout extends React.PureComponent {
+class Logout extends React.Component {
 
     static contextTypes = {
         router: PropTypes.object,
@@ -59,7 +59,7 @@ const Logo = observer(() => {
 });
 
 @observer
-export default class WorkspaceMenu extends React.PureComponent {
+export default class WorkspaceMenu extends React.Component {
 
     renderUnGrouped() {
         if (!User.isLoggedIn || isEmpty(Screens.unGrouped)) { return null; }

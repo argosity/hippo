@@ -7,7 +7,7 @@ import Clause from './query-builder/clause';
 import './query-builder/query-builder.scss';
 
 @observer
-export default class QueryBuilder extends React.PureComponent {
+export default class QueryBuilder extends React.Component {
 
     static defaultProps = {
         autoFetch: false,

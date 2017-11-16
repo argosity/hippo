@@ -6,7 +6,7 @@ import { FormState } from './api';
 import Screen from '../screen';
 
 @observer
-export default class FormWrapper extends React.PureComponent {
+export default class FormWrapper extends React.Component {
 
     static propTypes = {
         tag: PropTypes.string,

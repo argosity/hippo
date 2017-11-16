@@ -6,7 +6,7 @@ import moment from 'moment';
 import DateTime  from '../../date-time';
 
 @observer
-export default class DateWrapper extends React.PureComponent {
+export default class DateWrapper extends React.Component {
 
     static defaultProps = {
         format: 'M/d/Y h:iK',

@@ -15,7 +15,7 @@ import DataTable from '../data-table';
 import QueryBuilder from '../query-builder';
 
 @observer
-export default class QueryLayer extends React.PureComponent {
+export default class QueryLayer extends React.Component {
 
     static propTypes = {
         title: PropTypes.string.isRequired,

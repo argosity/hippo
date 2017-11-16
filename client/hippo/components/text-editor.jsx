@@ -23,7 +23,7 @@ const editorInstance = new Editor({
 });
 
 @observer
-export default class TextEditor extends React.PureComponent {
+export default class TextEditor extends React.Component {
 
     static defaultProps = {
         assets: observable.array(),

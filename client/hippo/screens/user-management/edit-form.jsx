@@ -14,7 +14,7 @@ import Query from '../../models/query';
 import { Form, Field, FormState, nonBlank, validEmail, booleanValue } from '../../components/form';
 
 @observer
-export default class EditForm extends React.PureComponent {
+export default class EditForm extends React.Component {
 
     static propTypes = {
         query:      PropTypes.instanceOf(Query).isRequired,

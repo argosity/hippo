@@ -33,7 +33,7 @@ function TenantSlugChange({ oldSlug }) {
 }
 
 @observer
-export default class TenantConfig extends React.PureComponent {
+export default class TenantConfig extends React.Component {
 
     formState = new FormState()
 

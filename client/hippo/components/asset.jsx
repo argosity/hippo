@@ -14,7 +14,7 @@ import { BaseModel } from '../models/base';
 import './asset.scss';
 
 @observer
-export default class Asset extends React.PureComponent {
+export default class Asset extends React.Component {
 
     static defaultProps = {
         label: '',

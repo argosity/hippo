@@ -19,7 +19,7 @@ const defaultHandlers = {
 };
 
 @observer
-export default class Clause extends React.PureComponent {
+export default class Clause extends React.Component {
 
     static defaultProps = {
         typeHandlers: {},

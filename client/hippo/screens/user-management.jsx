@@ -14,7 +14,7 @@ import Query from 'hippo/models/query';
 import Editor from './user-management/edit-form';
 
 @observer
-export default class UserManagement extends React.PureComponent {
+export default class UserManagement extends React.Component {
 
     @observable editingId;
 

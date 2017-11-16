@@ -4,7 +4,7 @@ import { action } from 'mobx';
 import DateTime from '../date-time';
 
 @observer
-export default class DatePicker extends React.PureComponent {
+export default class DatePicker extends React.Component {
 
     @action.bound onChange({ target: { value: dates } }) {
         this.props.clause.value = `${dates[0].toISOString()}...${dates[1].toISOString()}`;

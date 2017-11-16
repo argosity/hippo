@@ -4,7 +4,7 @@ import { action } from 'mobx';
 import CheckBox from 'grommet/components/CheckBox';
 
 @observer
-export default class CheckBoxWrapper extends React.PureComponent {
+export default class CheckBoxWrapper extends React.Component {
 
     @action.bound onBlur(ev) {
         this.props.onBlur({ target: { value: ev.target.checked } });

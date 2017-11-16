@@ -7,7 +7,7 @@ import Heading from 'grommet/components/Heading';
 import { Form, Field, FormState, nonBlank, validEmail  } from 'hippo/components/form';
 
 @observer
-export default class MailerConfig extends React.PureComponent {
+export default class MailerConfig extends React.Component {
 
     formState = new FormState()
 

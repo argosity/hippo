@@ -12,7 +12,7 @@ import { BaseModel } from '../models/base';
 
 
 @observer
-export default class SaveButton extends React.PureComponent {
+export default class SaveButton extends React.Component {
 
     static propTypes = {
         busy: PropTypes.bool,

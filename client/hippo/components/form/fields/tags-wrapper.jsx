@@ -5,7 +5,7 @@ import { action, isObservableArray } from 'mobx';
 import Tags from 'react-tag-autocomplete';
 
 @observer
-export default class CheckBoxWrapper extends React.PureComponent {
+export default class CheckBoxWrapper extends React.Component {
 
     get tags() {
         if (isEmpty(this.props.value)) {

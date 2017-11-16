@@ -10,7 +10,7 @@ import MenuOption from './menu-option';
 import Icon  from '../components/icon';
 
 @observer
-export default class Group extends React.PureComponent {
+export default class Group extends React.Component {
 
     static propTypes = {
         group: PropTypes.shape({

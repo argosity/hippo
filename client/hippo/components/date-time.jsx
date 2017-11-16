@@ -25,7 +25,7 @@ const defaultOptions = {
 };
 
 @observer
-export default class DateTimePicker extends React.PureComponent {
+export default class DateTimePicker extends React.Component {
 
     static propTypes = {
         defaultValue: PropTypes.string,

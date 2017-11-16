@@ -10,7 +10,7 @@ import './master-detail.scss';
 const DELAY_TIME = 500;
 
 @observer
-export default class MasterDetail extends React.PureComponent {
+export default class MasterDetail extends React.Component {
 
     static propTypes = {
         master: PropTypes.element.isRequired,

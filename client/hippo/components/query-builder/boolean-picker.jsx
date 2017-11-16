@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
 @observer
-export default class BooleanPicker extends React.PureComponent {
+export default class BooleanPicker extends React.Component {
 
     @action.bound onChange(ev) {
         this.props.clause.value = ev.target.checked;

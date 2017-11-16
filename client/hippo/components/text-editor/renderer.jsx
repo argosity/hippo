@@ -8,7 +8,7 @@ import { HTMLRenderer } from 'ory-editor-renderer';
 import './renderer.scss';
 
 @observer
-export default class TextEditorRenderer extends React.PureComponent {
+export default class TextEditorRenderer extends React.Component {
 
     static defaultProps = {
         assets: observable.array(),

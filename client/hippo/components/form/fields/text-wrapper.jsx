@@ -5,7 +5,7 @@ import TextInput from 'grommet/components/TextInput';
 
 
 @observer
-export default class TextWrapper extends React.PureComponent {
+export default class TextWrapper extends React.Component {
 
     @action.bound focus() {
         this.inputRef.componentRef.focus();

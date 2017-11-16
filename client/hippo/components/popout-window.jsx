@@ -8,7 +8,7 @@ import ReactDOM     from 'react-dom';
 import { isFunction, invoke, defaults, map, uniqueId } from 'lodash';
 import { autobind } from 'core-decorators';
 
-export default class PopoutWindow extends React.PureComponent {
+export default class PopoutWindow extends React.Component {
 
     static propTypes = {
         title:      PropTypes.string.isRequired,

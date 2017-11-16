@@ -13,7 +13,7 @@ function Indicator({ error }) {
 }
 
 @observer
-export default class NetworkActivityOverlay extends React.PureComponent {
+export default class NetworkActivityOverlay extends React.Component {
 
     static defaultProps = {
         timeout: 30000,
