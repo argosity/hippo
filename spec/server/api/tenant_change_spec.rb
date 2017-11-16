@@ -13,6 +13,7 @@ describe "Tenant changes", api: true, vcr: VCR_OPTS do
              }.to_json, {
                  'HTTP_AUTHORIZATION' => user.jwt_token,
                  'HTTP_ACCEPT' => 'application/json',
+                 'CONTENT_TYPE' => 'application/json',
                  'SERVER_NAME' => "#{tenant.slug}.example.ua",
              }
         expect(tenant.reload.slug).to eq('red')

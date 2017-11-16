@@ -13,14 +13,20 @@ describe "User Create/Update", api: true, vcr: VCR_OPTS do
 
     it 'can create user when admin' do
         user.update_attributes(role_names: ['administrator'])
-        post '/api/hippo/user.json', new_user_data.to_json, { 'HTTP_AUTHORIZATION' => user.jwt_token }
+        post('/api/hippo/user.json', new_user_data.to_json, {
+                 'HTTP_AUTHORIZATION' => user.jwt_token,
+                 'CONTENT_TYPE' => 'application/json'
+             })
         expect(last_response_json['success']).to eq(true)
         expect(last_response_json.dig('data', 'login')).to eq('bob')
     end
 
     it 'fails when user is not admin' do
         Hippo.silence_logs do
-            post '/api/hippo/user.json', new_user_data.to_json, { 'HTTP_AUTHORIZATION' => user.jwt_token }
+            post('/api/hippo/user.json',
+                 new_user_data.to_json,
+                 {'HTTP_AUTHORIZATION' => user.jwt_token,
+                  'CONTENT_TYPE' => 'application/json'})
         end
         expect(last_response_json['success']).to eq(false)
         expect(last_response_json['message']).to eq('Access Denied')
@@ -29,7 +35,8 @@ describe "User Create/Update", api: true, vcr: VCR_OPTS do
     it 'allows user to update own account' do
         put("/api/hippo/user/#{user.id}.json",
             new_user_data.merge('id' => user.id).to_json,
-            {'HTTP_AUTHORIZATION' => user.jwt_token})
+            {'HTTP_AUTHORIZATION' => user.jwt_token,
+             'CONTENT_TYPE' => 'application/json'})
         expect(last_response_json['success']).to eq(true)
         expect(user.reload.login).to eq('SamTheMan')
         expect(user.authenticate('new-password')).not_to eq(false)
