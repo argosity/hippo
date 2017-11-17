@@ -10,7 +10,6 @@
     "client"
   ],
   "dependencies": {
-    "action_cable": "^5.0.0-beta3",
     "babel-core": "^6.25.0",
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.1.1",
