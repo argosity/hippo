@@ -51,7 +51,7 @@ export default class Clause extends React.Component {
     }
 
     renderInputTag() {
-        const Tag = this.handlers[this.props.clause.field.dataType];
+        const Tag = this.handlers[this.props.clause.field.queryType];
         if (Tag) {
             return <Tag clause={this.props.clause} />;
         }
