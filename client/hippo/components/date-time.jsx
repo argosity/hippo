@@ -7,6 +7,7 @@ import { defaults, has, omit } from 'lodash';
 import { observable, action }  from 'mobx';
 import moment from 'moment';
 import './date-time.scss';
+import DateRange from '../lib/date-range';
 
 const hooks = [
     'onOpen',
@@ -81,6 +82,7 @@ export default class DateTimePicker extends React.Component {
     setValueFromProps(props) {
         if (!has(props, 'value')) { return; }
         let { value } = props;
+        if (value instanceof DateRange) { value = value.asArray; }
         if (moment.isMoment(value)) { value = value.toDate(); }
         this.flatpickr.setDate(value, false);
     }

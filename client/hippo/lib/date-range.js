@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { observable, computed } from 'mobx';
-import { isString, isEmpty, map, isNaN } from 'lodash';
+import { observable, computed, isObservableArray } from 'mobx';
+import { isString, isEmpty, map, isNaN, isArray, first, last } from 'lodash';
 import {
     identifiedBy,
 } from 'mobx-decorated-models';
@@ -14,6 +14,9 @@ export default class DateRange {
     constructor(range) {
         if (isString(range) && !isEmpty(range)) {
             [this.start, this.end] = map(range.split('...'), d => new Date(d));
+        } else if (isArray(range) || isObservableArray(range)) {
+            this.start = first(range);
+            this.end = last(range);
         } else if (range) {
             this.start = range.start;
             this.end = range.end;
@@ -34,6 +37,10 @@ export default class DateRange {
 
     @computed get isCurrent() {
         return moment(this.end).isAfter() && moment(this.start).isBefore();
+    }
+
+    @computed get asArray() {
+        return [this.start, this.end];
     }
 
 }
