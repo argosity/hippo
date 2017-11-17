@@ -107,7 +107,7 @@ const peformMobxyRequest = action('SyncforModel', (mobxObj, options = {}) => {
             mobxObj.errors = { network: e };
             mobxObj.syncInProgress = undefined;
             mobxObj.lastServerMessage = e.toString();
-            return {};
+            return mobxObj;
         }));
 });
 
