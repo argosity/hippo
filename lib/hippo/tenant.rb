@@ -34,7 +34,7 @@ module Hippo
             as_json(
                 only: PUBLIC_ATTRS,
             ).merge(
-                bootstrap: system_settings.public_json.merge(
+                bootstrap: SystemSettings.config.public_json.merge(
                     Hippo::Extensions.tenant_bootstrap_data(self)
                 )
             )
