@@ -78,7 +78,11 @@ export class BaseModel {
     @observable errors = {};
 
     @computed get errorMessage() {
-        return this.errors ? toSentence(map(this.errors, (v, k) => `${humanize(k)} ${v}`)) : '';
+        return this.errors ? toSentence(
+            map(this.errors, (v, k) => (
+                'base' === k ? v : `${humanize(k)} ${v}`
+            )),
+        ) : '';
     }
 
     @computed get isValid() {
