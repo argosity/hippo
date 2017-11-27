@@ -53,7 +53,7 @@ export default class UserManagement extends React.Component {
     render() {
         return (
             <Screen {...this.props}>
-                <Heading>Manage User</Heading>
+                <Heading tag="h3">User Management</Heading>
                 <DataTable
                     canCreate
                     query={this.query}
