@@ -2,6 +2,10 @@ module Hippo
     module API
 
         module RequestWrapper
+            DEFAULT_OPTIONS = {
+                with_transaction: true, require_tenant: true
+            }
+
             class << self
 
                 def get(*args)
@@ -68,12 +72,19 @@ module Hippo
                 end
             end
 
+            def with_user(options = DEFAULT_OPTIONS)
+                authentication = Hippo::API::AuthenticationProvider.new(request)
+                wrap_reply(options) do
+                    yield authentication.current_user
+                end
+            end
+
             # Wraps a HTTP request in an optional DB transaction and converts yeilded data to JSON
             #
             # @param [options] options for additional checks
             # @option opts [Boolean] :with_transaction rollback DB transaction if exceptions occur
             # @option opts [Boolean] :require_tenant return error if tenant is not found
-            def wrap_reply(options = { with_transaction: true, require_tenant: true })
+            def wrap_reply(options = DEFAULT_OPTIONS)
                 if options[:require_tenant] && Hippo::Tenant.current.nil?
                     return json_reply(
                                { success: false, message: "invalid address",
