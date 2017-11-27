@@ -1,6 +1,6 @@
 import { pick, merge, includes, omit } from 'lodash';
-
 import { action } from 'mobx';
+import Sync from './models/sync';
 
 import {
     BaseModel, identifiedBy, field, identifier, computed,
@@ -30,7 +30,7 @@ const ADMIN = 'administrator';
 @identifiedBy('hippo/user')
 export class UserModel extends BaseModel {
 
-    @identifier({ type: 'number' }) id;
+    @identifier id;
     @field login;
     @field name;
     @field email;
@@ -85,6 +85,13 @@ export class UserModel extends BaseModel {
 
     toJSON() {
         return merge(this.serialize(), { is_admin: this.is_admin });
+    }
+
+    fetch() {
+        return Sync.forModel(this, {
+            url: `${Config.api_path}/${UserModel.identifiedBy}/current`,
+            method: 'GET',
+        });
     }
 
 }
