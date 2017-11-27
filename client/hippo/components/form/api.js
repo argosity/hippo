@@ -159,6 +159,7 @@ export class FormState {
         } else {
             this.set(model);
         }
+        return model;
     }
 
     persistTo(model) {
