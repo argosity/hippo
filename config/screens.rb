@@ -5,6 +5,13 @@ Hippo::Screen.define_group "system-settings" do | group |
 end
 
 Hippo::Screen.for_extension 'hippo' do | screens |
+    screens.define "preferences" do | screen |
+        screen.title       = "Preferences"
+        screen.description = "User Preferences"
+        screen.icon        = "heartbeat"
+        screen.group_id    = "system-settings"
+        screen.asset       = 'hippo/screens/preferences'
+    end
 
     screens.define "user-management" do | screen |
         screen.title       = "User Management"
