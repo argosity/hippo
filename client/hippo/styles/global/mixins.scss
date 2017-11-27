@@ -1,5 +1,18 @@
-@mixin hidden-print {
+@mixin hidden-print() {
   @media print {
       display: none !important;
   }
+}
+
+@mixin workspace-screen-padding($exclude: '.grommetux-header__container--fixed') {
+
+    > *:not(#{$exclude}) {
+        margin: 0.5rem;
+    }
+    > .row {
+        & + .row {
+            margin-top: 0;
+        }
+    }
+
 }

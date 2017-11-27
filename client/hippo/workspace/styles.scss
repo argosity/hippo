@@ -1,12 +1,13 @@
 @import '../styles/global';
 @import '~grommet/scss/aruba/index';
 
-.screen {
+.hippo-screen {
     flex: 1;
     flex-direction: column;
-    padding: 0.5rem;
+
     display: none;
 
+    @include workspace-screen-padding();
 
     min-height: min-content; min-height: -moz-min-content; min-height: -webkit-min-content;
 
