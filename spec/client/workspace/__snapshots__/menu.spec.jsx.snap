@@ -44,6 +44,18 @@ exports[`Workspace Menu has groups with screens 1`] = `
   >
     <span
       aria-hidden={true}
+      className="fa fa-heartbeat icon"
+    />
+    Preferences
+  </a>
+  <a
+    aria-label={undefined}
+    className="grommetux-anchor"
+    href={undefined}
+    onClick={[Function]}
+  >
+    <span
+      aria-hidden={true}
       className="fa fa-group icon"
     />
     User Management

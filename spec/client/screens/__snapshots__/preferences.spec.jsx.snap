@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Screen Preferences renders and matches snapshot 1`] = `
+<div
+  className="hippo-screen preferences is-active"
+  data-screen-id="preferences"
+>
+  <div
+    className="grommetux-header__container grommetux-header__container--fixed"
+  >
+    <div
+      className="grommetux-header__mirror"
+    />
+    <div
+      className="grommetux-header__wrapper"
+    >
+      <div
+        className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
+        id={undefined}
+        onClick={undefined}
+        role={undefined}
+        style={Object {}}
+        tabIndex={undefined}
+      >
+        <header
+          className="grommetux-box grommetux-box--direction-row grommetux-box--align-center grommetux-box--pad-horizontal-small grommetux-box--pad-vertical-small grommetux-box--pad-between-small grommetux-background-color-index-light-2 grommetux-background-color-index--light grommetux-header hippo-toolbar"
+          id={undefined}
+          onClick={undefined}
+          role={undefined}
+          style={Object {}}
+          tabIndex={undefined}
+        >
+          <button
+            aria-label={undefined}
+            className="grommetux-button grommetux-button--primary save-button"
+            disabled={false}
+            href={undefined}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            type="button"
+          >
+            <span
+              className="grommetux-button__icon"
+            >
+              <svg
+                aria-label="save"
+                className="grommetux-control-icon grommetux-control-icon-save grommetux-control-icon--responsive"
+                height="24px"
+                role="img"
+                version="1.1"
+                viewBox="0 0 24 24"
+                width="24px"
+              >
+                <path
+                  d="M3,2 L3,21 L21,21 L21,3 L12,3 L12,14 M8,11 L12,15 L16,11"
+                  fill="none"
+                  stroke="#000"
+                  strokeWidth="2"
+                />
+              </svg>
+            </span>
+            <span
+              className="grommetux-button__label"
+            >
+              Save
+            </span>
+          </button>
+        </header>
+      </div>
+    </div>
+  </div>
+  <h4>
+    Account information:
+  </h4>
+  <div
+    className="row"
+  >
+    <div
+      className="form-field text col-xs-6"
+    >
+      <div
+        className="grommetux-form-field grommetux-form-field--size-medium"
+        onClick={[Function]}
+      >
+        <label
+          className="grommetux-form-field__label"
+          htmlFor={undefined}
+        >
+          Login
+        </label>
+        <span
+          className="grommetux-form-field__contents"
+        >
+          <input
+            autoComplete="off"
+            autoFocus={undefined}
+            className="grommetux-text-input grommetux-input"
+            defaultValue={undefined}
+            name="login"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onInput={[Function]}
+            onKeyDown={[Function]}
+            placeholder={undefined}
+            tabIndex={0}
+            type="text"
+            value=""
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      className="form-field text col-xs-6"
+    >
+      <div
+        className="grommetux-form-field grommetux-form-field--size-medium"
+        onClick={[Function]}
+      >
+        <label
+          className="grommetux-form-field__label"
+          htmlFor={undefined}
+        >
+          Name
+        </label>
+        <span
+          className="grommetux-form-field__contents"
+        >
+          <input
+            autoComplete="off"
+            autoFocus={undefined}
+            className="grommetux-text-input grommetux-input"
+            defaultValue={undefined}
+            name="name"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onInput={[Function]}
+            onKeyDown={[Function]}
+            placeholder={undefined}
+            tabIndex={0}
+            type="text"
+            value=""
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      className="form-field text col-sm-6 col-xs-12"
+    >
+      <div
+        className="grommetux-form-field grommetux-form-field--size-medium"
+        onClick={[Function]}
+      >
+        <label
+          className="grommetux-form-field__label"
+          htmlFor={undefined}
+        >
+          Email
+        </label>
+        <span
+          className="grommetux-form-field__contents"
+        >
+          <input
+            autoComplete="off"
+            autoFocus={undefined}
+            className="grommetux-text-input grommetux-input"
+            defaultValue={undefined}
+            name="email"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onInput={[Function]}
+            onKeyDown={[Function]}
+            placeholder={undefined}
+            tabIndex={0}
+            type="text"
+            value=""
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      className="form-field password col-sm-6 col-xs-12"
+    >
+      <div
+        className="grommetux-form-field grommetux-form-field--size-medium"
+        onClick={[Function]}
+      >
+        <label
+          className="grommetux-form-field__label"
+          htmlFor={undefined}
+        >
+          Password
+        </label>
+        <span
+          className="grommetux-form-field__contents"
+        >
+          <input
+            autoComplete="off"
+            autoFocus={undefined}
+            className="grommetux-text-input grommetux-input"
+            defaultValue={undefined}
+            name="password"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onInput={[Function]}
+            onKeyDown={[Function]}
+            placeholder={undefined}
+            tabIndex={0}
+            type="password"
+            value=""
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
