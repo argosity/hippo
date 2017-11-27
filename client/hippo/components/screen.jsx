@@ -25,7 +25,7 @@ export default class Screen extends React.Component {
             <div
                 data-screen-id={this.props.screen.definition.id}
                 className={classnames(
-                    'screen',
+                    'hippo-screen',
                     this.props.screen.definition.id,
                     this.props.className, {
                         'is-active': this.props.screen.isActive,
