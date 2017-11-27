@@ -5,13 +5,11 @@ import { observer }   from 'mobx-react';
 import { map, compact, invoke } from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
-import Header from 'grommet/components/Header';
-
 import Screen from '../components/screen';
 import Asset  from '../components/asset';
 import Settings from '../models/system-setting';
 import Warning from '../components/warning-notification';
-import SaveButton from '../components/save-button';
+import { Toolbar, SaveButton } from '../components/toolbar';
 import ScreenInstance from '../screens/instance';
 import Extensions from '../extensions';
 import MailerConfig from './system-settings/mailer-config';
@@ -79,12 +77,12 @@ export default class SystemSettings extends React.Component {
     render() {
         return (
             <Screen {...this.props}>
-                <Header fixed>
+                <Toolbar>
                     <SaveButton
                         model={this.settings}
                         onClick={this.onSave}
                     />
-                </Header>
+                </Toolbar>
                 <Heading>{this.props.screen.definition.title}</Heading>
                 <Warning message={this.settings.errorMessage} />
                 <TenantSettings ref={this.setTenantRef} />
