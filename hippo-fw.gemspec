@@ -51,7 +51,8 @@ Gem::Specification.new do |spec|
     spec.add_dependency "bcrypt",                    "~> 3.1"
     spec.add_dependency "shrine",                    "~> 2.4"
     spec.add_dependency "image_processing",          "~> 0.4"
-
+    spec.add_dependency 'image_optim',               "~> 0.26"
+    spec.add_dependency 'image_optim_pack'
     spec.add_dependency "execjs",                    "~> 2.6"
     spec.add_dependency "fastimage",                 "~> 2.0"
     spec.add_dependency "guard",                     "~> 2.13"
