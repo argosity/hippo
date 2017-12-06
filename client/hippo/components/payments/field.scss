@@ -1,0 +1,14 @@
+.form-field.payment-field {
+    padding-bottom: 0;
+    .grommetux-form-field {
+        padding-bottom: 0;
+    }
+    .grommetux-form-field__contents {
+        height: 40px;
+        overflow: hidden;
+    }
+    .hosted-card-field {
+        height: 100%;
+        border: 0;
+    }
+}
