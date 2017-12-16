@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, computed } from 'mobx';
+import { action, computed, observe } from 'mobx';
 import { isEmpty, get } from 'lodash';
 import PropTypes from 'prop-types';
 import Box     from 'grommet/components/Box';
@@ -24,12 +24,25 @@ class Logout extends React.Component {
         router: PropTypes.object,
     }
 
+    componentWillUnmount() {
+        this.stopObserving();
+    }
+
+    componentWillMount() {
+        this.stopObserving = observe(
+            User, 'isLoggedIn', (change) => {
+                if (change.oldValue && !change.newValue) {
+                    this.context.router.history.replace('/');
+                }
+            },
+        );
+    }
+
     @action.bound
     onLogoutClick(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         User.logout();
-        this.context.router.history.push('/');
     }
 
     render() {

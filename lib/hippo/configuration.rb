@@ -122,9 +122,9 @@ module Hippo
         # types of assets to include into compiled package
         config_option :static_asset_types, ['images','fonts']
 
-        config_option :website_domain, 'test.com'
-
-        config_option :product_name, 'Hippo Funtime'
+        config_option :website_domain, ''
+        config_option :support_email, ''
+        config_option :product_name, ''
 
         def api_path
             mounted_at + 'api'

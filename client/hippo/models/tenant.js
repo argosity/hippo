@@ -1,9 +1,10 @@
 import { observable, computed } from 'mobx';
-import { first } from 'lodash';
+import { find, first } from 'lodash';
 import {
     BaseModel, identifiedBy, field, identifier,
 } from './base';
 import Extensions from '../extensions';
+import Subscription from './subscription';
 import Config from '../config';
 
 const CACHED = observable.box();
@@ -35,10 +36,19 @@ export default class Tenant extends BaseModel {
     @field name;
     @field email;
     @field slug;
+    @field subscription_id;
 
+    @computed get hasSubscription() {
+        return Boolean(this.subscription);
+    }
 
     @computed get domain() {
         return `${this.slug}.${Config.website_domain}`;
+    }
+
+    @computed get subscription() {
+        return this.subscription_id ?
+            find(Subscription.all, { id: this.subscription_id }) : null;
     }
 
     set syncData(data) {

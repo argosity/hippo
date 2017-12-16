@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { autorun, action, observable, computed } from 'mobx';
 import Spinning from 'grommet/components/icons/Spinning';
 import CircleInformationIcon from 'grommet/components/icons/base/CircleInformation';
@@ -21,7 +21,7 @@ export default class NetworkActivityOverlay extends React.Component {
     }
 
     static propTypes = {
-        model:   MobxPropTypes.observableObject,
+        model:   PropTypes.object,
         message: PropTypes.string,
         timeout: PropTypes.number,
         visible: PropTypes.bool,
@@ -30,7 +30,7 @@ export default class NetworkActivityOverlay extends React.Component {
     }
 
     @computed get isRequesting() {
-        const { syncInProgress } = this.props.model;
+        const { syncInProgress } = this.props.model || {};
         if (this.props.method) {
             return !!(syncInProgress && syncInProgress.method === this.props.method);
         }
@@ -38,7 +38,7 @@ export default class NetworkActivityOverlay extends React.Component {
     }
 
     @computed get hasError() {
-        return !isEmpty(this.props.model.errors);
+        return this.props.model && !isEmpty(this.props.model.errors);
     }
 
     @computed get isVisible() {
@@ -89,7 +89,7 @@ export default class NetworkActivityOverlay extends React.Component {
         let { message } = this.props;
         if (!message) {
             if (this.hasError) {
-                message = model.errorMessage || 'Error';
+                message = get(model, 'errorMessage', 'Error');
             } else {
                 const method = get(model, 'syncInProgress.method');
                 if ('GET' === method) {

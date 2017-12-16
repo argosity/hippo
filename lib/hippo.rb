@@ -35,3 +35,4 @@ require_relative 'hippo/user'
 require_relative "hippo/access"
 require_relative "hippo/workspace"
 require_relative "hippo/webpack"
+require_relative "hippo/payments"

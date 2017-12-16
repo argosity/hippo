@@ -5,7 +5,7 @@ import Notification from 'grommet/components/Notification';
 export default function WarningNotification(props) {
     if (!props.message) { return null; }
     return (
-        <Notification message={props.message} size="small" status="warning" />
+        <Notification size="small" status="warning"  {...props} />
     );
 }
 

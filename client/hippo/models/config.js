@@ -1,5 +1,5 @@
 import { observable, observe } from 'mobx';
-import { keysIn, pick, assign, get } from 'lodash';
+import { pickBy, assign, get, hasIn, isNil } from 'lodash';
 import { persist, create as createHydrator } from 'mobx-persist';
 
 import Extensions from '../extensions';
@@ -16,11 +16,15 @@ export default class Config {
     @persist @observable print_path_prefix = '/print';
     @persist @observable website_domain;
     @persist @observable product_name;
+    @persist @observable support_email;
+
     @persist('list') @observable screen_ids = [];
     @persist @observable user_info;
     @persist('object') @observable logo;
     @observable user;
+    @observable environment;
     @observable isIntialized = false;
+    @observable subscription_plans = [];
 
     static create(hydrationConfig) {
         const hydrate = createHydrator(hydrationConfig);
@@ -36,7 +40,7 @@ export default class Config {
     }
 
     update(attrs) {
-        assign(this, pick(attrs, keysIn(this)));
+        assign(this, pickBy(attrs, (v, k) => !isNil(v) && hasIn(this, k)));
         Extensions.setBootstrapData(attrs);
     }
 

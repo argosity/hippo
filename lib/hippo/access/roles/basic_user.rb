@@ -6,6 +6,7 @@ module Hippo
             class BasicUser < Role
 
                 self.read << Hippo::Tenant
+                self.read << Hippo::Subscription
 
             end
 

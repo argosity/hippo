@@ -27,11 +27,13 @@ module Hippo::API
         get 'user/current.json' do
             with_user {|user| { success: true, data: user } }
         end
-        resources Hippo::User
 
+        resources Hippo::User
         resources Hippo::Tenant,
                   controller: Hippo::API::Handlers::Tenant,
                   cors: '*', public: true
+        resources Hippo::Subscription,
+                  controller: Hippo::API::Handlers::Subscription
     end
 
     routes.draw do

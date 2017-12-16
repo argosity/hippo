@@ -31,4 +31,5 @@ module Hippo
         end
     end
 
+    autoload :Subscription, "hippo/models/subscription"
 end

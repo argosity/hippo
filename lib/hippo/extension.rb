@@ -99,7 +99,8 @@ module Hippo
             def static_bootstrap_data
                 data = {}
                 %w{
-                  api_path print_path_prefix environment website_domain product_name assets_path_prefix
+                  api_path print_path_prefix environment assets_path_prefix
+                  website_domain  product_name support_email
                 }.each do |config|
                     data[config.to_sym] = Hippo.config.send(config)
                 end
@@ -110,6 +111,7 @@ module Hippo
                     ext_data  = ext.static_bootstrap_data
                     data[ext.identifier] = ext_data unless ext_data.nil?
                 end
+                data[:subscription_plans] = Subscription.all.as_json
                 return data
             end
 

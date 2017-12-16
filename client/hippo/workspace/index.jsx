@@ -14,10 +14,13 @@ import 'hippo/config-data';
 import 'hippo/screen-definitions';
 import Button from 'grommet/components/Button';
 import CirclePlayIcon from 'grommet/components/icons/base/CirclePlay';
+import User from '../user';
+import Tenant from '../models/tenant';
 import Extensions  from '../extensions';
 import Menu        from './menu';
 import Screen      from './screen';
 import LoginDialog from '../access/login-dialog';
+import SubscriptionChoiceLayer from '../access/subscription-choice-layer';
 
 import './styles.scss';
 
@@ -81,18 +84,24 @@ class Workspace extends React.Component {
         );
     }
 
+    renderSubscriptionChoice() {
+        if (!User.isLoggedIn || Tenant.current.hasSubscription) { return null; }
+        return <SubscriptionChoiceLayer />;
+    }
+
     render() {
         return (
             <App centered={false}>
                 <LoginDialog />
+                {this.renderSubscriptionChoice()}
                 <Sidebar
                     styles={{ sidebar: { zIndex: 60 }, overlay: { zIndex: 59 } }}
                     sidebar={<Menu
                         isOpen={this.sidebarOpen}
                         isDocked={this.sidebarDocked}
                         onCloseMenu={this.toggleSidebarDocked}
-                        onDockToggle={this.toggleSidebarDocked}
-                    />}
+                        onDockToggle={this.toggleSidebarDocked} />
+                    }
                     open={this.sidebarOpen}
                     docked={this.sidebarDocked}
                     onSetOpen={this.onSetSidebarOpen}

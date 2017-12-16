@@ -58,6 +58,7 @@
     "node-sass": "^4.5.0",
     "object-hash": "^1.1.8",
     "ory-editor": "^0.2.25",
+    "payment-fields": "^0.4.0",
     "pluralize": "^6.0.0",
     "prop-types": "^15.5.8",
     "qs": "^6.5.0",

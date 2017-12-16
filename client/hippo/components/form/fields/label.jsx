@@ -1,16 +1,14 @@
 import React from 'react';
+import { isString } from 'lodash';
 import { observer } from 'mobx-react';
-import Value from 'grommet/components/Value';
+import Label from 'grommet/components/Label';
 
 @observer
 export default class LabelWrapper extends React.Component {
 
     render() {
-        const { value }  = this.props;
-
-        return (
-            <Value value={value} />
-        );
+        const { value, ...props } = this.props;
+        return isString(value) ? <Label {...props}>{value}</Label> : value;
     }
 
 }

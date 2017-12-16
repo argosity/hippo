@@ -1,19 +1,21 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import { Row } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
 import Box from 'grommet/components/Box';
 import { Form, Field, FormState, nonBlank } from 'hippo/components/form';
-
 import Notification from 'grommet/components/Notification';
 import Layer from 'grommet/components/Layer';
 import Paragraph from 'grommet/components/Paragraph';
 import Anchor from 'grommet/components/Anchor';
+import Button from 'grommet/components/Button';
 import LinkIcon from 'grommet/components/icons/base/Link';
-
+import UserAdminIcon from 'grommet/components/icons/base/UserAdmin';
+import ClearIcon from 'grommet/components/icons/base/Clear';
 import Tenant from '../../models/tenant';
 import Config from '../../config';
+import SubscriptionChoiceLayer from '../../access/subscription-choice-layer';
 
 function onTenantSlugChangeClose() { }
 
@@ -38,6 +40,8 @@ export default class TenantConfig extends React.Component {
     formState = new FormState()
 
     @observable slugChangedFrom;
+    @observable isCanceling;
+    @observable showSubscriptionChoice = false;
 
     onSave() {
         const originalSlug = Tenant.current.slug;
@@ -51,8 +55,35 @@ export default class TenantConfig extends React.Component {
             });
     }
 
+    @action.bound onSubscriptionChange() {
+        this.showSubscriptionChoice = {
+            isCanceling: false,
+        };
+    }
+
+    @action.bound onSubscriptionCancel() {
+        this.showSubscriptionChoice = {
+            isCanceling: true,
+        };
+    }
+
+    @action.bound hideSubscriptionChoice() {
+        this.showSubscriptionChoice = false;
+    }
+
     componentWillMount() {
         this.formState.setFromModel(Tenant.current);
+    }
+
+    renderSubscriptionChoice() {
+        if (!this.showSubscriptionChoice) { return null; }
+        return (
+            <SubscriptionChoiceLayer
+                displayCancel
+                {...this.showSubscriptionChoice}
+                onCancel={this.hideSubscriptionChoice}
+                onChoice={this.hideSubscriptionChoice} />
+        );
     }
 
     renderIdChangeWarning() {
@@ -71,6 +102,7 @@ export default class TenantConfig extends React.Component {
     render() {
         return (
             <Form tag="div" className="tenant-edit-form" state={this.formState}>
+                {this.renderSubscriptionChoice()}
                 <TenantSlugChange oldSlug={this.slugChangedFrom} />
                 <Heading tag="h3">Account</Heading>
                 <Row>
@@ -80,6 +112,27 @@ export default class TenantConfig extends React.Component {
                         validate={nonBlank}
                     />
                     <Field xs={6} name="name" validate={nonBlank} />
+                </Row>
+                <Row>
+                    <Field
+                        xs={12} type="label"
+                        label="Subscription"
+                        name="subscription_name"
+                        value={
+                            <Box direction="row" justify="between">
+                                <Button
+                                    plain label={Tenant.current.subscription.nameAndCost}
+                                    icon={<UserAdminIcon />}
+                                    onClick={this.onSubscriptionChange}
+                                />
+                                <Button
+                                    plain label="Cancel"
+                                    icon={<ClearIcon />}
+                                    onClick={this.onSubscriptionCancel}
+                                />
+                            </Box>
+                        }
+                    />
                 </Row>
                 {this.renderIdChangeWarning()}
             </Form>

@@ -4,7 +4,7 @@ module Hippo
     # Tenant
     class Tenant < Hippo::Model
 
-        PUBLIC_ATTRS = %w{slug name identifier}
+        PUBLIC_ATTRS = %w{slug name identifier subscription_id}
 
         validates :slug, uniqueness: true
         validates :name, :presence => { message: 'for company' }
@@ -12,7 +12,7 @@ module Hippo
 
         has_random_identifier
         has_many :users, class_name: 'Hippo::User', autosave: true
-
+        belongs_to :subscription
         belongs_to :system_settings, class_name: 'Hippo::SystemSettings',
                    foreign_key: :id, primary_key: :tenant_id
 

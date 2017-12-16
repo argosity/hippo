@@ -6,9 +6,13 @@
     .grommetux-form-field__contents {
         height: 40px;
         overflow: hidden;
+        padding-left: 22px;
     }
     .hosted-card-field {
         height: 100%;
         border: 0;
+    }
+    .payment-field {
+        height: 40px;
     }
 }

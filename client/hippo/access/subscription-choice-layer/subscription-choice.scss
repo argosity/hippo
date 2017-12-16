@@ -1,0 +1,29 @@
+.subscription-choice-layer {
+
+    .subscriptions-listing {
+        min-height: 350px;
+        polyline {
+            transition: all 0.2s;
+        }
+        .subscription {
+            &:hover {
+                polyline {
+                    stroke-width: 3px;
+                    stroke: black;
+                }
+            }
+        }
+    }
+
+    .payment-fields-wrapper {
+        min-height: 400px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grommetux-control-icon-next {
+        margin-left: 1rem;
+    }
+
+}
