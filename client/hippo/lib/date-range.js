@@ -1,9 +1,18 @@
-import moment from 'moment';
-import { observable, computed, isObservableArray } from 'mobx';
-import { isString, isEmpty, map, isNaN, isArray, first, last } from 'lodash';
+import moment from 'moment-timezone';
+import { observable, computed, isObservableArray, intercept } from 'mobx';
+import { includes, isString, isEmpty, map, isArray, first, last } from 'lodash';
 import {
     identifiedBy,
 } from 'mobx-decorated-models';
+
+function coerceToMoment(change) {
+    if (!includes(['start', 'end'], change.name)) { return change; }
+    if (!change.newValue && !moment.isMoment(change.newValue)) {
+        change.newValue = moment(change.newValue);
+    }
+    return change;
+}
+
 
 @identifiedBy('date-range')
 export default class DateRange {
@@ -12,6 +21,7 @@ export default class DateRange {
     @observable end;
 
     constructor(range) {
+        intercept(this, coerceToMoment);
         if (isString(range) && !isEmpty(range)) {
             [this.start, this.end] = map(range.split('...'), d => new Date(d));
         } else if (isArray(range) || isObservableArray(range)) {
@@ -24,8 +34,8 @@ export default class DateRange {
     }
 
     toJSON() {
-        if (this.start && this.end && !isNaN(this.start.getTime()) && !isNaN(this.end.getTime())) {
-            // this strange format is what PG user and is therefore what active record expects
+        if (this.start && this.end && this.start.isValid() && this.end.isValid()) {
+            // this strange format is what PG uses and is therefore what active record expects
             return `[${this.start.toISOString()},${this.end.toISOString()})`;
         }
         return '';
