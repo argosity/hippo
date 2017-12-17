@@ -13,7 +13,7 @@ module Hippo
 
     class Configuration
         include Concerns::AttrAccessorWithDefault
-        cattr_reader :secrets
+        attr_reader :secrets
 
         # Since changing a config value inadvertently
         # can have pretty drastic consequences that might not be
@@ -34,6 +34,7 @@ module Hippo
 
         def initialize
             @observers=Hash.new{ |hash,key| hash[key] = Array.new }
+            @secrets = {}
         end
 
         def on_change(config, &block)
@@ -54,6 +55,7 @@ module Hippo
 
             controlling_ext = Hippo::Extensions.bootstrap
             secrets = controlling_ext.root_path.join('config', 'secrets.yml')
+
             @@secrets = Hashie::Mash.new(
                 secrets.exist? ? YAML.load(ERB.new(secrets.read).result) : {}
             )

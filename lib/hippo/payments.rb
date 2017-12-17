@@ -6,7 +6,8 @@ module Hippo
         extend self
 
         def gateway
-            cc = Hippo::Configuration.secrets.payments.braintree
+            cc = Hippo.config.secrets.dig(:payments, :braintree)
+            return if cc.nil?
             ::Braintree::Gateway.new(
                 ::Braintree::Configuration.new(
                     environment: cc['sandbox'] ? :sandbox : :production,
