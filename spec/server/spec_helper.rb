@@ -2,8 +2,8 @@ require "hippo/spec_helper"
 require 'hippo/command'
 require "temping"
 require "shrine/storage/memory"
-
 require 'rspec/expectations'
+require_relative 'payment_helpers'
 
 require "shrine"
 
@@ -12,8 +12,9 @@ RSpec.configure do |config|
   config.after do
     Temping.teardown
   end
-
+  config.include PaymentHelpers
 end
+
 require 'hippo/db/migrations'
 ActiveRecord::ConnectionAdapters::PostgreSQL::Table.class_eval do
     include ::Hippo::DB::Migrations::TableDefinitionHelpers

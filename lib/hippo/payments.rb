@@ -5,9 +5,13 @@ module Hippo
     module Payments
         extend self
 
+        def gateway_config
+            Hippo.config.secrets.dig(:payments, :braintree) || {}
+        end
+
         def gateway
-            cc = Hippo.config.secrets.dig(:payments, :braintree)
-            return if cc.nil?
+            cc = gateway_config
+            return nil unless cc.present?
             ::Braintree::Gateway.new(
                 ::Braintree::Configuration.new(
                     environment: cc['sandbox'] ? :sandbox : :production,
@@ -37,6 +41,7 @@ module Hippo
         end
 
         def update_customer_for_tenant(tenant)
+            return unless gateway.present?
             gateway.customer.update(
                 tenant.metadata['bt_customer_id'],
                 company: tenant.name,
@@ -46,6 +51,7 @@ module Hippo
         end
 
         def create_customer_for_tenant(tenant)
+            return unless gateway.present?
             result = gateway.customer.create(
                 company: tenant.name,
                 email: tenant.email,
