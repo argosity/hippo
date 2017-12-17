@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "liquid",                    "~> 4.0"
     spec.add_dependency 'erb_latex',                 "~> 1.0"
     spec.add_dependency 'shrine-memory',             "~> 0.2"
-    spec.add_dependency 'factory_girl',              "~> 4.8"
+    spec.add_dependency 'factory_bot',               "~> 4.8"
     spec.add_dependency 'faker',                     "~> 1.7"
     spec.add_dependency 'webmock',                   "~> 3.0"
     spec.add_dependency "database_cleaner",          "~> 1.3"

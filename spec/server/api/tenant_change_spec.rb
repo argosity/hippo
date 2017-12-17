@@ -3,9 +3,9 @@ require_relative '../spec_helper'
 
 describe "Tenant changes", api: true, vcr: VCR_OPTS do
 
-    let(:tenant) { FactoryGirl.create :tenant, slug: 'foo' }
+    let(:tenant) { FactoryBot.create :tenant, slug: 'foo' }
 
-    let!(:user) { FactoryGirl.create :user, tenant: tenant, role_names: ['administrator'] }
+    let!(:user) { FactoryBot.create :user, tenant: tenant, role_names: ['administrator'] }
 
     it 'sends email when tenant identifier changes' do
         put "/api/hippo/tenant/#{tenant.identifier}.json", {

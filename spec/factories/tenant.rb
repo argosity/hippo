@@ -1,6 +1,6 @@
 require 'faker'
 
-FactoryGirl.define do
+FactoryBot.define do
     factory :tenant, class: Hippo::Tenant do
         slug         { Faker::Internet.domain_word }
         name         { Faker::Company.name }

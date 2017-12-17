@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 describe "User Create/Update", api: true, vcr: VCR_OPTS do
 
     let(:user) {
-        FactoryGirl.create :user, login: 'SamTheMan', password: 'password', role_names: ['employee']
+        FactoryBot.create :user, login: 'SamTheMan', password: 'password', role_names: ['employee']
     }
 
     let(:new_user_data) {

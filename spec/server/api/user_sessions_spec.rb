@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 describe "User Login", api: true, vcr: VCR_OPTS do
 
-    let!(:user) { FactoryGirl.create :user, login: 'SamTheMan', password: 'password' }
+    let!(:user) { FactoryBot.create :user, login: 'SamTheMan', password: 'password' }
 
     it 'logs in using case insensitive logins' do
         post('/api/hippo/user-session.json', {

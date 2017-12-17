@@ -8,7 +8,7 @@ require 'hashie/mash'
 require 'active_record'
 require 'active_record/fixtures'
 require 'mail'
-require 'factory_girl'
+require 'factory_bot'
 require 'faker'
 require 'database_cleaner'
 require "shrine/storage/memory"
@@ -55,7 +55,7 @@ module Fixtures
     end
 end
 
-FactoryGirl.definition_file_paths = Hippo::Extensions.map do |ext|
+FactoryBot.definition_file_paths = Hippo::Extensions.map do |ext|
     ext.root_path.join('spec/factories')
 end
 
@@ -70,7 +70,7 @@ module ApiHelper
 end
 
 RSpec.configure do |config|
-    config.include FactoryGirl::Syntax::Methods
+    config.include FactoryBot::Syntax::Methods
     config.include ApiHelper, api: true
     config.include Fixtures
 
@@ -80,7 +80,7 @@ RSpec.configure do |config|
     config.color = true
 
     config.before(:suite) do
-        FactoryGirl.find_definitions
+        FactoryBot.find_definitions
         DatabaseCleaner.strategy = :transaction
     end
 

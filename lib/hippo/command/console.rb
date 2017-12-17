@@ -12,15 +12,15 @@ module Hippo
                 require 'irb/completion'
                 require 'pp'
                 require 'faker'
-                require 'factory_girl'
+                require 'factory_bot'
                 DB.establish_connection
                 ActiveRecord::Base.logger = Logger.new STDOUT
                 Configuration.apply
                 Hippo::Extensions.load_controlling_config
-                FactoryGirl.definition_file_paths = Hippo::Extensions.map do |ext|
+                FactoryBot.definition_file_paths = Hippo::Extensions.map do |ext|
                     ext.root_path.join('spec/factories')
                 end
-                FactoryGirl.find_definitions
+                FactoryBot.find_definitions
                 Hippo::API::Cable.configure
                 MultiTenant.current_tenant = Hippo::Tenant.find_by_slug(
                     Hippo.env.development? ? 'dev' : 'system'

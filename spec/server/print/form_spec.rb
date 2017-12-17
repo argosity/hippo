@@ -16,7 +16,7 @@ xdescribe "Printing tempaltes" do
     end
 
     it "can generate a pdf" do
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         tmpl = TestPrinter.new(user.id)
         tmpl.record
         expect(tmpl.render.length).to be > 1000

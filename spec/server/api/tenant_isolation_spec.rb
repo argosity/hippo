@@ -3,11 +3,11 @@ require_relative '../spec_helper'
 
 describe "Tenant isoloation", api: true, vcr: VCR_OPTS do
 
-    let(:foo) { FactoryGirl.create :tenant, slug: 'foo' }
-    let(:bar) { FactoryGirl.create :tenant, slug: 'bar' }
+    let(:foo) { FactoryBot.create :tenant, slug: 'foo' }
+    let(:bar) { FactoryBot.create :tenant, slug: 'bar' }
 
-    let!(:foo_user) { FactoryGirl.create :user, tenant: foo }
-    let!(:bar_user) { FactoryGirl.create :user, tenant: bar }
+    let!(:foo_user) { FactoryBot.create :user, tenant: foo }
+    let!(:bar_user) { FactoryBot.create :user, tenant: bar }
 
     before(:each) {
         Hippo.logger.level = ::Logger::ERROR
