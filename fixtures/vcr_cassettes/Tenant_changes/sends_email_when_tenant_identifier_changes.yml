@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/dshtky2jcjpr96z3/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <company>Reichert Group</company>
+          <email>zander.wuckert@larson.info</email>
+          <phone>(219) 762-7882 x5075</phone>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.80.1
+      X-Apiversion:
+      - '4'
+      Authorization:
+      - Basic aG03bjZ2Yzg0amJyOTYydzo0MTNjYjNjOGFmMjliM2MzYmEzNDBjZmI3MTVmNDUzMg==
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Sun, 17 Dec 2017 19:57:40 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 4y6kf87m57f2bcq7
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"5a4262df33f9a0ff82ff080443dfdf4b"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4ebc847c-b566-43c2-8598-db9baf57c5c8
+      X-Runtime:
+      - '0.184468'
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIADTMNloAA5SRsU7DMBRF936F5QkGN42rNHHlpEywo7KwGfuFuE3syHZo068nSUtBKgyM75177SM9vjk2NfoA57U1OY7nC4zASKu0ec/xy/aRZHhTzLjsfLANuGKGENeqSChLEpoxxqNhGpcDlJUwgQyz8lXY93Qnd61jq9OSRz/pmC6184EY0QAyus5xcB3gaEK1+ItI27TC9MUzaFmBC+jJ2a7l0dd+zEAjdF2chFHg5odO7ofcQy2ct2auTWl5dE6M2bayBoo7GrN7lK4oSbOMomOySBMendmkKo43Jgd48zr8YuhABFBEBBT6FnKshjHoBnBBF3FKYkridBuzdZKul+x1UL8Wpn7Xqv/1vwvn/6czkVJDrfxVSelApHDKXx4Vzon+YiyUcuA93LDB7XrzTwAAAP//AwBs5CzBJgIAAA==
+    http_version: 
+  recorded_at: Sun, 17 Dec 2017 19:57:40 GMT
+recorded_with: VCR 3.0.3
