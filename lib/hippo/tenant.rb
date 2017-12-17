@@ -46,8 +46,7 @@ module Hippo
 
         def self.system
             find_by(slug: 'system') || create!(
-                slug: 'system', name: 'system',
-                email: 'contact@argosity.com', subscription: :admin
+                slug: 'system', name: 'system', email: 'contact@argosity.com'
             )
         end
 
