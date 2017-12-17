@@ -1,8 +1,9 @@
 import logger from 'loglevel';
 import {
     trim, isDate, isNaN, isError, isElement, isFunction, isBoolean, isRegExp,
-    isNumber, isObject, isEmpty, isNil, isString, each,
+    isNumber, isObject, isEmpty, isNil, isString, isArray, each,
 } from 'lodash';
+import { isObservableArray } from 'mobx';
 import pluralize from 'pluralize';
 import classnames from 'classnames';
 import { getColumnProps } from 'react-flexbox-grid';
@@ -103,4 +104,8 @@ export function isBlank(value) {
     default:
         return isNil(value);
     }
+}
+
+export function isArrayLike(value) {
+    return isObservableArray(value) || isArray(value);
 }

@@ -1,12 +1,13 @@
 import React from 'react';
+import { defaults, has, omit } from 'lodash';
+import { observable, action }  from 'mobx';
+import moment from 'moment-timezone';
 import PropTypes    from 'prop-types';
 import { observer } from 'mobx-react';
 import { autobind } from 'core-decorators';
 import Flatpickr    from 'flatpickr';
-import { defaults, has, omit } from 'lodash';
-import { observable, action }  from 'mobx';
-import moment from 'moment';
 import './date-time.scss';
+import { isArrayLike } from '../lib/util';
 import DateRange from '../lib/date-range';
 
 const hooks = [
@@ -84,6 +85,9 @@ export default class DateTimePicker extends React.Component {
         let { value } = props;
         if (value instanceof DateRange) { value = value.asArray; }
         if (moment.isMoment(value)) { value = value.toDate(); }
+        if (isArrayLike(value)) {
+            value = value.map(v => (moment.isMoment(v) ? v.toDate() : v));
+        }
         this.flatpickr.setDate(value, false);
     }
 
@@ -99,7 +103,14 @@ export default class DateTimePicker extends React.Component {
     @autobind onChange(dates) {
         if ('range' === this.props.options.mode) {
             if (2 === dates.length) {
-                this.props.onChange({ target: { value: dates } });
+                this.props.onChange({
+                    target: {
+                        value: [
+                            moment(dates[0]).startOf('day'),
+                            moment(dates[1]).endOf('day'),
+                        ],
+                    },
+                });
             }
         } else {
             this.props.onChange({ target: { value: dates[0] } });
