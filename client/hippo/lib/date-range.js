@@ -7,7 +7,7 @@ import {
 
 function coerceToMoment(change) {
     if (!includes(['start', 'end'], change.name)) { return change; }
-    if (!change.newValue && !moment.isMoment(change.newValue)) {
+    if (change.newValue && !moment.isMoment(change.newValue)) {
         change.newValue = moment(change.newValue);
     }
     return change;
