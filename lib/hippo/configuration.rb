@@ -34,7 +34,7 @@ module Hippo
 
         def initialize
             @observers=Hash.new{ |hash,key| hash[key] = Array.new }
-            @secrets = {}
+            @secrets = Hashie::Mash.new
         end
 
         def on_change(config, &block)
