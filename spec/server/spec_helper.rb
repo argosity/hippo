@@ -64,12 +64,3 @@ module TestingModels
         Temping.teardown
     end
 end
-
-
-# class Hippo::TestCase
-
-#     def fixtures_path
-#         Pathname.new(__FILE__).dirname.join("..","fixtures").expand_path
-#     end
-
-# end
