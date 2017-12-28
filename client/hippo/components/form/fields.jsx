@@ -11,16 +11,17 @@ import { titleize } from '../../lib/util';
 import DateWrapper     from './fields/date-wrapper';
 import SelectWrapper   from './fields/select-wrapper';
 import TextWrapper     from './fields/text-wrapper';
+import EmailWrapper    from './fields/email-wrapper';
 import CheckBoxWrapper from './fields/checkbox-wrapper';
 import TagsWrapper     from './fields/tags-wrapper';
 import TextAreaWrapper from './fields/textarea-wrapper';
 import Label           from './fields/label';
 import TimeZoneSelect  from '../../components/time-zone-select';
 
-
 import './fields/form-field.scss';
 
 const TypesMapping = {
+    email:    EmailWrapper,
     text:     TextWrapper,
     date:     DateWrapper,
     tags:     TagsWrapper,
