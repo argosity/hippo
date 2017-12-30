@@ -3,18 +3,11 @@
 .grommet .text-editor {
 
     flex: 1;
-    display: flex;
-    flex-direction: column;
 
     .text-editor-content {
         overflow: auto;
         -webkit-overflow-scrolling: touch;
-        margin-bottom: 100px;
         border: 1px solid #adadad;
-    }
-
-    .ory-cell-leaf {
-        margin: 12px;
     }
 
     .toolbar > * {

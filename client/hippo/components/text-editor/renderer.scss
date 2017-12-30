@@ -4,11 +4,10 @@
     flex: 1;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    .ory-cell-leaf {
-        margin: 12px;
-    }
 
     p:not(.grommetux-paragraph) {
+        max-width: inherit;
+        margin-left: 0;
         margin-top: 0;
         margin-bottom: 0;
     }
