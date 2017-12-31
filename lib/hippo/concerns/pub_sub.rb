@@ -45,15 +45,15 @@ module Hippo::Concerns
         end
 
         included do | base |
-
             class_attribute :valid_event_names
             class_attribute :_event_listeners
             base.valid_event_names = [ :save, :create, :update, :destroy ]
-
-            base.before_save    :fire_save_pubsub_events
-            base.before_create  :fire_create_pubsub_events
-            base.before_update  :fire_update_pubsub_events
-            base.before_destroy :fire_destroy_pubsub_events
+            if base < ActiveRecord::Base
+                base.before_save    :fire_save_pubsub_events
+                base.before_create  :fire_create_pubsub_events
+                base.before_update  :fire_update_pubsub_events
+                base.before_destroy :fire_destroy_pubsub_events
+            end
         end
 
         module ClassMethods
