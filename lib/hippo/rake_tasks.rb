@@ -24,7 +24,7 @@ end
 
 task :env do
     Hippo::DB.configure_rake_environment
-    Hippo::Configuration.apply
+    Hippo.config.apply
 end
 
 # ## quite a bit of this is cribbed from Sinatra ActiveRecord

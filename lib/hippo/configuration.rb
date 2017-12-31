@@ -50,14 +50,14 @@ module Hippo
             value
         end
 
-        def self.apply
+        def apply
             Oj.default_options = { mode: :rails, time_format: :xmlschema }
 
             controlling_ext = Hippo::Extensions.bootstrap
-            secrets = controlling_ext.root_path.join('config', 'secrets.yml')
+            secpath = controlling_ext.root_path.join('config', 'secrets.yml')
 
-            @@secrets = Hashie::Mash.new(
-                secrets.exist? ? YAML.load(ERB.new(secrets.read).result) : {}
+            @secrets = Hashie::Mash.new(
+                secpath.file? ? YAML.load(ERB.new(secpath.read).result) : {}
             )
 
             ActiveJob::Base.queue_adapter = Hippo.env.test? ? :test : :resque

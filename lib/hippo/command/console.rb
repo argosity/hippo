@@ -15,7 +15,7 @@ module Hippo
                 require 'factory_bot'
                 DB.establish_connection
                 ActiveRecord::Base.logger = Logger.new STDOUT
-                Configuration.apply
+                Hippo.config.apply
                 Hippo::Extensions.load_controlling_config
                 FactoryBot.definition_file_paths = Hippo::Extensions.map do |ext|
                     ext.root_path.join('spec/factories')

@@ -32,7 +32,7 @@ module Hippo::API
 
         configure do
             set :show_exceptions, false
-            Hippo::Configuration.apply
+            Hippo.config.apply
             Hippo::Extensions.load_controlling_config
             set :views, Hippo::Extensions.map{|ext| ext.root_path.join('views') }.reverse
             set :webpack, Hippo::Webpack.new

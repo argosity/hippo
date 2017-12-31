@@ -17,7 +17,7 @@ module Hippo
             ROOT = Pathname.new(__FILE__).dirname.join('..', '..', '..')
 
             def self.source_root
-                Hippo::Configuration.apply
+                Hippo.config.apply
                 Hippo::Extensions.load_controlling_config
                 Hippo::Extensions.controlling.root_path
             end
