@@ -63,4 +63,4 @@ export default class HippoUploadAdapter {
 
 }
 
-mix(Plugin, ObservableMixin);
+mix(HippoUploadAdapter, ObservableMixin);

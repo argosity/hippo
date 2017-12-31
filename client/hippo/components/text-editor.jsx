@@ -37,6 +37,13 @@ export default class TextEditor extends React.Component {
 
     @action.bound setRef(r) {
         this.body = r;
+    }
+
+    componentWillUnmount() {
+        this.editor.destroy();
+    }
+
+    componentDidMount() {
         BalloonEditor.create(this.body, {
             plugins: [
                 EssentialsPlugin,
@@ -96,7 +103,7 @@ export default class TextEditor extends React.Component {
     }
 
     set contents(html) {
-        this.editor.setData(html);
+        this.editor.setData(html || '<p>Edit me…</p>');
     }
 
     @action.bound

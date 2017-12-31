@@ -3,20 +3,8 @@
 .grommet .text-editor {
 
     flex: 1;
-
-    .text-editor-content {
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-        border: 1px solid #adadad;
-    }
-
-    .toolbar > * {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-    }
-
+    min-height: 400px;
+    margin: 0.8em;
     p:not(.grommetux-paragraph) {
         max-width: inherit;
         margin-left: 0;
