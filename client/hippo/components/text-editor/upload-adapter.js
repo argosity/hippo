@@ -1,7 +1,3 @@
-import FileRepository from '@ckeditor/ckeditor5-upload/src/filerepository';
-import ObservableMixin from '@ckeditor/ckeditor5-utils/src/observablemixin';
-import mix from '@ckeditor/ckeditor5-utils/src/mix';
-
 class Adapter {
 
     constructor(loader, t) {
@@ -41,7 +37,7 @@ class Adapter {
 export default class HippoUploadAdapter {
 
     static get requires() {
-        return [FileRepository];
+        return []; // hm, why not work? this.editor.plugins.get('FileRepository')];
     }
 
     static get pluginName() {
@@ -53,14 +49,11 @@ export default class HippoUploadAdapter {
     }
 
     init() {
-        this.editor.plugins.get(FileRepository).createAdapter = loader =>
+        this.editor.plugins.get('FileRepository').createAdapter = loader =>
             new Adapter(loader, this.editor);
     }
 
     destroy() {
-        this.stopListening();
     }
 
 }
-
-mix(HippoUploadAdapter, ObservableMixin);
