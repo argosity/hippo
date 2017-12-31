@@ -73,3 +73,7 @@ task :ci do
     sh %{bundle exec rspec}
     Rake::Task["lint"].invoke
 end
+
+task :crondaily => :env do
+    Hippo::Cron.trigger(:daily)
+end
