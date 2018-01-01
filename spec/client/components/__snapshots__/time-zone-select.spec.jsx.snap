@@ -9,6 +9,7 @@ exports[`TimeZone Component matches snapshot 1`] = `
     className="grommetux-input grommetux-select__input"
     placeholder="None"
     readOnly={true}
+    type="text"
     value="America/Chicago"
   />
   <button

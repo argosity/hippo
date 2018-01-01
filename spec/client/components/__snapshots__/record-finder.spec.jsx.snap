@@ -26,7 +26,6 @@ exports[`RecordFinder Component renders 1`] = `
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
-        onInput={[Function]}
         onKeyDown={[Function]}
         onKeyPress={[Function]}
         placeholder={undefined}
