@@ -15,6 +15,17 @@ require "shrine/storage/memory"
 require 'vcr'
 require 'hippo/tenant'
 
+module BtPaymentHelpers
+    def with_bt_payment_proccessor
+        allow(Hippo::Payments).to receive(:gateway_config).and_return(
+                                      'merchant_id' => 'dshtky2jcjpr96z3',
+                                      'public_key'  => 'hm7n6vc84jbr962w',
+                                      'private_key' => '413cb3c8af29b3c3ba340cfb715f4532',
+                                      'sandbox'     => true
+                                  )
+        yield
+    end
+end
 
 TEST_TENANT = Hippo::Tenant.find_by_slug('test') || Hippo::Tenant.create!(slug: 'test', name: 'testing tenant', email: 'test@test.com')
 
@@ -73,7 +84,7 @@ RSpec.configure do |config|
     config.include FactoryBot::Syntax::Methods
     config.include ApiHelper, api: true
     config.include Fixtures
-
+    config.include BtPaymentHelpers
     config.include RackSpecMixin, :api => true
 
     # Use color in STDOUT
