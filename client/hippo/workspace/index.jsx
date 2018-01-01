@@ -8,7 +8,7 @@ import {
     Route,
     Switch,
 } from 'react-router-dom';
-import App from 'grommet/components/App';
+import Grommet from 'grommet/components/Grommet';
 import Sidebar from 'react-sidebar';
 import 'hippo/config-data';
 import 'hippo/screen-definitions';
@@ -91,7 +91,7 @@ class Workspace extends React.Component {
 
     render() {
         return (
-            <App centered={false}>
+            <Grommet centered={false}>
                 <LoginDialog />
                 {this.renderSubscriptionChoice()}
                 <Sidebar
@@ -113,7 +113,7 @@ class Workspace extends React.Component {
                         <Route component={NoMatch} />
                     </Switch>
                 </Sidebar>
-            </App>
+            </Grommet>
         );
     }
 
