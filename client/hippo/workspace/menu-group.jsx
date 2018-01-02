@@ -18,6 +18,7 @@ export default class Group extends React.Component {
             title:  PropTypes.string.isRequired,
             icon:   PropTypes.string.isRequired,
         }).isRequired,
+        onMenuSelection: PropTypes.func.isRequired,
     }
 
     render() {
@@ -30,7 +31,12 @@ export default class Group extends React.Component {
                         <Icon name={group.icon} />
                     </Heading>
                 </Header>
-                {group.screens.map(s => <MenuOption key={s.id} screen={s} />)}
+                {group.screens.map(s =>
+                    <MenuOption
+                        key={s.id}
+                        screen={s}
+                        onSelection={this.props.onMenuSelection}
+                    />)}
             </Menu>
         );
     }

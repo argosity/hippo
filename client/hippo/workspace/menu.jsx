@@ -112,7 +112,12 @@ export default class WorkspaceMenu extends React.Component {
                     <Logo />
                     {this.renderClose()}
                 </Header>
-                {Screens.activeGroups.map(g => <Group key={g.id} group={g} />)}
+                {Screens.activeGroups.map(g =>
+                    <Group
+                        key={g.id}
+                        group={g}
+                        onMenuSelection={this.onMenuSelection}
+                    />)}
                 {this.renderUnGrouped()}
                 <Logout />
             </Box>
