@@ -6,7 +6,7 @@ import { get } from 'lodash';
 import cn from 'classnames';
 
 import Button from 'grommet/components/Button';
-import Spinning from 'grommet/components/icons/Spinning';
+import Spinning from 'hippo/components/icon/spinning';
 import { Save } from 'grommet-icons';
 import { BaseModel } from '../models/base';
 

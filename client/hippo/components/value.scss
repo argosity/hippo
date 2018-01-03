@@ -1,0 +1,175 @@
+.hip-value {
+  display: inline-block;
+  @include text-align();
+}
+
+.hip-value--active {
+  color: $hover-text-color;
+
+  #{$dark-background-context} {
+    color: $active-colored-text-color;
+  }
+
+  #{$light-background-context} {
+    color: $hover-text-color;
+  }
+}
+
+.hip-value__annotated {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  @include inuit-font-size($value-font-size);
+
+  .text-control-icon:first-child {
+    margin-right: quarter($inuit-base-spacing-unit);
+  }
+
+  .text-control-icon:last-child {
+    margin-left: quarter($inuit-base-spacing-unit);
+  }
+}
+
+.hip-value__label {
+  display: inline-block;
+  margin-top: quarter($inuit-base-spacing-unit);
+  @include inuit-font-size($control-font-size);
+}
+
+.hip-value__value {
+  font-weight: $text-strong-font-weight;
+}
+
+.hip-value__units {
+  margin-left: 0.5rem;
+  font-weight: $text-font-weight;
+}
+
+.hip-value--align-start {
+  .hip-value__annotated {
+    justify-content: flex-start;
+  }
+}
+
+.hip-value--align-end {
+  .hip-value__annotated {
+    justify-content: flex-end;
+  }
+}
+
+.hip-value--xsmall {
+  .hip-value__annotated {
+    @include inuit-font-size($value-xsmall-font-size);
+  }
+
+  .hip-value__label {
+    margin-top: quarter($inuit-base-spacing-unit);
+    @include inuit-font-size($content-small-font-size);
+  }
+}
+
+.hip-value--small {
+  .hip-value__annotated {
+    @include inuit-font-size($value-small-font-size);
+  }
+
+  .hip-value__label {
+    margin-top: quarter($inuit-base-spacing-unit);
+    @include inuit-font-size($content-small-font-size);
+  }
+}
+
+.hip-value--large {
+  .hip-value__annotated {
+    @include inuit-font-size($value-large-font-size);
+
+    .text-control-icon:first-child {
+      margin-right: halve($inuit-base-spacing-unit);
+    }
+
+    .text-control-icon:last-child {
+      margin-left: halve($inuit-base-spacing-unit);
+    }
+  }
+
+  .hip-value__label {
+    margin-top: halve($inuit-base-spacing-unit);
+    @include inuit-font-size($content-large-font-size);
+  }
+}
+
+.hip-value--align-center {
+  justify-content: center;
+
+  .hip-value__annotated {
+    justify-content: center;
+  }
+}
+
+@include media-query(palm) {
+
+  // same as large
+  .hip-value--xlarge {
+    .hip-value__annotated {
+      @include inuit-font-size($value-large-font-size);
+
+      .text-control-icon:first-child {
+        margin-right: halve($inuit-base-spacing-unit);
+      }
+
+      .text-control-icon:last-child {
+        margin-left: halve($inuit-base-spacing-unit);
+      }
+    }
+
+    .hip-value__label {
+      margin-top: halve($inuit-base-spacing-unit);
+      @include inuit-font-size($content-large-font-size);
+    }
+  }
+
+  .hip-value--responsive {
+    &.hip-value--large,
+    &.hip-value--xlarge {
+      .hip-value__annotated {
+        @include inuit-font-size($value-font-size);
+
+        .text-control-icon:first-child {
+          margin-right: quarter($inuit-base-spacing-unit);
+        }
+
+        .text-control-icon:last-child {
+          margin-left: quarter($inuit-base-spacing-unit);
+        }
+      }
+
+      .hip-value__label {
+        margin-top: quarter($inuit-base-spacing-unit);
+        @include inuit-font-size($control-font-size);
+      }
+    }
+  }
+}
+
+@include media-query(lap-and-up) {
+  .hip-value--xlarge {
+    .hip-value__annotated {
+      @include inuit-font-size($value-xlarge-font-size);
+
+      .text-control-icon:first-child {
+        margin-right: ($inuit-base-spacing-unit);
+      }
+
+      .text-control-icon:last-child {
+        margin-left: ($inuit-base-spacing-unit);
+      }
+    }
+
+    .hip-value__label {
+      margin-top: $inuit-base-spacing-unit;
+      @include inuit-font-size($value-font-size);
+    }
+  }
+}

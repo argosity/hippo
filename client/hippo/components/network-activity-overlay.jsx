@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { autorun, action, observable, computed } from 'mobx';
-import Spinning from 'grommet/components/icons/Spinning';
+import Spinning from 'hippo/components/icon/spinning';
 import { CircleInformation } from 'grommet-icons';
 import { delay, isEmpty, includes, get } from 'lodash';
 import classnames from 'classnames';

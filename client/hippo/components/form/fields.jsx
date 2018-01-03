@@ -6,7 +6,6 @@ import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Col, getColumnProps } from 'react-flexbox-grid';
 import Field     from 'grommet/components/FormField';
-import NumberInput from 'grommet/components/NumberInput';
 import { titleize } from '../../lib/util';
 import DateWrapper     from './fields/date-wrapper';
 import SelectWrapper   from './fields/select-wrapper';
@@ -27,7 +26,7 @@ const TypesMapping = {
     tags:     TagsWrapper,
     label:    Label,
     select:   SelectWrapper,
-    number:   NumberInput,
+    number:   TextWrapper,
     timezone: TimeZoneSelect,
     checkbox: CheckBoxWrapper,
     textarea: TextAreaWrapper,
