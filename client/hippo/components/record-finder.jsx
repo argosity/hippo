@@ -7,7 +7,7 @@ import { get } from 'lodash';
 import { Field } from 'hippo/components/form';
 
 import Button from 'grommet/components/Button';
-import SearchIcon from 'grommet/components/icons/base/Search';
+import { Search } from 'grommet-icons';
 import { BaseModel } from '../models/base';
 import Query from '../models/query';
 import './record-finder/record-finder.scss';
@@ -87,7 +87,7 @@ export default class RecordFinder extends React.Component {
                 />
                 <Button
                     className="grommetux-control-icon-search"
-                    icon={<SearchIcon />}
+                    icon={<Search />}
                     onClick={this.onSearchClick}
                 />
             </Field>

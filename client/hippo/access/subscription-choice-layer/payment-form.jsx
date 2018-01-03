@@ -4,7 +4,7 @@ import { action, observable, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import PaymentFields from 'payment-fields';
 import Button from 'grommet/components/Button';
-import CreditCardIcon from 'grommet/components/icons/base/CreditCard';
+import { CreditCard } from 'grommet-icons';
 import Box from 'grommet/components/Box';
 import NetworkActivityOverlay from '../../components/network-activity-overlay';
 import CardField from '../../components/payments/field';
@@ -144,7 +144,7 @@ export default class PaymentForm extends React.Component {
                     <Button label="Back" onClick={this.props.onCancel} />
                     <Button
                         onClick={this.isBusy ? null : this.onSubscribe}
-                        primary icon={<CreditCardIcon />}
+                        primary icon={<CreditCard />}
                         label="Start Subscription" />
                 </Box>
             </PaymentFields>

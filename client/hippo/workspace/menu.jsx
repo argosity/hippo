@@ -5,7 +5,7 @@ import { isEmpty, get } from 'lodash';
 import PropTypes from 'prop-types';
 import Box     from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
-import CloseIcon from 'grommet/components/icons/base/Close';
+import { Close } from 'grommet-icons';
 import Header  from 'grommet/components/Header';
 import Anchor  from 'grommet/components/Anchor';
 import Menu from 'grommet/components/Menu';
@@ -96,7 +96,7 @@ export default class WorkspaceMenu extends React.Component {
 
     renderClose() {
         if (this.canClose) {
-            return <Button icon={<CloseIcon />} onClick={this.props.onCloseMenu} plain />;
+            return <Button icon={<Close />} onClick={this.props.onCloseMenu} plain />;
         }
         return null;
     }

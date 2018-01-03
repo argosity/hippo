@@ -8,8 +8,8 @@ import { action } from 'mobx';
 import Heading from 'grommet/components/Heading';
 import Layer   from 'grommet/components/Layer';
 import Box     from 'grommet/components/Box';
-import CloseIcon from 'grommet/components/icons/base/Close';
 import Button   from 'grommet/components/Button';
+import { Close } from 'grommet-icons';
 
 import DataTable from '../data-table';
 import QueryBuilder from '../query-builder';
@@ -58,7 +58,7 @@ export default class QueryLayer extends React.Component {
                         <Box flex="grow">
                             <Heading tag="h3" margin="none">{title}</Heading>
                         </Box>
-                        <Button plain icon={<CloseIcon />} onClick={onClose} />
+                        <Button plain icon={<Close />} onClick={onClose} />
                     </Box>
                     <QueryBuilder query={query} autoFetch />
                     <DataTable

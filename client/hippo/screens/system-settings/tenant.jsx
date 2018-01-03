@@ -10,9 +10,7 @@ import Layer from 'grommet/components/Layer';
 import Paragraph from 'grommet/components/Paragraph';
 import Anchor from 'grommet/components/Anchor';
 import Button from 'grommet/components/Button';
-import LinkIcon from 'grommet/components/icons/base/Link';
-import UserAdminIcon from 'grommet/components/icons/base/UserAdmin';
-import ClearIcon from 'grommet/components/icons/base/Clear';
+import { Link, Clear, UserAdmin } from 'grommet-icons';
 import Tenant from '../../models/tenant';
 import Config from '../../config';
 import SubscriptionChoiceLayer from '../../access/subscription-choice-layer';
@@ -28,7 +26,7 @@ function TenantSlugChange({ oldSlug }) {
                 <Paragraph size='large'>
                     You will need to login to your account from the updated address at:
                 </Paragraph>
-                <Anchor icon={<LinkIcon />} label={Tenant.current.domain} href={`https://${Tenant.current.domain}`} primary={true} />
+                <Anchor icon={<Link />} label={Tenant.current.domain} href={`https://${Tenant.current.domain}`} primary={true} />
             </Box>
         </Layer>
     );
@@ -122,12 +120,12 @@ export default class TenantConfig extends React.Component {
                             <Box direction="row" justify="between">
                                 <Button
                                     plain label={Tenant.current.subscription.nameAndCost}
-                                    icon={<UserAdminIcon />}
+                                    icon={<UserAdmin />}
                                     onClick={this.onSubscriptionChange}
                                 />
                                 <Button
                                     plain label="Cancel"
-                                    icon={<ClearIcon />}
+                                    icon={<Clear />}
                                     onClick={this.onSubscriptionCancel}
                                 />
                             </Box>

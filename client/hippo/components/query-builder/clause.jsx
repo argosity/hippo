@@ -7,7 +7,7 @@ import Button        from 'grommet/components/Button';
 import Box           from 'grommet/components/Box';
 import Menu          from 'grommet/components/Menu';
 import TextInput     from 'grommet/components/TextInput';
-import RefreshIcon   from 'grommet/components/icons/base/Refresh';
+import { Refresh }   from 'grommet-icons';
 import ClauseModel   from '../../models/query/clause';
 import { Radio, ClauseFilter } from './clause-filter';
 import BooleanPicker from './boolean-picker';
@@ -94,7 +94,7 @@ export default class Clause extends React.Component {
                 </Menu>
                 {this.renderInputTag()}
                 <Button
-                    icon={<RefreshIcon />}
+                    icon={<Refresh />}
                     onClick={this.onRefresh}
                 />
             </Box>

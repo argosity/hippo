@@ -13,7 +13,7 @@ import Sidebar from 'react-sidebar';
 import 'hippo/config-data';
 import 'hippo/screen-definitions';
 import Button from 'grommet/components/Button';
-import CirclePlayIcon from 'grommet/components/icons/base/CirclePlay';
+import { CirclePlay } from 'grommet-icons';
 import User from '../user';
 import Tenant from '../models/tenant';
 import Extensions  from '../extensions';
@@ -77,7 +77,7 @@ class Workspace extends React.Component {
         return (
             <Button
                 primary
-                icon={<CirclePlayIcon />}
+                icon={<CirclePlay />}
                 onClick={this.toggleSidebarDocked}
                 className={cn('sidebar-toggle', { 'is-open': this.sidebarOpen })}
             />

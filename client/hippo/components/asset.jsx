@@ -8,7 +8,7 @@ import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 
 import Field from 'grommet/components/FormField';
-import DocumentIcon from 'grommet/components/icons/base/DocumentCloud';
+import { Document } from 'grommet-icons';
 
 import { BaseModel } from '../models/base';
 import './asset.scss';
@@ -62,7 +62,7 @@ export default class Asset extends React.Component {
         if (this.asset && this.asset.exists) {
             return this.asset.isImage ?
                 <img src={this.asset.previewUrl} alt="" /> :
-                <DocumentIcon size="xlarge" type="status" />;
+                <Document size="xlarge" type="status" />;
         }
         return (
             <div>

@@ -5,9 +5,7 @@ import { sortBy }  from 'lodash';
 import SwipeableViews from 'react-swipeable-views';
 import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
-import NextIcon from 'grommet/components/icons/base/Next';
-import CloseIcon from 'grommet/components/icons/base/Close';
-import StarIcon from 'grommet/components/icons/base/Star';
+import { Star, Next, Close } from 'grommet-icons';
 import Layer from 'grommet/components/Layer';
 import Tenant from '../models/tenant';
 import Subscription from '../models/subscription';
@@ -99,7 +97,7 @@ export default class SubscriptionChoiceLayer extends React.Component {
                         <Box direction="row" justify="between">
                             <span>
                                 {subscription.name}
-                                {isCurrent && <StarIcon colorIndex="brand" size="small" />}
+                                {isCurrent && <Star colorIndex="brand" size="small" />}
                             </span>
 
                             <span className="price">
@@ -108,7 +106,7 @@ export default class SubscriptionChoiceLayer extends React.Component {
                         </Box>
                         <span>{subscription.description}</span>
                     </Box>
-                    <NextIcon className="select"/>
+                    <Next className="select"/>
                 </Box>
             </Box>
         );
@@ -121,7 +119,7 @@ export default class SubscriptionChoiceLayer extends React.Component {
             <Box margin={{ bottom: 'medium' }}  align="end">
                 <Button
                     label="Close"
-                    icon={<CloseIcon />}
+                    icon={<Close />}
                     onClick={this.props.onCancel}
                 />
             </Box>
