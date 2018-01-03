@@ -4,8 +4,8 @@ import { action, observable } from 'mobx';
 import { observer, Provider, PropTypes as MobxPropTypes } from 'mobx-react';
 import HippoUploadAdapter from './text-editor/upload-adapter';
 import './text-editor/text-editor.scss';
-
-const BalloonEditor = require('@ckeditor/ckeditor5-build-balloon');
+// using require since otherwise webpack warns about missing export
+const { BalloonEditor } = require('@ckeditor/ckeditor5-build-balloon');
 
 BalloonEditor.build.plugins.push(HippoUploadAdapter);
 
