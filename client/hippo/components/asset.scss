@@ -1,5 +1,3 @@
-@import "~grommet/scss/grommet-core/settings";
-
 #hippo-root {
     .asset {
         > .grommetux-form-field { height: 100%; }
@@ -10,7 +8,7 @@
             overflow: auto;
             -webkit-overflow-scrolling: touch;
             &-active {
-                background-color: $selected-background-color;
+//                background-color: $selected-background-color;
             }
         }
     }

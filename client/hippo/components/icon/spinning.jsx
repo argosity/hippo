@@ -1,9 +1,10 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import from './spinning.scss';
+import cn from 'classnames';
+import './spinning.scss';
 
 const CLASS_ROOT = 'icon-spinning';
 
-export function Spinning(props) {
+export default function Spinning(props) {
     const {
         className, small, size, responsive, ...otherProps
     } = props;

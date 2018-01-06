@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import OK from './status/OK';
-import CriticalStatus from './status/CriticalStatus';
-import Warning from './status/Warning';
-import Disabled from './status/Disabled';
-import Unknown from './status/Unknown';
-import Blank from './status/Blank';
-import Label from './status/Label';
-import CSSClassnames from '../../utils/CSSClassnames';
+
+import {
+    StatusGood, StatusCritical, StatusWarning,
+    StatusDisabled, Unknown, EmptyCircle, StatusUnknown
+} from 'grommet-icons';
 
 const CLASS_ROOT = 'status-icon';
 
@@ -25,25 +22,19 @@ export default function StatusIcon({ className, size, value, ...props }) {
     switch (value.toLowerCase()) {
         case 'ok':
         case 'normal':
-            icon = <OK {...props} className={classes} />;
+            icon = <StatusGood {...props} className={classes} />;
             break;
         case 'warning':
-            icon = <Warning {...props} className={classes} />;
+            icon = <StatusWarning {...props} className={classes} />;
             break;
         case 'critical':
-            icon = <CriticalStatus {...props} className={classes} />;
+            icon = <StatusCritical {...props} className={classes} />;
             break;
         case 'disabled':
-            icon = <Disabled {...props} className={classes} />;
+            icon = <StatusDisabled {...props} className={classes} />;
             break;
         case 'unknown':
-            icon = <Unknown {...props} className={classes} />;
-            break;
-        case 'blank':
-            icon = <Blank {...props} className={classes} />;
-            break;
-        case 'label':
-            icon = <Label {...props} className={classes} />;
+            icon = <StatusUnknown {...props} className={classes} />;
             break;
         default:
             icon = null;
@@ -51,7 +42,7 @@ export default function StatusIcon({ className, size, value, ...props }) {
     return icon;
 }
 
-Status.propTypes = {
+StatusIcon.propTypes = {
     a11yTitle: PropTypes.string,
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     value: PropTypes.oneOf(['critical', 'warning', 'ok', 'unknown',
@@ -59,6 +50,6 @@ Status.propTypes = {
         'Critical', 'Warning', 'OK', 'Unknown', 'Disabled', 'Label', 'blank'])
 };
 
-Status.defaultProps = {
-    value: 'unknown'
+StatusIcon.defaultProps = {
+    value: 'unknown',
 };

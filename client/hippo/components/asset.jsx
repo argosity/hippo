@@ -7,7 +7,7 @@ import { titleize } from 'hippo/lib/util';
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 
-import Field from 'grommet/components/FormField';
+import { FieldWrapper } from './form';
 import { Document } from 'grommet-icons';
 
 import { BaseModel } from '../models/base';
@@ -82,7 +82,7 @@ export default class Asset extends React.Component {
                 {...col}
                 className={classnames(className, 'asset', 'form-field')}
             >
-                <Field
+                <FieldWrapper
                     label={this.label}
                     tabIndex={tabIndex}
                     onKeyPress={this.onKey}
@@ -96,7 +96,7 @@ export default class Asset extends React.Component {
                     >
                         {this.preview()}
                     </Dropzone>
-                </Field>
+                </FieldWrapper>
             </Col>
         );
     }

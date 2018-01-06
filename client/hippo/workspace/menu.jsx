@@ -1,13 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, observe } from 'mobx';
 import { isEmpty, get } from 'lodash';
-import PropTypes from 'prop-types';
 import Box     from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
 import { Close } from 'grommet-icons';
-import Header  from 'grommet/components/Header';
-import Anchor  from 'grommet/components/Anchor';
+import Anchor from 'grommet/components/Anchor';
 import Menu from 'grommet/components/Menu';
 import Icon from '../components/icon';
 import Group   from './menu-group';
@@ -76,13 +75,8 @@ export default class WorkspaceMenu extends React.Component {
 
     renderUnGrouped() {
         if (!User.isLoggedIn || isEmpty(Screens.unGrouped)) { return null; }
-        return (
-            <Menu direction="column" align="start" justify="between" primary>
-                {Screens.unGrouped.map(s =>
-                    <MenuOption
-                        onSelection={this.onMenuSelection}
-                        key={s.id} screen={s} />)}
-            </Menu>
+        return Screens.unGrouped.map(
+            s => <MenuOption onSelection={this.onMenuSelection} key={s.id} screen={s} />,
         );
     }
 
@@ -105,10 +99,10 @@ export default class WorkspaceMenu extends React.Component {
         return (
             <Box
                 full size="small" separator="right"
-                colorIndex="brand"
+                background="brand"
                 className="screen-selection-menu"
             >
-                <Header justify="between" size="large" pad={{ horizontal: 'medium' }}>
+                <Box justify="between" size="large" pad={{ horizontal: 'medium' }}>
                     <Logo />
                     {this.renderClose()}
                 </Header>

@@ -3,25 +3,24 @@ import ReactDOM     from 'react-dom';
 import whenDomReady from 'when-dom-ready';
 import { delay } from 'lodash';
 import { unresolvedAssociations } from 'mobx-decorated-models';
-import { AppContainer } from 'react-hot-loader';
+
 import { onBoot } from './models/pub_sub';
 import './extensions/hippo';
 import Tenant from './models/tenant';
 
-const Workspace = require('hippo/workspace').default;
+import Workspace from './workspace';
 
 let Root;
-
-function renderer(Body) {
-    ReactDOM.render(<AppContainer><Body /></AppContainer>, Root);
-}
-
-if (module.hot) {
-    module.hot.accept('hippo/workspace', () => {
-        const WSNext = require('hippo/workspace').default; // eslint-disable-line global-require
-        renderer(WSNext);
-    });
-}
+//
+// function renderer(Body) {
+// }
+//
+// if (module.hot) {
+//     module.hot.accept('./workspace', () => {
+//         //const WSNext = require('hippo/workspace').default; // eslint-disable-line global-require
+//         return renderer(Workspace);
+//     });
+// }
 
 whenDomReady().then(() => {
     if (Root) return;
@@ -32,7 +31,8 @@ whenDomReady().then(() => {
         JSON.parse(document.getElementById('bootstrap-data').innerHTML),
     );
     /* global document: false */
-    renderer(Workspace);
+//    renderer(Workspace);
+    ReactDOM.render(<Workspace />, Root);
 
     unresolvedAssociations().forEach(({ model, property }) => {
         // eslint-disable-next-line no-console

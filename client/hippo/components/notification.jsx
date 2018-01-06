@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Box from 'grommet/components/Box';
+import StatusIcon from './icon/status';
 
 export default function Notification({ size, className, children, status, ...otherProps }) {
     let statusNode;

@@ -5,7 +5,7 @@ import { action } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Col, getColumnProps } from 'react-flexbox-grid';
-import Field     from 'grommet/components/FormField';
+import FieldWrapper     from './field-wrapper';
 import { titleize } from '../../lib/util';
 import DateWrapper     from './fields/date-wrapper';
 import SelectWrapper   from './fields/select-wrapper';
@@ -80,7 +80,7 @@ export default class FormField extends React.Component {
 
         return (
             <div className={classnames('form-field', type, className)}>
-                <Field
+                <FieldWrapper
                     label={label || titleize(name)}
                     error={this.field.invalidMessage}
                     help={this.field.help}
@@ -96,7 +96,7 @@ export default class FormField extends React.Component {
                         {...otherProps}
                     />
                     {children}
-                </Field>
+                </FieldWrapper>
             </div>
         );
     }

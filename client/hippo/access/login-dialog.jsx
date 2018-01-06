@@ -2,7 +2,7 @@ import React from 'react';
 
 import { observer } from 'mobx-react';
 import { bindAll }  from 'lodash';
-import LoginForm    from 'grommet/components/LoginForm';
+import LoginForm    from './login-form';
 import Layer        from 'grommet/components/Layer';
 
 import User from '../user';

@@ -5,7 +5,7 @@ import { Row } from 'react-flexbox-grid';
 import Heading from 'grommet/components/Heading';
 import Box from 'grommet/components/Box';
 import { Form, Field, FormState, nonBlank } from 'hippo/components/form';
-import Notification from 'grommet/components/Notification';
+import Notification from 'hippo/components/notification';
 import Layer from 'grommet/components/Layer';
 import Paragraph from 'grommet/components/Paragraph';
 import Anchor from 'grommet/components/Anchor';

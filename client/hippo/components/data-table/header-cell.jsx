@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 
 import Box      from 'grommet/components/Box';
 import Button   from 'grommet/components/Button';
-import { Asc, Desc, Add } from 'grommet-icons';
+import { Ascending, Descending, Add } from 'grommet-icons';
 
 import Field from '../../models/query/field';
 

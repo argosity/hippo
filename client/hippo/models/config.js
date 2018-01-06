@@ -41,7 +41,7 @@ export default class Config {
 
     update(attrs) {
         assign(this, pickBy(attrs, (v, k) => !isNil(v) && hasIn(this, k)));
-        Extensions.setBootstrapData(attrs);
+        Extensions.setBootstrapData(attrs, this);
     }
 
     setScreenData() {
