@@ -15,13 +15,11 @@ export default function xhr(
         body = JSON.stringify(data);
     }
 
-    for (const key in headers) {
-        // skip loop if the property is from prototype
-        if (Object.prototype.hasOwnProperty.call(headers, key)) {
-            req.setRequestHeader(key, headers[key]);
-        }
+    const keys = Object.keys(headers);
+    for (let i = 0; i < keys.length; i++) {
+        const header = keys[i];
+        req.setRequestHeader(header, headers[header]);
     }
-
 
     req.onload = function() {
         if (4 === req.readyState && 200 === req.status) {

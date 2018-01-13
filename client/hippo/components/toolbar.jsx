@@ -1,10 +1,9 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import Box from 'grommet/components/Box';
-//import StyledBox from 'hippo/components/Box/StyledBox';
+import styled from 'styled-components';
 import cn from 'classnames';
 
 export SaveButton from './save-button';
-import styled from 'styled-components';
 
 const TB = styled(Box)`
 > *:not(:first-child) {

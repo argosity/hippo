@@ -1,20 +1,14 @@
 import React from 'react';
-
 import { observer } from 'mobx-react';
-import { bindAll }  from 'lodash';
-import LoginForm    from './login-form';
-import Layer        from 'grommet/components/Layer';
-
+import { action } from 'mobx';
+import { Layer } from 'grommet';
+import LoginForm from './login-form';
 import User from '../user';
 
 @observer
 export default class LoginDialog extends React.Component {
 
-    constructor() {
-        super();
-        bindAll(this, 'attemptLogin');
-    }
-
+    @action.bound
     attemptLogin({ username, password }) {
         User.attemptLogin(username, password);/* .then((session)=> {
                                                 if session.isValid

@@ -1,6 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { Grid } from 'styled-css-grid';
 
 const Layout = Grid.extend.attrs({

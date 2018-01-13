@@ -1,13 +1,11 @@
 import React        from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM     from 'react-dom';
-import whenDomReady from './lib/when-dom-ready';
 import { delay } from 'lodash';
 import { unresolvedAssociations } from 'mobx-decorated-models';
-
 import { onBoot } from './models/pub_sub';
+import whenDomReady from './lib/when-dom-ready';
 import './extensions/hippo';
 import Tenant from './models/tenant';
-
 import Workspace from './workspace';
 
 let Root;

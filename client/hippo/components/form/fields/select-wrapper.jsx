@@ -4,7 +4,7 @@ import { action, computed } from 'mobx';
 import { Box, Text, Select } from 'grommet';
 import { get, find } from 'lodash';
 
-const renderOption = (opt = { id: -1, label: 'None'}) => (
+const renderOption = (opt = { id: -1, label: 'None' }) => (
     <Box
         align='center'
         direction='row'

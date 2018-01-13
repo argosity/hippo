@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { observable, action } from 'mobx';
 import { observer }   from 'mobx-react';
 import { map, compact, invoke } from 'lodash';
-import { Row, Col } from 'react-flexbox-grid';
 import { Heading, FieldsLayout } from '../components/form';
 import Screen from '../components/screen';
 import Asset  from '../components/asset';

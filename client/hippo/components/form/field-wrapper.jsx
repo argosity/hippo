@@ -22,7 +22,7 @@ align-items: flex-end;
 ${props => props.control && controlStyle(props)}
 `;
 
-const borderBottom = (props) => (`
+const borderBottom = props => (`
 border-bottom: solid ${props.theme.global.borderSize.small} ${color.colorForName('light-2', props.theme)};
 `);
 

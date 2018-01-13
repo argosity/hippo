@@ -1,6 +1,4 @@
-// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
-
-import React, { Component } from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Box } from 'grommet';

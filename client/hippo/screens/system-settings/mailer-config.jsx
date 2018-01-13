@@ -1,7 +1,6 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import { Row } from 'react-flexbox-grid';
 import { Heading, FieldsLayout, Form, Field, FormState, nonBlank, validEmail  } from 'hippo/components/form';
 
 @observer

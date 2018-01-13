@@ -6,6 +6,8 @@ module Hippo
             include ::Hippo::Concerns::AttrAccessorWithDefault
 
             class_attribute :defined_format
+            attr_reader :variables
+            attr_reader :basename
 
             attr_accessor_with_default :extension_id
 
@@ -26,7 +28,8 @@ module Hippo
             end
 
             def filename
-                class_as_name + self.extension
+                bn = basename || class_as_name
+                bn + extension
             end
 
             def source

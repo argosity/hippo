@@ -56,7 +56,7 @@ export default class SortingHeaderCell extends React.Component {
 
     sortIndicator() {
         if (!this.field.isSortingBy) { return null; }
-        return this.field.query.sortAscending ? <Asc /> : <Desc />;
+        return this.field.query.sortAscending ? <Ascending /> : <Descending />;
     }
     render() {
         let label = <span>{this.field.label}</span>;

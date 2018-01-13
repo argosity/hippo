@@ -118,7 +118,7 @@ export default class TenantConfig extends React.Component {
                                 <Button
                                     plain
                                     label={Tenant.current.subscription.nameAndCost}
-                                          icon={<UserAdmin />}
+                                    icon={<UserAdmin />}
                                     onClick={this.onSubscriptionChange}
                                 />
                                 <Button

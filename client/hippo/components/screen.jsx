@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { observer } from 'mobx-react';
-import { Box, Heading, Grid } from 'grommet';
+import { Grid } from 'grommet';
 import styled from 'styled-components';
 import ScreenInstance from '../screens/instance';
 
@@ -35,7 +35,7 @@ export default class Screen extends React.Component {
                     { name: 'footer', start: [0, 2], end: [1, 2] },
                 ]}
                 className={cn('hippo-screen', screen.definition.id, className, {
-                        'is-active': screen.isActive,
+                    'is-active': screen.isActive,
                 })}
                 {...gridProps}
             >

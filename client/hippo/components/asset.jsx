@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col } from 'react-flexbox-grid';
 import { action } from 'mobx';
 import { observer }   from 'mobx-react';
 import { titleize } from 'hippo/lib/util';
@@ -86,7 +85,7 @@ export default class Asset extends React.Component {
 
     render() {
         const {
-            model: _, label: __, name: ___, className, tabIndex, height, ...wrapperProps
+            model: _, label: __, name: ___, tabIndex, height, ...wrapperProps
         } = this.props;
 
         return (

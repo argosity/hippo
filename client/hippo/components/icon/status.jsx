@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import {
     StatusGood, StatusCritical, StatusWarning,
-    StatusDisabled, Unknown, EmptyCircle, StatusUnknown
+    StatusDisabled,
+    StatusUnknown,
 } from 'grommet-icons';
 
 const CLASS_ROOT = 'status-icon';
 
-export default function StatusIcon({ className, size, value, ...props }) {
-
+export default function StatusIcon({
+    className, size, value, ...props
+}) {
     const classes = classnames(
         {
             [`${CLASS_ROOT}--${size}`]: size,
@@ -47,7 +49,11 @@ StatusIcon.propTypes = {
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     value: PropTypes.oneOf(['critical', 'warning', 'ok', 'unknown',
         'disabled', 'label',
-        'Critical', 'Warning', 'OK', 'Unknown', 'Disabled', 'Label', 'blank'])
+        'Critical', 'Warning',
+        'OK', 'Unknown',
+        'Disabled',
+        'Label', 'blank',
+    ]),
 };
 
 StatusIcon.defaultProps = {

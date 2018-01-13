@@ -1,19 +1,7 @@
-// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Box from 'grommet/components/Box';
-import Button from 'grommet/components/Button';
-import CheckBox from 'grommet/components/CheckBox';
-
-import { Field } from '../components/form';
-// import Footer from './Footer';
-// import Heading from './Heading';
-// import Paragraph from './Paragraph';
-// import Box from './Box';
-
-//import CSSClassnames from '../utils/CSSClassnames';
+import { Box, Button } from 'grommet';
 
 const CLASS_ROOT = 'login-form';
 
@@ -25,24 +13,22 @@ export default class LoginForm extends Component {
         this._onSubmit = this._onSubmit.bind(this);
         this._onUsernameChange = this._onUsernameChange.bind(this);
         this._onPasswordChange = this._onPasswordChange.bind(this);
-        this._onRememberMeChange = this._onRememberMeChange.bind(this);
         this._onChange = this._onChange.bind(this);
 
         this.state = {
             timestamp: new Date().getTime(),
             password: '',
-            rememberMe: props.defaultValues.rememberMe,
-            username: props.defaultValues.username
+            username: '',
         };
     }
 
-    componentDidMount () {
+    componentDidMount() {
         if (this.usernameRef) {
             this.usernameRef.focus();
         }
     }
 
-    _onChange (args) {
+    _onChange(args) {
         const { onChange } = this.props;
 
         if (onChange) {
@@ -50,45 +36,39 @@ export default class LoginForm extends Component {
         }
     }
 
-    _onUsernameChange (event) {
+    _onUsernameChange(event) {
         const username = event.target.value;
         this.setState({ username });
         this._onChange({ event, username });
     }
 
-    _onPasswordChange (event) {
+    _onPasswordChange(event) {
         const password = event.target.value;
         this.setState({ password });
         this._onChange({ event, password });
     }
 
-    _onRememberMeChange (event) {
-        const rememberMe = event.target.checked;
-        this.setState({ rememberMe });
-        this._onChange({ event, rememberMe });
-    }
-
-    _onSubmit (event) {
+    _onSubmit(event) {
         event.preventDefault();
         const { onSubmit } = this.props;
-        let { password, rememberMe, username } = this.state;
-
+        let { username } = this.state;
+        const { password } = this.state;
         username = username.trim();
 
         if (onSubmit) {
-            onSubmit({username, password, rememberMe});
+            onSubmit({ username, password });
         }
     }
 
-    render () {
+    render() {
         const {
             align, errors, forgotPassword,
-            logo, onSubmit, rememberMe, secondaryText, title, usernameType
+            logo, onSubmit, secondaryText, title, usernameType,
         } = this.props;
         const { timestamp } = this.state;
 
         const classes = classnames(CLASS_ROOT, this.props.className);
-        const center = ! align || 'stretch' === align || 'center' === align;
+        const center = !align || 'stretch' === align || 'center' === align;
 
         const errorsNode = errors.map((error, index) => {
             if (error) {
@@ -119,19 +99,7 @@ export default class LoginForm extends Component {
             );
         }
 
-        let rememberMeNode;
-        if (rememberMe) {
-            const rememberMeLabel = (
-                <FormattedMessage id="Remember me" defaultMessage="Remember me" />
-            );
-
-            rememberMeNode = (
-                <CheckBox label={rememberMeLabel} checked={this.state.rememberMe}
-                          onChange={this._onRememberMeChange} />
-            );
-        }
-
-        const username = usernameType === 'email' ? (
+        const username = 'email' === usernameType ? (
             <FormattedMessage id="Email" defaultMessage="Email" />
         ) : (
             <FormattedMessage id="Username" defaultMessage="Username" />
@@ -157,7 +125,7 @@ export default class LoginForm extends Component {
                         <input
                             id={usernameId}
                             type={usernameType}
-                            ref={ref => this.usernameRef = ref}
+                            ref={(ref) => { this.usernameRef = ref; }}
                             value={this.state.username}
                             onChange={this._onUsernameChange}
                         />
@@ -172,14 +140,17 @@ export default class LoginForm extends Component {
                     </FormField>
                     {errorsNode}
                 </fieldset>
-                <Footer size="small" direction="column"
-                        align={center ? 'stretch' : 'start'}
-                        pad={{vertical: 'none', between: 'medium'}}>
-                    {rememberMeNode}
-                    <Button primary={true} fill={center}
-                            type={onSubmit ? "submit" : "button"}
-                            label={login}
-                            onClick={onSubmit ? this._onSubmit : undefined} />
+                <Footer
+                    size="small" direction="column"
+                    align={center ? 'stretch' : 'start'}
+                    pad={{ vertical: 'none', between: 'medium' }}
+                >
+                    <Button
+                        primary={true} fill={center}
+                        type={onSubmit ? 'submit' : 'button'}
+                        label={login}
+                        onClick={onSubmit ? this._onSubmit : undefined}
+                    />
                     {forgotPassword}
                 </Footer>
             </Form>
@@ -192,28 +163,25 @@ LoginForm.propTypes = {
     align: PropTypes.oneOf(['start', 'center', 'end', 'stretch']),
     defaultValues: PropTypes.shape({
         username: PropTypes.string,
-        rememberMe: PropTypes.bool
     }),
     errors: PropTypes.arrayOf(PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.node
+        PropTypes.node,
     ])),
     forgotPassword: PropTypes.node,
     logo: PropTypes.node,
     onSubmit: PropTypes.func,
     onChange: PropTypes.func,
-    rememberMe: PropTypes.bool,
     secondaryText: PropTypes.string,
     title: PropTypes.string,
-    usernameType: PropTypes.string
+    usernameType: PropTypes.string,
 };
 
 LoginForm.defaultProps = {
     align: 'center',
     defaultValues: {
         username: '',
-        rememberMe: false
     },
     errors: [],
-    usernameType: 'email'
+    usernameType: 'email',
 };

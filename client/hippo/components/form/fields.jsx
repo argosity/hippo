@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import invariant from 'invariant';
 import { action } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import classnames from 'classnames';
-import { Col, getColumnProps } from 'react-flexbox-grid';
 import FieldWrapper     from './field-wrapper';
 import DateWrapper     from './fields/date-wrapper';
 import SelectWrapper   from './fields/select-wrapper';
@@ -35,13 +33,13 @@ const TypesMapping = {
 @observer
 export default class FormField extends React.Component {
 
-    static propTypes = Object.assign({
+    static propTypes = {
         label: PropTypes.string,
         name:  PropTypes.string.isRequired,
         className: PropTypes.string,
         type: PropTypes.string,
         tabIndex: PropTypes.number,
-    }, Col.PropTypes)
+    }
 
     static defaultProps = {
         label:     '',
@@ -49,7 +47,6 @@ export default class FormField extends React.Component {
         type:      'text',
         tabIndex: 0,
     }
-
     focus() {
         if (this.inputRef) { this.inputRef.focus(); }
     }
@@ -75,7 +72,7 @@ export default class FormField extends React.Component {
             validate: _, formState: __, help: ___,
             width, height, left, top, middle, center, area,
             ...otherProps
-        } = getColumnProps(this.props);
+        } = this.props;
         const wrapperProps = {
             width, height, left, top, middle, center, area, type,
         };

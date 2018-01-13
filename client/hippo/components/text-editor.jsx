@@ -21,7 +21,6 @@ export default class TextEditor extends React.Component {
     }
 
     @action.bound setRef(r) {
-        debugger
         this.body = r;
     }
 

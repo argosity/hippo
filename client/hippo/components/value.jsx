@@ -25,11 +25,11 @@ const Label = styled.span`
 font-size: 1.1875rem;
 line-height: 1.26316;
 display: inline-block;
-`
+`;
 
 const Content = styled.div`
 display: flex;
-flex-direction: ${props => props.reversed ? 'row-reverse' : 'row'};
+flex-direction: ${props => (props.reversed ? 'row-reverse' : 'row')};
 `;
 
 const InnerValue = styled.span`
@@ -57,7 +57,7 @@ const StyledValue = styled.div`
 
 export default function Value({
     active, align, className, colorIndex, icon, label, responsive,
-    size, onClick, trendIcon, units, value, reverse, ...otherProps
+    size, onClick, trendIcon, units, value, ...otherProps
 }) {
     const classes = classnames(
         CLASS_ROOT,

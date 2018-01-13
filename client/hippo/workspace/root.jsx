@@ -10,13 +10,11 @@ import {
 } from 'react-router-dom';
 import Grommet from 'grommet/components/Grommet';
 import Sidebar from 'react-sidebar';
-import { compose } from 'recompose';
 import 'hippo/config-data';
 import 'hippo/screen-definitions';
 import Button from 'grommet/components/Button';
 import { CirclePlay } from 'grommet-icons';
-import hocs from 'grommet/components/hocs';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import User from '../user';
 import Tenant from '../models/tenant';
 import Extensions  from '../extensions';
@@ -101,11 +99,13 @@ class Workspace extends React.Component {
             <ThemeProvider theme={this.context.theme}>
                 <Sidebar
                     styles={{ sidebar: { zIndex: 6 }, overlay: { zIndex: 5 } }}
-                    sidebar={<Menu
-                                 isOpen={this.sidebarOpen}
-                                        isDocked={this.sidebarDocked}
-                                        onCloseMenu={this.toggleSidebarDocked}
-                                        onDockToggle={this.toggleSidebarDocked} />
+                    sidebar={
+                        <Menu
+                            isOpen={this.sidebarOpen}
+                            isDocked={this.sidebarDocked}
+                            onCloseMenu={this.toggleSidebarDocked}
+                            onDockToggle={this.toggleSidebarDocked}
+                        />
                     }
                     open={this.sidebarOpen}
                     docked={this.sidebarDocked}
