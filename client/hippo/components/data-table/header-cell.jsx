@@ -65,8 +65,7 @@ export default class SortingHeaderCell extends React.Component {
             label = (
                 <Button
                     key="sort"
-                    plain={true}
-                    fill={true}
+                    plain
                     onClick={this.onClick}
                 >
                     {label}

@@ -105,7 +105,7 @@ export default class WorkspaceMenu extends React.Component {
                 <Box justify="between" size="large" pad={{ horizontal: 'medium' }}>
                     <Logo />
                     {this.renderClose()}
-                </Header>
+                </Box>
                 {Screens.activeGroups.map(g =>
                     <Group
                         key={g.id}

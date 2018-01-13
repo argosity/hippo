@@ -100,7 +100,7 @@ class Workspace extends React.Component {
         return (
             <ThemeProvider theme={this.context.theme}>
                 <Sidebar
-                    styles={{ sidebar: { zIndex: 60 }, overlay: { zIndex: 59 } }}
+                    styles={{ sidebar: { zIndex: 6 }, overlay: { zIndex: 5 } }}
                     sidebar={<Menu
                                  isOpen={this.sidebarOpen}
                                         isDocked={this.sidebarDocked}

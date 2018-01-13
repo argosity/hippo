@@ -37,8 +37,7 @@
 }
 
 .screens-wrapper {
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     .async-loading {
         align-items: center;
         font-weight: bold;

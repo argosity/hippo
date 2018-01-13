@@ -2,6 +2,7 @@ import React from 'react';
 import { defaults, has, omit } from 'lodash';
 import { observable, action }  from 'mobx';
 import moment from 'moment-timezone';
+import styled from 'styled-components';
 import PropTypes    from 'prop-types';
 import { observer } from 'mobx-react';
 import { autobind } from 'core-decorators';
@@ -20,6 +21,13 @@ const hooks = [
     'onBlur',
     'onChange',
 ];
+
+const Input = styled.input`
+border: 0;
+width: 100%;
+font-${props => props.theme.text.medium};
+padding: ${props => props.theme.global.edgeSize.small};
+`;
 
 const defaultOptions = {
     enableTime: true,
@@ -147,10 +155,10 @@ export default class DateTimePicker extends React.Component {
         } = omit(this.props, hooks);
 
         return (
-            <input
+            <Input
                 {...props}
                 defaultValue={defaultValue}
-                ref={this.setNode}
+                innerRef={this.setNode}
             />
         );
     }

@@ -2,11 +2,8 @@ import React from 'react';
 import { defaults } from 'lodash';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action } from 'mobx';
-import Button        from 'grommet/components/Button';
-import Box           from 'grommet/components/Box';
-import Menu          from 'grommet/components/Menu';
-import TextInput     from 'grommet/components/TextInput';
+import { action, observable } from 'mobx';
+import { Button, Box, DropButton, TextInput } from 'grommet';
 import { Refresh }   from 'grommet-icons';
 import ClauseModel   from '../../models/query/clause';
 import { Radio, ClauseFilter } from './clause-filter';
@@ -30,6 +27,8 @@ export default class Clause extends React.Component {
         typeHandlers: PropTypes.object,
     }
 
+    @observable showFilter = false;
+
     @action.bound onSelect() {
         this.menuRef._onClose();
     }
@@ -50,6 +49,10 @@ export default class Clause extends React.Component {
         return defaults(this.props.typeHandlers, defaultHandlers);
     }
 
+    @action.bound toggleFilter() {
+        this.showFilter = !this.showFilter;
+    }
+
     renderInputTag() {
         const Tag = this.handlers[this.props.clause.field.queryType];
         if (Tag) {
@@ -60,7 +63,7 @@ export default class Clause extends React.Component {
                 autoFocus
                 style={{ flex: 1 }}
                 value={this.props.clause.value || ''}
-                onDOMChange={this.onValueChange}
+                onInput={this.onValueChange}
             />
         );
     }
@@ -70,11 +73,13 @@ export default class Clause extends React.Component {
 
         return (
             <Box responsive={false} className="clause" direction='row' pad={{ between: 'small' }} align="center">
-                <Menu
+                <DropButton
                     ref={this.setMenuRef}
+                    open={this.showFilter}
                     size='large'
                     pad='small'
-                    closeOnClick={false} icon={<ClauseFilter clause={clause} />}
+                    control={<ClauseFilter onClick={this.toggleFilter} clause={clause} />}
+                    closeOnClick={false}
                 >
                     <Box direction='row' pad="small">
                         <Box size="small" pad={{ between: 'small' }}>
@@ -91,7 +96,7 @@ export default class Clause extends React.Component {
                                 />)}
                         </Box>
                     </Box>
-                </Menu>
+                </DropButton>
                 {this.renderInputTag()}
                 <Button
                     icon={<Refresh />}

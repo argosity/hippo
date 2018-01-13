@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
-import RadioButton   from 'grommet/components/RadioButton';
+import { Anchor, RadioButton } from 'grommet';
 import { Down }      from 'grommet-icons';
 import { BaseModel } from '../../models/base';
 import ClauseModel   from '../../models/query/clause';
@@ -47,11 +47,11 @@ export class ClauseFilter extends React.Component {
     }
 
     render() {
-        const { clause } = this.props;
+        const { onClick, clause } = this.props;
         return (
-            <span>
+            <Anchor plain onClick={onClick}>
                 <Down /> {clause.field.label} {clause.operator.label}
-            </span>
+            </Anchor>
         );
     }
 

@@ -28,7 +28,7 @@ export default class Group extends React.Component {
                         {group.title}
                         <Icon name={group.icon} />
                     </Heading>
-                </Header>
+                </Box>
                 {group.screens.map(s =>
                     <MenuOption
                         key={s.id}

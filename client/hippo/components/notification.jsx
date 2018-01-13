@@ -3,22 +3,42 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Box from 'grommet/components/Box';
+import { Box } from 'grommet';
+import { Close } from 'grommet-icons';
 import StatusIcon from './icon/status';
 
-export default function Notification({ size, className, children, status, ...otherProps }) {
+export default function Notification({
+    size, className, message, children, status, closer, onClose, ...otherProps
+}) {
     let statusNode;
     if (status) {
         statusNode = (
-            <StatusIcon className={`${CLASS_ROOT}__status`}
-                        value={status} size={size} />
+            <StatusIcon className="notification-status" value={status} size={size} />
         );
     }
 
+    const classes = classnames(
+        'notification',
+        `notification-status-${status.toLowerCase()}`,
+        className,
+    );
+
+    let closerNode;
+    if ('object' === typeof closer) {
+        closerNode = closer;
+    } else if (onClose && closer) {
+        closerNode = (
+            <Button
+                plain={true} onClick={onClose}
+                icon={<Close className="notification-close" />}
+            />
+        );
+    }
 
     return (
         <Box
-            {...otherProps} className={classes}
+            {...otherProps}
+            className={classes}
             pad='small' direction='row' align='start'
             responsive={false}
         >
@@ -26,20 +46,13 @@ export default function Notification({ size, className, children, status, ...oth
                 {statusNode}
             </Box>
             <Box flex={true} pad='small'>
-                <span className={`${CLASS_ROOT}__message`}>
-                    {message}
-                </span>
-                {context}
-                {stateNode}
-
+                <span className="notification-message">{message}</span>
                 {children}
             </Box>
             {closerNode}
         </Box>
     );
-
-};
-
+}
 
 Notification.propTypes = {
     size: PropTypes.oneOf(['small', 'medium', 'large']),

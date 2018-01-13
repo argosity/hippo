@@ -1,9 +1,59 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import styled, { css } from 'styled-components';
 
 const CLASS_ROOT = 'hip-value';
 const COLOR_INDEX = 1;
+
+
+const sizeStyle = (props, sizeType) => {
+    // size is a combination of the level and size properties
+    const size = props.size || sizeType || 'medium';
+    const data = props.theme.text[size];
+    return css`
+    font-size: ${data.size};
+    line-height: ${data.height};
+  `;
+};
+
+const Units = styled.span`
+  ${props => sizeStyle(props)}
+`;
+
+const Label = styled.span`
+font-size: 1.1875rem;
+line-height: 1.26316;
+display: inline-block;
+`
+
+const Content = styled.div`
+display: flex;
+flex-direction: ${props => props.reversed ? 'row-reverse' : 'row'};
+`;
+
+const InnerValue = styled.span`
+font-weight: 500;
+font-size: 2.25rem;
+line-height: 1.33333;
+`;
+
+const Annotated = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  ${props => sizeStyle(props)}
+`;
+
+const StyledValue = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default function Value({
     active, align, className, colorIndex, icon, label, responsive,
@@ -22,58 +72,27 @@ export default function Value({
         className,
     );
 
-    let unitsSpan;
-    if (units) {
-        unitsSpan = (
-            <span className={`${CLASS_ROOT}__units`}>
-                {units}
-            </span>
-        );
-    }
-
-    let labelSpan;
-    if (label) {
-        labelSpan = (
-            <span className={`${CLASS_ROOT}__label`}>
-                {label}
-            </span>
-        );
-    }
-
-    let contentNode;
-    if (reverse) {
-        contentNode = (
-            <div>
-                <span className={`${CLASS_ROOT}__value`}>
-                    {value}
-                </span>
-                {unitsSpan}
-                {icon}
-            </div>
-        );
-    } else {
-        contentNode = (
-            <div>
-                {icon}
-                <span className={`${CLASS_ROOT}__value`}>
-                    {value}
-                </span>
-                {unitsSpan}
-            </div>
-        );
-    }
+    const unitsSpan = units && <Units>{units}</Units>;
+    const labelSpan = label && <Label>{label}</Label>;
+    const contentNode = (
+        <Content reversed>
+            <InnerValue>{value}</InnerValue>
+            {unitsSpan}
+            {icon}
+        </Content>
+    );
 
     return (
-        <div
+        <StyledValue
             {...otherProps}
             className={classes}
         >
-            <div className={`${CLASS_ROOT}__annotated`}>
+            <Annotated>
                 {contentNode}
                 {trendIcon}
-            </div>
+            </Annotated>
             {labelSpan}
-        </div>
+        </StyledValue>
     );
 }
 

@@ -4,14 +4,26 @@ import { Col } from 'react-flexbox-grid';
 import { action } from 'mobx';
 import { observer }   from 'mobx-react';
 import { titleize } from 'hippo/lib/util';
-import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
-
-import { FieldWrapper } from './form';
+import color from 'grommet/utils/colors';
 import { Document } from 'grommet-icons';
-
 import { BaseModel } from '../models/base';
-import './asset.scss';
+import { StyledWrapper } from './form/field-wrapper';
+
+const AssetWrapper = StyledWrapper.withComponent('div').extend`
+border-bottom: 0;
+.drop-zone { height: 100%; }
+padding: ${props => props.theme.global.edgeSize.small};
+border: ${props => props.theme.global.borderSize.small} dashed transparent;
+overflow: auto;
+min-height: 200px;
+-webkit-overflow-scrolling: touch;
+&:hover {
+ border-color: ${props => color.colorForName('light-3', props.theme)};
+ cursor: pointer;
+ background: ${props => color.colorForName('light-1', props.theme)};
+}
+`;
 
 @observer
 export default class Asset extends React.Component {
@@ -74,30 +86,27 @@ export default class Asset extends React.Component {
 
     render() {
         const {
-            model: _, label: __, name: ___, className, tabIndex, ...col
+            model: _, label: __, name: ___, className, tabIndex, height, ...wrapperProps
         } = this.props;
 
         return (
-            <Col
-                {...col}
-                className={classnames(className, 'asset', 'form-field')}
+            <AssetWrapper
+                height={height || 3}
+                label={this.label}
+                tabIndex={tabIndex}
+                onKeyPress={this.onKey}
+                {...wrapperProps}
             >
-                <FieldWrapper
-                    label={this.label}
-                    tabIndex={tabIndex}
-                    onKeyPress={this.onKey}
+                <Dropzone
+                    className="drop-zone"
+                    activeClassName="drop-zone-active"
+                    onDrop={this.onDrop}
+                    multiple={false}
+                    ref={this.setDZRef}
                 >
-                    <Dropzone
-                        className="drop-zone"
-                        activeClassName="drop-zone-active"
-                        onDrop={this.onDrop}
-                        multiple={false}
-                        ref={this.setDZRef}
-                    >
-                        {this.preview()}
-                    </Dropzone>
-                </FieldWrapper>
-            </Col>
+                    {this.preview()}
+                </Dropzone>
+            </AssetWrapper>
         );
     }
 

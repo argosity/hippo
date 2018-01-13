@@ -10,6 +10,8 @@ export FieldWrapper from './form/field-wrapper';
 export Form from './form/wrapper';
 export Field from './form/fields';
 export { FormField, FormState } from './form/api';
+export FieldsLayout from './form/layout';
+export Heading from './form/heading';
 
 function buildTest(options, defaultOptions) {
     return merge({}, defaultOptions, options);

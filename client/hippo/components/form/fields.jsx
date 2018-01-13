@@ -6,7 +6,6 @@ import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Col, getColumnProps } from 'react-flexbox-grid';
 import FieldWrapper     from './field-wrapper';
-import { titleize } from '../../lib/util';
 import DateWrapper     from './fields/date-wrapper';
 import SelectWrapper   from './fields/select-wrapper';
 import TextWrapper     from './fields/text-wrapper';
@@ -72,32 +71,39 @@ export default class FormField extends React.Component {
 
     render() {
         const {
-            name, className, autoFocus, type, children, label, tabIndex,
-            validate: _, formState: __, help: ___, ...otherProps
+            name, control, className, autoFocus, type, children, label, tabIndex,
+            validate: _, formState: __, help: ___,
+            width, height, left, top, middle, center, area,
+            ...otherProps
         } = getColumnProps(this.props);
-
+        const wrapperProps = {
+            width, height, left, top, middle, center, area, type,
+        };
         const InputTag = TypesMapping[type] || TypesMapping.text;
-
         return (
-            <div className={classnames('form-field', type, className)}>
-                <FieldWrapper
-                    label={label || titleize(name)}
-                    error={this.field.invalidMessage}
-                    help={this.field.help}
-                >
-                    <InputTag
-                        name={name}
-                        tabIndex={tabIndex}
-                        autoFocus={autoFocus}
-                        ref={this.setRef}
-                        value={this.field.value || ''}
-                        type={InputTag === TypesMapping.text ? this.props.type : undefined}
-                        {...this.field.events}
-                        {...otherProps}
-                    />
-                    {children}
-                </FieldWrapper>
-            </div>
+            <FieldWrapper
+                label={label}
+                name={name}
+                error={this.field.invalidMessage}
+                help={this.field.help}
+                className={className}
+                {...wrapperProps}
+                control={control}
+            >
+                <InputTag
+                    plain
+                    name={name}
+                    tabIndex={tabIndex}
+                    autoFocus={autoFocus}
+                    ref={this.setRef}
+                    value={this.field.value || ''}
+                    type={InputTag === TypesMapping.text ? this.props.type : undefined}
+                    {...this.field.events}
+                    {...otherProps}
+                />
+                {control}
+                {children}
+            </FieldWrapper>
         );
     }
 

@@ -24,13 +24,15 @@ export default class LoginDialog extends React.Component {
     render() {
         if (User.isLoggedIn) { return null; }
         return (
-            <Layer closer={true} flush={false}>
-                <LoginForm
-                    title="Please Login…"
-                    onSubmit={this.attemptLogin}
-                    usernameType="text"
-                    secondaryText={User.lastServerMessage}
-                />
+            <Layer closer>
+                <Box margin="medium">
+                    <LoginForm
+                        title="Please Login…"
+                        onSubmit={this.attemptLogin}
+                        usernameType="text"
+                        secondaryText={User.lastServerMessage}
+                    />
+                </Box>
             </Layer>
         );
     }

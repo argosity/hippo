@@ -23,7 +23,7 @@ export default class EmailWrapper extends React.Component {
             <TextInput
                 ref={(f) => { this.inputRef = f; }}
                 {...this.props}
-                onDOMChange={this.onChange}
+                onInput={this.onChange}
             />
         );
     }

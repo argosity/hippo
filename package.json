@@ -92,7 +92,6 @@
     "validator": "^8.0.0",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1",
-    "whatwg-fetch": "^2.0.2",
-    "when-dom-ready": "^1.2.4"
+    "whatwg-fetch": "^2.0.2"
   }
 }

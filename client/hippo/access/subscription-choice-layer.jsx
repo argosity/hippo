@@ -86,7 +86,7 @@ export default class SubscriptionChoiceLayer extends React.Component {
             <Box
                 key={subscription.id}
                 className="subscription"
-                margin={{ bottom: 'medium' }}
+                margin="medium"
                 onClick={() => this.showCCForm(subscription)}
             >
                 <Box
@@ -150,9 +150,7 @@ export default class SubscriptionChoiceLayer extends React.Component {
                 closer={!!this.props.onCancel}
                 onClose={this.props.onCancel}
             >
-                <Box
-                    margin={{ vertical: 'medium' }}
-                >
+                <Box margin="medium">
                     <SwipeableViews
                         disabled index={this.displayIndex}
                     >

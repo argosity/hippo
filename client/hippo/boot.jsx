@@ -1,6 +1,6 @@
 import React        from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM     from 'react-dom';
-import whenDomReady from 'when-dom-ready';
+import whenDomReady from './lib/when-dom-ready';
 import { delay } from 'lodash';
 import { unresolvedAssociations } from 'mobx-decorated-models';
 
@@ -11,18 +11,8 @@ import Tenant from './models/tenant';
 import Workspace from './workspace';
 
 let Root;
-//
-// function renderer(Body) {
-// }
-//
-// if (module.hot) {
-//     module.hot.accept('./workspace', () => {
-//         //const WSNext = require('hippo/workspace').default; // eslint-disable-line global-require
-//         return renderer(Workspace);
-//     });
-// }
 
-whenDomReady().then(() => {
+whenDomReady(() => {
     if (Root) return;
     /* global document: true  */
     Root = document.getElementById('hippo-root');
@@ -31,7 +21,7 @@ whenDomReady().then(() => {
         JSON.parse(document.getElementById('bootstrap-data').innerHTML),
     );
     /* global document: false */
-//    renderer(Workspace);
+
     ReactDOM.render(<Workspace />, Root);
 
     unresolvedAssociations().forEach(({ model, property }) => {

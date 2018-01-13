@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer, Provider, PropTypes as MobxPropTypes } from 'mobx-react';
+import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import HippoUploadAdapter from './text-editor/upload-adapter';
-//import './text-editor/text-editor.scss';
-// using require since otherwise webpack warns about missing export
-const { BalloonEditor } = require('@ckeditor/ckeditor5-build-balloon');
 
 BalloonEditor.build.plugins.push(HippoUploadAdapter);
 
@@ -23,6 +21,7 @@ export default class TextEditor extends React.Component {
     }
 
     @action.bound setRef(r) {
+        debugger
         this.body = r;
     }
 
