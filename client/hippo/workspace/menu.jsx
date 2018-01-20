@@ -6,12 +6,10 @@ import { isEmpty, get } from 'lodash';
 import Box     from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
 import { Close } from 'grommet-icons';
-import Anchor from 'grommet/components/Anchor';
-import Menu from 'grommet/components/Menu';
 import Icon from '../components/icon';
 import Group   from './menu-group';
 import Screens from '../screens';
-import MenuOption from './menu-option';
+import { MenuLink, MenuOption } from './menu-option';
 import User from '../user';
 import Config from '../config';
 import Asset from '../models/asset';
@@ -47,12 +45,11 @@ class Logout extends React.Component {
     render() {
         if (!User.isLoggedIn) { return null; }
         return (
-            <Menu direction="column" align="start" justify="between" primary>
-                <Anchor label="Log Out" onClick={this.onLogoutClick}>
-                    <Icon name="sign-out" />
-                    Log Out
-                </Anchor>
-            </Menu>
+            <MenuLink
+                icon={<Icon name="sign-out" />}
+                label="Log Out"
+                onClick={this.onLogoutClick}
+            />
         );
     }
 

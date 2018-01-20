@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
-import { observer } from 'mobx-react';
+import { observer, Provider } from 'mobx-react';
 import cn from 'classnames';
 import {
-    BrowserRouter as Router,
+    Router,
     Route,
     Switch,
 } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
+import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
+
 import Grommet from 'grommet/components/Grommet';
 import Sidebar from 'react-sidebar';
 import 'hippo/config-data';
@@ -22,7 +25,6 @@ import Menu        from './menu';
 import Screen      from './screen';
 import LoginDialog from '../access/login-dialog';
 import SubscriptionChoiceLayer from '../access/subscription-choice-layer';
-
 import './styles.scss';
 
 const DOCKED_WIDTH_BREAKPOINT = 950;
@@ -94,19 +96,24 @@ class Workspace extends React.Component {
         return <SubscriptionChoiceLayer />;
     }
 
+    renderMenu() {
+        return (
+            <Menu
+                currentPath={window.location.pathname}
+                isOpen={this.sidebarOpen}
+                isDocked={this.sidebarDocked}
+                onCloseMenu={this.toggleSidebarDocked}
+                onDockToggle={this.toggleSidebarDocked}
+            />
+        );
+    }
+
     render() {
         return (
             <ThemeProvider theme={this.context.theme}>
                 <Sidebar
                     styles={{ sidebar: { zIndex: 6 }, overlay: { zIndex: 5 } }}
-                    sidebar={
-                        <Menu
-                            isOpen={this.sidebarOpen}
-                            isDocked={this.sidebarDocked}
-                            onCloseMenu={this.toggleSidebarDocked}
-                            onDockToggle={this.toggleSidebarDocked}
-                        />
-                    }
+                    sidebar={this.renderMenu()}
                     open={this.sidebarOpen}
                     docked={this.sidebarDocked}
                     onSetOpen={this.onSetSidebarOpen}
@@ -126,12 +133,24 @@ class Workspace extends React.Component {
 
 }
 
-const WorkspaceRoot = () => (
-    <Grommet>
-        <Router>
-            <Route path="/" component={Workspace} />
-        </Router>
-    </Grommet>
-);
+
+class WorkspaceRoot extends React.Component {
+
+    routing = new RouterStore();
+    history = syncHistoryWithStore(createBrowserHistory(), this.routing);
+
+    render() {
+        return (
+            <Grommet>
+                <Provider routing={this.routing}>
+                    <Router history={this.history}>
+                        <Route path="/" component={Workspace} />
+                    </Router>
+                </Provider>
+            </Grommet>
+        );
+    }
+
+}
 
 export default WorkspaceRoot;

@@ -10,7 +10,7 @@ import {
 import User from '../user';
 
 @observer
-export default class Preferences extends React.PureComponent {
+export default class Preferences extends React.Component {
 
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,

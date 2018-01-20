@@ -27,8 +27,10 @@ export default class SelectFieldWrapper extends React.Component {
     @computed get value() {
         return this.props.value ? get(find(this.props.collection, { id: this.props.value }), 'label', '') : '';
     }
+
     render() {
         const { children, collection, ...otherProps } = this.props;
+
         return (
             <Select
                 {...otherProps}

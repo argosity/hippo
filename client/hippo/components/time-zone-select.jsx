@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from 'grommet/components/Select';
+import { Select } from 'grommet';
 import { observer } from 'mobx-react';
 import { action, computed, observable } from 'mobx';
 import { filter } from 'lodash';
@@ -12,7 +12,6 @@ export default class TimeZoneSelect extends React.Component {
 
     static propTypes = {
         value: PropTypes.string,
-        onChange: PropTypes.func.isRequired,
     }
 
     static defaultProps = {
