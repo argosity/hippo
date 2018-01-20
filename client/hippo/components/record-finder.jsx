@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { get } from 'lodash';
-
-import { Field } from 'hippo/components/form';
-
-import Button from 'grommet/components/Button';
-import SearchIcon from 'grommet/components/icons/base/Search';
+import { Button } from 'grommet';
+import { Search } from 'grommet-icons';
+import { Field } from './form';
 import { BaseModel } from '../models/base';
 import Query from '../models/query';
-import './record-finder/record-finder.scss';
 import QueryLayer from './record-finder/query-layer';
+import './record-finder/record-finder.scss';
 
 @inject('formState')
 @observer
@@ -77,6 +75,7 @@ export default class RecordFinder extends React.Component {
                 onKeyPress={this.onKeyPress}
                 readOnly={Boolean(model && !model.isNew)}
                 {...otherProps}
+                control={<Button icon={<Search />} onClick={this.onSearchClick} />}
             >
                 <QueryLayer
                     query={query}
@@ -85,11 +84,7 @@ export default class RecordFinder extends React.Component {
                     onRecordSelect={this.onRecordSelect}
                     onClose={this.onSearchClose}
                 />
-                <Button
-                    className="grommetux-control-icon-search"
-                    icon={<SearchIcon />}
-                    onClick={this.onSearchClick}
-                />
+
             </Field>
         );
     }

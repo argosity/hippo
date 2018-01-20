@@ -85,24 +85,24 @@ export function classify(str) {
 
 export function isBlank(value) {
     switch (true) {
-    case isDate(value):
-        return isNaN(value.getDate());
-    case isError(value):
-    case isNaN(value):
-        return true;
-    case isElement(value):
-    case isFunction(value):
-    case isBoolean(value):
-    case isRegExp(value):
-        return false;
-    case isNumber(value):
-        return !value;
-    case isObject(value):
-        return isEmpty(value);
-    case isString(value):
-        return isEmpty(trim(value));
-    default:
-        return isNil(value);
+        case isDate(value):
+            return isNaN(value.getDate());
+        case isError(value):
+        case isNaN(value):
+            return true;
+        case isElement(value):
+        case isFunction(value):
+        case isBoolean(value):
+        case isRegExp(value):
+            return false;
+        case isNumber(value):
+            return !value;
+        case isObject(value):
+            return isEmpty(value);
+        case isString(value):
+            return isEmpty(trim(value));
+        default:
+            return isNil(value);
     }
 }
 

@@ -1,0 +1,60 @@
+// $spinning-base-spacing-unit: 24px;
+
+// $spinning-dash: round($spinning-base-spacing-unit * 2 * 3.1416);
+
+// // @include keyframes(drawAndReverse) {
+// //   0% {
+// //     stroke-dashoffset: $spinning-dash;
+// //   }
+
+// //   100% {
+// //     stroke-dashoffset: - ($spinning-dash - 20); // empirical
+// //   }
+// // }
+
+// .icon-spinning {
+//   width: $spinning-base-spacing-unit;
+//   height: $spinning-base-spacing-unit;
+//   stroke-dasharray: $spinning-dash $spinning-dash;
+//   stroke-dashoffset: 0;
+//   transform: rotate(90deg);
+// //  @include animation('drawAndReverse 4s alternate infinite ease-in-out');
+//   @media all and (-ms-high-contrast: none) {
+//     transform: rotate(0deg);
+//     stroke-dashoffset: 50;
+// //    @include animation('fadeOut 3s infinite linear');
+//   }
+// }
+
+// .icon-spinning--xsmall {
+//   width: $icon-xsmall-size;
+//   height: $icon-xsmall-size;
+// }
+
+// .icon-spinning--medium {
+//   width: $icon-medium-size;
+//   height: $icon-medium-size;
+// }
+
+// .icon-spinning--large {
+//   width: $icon-large-size;
+//   height: $icon-large-size;
+// }
+
+// .icon-spinning--xlarge {
+//   width: $icon-xlarge-size;
+//   height: $icon-xlarge-size;
+// }
+
+// .icon-spinning--huge {
+//   width: $icon-huge-size;
+//   height: $icon-huge-size;
+// }
+
+// .icon-spinning--xlarge.icon-spinning--responsive,
+// .icon-spinning--huge.icon-spinning--responsive {
+//   // @include media-query(palm) {
+//   //   width: round($spinning-base-spacing-unit * 2);
+//   //   height: round($spinning-base-spacing-unit * 2);
+//   // }
+// }

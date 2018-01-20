@@ -1,17 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col } from 'react-flexbox-grid';
 import { action } from 'mobx';
 import { observer }   from 'mobx-react';
 import { titleize } from 'hippo/lib/util';
-import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
-
-import Field from 'grommet/components/FormField';
-import DocumentIcon from 'grommet/components/icons/base/DocumentCloud';
-
+import color from 'grommet/utils/colors';
+import { Document } from 'grommet-icons';
 import { BaseModel } from '../models/base';
-import './asset.scss';
+import { StyledWrapper } from './form/field-wrapper';
+
+const AssetWrapper = StyledWrapper.withComponent('div').extend`
+border-bottom: 0;
+.drop-zone { height: 100%; }
+padding: ${props => props.theme.global.edgeSize.small};
+border: ${props => props.theme.global.borderSize.small} dashed transparent;
+overflow: auto;
+min-height: 200px;
+-webkit-overflow-scrolling: touch;
+&:hover {
+ border-color: ${props => color.colorForName('light-3', props.theme)};
+ cursor: pointer;
+ background: ${props => color.colorForName('light-1', props.theme)};
+}
+`;
 
 @observer
 export default class Asset extends React.Component {
@@ -62,7 +73,7 @@ export default class Asset extends React.Component {
         if (this.asset && this.asset.exists) {
             return this.asset.isImage ?
                 <img src={this.asset.previewUrl} alt="" /> :
-                <DocumentIcon size="xlarge" type="status" />;
+                <Document size="xlarge" type="status" />;
         }
         return (
             <div>
@@ -74,30 +85,27 @@ export default class Asset extends React.Component {
 
     render() {
         const {
-            model: _, label: __, name: ___, className, tabIndex, ...col
+            model: _, label: __, name: ___, tabIndex, height, ...wrapperProps
         } = this.props;
 
         return (
-            <Col
-                {...col}
-                className={classnames(className, 'asset', 'form-field')}
+            <AssetWrapper
+                height={height || 3}
+                label={this.label}
+                tabIndex={tabIndex}
+                onKeyPress={this.onKey}
+                {...wrapperProps}
             >
-                <Field
-                    label={this.label}
-                    tabIndex={tabIndex}
-                    onKeyPress={this.onKey}
+                <Dropzone
+                    className="drop-zone"
+                    activeClassName="drop-zone-active"
+                    onDrop={this.onDrop}
+                    multiple={false}
+                    ref={this.setDZRef}
                 >
-                    <Dropzone
-                        className="drop-zone"
-                        activeClassName="drop-zone-active"
-                        onDrop={this.onDrop}
-                        multiple={false}
-                        ref={this.setDZRef}
-                    >
-                        {this.preview()}
-                    </Dropzone>
-                </Field>
-            </Col>
+                    {this.preview()}
+                </Dropzone>
+            </AssetWrapper>
         );
     }
 

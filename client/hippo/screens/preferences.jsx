@@ -2,16 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
-import { Row } from 'react-flexbox-grid';
 import Screen from '../components/screen';
 import { Toolbar, SaveButton } from '../components/toolbar';
 import {
-    Form, Field, FormState, nonBlank, validEmail,
+    Form, Field, FormState, nonBlank, validEmail, FieldsLayout, Heading,
 } from '../components/form';
 import User from '../user';
 
 @observer
-export default class Preferences extends React.PureComponent {
+export default class Preferences extends React.Component {
 
     static propTypes = {
         screen: PropTypes.instanceOf(Screen.Instance).isRequired,
@@ -43,13 +42,13 @@ export default class Preferences extends React.PureComponent {
                         onClick={this.onSave}
                     />
                 </Toolbar>
-                <h4>Account information:</h4>
-                <Row>
-                    <Field xs={6} name="login" validate={nonBlank} />
-                    <Field xs={6} name="name" validate={nonBlank} />
-                    <Field sm={6} xs={12} name="email" validate={validEmail} />
-                    <Field sm={6} xs={12} name="password" type="password" />
-                </Row>
+                <Heading>Account information</Heading>
+                <FieldsLayout>
+                    <Field name="login" validate={nonBlank} />
+                    <Field name="name" validate={nonBlank} />
+                    <Field name="email" validate={validEmail} />
+                    <Field name="password" type="password" />
+                </FieldsLayout>
             </Form>
         );
     }

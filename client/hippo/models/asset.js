@@ -38,7 +38,7 @@ export default class Asset extends BaseModel {
 
     static urlForSize(data, size) {
         const url = get(data, `${size}.id`);
-        return url ? `${Config.api_host}${this.syncUrl}/${url}` : null;
+        return url ? `${Config.asset_host}${this.syncUrl}/${url}` : null;
     }
 
     @action.bound

@@ -1,16 +1,9 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
 import { observer }   from 'mobx-react';
 import { action } from 'mobx';
-
-import Heading from 'grommet/components/Heading';
-import Layer   from 'grommet/components/Layer';
-import Box     from 'grommet/components/Box';
-import CloseIcon from 'grommet/components/icons/base/Close';
-import Button   from 'grommet/components/Button';
-
+import { Heading, Layer, Box, Button } from 'grommet';
+import { Close } from 'grommet-icons';
 import DataTable from '../data-table';
 import QueryBuilder from '../query-builder';
 
@@ -40,11 +33,11 @@ export default class QueryLayer extends React.Component {
 
         return (
             <Layer
-                closer
-                pad="small"
-                padding={{ bottom: 'small' }}
+                onEsc={onClose}
             >
                 <Box
+                    pad="small"
+                    padding={{ bottom: 'small' }}
                     direction='column'
                     margin={{ bottom: 'small' }}
                 >
@@ -52,13 +45,11 @@ export default class QueryLayer extends React.Component {
                         direction='row'
                         justify='start'
                         align='center'
-                        margin={{ top: 'small' }}
-                        flex='grow'
                     >
                         <Box flex="grow">
-                            <Heading tag="h3" margin="none">{title}</Heading>
+                            <Heading level={3} margin="none">{title}</Heading>
                         </Box>
-                        <Button plain icon={<CloseIcon />} onClick={onClose} />
+                        <Button plain icon={<Close />} onClick={onClose} />
                     </Box>
                     <QueryBuilder query={query} autoFetch />
                     <DataTable

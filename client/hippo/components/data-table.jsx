@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import { autobind } from 'core-decorators';
 import cn from 'classnames';
 import 'react-virtualized/styles.css';
-import NextIcon from 'grommet/components/icons/base/CaretNext';
+import { Next } from 'grommet-icons';
 import Button   from 'grommet/components/Button';
 import ActivityOverlay from './network-activity-overlay';
 import './data-table/table-styles.scss';
@@ -18,7 +18,7 @@ import HeaderCell from './data-table/header-cell';
 function renderEditTriangle({ rowIndex, columnData: { onEdit } }) {
     return (
         <Button
-            plain icon={<NextIcon />}
+            plain icon={<Next />}
             onClick={partial(onEdit, rowIndex)}
         />
     );

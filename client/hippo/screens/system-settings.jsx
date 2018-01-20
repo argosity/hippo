@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { observable, action } from 'mobx';
 import { observer }   from 'mobx-react';
 import { map, compact, invoke } from 'lodash';
-import { Row, Col } from 'react-flexbox-grid';
-import Heading from 'grommet/components/Heading';
+import { Heading, FieldsLayout } from '../components/form';
 import Screen from '../components/screen';
 import Asset  from '../components/asset';
 import Settings from '../models/system-setting';
@@ -83,23 +82,21 @@ export default class SystemSettings extends React.Component {
                         onClick={this.onSave}
                     />
                 </Toolbar>
-                <Heading>{this.props.screen.definition.title}</Heading>
-                <Warning message={this.settings.errorMessage} />
-                <TenantSettings ref={this.setTenantRef} />
-                <Heading tag="h3">Images</Heading>
-                <Row>
-                    <Col sm={6} xs={12}>
+                <Screen.body>
+                    <Heading>{this.props.screen.definition.title}</Heading>
+                    <Warning message={this.settings.errorMessage} />
+                    <TenantSettings ref={this.setTenantRef} />
+                    <Heading>Images</Heading>
+                    <FieldsLayout>
                         <Asset model={this.settings} name="logo" />
-                    </Col>
-                    <Col sm={6} xs={12}>
                         <Asset model={this.settings} name="print_logo" />
-                    </Col>
-                </Row>
-                <MailerConfig
-                    settings={this.settings.settings}
-                    registerForSave={panel => this.extensionPanelRefs.set('mail', panel)}
-                />
-                {this.extensionPanels}
+                    </FieldsLayout>
+                    <MailerConfig
+                        settings={this.settings.settings}
+                        registerForSave={panel => this.extensionPanelRefs.set('mail', panel)}
+                    />
+                    {this.extensionPanels}
+                </Screen.body>
             </Screen>
         );
     }

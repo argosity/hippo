@@ -1,18 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
-import { Row } from 'react-flexbox-grid';
-import Heading from 'grommet/components/Heading';
-import Box from 'grommet/components/Box';
-import { Form, Field, FormState, nonBlank } from 'hippo/components/form';
-import Notification from 'grommet/components/Notification';
-import Layer from 'grommet/components/Layer';
-import Paragraph from 'grommet/components/Paragraph';
-import Anchor from 'grommet/components/Anchor';
-import Button from 'grommet/components/Button';
-import LinkIcon from 'grommet/components/icons/base/Link';
-import UserAdminIcon from 'grommet/components/icons/base/UserAdmin';
-import ClearIcon from 'grommet/components/icons/base/Clear';
+import { Anchor, Button, Paragraph, Layer, Box } from 'grommet';
+import { Link, Clear, UserAdmin } from 'grommet-icons';
+import {
+    Form, Field, FormState, nonBlank, Heading, FieldsLayout,
+} from 'hippo/components/form';
+import Notification from 'hippo/components/notification';
 import Tenant from '../../models/tenant';
 import Config from '../../config';
 import SubscriptionChoiceLayer from '../../access/subscription-choice-layer';
@@ -24,11 +18,11 @@ function TenantSlugChange({ oldSlug }) {
     return (
         <Layer onClose={onTenantSlugChangeClose}>
             <Box pad="medium">
-                <Heading tag="h3">Your account identifier has changed!</Heading>
+                <Heading size={4}>Your account identifier has changed!</Heading>
                 <Paragraph size='large'>
                     You will need to login to your account from the updated address at:
                 </Paragraph>
-                <Anchor icon={<LinkIcon />} label={Tenant.current.domain} href={`https://${Tenant.current.domain}`} primary={true} />
+                <Anchor icon={<Link />} label={Tenant.current.domain} href={`https://${Tenant.current.domain}`} primary={true} />
             </Box>
         </Layer>
     );
@@ -104,36 +98,37 @@ export default class TenantConfig extends React.Component {
             <Form tag="div" className="tenant-edit-form" state={this.formState}>
                 {this.renderSubscriptionChoice()}
                 <TenantSlugChange oldSlug={this.slugChangedFrom} />
-                <Heading tag="h3">Account</Heading>
-                <Row>
+
+                <FieldsLayout>
                     <Field
-                        xs={6} name="slug"
+                        name="slug"
                         label="Identifier"
                         validate={nonBlank}
                     />
-                    <Field xs={6} name="name" validate={nonBlank} />
-                </Row>
-                <Row>
+                    <Field name="name" validate={nonBlank} />
+                </FieldsLayout>
+                <Heading>Subscription</Heading>
+                <Box margin="small" padding="small">
                     <Field
-                        xs={12} type="label"
-                        label="Subscription"
+                        type="label"
+                        label={false}
                         name="subscription_name"
                         value={
-                            <Box direction="row" justify="between">
+                            <Box flex margin="small" direction="row" justify="between">
                                 <Button
-                                    plain label={Tenant.current.subscription.nameAndCost}
-                                    icon={<UserAdminIcon />}
+                                    plain
+                                    label={Tenant.current.subscription.nameAndCost}
+                                    icon={<UserAdmin />}
                                     onClick={this.onSubscriptionChange}
                                 />
                                 <Button
-                                    plain label="Cancel"
-                                    icon={<ClearIcon />}
+                                    plain label="Cancel" icon={<Clear />}
                                     onClick={this.onSubscriptionCancel}
                                 />
                             </Box>
                         }
                     />
-                </Row>
+                </Box>
                 {this.renderIdChangeWarning()}
             </Form>
         );

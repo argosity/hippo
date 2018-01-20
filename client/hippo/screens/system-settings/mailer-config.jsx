@@ -1,10 +1,7 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import { Row } from 'react-flexbox-grid';
-import Heading from 'grommet/components/Heading';
-
-import { Form, Field, FormState, nonBlank, validEmail  } from 'hippo/components/form';
+import { Heading, FieldsLayout, Form, Field, FormState, nonBlank, validEmail  } from 'hippo/components/form';
 
 @observer
 export default class MailerConfig extends React.Component {
@@ -30,12 +27,12 @@ export default class MailerConfig extends React.Component {
     render() {
         return (
             <div className="section">
-                <Heading tag="h3">Email settings</Heading>
+                <Heading>Email settings</Heading>
                 <Form state={this.formState}>
-                    <Row className="section">
-                        <Field xs={6} name="from_email" label="From Email" validate={validEmail} />
-                        <Field xs={6} name="from_name" label="From Name" validate={nonBlank} />
-                    </Row>
+                    <FieldsLayout>
+                        <Field name="from_email" label="From Email" validate={validEmail} />
+                        <Field name="from_name" label="From Name" validate={nonBlank} />
+                    </FieldsLayout>
                 </Form>
             </div>
         );

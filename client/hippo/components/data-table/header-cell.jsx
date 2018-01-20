@@ -6,9 +6,7 @@ import { observer } from 'mobx-react';
 
 import Box      from 'grommet/components/Box';
 import Button   from 'grommet/components/Button';
-import AscIcon  from 'grommet/components/icons/base/LinkDown';
-import DescIcon from 'grommet/components/icons/base/LinkUp';
-import AddIcon  from 'grommet/components/icons/base/AddCircle';
+import { Ascending, Descending, Add } from 'grommet-icons';
 
 import Field from '../../models/query/field';
 
@@ -49,7 +47,7 @@ export default class SortingHeaderCell extends React.Component {
         if (!this.displayAdd) { return null; }
         return (
             <Button
-                icon={<AddIcon />}
+                icon={<Add />}
                 onClick={this.props.onAdd}
                 plain
             />
@@ -58,7 +56,7 @@ export default class SortingHeaderCell extends React.Component {
 
     sortIndicator() {
         if (!this.field.isSortingBy) { return null; }
-        return this.field.query.sortAscending ? <AscIcon /> : <DescIcon />;
+        return this.field.query.sortAscending ? <Ascending /> : <Descending />;
     }
     render() {
         let label = <span>{this.field.label}</span>;
@@ -67,8 +65,7 @@ export default class SortingHeaderCell extends React.Component {
             label = (
                 <Button
                     key="sort"
-                    plain={true}
-                    fill={true}
+                    plain
                     onClick={this.onClick}
                 >
                     {label}

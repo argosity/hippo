@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { action } from 'mobx';
 import TextInput from 'grommet/components/TextInput';
 
-
 @observer
 export default class TextWrapper extends React.Component {
 
@@ -16,11 +15,12 @@ export default class TextWrapper extends React.Component {
     }
 
     render() {
+        const inputProps = this.props;
         return (
             <TextInput
                 ref={(f) => { this.inputRef = f; }}
                 onSelect={this.onSelect}
-                {...this.props} onDOMChange={this.props.onChange}
+                {...inputProps} onInput={this.props.onChange}
             />
         );
     }

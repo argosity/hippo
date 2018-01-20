@@ -1,12 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { action } from 'mobx';
-import { observer } from 'mobx-react';
-import Anchor from 'grommet/components/Anchor';
+import { action, computed } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import { RoutedAnchor } from 'grommet';
+import styled, { css } from 'styled-components';
+import color from 'grommet/utils/colors';
 import Icon from '../components/icon';
 
+const activeStyle = css`
+  background-color: ${props => color.colorForName('neutral-4', props.theme)};
+`;
+
+const MenuLink = styled(RoutedAnchor)`
+  padding: 10px 0 10px 10px;
+  color: ${props => color.colorForName('light-1', props.theme)};
+  ${props => props.isActive && activeStyle}
+  &:hover {
+    text-decoration: none;
+    background-color: ${props => color.colorForName('border', props.theme)};
+  }
+`;
+
+export { MenuLink };
+
+@inject('routing')
 @observer
-export default class MenuOption extends React.Component {
+export class MenuOption extends React.Component {
 
     static propTypes = {
         onSelection: PropTypes.func.isRequired,
@@ -18,7 +37,7 @@ export default class MenuOption extends React.Component {
     }
 
     static contextTypes = {
-        viewport: PropTypes.object,
+        router: PropTypes.object,
     }
 
     @action.bound
@@ -27,13 +46,26 @@ export default class MenuOption extends React.Component {
         this.props.screen.display();
     }
 
+    @computed get path() {
+        return `/${this.props.screen.id}`;
+    }
+
+    @computed get isActive() {
+        const { location } = this.props.routing;
+        return this.path === location.pathname;
+    }
+
+
     render() {
         const { screen } = this.props;
         return (
-            <Anchor path={`/${screen.id}/`} onClick={this.activateScreen}>
-                <Icon name={screen.icon} />
-                {screen.title}
-            </Anchor>
+            <MenuLink
+                isActive={this.isActive}
+                icon={<Icon name={screen.icon} />}
+                label={screen.title}
+                path={this.path}
+                onClick={this.activateScreen}
+            />
         );
     }
 

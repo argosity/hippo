@@ -7,8 +7,9 @@ module Hippo
 
             def javascript_tags(*entries)
                 Root.webpack.wait_until_available
+                origin = Hippo.env.production? ? '' : 'crossorigin';
                 entries.map { |entry|
-                    "<script src=\"#{Root.webpack.host}/assets/#{Root.webpack.file(entry)}\"></script>"
+                    "<script #{origin} src=\"#{Root.webpack.host}/assets/#{Root.webpack.file(entry)}\"></script>"
                 }.join("\n")
             end
 

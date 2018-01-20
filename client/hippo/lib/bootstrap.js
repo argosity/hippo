@@ -1,17 +1,15 @@
 // this file's imports should be kept as small as possible, it'll be typical used
 // to bootstrap a remote lib
-import whenDomReady from 'when-dom-ready';
 
-const PENDING  = Symbol('PENDING');
-const ERROR    = Symbol('ERROR');
-const COMPLETE = Symbol('COMPLETE');
+// it also will be loaded without polyfills, so only es3
+
+import whenDomReady from './when-dom-ready';
 
 export default class Bootstrap {
 
     constructor(options = {}) {
         this.options = options;
         this.callbacks = { onReady: [] };
-        this.status = PENDING;
         if (this.options.onReady) { this.onReady(this.options.onReady); }
 
         whenDomReady(() => this.readLoadUrl());
@@ -30,8 +28,8 @@ export default class Bootstrap {
                 return;
             }
         }
-        this.state = ERROR;
-        console.error('Unable to find script tag that Stockor was loaded from'); // eslint-disable-line no-console
+        // eslint-disable-next-line no-console
+        console.error('Unable to find script tag that Stockor was loaded from');
     }
 
     onReady(cb) {
@@ -39,7 +37,6 @@ export default class Bootstrap {
     }
 
     signalDone(host, data) {
-        this.status = COMPLETE;
         this.callbacks.onReady.map(cb => cb(host, data));
     }
 

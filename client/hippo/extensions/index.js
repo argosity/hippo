@@ -37,13 +37,13 @@ const Extensions = {
         return this.instances.get(identifier);
     },
 
-    setBootstrapData(bootstrapData) {
+    setBootstrapData(bootstrapData, config) {
         if (bootstrapData.controlling_extension) {
             this.controlling_id = bootstrapData.controlling_extension;
         }
         this.instances.forEach((instance, key) => {
             if (bootstrapData[key]) {
-                invoke(instance, 'setBootstrapData', bootstrapData[key]);
+                invoke(instance, 'setBootstrapData', bootstrapData[key], config);
             }
         });
     },

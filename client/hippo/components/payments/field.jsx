@@ -1,10 +1,10 @@
 import React from 'react';
-import FieldWrapper from 'grommet/components/FormField';
 import PaymentFields from 'payment-fields';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { getColumnProps } from 'react-flexbox-grid';
 import classnames from 'classnames';
+import { FieldWrapper } from '../form';
 import './field.scss';
 
 @observer

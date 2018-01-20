@@ -1,19 +1,33 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import Header from 'grommet/components/Header';
+import Box from 'grommet/components/Box';
+import styled from 'styled-components';
 import cn from 'classnames';
 
 export SaveButton from './save-button';
 
+const TB = styled(Box)`
+> *:not(:first-child) {
+  margin-left: ${props => props.theme.global.edgeSize.small}
+};
+`;
+
 export function Toolbar({ children, className, ...props }) {
     return (
-        <Header
+        <TB
+            gridArea="header"
+            direction="row"
             align="center"
-            fixed colorIndex="light-2"
+            background="light-3"
+            margin="none"
             className={cn('hippo-toolbar', className)}
             pad={{ horizontal: 'small', vertical: 'small', between: 'small' }}
             {...props}
         >
             {children}
-        </Header>
+        </TB>
     );
 }
+
+Toolbar.expand = styled.div`
+flex: 1;
+`;

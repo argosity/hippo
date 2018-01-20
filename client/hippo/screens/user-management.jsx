@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import { isNil, toInteger } from 'lodash';
 import { observable, action, computed } from 'mobx';
 import { observer }   from 'mobx-react';
-
-import Heading from 'grommet/components/Heading';
-
-import Screen from 'hippo/components/screen';
-import DataTable from 'hippo/components/data-table';
-import { UserModel } from 'hippo/user';
-import Query from 'hippo/models/query';
-
+import { Heading } from '../components/form';
+import Screen from '../components/screen';
+import DataTable from '../components/data-table';
+import { UserModel } from '../user';
+import Query from '../models/query';
 import Editor from './user-management/edit-form';
 
 @observer
@@ -53,7 +50,7 @@ export default class UserManagement extends React.Component {
     render() {
         return (
             <Screen {...this.props}>
-                <Heading tag="h3">User Management</Heading>
+                <Heading>User Management</Heading>
                 <DataTable
                     canCreate
                     query={this.query}

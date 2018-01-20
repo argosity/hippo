@@ -36,18 +36,21 @@ module Hippo
                 def make_handler(model, controller, options = {})
                     lambda do
                         authentication = Hippo::API::AuthenticationProvider.new(request)
-                        authentication.wrap_model_access(model, self, options) do
-                            if options[:parent_attribute]
-                              params[:nested_attribute] = Hash[ options[:parent_attribute],
-                                                               params[parent_attribute] ]
-                            end
-                            wrap_reply(options.reverse_merge(with_transaction: !request.get?)) do
-                                yield controller.new(model, authentication, params, data)
+                        if options[:unwrapped]
+                            yield controller.new(model, authentication, params, data)
+                        else
+                            authentication.wrap_model_access(model, self, options) do
+                                if options[:parent_attribute]
+                                    params[:nested_attribute] = Hash[ options[:parent_attribute],
+                                                                      params[parent_attribute] ]
+                                end
+                                wrap_reply(options.reverse_merge(with_transaction: !request.get?)) do
+                                    yield controller.new(model, authentication, params, data)
+                                end
                             end
                         end
                     end
                 end
-
 
                 # Ensure request is performed with a logged in user. The provided block will be called
                 # with |user, request|

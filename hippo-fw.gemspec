@@ -47,7 +47,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "braintree",                 "~> 2.80"
     spec.add_dependency "rack-cors",                 "~> 0.4"
     spec.add_dependency "rack-test",                 "~> 0.6"
-
+    spec.add_dependency "erubis",                    "~> 2.7.0"
     spec.add_dependency "bcrypt",                    "~> 3.1"
     spec.add_dependency "shrine",                    "~> 2.4"
     spec.add_dependency "image_processing",          "~> 0.4"

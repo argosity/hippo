@@ -2,7 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes    from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
-import CircleQuestionIcon from 'grommet/components/icons/base/CircleQuestion';
+import { CircleQuestion } from 'grommet-icons';
 
 export default function Help({ message, ...ttProps }) {
     return (
@@ -11,7 +11,7 @@ export default function Help({ message, ...ttProps }) {
             title={message}
             {...ttProps}
         >
-            <CircleQuestionIcon colorIndex="brand" />
+            <CircleQuestion colorIndex="brand" />
         </Tooltip>
     );
 }

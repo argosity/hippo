@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-
-import Heading from 'grommet/components/Heading';
-import Header  from 'grommet/components/Header';
-import Menu    from 'grommet/components/Menu';
+import Box from 'grommet/components/Box';
+import Menu from 'grommet/components/Menu';
 
 import MenuOption from './menu-option';
 import Icon  from '../components/icon';
@@ -25,12 +23,12 @@ export default class Group extends React.Component {
         const { group } = this.props;
         return (
             <Menu direction="column" align="start" justify="between" primary>
-                <Header align="end" pad={{ horizontal: 'medium' }}>
+                <Box align="end" pad={{ horizontal: 'medium' }}>
                     <Heading tag="h4" strong>
                         {group.title}
                         <Icon name={group.icon} />
                     </Heading>
-                </Header>
+                </Box>
                 {group.screens.map(s =>
                     <MenuOption
                         key={s.id}

@@ -1,16 +1,11 @@
 @import '../styles/global';
-@import '~grommet/scss/aruba/index';
+//@import '~grommet/scss/aruba/index';
 
 .hippo-screen {
     flex: 1;
     flex-direction: column;
-
     display: none;
-
-    @include workspace-screen-padding();
-
     min-height: min-content; min-height: -moz-min-content; min-height: -webkit-min-content;
-
     &.is-active {
         display: flex;
     }
@@ -35,14 +30,14 @@
 
 .screen-selection-menu {
     min-width: 250px;
+    max-width: 250px;
     .grommetux-anchor > .icon {
         margin-right: 0.5rem;
     }
 }
 
 .screens-wrapper {
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     .async-loading {
         align-items: center;
         font-weight: bold;

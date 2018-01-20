@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
-import CheckBox from 'grommet/components/CheckBox';
+import cn from 'classnames';
+import { CheckBox } from 'grommet';
 
 @observer
 export default class CheckBoxWrapper extends React.Component {
@@ -13,9 +14,12 @@ export default class CheckBoxWrapper extends React.Component {
         this.props.onChange({ target: { value } });
     }
     render() {
+        const { className, ...props } = this.props;
         return (
             <CheckBox
-                {...this.props} onChange={this.onChange}
+                {...props}
+                onChange={this.onChange}
+                className={cn('checkbox', className)}
                 onBlur={this.onBlur} checked={!!this.props.value} />
         );
     }

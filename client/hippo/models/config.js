@@ -14,6 +14,7 @@ export default class Config {
     @persist @observable root_view;
     @persist @observable assets_path_prefix = '/assets';
     @persist @observable print_path_prefix = '/print';
+    @persist @observable asset_host;
     @persist @observable website_domain;
     @persist @observable product_name;
     @persist @observable support_email;
@@ -41,7 +42,7 @@ export default class Config {
 
     update(attrs) {
         assign(this, pickBy(attrs, (v, k) => !isNil(v) && hasIn(this, k)));
-        Extensions.setBootstrapData(attrs);
+        Extensions.setBootstrapData(attrs, this);
     }
 
     setScreenData() {

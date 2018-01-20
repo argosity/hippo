@@ -100,7 +100,7 @@ module Hippo
                 data = {}
                 %w{
                   api_path print_path_prefix environment assets_path_prefix
-                  website_domain  product_name support_email
+                  asset_host website_domain  product_name support_email
                 }.each do |config|
                     data[config.to_sym] = Hippo.config.send(config)
                 end

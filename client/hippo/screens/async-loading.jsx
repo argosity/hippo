@@ -1,7 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import Spinning from 'grommet/components/icons/Spinning';
-import FormRefreshIcon from 'grommet/components/icons/base/FormRefresh';
-import AlertIcon from 'grommet/components/icons/base/Alert';
+import Spinning from 'hippo/components/icon/spinning';
+import { Alert, FormRefresh } from 'grommet-icons';
 import Button from 'grommet/components/Button';
 import { asyncComponent } from 'react-async-component';
 import { observer } from 'mobx-react';
@@ -13,9 +12,9 @@ const ErrorComponent = observer(({ screen, retry }) => (
         className={cn('hippo-screen', 'async-loading', 'error', { 'is-active': screen.isActive })}
     >
         <div className="content">
-            <h4><AlertIcon /> Failed to load {screen.definition.title}…</h4>
+            <h4><Alert /> Failed to load {screen.definition.title}…</h4>
             <Button
-                icon={<FormRefreshIcon />}
+                icon={<FormRefresh />}
                 onClick={retry}
                 label="Retry"
             />
