@@ -1,74 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import { Box, Button } from 'grommet';
+import { action } from 'mobx';
+import { Heading, Box, Button } from 'grommet';
+import Notification from '../components/notification';
+import {
+    Form, Field, FormState,
+} from '../components/form';
 
 const CLASS_ROOT = 'login-form';
 
 export default class LoginForm extends Component {
 
-    constructor(props, context) {
-        super(props, context);
+    formState = new FormState()
 
-        this._onSubmit = this._onSubmit.bind(this);
-        this._onUsernameChange = this._onUsernameChange.bind(this);
-        this._onPasswordChange = this._onPasswordChange.bind(this);
-        this._onChange = this._onChange.bind(this);
 
-        this.state = {
-            timestamp: new Date().getTime(),
-            password: '',
-            username: '',
-        };
-    }
-
-    componentDidMount() {
-        if (this.usernameRef) {
-            this.usernameRef.focus();
-        }
-    }
-
-    _onChange(args) {
-        const { onChange } = this.props;
-
-        if (onChange) {
-            onChange(args);
-        }
-    }
-
-    _onUsernameChange(event) {
-        const username = event.target.value;
-        this.setState({ username });
-        this._onChange({ event, username });
-    }
-
-    _onPasswordChange(event) {
-        const password = event.target.value;
-        this.setState({ password });
-        this._onChange({ event, password });
-    }
-
-    _onSubmit(event) {
-        event.preventDefault();
-        const { onSubmit } = this.props;
-        let { username } = this.state;
-        const { password } = this.state;
-        username = username.trim();
-
-        if (onSubmit) {
-            onSubmit({ username, password });
-        }
+    @action.bound onSubmit() {
+        this.props.onSubmit(this.formState.serialize());
     }
 
     render() {
         const {
             align, errors, forgotPassword,
-            logo, onSubmit, secondaryText, title, usernameType,
+            logo, secondaryText, title,
         } = this.props;
-        const { timestamp } = this.state;
-
-        const classes = classnames(CLASS_ROOT, this.props.className);
-        const center = !align || 'stretch' === align || 'center' === align;
 
         const errorsNode = errors.map((error, index) => {
             if (error) {
@@ -76,7 +30,7 @@ export default class LoginForm extends Component {
                 if (React.isValidElement(error)) {
                     errorMessage = error;
                 } else {
-                    errorMessage = <FormattedMessage id={error} defaultMessage={error} />;
+                    errorMessage = <Notification message={error} />;
                 }
                 return (
                     <div key={index} className='error'>
@@ -99,60 +53,40 @@ export default class LoginForm extends Component {
             );
         }
 
-        const username = 'email' === usernameType ? (
-            <FormattedMessage id="Email" defaultMessage="Email" />
-        ) : (
-            <FormattedMessage id="Username" defaultMessage="Username" />
-        );
-
-        const password = (
-            <FormattedMessage id="Password" defaultMessage="Password" />
-        );
-        const login = <FormattedMessage id="Log In" defaultMessage="Log In" />;
-
-        const usernameId = `grommetux-username_${timestamp}`;
-        const passwordId = `grommetux-password_${timestamp}`;
-
         return (
-            <Form className={classes} pad="medium" onSubmit={this._onSubmit}>
+            <Form
+                tag="div"
+                state={this.formState}
+                pad="medium"
+            >
+
                 <Box align={align}>
                     {logo}
                     {titleNode}
                     {secondaryTextNode}
                 </Box>
-                <fieldset>
-                    <FormField htmlFor={usernameId} label={username}>
-                        <input
-                            id={usernameId}
-                            type={usernameType}
-                            ref={(ref) => { this.usernameRef = ref; }}
-                            value={this.state.username}
-                            onChange={this._onUsernameChange}
-                        />
-                    </FormField>
-                    <FormField htmlFor={passwordId} label={password}>
-                        <input
-                            id={passwordId}
-                            type="password"
-                            value={this.state.password}
-                            onChange={this._onPasswordChange}
-                        />
-                    </FormField>
-                    {errorsNode}
-                </fieldset>
-                <Footer
+
+                <Field name="username" />
+
+                <Field name="password" type="password" />
+
+                {errorsNode}
+
+                <Box
                     size="small" direction="column"
-                    align={center ? 'stretch' : 'start'}
+                    align="stretch"
+                    margin={{ vertical: 'medium' }}
                     pad={{ vertical: 'none', between: 'medium' }}
                 >
                     <Button
-                        primary={true} fill={center}
-                        type={onSubmit ? 'submit' : 'button'}
-                        label={login}
-                        onClick={onSubmit ? this._onSubmit : undefined}
+                        primary={true}
+                        fill={false}
+                        label="Log In"
+                        onClick={this.onSubmit}
                     />
                     {forgotPassword}
-                </Footer>
+                </Box>
+
             </Form>
         );
     }
@@ -170,8 +104,7 @@ LoginForm.propTypes = {
     ])),
     forgotPassword: PropTypes.node,
     logo: PropTypes.node,
-    onSubmit: PropTypes.func,
-    onChange: PropTypes.func,
+    onSubmit: PropTypes.func.isRequired,
     secondaryText: PropTypes.string,
     title: PropTypes.string,
     usernameType: PropTypes.string,

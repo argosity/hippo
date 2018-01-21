@@ -167,4 +167,8 @@ export class FormState {
         return Promise.resolve(model);
     }
 
+    serialize() {
+        return mapValues(this.fields.toJS(), 'value');
+    }
+
 }

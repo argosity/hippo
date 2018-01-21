@@ -4,7 +4,7 @@ import { action, observable } from 'mobx';
 import { observer, Provider, PropTypes as MobxPropTypes } from 'mobx-react';
 import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import HippoUploadAdapter from './text-editor/upload-adapter';
-import './text-editor/text-editor.scss';
+import TextEditorWrapper from './text-editor/text-editor-wrapper';
 
 BalloonEditor.build.plugins.push(HippoUploadAdapter);
 
@@ -72,8 +72,9 @@ export default class TextEditor extends React.Component {
                 assets={this.props.assets}
             >
 
-                <div className="text-editor" ref={this.setRef}>
-                </div>
+                <TextEditorWrapper
+                    className="text-editor" ref={this.setRef}
+                />
 
             </Provider>
         );

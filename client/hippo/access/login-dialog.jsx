@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
-import { Layer } from 'grommet';
+import { Box, Layer } from 'grommet';
 import LoginForm from './login-form';
 import User from '../user';
 

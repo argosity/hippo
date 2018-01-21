@@ -1,1 +1,1 @@
-export { Row, Col } from 'react-flexa';
+export { Cell } from 'styled-css-grid';

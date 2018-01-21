@@ -1,7 +1,6 @@
-@import 'hippo/styles/global';
+import styled from 'styled-components';
 
-.grommet .text-editor {
-
+const TextEditorWrapper = styled.div`
     flex: 1;
     min-height: 400px;
     margin: 0.8em;
@@ -29,4 +28,7 @@
             margin-left: 0.5rem;
         }
     }
-}
+
+`;
+
+export default TextEditorWrapper;
