@@ -1,4 +1,5 @@
 import Asset from 'hippo/models/asset';
+import fetch from 'hippo/testing/mocks/fetch';
 import LogoJson from '../test-logo.json';
 
 import { TestImage } from '../test-models';
@@ -9,6 +10,7 @@ describe('Asset Test', () => {
 
     beforeEach(() => {
         model = new TestImage();
+        global.fetch = fetch;
         model.asset = new Asset({ owner: model });
         file = new File([''], 'test-image.png', {
             lastModified: 1449505890000,

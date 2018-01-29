@@ -6,7 +6,61 @@ import Spinning from 'hippo/components/icon/spinning';
 import { CircleInformation } from 'grommet-icons';
 import { delay, isEmpty, includes, get } from 'lodash';
 import classnames from 'classnames';
-import './network-activity-overlay.scss';
+import styled from 'styled-components';
+import { backgroundStyle } from 'grommet/utils/styles';
+import color from 'grommet/utils/colors';
+
+
+const StyledOverlay = styled.div`
+
+    .network-activity-overlay {
+        position: absolute;
+        z-index: 11;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      .mask {
+          background-color: white;
+          height: 100%;
+          left: 0;
+          opacity: 0.8;
+          position: absolute;
+          top: 0;
+          width: 100%;
+      }
+
+            &.rounded {
+          .mask { border-radius: 8px }
+            }
+
+      .message {
+          width: 450px;
+          max-width: 90%;
+          min-height: 65px;
+          line-height: 3rem;
+          border-width: ${props => props.theme.button.border.width};
+          border-color: ${props => props.theme.button.border.color};
+          border-style: solid;
+          margin-left: auto;
+          margin-right: auto;
+          font-size: 2rem;
+          position: relative;
+          top: 25%;
+          border-radius: 8px;
+          padding: 10px;
+          box-shadow: 6px 7px 5px ${props => color.colorForName('neutral-4', props.theme)};
+          background-color: ${props => backgroundStyle(props.color || 'brand', props.theme)}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span { margin-left: 1rem; }
+  }
+
+}
+`;
 
 function Indicator({ error }) {
     return error ? <CircleInformation size="medium" /> : <Spinning size="medium" />;
@@ -106,20 +160,19 @@ export default class NetworkActivityOverlay extends React.Component {
 
     render() {
         if (!this.isVisible) { return null; }
-
         const classes = classnames('network-activity-overlay', this.props.className, {
             rounded: this.props.roundedCorners,
         });
 
         return (
-            <div className={classes}>
+            <StyledOverlay className={classes}>
                 <div className="mask">
                     <div className="message">
                         <Indicator error={this.hasError} />
                         <span>{this.message}</span>
                     </div>
                 </div>
-            </div>
+            </StyledOverlay>
         );
     }
 

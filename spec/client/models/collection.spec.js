@@ -1,7 +1,12 @@
 import { autorun } from 'mobx';
+import Sync from 'hippo/models/sync';
 import { Box } from '../test-models';
 
 describe('Model Collection Test', () => {
+    beforeEach(() => {
+        global.fetch = fetch;
+    });
+
     it('adds items specific for each model', () => {
         const collection = Box.Collection.create();
         expect(Box.identifiedBy).toEqual('test/box');
@@ -23,14 +28,16 @@ describe('Model Collection Test', () => {
     });
 
     it('can fetch', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: [{ width: 12, height: 12, depth: 10 }] }));
-        Box.Collection.create().fetch().then((collection) => {
-            expect(fetch).lastCalledWith(
-                '/api/test/boxes.json',
-                { headers: { 'Content-Type': 'application/json' } },
+        Sync.forCollection.mockImplementationOnce(() => (
+            Promise.resolve(JSON.stringify({
+                data: [{ width: 12, height: 12, depth: 10 }],
+            }))
+        ));
+        const collection = Box.Collection.create();
+        return collection.fetch({ one: 1 }).then(() => {
+            expect(Sync.forCollection).lastCalledWith(
+                collection, { one: 1 },
             );
-            expect(collection.length).toEqual(1);
-            expect(collection[0].volume).toBe(1440);
         });
     });
 

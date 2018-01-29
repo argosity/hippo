@@ -39,10 +39,6 @@ describe('RecordFinder Component', () => {
     });
 
     it('renders', () => {
-        const finder = mount(
-            <RecordFinder {...props} />,
-        );
-        expect(finder).toHaveRendered('TextInput');
         expect(Snapshot(<RecordFinder {...props} />)).toMatchSnapshot();
     });
 });

@@ -4,7 +4,6 @@ import Config from 'hippo/config';
 import Subscription from 'hippo/models/subscription';
 
 export React from 'react';
-
 export { getScreenInstance, Snapshot } from './screens';
 
 Config.subscription_plans = [new Subscription({ id: 1, price: '42.42' })];

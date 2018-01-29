@@ -9,9 +9,10 @@ describe('SystemSettings Tenants section', () => {
         expect(t).not.toHaveRendered('TenantSlugChange Layer');
         TenantModel.current.slug = 'ONE';
         t.find('input[name="name"]').simulate('change', { target: { value: 'NEW' } });
+
         t.instance().onSave();
         setTimeout(() => {
-            expect(t).toHaveRendered('TenantSlugChange Layer');
+            expect(t).toHaveRendered('TenantSlugChange');
             done();
         });
     });

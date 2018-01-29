@@ -1,218 +1,576 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Screen Preferences renders and matches snapshot 1`] = `
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 100%;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #DDDDDD;
+  color: #333333;
+  min-height: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  grid-area: header;
+  margin: undefined;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 100%;
+  min-width: 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 12px;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 100%;
+  min-height: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c1 {
+  display: grid;
+  height: 100%;
+  grid-template-areas: "header header" "main" "footer footer";
+  grid-template-columns: 100%;
+  grid-gap: 12px 12px;
+  grid-template-rows: 48px 1fr 96px;
+}
+
+.c9 {
+  font-size: 24px;
+  line-height: 1.333;
+  max-width: 576px;
+  font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.c17 {
+  padding: 11px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  outline: none;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  border: none;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+.c17::-webkit-input-placeholder {
+  color: #AAAAAA;
+}
+
+.c17::-moz-placeholder {
+  color: #AAAAAA;
+}
+
+.c17:-ms-input-placeholder {
+  color: #AAAAAA;
+}
+
+.c17::-moz-focus-inner {
+  border: none;
+  outline: none;
+}
+
+.c16 {
+  width: 100%;
+}
+
+.c13 {
+  font-size: 16px;
+  line-height: 1.375;
+}
+
+.c14 {
+  font-size: 16px;
+  line-height: 1.375;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #777777;
+}
+
+.c2 > *:not(:first-child) {
+  margin-left: 12px;
+}
+
+.c11 {
+  height: 100%;
+  min-width: 0;
+  -webkit-align-content: space-around;
+  -ms-flex-line-pack: space-around;
+  align-content: space-around;
+  grid-column-end: span 1;
+  grid-row-end: span 1;
+  padding: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-bottom: solid 2px #EEEEEE;
+}
+
+.c11:focus-within {
+  border-bottom-color: #CCCCCC;
+}
+
+.c11:focus-within span {
+  font-weight: 500;
+}
+
+.c11 input[type="checkbox"] {
+  margin-left: 12px;
+}
+
+.c10 {
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-auto-rows: minmax(20px,auto);
+  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+  grid-gap: 8px 8px;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: auto;
+  grid-area: body;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px;
+  grid-auto-rows: minmax(80px,auto);
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+}
+
+.c0 {
+  font-family: 'Work Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333333;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.c0 * {
+  box-sizing: inherit;
+}
+
+.c4 {
+  cursor: pointer;
+  outline: none;
+  font: inherit;
+  text-decoration: none;
+  font: inherit;
+  margin: 0;
+  background-color: transparent;
+  overflow: visible;
+  text-transform: none;
+  text-align: center;
+  display: inline-block;
+  min-width: 96px;
+  max-width: 384px;
+  font-weight: 600;
+  background-color: #865CD6;
+  color: rgba(255,255,255,0.85);
+  border: none;
+  font-size: 1.1875rem;
+  line-height: 24px;
+  padding: 10px 10px;
+}
+
+.c4 svg {
+  fill: #FFFFFF;
+  stroke: #FFFFFF;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.c4:hover {
+  box-shadow: 0px 0px 0px 2px #865CD6;
+}
+
+.c5 {
+  display: inline-block;
+}
+
+.c5:first-child:not(:last-child) {
+  margin-right: 12px;
+}
+
+.c5 > * {
+  vertical-align: bottom;
+}
+
+.c6 {
+  display: inline-block;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  fill: #666666;
+  stroke: #666666;
+}
+
+.c6 g {
+  fill: inherit;
+  stroke: inherit;
+}
+
+.c6 *:not([stroke])[fill="none"] {
+  stroke-width: 0;
+}
+
+.c6 *[stroke*="#"],
+.c6 *[STROKE*="#"] {
+  stroke: inherit;
+  fill: none;
+}
+
+.c6 *[fill-rule],
+.c6 *[FILL-RULE],
+.c6 *[fill*="#"],
+.c6 *[FILL*="#"] {
+  fill: inherit;
+  stroke: none;
+}
+
+.c7:first-child:not(:last-child) {
+  margin-right: 12px;
+}
+
+@media only screen and (min-width:700px) {
+  .c4 {
+    -webkit-transition: 0.1s ease-in-out;
+    transition: 0.1s ease-in-out;
+  }
+}
+
 <div
-  className="hippo-screen preferences is-active"
-  data-screen-id="preferences"
+  className="c0"
 >
   <div
-    className="grommetux-header__container grommetux-header__container--fixed"
+    className="hippo-screen preferences is-active c1"
+    data-screen-id="preferences"
+    rows={
+      Array [
+        "xxsmall",
+        "flex",
+        "xsmall",
+      ]
+    }
   >
     <div
-      className="grommetux-header__mirror"
-    />
-    <div
-      className="grommetux-header__wrapper"
+      aria-label={undefined}
+      className="hippo-toolbar c2 c3"
+      direction="row"
     >
-      <div
-        className="grommetux-box grommetux-box--direction-column grommetux-box--responsive grommetux-box--pad-none grommetux-box--flex-off"
-        id={undefined}
-        onClick={undefined}
-        role={undefined}
-        style={Object {}}
-        tabIndex={undefined}
+      <button
+        aria-label={undefined}
+        className="save-button c4"
+        disabled={false}
+        href={undefined}
+        icon={<Save />}
+        label="Save"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        tabIndex="0"
+        type="button"
       >
-        <header
-          className="grommetux-box grommetux-box--direction-row grommetux-box--align-center grommetux-box--pad-horizontal-small grommetux-box--pad-vertical-small grommetux-box--pad-between-small grommetux-background-color-index-light-2 grommetux-background-color-index--light grommetux-header hippo-toolbar"
-          id={undefined}
-          onClick={undefined}
-          role={undefined}
-          style={Object {}}
-          tabIndex={undefined}
+        <span
+          aria-hidden={true}
+          className="c5"
         >
-          <button
-            aria-label={undefined}
-            className="grommetux-button grommetux-button--primary save-button"
-            disabled={false}
-            href={undefined}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onMouseDown={[Function]}
-            onMouseUp={[Function]}
-            type="button"
+          <svg
+            aria-label="Save"
+            className="c6"
+            height="24px"
+            role="img"
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="24px"
           >
-            <span
-              className="grommetux-button__icon"
-            >
-              <svg
-                aria-label="save"
-                className="grommetux-control-icon grommetux-control-icon-save grommetux-control-icon--responsive"
-                height="24px"
-                role="img"
-                version="1.1"
-                viewBox="0 0 24 24"
-                width="24px"
-              >
-                <path
-                  d="M3,2 L3,21 L21,21 L21,3 L12,3 L12,14 M8,11 L12,15 L16,11"
-                  fill="none"
-                  stroke="#000"
-                  strokeWidth="2"
-                />
-              </svg>
-            </span>
-            <span
-              className="grommetux-button__label"
-            >
-              Save
-            </span>
-          </button>
-        </header>
-      </div>
-    </div>
-  </div>
-  <h4>
-    Account information:
-  </h4>
-  <div
-    className="row"
-  >
-    <div
-      className="form-field text col-xs-6"
-    >
-      <div
-        className="grommetux-form-field grommetux-form-field--size-medium"
-        onClick={[Function]}
-      >
-        <label
-          className="grommetux-form-field__label"
-          htmlFor={undefined}
-        >
-          Login
-        </label>
-        <span
-          className="grommetux-form-field__contents"
-        >
-          <input
-            autoComplete="off"
-            autoFocus={undefined}
-            className="grommetux-text-input grommetux-input"
-            defaultValue={undefined}
-            name="login"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            placeholder={undefined}
-            tabIndex={0}
-            type="text"
-            value=""
-          />
+            <path
+              d="M3,2 L3,21 L21,21 L21,3 L12,3 L12,14 M8,11 L12,15 L16,11"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+            />
+          </svg>
         </span>
-      </div>
+        <span
+          className="c7"
+        >
+          Save
+        </span>
+      </button>
     </div>
     <div
-      className="form-field text col-xs-6"
+      aria-label={undefined}
+      className="c8"
+      direction="column"
     >
-      <div
-        className="grommetux-form-field grommetux-form-field--size-medium"
-        onClick={[Function]}
+      <h3
+        className="c9"
       >
-        <label
-          className="grommetux-form-field__label"
-          htmlFor={undefined}
-        >
-          Name
-        </label>
-        <span
-          className="grommetux-form-field__contents"
-        >
-          <input
-            autoComplete="off"
-            autoFocus={undefined}
-            className="grommetux-text-input grommetux-input"
-            defaultValue={undefined}
-            name="name"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            placeholder={undefined}
-            tabIndex={0}
-            type="text"
-            value=""
-          />
-        </span>
-      </div>
+        Account information
+      </h3>
     </div>
     <div
-      className="form-field text col-sm-6 col-xs-12"
+      className="c10"
+      columns="repeat(auto-fill, minmax(280px, 1fr))"
+      flow="row dense"
     >
-      <div
-        className="grommetux-form-field grommetux-form-field--size-medium"
-        onClick={[Function]}
+      <label
+        className="c11"
+        height={undefined}
+        type="text"
+        width={undefined}
       >
-        <label
-          className="grommetux-form-field__label"
-          htmlFor={undefined}
+        <div
+          aria-label={undefined}
+          className="c12"
+          direction="row"
+          wrap={true}
         >
-          Email
-        </label>
-        <span
-          className="grommetux-form-field__contents"
-        >
-          <input
-            autoComplete="off"
-            autoFocus={undefined}
-            className="grommetux-text-input grommetux-input"
-            defaultValue={undefined}
-            name="email"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            placeholder={undefined}
-            tabIndex={0}
-            type="text"
-            value=""
+          <span
+            className="c13"
+          >
+            Login
+          </span>
+          <span
+            className="c14"
+            color="dark-5"
           />
-        </span>
-      </div>
-    </div>
-    <div
-      className="form-field password col-sm-6 col-xs-12"
-    >
-      <div
-        className="grommetux-form-field grommetux-form-field--size-medium"
-        onClick={[Function]}
+        </div>
+        <div
+          className="c15"
+        >
+          <div
+            className="c16"
+          >
+            <input
+              autoComplete="off"
+              autoFocus={undefined}
+              className="c17"
+              defaultValue={undefined}
+              id={undefined}
+              name="login"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onInput={[Function]}
+              onKeyDown={[Function]}
+              tabIndex={0}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </label>
+      <label
+        className="c11"
+        height={undefined}
+        type="text"
+        width={undefined}
       >
-        <label
-          className="grommetux-form-field__label"
-          htmlFor={undefined}
+        <div
+          aria-label={undefined}
+          className="c12"
+          direction="row"
+          wrap={true}
         >
-          Password
-        </label>
-        <span
-          className="grommetux-form-field__contents"
-        >
-          <input
-            autoComplete="off"
-            autoFocus={undefined}
-            className="grommetux-text-input grommetux-input"
-            defaultValue={undefined}
-            name="password"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            placeholder={undefined}
-            tabIndex={0}
-            type="password"
-            value=""
+          <span
+            className="c13"
+          >
+            Name
+          </span>
+          <span
+            className="c14"
+            color="dark-5"
           />
-        </span>
-      </div>
+        </div>
+        <div
+          className="c15"
+        >
+          <div
+            className="c16"
+          >
+            <input
+              autoComplete="off"
+              autoFocus={undefined}
+              className="c17"
+              defaultValue={undefined}
+              id={undefined}
+              name="name"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onInput={[Function]}
+              onKeyDown={[Function]}
+              tabIndex={0}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </label>
+      <label
+        className="c11"
+        height={undefined}
+        type="text"
+        width={undefined}
+      >
+        <div
+          aria-label={undefined}
+          className="c12"
+          direction="row"
+          wrap={true}
+        >
+          <span
+            className="c13"
+          >
+            Email
+          </span>
+          <span
+            className="c14"
+            color="dark-5"
+          />
+        </div>
+        <div
+          className="c15"
+        >
+          <div
+            className="c16"
+          >
+            <input
+              autoComplete="off"
+              autoFocus={undefined}
+              className="c17"
+              defaultValue={undefined}
+              id={undefined}
+              name="email"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onInput={[Function]}
+              onKeyDown={[Function]}
+              tabIndex={0}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </label>
+      <label
+        className="c11"
+        height={undefined}
+        type="password"
+        width={undefined}
+      >
+        <div
+          aria-label={undefined}
+          className="c12"
+          direction="row"
+          wrap={true}
+        >
+          <span
+            className="c13"
+          >
+            Password
+          </span>
+          <span
+            className="c14"
+            color="dark-5"
+          />
+        </div>
+        <div
+          className="c15"
+        >
+          <div
+            className="c16"
+          >
+            <input
+              autoComplete="off"
+              autoFocus={undefined}
+              className="c17"
+              defaultValue={undefined}
+              id={undefined}
+              name="password"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onInput={[Function]}
+              onKeyDown={[Function]}
+              tabIndex={0}
+              type="password"
+              value=""
+            />
+          </div>
+        </div>
+      </label>
     </div>
   </div>
 </div>

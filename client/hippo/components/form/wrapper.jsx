@@ -1,9 +1,29 @@
 import React from 'react';
+import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
-import { PropTypes as MobxPropTypes, Provider, observer } from 'mobx-react';
+import { PropTypes as MobxPropTypes, Provider as MobxProvider, observer } from 'mobx-react';
+import { ThemeProvider } from 'styled-components';
+import baseTheme from 'grommet/themes/vanilla';
 import { observePubSub } from '../../models/pub_sub';
 import { FormState } from './api';
 import Screen from '../screen';
+
+const Provider = ({ formState, children }, context) => {
+    const theme = isEmpty(context.theme) ? baseTheme : context.theme;
+    return (
+        <MobxProvider formState={formState}>
+            <ThemeProvider theme={theme}>
+                {children}
+            </ThemeProvider>
+        </MobxProvider>
+    );
+};
+
+
+Provider.contextTypes = {
+    theme: PropTypes.object,
+};
+
 
 @observer
 export default class FormWrapper extends React.Component {

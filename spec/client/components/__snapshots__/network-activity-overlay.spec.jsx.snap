@@ -1,34 +1,115 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Network Activity Overlay matches snapshot 1`] = `
+.c1 .network-activity-overlay {
+  position: absolute;
+  z-index: 11;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.c1 .network-activity-overlay .mask {
+  background-color: white;
+  height: 100%;
+  left: 0;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.c1 .network-activity-overlay.rounded .mask {
+  border-radius: 8px;
+}
+
+.c1 .network-activity-overlay .message {
+  width: 450px;
+  max-width: 90%;
+  min-height: 65px;
+  line-height: 3rem;
+  border-width: 2px;
+  border-color: #865CD6;
+  border-style: solid;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 2rem;
+  position: relative;
+  top: 25%;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 6px 7px 5px #49516F;
+  background-color: background-color:#865CD6;
+  color: rgba(255,255,255,0.85);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 .network-activity-overlay .message span {
+  margin-left: 1rem;
+}
+
+.c0 {
+  font-family: 'Work Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333333;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.c0 * {
+  box-sizing: inherit;
+}
+
 <div
-  className="network-activity-overlay"
+  className="c0"
 >
   <div
-    className="mask"
+    className="network-activity-overlay c1"
   >
     <div
-      className="message"
+      className="mask"
     >
-      <svg
-        aria-label="Spinning"
-        className="grommetux-icon-spinning grommetux-icon-spinning--medium grommetux-icon-spinning--responsive"
-        role="img"
-        version="1.1"
-        viewBox="0 0 48 48"
+      <div
+        className="message"
       >
-        <circle
-          cx="24"
-          cy="24"
-          fill="none"
-          r="21"
-          stroke="#979797"
-          strokeWidth="6"
-        />
-      </svg>
-      <span>
-        Deleting…
-      </span>
+        <svg
+          className="icon-spinning icon-spinning--medium"
+          role="img"
+          version="1.1"
+          viewBox="0 0 48 48"
+        >
+          <circle
+            cx="24"
+            cy="24"
+            fill="none"
+            r="21"
+            stroke="#979797"
+            strokeWidth="6"
+          />
+        </svg>
+        <span>
+          Deleting…
+        </span>
+      </div>
     </div>
   </div>
 </div>

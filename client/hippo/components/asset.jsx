@@ -5,6 +5,7 @@ import { observer }   from 'mobx-react';
 import { titleize } from 'hippo/lib/util';
 import Dropzone from 'react-dropzone';
 import color from 'grommet/utils/colors';
+import baseTheme from 'grommet/themes/vanilla';
 import { Document } from 'grommet-icons';
 import { BaseModel } from '../models/base';
 import { StyledWrapper } from './form/field-wrapper';
@@ -31,6 +32,7 @@ export default class Asset extends React.Component {
         label: '',
         className: '',
         tabIndex: 0,
+        theme: baseTheme,
     }
 
     static propTypes = {

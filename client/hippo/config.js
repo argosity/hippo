@@ -1,7 +1,7 @@
 import Config from './models/config';
 
 const ConfigInstance = Config.create({
-    storage: localStorage,
+    storage: window.localStorage,
     jsonify: true,
 });
 

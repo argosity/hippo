@@ -4,7 +4,7 @@ import Group      from 'hippo/screens/group';
 import Screen     from 'hippo/screens/definition';
 import Menu       from 'hippo/workspace/menu';
 import MenuGroup  from 'hippo/workspace/menu-group';
-import MenuOption from 'hippo/workspace/menu-option';
+import { MenuOption } from 'hippo/workspace/menu-option';
 
 import { Snapshot } from 'hippo/testing/screens';
 import { getTestScreen } from '../test-models';
@@ -36,8 +36,6 @@ describe('Workspace Menu', () => {
 
     it('has renders menu options', () => {
         const screen = getTestScreen();
-        const option = shallow(<MenuOption screen={screen} />);
-        expect(option).toHaveRendered(`Anchor[path="/${screen.id}/"]`);
         expect(Snapshot(<MenuOption screen={screen} />)).toMatchSnapshot();
     });
 });

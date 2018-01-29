@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import Box from 'grommet/components/Box';
-import Menu from 'grommet/components/Menu';
+import { Box, Heading } from 'grommet';
+import { MenuOption } from './menu-option';
 
-import MenuOption from './menu-option';
 import Icon  from '../components/icon';
 
 @observer
@@ -22,7 +21,7 @@ export default class Group extends React.Component {
     render() {
         const { group } = this.props;
         return (
-            <Menu direction="column" align="start" justify="between" primary>
+            <Box direction="column" align="start" justify="between" primary>
                 <Box align="end" pad={{ horizontal: 'medium' }}>
                     <Heading tag="h4" strong>
                         {group.title}
@@ -35,7 +34,7 @@ export default class Group extends React.Component {
                         screen={s}
                         onSelection={this.props.onMenuSelection}
                     />)}
-            </Menu>
+            </Box>
         );
     }
 

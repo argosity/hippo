@@ -3,10 +3,11 @@
     "notify": false,
     "testMatch": [ "**/?(*.)(spec|test).js?(x)" ],
     "rootDir": "<%= controlling_extension.root_path %>",
+    "setupFiles": [ "<rootDir>/spec/client/startup.js" ],
     "setupTestFrameworkScriptFile": "<rootDir>/spec/client/setup.js",
     "moduleFileExtensions": [ "", "js", "jsx", "json", "css", "less", "scss" ],
     "transformIgnorePatterns": [
-        "/node_modules/(?!flexboxgrid)"
+        "/node_modules/(?!flexboxgrid|grommet)"
     ],
     "roots": [
         "<%= extension_path %>/client",
