@@ -43,9 +43,9 @@ export default class CheckBoxWrapper extends React.Component {
             >
                 {value}
                 <ColorPicker
+                    {...props}
                     color={value || '#fff'}
                     onChange={this.onChange}
-                    {...props}
                 >
                     <div className="react-custom-trigger" />
                 </ColorPicker>
