@@ -94,7 +94,8 @@ export class FormState {
         if (field) {
             field.update(attrs);
         } else {
-            field = new FormField(name, extend({}, attrs, { value: get(this.values, name) }));
+            field = new FormField(name, extend({}, attrs,
+                { value: isNil(attrs.value) ? get(this.values, name) : attrs.value }));
             this.fields.set(name, field);
         }
         return field;
