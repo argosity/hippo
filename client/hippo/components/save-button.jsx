@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, action } from 'mobx';
 import { get } from 'lodash';
 import cn from 'classnames';
 
@@ -38,13 +38,21 @@ export default class SaveButton extends React.Component {
         return this.isBusy ? <Spinning /> : <Save />;
     }
 
+    @action.bound saveModel() {
+        this.props.model.save();
+    }
+
     render() {
         // eslint-disable-next-line no-unused-vars
         const {
             label, icon, props: {
-                label: _, busyLabel: __, busy, model: ___, ...props
+                saveOnClick, label: _, busyLabel: __, busy, model: ___, ...props
             },
         } = this;
+
+        if (saveOnClick) {
+            props.onClick = this.saveModel;
+        }
 
         return (
             <Button
