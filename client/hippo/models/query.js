@@ -99,8 +99,12 @@ export default class Query extends BaseModel {
         return this.results.fetch({ start: 0 });
     }
 
-    get rows() {
+    @computed get rows() {
         return this.results.rows;
+    }
+
+    @computed get records() {
+        return this.rows.map((r, index) => this.rows.modelForRow(index));
     }
 
     reset() {

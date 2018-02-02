@@ -99,7 +99,10 @@ export default class ArrayResult extends Result {
     }
 
     modelForRow(index) {
-        const model = this.createModel(this.rowAsObject(index));
+        const row = this.rows[index];
+        if (row.model) { return row.model; }
+        const model = this.createModel(this.convertRowToObject(row));
+        row.model = model;
         this.observeModelSave(model, index);
         return model;
     }
