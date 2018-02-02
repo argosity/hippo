@@ -1,6 +1,7 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
+import { observable } from 'mobx';
 import { PropTypes as MobxPropTypes, Provider as MobxProvider, observer } from 'mobx-react';
 import { ThemeProvider } from 'styled-components';
 import baseTheme from 'grommet/themes/vanilla';
@@ -37,34 +38,35 @@ export default class FormWrapper extends React.Component {
         screen: PropTypes.instanceOf(Screen.Instance),
     }
 
-    static get defaultProps() {
-        return {
-            state: new FormState(),
-        };
+    @observable state;
+
+    constructor(props) {
+        super(props);
+        this.state = props.state || new FormState();
     }
 
     componentDidMount() {
         if (this.props.model) {
-            this.props.state.setFromModel(this.props.model);
+            this.state.setFromModel(this.props.model);
         }
     }
 
     renderTagless() {
         return (
-            <Provider formState={this.props.state}>
+            <Provider formState={this.state}>
                 {this.props.children}
             </Provider>
         );
     }
 
     persistTo(model) {
-        this.props.state.persistTo(model);
+        this.state.persistTo(model);
     }
 
     renderTagged() {
         const {
-            tag: Tag, state, children, model: _, ...otherProps
-        } = this.props;
+            state, props: { tag: Tag, children, model: _, ...otherProps },
+        } = this;
         return (
             <Provider formState={state}>
                 <Tag {...otherProps}>
