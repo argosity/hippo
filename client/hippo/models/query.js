@@ -104,7 +104,7 @@ export default class Query extends BaseModel {
     }
 
     @computed get records() {
-        return this.rows.map((r, index) => this.rows.modelForRow(index));
+        return this.results.rows.map((r, index) => this.results.modelForRow(index));
     }
 
     reset() {
