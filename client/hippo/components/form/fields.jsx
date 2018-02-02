@@ -13,6 +13,7 @@ import TagsWrapper     from './fields/tags-wrapper';
 import TextAreaWrapper from './fields/textarea-wrapper';
 import Label           from './fields/label';
 import TimeZoneSelect  from '../../components/time-zone-select';
+import ColorPicker     from './fields/color';
 
 import './fields/form-field.scss';
 
@@ -27,6 +28,7 @@ const TypesMapping = {
     timezone: TimeZoneSelect,
     checkbox: CheckBoxWrapper,
     textarea: TextAreaWrapper,
+    color:    ColorPicker,
 };
 
 @inject('formState')
@@ -84,6 +86,7 @@ export default class FormField extends React.Component {
                 error={this.field.invalidMessage}
                 help={this.field.help}
                 className={className}
+                type={type}
                 {...wrapperProps}
                 control={control}
             >

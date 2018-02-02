@@ -5,6 +5,11 @@ import { Cell } from 'styled-css-grid';
 import color from 'grommet/utils/colors';
 import styled from 'styled-components';
 import { titleize } from '../../lib/util';
+import { colorWrapperStyles } from './fields/color';
+
+const STYLES = {
+    color: colorWrapperStyles,
+};
 
 const UNDERLINED_TYPES = ['text', 'textarea', 'number', 'password', 'date', 'email'];
 
@@ -17,7 +22,6 @@ input {
 
 const ControlsWrapper = styled.div`
 display: flex;
-flex: 1;
 align-items: flex-end;
 ${props => props.control && controlStyle(props)}
 `;
@@ -39,8 +43,9 @@ ${props => includes(UNDERLINED_TYPES, props.type) && borderBottom(props)}
   }
 }
 input[type="checkbox"] {
-margin-left: ${props => props.theme.global.edgeSize.small};
+  margin-left: ${props => props.theme.global.edgeSize.small};
 }
+${props => STYLES[props.type] && STYLES[props.type](props)}
 `;
 
 export { StyledWrapper };
