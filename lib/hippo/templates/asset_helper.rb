@@ -1,5 +1,3 @@
-require 'erubis'
-
 module Hippo
     module Templates
 
