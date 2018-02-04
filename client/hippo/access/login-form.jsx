@@ -6,6 +6,7 @@ import Notification from '../components/notification';
 import {
     Form, Field, FormState,
 } from '../components/form';
+import Logo from '../workspace/logo';
 
 const CLASS_ROOT = 'login-form';
 
@@ -21,7 +22,7 @@ export default class LoginForm extends Component {
     render() {
         const {
             align, errors, forgotPassword,
-            logo, secondaryText, title,
+            errorText,
         } = this.props;
 
         const errorsNode = errors.map((error, index) => {
@@ -41,15 +42,10 @@ export default class LoginForm extends Component {
             return undefined;
         });
 
-        let titleNode;
-        if (title) {
-            titleNode = <Heading strong={true}>{title}</Heading>;
-        }
-
-        let secondaryTextNode;
-        if (secondaryText) {
-            secondaryTextNode = (
-                <Paragraph align={align} margin="none">{secondaryText}</Paragraph>
+        let errorTextNode;
+        if (errorText) {
+            errorTextNode = (
+                <p align={align} margin="none">{errorText}</p>
             );
         }
 
@@ -60,13 +56,17 @@ export default class LoginForm extends Component {
                 pad="medium"
             >
 
-                <Box align={align}>
-                    {logo}
-                    {titleNode}
-                    {secondaryTextNode}
+                <Box align={align} align="start">
+                    <Logo />
+                    <Heading
+                        level="2"
+                        margin="small"
+                        strong={true}
+                    >Please Login…</Heading>
+                    {errorTextNode}
                 </Box>
 
-                <Field name="username" />
+                <Field name="username" autoFocus autoCorrect="off" autoCapitalize="none"/>
 
                 <Field name="password" type="password" />
 
@@ -103,11 +103,8 @@ LoginForm.propTypes = {
         PropTypes.node,
     ])),
     forgotPassword: PropTypes.node,
-    logo: PropTypes.node,
     onSubmit: PropTypes.func.isRequired,
-    secondaryText: PropTypes.string,
-    title: PropTypes.string,
-    usernameType: PropTypes.string,
+    errorText: PropTypes.string,
 };
 
 LoginForm.defaultProps = {
@@ -116,5 +113,4 @@ LoginForm.defaultProps = {
         username: '',
     },
     errors: [],
-    usernameType: 'email',
 };

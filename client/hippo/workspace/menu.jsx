@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, observe } from 'mobx';
-import { isEmpty, get } from 'lodash';
+import { isEmpty } from 'lodash';
 import Box     from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
 import { Close } from 'grommet-icons';
@@ -11,8 +11,7 @@ import Group   from './menu-group';
 import Screens from '../screens';
 import { MenuLink, MenuOption } from './menu-option';
 import User from '../user';
-import Config from '../config';
-import Asset from '../models/asset';
+import Logo from './logo';
 
 @observer
 class Logout extends React.Component {
@@ -55,17 +54,6 @@ class Logout extends React.Component {
 
 }
 
-const Logo = observer(() => {
-    if (!get(Config, 'logo.thumbnail')) {
-        if (!isEmpty(Config.product_name)) {
-            return <Box className="product-name">{Config.product_name}</Box>;
-        }
-        return null;
-    }
-    return (
-        <Box className="logo"><img src={Asset.urlForSize(Config.logo, 'thumbnail')} /></Box>
-    );
-});
 
 @observer
 export default class WorkspaceMenu extends React.Component {
@@ -99,7 +87,11 @@ export default class WorkspaceMenu extends React.Component {
                 background="brand"
                 className="screen-selection-menu"
             >
-                <Box justify="between" size="large" pad={{ horizontal: 'medium' }}>
+                <Box
+                    justify="between"
+                    direction="row"
+                    size="large"
+                >
                     <Logo />
                     {this.renderClose()}
                 </Box>
