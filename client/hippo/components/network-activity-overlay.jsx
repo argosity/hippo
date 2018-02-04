@@ -13,52 +13,56 @@ import color from 'grommet/utils/colors';
 
 const StyledOverlay = styled.div`
 
-    .network-activity-overlay {
-        position: absolute;
-        z-index: 11;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-      .mask {
-          background-color: white;
-          height: 100%;
-          left: 0;
-          opacity: 0.8;
-          position: absolute;
-          top: 0;
-          width: 100%;
-      }
+position: absolute;
+z-index: 11;
+height: 100%;
+width: 100%;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
 
-            &.rounded {
-          .mask { border-radius: 8px }
-            }
+display: flex;
+justify-content: center;
+align-items: center;
+span { margin-left: 1rem; }
 
-      .message {
-          width: 450px;
-          max-width: 90%;
-          min-height: 65px;
-          line-height: 3rem;
-          border-width: ${props => props.theme.button.border.width};
-          border-color: ${props => props.theme.button.border.color};
-          border-style: solid;
-          margin-left: auto;
-          margin-right: auto;
-          font-size: 2rem;
-          position: relative;
-          top: 25%;
-          border-radius: 8px;
-          padding: 10px;
-          box-shadow: 6px 7px 5px ${props => color.colorForName('neutral-4', props.theme)};
-          background-color: ${props => backgroundStyle(props.color || 'brand', props.theme)}
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    span { margin-left: 1rem; }
-  }
+.mask {
+  background-color: white;
+  height: 100%;
+  left: 0;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
 
+&.rounded {
+  .mask { border-radius: 8px }
+}
+
+.message {
+  min-height: 65px;
+  line-height: 3rem;
+  border-width: ${props => props.theme.button.border.width};
+  border-color: ${props => props.theme.button.border.color};
+  border-style: solid;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 2rem;
+  position: relative;
+  top: 25%;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 6px 7px 5px ${props => color.colorForName('neutral-4', props.theme)};
+  background-color: ${props => backgroundStyle(props.color || 'brand', props.theme)};
+  color: black;
+  display:flex;
+  align-items: center;
+}
+svg {
+height: 45px;
+widh: 45px
 }
 `;
 
