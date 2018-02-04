@@ -72,11 +72,11 @@ export default class FormField extends React.Component {
         const {
             name, control, className, autoFocus, type, children, label, tabIndex,
             validate: _, formState: __, help: ___,
-            width, height, left, top, middle, center, area,
+            width, desktop, tablet, phone, height, left, top, middle, center, area,
             ...otherProps
         } = this.props;
         const wrapperProps = {
-            width, height, left, top, middle, center, area, type,
+            width, desktop, tablet, phone, height, left, top, middle, center, area, type,
         };
         const InputTag = TypesMapping[type] || TypesMapping.text;
         return (
