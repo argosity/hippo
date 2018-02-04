@@ -36,6 +36,7 @@ module Hippo::API
             Hippo::Extensions.load_controlling_config
             set :views, Hippo::Extensions.map{|ext| ext.root_path.join('views') }.reverse
             set :webpack, Hippo::Webpack.new
+            set :public_folder, 'public' unless Hippo.env.production?
             webpack.start
             require_relative './routing'
             Cable.configure
