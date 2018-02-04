@@ -1,5 +1,12 @@
 @import '../styles/global';
-//@import '~grommet/scss/aruba/index';
+
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+    margin: 0;
+}
 
 .hippo-screen {
     flex: 1;
