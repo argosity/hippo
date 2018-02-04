@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
-import { Anchor, Button, Paragraph, Layer, Box } from 'grommet';
+import { Anchor, Button, Layer, Box } from 'grommet';
 import { Link, Clear, UserAdmin } from 'grommet-icons';
 import {
     Form, Field, FormState, nonBlank, Heading, FieldsLayout,
