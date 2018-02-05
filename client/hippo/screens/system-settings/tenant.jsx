@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
-import { Anchor, Button, Layer, Box } from 'grommet';
+import { Anchor, Button, Layer, Box, Paragraph } from 'grommet';
 import { Link, Clear, UserAdmin } from 'grommet-icons';
 import {
     Form, Field, FormState, nonBlank, Heading, FieldsLayout,
@@ -85,6 +85,7 @@ export default class TenantConfig extends React.Component {
         if (!Tenant.current.slug || slug === Tenant.current.slug) {
             return null;
         }
+
         return (
             <Notification
                 size="small" status="warning"

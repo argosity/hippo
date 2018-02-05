@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Network Activity Overlay matches snapshot 1`] = `
-.c1 .network-activity-overlay {
+.c1 {
   position: absolute;
   z-index: 11;
   height: 100%;
@@ -10,9 +10,25 @@ exports[`Network Activity Overlay matches snapshot 1`] = `
   right: 0;
   top: 0;
   bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
-.c1 .network-activity-overlay .mask {
+.c1 span {
+  margin-left: 1rem;
+}
+
+.c1 .mask {
   background-color: white;
   height: 100%;
   left: 0;
@@ -22,13 +38,11 @@ exports[`Network Activity Overlay matches snapshot 1`] = `
   width: 100%;
 }
 
-.c1 .network-activity-overlay.rounded .mask {
+.c1.rounded .mask {
   border-radius: 8px;
 }
 
-.c1 .network-activity-overlay .message {
-  width: 450px;
-  max-width: 90%;
+.c1 .message {
   min-height: 65px;
   line-height: 3rem;
   border-width: 2px;
@@ -44,22 +58,20 @@ exports[`Network Activity Overlay matches snapshot 1`] = `
   box-shadow: 6px 7px 5px #49516F;
   background-color: background-color:#865CD6;
   color: rgba(255,255,255,0.85);
+  color: black;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
 }
 
-.c1 .network-activity-overlay .message span {
-  margin-left: 1rem;
+.c1 svg {
+  height: 45px;
+  widh: 45px;
 }
 
 .c0 {

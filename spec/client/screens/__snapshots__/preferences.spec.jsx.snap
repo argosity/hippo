@@ -38,7 +38,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin: 12px;
 }
 
-.c12 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -78,7 +78,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin-bottom: 0;
 }
 
-.c17 {
+.c18 {
   padding: 11px;
   border: 1px solid rgba(0,0,0,0.15);
   border-radius: 4px;
@@ -92,33 +92,33 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-appearance: none;
 }
 
-.c17::-webkit-input-placeholder {
+.c18::-webkit-input-placeholder {
   color: #AAAAAA;
 }
 
-.c17::-moz-placeholder {
+.c18::-moz-placeholder {
   color: #AAAAAA;
 }
 
-.c17:-ms-input-placeholder {
+.c18:-ms-input-placeholder {
   color: #AAAAAA;
 }
 
-.c17::-moz-focus-inner {
+.c18::-moz-focus-inner {
   border: none;
   outline: none;
 }
 
-.c16 {
+.c17 {
   width: 100%;
 }
 
-.c13 {
+.c14 {
   font-size: 16px;
   line-height: 1.375;
 }
 
-.c14 {
+.c15 {
   font-size: 16px;
   line-height: 1.375;
   white-space: nowrap;
@@ -131,7 +131,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin-left: 12px;
 }
 
-.c11 {
+.c12 {
   height: 100%;
   min-width: 0;
   -webkit-align-content: space-around;
@@ -154,19 +154,19 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   border-bottom: solid 2px #EEEEEE;
 }
 
-.c11:focus-within {
+.c12:focus-within {
   border-bottom-color: #CCCCCC;
 }
 
-.c11:focus-within span {
+.c12:focus-within span {
   font-weight: 500;
 }
 
-.c11 input[type="checkbox"] {
+.c12 input[type="checkbox"] {
   margin-left: 12px;
 }
 
-.c10 {
+.c11 {
   display: grid;
   grid-auto-flow: row dense;
   grid-auto-rows: minmax(20px,auto);
@@ -175,8 +175,6 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  overflow: auto;
-  grid-area: body;
   -webkit-align-content: flex-start;
   -ms-flex-line-pack: start;
   align-content: flex-start;
@@ -185,7 +183,11 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   grid-auto-rows: minmax(80px,auto);
 }
 
-.c15 {
+.c11 > * {
+  min-height: 85px;
+}
+
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -194,6 +196,14 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-box-align: flex-end;
   -ms-flex-align: flex-end;
   align-items: flex-end;
+}
+
+.c10 {
+  grid-area: body;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }
 
 .c0 {
@@ -377,197 +387,201 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
     </div>
     <div
       className="c10"
-      columns="repeat(auto-fill, minmax(280px, 1fr))"
-      flow="row dense"
     >
-      <label
+      <div
         className="c11"
-        height={undefined}
-        type="text"
-        width={undefined}
+        columns="repeat(auto-fill, minmax(280px, 1fr))"
+        flow="row dense"
       >
-        <div
-          aria-label={undefined}
+        <label
           className="c12"
-          direction="row"
-          wrap={true}
+          height={undefined}
+          type="text"
+          width={undefined}
         >
-          <span
+          <div
+            aria-label={undefined}
             className="c13"
+            direction="row"
+            wrap={true}
           >
-            Login
-          </span>
-          <span
-            className="c14"
-            color="dark-5"
-          />
-        </div>
-        <div
-          className="c15"
-        >
+            <span
+              className="c14"
+            >
+              Login
+            </span>
+            <span
+              className="c15"
+              color="dark-5"
+            />
+          </div>
           <div
             className="c16"
           >
-            <input
-              autoComplete="off"
-              autoFocus={undefined}
+            <div
               className="c17"
-              defaultValue={undefined}
-              id={undefined}
-              name="login"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              onInput={[Function]}
-              onKeyDown={[Function]}
-              tabIndex={0}
-              type="text"
-              value=""
+            >
+              <input
+                autoComplete="off"
+                autoFocus={undefined}
+                className="c18"
+                defaultValue={undefined}
+                id={undefined}
+                name="login"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onInput={[Function]}
+                onKeyDown={[Function]}
+                tabIndex={0}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </label>
+        <label
+          className="c12"
+          height={undefined}
+          type="text"
+          width={undefined}
+        >
+          <div
+            aria-label={undefined}
+            className="c13"
+            direction="row"
+            wrap={true}
+          >
+            <span
+              className="c14"
+            >
+              Name
+            </span>
+            <span
+              className="c15"
+              color="dark-5"
             />
           </div>
-        </div>
-      </label>
-      <label
-        className="c11"
-        height={undefined}
-        type="text"
-        width={undefined}
-      >
-        <div
-          aria-label={undefined}
-          className="c12"
-          direction="row"
-          wrap={true}
-        >
-          <span
-            className="c13"
-          >
-            Name
-          </span>
-          <span
-            className="c14"
-            color="dark-5"
-          />
-        </div>
-        <div
-          className="c15"
-        >
           <div
             className="c16"
           >
-            <input
-              autoComplete="off"
-              autoFocus={undefined}
+            <div
               className="c17"
-              defaultValue={undefined}
-              id={undefined}
-              name="name"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              onInput={[Function]}
-              onKeyDown={[Function]}
-              tabIndex={0}
-              type="text"
-              value=""
+            >
+              <input
+                autoComplete="off"
+                autoFocus={undefined}
+                className="c18"
+                defaultValue={undefined}
+                id={undefined}
+                name="name"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onInput={[Function]}
+                onKeyDown={[Function]}
+                tabIndex={0}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </label>
+        <label
+          className="c12"
+          height={undefined}
+          type="text"
+          width={undefined}
+        >
+          <div
+            aria-label={undefined}
+            className="c13"
+            direction="row"
+            wrap={true}
+          >
+            <span
+              className="c14"
+            >
+              Email
+            </span>
+            <span
+              className="c15"
+              color="dark-5"
             />
           </div>
-        </div>
-      </label>
-      <label
-        className="c11"
-        height={undefined}
-        type="text"
-        width={undefined}
-      >
-        <div
-          aria-label={undefined}
-          className="c12"
-          direction="row"
-          wrap={true}
-        >
-          <span
-            className="c13"
-          >
-            Email
-          </span>
-          <span
-            className="c14"
-            color="dark-5"
-          />
-        </div>
-        <div
-          className="c15"
-        >
           <div
             className="c16"
           >
-            <input
-              autoComplete="off"
-              autoFocus={undefined}
+            <div
               className="c17"
-              defaultValue={undefined}
-              id={undefined}
-              name="email"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              onInput={[Function]}
-              onKeyDown={[Function]}
-              tabIndex={0}
-              type="text"
-              value=""
+            >
+              <input
+                autoComplete="off"
+                autoFocus={undefined}
+                className="c18"
+                defaultValue={undefined}
+                id={undefined}
+                name="email"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onInput={[Function]}
+                onKeyDown={[Function]}
+                tabIndex={0}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </label>
+        <label
+          className="c12"
+          height={undefined}
+          type="password"
+          width={undefined}
+        >
+          <div
+            aria-label={undefined}
+            className="c13"
+            direction="row"
+            wrap={true}
+          >
+            <span
+              className="c14"
+            >
+              Password
+            </span>
+            <span
+              className="c15"
+              color="dark-5"
             />
           </div>
-        </div>
-      </label>
-      <label
-        className="c11"
-        height={undefined}
-        type="password"
-        width={undefined}
-      >
-        <div
-          aria-label={undefined}
-          className="c12"
-          direction="row"
-          wrap={true}
-        >
-          <span
-            className="c13"
-          >
-            Password
-          </span>
-          <span
-            className="c14"
-            color="dark-5"
-          />
-        </div>
-        <div
-          className="c15"
-        >
           <div
             className="c16"
           >
-            <input
-              autoComplete="off"
-              autoFocus={undefined}
+            <div
               className="c17"
-              defaultValue={undefined}
-              id={undefined}
-              name="password"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              onInput={[Function]}
-              onKeyDown={[Function]}
-              tabIndex={0}
-              type="password"
-              value=""
-            />
+            >
+              <input
+                autoComplete="off"
+                autoFocus={undefined}
+                className="c18"
+                defaultValue={undefined}
+                id={undefined}
+                name="password"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onInput={[Function]}
+                onKeyDown={[Function]}
+                tabIndex={0}
+                type="password"
+                value=""
+              />
+            </div>
           </div>
-        </div>
-      </label>
+        </label>
+      </div>
     </div>
   </div>
 </div>

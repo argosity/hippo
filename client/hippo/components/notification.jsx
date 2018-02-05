@@ -39,6 +39,7 @@ export default function Notification({
             className={classes}
             pad='small' direction='row' align='start'
             responsive={false}
+            background={`status-${status}`}
         >
             <Box pad='small'>
                 {statusNode}

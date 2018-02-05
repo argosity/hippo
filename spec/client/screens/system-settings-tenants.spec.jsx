@@ -11,6 +11,7 @@ describe('SystemSettings Tenants section', () => {
         t.find('input[name="name"]').simulate('change', { target: { value: 'NEW' } });
 
         t.instance().onSave();
+
         setTimeout(() => {
             expect(t).toHaveRendered('TenantSlugChange');
             done();
