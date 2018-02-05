@@ -1,9 +1,9 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { Box, Text } from 'grommet';
 import { includes } from 'lodash';
-import { Cell } from 'styled-css-grid';
 import color from 'grommet/utils/colors';
 import styled from 'styled-components';
+import { Cell } from '../../components/grid';
 import { titleize } from '../../lib/util';
 import { colorWrapperStyles } from './fields/color';
 
@@ -46,6 +46,7 @@ input[type="checkbox"] {
   margin-left: ${props => props.theme.global.edgeSize.small};
 }
 ${props => STYLES[props.type] && STYLES[props.type](props)}
+
 `;
 
 export { StyledWrapper };
