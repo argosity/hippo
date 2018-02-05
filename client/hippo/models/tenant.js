@@ -55,4 +55,8 @@ export default class Tenant extends BaseModel {
         Tenant.bootstrap(data);
     }
 
+    get syncData() {
+        return this.serialize();
+    }
+
 }

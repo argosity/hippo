@@ -88,7 +88,8 @@ export default class TenantConfig extends React.Component {
 
         return (
             <Notification
-                size="small" status="warning"
+                size="small"
+                status="warning"
                 message={`Warning:  Changing the identifier will also change where you login at. The updated address will be: ${slug}.${Config.website_domain}`}
             />
         );
