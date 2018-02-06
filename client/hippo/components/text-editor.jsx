@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer, Provider, PropTypes as MobxPropTypes } from 'mobx-react';
-import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-import HippoUploadAdapter from './text-editor/upload-adapter';
+import { Quill, defaultModules } from './text-editor/quill';
 import TextEditorWrapper from './text-editor/text-editor-wrapper';
 
-BalloonEditor.build.plugins.push(HippoUploadAdapter);
 
 @observer
 export default class TextEditor extends React.Component {
@@ -26,38 +24,29 @@ export default class TextEditor extends React.Component {
     }
 
     componentWillUnmount() {
-        this.editor.destroy();
+        this.editor.disable();
     }
 
     componentDidMount() {
-        BalloonEditor.create(this.body, {
-            assets: this.props.assets,
-            image: {
-                toolbar: [
-                    'imageTextAlternative', '|',
-                    'imageStyleAlignLeft', 'imageStyleFull', 'imageStyleAlignRight',
-                ],
-                styles: [
-                    // This option is equal to a situation where no style is applied.
-                    'imageStyleFull',
-                    // This represents an image aligned to left.
-                    'imageStyleAlignLeft',
-                    // This represents an image aligned to right.
-                    'imageStyleAlignRight',
-                ],
-            },
-        }).then((e) => {
-            this.editor = e;
-            this.props.onReady(this);
+        this.editor = new Quill(this.body, {
+            modules: defaultModules,
+            theme: 'snow',
         });
+        if (this.props.onReady) {
+            this.props.onReady(this);
+        }
+        this.editor.focus();
     }
 
     get contents() {
-        return this.editor.getData();
+        return {
+            delta: this.editor.getContents(),
+            html: this.body.querySelector('.ql-editor').innerHTML,
+        };
     }
 
-    set contents(html) {
-        this.editor.setData(html || '<p>Edit me…</p>');
+    set contents(delta) {
+        this.editor.setContents(delta.ops);
     }
 
     @action.bound
@@ -71,11 +60,9 @@ export default class TextEditor extends React.Component {
             <Provider
                 assets={this.props.assets}
             >
-
                 <TextEditorWrapper
-                    className="text-editor" ref={this.setRef}
+                    className="text-editor" innerRef={this.setRef}
                 />
-
             </Provider>
         );
     }
