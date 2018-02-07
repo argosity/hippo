@@ -4,6 +4,7 @@ import { action, observable } from 'mobx';
 import { observer, Provider, PropTypes as MobxPropTypes } from 'mobx-react';
 import { Quill, defaultModules } from './text-editor/quill';
 import TextEditorWrapper from './text-editor/text-editor-wrapper';
+import imageUploader from './text-editor/image-uploader';
 
 
 @observer
@@ -30,8 +31,22 @@ export default class TextEditor extends React.Component {
     componentDidMount() {
         this.editor = new Quill(this.body, {
             modules: defaultModules,
+            assets: this.props.assets,
             theme: 'snow',
         });
+        // this.editor.keyboard.addBinding({
+        //     key: 8,
+        //     shortKey: false,
+        //     handler: (range, context) => {
+        //         console.log(range, context);
+        //     }
+        //         // const deleted = d.ops.find(o => has(o, 'delete'));
+        //         // if (deleted) {
+        //         //     debugger
+        //         //     console.log(od.ops[0]);
+        //         // }
+        // });
+        this.editor.getModule('toolbar').addHandler('image', imageUploader);
         if (this.props.onReady) {
             this.props.onReady(this);
         }
@@ -40,13 +55,13 @@ export default class TextEditor extends React.Component {
 
     get contents() {
         return {
-            delta: this.editor.getContents(),
+            contents: this.editor.getContents().ops,
             html: this.body.querySelector('.ql-editor').innerHTML,
         };
     }
 
-    set contents(delta) {
-        this.editor.setContents(delta.ops);
+    set contents(contents) {
+        this.editor.setContents(contents);
     }
 
     @action.bound

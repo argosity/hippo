@@ -6,22 +6,25 @@ import { asyncComponent } from 'react-async-component';
 import { observer } from 'mobx-react';
 import cn from 'classnames';
 
-const ErrorComponent = observer(({ screen, retry }) => (
-    <div
-        data-screen-id={screen.definition.id}
-        className={cn('hippo-screen', 'async-loading', 'error', { 'is-active': screen.isActive })}
-    >
-        <div className="content">
-            <h4><Alert /> Failed to load {screen.definition.title}…</h4>
-            <Button
-                icon={<FormRefresh />}
-                onClick={retry}
-                label="Retry"
-            />
+const ErrorComponent = observer(({ screen, retry, error }) => {
+    console.warn(error); // eslint-disable-line
+    return (
+        <div
+            data-screen-id={screen.definition.id}
+            className={cn('hippo-screen', 'async-loading', 'error', { 'is-active': screen.isActive })}
+        >
+            <div className="content">
+                <h4><Alert /> Failed to load {screen.definition.title}…</h4>
+                <p>{String(error)}</p>
+                <Button
+                    icon={<FormRefresh />}
+                    onClick={retry}
+                    label="Retry"
+                />
+            </div>
         </div>
-    </div>
-));
-
+    );
+});
 
 const LoadingComponent = observer(({ screen }) => (
     <div

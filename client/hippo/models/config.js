@@ -1,7 +1,6 @@
-import { observable, observe } from 'mobx';
+import { when, observable, observe } from 'mobx';
 import { pickBy, assign, get, hasIn, isNil } from 'lodash';
 import { persist, create as createHydrator } from 'mobx-persist';
-
 import Extensions from '../extensions';
 
 const STORAGE_KEY = 'hippo-user-data';
@@ -41,8 +40,13 @@ export default class Config {
     }
 
     update(attrs) {
-        assign(this, pickBy(attrs, (v, k) => !isNil(v) && hasIn(this, k)));
-        Extensions.setBootstrapData(attrs, this);
+        when(
+            () => this.isIntialized,
+            () => {
+                assign(this, pickBy(attrs, (v, k) => !isNil(v) && hasIn(this, k)));
+                Extensions.setBootstrapData(attrs, this);
+            },
+        );
     }
 
     setScreenData() {

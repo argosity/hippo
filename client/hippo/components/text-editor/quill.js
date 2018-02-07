@@ -1,14 +1,12 @@
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { ImageDrop } from 'quill-image-drop-module';
 import ImageResize from './image-resize';
 
 Quill.register('modules/imageResize', ImageResize);
-Quill.register('modules/imageDrop', ImageDrop);
 
 const defaultModules = {
-    imageDrop: true,
     imageResize: {},
+
     toolbar: [
         ['bold', 'italic', 'underline', 'strike'], // toggled buttons
         ['blockquote', 'code-block'],
