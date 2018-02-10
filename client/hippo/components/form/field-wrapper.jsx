@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { Box, Text } from 'grommet';
 import { includes } from 'lodash';
+import cn from 'classnames';
 import color from 'grommet/utils/colors';
 import styled from 'styled-components';
 import { Cell } from '../../components/grid';
@@ -52,7 +53,7 @@ ${props => STYLES[props.type] && STYLES[props.type](props)}
 export { StyledWrapper };
 
 export default function FieldWrapper({
-    control, label: labelVal, name, help, error, children, ...cellProps
+    control, label: labelVal, name, help, error, children, className, ...cellProps
 }) {
     let header;
     const label = (!labelVal && labelVal !== false) ? titleize(name) : labelVal;
@@ -70,7 +71,7 @@ export default function FieldWrapper({
         );
     }
     return (
-        <StyledWrapper {...cellProps}>
+        <StyledWrapper {...cellProps} className={cn('form-field-wrapper', className)}>
             {header}
             <ControlsWrapper control={control}>{children}</ControlsWrapper>
         </StyledWrapper>

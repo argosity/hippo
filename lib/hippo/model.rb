@@ -19,6 +19,7 @@ module Hippo
         include Concerns::Queries
         include Concerns::SortingExpressions
         include Concerns::RandomIdentifer
+        include Concerns::HasPage
 
         def self.belongs_to_tenant
             belongs_to :tenant, class_name: 'Hippo::Tenant'
@@ -31,5 +32,6 @@ module Hippo
         end
     end
 
+    autoload :Page, "hippo/models/page"
     autoload :Subscription, "hippo/models/subscription"
 end

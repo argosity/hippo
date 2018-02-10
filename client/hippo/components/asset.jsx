@@ -17,6 +17,7 @@ padding: ${props => props.theme.global.edgeSize.small};
 border: ${props => props.theme.global.borderSize.small} dashed transparent;
 overflow: auto;
 min-height: 200px;
+max-height: 300px;
 -webkit-overflow-scrolling: touch;
 &:hover {
  border-color: ${props => color.colorForName('light-3', props.theme)};

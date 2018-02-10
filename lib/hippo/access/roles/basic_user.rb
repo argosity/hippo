@@ -7,6 +7,7 @@ module Hippo
 
                 self.read << Hippo::Tenant
                 self.read << Hippo::Subscription
+                self.read << Hippo::Page
 
             end
 

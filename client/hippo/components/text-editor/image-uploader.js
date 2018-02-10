@@ -36,16 +36,16 @@ class FileInput {
         if (!files || !files.length) { return; }
 
         const saving = new SavingMask(this.quill.container);
-        const { assets } = this.quill.options;
-        const len = assets.push({});
-        const asset = assets[len - 1];
-        [asset.file] = files;
-        asset.save().then(() => {
+        const { images } = this.quill.options.page;
+        const len = images.push({});
+        const image = images[len - 1];
+        [image.file] = files;
+        image.save().then(() => {
             const range = this.quill.getSelection(true);
             const delta = new Delta();
             delta.retain(range.index)
                 .delete(range.length)
-                .insert({ image: asset.urlFor() });
+                .insert({ image: { id: image.id, src: image.urlFor() } });
             this.quill.updateContents(delta, Quill.sources.USER);
             saving.hide();
             this.fileInput.value = '';
@@ -59,6 +59,9 @@ class FileInput {
 }
 
 export default function imageUploader() {
+    if (this.quill.options.page.isNew) {
+        return;
+    }
     let fileInput = this.container.querySelector('input.ql-image[type=file]');
     if (!fileInput) {
         fileInput = new FileInput(this.quill, this.container);

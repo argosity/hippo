@@ -19,6 +19,7 @@ export default class SaveButton extends React.Component {
         model: PropTypes.instanceOf(BaseModel),
         busyLabel: PropTypes.string,
         label: PropTypes.string,
+        saveOnClick: PropTypes.bool,
     }
 
     static defaultProps = {

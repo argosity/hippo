@@ -34,6 +34,7 @@ module Hippo::API
                   cors: '*', public: true
         resources Hippo::Subscription,
                   controller: Hippo::API::Handlers::Subscription
+        resources Hippo::Page
     end
 
     routes.draw do

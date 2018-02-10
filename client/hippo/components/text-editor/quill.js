@@ -9,7 +9,7 @@ const defaultModules = {
 
     toolbar: [
         ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-        ['blockquote', 'code-block'],
+        ['blockquote', 'code-block', 'clean'],
 
         [{ list: 'ordered' }, { list: 'bullet' }],
         [{ script: 'sub' }, { script: 'super' }],
@@ -23,7 +23,7 @@ const defaultModules = {
         [{ font: [] }],
         [{ align: [] }],
 
-        ['link', 'image', 'clean'],
+        ['link', 'image', 'video'],
     ],
 
 };

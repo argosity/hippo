@@ -12,7 +12,7 @@ import { action, observable, computed } from 'mobx';
 import './date-type';
 import Sync from './sync';
 import Config from '../config';
-import { toSentence, humanize } from '../lib/util';
+import { toSentence, humanize, classify } from '../lib/util';
 import ModelCollection from './collection';
 
 export {
@@ -52,6 +52,10 @@ export class BaseModel {
     static get syncUrl() {
         invariant(this.identifiedBy, 'must have an identifiedBy property in order to calulate syncUrl');
         return `${Config.api_path}/${this.identifiedBy}`;
+    }
+
+    static get serverModel() {
+        return classify(this.identifiedBy);
     }
 
     static get identifierFieldName() {
