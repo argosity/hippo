@@ -1,5 +1,5 @@
 import { Grid, Cell as StyledCell } from 'styled-css-grid';
-import media from './media';
+import media from './grid/media';
 
 const Cell = StyledCell.extend`
 ${props => props.desktop && media.desktop`grid-column-end: span ${props.desktop};`}
