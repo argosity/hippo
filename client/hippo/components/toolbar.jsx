@@ -7,6 +7,7 @@ import baseTheme from 'grommet/themes/vanilla';
 export SaveButton from './save-button';
 
 const TB = styled(Box)`
+width: 100%;
 > *:not(:first-child) {
   margin-left: ${props => props.theme.global.edgeSize.small}
 };
