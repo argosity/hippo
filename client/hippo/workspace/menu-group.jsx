@@ -23,7 +23,7 @@ export default class Group extends React.Component {
         return (
             <Box direction="column" align="start" justify="between" primary>
                 <Box align="end" pad={{ horizontal: 'medium' }}>
-                    <Heading tag="h4" strong>
+                    <Heading level={3}>
                         {group.title}
                         <Icon name={group.icon} />
                     </Heading>
