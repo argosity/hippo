@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
+import { isString, invoke } from 'lodash';
 import { action } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import FieldWrapper     from './field-wrapper';
@@ -9,7 +10,6 @@ import SelectWrapper   from './fields/select-wrapper';
 import TextWrapper     from './fields/text-wrapper';
 import EmailWrapper    from './fields/email-wrapper';
 import CheckBoxWrapper from './fields/checkbox-wrapper';
-import TagsWrapper     from './fields/tags-wrapper';
 import TextAreaWrapper from './fields/textarea-wrapper';
 import Label           from './fields/label';
 import TimeZoneSelect  from '../../components/time-zone-select';
@@ -21,7 +21,6 @@ const TypesMapping = {
     email:    EmailWrapper,
     text:     TextWrapper,
     date:     DateWrapper,
-    tags:     TagsWrapper,
     label:    Label,
     select:   SelectWrapper,
     number:   TextWrapper,
@@ -39,7 +38,6 @@ export default class FormField extends React.Component {
         label: PropTypes.string,
         name:  PropTypes.string.isRequired,
         className: PropTypes.string,
-        type: PropTypes.string,
         tabIndex: PropTypes.number,
     }
 
@@ -72,13 +70,17 @@ export default class FormField extends React.Component {
         const {
             name, control, className, autoFocus, type, children, label, tabIndex,
             validate: _, formState: __, help: ___,
-            width, desktop, tablet, phone, height, left, top, middle, center, area,
+            width, cellWidth, desktop, tablet, phone, height,
+            left, top, middle, center, area,
             ...otherProps
         } = this.props;
         const wrapperProps = {
-            width, desktop, tablet, phone, height, left, top, middle, center, area, type,
+            width, desktop, tablet, phone, cellWidth, height, left, top, middle, center, area, type,
         };
-        const InputTag = TypesMapping[type] || TypesMapping.text;
+        const InputTag = isString(type) ? (
+            TypesMapping[type] || TypesMapping.text
+        ) : type;
+
         return (
             <FieldWrapper
                 label={label}
@@ -88,6 +90,7 @@ export default class FormField extends React.Component {
                 className={className}
                 type={type}
                 {...wrapperProps}
+                styles={invoke(type, 'styles', this.props)}
                 control={control}
             >
                 <InputTag
@@ -97,7 +100,7 @@ export default class FormField extends React.Component {
                     autoFocus={autoFocus}
                     ref={this.setRef}
                     value={this.field.value || ''}
-                    type={InputTag === TypesMapping.text ? this.props.type : undefined}
+                    type={type}
                     {...this.field.events}
                     {...otherProps}
                 />

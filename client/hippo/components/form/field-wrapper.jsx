@@ -1,16 +1,11 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { Box, Text } from 'grommet';
-import { includes } from 'lodash';
+import { includes, isString } from 'lodash';
 import cn from 'classnames';
 import color from 'grommet/utils/colors';
 import styled from 'styled-components';
 import { Cell } from '../../components/grid';
 import { titleize } from '../../lib/util';
-import { colorWrapperStyles } from './fields/color';
-
-const STYLES = {
-    color: colorWrapperStyles,
-};
 
 const UNDERLINED_TYPES = ['text', 'textarea', 'number', 'password', 'date', 'email'];
 
@@ -46,17 +41,24 @@ ${props => includes(UNDERLINED_TYPES, props.type) && borderBottom(props)}
 input[type="checkbox"] {
   margin-left: ${props => props.theme.global.edgeSize.small};
 }
-${props => STYLES[props.type] && STYLES[props.type](props)}
-
+${props => props.styles}
 `;
 
 export { StyledWrapper };
 
 export default function FieldWrapper({
-    control, label: labelVal, name, help, error, children, className, ...cellProps
+    control, label: labelVal, name, help, error, children, className,
+    desktop, tablet, phone, cellWidth = 3, type,
+    ...cellProps
 }) {
-    let header;
     const label = (!labelVal && labelVal !== false) ? titleize(name) : labelVal;
+    const sizeProps = {
+        desktop: (desktop || cellWidth),
+        tablet: (tablet || cellWidth),
+        phone: (phone || cellWidth),
+    };
+
+    let header;
     if (label || help || error) {
         header = (
             <Box
@@ -66,12 +68,20 @@ export default function FieldWrapper({
                 pad={{ horizontal: 'small', top: 'xsmall' }}
             >
                 <Text>{label}</Text>
-                <Text truncate color={error ? 'status-critical' : 'dark-5'}>{error || help}</Text>
+                <Text truncate color={error ? 'status-critical' : 'dark-5'}>
+                    {error || help}
+                </Text>
             </Box>
         );
     }
+
     return (
-        <StyledWrapper {...cellProps} className={cn('form-field-wrapper', className)}>
+        <StyledWrapper
+            {...cellProps}
+            {...sizeProps}
+            type={isString(type) ? type : ''}
+            className={cn('form-field-wrapper', className)}
+        >
             {header}
             <ControlsWrapper control={control}>{children}</ControlsWrapper>
         </StyledWrapper>
