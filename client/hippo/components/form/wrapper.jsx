@@ -6,6 +6,7 @@ import { PropTypes as MobxPropTypes, Provider as MobxProvider, observer } from '
 import { ThemeProvider } from 'styled-components';
 import baseTheme from 'grommet/themes/vanilla';
 import { observePubSub } from '../../models/pub_sub';
+import Layout from './layout';
 import { FormState } from './api';
 import Screen from '../screen';
 
@@ -89,9 +90,23 @@ export default class FormWrapper extends React.Component {
         );
     }
 
+    renderLayout() {
+        const {
+            tag: _, state, children, model: __, ...otherProps
+        } = this.props;
+        return (
+            <Provider formState={state}>
+                <Layout {...otherProps}>
+                    {children}
+                </Layout>
+            </Provider>
+        );
+    }
+
     render() {
         if (this.props.model) { observePubSub(this.props.model); }
         if (this.props.screen) { return this.renderScreen(); }
+        if (this.props.grid) { return this.renderLayout(); }
         return this.props.tag ? this.renderTagged() : this.renderTagless();
     }
 
