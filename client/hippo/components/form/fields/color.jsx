@@ -4,16 +4,7 @@ import { action } from 'mobx';
 import { Box } from 'grommet';
 import ColorPicker from 'rc-color-picker';
 import 'rc-color-picker/assets/index.css';
-import styled from 'styled-components';
-
-
-const colorWrapperStyles = () => `
-flex-direction: row;
-justify-content: flex-start;
-align-items: center;
-`;
-
-export { colorWrapperStyles };
+import styled, { css } from 'styled-components';
 
 const ColorWrapper = styled(Box)`
 .react-custom-trigger {
@@ -27,6 +18,14 @@ const ColorWrapper = styled(Box)`
 
 @observer
 export default class CheckBoxWrapper extends React.Component {
+
+    static styles() {
+        return css`
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        `;
+    }
 
     @action.bound onChange({ color }) {
         this.props.onChange({ target: { value: color } });

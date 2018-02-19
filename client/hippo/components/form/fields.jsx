@@ -13,7 +13,6 @@ import CheckBoxWrapper from './fields/checkbox-wrapper';
 import TextAreaWrapper from './fields/textarea-wrapper';
 import Label           from './fields/label';
 import TimeZoneSelect  from '../../components/time-zone-select';
-import ColorPicker     from './fields/color';
 
 import './fields/form-field.scss';
 
@@ -27,7 +26,6 @@ const TypesMapping = {
     timezone: TimeZoneSelect,
     checkbox: CheckBoxWrapper,
     textarea: TextAreaWrapper,
-    color:    ColorPicker,
 };
 
 @inject('formState')
