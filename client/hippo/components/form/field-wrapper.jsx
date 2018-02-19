@@ -63,8 +63,9 @@ export default function FieldWrapper({
         header = (
             <Box
                 wrap
-                direction='row'
-                justify='between'
+                direction="row"
+                className="labels"
+                justify="between"
                 pad={{ horizontal: 'small', top: 'xsmall' }}
             >
                 <Text>{label}</Text>
