@@ -2,6 +2,7 @@ import React from 'react';
 import { defaults } from 'lodash';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import styled from 'styled-components';
 import { action, observable } from 'mobx';
 import { Button, Box, DropButton, TextInput } from 'grommet';
 import { Refresh }   from 'grommet-icons';
@@ -14,6 +15,27 @@ const defaultHandlers = {
     boolean: BooleanPicker,
     date: DatePicker,
 };
+
+const ClauseWrapper = styled(Box)`
+width: 100%;
+.clause-select {
+  text-align: left;
+  width: 300px;
+  flex-grow: inherit;
+  padding-left: ${props => props.theme.global.edgeSize.small}
+}
+.query-value {
+  > * {
+    flex: 1;
+    display: flex;
+    > * { flex: 1; }
+  }
+}
+> *:not(:first-child) {
+  margin-left: ${props => props.theme.global.edgeSize.small}
+};
+`;
+
 
 @observer
 export default class Clause extends React.Component {
@@ -30,7 +52,7 @@ export default class Clause extends React.Component {
     @observable showFilter = false;
 
     @action.bound onSelect() {
-        this.menuRef._onClose();
+        this.showFilter = false;
     }
 
     @action.bound onValueChange(ev) {
@@ -54,30 +76,39 @@ export default class Clause extends React.Component {
     }
 
     renderInputTag() {
+        let input;
         const Tag = this.handlers[this.props.clause.field.queryType];
         if (Tag) {
-            return <Tag clause={this.props.clause} />;
+            input = <Tag clause={this.props.clause} />;
+        } else {
+            input = (
+                <TextInput
+                    autoFocus
+                    value={this.props.clause.value || ''}
+                    onInput={this.onValueChange}
+                />
+            );
         }
-        return (
-            <TextInput
-                autoFocus
-                style={{ flex: 1 }}
-                value={this.props.clause.value || ''}
-                onInput={this.onValueChange}
-            />
-        );
+        return <Box className="query-value" flex>{input}</Box>;
     }
 
     render() {
         const { props: { clause } } = this;
 
         return (
-            <Box responsive={false} className="clause" direction='row' pad={{ between: 'small' }} align="center">
+            <ClauseWrapper
+                responsive={false}
+                className="clause"
+                direction='row'
+                pad={{ between: 'small' }}
+                align="center"
+            >
+
                 <DropButton
+                    className="clause-select"
                     ref={this.setMenuRef}
                     open={this.showFilter}
-                    size='large'
-                    pad='small'
+
                     control={<ClauseFilter onClick={this.toggleFilter} clause={clause} />}
                     closeOnClick={false}
                 >
@@ -97,12 +128,13 @@ export default class Clause extends React.Component {
                         </Box>
                     </Box>
                 </DropButton>
+
                 {this.renderInputTag()}
                 <Button
                     icon={<Refresh />}
                     onClick={this.onRefresh}
                 />
-            </Box>
+            </ClauseWrapper>
         );
     }
 
