@@ -59,15 +59,10 @@ span { margin-left: 1rem; }
   color: black;
   display:flex;
   align-items: center;
-}
-svg {
-height: 45px;
-widh: 45px
-}
-`;
+}`;
 
 function Indicator({ error }) {
-    return error ? <CircleInformation size="medium" /> : <Spinning size="medium" />;
+    return error ? <CircleInformation size="medium" /> : <Spinning size="large" />;
 }
 
 @observer
