@@ -3,7 +3,7 @@ import { Grid } from 'styled-css-grid';
 import styled from 'styled-components';
 
 const Layout = Grid.extend.attrs({
-    columns: props => props.columns || 'repeat(auto-fill, minmax(280px, 1fr))',
+    columns: props => props.columns || 'repeat(auto-fill, minmax(120px, 1fr))',
     flow: props => props.flow || 'row dense',
 })`
 flex: 1;

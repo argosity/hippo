@@ -94,6 +94,7 @@ export default class Asset extends React.Component {
         return (
             <AssetWrapper
                 height={height || 3}
+                width={3}
                 label={this.label}
                 tabIndex={tabIndex}
                 onKeyPress={this.onKey}

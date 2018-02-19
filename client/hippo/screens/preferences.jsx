@@ -44,10 +44,10 @@ export default class Preferences extends React.Component {
                 </Toolbar>
                 <Heading>Account information</Heading>
                 <FieldsLayout>
-                    <Field name="login" validate={nonBlank} />
+                    <Field cellWidth={2} name="login" validate={nonBlank} />
                     <Field name="name" validate={nonBlank} />
                     <Field name="email" validate={validEmail} />
-                    <Field name="password" type="password" />
+                    <Field cellWidth={2} name="password" type="password" />
                 </FieldsLayout>
             </Form>
         );

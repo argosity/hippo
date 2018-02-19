@@ -24,6 +24,10 @@ export default class RecordFinder extends React.Component {
         onRecordFound: PropTypes.func.isRequired,
     }
 
+    static defaultProps = {
+        cellWidth: 2,
+    }
+
     @observable showingSearch = false;
 
     @action.bound
