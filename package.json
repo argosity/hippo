@@ -65,7 +65,7 @@
     "payment-fields": "^0.5.1",
     "pluralize": "^7.0.0",
     "prop-types": "^15.5.8",
-    "qs": "^6.5.0",
+    "qs": "^6.5.1",
     "quill": "^1.3.5",
     "rc-color-picker": "^1.2.3",
     "react": "^16.2.0",
