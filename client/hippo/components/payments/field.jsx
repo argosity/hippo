@@ -2,17 +2,30 @@ import React from 'react';
 import PaymentFields from 'payment-fields';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
+import styled from 'styled-components';
 import { getColumnProps } from 'react-flexbox-grid';
 import classnames from 'classnames';
 import { FieldWrapper } from '../form';
-import './field.scss';
+
+const PaymentFieldWrapper = styled.div`
+    padding-bottom: 0;
+    .payment-field {
+        height: 40px;
+    }
+    .hosted-card-field {
+        height: 100%;
+        border: 0;
+    }
+    .labels {
+        padding-left: 0;
+    }
+`;
 
 @observer
 export default class PaymentField extends React.Component {
 
     @action.bound
     onFocus() {
-        this.wrapper._onFocus();
         this.errorMessage = '';
     }
 
@@ -45,7 +58,7 @@ export default class PaymentField extends React.Component {
             label, className, ...cardFieldProps
         } = getColumnProps(this.props);
         return (
-            <div className={classnames('payment-field form-field', className)}>
+            <PaymentFieldWrapper className={classnames('payment-field form-field', className)}>
                 <FieldWrapper
                     error={this.errorMessage}
                     label={label}
@@ -57,7 +70,7 @@ export default class PaymentField extends React.Component {
                         onBlur={this.onBlur}
                     />
                 </FieldWrapper>
-            </div>
+            </PaymentFieldWrapper>
         );
     }
 
