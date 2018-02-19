@@ -29,8 +29,9 @@ export default class Screen extends React.Component {
 
     render() {
         const { className, screen, ...gridProps } = this.props;
+        const theme = this.props.theme || this.context.theme || baseTheme;
         return (
-            <ThemeProvider theme={this.context.theme || baseTheme}>
+            <ThemeProvider theme={theme}>
                 <Grid
                     data-screen-id={this.props.screen.definition.id}
                     rows={['xxsmall', 'flex', 'xsmall']}
