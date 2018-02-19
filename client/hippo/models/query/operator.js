@@ -13,6 +13,7 @@ export default class Operator extends BaseModel {
     @belongsTo({ model: 'hippo/query/field' }) field;
 
     isValidForField(field) {
+        if ('eq' === this.id) { return true; }
         if (!field) { return false; }
         if (!this.types.length) { return true; }
         return !!this.types.find(t => t === field.queryType);
