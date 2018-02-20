@@ -127,6 +127,10 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   color: #777777;
 }
 
+.c2 {
+  width: 100%;
+}
+
 .c2 > *:not(:first-child) {
   margin-left: 12px;
 }
@@ -166,11 +170,46 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin-left: 12px;
 }
 
+.c19 {
+  height: 100%;
+  min-width: 0;
+  -webkit-align-content: space-around;
+  -ms-flex-line-pack: space-around;
+  align-content: space-around;
+  grid-column-end: span 1;
+  grid-row-end: span 1;
+  padding: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-bottom: solid 2px #EEEEEE;
+}
+
+.c19:focus-within {
+  border-bottom-color: #CCCCCC;
+}
+
+.c19:focus-within span {
+  font-weight: 500;
+}
+
+.c19 input[type="checkbox"] {
+  margin-left: 12px;
+}
+
 .c11 {
   display: grid;
   grid-auto-flow: row dense;
   grid-auto-rows: minmax(20px,auto);
-  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+  grid-template-columns: repeat(auto-fill,minmax(120px,1fr));
   grid-gap: 8px 8px;
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -305,6 +344,42 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin-right: 12px;
 }
 
+@media (min-width:992px) {
+  .c12 {
+    grid-column-end: span 2;
+  }
+}
+
+@media (min-width:768px) {
+  .c12 {
+    grid-column-end: span 2;
+  }
+}
+
+@media (min-width:300px) {
+  .c12 {
+    grid-column-end: span 2;
+  }
+}
+
+@media (min-width:992px) {
+  .c19 {
+    grid-column-end: span 3;
+  }
+}
+
+@media (min-width:768px) {
+  .c19 {
+    grid-column-end: span 3;
+  }
+}
+
+@media (min-width:300px) {
+  .c19 {
+    grid-column-end: span 3;
+  }
+}
+
 @media only screen and (min-width:700px) {
   .c4 {
     -webkit-transition: 0.1s ease-in-out;
@@ -390,18 +465,18 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
     >
       <div
         className="c11"
-        columns="repeat(auto-fill, minmax(280px, 1fr))"
+        columns="repeat(auto-fill, minmax(120px, 1fr))"
         flow="row dense"
       >
         <label
-          className="c12"
+          className="form-field-wrapper c12"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="c13"
+            className="labels c13"
             direction="row"
             wrap={true}
           >
@@ -441,14 +516,14 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="c12"
+          className="form-field-wrapper c19"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="c13"
+            className="labels c13"
             direction="row"
             wrap={true}
           >
@@ -488,14 +563,14 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="c12"
+          className="form-field-wrapper c19"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="c13"
+            className="labels c13"
             direction="row"
             wrap={true}
           >
@@ -535,14 +610,14 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="c12"
+          className="form-field-wrapper c12"
           height={undefined}
           type="password"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="c13"
+            className="labels c13"
             direction="row"
             wrap={true}
           >

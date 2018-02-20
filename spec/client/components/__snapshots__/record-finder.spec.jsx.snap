@@ -200,6 +200,24 @@ exports[`RecordFinder Component renders 1`] = `
   stroke: none;
 }
 
+@media (min-width:992px) {
+  .c1 {
+    grid-column-end: span 2;
+  }
+}
+
+@media (min-width:768px) {
+  .c1 {
+    grid-column-end: span 2;
+  }
+}
+
+@media (min-width:300px) {
+  .c1 {
+    grid-column-end: span 2;
+  }
+}
+
 @media only screen and (min-width:700px) {
   .c8 {
     -webkit-transition: 0.1s ease-in-out;
@@ -211,14 +229,14 @@ exports[`RecordFinder Component renders 1`] = `
   className="c0"
 >
   <label
-    className="record-finder c1"
+    className="form-field-wrapper record-finder c1"
     height={undefined}
     type="text"
     width={undefined}
   >
     <div
       aria-label={undefined}
-      className="c2"
+      className="labels c2"
       direction="row"
       wrap={true}
     >

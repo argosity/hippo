@@ -64,9 +64,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
 }
 
 .c3 {
-  font-size: 48px;
-  line-height: 1.125;
-  max-width: 1152px;
+  font-size: 24px;
+  line-height: 1.333;
+  max-width: 576px;
   font-weight: 300;
 }
 
@@ -110,7 +110,7 @@ exports[`Workspace Menu has groups with screens 1`] = `
       className="c2"
       direction="column"
     >
-      <h1
+      <h3
         className="c3"
       >
         Settings
@@ -118,7 +118,7 @@ exports[`Workspace Menu has groups with screens 1`] = `
           aria-hidden={true}
           className="fa fa-wrench icon"
         />
-      </h1>
+      </h3>
     </div>
     <a
       aria-label={undefined}
