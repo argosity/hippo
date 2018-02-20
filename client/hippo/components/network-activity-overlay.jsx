@@ -29,12 +29,12 @@ span { margin-left: 1rem; }
 
 .mask {
   background-color: white;
+  top: 0;
   height: 100%;
-  left: 0;
+  left: 0%;
+  width: 100%;
   opacity: 0.8;
   position: absolute;
-  top: 0;
-  width: 100%;
 }
 
 &.rounded {
@@ -59,6 +59,7 @@ span { margin-left: 1rem; }
   color: black;
   display:flex;
   align-items: center;
+  width: 80%;
 }`;
 
 function Indicator({ error }) {
