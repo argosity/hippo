@@ -9,7 +9,7 @@ module Hippo
                 Root.webpack.wait_until_available
                 origin = Hippo.env.production? ? '' : 'crossorigin';
                 entries.map { |entry|
-                    "<script defer #{origin} src=\"#{Root.webpack.host}/assets/#{Root.webpack.file(entry)}\"></script>"
+                    "<script async #{origin} src=\"#{Root.webpack.host}/assets/#{Root.webpack.file(entry)}\"></script>"
                 }.join("\n")
             end
 
