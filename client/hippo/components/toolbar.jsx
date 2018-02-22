@@ -1,7 +1,8 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import Box from 'grommet/components/Box';
+import { Box } from 'grommet';
 import cn from 'classnames';
 import baseTheme from 'grommet/themes/vanilla';
+import styled from 'styled-components';
 
 export SaveButton from './save-button';
 
@@ -27,3 +28,7 @@ export function Toolbar({ children, className, ...props }) {
 Toolbar.defaultProps = {
     theme: baseTheme,
 };
+
+Toolbar.expand = styled.div`
+flex: 1;
+`;
