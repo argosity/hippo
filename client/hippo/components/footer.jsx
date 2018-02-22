@@ -9,6 +9,7 @@ export function Footer({ children, ...props }) {
             gridArea="footer"
             align="end"
             justify="end"
+            background="white"
             direction="row"
             {...props}
         >

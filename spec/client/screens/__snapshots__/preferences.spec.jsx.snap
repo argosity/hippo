@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Screen Preferences renders and matches snapshot 1`] = `
-.c3 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -17,6 +17,9 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-flex: 1 1;
+  -ms-flex: 1 1;
+  flex: 1 1;
   grid-area: header;
   margin: undefined;
   padding-left: 12px;
@@ -25,7 +28,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   padding-bottom: 12px;
 }
 
-.c8 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,7 +41,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin: 12px;
 }
 
-.c13 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -69,7 +72,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   grid-template-rows: 48px 1fr 96px;
 }
 
-.c9 {
+.c8 {
   font-size: 24px;
   line-height: 1.333;
   max-width: 576px;
@@ -78,7 +81,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin-bottom: 0;
 }
 
-.c18 {
+.c17 {
   padding: 11px;
   border: 1px solid rgba(0,0,0,0.15);
   border-radius: 4px;
@@ -92,33 +95,33 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-appearance: none;
 }
 
-.c18::-webkit-input-placeholder {
+.c17::-webkit-input-placeholder {
   color: #AAAAAA;
 }
 
-.c18::-moz-placeholder {
+.c17::-moz-placeholder {
   color: #AAAAAA;
 }
 
-.c18:-ms-input-placeholder {
+.c17:-ms-input-placeholder {
   color: #AAAAAA;
 }
 
-.c18::-moz-focus-inner {
+.c17::-moz-focus-inner {
   border: none;
   outline: none;
 }
 
-.c17 {
+.c16 {
   width: 100%;
 }
 
-.c14 {
+.c13 {
   font-size: 16px;
   line-height: 1.375;
 }
 
-.c15 {
+.c14 {
   font-size: 16px;
   line-height: 1.375;
   white-space: nowrap;
@@ -127,85 +130,77 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   color: #777777;
 }
 
-.c2 {
-  width: 100%;
-}
-
-.c2 > *:not(:first-child) {
-  margin-left: 12px;
-}
-
-.c12 {
-  height: 100%;
-  min-width: 0;
-  -webkit-align-content: space-around;
-  -ms-flex-line-pack: space-around;
-  align-content: space-around;
-  grid-column-end: span 1;
-  grid-row-end: span 1;
-  padding: 3px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  border-bottom: solid 2px #EEEEEE;
-}
-
-.c12:focus-within {
-  border-bottom-color: #CCCCCC;
-}
-
-.c12:focus-within span {
-  font-weight: 500;
-}
-
-.c12 input[type="checkbox"] {
-  margin-left: 12px;
-}
-
-.c19 {
-  height: 100%;
-  min-width: 0;
-  -webkit-align-content: space-around;
-  -ms-flex-line-pack: space-around;
-  align-content: space-around;
-  grid-column-end: span 1;
-  grid-row-end: span 1;
-  padding: 3px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  border-bottom: solid 2px #EEEEEE;
-}
-
-.c19:focus-within {
-  border-bottom-color: #CCCCCC;
-}
-
-.c19:focus-within span {
-  font-weight: 500;
-}
-
-.c19 input[type="checkbox"] {
-  margin-left: 12px;
-}
-
 .c11 {
+  height: 100%;
+  min-width: 0;
+  -webkit-align-content: space-around;
+  -ms-flex-line-pack: space-around;
+  align-content: space-around;
+  grid-column-end: span 1;
+  grid-row-end: span 1;
+  padding: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-bottom: solid 2px #EEEEEE;
+}
+
+.c11:focus-within {
+  border-bottom-color: #CCCCCC;
+}
+
+.c11:focus-within span {
+  font-weight: 500;
+}
+
+.c11 input[type="checkbox"] {
+  margin-left: 12px;
+}
+
+.c18 {
+  height: 100%;
+  min-width: 0;
+  -webkit-align-content: space-around;
+  -ms-flex-line-pack: space-around;
+  align-content: space-around;
+  grid-column-end: span 1;
+  grid-row-end: span 1;
+  padding: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-bottom: solid 2px #EEEEEE;
+}
+
+.c18:focus-within {
+  border-bottom-color: #CCCCCC;
+}
+
+.c18:focus-within span {
+  font-weight: 500;
+}
+
+.c18 input[type="checkbox"] {
+  margin-left: 12px;
+}
+
+.c10 {
   display: grid;
   grid-auto-flow: row dense;
   grid-auto-rows: minmax(20px,auto);
@@ -222,11 +217,11 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   grid-auto-rows: minmax(80px,auto);
 }
 
-.c11 > * {
+.c10 > * {
   min-height: 85px;
 }
 
-.c16 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -237,7 +232,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   align-items: flex-end;
 }
 
-.c10 {
+.c9 {
   grid-area: body;
   overflow: auto;
   -webkit-flex: 1;
@@ -262,7 +257,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   box-sizing: inherit;
 }
 
-.c4 {
+.c3 {
   cursor: pointer;
   outline: none;
   font: inherit;
@@ -285,30 +280,30 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   padding: 10px 10px;
 }
 
-.c4 svg {
+.c3 svg {
   fill: #FFFFFF;
   stroke: #FFFFFF;
   -webkit-transition: none;
   transition: none;
 }
 
-.c4:hover {
+.c3:hover {
   box-shadow: 0px 0px 0px 2px #865CD6;
 }
 
-.c5 {
+.c4 {
   display: inline-block;
 }
 
-.c5:first-child:not(:last-child) {
+.c4:first-child:not(:last-child) {
   margin-right: 12px;
 }
 
-.c5 > * {
+.c4 > * {
   vertical-align: bottom;
 }
 
-.c6 {
+.c5 {
   display: inline-block;
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
@@ -317,71 +312,71 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   stroke: #666666;
 }
 
-.c6 g {
+.c5 g {
   fill: inherit;
   stroke: inherit;
 }
 
-.c6 *:not([stroke])[fill="none"] {
+.c5 *:not([stroke])[fill="none"] {
   stroke-width: 0;
 }
 
-.c6 *[stroke*="#"],
-.c6 *[STROKE*="#"] {
+.c5 *[stroke*="#"],
+.c5 *[STROKE*="#"] {
   stroke: inherit;
   fill: none;
 }
 
-.c6 *[fill-rule],
-.c6 *[FILL-RULE],
-.c6 *[fill*="#"],
-.c6 *[FILL*="#"] {
+.c5 *[fill-rule],
+.c5 *[FILL-RULE],
+.c5 *[fill*="#"],
+.c5 *[FILL*="#"] {
   fill: inherit;
   stroke: none;
 }
 
-.c7:first-child:not(:last-child) {
+.c6:first-child:not(:last-child) {
   margin-right: 12px;
 }
 
 @media (min-width:992px) {
-  .c12 {
+  .c11 {
     grid-column-end: span 2;
   }
 }
 
 @media (min-width:768px) {
-  .c12 {
+  .c11 {
     grid-column-end: span 2;
   }
 }
 
 @media (min-width:300px) {
-  .c12 {
+  .c11 {
     grid-column-end: span 2;
   }
 }
 
 @media (min-width:992px) {
-  .c19 {
+  .c18 {
     grid-column-end: span 3;
   }
 }
 
 @media (min-width:768px) {
-  .c19 {
+  .c18 {
     grid-column-end: span 3;
   }
 }
 
 @media (min-width:300px) {
-  .c19 {
+  .c18 {
     grid-column-end: span 3;
   }
 }
 
 @media only screen and (min-width:700px) {
-  .c4 {
+  .c3 {
     -webkit-transition: 0.1s ease-in-out;
     transition: 0.1s ease-in-out;
   }
@@ -403,12 +398,12 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   >
     <div
       aria-label={undefined}
-      className="hippo-toolbar c2 c3"
+      className="hippo-toolbar c2"
       direction="row"
     >
       <button
         aria-label={undefined}
-        className="save-button c4"
+        className="save-button c3"
         disabled={false}
         href={undefined}
         icon={<Save />}
@@ -423,11 +418,11 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
       >
         <span
           aria-hidden={true}
-          className="c5"
+          className="c4"
         >
           <svg
             aria-label="Save"
-            className="c6"
+            className="c5"
             height="24px"
             role="img"
             version="1.1"
@@ -443,7 +438,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </svg>
         </span>
         <span
-          className="c7"
+          className="c6"
         >
           Save
         </span>
@@ -451,55 +446,55 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
     </div>
     <div
       aria-label={undefined}
-      className="c8"
+      className="c7"
       direction="column"
     >
       <h3
-        className="c9"
+        className="c8"
       >
         Account information
       </h3>
     </div>
     <div
-      className="c10"
+      className="c9"
     >
       <div
-        className="c11"
+        className="c10"
         columns="repeat(auto-fill, minmax(120px, 1fr))"
         flow="row dense"
       >
         <label
-          className="form-field-wrapper c12"
+          className="form-field-wrapper c11"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="labels c13"
+            className="labels c12"
             direction="row"
             wrap={true}
           >
             <span
-              className="c14"
+              className="c13"
             >
               Login
             </span>
             <span
-              className="c15"
+              className="c14"
               color="dark-5"
             />
           </div>
           <div
-            className="c16"
+            className="c15"
           >
             <div
-              className="c17"
+              className="c16"
             >
               <input
                 autoComplete="off"
                 autoFocus={undefined}
-                className="c18"
+                className="c17"
                 defaultValue={undefined}
                 id={undefined}
                 name="login"
@@ -516,37 +511,37 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="form-field-wrapper c19"
+          className="form-field-wrapper c18"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="labels c13"
+            className="labels c12"
             direction="row"
             wrap={true}
           >
             <span
-              className="c14"
+              className="c13"
             >
               Name
             </span>
             <span
-              className="c15"
+              className="c14"
               color="dark-5"
             />
           </div>
           <div
-            className="c16"
+            className="c15"
           >
             <div
-              className="c17"
+              className="c16"
             >
               <input
                 autoComplete="off"
                 autoFocus={undefined}
-                className="c18"
+                className="c17"
                 defaultValue={undefined}
                 id={undefined}
                 name="name"
@@ -563,37 +558,37 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="form-field-wrapper c19"
+          className="form-field-wrapper c18"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="labels c13"
+            className="labels c12"
             direction="row"
             wrap={true}
           >
             <span
-              className="c14"
+              className="c13"
             >
               Email
             </span>
             <span
-              className="c15"
+              className="c14"
               color="dark-5"
             />
           </div>
           <div
-            className="c16"
+            className="c15"
           >
             <div
-              className="c17"
+              className="c16"
             >
               <input
                 autoComplete="off"
                 autoFocus={undefined}
-                className="c18"
+                className="c17"
                 defaultValue={undefined}
                 id={undefined}
                 name="email"
@@ -610,37 +605,37 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="form-field-wrapper c12"
+          className="form-field-wrapper c11"
           height={undefined}
           type="password"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="labels c13"
+            className="labels c12"
             direction="row"
             wrap={true}
           >
             <span
-              className="c14"
+              className="c13"
             >
               Password
             </span>
             <span
-              className="c15"
+              className="c14"
               color="dark-5"
             />
           </div>
           <div
-            className="c16"
+            className="c15"
           >
             <div
-              className="c17"
+              className="c16"
             >
               <input
                 autoComplete="off"
                 autoFocus={undefined}
-                className="c18"
+                className="c17"
                 defaultValue={undefined}
                 id={undefined}
                 name="password"

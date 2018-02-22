@@ -83,7 +83,7 @@ export default class WorkspaceMenu extends React.Component {
     render() {
         return (
             <Box
-                full size="small" separator="right"
+                fill size="small" separator="right"
                 background="brand"
                 className="screen-selection-menu"
             >

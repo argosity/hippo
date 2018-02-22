@@ -139,6 +139,7 @@ export default class PaymentForm extends React.Component {
                     justify="end"
                     direction="row"
                     margin="medium"
+                    gap="small"
                     pad={{ between: 'small' }}
                 >
                     <Button label="Back" onClick={this.props.onCancel} />

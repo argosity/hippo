@@ -35,11 +35,10 @@ export default class Screen extends React.Component {
     render() {
         return (
             <Box
-                full
                 className="screens-wrapper"
                 justify="start"
                 align="stretch"
-                flex="grow"
+
             >
                 {displaying.models.map(s =>
                     <ScreenView

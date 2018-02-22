@@ -3,14 +3,46 @@ import { action, observable, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { sortBy }  from 'lodash';
 import SwipeableViews from 'react-swipeable-views';
-import Box from 'grommet/components/Box';
-import Button from 'grommet/components/Button';
+import { Box, Button, Layer } from 'grommet';
 import { Star, Next, Close } from 'grommet-icons';
-import Layer from 'grommet/components/Layer';
+import styled from 'styled-components';
 import Tenant from '../models/tenant';
 import Subscription from '../models/subscription';
 import PaymentForm from './subscription-choice-layer/payment-form';
 import './subscription-choice-layer/subscription-choice.scss';
+
+const SubscriptionChoices = styled.div`
+
+    padding:  ${props => props.theme.global.edgeSize.small};
+
+    .subscriptions-listing {
+        min-height: 350px;
+        polyline {
+            transition: all 0.2s;
+        }
+        .subscription {
+            cursor: pointer;
+            &:hover {
+                    polyline {
+                    stroke-width: 3px;
+                    stroke: black;
+                }
+            }
+        }
+    }
+
+    .payment-fields-wrapper {
+        min-height: 400px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grommetux-control-icon-next {
+        margin-left: 1rem;
+    }
+
+`;
 
 @observer
 export default class SubscriptionChoiceLayer extends React.Component {
@@ -86,8 +118,9 @@ export default class SubscriptionChoiceLayer extends React.Component {
             <Box
                 key={subscription.id}
                 className="subscription"
-                margin="medium"
+                pad="medium"
                 onClick={() => this.showCCForm(subscription)}
+
             >
                 <Box
                     direction="row"
@@ -150,7 +183,7 @@ export default class SubscriptionChoiceLayer extends React.Component {
                 closer={!!this.props.onCancel}
                 onClose={this.props.onCancel}
             >
-                <Box margin="medium">
+                <SubscriptionChoices>
                     <SwipeableViews
                         disabled index={this.displayIndex}
                     >
@@ -158,7 +191,7 @@ export default class SubscriptionChoiceLayer extends React.Component {
                         {this.renderCardFields()}
                         {this.renderSubscriptionChangeSuccess()}
                     </SwipeableViews>
-                </Box>
+                </SubscriptionChoices>
             </Layer>
         );
     }
