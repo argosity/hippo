@@ -101,6 +101,13 @@ export default class Asset extends BaseModel {
         return this.constructor.urlForSize(this.file_data, size);
     }
 
+    destroy() {
+        return super.destroy().then(() => {
+            if (!this.owner) { return; }
+            this.owner[this.owner_association_name] = null;
+        });
+    }
+
     save() {
         if (!this.file) { return Promise.resolve(this); }
         const form = new FormData();

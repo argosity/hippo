@@ -4,11 +4,30 @@ import { action } from 'mobx';
 import { observer }   from 'mobx-react';
 import { titleize } from 'hippo/lib/util';
 import Dropzone from 'react-dropzone';
+import styled from 'styled-components';
 import color from 'grommet/utils/colors';
 import baseTheme from 'grommet/themes/vanilla';
+import { Button } from 'grommet';
 import { Document } from 'grommet-icons';
 import { BaseModel } from '../models/base';
 import { StyledWrapper } from './form/field-wrapper';
+
+const Preview = styled.div`
+position: relative;
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  opacity: 0.3;
+  &:hover {
+    opacity: 1;
+  }
+}
+`;
 
 const AssetWrapper = StyledWrapper.withComponent('div').extend`
 border-bottom: 0;
@@ -72,11 +91,31 @@ export default class Asset extends React.Component {
         }
     }
 
+    @action.bound onRemove(ev) {
+        ev.stopPropagation();
+        if (this.asset.isNew) {
+            this.props.model[this.props.name] = null;
+        } else {
+            this.asset.destroy();
+        }
+    }
+
     preview() {
         if (this.asset && this.asset.exists) {
-            return this.asset.isImage ?
+            const preview = this.asset.isImage ?
                 <img src={this.asset.previewUrl} alt="" /> :
                 <Document size="xlarge" type="status" />;
+            return (
+                <Preview>
+                    <Button
+                        primary
+                        onClick={this.onRemove}
+                        label={this.asset.isNew ? 'Clear' : 'Delete'}
+                    />
+                    {preview}
+                </Preview>
+
+            );
         }
         return (
             <div>
