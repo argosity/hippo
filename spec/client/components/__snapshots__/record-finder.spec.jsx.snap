@@ -80,7 +80,6 @@ exports[`RecordFinder Component renders 1`] = `
   align-content: space-around;
   grid-column-end: span 1;
   grid-row-end: span 1;
-  padding: 3px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -92,13 +91,21 @@ exports[`RecordFinder Component renders 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  border-bottom: solid 2px #EEEEEE;
+  background: white no-repeat;
+  background-image: linear-gradient(to bottom,#00CCEB,#00CCEB),linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
+  background-size: 0 2px,100% 1px;
+  background-position: 50% 100%,50% 100%;
+  -webkit-transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
+  transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
 }
 
+.c1.focus,
 .c1:focus-within {
-  border-bottom-color: #CCCCCC;
+  background-size: 100% 2px,100% 1px;
+  outline: none;
 }
 
+.c1.focus span,
 .c1:focus-within span {
   font-weight: 500;
 }

@@ -17,9 +17,6 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-flex: 1 1;
-  -ms-flex: 1 1;
-  flex: 1 1;
   grid-area: header;
   margin: undefined;
   padding-left: 12px;
@@ -138,7 +135,6 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   align-content: space-around;
   grid-column-end: span 1;
   grid-row-end: span 1;
-  padding: 3px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -150,13 +146,21 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  border-bottom: solid 2px #EEEEEE;
+  background: white no-repeat;
+  background-image: linear-gradient(to bottom,#00CCEB,#00CCEB),linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
+  background-size: 0 2px,100% 1px;
+  background-position: 50% 100%,50% 100%;
+  -webkit-transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
+  transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
 }
 
+.c11.focus,
 .c11:focus-within {
-  border-bottom-color: #CCCCCC;
+  background-size: 100% 2px,100% 1px;
+  outline: none;
 }
 
+.c11.focus span,
 .c11:focus-within span {
   font-weight: 500;
 }
@@ -173,7 +177,6 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   align-content: space-around;
   grid-column-end: span 1;
   grid-row-end: span 1;
-  padding: 3px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -185,13 +188,21 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  border-bottom: solid 2px #EEEEEE;
+  background: white no-repeat;
+  background-image: linear-gradient(to bottom,#00CCEB,#00CCEB),linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
+  background-size: 0 2px,100% 1px;
+  background-position: 50% 100%,50% 100%;
+  -webkit-transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
+  transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
 }
 
+.c18.focus,
 .c18:focus-within {
-  border-bottom-color: #CCCCCC;
+  background-size: 100% 2px,100% 1px;
+  outline: none;
 }
 
+.c18.focus span,
 .c18:focus-within span {
   font-weight: 500;
 }
@@ -400,6 +411,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
       aria-label={undefined}
       className="hippo-toolbar c2"
       direction="row"
+      fill="horizontal"
     >
       <button
         aria-label={undefined}
