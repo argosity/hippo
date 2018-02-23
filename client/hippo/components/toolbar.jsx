@@ -9,7 +9,7 @@ export SaveButton from './save-button';
 export function Toolbar({ children, className, ...props }) {
     return (
         <Box
-            flex
+            fill="horizontal"
             gridArea="header"
             direction="row"
             align="center"
