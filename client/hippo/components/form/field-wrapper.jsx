@@ -2,12 +2,14 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { Box, Text } from 'grommet';
 import { includes, isString } from 'lodash';
 import cn from 'classnames';
-import color from 'grommet/utils/colors';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Cell } from '../../components/grid';
 import { titleize } from '../../lib/util';
 
 const UNDERLINED_TYPES = ['text', 'textarea', 'number', 'password', 'date', 'email'];
+
+const isUnderlined = props =>
+    Boolean(props.underlined || includes(UNDERLINED_TYPES, props.type));
 
 const controlStyle = () => (`
 padding-right: 3px;
@@ -22,19 +24,24 @@ align-items: flex-end;
 ${props => props.control && controlStyle(props)}
 `;
 
-const borderBottom = props => (`
-border-bottom: solid ${props.theme.global.borderSize.small} ${color.colorForName('light-2', props.theme)};
-`);
+const borderBottom = css`
+  background: white no-repeat;
+  background-image: linear-gradient(to bottom, ${props => props.theme.global.focus.border.color}, ${props => props.theme.global.focus.border.color}), linear-gradient(to bottom, ${props => props.theme.global.input.border.color}, ${props => props.theme.global.input.border.color});
+  background-size: 0 2px, 100% 1px;
+  background-position: 50% 100%, 50% 100%;
+  transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+`;
 
 const StyledWrapper = Cell.withComponent('label').extend`
-padding: 3px;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-${props => includes(UNDERLINED_TYPES, props.type) && borderBottom(props)}
-&:focus-within {
-  border-bottom-color: ${props => color.colorForName('light-4', props.theme)};
-  span {
+${props => isUnderlined(props) && borderBottom}
+  &.focus,
+  &:focus-within {
+    background-size: 100% 2px, 100% 1px;
+    outline: none;
+    span {
     font-weight: 500;
   }
 }
