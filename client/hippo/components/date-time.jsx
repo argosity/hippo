@@ -27,6 +27,7 @@ border: 0;
 width: 100%;
 font-${props => props.theme.text.medium};
 padding: ${props => props.theme.global.edgeSize.small};
+margin-bottom: 2px; // needed so that the border on wrapper will display
 `;
 
 const defaultOptions = {
