@@ -14,8 +14,6 @@ import TextAreaWrapper from './fields/textarea-wrapper';
 import Label           from './fields/label';
 import TimeZoneSelect  from '../../components/time-zone-select';
 
-import './fields/form-field.scss';
-
 const TypesMapping = {
     email:    EmailWrapper,
     text:     TextWrapper,
