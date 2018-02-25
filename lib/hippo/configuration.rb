@@ -103,7 +103,7 @@ module Hippo
         config_option :environment, (ENV['HIPPO_ENV'] || ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'development').to_sym
 
         # The secret key to use for session cookies.
-        config_option :session_secret_key_base,  '1234', silent: true
+        config_option :session_secret_key_base, ENV['SECRET_KEY'] || '1234', silent: true
 
         # Configuration for Redis
         config_option :redis, ENV.has_key?('REDIS_URL') ?
