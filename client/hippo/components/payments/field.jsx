@@ -27,17 +27,19 @@ export default class PaymentField extends React.Component {
     @action.bound
     onFocus() {
         this.errorMessage = '';
+        this.isFocused = true;
     }
 
     @action.bound
     onBlur({ isValid, isPotentiallyValid }) {
         this.isValid = isValid;
-        this.wrapper._onBlur();
+        this.isFocused = false;
         this.errorMessage = isPotentiallyValid ? '' : this.props.errorMessage;
     }
 
     @observable isValid = false;
     @observable errorMessage = '';
+    @observable isFocused;
 
     @action.bound onValidityChange({ isValid, isPotentiallyValid }) {
         this.isValid = isValid;
@@ -63,6 +65,8 @@ export default class PaymentField extends React.Component {
                     error={this.errorMessage}
                     label={label}
                     ref={this.setRef}
+                    underlined
+                    focused={this.isFocused}
                 >
                     <PaymentFields.Field
                         {...cardFieldProps}

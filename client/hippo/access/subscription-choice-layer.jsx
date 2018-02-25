@@ -22,8 +22,10 @@ const SubscriptionChoices = styled.div`
         }
         .subscription {
             cursor: pointer;
+            transition: all 0.2s;
             &:hover {
-                    polyline {
+                background-color: #f5f5f5;
+                polyline {
                     stroke-width: 3px;
                     stroke: black;
                 }

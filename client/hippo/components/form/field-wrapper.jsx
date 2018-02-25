@@ -33,11 +33,11 @@ const borderBottom = css`
 `;
 
 const StyledWrapper = Cell.withComponent('label').extend`
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-${props => isUnderlined(props) && borderBottom}
-  &.focus,
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  ${props => isUnderlined(props) && borderBottom}
+  &.focused,
   &:focus-within {
     background-size: 100% 2px, 100% 1px;
     outline: none;
@@ -55,7 +55,7 @@ export { StyledWrapper };
 
 export default function FieldWrapper({
     control, label: labelVal, name, help, error, children, className,
-    desktop, tablet, phone, cellWidth = 3, type,
+    desktop, tablet, phone, cellWidth = 3, type, focused,
     ...cellProps
 }) {
     const label = (!labelVal && labelVal !== false) ? titleize(name) : labelVal;
@@ -88,7 +88,7 @@ export default function FieldWrapper({
             {...cellProps}
             {...sizeProps}
             type={isString(type) ? type : ''}
-            className={cn('form-field-wrapper', className)}
+            className={cn('form-field-wrapper', className, { focused })}
         >
             {header}
             <ControlsWrapper control={control}>{children}</ControlsWrapper>
