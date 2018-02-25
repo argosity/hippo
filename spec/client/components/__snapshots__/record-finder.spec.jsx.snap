@@ -99,13 +99,13 @@ exports[`RecordFinder Component renders 1`] = `
   transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
 }
 
-.c1.focus,
+.c1.focused,
 .c1:focus-within {
   background-size: 100% 2px,100% 1px;
   outline: none;
 }
 
-.c1.focus span,
+.c1.focused span,
 .c1:focus-within span {
   font-weight: 500;
 }

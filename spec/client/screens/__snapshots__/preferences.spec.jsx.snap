@@ -154,13 +154,13 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
 }
 
-.c11.focus,
+.c11.focused,
 .c11:focus-within {
   background-size: 100% 2px,100% 1px;
   outline: none;
 }
 
-.c11.focus span,
+.c11.focused span,
 .c11:focus-within span {
   font-weight: 500;
 }
@@ -196,13 +196,13 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
 }
 
-.c18.focus,
+.c18.focused,
 .c18:focus-within {
   background-size: 100% 2px,100% 1px;
   outline: none;
 }
 
-.c18.focus span,
+.c18.focused span,
 .c18:focus-within span {
   font-weight: 500;
 }
