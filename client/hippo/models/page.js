@@ -27,7 +27,7 @@ export default class Page extends BaseModel {
             @action findOrCreatePage() {
                 if (!this.page) {
                     this.page = new Page({
-                        owner: this, owner_id: this.id, owner_type: this.serverModel,
+                        owner: this, owner_id: this.id, owner_type: this.constructor.serverModel,
                     });
                     if (!this.isNew) { this.page.save(); }
                 }
