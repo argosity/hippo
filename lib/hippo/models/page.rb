@@ -5,6 +5,7 @@ module Hippo
         has_many :images,
                  class_name: 'Hippo::Asset', as: :owner, dependent: :destroy
 
+        validates :owner, presence: true
         validates :owner_id, uniqueness: { scope: :owner_type, message: 'Only one page per model' }
     end
 end
