@@ -45,7 +45,7 @@ class Logout extends React.Component {
         if (!User.isLoggedIn) { return null; }
         return (
             <MenuLink
-                icon={<Icon name="sign-out" />}
+                icon={<Icon name="sign-out-alt" />}
                 label="Log Out"
                 onClick={this.onLogoutClick}
             />
