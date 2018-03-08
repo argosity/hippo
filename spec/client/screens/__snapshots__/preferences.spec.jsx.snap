@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Screen Preferences renders and matches snapshot 1`] = `
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -25,7 +25,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   padding-bottom: 12px;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,7 +38,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin: 12px;
 }
 
-.c12 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -69,7 +69,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   grid-template-rows: 48px 1fr 96px;
 }
 
-.c8 {
+.c9 {
   font-size: 24px;
   line-height: 1.333;
   max-width: 576px;
@@ -78,7 +78,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   margin-bottom: 0;
 }
 
-.c17 {
+.c18 {
   padding: 11px;
   border: 1px solid rgba(0,0,0,0.15);
   border-radius: 4px;
@@ -92,33 +92,33 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   -webkit-appearance: none;
 }
 
-.c17::-webkit-input-placeholder {
+.c18::-webkit-input-placeholder {
   color: #AAAAAA;
 }
 
-.c17::-moz-placeholder {
+.c18::-moz-placeholder {
   color: #AAAAAA;
 }
 
-.c17:-ms-input-placeholder {
+.c18:-ms-input-placeholder {
   color: #AAAAAA;
 }
 
-.c17::-moz-focus-inner {
+.c18::-moz-focus-inner {
   border: none;
   outline: none;
 }
 
-.c16 {
+.c17 {
   width: 100%;
 }
 
-.c13 {
+.c14 {
   font-size: 16px;
   line-height: 1.375;
 }
 
-.c14 {
+.c15 {
   font-size: 16px;
   line-height: 1.375;
   white-space: nowrap;
@@ -127,91 +127,95 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   color: #777777;
 }
 
+.c2 button {
+  min-width: 100px;
+}
+
+.c12 {
+  height: 100%;
+  min-width: 0;
+  -webkit-align-content: space-around;
+  -ms-flex-line-pack: space-around;
+  align-content: space-around;
+  grid-column-end: span 1;
+  grid-row-end: span 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background: white no-repeat;
+  background-image: linear-gradient(to bottom,#00CCEB,#00CCEB),linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
+  background-size: 0 2px,100% 1px;
+  background-position: 50% 100%,50% 100%;
+  -webkit-transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
+  transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
+}
+
+.c12.focused,
+.c12:focus-within {
+  background-size: 100% 2px,100% 1px;
+  outline: none;
+}
+
+.c12.focused span,
+.c12:focus-within span {
+  font-weight: 500;
+}
+
+.c12 input[type="checkbox"] {
+  margin-left: 12px;
+}
+
+.c19 {
+  height: 100%;
+  min-width: 0;
+  -webkit-align-content: space-around;
+  -ms-flex-line-pack: space-around;
+  align-content: space-around;
+  grid-column-end: span 1;
+  grid-row-end: span 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background: white no-repeat;
+  background-image: linear-gradient(to bottom,#00CCEB,#00CCEB),linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
+  background-size: 0 2px,100% 1px;
+  background-position: 50% 100%,50% 100%;
+  -webkit-transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
+  transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
+}
+
+.c19.focused,
+.c19:focus-within {
+  background-size: 100% 2px,100% 1px;
+  outline: none;
+}
+
+.c19.focused span,
+.c19:focus-within span {
+  font-weight: 500;
+}
+
+.c19 input[type="checkbox"] {
+  margin-left: 12px;
+}
+
 .c11 {
-  height: 100%;
-  min-width: 0;
-  -webkit-align-content: space-around;
-  -ms-flex-line-pack: space-around;
-  align-content: space-around;
-  grid-column-end: span 1;
-  grid-row-end: span 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  background: white no-repeat;
-  background-image: linear-gradient(to bottom,#00CCEB,#00CCEB),linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
-  background-size: 0 2px,100% 1px;
-  background-position: 50% 100%,50% 100%;
-  -webkit-transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
-  transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
-}
-
-.c11.focused,
-.c11:focus-within {
-  background-size: 100% 2px,100% 1px;
-  outline: none;
-}
-
-.c11.focused span,
-.c11:focus-within span {
-  font-weight: 500;
-}
-
-.c11 input[type="checkbox"] {
-  margin-left: 12px;
-}
-
-.c18 {
-  height: 100%;
-  min-width: 0;
-  -webkit-align-content: space-around;
-  -ms-flex-line-pack: space-around;
-  align-content: space-around;
-  grid-column-end: span 1;
-  grid-row-end: span 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  background: white no-repeat;
-  background-image: linear-gradient(to bottom,#00CCEB,#00CCEB),linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
-  background-size: 0 2px,100% 1px;
-  background-position: 50% 100%,50% 100%;
-  -webkit-transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
-  transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);
-}
-
-.c18.focused,
-.c18:focus-within {
-  background-size: 100% 2px,100% 1px;
-  outline: none;
-}
-
-.c18.focused span,
-.c18:focus-within span {
-  font-weight: 500;
-}
-
-.c18 input[type="checkbox"] {
-  margin-left: 12px;
-}
-
-.c10 {
   display: grid;
   grid-auto-flow: row dense;
   grid-auto-rows: minmax(20px,auto);
@@ -228,11 +232,11 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   grid-auto-rows: minmax(80px,auto);
 }
 
-.c10 > * {
+.c11 > * {
   min-height: 85px;
 }
 
-.c15 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -243,7 +247,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   align-items: flex-end;
 }
 
-.c9 {
+.c10 {
   grid-area: body;
   overflow: auto;
   -webkit-flex: 1;
@@ -268,7 +272,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   box-sizing: inherit;
 }
 
-.c3 {
+.c4 {
   cursor: pointer;
   outline: none;
   font: inherit;
@@ -291,30 +295,30 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   padding: 10px 10px;
 }
 
-.c3 svg {
+.c4 svg {
   fill: #FFFFFF;
   stroke: #FFFFFF;
   -webkit-transition: none;
   transition: none;
 }
 
-.c3:hover {
+.c4:hover {
   box-shadow: 0px 0px 0px 2px #865CD6;
 }
 
-.c4 {
+.c5 {
   display: inline-block;
 }
 
-.c4:first-child:not(:last-child) {
+.c5:first-child:not(:last-child) {
   margin-right: 12px;
 }
 
-.c4 > * {
+.c5 > * {
   vertical-align: bottom;
 }
 
-.c5 {
+.c6 {
   display: inline-block;
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
@@ -323,71 +327,71 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   stroke: #666666;
 }
 
-.c5 g {
+.c6 g {
   fill: inherit;
   stroke: inherit;
 }
 
-.c5 *:not([stroke])[fill="none"] {
+.c6 *:not([stroke])[fill="none"] {
   stroke-width: 0;
 }
 
-.c5 *[stroke*="#"],
-.c5 *[STROKE*="#"] {
+.c6 *[stroke*="#"],
+.c6 *[STROKE*="#"] {
   stroke: inherit;
   fill: none;
 }
 
-.c5 *[fill-rule],
-.c5 *[FILL-RULE],
-.c5 *[fill*="#"],
-.c5 *[FILL*="#"] {
+.c6 *[fill-rule],
+.c6 *[FILL-RULE],
+.c6 *[fill*="#"],
+.c6 *[FILL*="#"] {
   fill: inherit;
   stroke: none;
 }
 
-.c6:first-child:not(:last-child) {
+.c7:first-child:not(:last-child) {
   margin-right: 12px;
 }
 
 @media (min-width:992px) {
-  .c11 {
+  .c12 {
     grid-column-end: span 2;
   }
 }
 
 @media (min-width:768px) {
-  .c11 {
+  .c12 {
     grid-column-end: span 2;
   }
 }
 
 @media (min-width:300px) {
-  .c11 {
+  .c12 {
     grid-column-end: span 2;
   }
 }
 
 @media (min-width:992px) {
-  .c18 {
+  .c19 {
     grid-column-end: span 3;
   }
 }
 
 @media (min-width:768px) {
-  .c18 {
+  .c19 {
     grid-column-end: span 3;
   }
 }
 
 @media (min-width:300px) {
-  .c18 {
+  .c19 {
     grid-column-end: span 3;
   }
 }
 
 @media only screen and (min-width:700px) {
-  .c3 {
+  .c4 {
     -webkit-transition: 0.1s ease-in-out;
     transition: 0.1s ease-in-out;
   }
@@ -409,13 +413,13 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
   >
     <div
       aria-label={undefined}
-      className="hippo-toolbar c2"
+      className="hippo-toolbar c2 c3"
       direction="row"
       fill="horizontal"
     >
       <button
         aria-label={undefined}
-        className="save-button c3"
+        className="save-button c4"
         disabled={false}
         href={undefined}
         icon={<Save />}
@@ -430,11 +434,11 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
       >
         <span
           aria-hidden={true}
-          className="c4"
+          className="c5"
         >
           <svg
             aria-label="Save"
-            className="c5"
+            className="c6"
             height="24px"
             role="img"
             version="1.1"
@@ -450,7 +454,7 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </svg>
         </span>
         <span
-          className="c6"
+          className="c7"
         >
           Save
         </span>
@@ -458,55 +462,55 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
     </div>
     <div
       aria-label={undefined}
-      className="c7"
+      className="c8"
       direction="column"
     >
       <h3
-        className="c8"
+        className="c9"
       >
         Account information
       </h3>
     </div>
     <div
-      className="c9"
+      className="c10"
     >
       <div
-        className="c10"
+        className="c11"
         columns="repeat(auto-fill, minmax(120px, 1fr))"
         flow="row dense"
       >
         <label
-          className="form-field-wrapper c11"
+          className="form-field-wrapper c12"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="labels c12"
+            className="labels c13"
             direction="row"
             wrap={true}
           >
             <span
-              className="c13"
+              className="c14"
             >
               Login
             </span>
             <span
-              className="c14"
+              className="c15"
               color="dark-5"
             />
           </div>
           <div
-            className="c15"
+            className="c16"
           >
             <div
-              className="c16"
+              className="c17"
             >
               <input
                 autoComplete="off"
                 autoFocus={undefined}
-                className="c17"
+                className="c18"
                 defaultValue={undefined}
                 id={undefined}
                 name="login"
@@ -523,37 +527,37 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="form-field-wrapper c18"
+          className="form-field-wrapper c19"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="labels c12"
+            className="labels c13"
             direction="row"
             wrap={true}
           >
             <span
-              className="c13"
+              className="c14"
             >
               Name
             </span>
             <span
-              className="c14"
+              className="c15"
               color="dark-5"
             />
           </div>
           <div
-            className="c15"
+            className="c16"
           >
             <div
-              className="c16"
+              className="c17"
             >
               <input
                 autoComplete="off"
                 autoFocus={undefined}
-                className="c17"
+                className="c18"
                 defaultValue={undefined}
                 id={undefined}
                 name="name"
@@ -570,37 +574,37 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="form-field-wrapper c18"
+          className="form-field-wrapper c19"
           height={undefined}
           type="text"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="labels c12"
+            className="labels c13"
             direction="row"
             wrap={true}
           >
             <span
-              className="c13"
+              className="c14"
             >
               Email
             </span>
             <span
-              className="c14"
+              className="c15"
               color="dark-5"
             />
           </div>
           <div
-            className="c15"
+            className="c16"
           >
             <div
-              className="c16"
+              className="c17"
             >
               <input
                 autoComplete="off"
                 autoFocus={undefined}
-                className="c17"
+                className="c18"
                 defaultValue={undefined}
                 id={undefined}
                 name="email"
@@ -617,37 +621,37 @@ exports[`Screen Preferences renders and matches snapshot 1`] = `
           </div>
         </label>
         <label
-          className="form-field-wrapper c11"
+          className="form-field-wrapper c12"
           height={undefined}
           type="password"
           width={undefined}
         >
           <div
             aria-label={undefined}
-            className="labels c12"
+            className="labels c13"
             direction="row"
             wrap={true}
           >
             <span
-              className="c13"
+              className="c14"
             >
               Password
             </span>
             <span
-              className="c14"
+              className="c15"
               color="dark-5"
             />
           </div>
           <div
-            className="c15"
+            className="c16"
           >
             <div
-              className="c16"
+              className="c17"
             >
               <input
                 autoComplete="off"
                 autoFocus={undefined}
-                className="c17"
+                className="c18"
                 defaultValue={undefined}
                 id={undefined}
                 name="password"
