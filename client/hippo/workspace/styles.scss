@@ -44,6 +44,7 @@ body {
 }
 
 .screens-wrapper {
+    height: 100vh;
     overflow: hidden;
     .async-loading {
         align-items: center;
