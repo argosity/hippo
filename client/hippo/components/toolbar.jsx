@@ -6,9 +6,15 @@ import styled from 'styled-components';
 
 export SaveButton from './save-button';
 
+const TB = styled(Box)`
+button {
+  min-width: 100px;
+};
+`;
+
 export function Toolbar({ children, className, ...props }) {
     return (
-        <Box
+        <TB
             fill="horizontal"
             gridArea="header"
             direction="row"
@@ -21,7 +27,7 @@ export function Toolbar({ children, className, ...props }) {
             {...props}
         >
             {children}
-        </Box>
+        </TB>
     );
 }
 
