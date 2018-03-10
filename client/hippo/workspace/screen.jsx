@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Box from 'grommet/components/Box';
 import Screens from '../screens';
 import { displaying } from '../screens/instance';
@@ -13,6 +13,7 @@ const ScreenView = observer((props) => {
 });
 ScreenView.displayName = 'ScreenView';
 
+@inject('routing')
 @observer
 export default class Screen extends React.Component {
 
@@ -24,8 +25,15 @@ export default class Screen extends React.Component {
         }).isRequired,
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setScreen(nextProps.match.params);
+    }
+
     componentDidMount() {
-        const { screenId } = this.props.match.params;
+        this.setScreen(this.props.match.params);
+    }
+
+    setScreen({ screenId }) {
         if (screenId) {
             const definition = Screens.all.get(screenId);
             if (definition) { definition.display(); }
