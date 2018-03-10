@@ -1,23 +1,17 @@
 import React from 'react';
+import cn from 'classnames';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
-import { observer, Provider } from 'mobx-react';
-import cn from 'classnames';
-import {
-    Router,
-    Route,
-    Switch,
-} from 'react-router-dom';
+import { observer, inject, Provider } from 'mobx-react';
+import { Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
-
-import Grommet from 'grommet/components/Grommet';
+import { CirclePlay } from 'grommet-icons';
+import { Grommet, Button } from 'grommet';
 import Sidebar from 'react-sidebar';
+import { ThemeProvider } from 'styled-components';
 import 'hippo/config-data';
 import 'hippo/screen-definitions';
-import Button from 'grommet/components/Button';
-import { CirclePlay } from 'grommet-icons';
-import { ThemeProvider } from 'styled-components';
 import User from '../user';
 import Tenant from '../models/tenant';
 import Extensions  from '../extensions';
@@ -39,6 +33,8 @@ function NoMatch({ match: { path } }) {
     );
 }
 
+
+@inject('routing')
 @observer
 class Workspace extends React.Component {
 
@@ -123,7 +119,11 @@ class Workspace extends React.Component {
                     {this.renderOpenButton()}
 
                     <Switch>
-                        <Route name='screen' path="/:screenId/:identifier?" component={Screen} />
+                        <Route
+                            name='screen'
+                            path="/:screenId/:identifier?"
+                            component={Screen}
+                        />
                         <Route component={NoMatch} />
                     </Switch>
                 </Sidebar>
@@ -142,7 +142,7 @@ class WorkspaceRoot extends React.Component {
     render() {
         return (
             <Grommet>
-                <Provider routing={this.routing}>
+                <Provider routing={this.routing} history={this.history}>
                     <Router history={this.history}>
                         <Route path="/" component={Workspace} />
                     </Router>
