@@ -77,3 +77,7 @@ end
 task :crondaily => :env do
     Hippo::Cron.trigger(:daily)
 end
+
+task :cronweekly => :env do
+    Hippo::Cron.trigger(:weekly)
+end
