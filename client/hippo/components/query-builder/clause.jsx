@@ -1,12 +1,13 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { defaults } from 'lodash';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { action, observable } from 'mobx';
-import { Button, Box, DropButton, TextInput } from 'grommet';
-import { Refresh }   from 'grommet-icons';
-import ClauseModel   from '../../models/query/clause';
+import { Button, Box, Drop, TextInput } from 'grommet';
+import { Refresh } from 'grommet-icons';
+import ClauseModel from '../../models/query/clause';
 import { Radio, ClauseFilter } from './clause-filter';
 import BooleanPicker from './boolean-picker';
 import DatePicker from './date-picker';
@@ -20,7 +21,7 @@ const ClauseWrapper = styled(Box)`
 width: 100%;
 .clause-select {
   text-align: left;
-  width: 300px;
+
   flex-grow: inherit;
   padding-left: ${props => props.theme.global.edgeSize.small}
 }
@@ -59,8 +60,8 @@ export default class Clause extends React.Component {
         this.props.clause.value = ev.target.value;
     }
 
-    @action.bound setMenuRef(ref) {
-        this.menuRef = ref;
+    @action.bound setDropTargetRef(ref) {
+        this.dropTarget = ReactDOM.findDOMNode(ref);
     }
 
     @action.bound onRefresh() {
@@ -92,6 +93,43 @@ export default class Clause extends React.Component {
         return <Box className="query-value" flex>{input}</Box>;
     }
 
+    @action.bound setDropRef(drop) {
+        this.drop = drop;
+    }
+
+
+    @observable dropTarget;
+    @observable drop;
+
+    renderDropFilter() {
+        const { props: { clause } } = this;
+        if (!this.showFilter) { return null; }
+
+        return (
+            <Drop
+                ref={this.setDropRef}
+                align={{ top: 'bottom', left: 'left' }}
+                target={this.dropTarget}
+            >
+                <Box direction='row' pad="small">
+                    <Box size="small" gap="small">
+                        {clause.query.info.queryableFields.map(f =>
+                            <Radio
+                                key={f.id} model={f} clause={clause}
+                                onSelect={this.onSelect} name='field' />)}
+                    </Box>
+                    <Box size="small" gap="small">
+                        {clause.validOperators.map(o =>
+                            <Radio
+                                key={o.id} model={o} clause={clause}
+                                onSelect={this.onSelect} name='operator'
+                            />)}
+                    </Box>
+                </Box>
+            </Drop>
+        );
+    }
+
     render() {
         const { props: { clause } } = this;
 
@@ -103,32 +141,14 @@ export default class Clause extends React.Component {
                 pad={{ between: 'small' }}
                 align="center"
             >
-
-                <DropButton
+                <Button
+                    color="white"
                     className="clause-select"
-                    ref={this.setMenuRef}
-                    open={this.showFilter}
-
-                    control={<ClauseFilter onClick={this.toggleFilter} clause={clause} />}
-                    closeOnClick={false}
-                >
-                    <Box direction='row' pad="small">
-                        <Box size="small" pad={{ between: 'small' }}>
-                            {clause.query.info.queryableFields.map(f =>
-                                <Radio
-                                    key={f.id} model={f} clause={clause}
-                                    onSelect={this.onSelect} name='field' />)}
-                        </Box>
-                        <Box size="small" pad={{ between: 'small' }}>
-                            {clause.validOperators.map(o =>
-                                <Radio
-                                    key={o.id} model={o} clause={clause}
-                                    onSelect={this.onSelect} name='operator'
-                                />)}
-                        </Box>
-                    </Box>
-                </DropButton>
-
+                    ref={this.setDropTargetRef}
+                    onClick={this.toggleFilter}
+                    label={<ClauseFilter onClick={this.toggleFilter} clause={clause} />}
+                />
+                {this.renderDropFilter()}
                 {this.renderInputTag()}
                 <Button
                     icon={<Refresh />}
