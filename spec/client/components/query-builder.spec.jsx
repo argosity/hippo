@@ -5,6 +5,7 @@ import T from 'hippo/testing/wrapper';
 import Query from 'hippo/models/query';
 import { Box } from '../test-models';
 
+jest.mock('react-dom');
 jest.useFakeTimers();
 
 describe('Query Builder Component', () => {
