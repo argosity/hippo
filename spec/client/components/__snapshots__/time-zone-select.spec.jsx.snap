@@ -1,117 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TimeZone Component matches snapshot 1`] = `
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  max-width: 100%;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border: solid 1px rgba(0,0,0,0.15);
-  min-height: 0;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  max-width: 100%;
-  min-width: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-flex: 0 0;
-  -ms-flex: 0 0;
-  flex: 0 0;
-  margin-left: 12px;
-  margin-right: 12px;
-}
-
-.c4 {
-  padding: 11px;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 4px;
-  outline: none;
-  background-color: transparent;
-  color: inherit;
-  font: inherit;
-  margin: 0;
-  border: none;
-  width: 100%;
-  -webkit-appearance: none;
-}
-
-.c4::-webkit-input-placeholder {
-  color: #AAAAAA;
-}
-
-.c4::-moz-placeholder {
-  color: #AAAAAA;
-}
-
-.c4:-ms-input-placeholder {
-  color: #AAAAAA;
-}
-
-.c4::-moz-focus-inner {
-  border: none;
-  outline: none;
-}
-
-.c3 {
-  width: 100%;
-}
-
-.c0 {
-  font-family: 'Work Sans',Arial,sans-serif;
-  font-size: 1em;
-  line-height: 1.5;
-  color: #333333;
-  background-color: #FFFFFF;
-  box-sizing: border-box;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
-.c0 * {
-  box-sizing: inherit;
-}
-
-.c1 {
-  cursor: pointer;
-  outline: none;
-  font: inherit;
-  text-decoration: none;
-  font: inherit;
-  margin: 0;
-  background-color: transparent;
-  overflow: visible;
-  text-transform: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  width: 100%;
-  max-width: none;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-}
-
 .c6 {
   display: inline-block;
   -webkit-flex: 0 0 auto;
@@ -144,10 +33,153 @@ exports[`TimeZone Component matches snapshot 1`] = `
   stroke: none;
 }
 
+.c1 {
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  font: inherit;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font: inherit;
+  margin: 0;
+  background-color: transparent;
+  overflow: visible;
+  text-transform: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  text-align: inherit;
+}
+
+.c0 {
+  font-family: 'Work Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333333;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  box-sizing: border-box;
+  outline: none;
+  max-width: 100%;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: solid 1px rgba(0,0,0,0.15);
+  min-height: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  box-sizing: border-box;
+  outline: none;
+  max-width: 100%;
+  min-width: 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex: 0 0;
+  -ms-flex: 0 0;
+  flex: 0 0;
+  margin-left: 12px;
+  margin-right: 12px;
+  padding: 0;
+}
+
+.c4 {
+  box-sizing: border-box;
+  padding: 11px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  outline: none;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  width: 100%;
+  border: none;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+.c4::-webkit-input-placeholder {
+  color: #AAAAAA;
+}
+
+.c4::-moz-placeholder {
+  color: #AAAAAA;
+}
+
+.c4:-ms-input-placeholder {
+  color: #AAAAAA;
+}
+
+.c4::-moz-focus-inner {
+  border: none;
+  outline: none;
+}
+
+.c3 {
+  width: 100%;
+}
+
 @media only screen and (min-width:700px) {
   .c1 {
     -webkit-transition: 0.1s ease-in-out;
     transition: 0.1s ease-in-out;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c2 {
+    border: solid 1px rgba(0,0,0,0.15);
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c2 {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c2 {
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c5 {
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c5 {
+    padding: 0;
   }
 }
 
@@ -158,7 +190,6 @@ exports[`TimeZone Component matches snapshot 1`] = `
     aria-label="undefined, America/Chicago"
     className="c1"
     disabled={false}
-    fill={true}
     href={undefined}
     icon={undefined}
     id={undefined}
@@ -166,10 +197,9 @@ exports[`TimeZone Component matches snapshot 1`] = `
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
+    onKeyDown={[Function]}
     onMouseDown={[Function]}
     onMouseUp={[Function]}
-    open={undefined}
-    tabIndex={undefined}
     type="button"
   >
     <div
@@ -186,7 +216,6 @@ exports[`TimeZone Component matches snapshot 1`] = `
           className="c4"
           defaultValue={undefined}
           id={undefined}
-          onChange={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
           onKeyDown={[Function]}
@@ -206,6 +235,11 @@ exports[`TimeZone Component matches snapshot 1`] = `
         aria-label={undefined}
         className="c5"
         direction="column"
+        style={
+          Object {
+            "minWidth": "auto",
+          }
+        }
       >
         <svg
           aria-label="FormDown"

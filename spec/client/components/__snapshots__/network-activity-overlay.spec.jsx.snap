@@ -1,6 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Network Activity Overlay matches snapshot 1`] = `
+.c2 {
+  height: 48px;
+  width: auto;
+  -webkit-animation: iVXCSc 0.7s linear infinite;
+  animation: iVXCSc 0.7s linear infinite;
+}
+
+.c0 {
+  font-family: 'Work Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333333;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
 .c1 {
   position: absolute;
   z-index: 11;
@@ -57,7 +76,7 @@ exports[`Network Activity Overlay matches snapshot 1`] = `
   padding: 10px;
   box-shadow: 6px 7px 5px #49516F;
   background-color: background-color:#865CD6;
-  color: rgba(255,255,255,0.85);
+  color: #FFFFFF;
   color: black;
   display: -webkit-box;
   display: -webkit-flex;
@@ -68,30 +87,6 @@ exports[`Network Activity Overlay matches snapshot 1`] = `
   -ms-flex-align: center;
   align-items: center;
   width: 80%;
-}
-
-.c0 {
-  font-family: 'Work Sans',Arial,sans-serif;
-  font-size: 1em;
-  line-height: 1.5;
-  color: #333333;
-  background-color: #FFFFFF;
-  box-sizing: border-box;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
-.c0 * {
-  box-sizing: inherit;
-}
-
-.c2 {
-  height: 48px;
-  width: auto;
-  -webkit-animation: iVXCSc 0.7s linear infinite;
-  animation: iVXCSc 0.7s linear infinite;
 }
 
 <div

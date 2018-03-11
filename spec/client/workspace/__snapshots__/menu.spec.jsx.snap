@@ -1,11 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Workspace Menu has groups with screens 1`] = `
+.c0 {
+  font-family: 'Work Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333333;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  box-sizing: border-box;
+  outline: none;
   max-width: 100%;
   -webkit-align-items: flex-start;
   -webkit-box-align: flex-start;
@@ -19,6 +33,8 @@ exports[`Workspace Menu has groups with screens 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  margin: 0;
+  padding: 0;
 }
 
 .c2 {
@@ -26,6 +42,8 @@ exports[`Workspace Menu has groups with screens 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  box-sizing: border-box;
+  outline: none;
   max-width: 100%;
   -webkit-align-items: flex-end;
   -webkit-box-align: flex-end;
@@ -35,12 +53,15 @@ exports[`Workspace Menu has groups with screens 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  margin: 0;
   padding-left: 24px;
   padding-right: 24px;
 }
 
 .c5 {
+  box-sizing: border-box;
   color: #865CD6;
+  -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
   outline: none;
@@ -51,6 +72,7 @@ exports[`Workspace Menu has groups with screens 1`] = `
 }
 
 .c5:hover {
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
@@ -76,25 +98,43 @@ exports[`Workspace Menu has groups with screens 1`] = `
 }
 
 .c4:hover {
+  -webkit-text-decoration: none;
   text-decoration: none;
   background-color: rgba(0,0,0,0.15);
 }
 
-.c0 {
-  font-family: 'Work Sans',Arial,sans-serif;
-  font-size: 1em;
-  line-height: 1.5;
-  color: #333333;
-  background-color: #FFFFFF;
-  box-sizing: border-box;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+@media only screen and (max-width:699px) {
+  .c1 {
+    margin: 0;
+  }
 }
 
-.c0 * {
-  box-sizing: inherit;
+@media only screen and (max-width:699px) {
+  .c1 {
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c2 {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c2 {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c3 {
+    font-size: 18px;
+    line-height: 1.333;
+    max-width: 432px;
+    font-weight: 300;
+  }
 }
 
 <div
@@ -136,6 +176,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   [Function],
                 ],
                 "fontWeight": 600,
+                "icons": Object {
+                  "primary": [Function],
+                },
                 "textDecoration": "none",
               },
               "button": Object {
@@ -167,6 +210,41 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   "vertical": "10px",
                 },
               },
+              "calendar": Object {
+                "icons": Object {
+                  "next": [Function],
+                  "previous": [Function],
+                  "small": Object {
+                    "next": [Function],
+                    "previous": [Function],
+                  },
+                },
+                "large": Object {
+                  "daySize": "109.71428571428571px",
+                  "fontSize": "36px",
+                  "lineHeight": 1.11,
+                  "slideDuration": "0.8s",
+                },
+                "medium": Object {
+                  "daySize": "54.857142857142854px",
+                  "fontSize": "22px",
+                  "lineHeight": 1.45,
+                  "slideDuration": "0.5s",
+                },
+                "small": Object {
+                  "daySize": "27.428571428571427px",
+                  "fontSize": "16px",
+                  "lineHeight": 1.375,
+                  "slideDuration": "0.2s",
+                },
+              },
+              "carousel": Object {
+                "icons": Object {
+                  "current": [Function],
+                  "next": [Function],
+                  "previous": [Function],
+                },
+              },
               "checkBox": Object {
                 "border": Object {
                   "color": Object {
@@ -190,71 +268,100 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 },
               },
               "clock": Object {
-                "circle": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                "analog": Object {
+                  "hour": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "24px",
+                    "width": "8px",
                   },
-                  "width": "2px",
-                },
-                "hour": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "minute": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "12px",
+                    "width": "4px",
                   },
-                  "shape": "round",
-                  "size": "24px",
-                  "width": "3px",
-                },
-                "minute": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "second": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "9px",
+                    "width": "3px",
                   },
-                  "shape": "round",
-                  "size": "12px",
-                  "width": "2px",
-                },
-                "second": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "size": Object {
+                    "huge": "288px",
+                    "large": "144px",
+                    "medium": "96px",
+                    "small": "72px",
+                    "xlarge": "216px",
                   },
-                  "shape": "round",
-                  "size": "9px",
-                  "width": "1px",
                 },
-                "size": Object {
-                  "huge": "288px",
-                  "large": "144px",
-                  "medium": "96px",
-                  "small": "72px",
-                  "xlarge": "216px",
+                "digital": Object {
+                  "text": Object {
+                    "large": Object {
+                      "height": 1.167,
+                      "size": "24px",
+                    },
+                    "medium": Object {
+                      "height": 1.375,
+                      "size": "16px",
+                    },
+                    "small": Object {
+                      "height": 1.43,
+                      "size": "14px",
+                    },
+                    "xlarge": Object {
+                      "height": 1.1875,
+                      "size": "32px",
+                    },
+                    "xsmall": Object {
+                      "height": 1.5,
+                      "size": "12px",
+                    },
+                    "xxlarge": Object {
+                      "height": 1.125,
+                      "size": "48px",
+                    },
+                  },
                 },
               },
               "global": Object {
                 "animation": Object {
                   "duration": "1s",
+                  "jiggle": Object {
+                    "duration": "0.1s",
+                  },
                 },
                 "borderSize": Object {
                   "large": "12px",
                   "medium": "4px",
+                  "narrow": Object {
+                    "large": "6px",
+                    "medium": "4px",
+                    "small": "2px",
+                    "xlarge": "12px",
+                    "xsmall": "1px",
+                  },
                   "small": "2px",
                   "xlarge": "24px",
                   "xsmall": "1px",
@@ -270,7 +377,6 @@ exports[`Workspace Menu has groups with screens 1`] = `
                     "#915591",
                   ],
                   "active": "rgba(221,221,221,0.5)",
-                  "background": "#FFFFFF",
                   "black": "#000000",
                   "border": "rgba(0, 0, 0, 0.15)",
                   "brand": "#865CD6",
@@ -283,7 +389,7 @@ exports[`Workspace Menu has groups with screens 1`] = `
                     "#999999",
                   ],
                   "darkBackground": Object {
-                    "text": "rgba(255, 255, 255, 0.85)",
+                    "text": "#FFFFFF",
                   },
                   "light": Array [
                     "#F6F6F6",
@@ -331,9 +437,26 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 "edgeSize": Object {
                   "large": "48px",
                   "medium": "24px",
+                  "narrow": Object {
+                    "large": "24px",
+                    "medium": "12px",
+                    "none": "0",
+                    "small": "6px",
+                    "xlarge": "48px",
+                    "xsmall": "3px",
+                  },
+                  "none": "0",
                   "small": "12px",
                   "xlarge": "96px",
                   "xsmall": "6px",
+                },
+                "elevation": Object {
+                  "large": "0px 6px 12px rgba(100, 100, 100, 0.50)",
+                  "medium": "0px 3px 8px rgba(100, 100, 100, 0.50)",
+                  "none": "none",
+                  "small": "0px 2px 4px rgba(100, 100, 100, 0.50)",
+                  "xlarge": "0px 8px 16px rgba(100, 100, 100, 0.50)",
+                  "xsmall": "0px 1px 2px rgba(100, 100, 100, 0.50)",
                 },
                 "focus": Object {
                   "border": Object {
@@ -423,6 +546,15 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   "full": "100%",
                   "large": "768px",
                   "medium": "384px",
+                  "narrow": Object {
+                    "full": "100%",
+                    "large": "384px",
+                    "medium": "192px",
+                    "small": "96px",
+                    "xlarge": "768px",
+                    "xsmall": "48px",
+                    "xxsmall": "24px",
+                  },
                   "small": "192px",
                   "xlarge": "1152px",
                   "xsmall": "96px",
@@ -518,6 +650,11 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 },
                 "overlayBackgroundColor": "rgba(0, 0, 0, 0.5)",
               },
+              "menu": Object {
+                "icons": Object {
+                  "down": [Function],
+                },
+              },
               "paragraph": Object {
                 "large": Object {
                   "height": 1.333,
@@ -563,6 +700,11 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   ],
                 },
               },
+              "select": Object {
+                "icons": Object {
+                  "down": [Function],
+                },
+              },
               "text": Object {
                 "large": Object {
                   "height": 1.167,
@@ -592,6 +734,25 @@ exports[`Workspace Menu has groups with screens 1`] = `
               "video": Object {
                 "captions": Object {
                   "background": "rgba(0,0,0,0.7)",
+                },
+                "icons": Object {
+                  "closedCaption": [Function],
+                  "configure": [Function],
+                  "fullScreen": [Function],
+                  "pause": [Function],
+                  "play": [Function],
+                  "reduceVolume": [Function],
+                  "volume": [Function],
+                },
+              },
+              "worldMap": Object {
+                "continent": Object {
+                  "active": "8px",
+                  "base": "6px",
+                },
+                "place": Object {
+                  "active": "20px",
+                  "base": "8px",
                 },
               },
             }
@@ -636,6 +797,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   [Function],
                 ],
                 "fontWeight": 600,
+                "icons": Object {
+                  "primary": [Function],
+                },
                 "textDecoration": "none",
               },
               "button": Object {
@@ -667,6 +831,41 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   "vertical": "10px",
                 },
               },
+              "calendar": Object {
+                "icons": Object {
+                  "next": [Function],
+                  "previous": [Function],
+                  "small": Object {
+                    "next": [Function],
+                    "previous": [Function],
+                  },
+                },
+                "large": Object {
+                  "daySize": "109.71428571428571px",
+                  "fontSize": "36px",
+                  "lineHeight": 1.11,
+                  "slideDuration": "0.8s",
+                },
+                "medium": Object {
+                  "daySize": "54.857142857142854px",
+                  "fontSize": "22px",
+                  "lineHeight": 1.45,
+                  "slideDuration": "0.5s",
+                },
+                "small": Object {
+                  "daySize": "27.428571428571427px",
+                  "fontSize": "16px",
+                  "lineHeight": 1.375,
+                  "slideDuration": "0.2s",
+                },
+              },
+              "carousel": Object {
+                "icons": Object {
+                  "current": [Function],
+                  "next": [Function],
+                  "previous": [Function],
+                },
+              },
               "checkBox": Object {
                 "border": Object {
                   "color": Object {
@@ -690,71 +889,100 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 },
               },
               "clock": Object {
-                "circle": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                "analog": Object {
+                  "hour": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "24px",
+                    "width": "8px",
                   },
-                  "width": "2px",
-                },
-                "hour": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "minute": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "12px",
+                    "width": "4px",
                   },
-                  "shape": "round",
-                  "size": "24px",
-                  "width": "3px",
-                },
-                "minute": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "second": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "9px",
+                    "width": "3px",
                   },
-                  "shape": "round",
-                  "size": "12px",
-                  "width": "2px",
-                },
-                "second": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "size": Object {
+                    "huge": "288px",
+                    "large": "144px",
+                    "medium": "96px",
+                    "small": "72px",
+                    "xlarge": "216px",
                   },
-                  "shape": "round",
-                  "size": "9px",
-                  "width": "1px",
                 },
-                "size": Object {
-                  "huge": "288px",
-                  "large": "144px",
-                  "medium": "96px",
-                  "small": "72px",
-                  "xlarge": "216px",
+                "digital": Object {
+                  "text": Object {
+                    "large": Object {
+                      "height": 1.167,
+                      "size": "24px",
+                    },
+                    "medium": Object {
+                      "height": 1.375,
+                      "size": "16px",
+                    },
+                    "small": Object {
+                      "height": 1.43,
+                      "size": "14px",
+                    },
+                    "xlarge": Object {
+                      "height": 1.1875,
+                      "size": "32px",
+                    },
+                    "xsmall": Object {
+                      "height": 1.5,
+                      "size": "12px",
+                    },
+                    "xxlarge": Object {
+                      "height": 1.125,
+                      "size": "48px",
+                    },
+                  },
                 },
               },
               "global": Object {
                 "animation": Object {
                   "duration": "1s",
+                  "jiggle": Object {
+                    "duration": "0.1s",
+                  },
                 },
                 "borderSize": Object {
                   "large": "12px",
                   "medium": "4px",
+                  "narrow": Object {
+                    "large": "6px",
+                    "medium": "4px",
+                    "small": "2px",
+                    "xlarge": "12px",
+                    "xsmall": "1px",
+                  },
                   "small": "2px",
                   "xlarge": "24px",
                   "xsmall": "1px",
@@ -770,7 +998,6 @@ exports[`Workspace Menu has groups with screens 1`] = `
                     "#915591",
                   ],
                   "active": "rgba(221,221,221,0.5)",
-                  "background": "#FFFFFF",
                   "black": "#000000",
                   "border": "rgba(0, 0, 0, 0.15)",
                   "brand": "#865CD6",
@@ -783,7 +1010,7 @@ exports[`Workspace Menu has groups with screens 1`] = `
                     "#999999",
                   ],
                   "darkBackground": Object {
-                    "text": "rgba(255, 255, 255, 0.85)",
+                    "text": "#FFFFFF",
                   },
                   "light": Array [
                     "#F6F6F6",
@@ -831,9 +1058,26 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 "edgeSize": Object {
                   "large": "48px",
                   "medium": "24px",
+                  "narrow": Object {
+                    "large": "24px",
+                    "medium": "12px",
+                    "none": "0",
+                    "small": "6px",
+                    "xlarge": "48px",
+                    "xsmall": "3px",
+                  },
+                  "none": "0",
                   "small": "12px",
                   "xlarge": "96px",
                   "xsmall": "6px",
+                },
+                "elevation": Object {
+                  "large": "0px 6px 12px rgba(100, 100, 100, 0.50)",
+                  "medium": "0px 3px 8px rgba(100, 100, 100, 0.50)",
+                  "none": "none",
+                  "small": "0px 2px 4px rgba(100, 100, 100, 0.50)",
+                  "xlarge": "0px 8px 16px rgba(100, 100, 100, 0.50)",
+                  "xsmall": "0px 1px 2px rgba(100, 100, 100, 0.50)",
                 },
                 "focus": Object {
                   "border": Object {
@@ -923,6 +1167,15 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   "full": "100%",
                   "large": "768px",
                   "medium": "384px",
+                  "narrow": Object {
+                    "full": "100%",
+                    "large": "384px",
+                    "medium": "192px",
+                    "small": "96px",
+                    "xlarge": "768px",
+                    "xsmall": "48px",
+                    "xxsmall": "24px",
+                  },
                   "small": "192px",
                   "xlarge": "1152px",
                   "xsmall": "96px",
@@ -1018,6 +1271,11 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 },
                 "overlayBackgroundColor": "rgba(0, 0, 0, 0.5)",
               },
+              "menu": Object {
+                "icons": Object {
+                  "down": [Function],
+                },
+              },
               "paragraph": Object {
                 "large": Object {
                   "height": 1.333,
@@ -1063,6 +1321,11 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   ],
                 },
               },
+              "select": Object {
+                "icons": Object {
+                  "down": [Function],
+                },
+              },
               "text": Object {
                 "large": Object {
                   "height": 1.167,
@@ -1092,6 +1355,25 @@ exports[`Workspace Menu has groups with screens 1`] = `
               "video": Object {
                 "captions": Object {
                   "background": "rgba(0,0,0,0.7)",
+                },
+                "icons": Object {
+                  "closedCaption": [Function],
+                  "configure": [Function],
+                  "fullScreen": [Function],
+                  "pause": [Function],
+                  "play": [Function],
+                  "reduceVolume": [Function],
+                  "volume": [Function],
+                },
+              },
+              "worldMap": Object {
+                "continent": Object {
+                  "active": "8px",
+                  "base": "6px",
+                },
+                "place": Object {
+                  "active": "20px",
+                  "base": "8px",
                 },
               },
             }
@@ -1136,6 +1418,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   [Function],
                 ],
                 "fontWeight": 600,
+                "icons": Object {
+                  "primary": [Function],
+                },
                 "textDecoration": "none",
               },
               "button": Object {
@@ -1167,6 +1452,41 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   "vertical": "10px",
                 },
               },
+              "calendar": Object {
+                "icons": Object {
+                  "next": [Function],
+                  "previous": [Function],
+                  "small": Object {
+                    "next": [Function],
+                    "previous": [Function],
+                  },
+                },
+                "large": Object {
+                  "daySize": "109.71428571428571px",
+                  "fontSize": "36px",
+                  "lineHeight": 1.11,
+                  "slideDuration": "0.8s",
+                },
+                "medium": Object {
+                  "daySize": "54.857142857142854px",
+                  "fontSize": "22px",
+                  "lineHeight": 1.45,
+                  "slideDuration": "0.5s",
+                },
+                "small": Object {
+                  "daySize": "27.428571428571427px",
+                  "fontSize": "16px",
+                  "lineHeight": 1.375,
+                  "slideDuration": "0.2s",
+                },
+              },
+              "carousel": Object {
+                "icons": Object {
+                  "current": [Function],
+                  "next": [Function],
+                  "previous": [Function],
+                },
+              },
               "checkBox": Object {
                 "border": Object {
                   "color": Object {
@@ -1190,71 +1510,100 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 },
               },
               "clock": Object {
-                "circle": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                "analog": Object {
+                  "hour": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "24px",
+                    "width": "8px",
                   },
-                  "width": "2px",
-                },
-                "hour": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "minute": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "12px",
+                    "width": "4px",
                   },
-                  "shape": "round",
-                  "size": "24px",
-                  "width": "3px",
-                },
-                "minute": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "second": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "9px",
+                    "width": "3px",
                   },
-                  "shape": "round",
-                  "size": "12px",
-                  "width": "2px",
-                },
-                "second": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "size": Object {
+                    "huge": "288px",
+                    "large": "144px",
+                    "medium": "96px",
+                    "small": "72px",
+                    "xlarge": "216px",
                   },
-                  "shape": "round",
-                  "size": "9px",
-                  "width": "1px",
                 },
-                "size": Object {
-                  "huge": "288px",
-                  "large": "144px",
-                  "medium": "96px",
-                  "small": "72px",
-                  "xlarge": "216px",
+                "digital": Object {
+                  "text": Object {
+                    "large": Object {
+                      "height": 1.167,
+                      "size": "24px",
+                    },
+                    "medium": Object {
+                      "height": 1.375,
+                      "size": "16px",
+                    },
+                    "small": Object {
+                      "height": 1.43,
+                      "size": "14px",
+                    },
+                    "xlarge": Object {
+                      "height": 1.1875,
+                      "size": "32px",
+                    },
+                    "xsmall": Object {
+                      "height": 1.5,
+                      "size": "12px",
+                    },
+                    "xxlarge": Object {
+                      "height": 1.125,
+                      "size": "48px",
+                    },
+                  },
                 },
               },
               "global": Object {
                 "animation": Object {
                   "duration": "1s",
+                  "jiggle": Object {
+                    "duration": "0.1s",
+                  },
                 },
                 "borderSize": Object {
                   "large": "12px",
                   "medium": "4px",
+                  "narrow": Object {
+                    "large": "6px",
+                    "medium": "4px",
+                    "small": "2px",
+                    "xlarge": "12px",
+                    "xsmall": "1px",
+                  },
                   "small": "2px",
                   "xlarge": "24px",
                   "xsmall": "1px",
@@ -1270,7 +1619,6 @@ exports[`Workspace Menu has groups with screens 1`] = `
                     "#915591",
                   ],
                   "active": "rgba(221,221,221,0.5)",
-                  "background": "#FFFFFF",
                   "black": "#000000",
                   "border": "rgba(0, 0, 0, 0.15)",
                   "brand": "#865CD6",
@@ -1283,7 +1631,7 @@ exports[`Workspace Menu has groups with screens 1`] = `
                     "#999999",
                   ],
                   "darkBackground": Object {
-                    "text": "rgba(255, 255, 255, 0.85)",
+                    "text": "#FFFFFF",
                   },
                   "light": Array [
                     "#F6F6F6",
@@ -1331,9 +1679,26 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 "edgeSize": Object {
                   "large": "48px",
                   "medium": "24px",
+                  "narrow": Object {
+                    "large": "24px",
+                    "medium": "12px",
+                    "none": "0",
+                    "small": "6px",
+                    "xlarge": "48px",
+                    "xsmall": "3px",
+                  },
+                  "none": "0",
                   "small": "12px",
                   "xlarge": "96px",
                   "xsmall": "6px",
+                },
+                "elevation": Object {
+                  "large": "0px 6px 12px rgba(100, 100, 100, 0.50)",
+                  "medium": "0px 3px 8px rgba(100, 100, 100, 0.50)",
+                  "none": "none",
+                  "small": "0px 2px 4px rgba(100, 100, 100, 0.50)",
+                  "xlarge": "0px 8px 16px rgba(100, 100, 100, 0.50)",
+                  "xsmall": "0px 1px 2px rgba(100, 100, 100, 0.50)",
                 },
                 "focus": Object {
                   "border": Object {
@@ -1423,6 +1788,15 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   "full": "100%",
                   "large": "768px",
                   "medium": "384px",
+                  "narrow": Object {
+                    "full": "100%",
+                    "large": "384px",
+                    "medium": "192px",
+                    "small": "96px",
+                    "xlarge": "768px",
+                    "xsmall": "48px",
+                    "xxsmall": "24px",
+                  },
                   "small": "192px",
                   "xlarge": "1152px",
                   "xsmall": "96px",
@@ -1518,6 +1892,11 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 },
                 "overlayBackgroundColor": "rgba(0, 0, 0, 0.5)",
               },
+              "menu": Object {
+                "icons": Object {
+                  "down": [Function],
+                },
+              },
               "paragraph": Object {
                 "large": Object {
                   "height": 1.333,
@@ -1563,6 +1942,11 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   ],
                 },
               },
+              "select": Object {
+                "icons": Object {
+                  "down": [Function],
+                },
+              },
               "text": Object {
                 "large": Object {
                   "height": 1.167,
@@ -1592,6 +1976,25 @@ exports[`Workspace Menu has groups with screens 1`] = `
               "video": Object {
                 "captions": Object {
                   "background": "rgba(0,0,0,0.7)",
+                },
+                "icons": Object {
+                  "closedCaption": [Function],
+                  "configure": [Function],
+                  "fullScreen": [Function],
+                  "pause": [Function],
+                  "play": [Function],
+                  "reduceVolume": [Function],
+                  "volume": [Function],
+                },
+              },
+              "worldMap": Object {
+                "continent": Object {
+                  "active": "8px",
+                  "base": "6px",
+                },
+                "place": Object {
+                  "active": "20px",
+                  "base": "8px",
                 },
               },
             }
@@ -1636,6 +2039,9 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   [Function],
                 ],
                 "fontWeight": 600,
+                "icons": Object {
+                  "primary": [Function],
+                },
                 "textDecoration": "none",
               },
               "button": Object {
@@ -1667,6 +2073,41 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   "vertical": "10px",
                 },
               },
+              "calendar": Object {
+                "icons": Object {
+                  "next": [Function],
+                  "previous": [Function],
+                  "small": Object {
+                    "next": [Function],
+                    "previous": [Function],
+                  },
+                },
+                "large": Object {
+                  "daySize": "109.71428571428571px",
+                  "fontSize": "36px",
+                  "lineHeight": 1.11,
+                  "slideDuration": "0.8s",
+                },
+                "medium": Object {
+                  "daySize": "54.857142857142854px",
+                  "fontSize": "22px",
+                  "lineHeight": 1.45,
+                  "slideDuration": "0.5s",
+                },
+                "small": Object {
+                  "daySize": "27.428571428571427px",
+                  "fontSize": "16px",
+                  "lineHeight": 1.375,
+                  "slideDuration": "0.2s",
+                },
+              },
+              "carousel": Object {
+                "icons": Object {
+                  "current": [Function],
+                  "next": [Function],
+                  "previous": [Function],
+                },
+              },
               "checkBox": Object {
                 "border": Object {
                   "color": Object {
@@ -1690,71 +2131,100 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 },
               },
               "clock": Object {
-                "circle": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                "analog": Object {
+                  "hour": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "24px",
+                    "width": "8px",
                   },
-                  "width": "2px",
-                },
-                "hour": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "minute": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "12px",
+                    "width": "4px",
                   },
-                  "shape": "round",
-                  "size": "24px",
-                  "width": "3px",
-                },
-                "minute": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "second": Object {
+                    "color": Object {
+                      "dark": Array [
+                        [Function],
+                      ],
+                      "light": Array [
+                        [Function],
+                      ],
+                    },
+                    "shape": "round",
+                    "size": "9px",
+                    "width": "3px",
                   },
-                  "shape": "round",
-                  "size": "12px",
-                  "width": "2px",
-                },
-                "second": Object {
-                  "color": Object {
-                    "day": Array [
-                      [Function],
-                    ],
-                    "night": Array [
-                      [Function],
-                    ],
+                  "size": Object {
+                    "huge": "288px",
+                    "large": "144px",
+                    "medium": "96px",
+                    "small": "72px",
+                    "xlarge": "216px",
                   },
-                  "shape": "round",
-                  "size": "9px",
-                  "width": "1px",
                 },
-                "size": Object {
-                  "huge": "288px",
-                  "large": "144px",
-                  "medium": "96px",
-                  "small": "72px",
-                  "xlarge": "216px",
+                "digital": Object {
+                  "text": Object {
+                    "large": Object {
+                      "height": 1.167,
+                      "size": "24px",
+                    },
+                    "medium": Object {
+                      "height": 1.375,
+                      "size": "16px",
+                    },
+                    "small": Object {
+                      "height": 1.43,
+                      "size": "14px",
+                    },
+                    "xlarge": Object {
+                      "height": 1.1875,
+                      "size": "32px",
+                    },
+                    "xsmall": Object {
+                      "height": 1.5,
+                      "size": "12px",
+                    },
+                    "xxlarge": Object {
+                      "height": 1.125,
+                      "size": "48px",
+                    },
+                  },
                 },
               },
               "global": Object {
                 "animation": Object {
                   "duration": "1s",
+                  "jiggle": Object {
+                    "duration": "0.1s",
+                  },
                 },
                 "borderSize": Object {
                   "large": "12px",
                   "medium": "4px",
+                  "narrow": Object {
+                    "large": "6px",
+                    "medium": "4px",
+                    "small": "2px",
+                    "xlarge": "12px",
+                    "xsmall": "1px",
+                  },
                   "small": "2px",
                   "xlarge": "24px",
                   "xsmall": "1px",
@@ -1770,7 +2240,6 @@ exports[`Workspace Menu has groups with screens 1`] = `
                     "#915591",
                   ],
                   "active": "rgba(221,221,221,0.5)",
-                  "background": "#FFFFFF",
                   "black": "#000000",
                   "border": "rgba(0, 0, 0, 0.15)",
                   "brand": "#865CD6",
@@ -1783,7 +2252,7 @@ exports[`Workspace Menu has groups with screens 1`] = `
                     "#999999",
                   ],
                   "darkBackground": Object {
-                    "text": "rgba(255, 255, 255, 0.85)",
+                    "text": "#FFFFFF",
                   },
                   "light": Array [
                     "#F6F6F6",
@@ -1831,9 +2300,26 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 "edgeSize": Object {
                   "large": "48px",
                   "medium": "24px",
+                  "narrow": Object {
+                    "large": "24px",
+                    "medium": "12px",
+                    "none": "0",
+                    "small": "6px",
+                    "xlarge": "48px",
+                    "xsmall": "3px",
+                  },
+                  "none": "0",
                   "small": "12px",
                   "xlarge": "96px",
                   "xsmall": "6px",
+                },
+                "elevation": Object {
+                  "large": "0px 6px 12px rgba(100, 100, 100, 0.50)",
+                  "medium": "0px 3px 8px rgba(100, 100, 100, 0.50)",
+                  "none": "none",
+                  "small": "0px 2px 4px rgba(100, 100, 100, 0.50)",
+                  "xlarge": "0px 8px 16px rgba(100, 100, 100, 0.50)",
+                  "xsmall": "0px 1px 2px rgba(100, 100, 100, 0.50)",
                 },
                 "focus": Object {
                   "border": Object {
@@ -1923,6 +2409,15 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   "full": "100%",
                   "large": "768px",
                   "medium": "384px",
+                  "narrow": Object {
+                    "full": "100%",
+                    "large": "384px",
+                    "medium": "192px",
+                    "small": "96px",
+                    "xlarge": "768px",
+                    "xsmall": "48px",
+                    "xxsmall": "24px",
+                  },
                   "small": "192px",
                   "xlarge": "1152px",
                   "xsmall": "96px",
@@ -2018,6 +2513,11 @@ exports[`Workspace Menu has groups with screens 1`] = `
                 },
                 "overlayBackgroundColor": "rgba(0, 0, 0, 0.5)",
               },
+              "menu": Object {
+                "icons": Object {
+                  "down": [Function],
+                },
+              },
               "paragraph": Object {
                 "large": Object {
                   "height": 1.333,
@@ -2063,6 +2563,11 @@ exports[`Workspace Menu has groups with screens 1`] = `
                   ],
                 },
               },
+              "select": Object {
+                "icons": Object {
+                  "down": [Function],
+                },
+              },
               "text": Object {
                 "large": Object {
                   "height": 1.167,
@@ -2092,6 +2597,25 @@ exports[`Workspace Menu has groups with screens 1`] = `
               "video": Object {
                 "captions": Object {
                   "background": "rgba(0,0,0,0.7)",
+                },
+                "icons": Object {
+                  "closedCaption": [Function],
+                  "configure": [Function],
+                  "fullScreen": [Function],
+                  "pause": [Function],
+                  "play": [Function],
+                  "reduceVolume": [Function],
+                  "volume": [Function],
+                },
+              },
+              "worldMap": Object {
+                "continent": Object {
+                  "active": "8px",
+                  "base": "6px",
+                },
+                "place": Object {
+                  "active": "20px",
+                  "base": "8px",
                 },
               },
             }
@@ -2125,8 +2649,22 @@ exports[`Workspace Menu has groups with screens 1`] = `
 `;
 
 exports[`Workspace Menu has renders menu options 1`] = `
+.c0 {
+  font-family: 'Work Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333333;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
 .c2 {
+  box-sizing: border-box;
   color: #865CD6;
+  -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
   outline: none;
@@ -2137,6 +2675,7 @@ exports[`Workspace Menu has renders menu options 1`] = `
 }
 
 .c2:hover {
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
@@ -2155,25 +2694,9 @@ exports[`Workspace Menu has renders menu options 1`] = `
 }
 
 .c1:hover {
+  -webkit-text-decoration: none;
   text-decoration: none;
   background-color: rgba(0,0,0,0.15);
-}
-
-.c0 {
-  font-family: 'Work Sans',Arial,sans-serif;
-  font-size: 1em;
-  line-height: 1.5;
-  color: #333333;
-  background-color: #FFFFFF;
-  box-sizing: border-box;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
-.c0 * {
-  box-sizing: inherit;
 }
 
 <div
@@ -2195,6 +2718,9 @@ exports[`Workspace Menu has renders menu options 1`] = `
                 [Function],
               ],
               "fontWeight": 600,
+              "icons": Object {
+                "primary": [Function],
+              },
               "textDecoration": "none",
             },
             "button": Object {
@@ -2226,6 +2752,41 @@ exports[`Workspace Menu has renders menu options 1`] = `
                 "vertical": "10px",
               },
             },
+            "calendar": Object {
+              "icons": Object {
+                "next": [Function],
+                "previous": [Function],
+                "small": Object {
+                  "next": [Function],
+                  "previous": [Function],
+                },
+              },
+              "large": Object {
+                "daySize": "109.71428571428571px",
+                "fontSize": "36px",
+                "lineHeight": 1.11,
+                "slideDuration": "0.8s",
+              },
+              "medium": Object {
+                "daySize": "54.857142857142854px",
+                "fontSize": "22px",
+                "lineHeight": 1.45,
+                "slideDuration": "0.5s",
+              },
+              "small": Object {
+                "daySize": "27.428571428571427px",
+                "fontSize": "16px",
+                "lineHeight": 1.375,
+                "slideDuration": "0.2s",
+              },
+            },
+            "carousel": Object {
+              "icons": Object {
+                "current": [Function],
+                "next": [Function],
+                "previous": [Function],
+              },
+            },
             "checkBox": Object {
               "border": Object {
                 "color": Object {
@@ -2249,71 +2810,100 @@ exports[`Workspace Menu has renders menu options 1`] = `
               },
             },
             "clock": Object {
-              "circle": Object {
-                "color": Object {
-                  "day": Array [
-                    [Function],
-                  ],
-                  "night": Array [
-                    [Function],
-                  ],
+              "analog": Object {
+                "hour": Object {
+                  "color": Object {
+                    "dark": Array [
+                      [Function],
+                    ],
+                    "light": Array [
+                      [Function],
+                    ],
+                  },
+                  "shape": "round",
+                  "size": "24px",
+                  "width": "8px",
                 },
-                "width": "2px",
-              },
-              "hour": Object {
-                "color": Object {
-                  "day": Array [
-                    [Function],
-                  ],
-                  "night": Array [
-                    [Function],
-                  ],
+                "minute": Object {
+                  "color": Object {
+                    "dark": Array [
+                      [Function],
+                    ],
+                    "light": Array [
+                      [Function],
+                    ],
+                  },
+                  "shape": "round",
+                  "size": "12px",
+                  "width": "4px",
                 },
-                "shape": "round",
-                "size": "24px",
-                "width": "3px",
-              },
-              "minute": Object {
-                "color": Object {
-                  "day": Array [
-                    [Function],
-                  ],
-                  "night": Array [
-                    [Function],
-                  ],
+                "second": Object {
+                  "color": Object {
+                    "dark": Array [
+                      [Function],
+                    ],
+                    "light": Array [
+                      [Function],
+                    ],
+                  },
+                  "shape": "round",
+                  "size": "9px",
+                  "width": "3px",
                 },
-                "shape": "round",
-                "size": "12px",
-                "width": "2px",
-              },
-              "second": Object {
-                "color": Object {
-                  "day": Array [
-                    [Function],
-                  ],
-                  "night": Array [
-                    [Function],
-                  ],
+                "size": Object {
+                  "huge": "288px",
+                  "large": "144px",
+                  "medium": "96px",
+                  "small": "72px",
+                  "xlarge": "216px",
                 },
-                "shape": "round",
-                "size": "9px",
-                "width": "1px",
               },
-              "size": Object {
-                "huge": "288px",
-                "large": "144px",
-                "medium": "96px",
-                "small": "72px",
-                "xlarge": "216px",
+              "digital": Object {
+                "text": Object {
+                  "large": Object {
+                    "height": 1.167,
+                    "size": "24px",
+                  },
+                  "medium": Object {
+                    "height": 1.375,
+                    "size": "16px",
+                  },
+                  "small": Object {
+                    "height": 1.43,
+                    "size": "14px",
+                  },
+                  "xlarge": Object {
+                    "height": 1.1875,
+                    "size": "32px",
+                  },
+                  "xsmall": Object {
+                    "height": 1.5,
+                    "size": "12px",
+                  },
+                  "xxlarge": Object {
+                    "height": 1.125,
+                    "size": "48px",
+                  },
+                },
               },
             },
             "global": Object {
               "animation": Object {
                 "duration": "1s",
+                "jiggle": Object {
+                  "duration": "0.1s",
+                },
               },
               "borderSize": Object {
                 "large": "12px",
                 "medium": "4px",
+                "narrow": Object {
+                  "large": "6px",
+                  "medium": "4px",
+                  "small": "2px",
+                  "xlarge": "12px",
+                  "xsmall": "1px",
+                },
                 "small": "2px",
                 "xlarge": "24px",
                 "xsmall": "1px",
@@ -2329,7 +2919,6 @@ exports[`Workspace Menu has renders menu options 1`] = `
                   "#915591",
                 ],
                 "active": "rgba(221,221,221,0.5)",
-                "background": "#FFFFFF",
                 "black": "#000000",
                 "border": "rgba(0, 0, 0, 0.15)",
                 "brand": "#865CD6",
@@ -2342,7 +2931,7 @@ exports[`Workspace Menu has renders menu options 1`] = `
                   "#999999",
                 ],
                 "darkBackground": Object {
-                  "text": "rgba(255, 255, 255, 0.85)",
+                  "text": "#FFFFFF",
                 },
                 "light": Array [
                   "#F6F6F6",
@@ -2390,9 +2979,26 @@ exports[`Workspace Menu has renders menu options 1`] = `
               "edgeSize": Object {
                 "large": "48px",
                 "medium": "24px",
+                "narrow": Object {
+                  "large": "24px",
+                  "medium": "12px",
+                  "none": "0",
+                  "small": "6px",
+                  "xlarge": "48px",
+                  "xsmall": "3px",
+                },
+                "none": "0",
                 "small": "12px",
                 "xlarge": "96px",
                 "xsmall": "6px",
+              },
+              "elevation": Object {
+                "large": "0px 6px 12px rgba(100, 100, 100, 0.50)",
+                "medium": "0px 3px 8px rgba(100, 100, 100, 0.50)",
+                "none": "none",
+                "small": "0px 2px 4px rgba(100, 100, 100, 0.50)",
+                "xlarge": "0px 8px 16px rgba(100, 100, 100, 0.50)",
+                "xsmall": "0px 1px 2px rgba(100, 100, 100, 0.50)",
               },
               "focus": Object {
                 "border": Object {
@@ -2482,6 +3088,15 @@ exports[`Workspace Menu has renders menu options 1`] = `
                 "full": "100%",
                 "large": "768px",
                 "medium": "384px",
+                "narrow": Object {
+                  "full": "100%",
+                  "large": "384px",
+                  "medium": "192px",
+                  "small": "96px",
+                  "xlarge": "768px",
+                  "xsmall": "48px",
+                  "xxsmall": "24px",
+                },
                 "small": "192px",
                 "xlarge": "1152px",
                 "xsmall": "96px",
@@ -2577,6 +3192,11 @@ exports[`Workspace Menu has renders menu options 1`] = `
               },
               "overlayBackgroundColor": "rgba(0, 0, 0, 0.5)",
             },
+            "menu": Object {
+              "icons": Object {
+                "down": [Function],
+              },
+            },
             "paragraph": Object {
               "large": Object {
                 "height": 1.333,
@@ -2622,6 +3242,11 @@ exports[`Workspace Menu has renders menu options 1`] = `
                 ],
               },
             },
+            "select": Object {
+              "icons": Object {
+                "down": [Function],
+              },
+            },
             "text": Object {
               "large": Object {
                 "height": 1.167,
@@ -2651,6 +3276,25 @@ exports[`Workspace Menu has renders menu options 1`] = `
             "video": Object {
               "captions": Object {
                 "background": "rgba(0,0,0,0.7)",
+              },
+              "icons": Object {
+                "closedCaption": [Function],
+                "configure": [Function],
+                "fullScreen": [Function],
+                "pause": [Function],
+                "play": [Function],
+                "reduceVolume": [Function],
+                "volume": [Function],
+              },
+            },
+            "worldMap": Object {
+              "continent": Object {
+                "active": "8px",
+                "base": "6px",
+              },
+              "place": Object {
+                "active": "20px",
+                "base": "8px",
               },
             },
           }

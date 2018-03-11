@@ -1,11 +1,128 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Query Builder Component renders and matches snapshot 1`] = `
+.c7 {
+  display: inline-block;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  fill: #666666;
+  stroke: #666666;
+}
+
+.c7 g {
+  fill: inherit;
+  stroke: inherit;
+}
+
+.c7 *:not([stroke])[fill="none"] {
+  stroke-width: 0;
+}
+
+.c7 *[stroke*="#"],
+.c7 *[STROKE*="#"] {
+  stroke: inherit;
+  fill: none;
+}
+
+.c7 *[fill-rule],
+.c7 *[FILL-RULE],
+.c7 *[fill*="#"],
+.c7 *[FILL*="#"] {
+  fill: inherit;
+  stroke: none;
+}
+
+.c3 {
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  font: inherit;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font: inherit;
+  margin: 0;
+  background-color: transparent;
+  overflow: visible;
+  text-transform: none;
+  text-align: center;
+  display: inline-block;
+  min-width: 96px;
+  max-width: 384px;
+  font-weight: 600;
+  border: 2px solid #FFFFFF;
+  border-radius: 5px;
+  color: #333333;
+  font-size: 1.1875rem;
+  line-height: 24px;
+  padding: 10px 10px;
+}
+
+.c3:hover {
+  box-shadow: 0px 0px 0px 2px #FFFFFF;
+}
+
+.c3:hover svg {
+  fill: #000000;
+  stroke: #000000;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.c11 {
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  font: inherit;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font: inherit;
+  margin: 0;
+  background-color: transparent;
+  overflow: visible;
+  text-transform: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  text-align: inherit;
+  padding: 12px;
+}
+
+.c4:first-child:not(:last-child) {
+  margin-right: 12px;
+}
+
+.c12 {
+  display: inline-block;
+}
+
+.c12:first-child:not(:last-child) {
+  margin-right: 12px;
+}
+
+.c12 > * {
+  vertical-align: bottom;
+}
+
+.c0 {
+  font-family: 'Work Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333333;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  box-sizing: border-box;
+  outline: none;
   max-width: 100%;
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -15,13 +132,36 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  margin: 0;
 }
 
-.c6 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  box-sizing: border-box;
+  outline: none;
+  max-width: 100%;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  box-sizing: border-box;
+  outline: none;
   max-width: 100%;
   min-width: 0;
   -webkit-flex-direction: column;
@@ -30,9 +170,16 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
   -webkit-flex: 1 1;
   -ms-flex: 1 1;
   flex: 1 1;
+  margin: 0;
+  padding: 0;
 }
 
-.c7 {
+.c6 {
+  width: 6px;
+}
+
+.c10 {
+  box-sizing: border-box;
   padding: 11px;
   border: 1px solid rgba(0,0,0,0.15);
   border-radius: 4px;
@@ -41,38 +188,43 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
   color: inherit;
   font: inherit;
   margin: 0;
+  width: 100%;
 }
 
-.c7::-webkit-input-placeholder {
+.c10::-webkit-input-placeholder {
   color: #AAAAAA;
 }
 
-.c7::-moz-placeholder {
+.c10::-moz-placeholder {
   color: #AAAAAA;
 }
 
-.c7:-ms-input-placeholder {
+.c10:-ms-input-placeholder {
   color: #AAAAAA;
 }
 
-.c7::-moz-focus-inner {
+.c10::-moz-focus-inner {
   border: none;
   outline: none;
 }
 
-.c7:focus {
+.c10:focus {
   border-color: #00CCEB;
   box-shadow: 0 0 2px 2px #00CCEB;
 }
 
-.c7:focus > circle,
-.c7:focus > ellipse,
-.c7:focus > line,
-.c7:focus > path,
-.c7:focus > polygon,
-.c7:focus > polyline,
-.c7:focus > rect {
+.c10:focus > circle,
+.c10:focus > ellipse,
+.c10:focus > line,
+.c10:focus > path,
+.c10:focus > polygon,
+.c10:focus > polyline,
+.c10:focus > rect {
   outline: #00CCEB solid 2px;
+}
+
+.c9 {
+  width: 100%;
 }
 
 .c1 {
@@ -108,121 +260,6 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
   margin-left: 12px;
 }
 
-.c0 {
-  font-family: 'Work Sans',Arial,sans-serif;
-  font-size: 1em;
-  line-height: 1.5;
-  color: #333333;
-  background-color: #FFFFFF;
-  box-sizing: border-box;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
-.c0 * {
-  box-sizing: inherit;
-}
-
-.c3 {
-  cursor: pointer;
-  outline: none;
-  font: inherit;
-  text-decoration: none;
-  font: inherit;
-  margin: 0;
-  background-color: transparent;
-  overflow: visible;
-  text-transform: none;
-  text-align: center;
-  display: inline-block;
-  min-width: 96px;
-  max-width: 384px;
-  font-weight: 600;
-  border: 2px solid #FFFFFF;
-  border-radius: 5px;
-  color: #333333;
-  font-size: 1.1875rem;
-  line-height: 24px;
-  padding: 10px 10px;
-}
-
-.c3:hover {
-  box-shadow: 0px 0px 0px 2px #FFFFFF;
-}
-
-.c3:hover svg {
-  fill: #000000;
-  stroke: #000000;
-  -webkit-transition: none;
-  transition: none;
-}
-
-.c8 {
-  cursor: pointer;
-  outline: none;
-  font: inherit;
-  text-decoration: none;
-  font: inherit;
-  margin: 0;
-  background-color: transparent;
-  overflow: visible;
-  text-transform: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  padding: 12px;
-}
-
-.c4:first-child:not(:last-child) {
-  margin-right: 12px;
-}
-
-.c5 {
-  display: inline-block;
-  -webkit-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
-  fill: #666666;
-  stroke: #666666;
-}
-
-.c5 g {
-  fill: inherit;
-  stroke: inherit;
-}
-
-.c5 *:not([stroke])[fill="none"] {
-  stroke-width: 0;
-}
-
-.c5 *[stroke*="#"],
-.c5 *[STROKE*="#"] {
-  stroke: inherit;
-  fill: none;
-}
-
-.c5 *[fill-rule],
-.c5 *[FILL-RULE],
-.c5 *[fill*="#"],
-.c5 *[FILL*="#"] {
-  fill: inherit;
-  stroke: none;
-}
-
-.c9 {
-  display: inline-block;
-}
-
-.c9:first-child:not(:last-child) {
-  margin-right: 12px;
-}
-
-.c9 > * {
-  vertical-align: bottom;
-}
-
 @media only screen and (min-width:700px) {
   .c3 {
     -webkit-transition: 0.1s ease-in-out;
@@ -231,9 +268,33 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
 }
 
 @media only screen and (min-width:700px) {
-  .c8 {
+  .c11 {
     -webkit-transition: 0.1s ease-in-out;
     transition: 0.1s ease-in-out;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c5 {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c5 {
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c8 {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width:699px) {
+  .c8 {
+    padding: 0;
   }
 }
 
@@ -950,7 +1011,6 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
           onFocus={[Function]}
           onMouseDown={[Function]}
           onMouseUp={[Function]}
-          tabIndex="0"
           type="button"
         >
           <span
@@ -958,7 +1018,7 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
           >
             <div
               aria-label={undefined}
-              className="c2"
+              className="c5"
               direction="row"
             >
               <span>
@@ -966,9 +1026,13 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
                  
                 Starts With
               </span>
+              <div
+                className="c6"
+                direction="row"
+              />
               <svg
                 aria-label="Down"
-                className="c5"
+                className="c7"
                 height="24px"
                 role="img"
                 version="1.1"
@@ -988,16 +1052,16 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
         </button>
         <div
           aria-label={undefined}
-          className="query-value c6"
+          className="query-value c8"
           direction="column"
         >
           <div
-            className=""
+            className="c9"
           >
             <input
               autoComplete="off"
               autoFocus={true}
-              className="c7"
+              className="c10"
               defaultValue={undefined}
               id={undefined}
               onFocus={[Function]}
@@ -1009,7 +1073,7 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
         </div>
         <button
           aria-label={undefined}
-          className="c8"
+          className="c11"
           disabled={false}
           href={undefined}
           icon={<Refresh />}
@@ -1019,16 +1083,15 @@ exports[`Query Builder Component renders and matches snapshot 1`] = `
           onFocus={[Function]}
           onMouseDown={[Function]}
           onMouseUp={[Function]}
-          tabIndex="0"
           type="button"
         >
           <span
             aria-hidden={true}
-            className="c9"
+            className="c12"
           >
             <svg
               aria-label="Refresh"
-              className="c5"
+              className="c7"
               height="24px"
               role="img"
               version="1.1"
