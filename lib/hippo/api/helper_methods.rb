@@ -5,12 +5,12 @@ module Hippo
                 Extensions.controlling.title
             end
 
-            def javascript_tags(*entries)
+            def javascript_tag(tag, options = {})
                 Root.webpack.wait_until_available
-                origin = Hippo.env.production? ? '' : 'crossorigin';
-                entries.map { |entry|
-                    "<script async #{origin} src=\"#{Root.webpack.host}/assets/#{Root.webpack.file(entry)}\"></script>"
-                }.join("\n")
+                opts = []
+                opts.push('crossorigin') unless Hippo.env.production?
+                opts.push('async') unless options[:async] == false
+                "<script #{opts.join(' ')} src=\"#{Root.webpack.host}/assets/#{Root.webpack.file(tag)}\"></script>"
             end
 
             def csrf_token
