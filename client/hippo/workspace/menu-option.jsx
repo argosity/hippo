@@ -8,7 +8,7 @@ import color from 'grommet/utils/colors';
 import Icon from '../components/icon';
 
 const activeStyle = css`
-  background-color: ${props => color.colorForName('neutral-4', props.theme)};
+  background-color: ${props => color.colorForName('border', props.theme)};
 `;
 
 const MenuLink = styled(RoutedAnchor)`
@@ -17,7 +17,7 @@ const MenuLink = styled(RoutedAnchor)`
   ${props => props.isActive && activeStyle}
   &:hover {
     text-decoration: none;
-    background-color: ${props => color.colorForName('border', props.theme)};
+    background-color: ${props => color.colorForName('neutral-3', props.theme)};
   }
 `;
 
