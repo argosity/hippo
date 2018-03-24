@@ -13,7 +13,7 @@ Definition.register(
     Screens['<%= screen.identifier %>'],
     asyncComponent({
         screen: <%= screen.to_json %>,
-        resolve: () => System.import(<%= "'#{screen.asset_path}'" %>)
+        resolve: () => import(<%= "'#{screen.asset_path}'" %>)
     }),
 );
 <% end -%>
