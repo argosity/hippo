@@ -19,9 +19,8 @@ import Menu        from './menu';
 import Screen      from './screen';
 import LoginDialog from '../access/login-dialog';
 import SubscriptionChoiceLayer from '../access/subscription-choice-layer';
+import Dimensions from './dimensions';
 import './styles.scss';
-
-const DOCKED_WIDTH_BREAKPOINT = 950;
 
 function NoMatch({ match: { path } }) {
     const RootView = Extensions.controlling.rootView();
@@ -47,7 +46,7 @@ class Workspace extends React.Component {
 
     constructor() {
         super();
-        this.mql = window.matchMedia(`(min-width: ${DOCKED_WIDTH_BREAKPOINT}px)`);
+        this.mql = window.matchMedia(`(min-width: ${Dimensions.dockedWidthBreakpoint}px)`);
         this.mql.addListener(this.onMediaQueryChanged);
         this.onMediaQueryChanged();
     }
