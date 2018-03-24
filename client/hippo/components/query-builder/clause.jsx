@@ -21,9 +21,9 @@ const ClauseWrapper = styled(Box)`
 width: 100%;
 .clause-select {
   text-align: left;
-
   flex-grow: inherit;
-  padding-left: ${props => props.theme.global.edgeSize.small}
+  padding: 0;
+  max-width: 40vw;
 }
 .query-value {
   > * {
