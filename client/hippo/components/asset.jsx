@@ -32,7 +32,6 @@ button {
 const AssetWrapper = StyledWrapper.withComponent('div').extend`
 border-bottom: 0;
 .drop-zone { height: 100%; }
-padding: ${props => props.theme.global.edgeSize.small};
 border: ${props => props.theme.global.borderSize.small} dashed transparent;
 overflow: auto;
 min-height: 200px;
