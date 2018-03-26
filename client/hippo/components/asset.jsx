@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone';
 import styled from 'styled-components';
 import color from 'grommet/utils/colors';
 import baseTheme from 'grommet/themes/vanilla';
-import { Button } from 'grommet';
+import { Box, Text, Button } from 'grommet';
 import { Document } from 'grommet-icons';
 import { BaseModel } from '../models/base';
 import { StyledWrapper } from './form/field-wrapper';
@@ -37,6 +37,7 @@ overflow: auto;
 min-height: 200px;
 max-height: 300px;
 -webkit-overflow-scrolling: touch;
+.labels { padding-left: 0; }
 &:hover {
  border-color: ${props => color.colorForName('light-3', props.theme)};
  cursor: pointer;
@@ -126,14 +127,31 @@ export default class Asset extends React.Component {
 
     render() {
         const {
-            model: _, label: __, name: ___, tabIndex, height, ...wrapperProps
+            model, label: __, name: ___, tabIndex, height, ...wrapperProps
         } = this.props;
+
+        let header;
+        if (this.label || model.errorMessage) {
+            header = (
+                <Box
+                    wrap
+                    direction="row"
+                    className="labels"
+                    justify="between"
+                    pad={{ horizontal: 'small', top: 'xsmall' }}
+                >
+                    <Text>{this.label}</Text>
+                    <Text truncate color="status-critical">
+                        {model.errorMessage}
+                    </Text>
+                </Box>
+            );
+        }
 
         return (
             <AssetWrapper
                 height={height || 3}
                 width={3}
-                label={this.label}
                 tabIndex={tabIndex}
                 onKeyPress={this.onKey}
                 {...wrapperProps}
@@ -145,6 +163,7 @@ export default class Asset extends React.Component {
                     multiple={false}
                     ref={this.setDZRef}
                 >
+                    {header}
                     {this.preview()}
                 </Dropzone>
             </AssetWrapper>
