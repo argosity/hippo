@@ -3,9 +3,19 @@ import { observer } from 'mobx-react';
 import { action } from 'mobx';
 import cn from 'classnames';
 import { CheckBox } from 'grommet';
+import { css } from 'styled-components';
 
 @observer
 export default class CheckBoxWrapper extends React.Component {
+
+    static styles(props) {
+        if ('center' === props.align) {
+            return css`
+              > div:last-child { justify-content: center; }
+            `;
+        }
+        return null;
+    }
 
     @action.bound onBlur(ev) {
         this.props.onBlur({ target: { value: ev.target.checked } });
