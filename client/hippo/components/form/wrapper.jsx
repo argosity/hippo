@@ -65,11 +65,9 @@ export default class FormWrapper extends React.Component {
     }
 
     renderTagged() {
-        const {
-            state, props: { tag: Tag, children, model: _, ...otherProps },
-        } = this;
+        const { tag: Tag, children, model: _, ...otherProps } = this.props;
         return (
-            <Provider formState={state}>
+            <Provider formState={this.state}>
                 <Tag {...otherProps}>
                     {children}
                 </Tag>
@@ -78,11 +76,9 @@ export default class FormWrapper extends React.Component {
     }
 
     renderScreen() {
-        const {
-            tag: _, state, children, screen, model: __, ...otherProps
-        } = this.props;
+        const { tag: _, children, screen, model: __, ...otherProps } = this.props;
         return (
-            <Provider formState={state}>
+            <Provider formState={this.state}>
                 <Screen screen={screen} {...otherProps}>
                     {children}
                 </Screen>
@@ -91,11 +87,9 @@ export default class FormWrapper extends React.Component {
     }
 
     renderLayout() {
-        const {
-            tag: _, state, children, model: __, ...otherProps
-        } = this.props;
+        const { children, model: _, ...otherProps } = this.props;
         return (
-            <Provider formState={state}>
+            <Provider formState={this.state}>
                 <Layout {...otherProps}>
                     {children}
                 </Layout>
