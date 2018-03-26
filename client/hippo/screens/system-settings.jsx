@@ -59,9 +59,7 @@ export default class SystemSettings extends React.Component {
             }
         });
         Promise.all(saves).then(() => {
-            if (saves.length) {
-                Config.logo = this.settings.logo.file_data;
-            }
+            Config.logo = this.settings.logo ? this.settings.logo.file_data : null;
             this.extensionPanelRefs.forEach(panel => invoke(panel, 'onSave'));
             this.tenantSettings.onSave();
             this.settings.save();
