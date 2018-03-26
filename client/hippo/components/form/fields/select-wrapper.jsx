@@ -34,6 +34,7 @@ export default class SelectFieldWrapper extends React.Component {
         return (
             <Select
                 {...otherProps}
+                fill
                 value={this.value}
                 options={collection}
                 onChange={this.onSelectChange}
