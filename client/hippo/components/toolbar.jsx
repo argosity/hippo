@@ -8,7 +8,7 @@ export SaveButton from './save-button';
 
 const TB = styled(Box)`
 button {
-  min-width: 100px;
+  padding: ${props => props.theme.global.edgeSize.small};
 };
 `;
 
