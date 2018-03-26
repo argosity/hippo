@@ -86,7 +86,7 @@ export default class FormField extends React.Component {
                 className={className}
                 type={type}
                 {...wrapperProps}
-                styles={invoke(type, 'styles', this.props)}
+                styles={invoke(InputTag, 'styles', this.props)}
                 control={control}
             >
                 <InputTag
