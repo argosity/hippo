@@ -22,8 +22,8 @@ width: 100%;
 .clause-select {
   text-align: left;
   flex-grow: inherit;
-  padding: 0;
   max-width: 40vw;
+  padding: 0;
 }
 .query-value {
   > * {
@@ -142,7 +142,7 @@ export default class Clause extends React.Component {
                 align="center"
             >
                 <Button
-                    color="white"
+                    color="transparent"
                     className="clause-select"
                     ref={this.setDropTargetRef}
                     onClick={this.toggleFilter}
