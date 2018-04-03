@@ -68,7 +68,7 @@ exports[`RecordFinder Component renders 1`] = `
   font-family: 'Work Sans',Arial,sans-serif;
   font-size: 1em;
   line-height: 1.5;
-  color: #333333;
+  color: #444444;
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -118,12 +118,13 @@ exports[`RecordFinder Component renders 1`] = `
 .c7 {
   box-sizing: border-box;
   padding: 11px;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid rgba(0,0,0,0.33);
   border-radius: 4px;
   outline: none;
   background-color: transparent;
   color: inherit;
   font: inherit;
+  font-weight: 700;
   margin: 0;
   width: 100%;
   border: none;
@@ -172,7 +173,7 @@ exports[`RecordFinder Component renders 1`] = `
   -ms-flex-pack: justify;
   justify-content: space-between;
   background: white no-repeat;
-  background-image: linear-gradient(to bottom,#00CCEB,#00CCEB),linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
+  background-image: linear-gradient(to bottom,#FD6FFF,#FD6FFF),linear-gradient(to bottom,rgba(0,0,0,0.33),rgba(0,0,0,0.33));
   background-size: 0 2px,100% 1px;
   background-position: 50% 100%,50% 100%;
   -webkit-transition: background-size 0.3s cubic-bezier(0.64,0.09,0.08,1);

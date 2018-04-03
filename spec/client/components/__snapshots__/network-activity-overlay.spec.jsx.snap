@@ -12,7 +12,7 @@ exports[`Network Activity Overlay matches snapshot 1`] = `
   font-family: 'Work Sans',Arial,sans-serif;
   font-size: 1em;
   line-height: 1.5;
-  color: #333333;
+  color: #444444;
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -74,7 +74,7 @@ exports[`Network Activity Overlay matches snapshot 1`] = `
   top: 25%;
   border-radius: 8px;
   padding: 10px;
-  box-shadow: 6px 7px 5px #49516F;
+  box-shadow: 6px 7px 5px #FFB200;
   background-color: background-color:#865CD6;
   color: #FFFFFF;
   color: black;
