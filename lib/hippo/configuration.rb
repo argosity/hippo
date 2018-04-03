@@ -127,9 +127,10 @@ module Hippo
         # types of assets to include into compiled package
         config_option :static_asset_types, ['images','fonts']
 
-        config_option :website_domain, ENV['HOST'] || ''
-        config_option :support_email, ''
-        config_option :product_name, ''
+        config_option :website_domain, ENV['HOST']          || ''
+        config_option :support_email,  ENV['SUPPORT_EMAIL'] || ''
+        config_option :support_phone,  ENV['SUPPORT_PHONE'] || ''
+        config_option :product_name,   ENV['PRODUCT_NAME']  || ''
 
         def api_path
             mounted_at + 'api'

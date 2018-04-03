@@ -1,0 +1,34 @@
+<fieldset class="flex">
+  <form id="hippo-contact-form" method="post" action="/contact">
+
+    <div class="flex">
+      <label>
+        Your Name
+        <input id="name" name="name" type="text" placeholder="Name" value="<%= params['name'] %>">
+      </label>
+
+      <label>
+        Email
+        <input id="email" name="email" type="email" placeholder="Email Address" value="<%= params['email'] %>">
+      </label>
+    </div>
+
+
+    <div class="flex">
+      <label>
+        Subject
+        <input id="subject" name="subject" type="text" placeholder="Message subject">
+      </label>
+    </div>
+
+    <label>
+      Message
+      <textarea rows="8" name="message" placeholder="Your Login"></textarea>
+    </label>
+
+    <footer>
+      <button type="submit">Send message</button>
+    </footer>
+
+  </form>
+</fieldset>
