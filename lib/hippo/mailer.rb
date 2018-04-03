@@ -45,6 +45,7 @@ module Hippo
                 mail.content_type = 'text/html; charset=UTF-8'
                 mail.body = template.render
                 mail.to = template.to
+                mail.reply_to = template.reply_to if template.reply_to.present?
                 mail.subject = template.subject
                 mail
             end

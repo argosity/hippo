@@ -12,6 +12,10 @@ module Hippo
                 Hippo.config.support_email
             end
 
+            def reply_to
+                params['email']
+            end
+
             def subject
                 "[#{Hippo.config.product_name} Contact] #{params['subject']}"
             end

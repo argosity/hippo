@@ -18,6 +18,10 @@ module Hippo
                 { 'product_name' => Hippo.config.product_name }
             end
 
+            def reply_to
+                nil
+            end
+
             def self.create(*arg)
                 Hippo::Mailer.from_template(self.new(*arg))
             end
