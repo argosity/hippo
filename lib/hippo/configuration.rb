@@ -1,3 +1,4 @@
+require 'dotenv/load'
 require_relative "concerns/attr_accessor_with_default"
 require 'securerandom'
 require 'pathname'
