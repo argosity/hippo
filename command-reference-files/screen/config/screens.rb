@@ -13,7 +13,6 @@ Hippo::Screen.for_extension 'appy-app' do | screens |
         screen.group_id    = ""
         screen.model_class = ""
         screen.view_class  = "ReadySetGo"
-        screen.asset       = "ready-set-go"
     end
 
 end
