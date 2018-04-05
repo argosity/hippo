@@ -12,6 +12,11 @@ const activeStyle = css`
 `;
 
 const MenuLink = styled(RoutedAnchor)`
+  display: flex;
+  > * {
+    display: flex;
+    align-items: center;
+  }
   padding: 10px 0 10px 10px;
   color: ${props => color.colorForName('light-1', props.theme)};
   ${props => props.isActive && activeStyle}
