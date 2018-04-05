@@ -52,10 +52,10 @@ export default class FormWrapper extends React.Component {
         }
     }
 
-    renderTagless() {
+    renderTagless(body) {
         return (
             <Provider formState={this.state}>
-                {this.props.children}
+                {body}
             </Provider>
         );
     }
@@ -64,44 +64,42 @@ export default class FormWrapper extends React.Component {
         this.state.persistTo(model);
     }
 
-    renderTagged() {
-        const { tag: Tag, children, model: _, ...otherProps } = this.props;
+    renderTagged(body) {
+        const { tag: Tag, children: _, model: __, ...otherProps } = this.props;
         return (
             <Provider formState={this.state}>
                 <Tag {...otherProps}>
-                    {children}
+                    {body}
                 </Tag>
             </Provider>
         );
     }
 
-    renderScreen() {
-        const { tag: _, children, screen, model: __, ...otherProps } = this.props;
+    renderScreen(body) {
+        const { tag: _, children: __, screen, model: ___, ...otherProps } = this.props;
         return (
-            <Provider formState={this.state}>
-                <Screen screen={screen} {...otherProps}>
-                    {children}
-                </Screen>
-            </Provider>
+            <Screen screen={screen} {...otherProps}>
+                {body}
+            </Screen>
         );
     }
 
-    renderLayout() {
-        const { children, model: _, ...otherProps } = this.props;
+    renderLayout(body) {
+        const { children: _, model: __, ...otherProps } = this.props;
         return (
-            <Provider formState={this.state}>
-                <Layout {...otherProps}>
-                    {children}
-                </Layout>
-            </Provider>
+            <Layout {...otherProps}>
+                {body}
+            </Layout>
         );
     }
 
     render() {
         if (this.props.model) { observePubSub(this.props.model); }
-        if (this.props.screen) { return this.renderScreen(); }
-        if (this.props.grid) { return this.renderLayout(); }
-        return this.props.tag ? this.renderTagged() : this.renderTagless();
+        let body = this.props.children;
+        if (this.props.screen) { body = this.renderScreen(body); }
+        if (this.props.grid) { body = this.renderLayout(body); }
+        return this.props.tag ?
+            this.renderTagged(body) : this.renderTagless(body);
     }
 
 }
