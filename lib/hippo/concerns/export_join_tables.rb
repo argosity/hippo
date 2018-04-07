@@ -18,7 +18,7 @@ module Hippo::Concerns
                 options = tables.extract_options!
                 tables.each do | join_name |
                     self.exported_join_tables << {
-                        name: join_name,
+                        name: join_name.to_sym,
                         limit: options[:limit]
                     }
                 end
@@ -27,7 +27,8 @@ module Hippo::Concerns
 
             # Has the join been marked as safe?
             def has_exported_join_table?(name, user)
-                return true if name == 'details' # "details" is reserved for views and is always allowed
+                name = name.to_sym
+                return true if name == :details # "details" is reserved for views and is always allowed
                 self.exported_join_tables && self.exported_join_tables.detect{ | join |
                     join[:name] == name && evaluate_export_limit( user, :join, join[:name], join[:limit] )
                 }
