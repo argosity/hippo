@@ -32,7 +32,7 @@ export default class RecordFinder extends React.Component {
 
     @action.bound
     onSearchClick() {
-        this.query.reset();
+        this.props.query.reset();
         this.showingSearch = true;
     }
 
