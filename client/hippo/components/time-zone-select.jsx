@@ -37,7 +37,7 @@ export default class TimeZoneSelect extends React.Component {
         return this.choices;
     }
 
-    @action.bound onSearch({ target: { value } }) {
+    @action.bound onSearch(value) {
         this.currentSearch = new RegExp(`^${value}|/${value}`, 'i');
     }
 
