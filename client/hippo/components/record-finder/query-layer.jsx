@@ -4,8 +4,13 @@ import { observer }   from 'mobx-react';
 import { action } from 'mobx';
 import { Heading, Layer, Box, Button } from 'grommet';
 import { Close } from 'grommet-icons';
+import styled from 'styled-components';
 import DataTable from '../data-table';
 import QueryBuilder from '../query-builder';
+
+const StyledLayer = styled(Layer)`
+min-width: 70vw;
+`;
 
 @observer
 export default class QueryLayer extends React.Component {
@@ -32,7 +37,7 @@ export default class QueryLayer extends React.Component {
         if (!visible) { return null; }
 
         return (
-            <Layer
+            <StyledLayer
                 onEsc={onClose}
             >
                 <Box
@@ -58,7 +63,7 @@ export default class QueryLayer extends React.Component {
                         style={{ minHeight: 400 }}
                     />
                 </Box>
-            </Layer>
+            </StyledLayer>
         );
     }
 
