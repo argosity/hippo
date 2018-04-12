@@ -22,7 +22,7 @@ width: 100%;
 .clause-select {
   text-align: left;
   flex-grow: inherit;
-  max-width: 40vw;
+  max-width: 40%;
   padding: 0;
 }
 .query-value {
@@ -146,8 +146,9 @@ export default class Clause extends React.Component {
                     className="clause-select"
                     ref={this.setDropTargetRef}
                     onClick={this.toggleFilter}
-                    label={<ClauseFilter onClick={this.toggleFilter} clause={clause} />}
-                />
+                >
+                    <ClauseFilter onClick={this.toggleFilter} clause={clause} />
+                </Button>
                 {this.renderDropFilter()}
                 {this.renderInputTag()}
                 <Button
