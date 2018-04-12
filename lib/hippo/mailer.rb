@@ -47,6 +47,9 @@ module Hippo
                 mail.to = template.to
                 mail.reply_to = template.reply_to if template.reply_to.present?
                 mail.subject = template.subject
+                template.attachments.each do |file_name, data|
+                    mail.attachments[file_name] = data
+                end
                 mail
             end
         end

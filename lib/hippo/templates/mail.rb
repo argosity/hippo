@@ -25,6 +25,10 @@ module Hippo
             def self.create(*arg)
                 Hippo::Mailer.from_template(self.new(*arg))
             end
+
+            def attachments
+                {}
+            end
         end
     end
 end

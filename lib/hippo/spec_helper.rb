@@ -101,6 +101,7 @@ RSpec.configure do |config|
             Hippo::User.scoped_to(TEST_TENANT.users.first) do
                 DatabaseCleaner.cleaning do
                     example.run
+                    Mail::TestMailer.deliveries.clear
                 end
             end
         end
