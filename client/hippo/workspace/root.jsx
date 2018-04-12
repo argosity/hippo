@@ -44,9 +44,10 @@ class Workspace extends React.Component {
     @observable sidebarOpen   = true;
     @observable sidebarDocked = false;
 
+    mql = window.matchMedia(`(min-width: ${Dimensions.dockedWidthBreakpoint}px)`);
+
     constructor() {
         super();
-        this.mql = window.matchMedia(`(min-width: ${Dimensions.dockedWidthBreakpoint}px)`);
         this.mql.addListener(this.onMediaQueryChanged);
         this.onMediaQueryChanged();
     }
