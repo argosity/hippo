@@ -1,5 +1,5 @@
 import {
-    isEmpty, isNil, extend, map, bindAll, inRange, find, range, isUndefined,
+    isEmpty, isNil, extend, map, bindAll, inRange, find, range, isUndefined, omit,
 } from 'lodash';
 import { reaction, observe, toJS } from 'mobx';
 import objectHash from 'object-hash';
@@ -20,6 +20,7 @@ export default class ArrayResult extends Result {
     @observable sortField;
     @observable.shallow loadingRows = [];
     @observable syncInProgress;
+    @observable metaData;
 
     constructor(attrs) {
         super(attrs);
@@ -222,6 +223,7 @@ export default class ArrayResult extends Result {
             if (start > this.rows.length) {
                 range(this.rows.length, start).forEach(() => this.rows.push([]));
             }
+            this.metaData = omit(resp, 'data');
             this.rows.splice(start, Math.max(limit, rows.length), ...rows);
             this.totalCount = resp.total;
             this.loadingRows.remove(inProgress);
