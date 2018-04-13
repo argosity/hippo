@@ -2,10 +2,14 @@ module Hippo
 
     class Cron
         include Hippo::Concerns::PubSub
-        valid_event_names << :daily
-        valid_event_names << :weekly
+
+        valid_event_names.concat(%i[hourly daily weekly])
 
         class << self
+
+            def hourly(&block)
+                observe(:hourly, &block)
+            end
 
             def daily(&block)
                 observe(:daily, &block)

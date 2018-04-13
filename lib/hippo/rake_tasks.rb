@@ -74,10 +74,7 @@ task :ci do
     Rake::Task["lint"].invoke
 end
 
-task :crondaily => :env do
-    Hippo::Cron.trigger(:daily)
-end
-
-task :cronweekly => :env do
-    Hippo::Cron.trigger(:weekly)
+desc "invoke cron jobs, type = hourly, daily or weekly"
+task :cron, [:type] => :env do |tt,args|
+    Hippo::Cron.trigger(args[:type].to_sym)
 end
