@@ -18,14 +18,14 @@ export default class ArrayResult extends Result {
     @observable rowUpdateCount = 0;
     @observable sortAscending;
     @observable sortField;
-    @observable.shallow loadingRows = [];
     @observable syncInProgress;
     @observable metaData;
+    rows = observable.array([], { deep: false });
+    loadingRows = observable.array([], { deep: false })
 
     constructor(attrs) {
         super(attrs);
         bindAll(this, 'onQuerySortChange');
-        this.rows = observable.shallowArray([]);
         this.sortField = this.query.sortField;
         this.sortAscending = this.query.sortAscending;
 

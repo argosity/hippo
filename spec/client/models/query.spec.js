@@ -1,6 +1,8 @@
 import Sync from 'hippo/models/sync';
 import { map, find, range, shuffle } from 'lodash';
 import Query  from 'hippo/models/query';
+import Field from 'hippo/models/query/field';
+import Operator from 'hippo/models/query/operator';
 import { Box } from '../test-models';
 
 jest.mock('hippo/models/sync');
@@ -40,6 +42,10 @@ describe('Model Queries', () => {
     });
 
     it('calculates fields', () => {
+        expect(query.operators).toHaveLength(6);
+        expect(query.operators[0]).toBeInstanceOf(Operator);
+        expect(query.fields).toHaveLength(6);
+        expect(query.fields[0]).toBeInstanceOf(Field);
         expect(query.clauses).toHaveLength(1);
         expect(query.clauses[0].field).toBe(query.fields[1]);
         expect(query.clauses[0].operator.id).toBe('like');

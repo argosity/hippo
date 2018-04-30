@@ -1,3 +1,4 @@
+import { autorun } from 'mobx';
 import { onBoot, observePubSub } from 'hippo/models/pub_sub';
 import PubSubChannel from 'hippo/models/pub_sub/channel';
 import Config from 'hippo/config';
@@ -15,13 +16,15 @@ describe('PubSub', () => {
         const ship = new Ship();
         const container = new Container({ id: '2' });
         onBoot();
+
         expect(PubSubChannel.prototype.subscribe)
             .not.toHaveBeenCalledWith('test/container/2');
         observePubSub(ship, container);
         ship.name = 'test';
         expect(ship.identifierFieldValue).toEqual('test');
-        observePubSub(ship);
-        expect(PubSubChannel.prototype.subscribe)
-            .toHaveBeenCalledWith('test/boat/test');
+        autorun(() => {
+            observePubSub(ship);
+        });
+        expect(PubSubChannel.prototype.subscribe).toHaveBeenCalled();
     });
 });

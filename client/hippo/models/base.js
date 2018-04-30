@@ -1,29 +1,25 @@
 import PropTypes from 'prop-types';
-import {
-    findModel,
-} from 'mobx-decorated-models';
+import { findModel } from 'mobx-decorated-models';
 import { readonly } from 'core-decorators';
 import invariant from 'invariant';
 import {
-    isEmpty, isNil, find, extend, assign, pick, map, isArray,
+    isEmpty, isNil, find, extend, pick, map, isArray,
 } from 'lodash';
-
 import { action, observable, computed } from 'mobx';
-import './date-type';
+import { identifier } from './decorators';
 import Sync from './sync';
 import Config from '../config';
 import { toSentence, humanize, classify } from '../lib/util';
 import ModelCollection from './collection';
 
 export {
-    identifiedBy, belongsTo, hasMany,
+    identifiedBy, belongsTo, hasMany, field, session,
 } from 'mobx-decorated-models';
 export {
     action, autorun,
 } from 'mobx';
-export {
-    field, session, identifier,
-} from './decorators';
+export { identifier };
+
 
 export {
     observable, computed,
@@ -40,12 +36,13 @@ export class BaseModel {
     }
 
     static get assignableKeys() {
-        return Array.from(this.$schema.keys());
+        return Array.from(this.$mxdm.properties.keys());
     }
 
     static get propertyOptions() {
         const options = {};
-        this.$schema.forEach((val, name) => { options[name] = val.options; });
+        // return pick(this.$mxdm.properties, 'options');
+        this.$mxdm.properties.forEach((val, name) => { options[name] = val.options; });
         return options;
     }
 
@@ -59,7 +56,7 @@ export class BaseModel {
     }
 
     static get identifierFieldName() {
-        const field = find(Array.from(this.$schema.values()), { type: 'identifier' });
+        const field = find(Array.from(this.$mxdm.properties.values()), { type: 'identifier' });
         invariant(field, 'identifierFieldName called on a model that has not designated one with `@identifier`');
         return field.name;
     }
@@ -107,7 +104,7 @@ export class BaseModel {
     }
 
     set(attrs = {}) {
-        assign(this, pick(attrs, this.constructor.assignableKeys));
+        Object.assign(this, pick(attrs, this.constructor.assignableKeys));
         return this;
     }
 

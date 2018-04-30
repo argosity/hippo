@@ -1,50 +1,18 @@
+import { identifier as mobxIdentifier, registerCustomType } from 'mobx-decorated-models';
 import {
-    isEmpty, isArray, isNumber, isObject, isString, partial, defaults, isNil,
+    isEmpty, isNumber, defaults,
 } from 'lodash';
-import invariant from 'invariant';
 import moment from 'moment';
-import { intercept, isObservableArray, isObservableObject } from 'mobx';
 
-import {
-    field as mobxField,
-    session as mobxSession,
-    identifier as mobxIdentifier,
-} from 'mobx-decorated-models';
+registerCustomType('number', {
+    serialize(num) { return num; },
+    deserialize(num) { return isNumber(num) ? num : Number(num); },
+});
 
-const VALIDATORS = {
-    number: isNumber,
-    string: isString,
-    array(a) { return isArray(a) || isObservableArray(a); },
-    object(o) { return isObject(o) || isObservableObject(o); },
-    date(d) { return moment.isMoment(d); },
-};
-
-const COERCE = {
-    date(change) {
-        if (!moment.isMoment(change.newValue)) {
-            change.newValue = moment(change.newValue); // eslint-disable-line no-param-reassign
-        }
-    },
-};
-
-function addLazyInitializer(target, fn) {
-    target.__mobxLazyInitializers.push(fn);
-}
-
-function validateChangeType(validator, propertyName, change) {
-    if (isNil(change.newValue)) { return change; }
-    invariant(VALIDATORS[validator], `Unknown TypeCheck: ${validator} does not exist`);
-    if (COERCE[validator]) { COERCE[validator](change); }
-    invariant(VALIDATORS[validator](change.newValue),
-        `Bad Type: Attempted to set ${propertyName} to '${change.newValue}' which is not ${validator}`);
-    return change;
-}
-
-function addTypeSafeInterceptor(target, property, type) {
-    if (isEmpty(type)) { return; }
-    addLazyInitializer(target, (partial(intercept, partial.placeholder, property,
-        partial(validateChangeType, type, property))));
-}
+registerCustomType('date', {
+    serialize(date) { return date; },
+    deserialize(date) { return moment.isMoment(date) ? date : moment(date); },
+});
 
 function decoratorWrapper(decorator, defaultOptions = {}) {
     return (targetOrOptions, ...args) => {
@@ -54,7 +22,6 @@ function decoratorWrapper(decorator, defaultOptions = {}) {
         const wrap = (target, property, descriptor) => {
             const decorationFn = decorator(options);
             const description = decorationFn(target, property, descriptor);
-            addTypeSafeInterceptor(target, property, options.type);
             return description;
         };
 
@@ -65,8 +32,6 @@ function decoratorWrapper(decorator, defaultOptions = {}) {
     };
 }
 
-const field = decoratorWrapper(mobxField);
-const session = decoratorWrapper(mobxSession);
 const identifier = decoratorWrapper(mobxIdentifier, { type: 'number' });
 
-export { field, session, identifier };
+export { identifier }; // eslint-disable-line import/prefer-default-export

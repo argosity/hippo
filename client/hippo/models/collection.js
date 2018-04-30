@@ -18,7 +18,8 @@ function extendAry(modelClass, models = [], options = {}) {
         syncInProgress:    '',
         errors:            {},
     });
-    ary.$map.keys().forEach((prop) => {
+
+    ary.$map.forEach((_, prop) => {
         Object.defineProperty(ary, prop, {
             get() { return this.$map.get(prop); },
             set(val) { return this.$map.set(prop, val); },

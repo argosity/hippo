@@ -67,16 +67,9 @@ describe('BaseModel Test', () => {
     });
 
     it('validates and records "type" in schema', () => {
-        const box = new Box();
-        box.id = 23;
-        expect(Box.propertyOptions.id.type).toEqual('number');
-        expect(() => { box.id = 'red'; }).toThrow('Bad Type');
-        expect(box.id).toEqual(23);
-
-        const container = new Container();
-        container.id = 'test';
-        expect(() => { container.id = 42; }).toThrow('Bad Type');
-        expect(container.id).toEqual('test');
+        const box = Box.deserialize({ width: '23' });
+        expect(Box.propertyOptions.width.type).toEqual('number');
+        expect(box.width).toEqual(23);
     });
 
     it('generates an error message from errors', () => {

@@ -52,7 +52,6 @@ export default class Query extends BaseModel {
             { id: 'contains', label: 'Contains', types: Types.LIKE_QUERY_TYPES },
             { id: 'lt', label: 'Less Than', types: Types.LESS_THAN_QUERY_TYPES },
             { id: 'gt', label: 'More Than', types: Types.LESS_THAN_QUERY_TYPES },
-
         ].forEach(op => this.operators.push(op));
         this.info = new Info(this);
         this.results = new ArrayResult({ query: this });

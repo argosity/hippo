@@ -10,6 +10,9 @@ const TB = styled(Box)`
 button {
   padding: ${props => props.theme.global.edgeSize.small};
 };
+.query-builder {
+  flex: 1;
+}
 `;
 
 export function Toolbar({ children, className, ...props }) {

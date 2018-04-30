@@ -1,4 +1,5 @@
-import { Atom, when, reaction } from 'mobx';
+import { createAtom, when, reaction } from 'mobx';
+
 import ActionCable from '../lib/action_cable';
 import { BaseModel } from './base';
 import User from '../user';
@@ -91,7 +92,7 @@ export class PubSubAtom {
     }
 
     buildAtom() {
-        this.atom = new Atom(
+        this.atom = createAtom(
             'ModelPubSub',
             () => PubSub.add(this.model),
             () => PubSub.remove(this.model),

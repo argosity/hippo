@@ -16,5 +16,6 @@ describe('SystemSettings Screen', () => {
     it('renders', () => {
         const settings = mount(<Settings screen={instance} />);
         expect(settings).toHaveRendered('Screen');
+        settings.unmount();
     });
 });

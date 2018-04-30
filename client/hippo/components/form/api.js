@@ -102,7 +102,7 @@ export class FormState {
     }
 
     @computed get invalidFields() {
-        return filter(this.fields.values(), { isValid: false });
+        return filter(Array.from(this.fields.values()), { isValid: false });
     }
 
     @computed get isValid() {
@@ -110,7 +110,7 @@ export class FormState {
     }
 
     @computed get isTouched() {
-        return !every(this.fields.values(), { isTouched: false });
+        return !every(Array.from(this.fields.values()), { isTouched: false });
     }
 
     @action
@@ -123,6 +123,7 @@ export class FormState {
         this.fields.forEach(field => field.reset());
     }
 
+    @action
     get(path, defaultValue) {
         const [name, ...rest] = path.split('.');
         const field = this.fields.get(name);
@@ -171,5 +172,6 @@ export class FormState {
     serialize() {
         return mapValues(this.fields.toJS(), 'value');
     }
+
 
 }
