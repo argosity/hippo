@@ -35,6 +35,30 @@ width: 100%;
 > *:not(:first-child) {
   margin-left: ${props => props.theme.global.edgeSize.small}
 };
+
+input { flex: 1; }
+.reload {
+    padding: 0;
+}
+.reload {
+    display: none;
+}
+&:last-child .reload {
+    display: inline-block;
+}
+.grommetux-button > span {
+    padding: 0;
+}
+.grommetux-menu button {
+    max-width: 40vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+input {
+    // set a min width so the input won't overflow flexbox
+    min-width: 40px;
+}
+
 `;
 
 
