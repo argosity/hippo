@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { base as grommetTheme } from 'grommet/themes';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer, inject, Provider } from 'mobx-react';
@@ -37,14 +38,14 @@ function NoMatch({ match: { path } }) {
 @observer
 class Workspace extends React.Component {
 
-    static contextTypes = {
-        theme: PropTypes.object,
-    }
-
     @observable sidebarOpen   = true;
     @observable sidebarDocked = false;
 
     mql = window.matchMedia(`(min-width: ${Dimensions.dockedWidthBreakpoint}px)`);
+
+    static contextTypes = {
+        theme: PropTypes.object,
+    }
 
     constructor() {
         super();
@@ -106,7 +107,7 @@ class Workspace extends React.Component {
 
     render() {
         return (
-            <ThemeProvider theme={this.context.theme}>
+            <ThemeProvider theme={grommetTheme}>
                 <Sidebar
                     styles={{ sidebar: { zIndex: 6 }, overlay: { zIndex: 5 } }}
                     sidebar={this.renderMenu()}
@@ -141,7 +142,7 @@ class WorkspaceRoot extends React.Component {
 
     render() {
         return (
-            <Grommet>
+            <Grommet theme={grommetTheme}>
                 <Provider routing={this.routing} history={this.history}>
                     <Router history={this.history}>
                         <Route path="/" component={Workspace} />

@@ -5,7 +5,7 @@ import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { autobind } from 'core-decorators';
 import cn from 'classnames';
-import Box from 'grommet/components/Box';
+import { Box } from 'grommet';
 import {
     List, AutoSizer, InfiniteLoader,
 } from 'react-virtualized';

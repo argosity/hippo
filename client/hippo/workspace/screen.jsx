@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
-import Box from 'grommet/components/Box';
+import { Box } from 'grommet';
 import Screens from '../screens';
 import { displaying } from '../screens/instance';
 

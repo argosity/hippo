@@ -1,14 +1,18 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { Box } from 'grommet';
 import cn from 'classnames';
-import baseTheme from 'grommet/themes/vanilla';
+import { base as grommetTheme } from 'grommet/themes';
 import styled from 'styled-components';
 
 export SaveButton from './save-button';
 
 const TB = styled(Box)`
+a,
 button {
   padding: ${props => props.theme.global.edgeSize.small};
+  > * {
+    padding: 0;
+  }
 };
 .query-builder {
   flex: 1;
@@ -35,7 +39,7 @@ export function Toolbar({ children, className, ...props }) {
 }
 
 Toolbar.defaultProps = {
-    theme: baseTheme,
+    theme: grommetTheme,
 };
 
 Toolbar.expand = styled.div`

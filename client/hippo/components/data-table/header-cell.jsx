@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { last } from 'lodash';
 import { action, computed } from 'mobx';
 import { observer } from 'mobx-react';
-
-import Box      from 'grommet/components/Box';
-import Button   from 'grommet/components/Button';
+import { Button, Box } from 'grommet';
 import { Ascend, Descend, Add } from 'grommet-icons';
 
 import Field from '../../models/query/field';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { isNil } from 'lodash';
-import CheckBox from 'grommet/components/CheckBox';
+import { CheckBox } from 'grommet';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 

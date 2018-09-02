@@ -113,7 +113,7 @@ export default class TenantConfig extends React.Component {
                 <Box margin="small" padding="small">
                     <Field
                         type="label"
-                        label={false}
+                        label=""
                         name="subscription_name"
                         value={
                             <Box flex margin="small" direction="row" justify="between">

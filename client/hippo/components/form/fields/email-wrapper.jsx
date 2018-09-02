@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
-import TextInput from 'grommet/components/TextInput';
+import { TextInput } from 'grommet';
 
 
 @observer

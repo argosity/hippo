@@ -2,6 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { Box, Text } from 'grommet';
 import { includes, isString } from 'lodash';
 import cn from 'classnames';
+import { colorForName } from 'grommet/utils/colors';
 import styled, { css } from 'styled-components';
 import { Cell } from '../../components/grid';
 import { titleize } from '../../lib/util';
@@ -26,7 +27,13 @@ ${props => props.control && controlStyle(props)}
 
 const borderBottom = css`
   background: white no-repeat;
-  background-image: linear-gradient(to bottom, ${props => props.theme.global.focus.border.color}, ${props => props.theme.global.focus.border.color}), linear-gradient(to bottom, ${props => props.theme.global.input.border.color}, ${props => props.theme.global.input.border.color});
+  background-image: linear-gradient(to bottom,
+    ${props => colorForName('focus', props.theme)},
+    ${props => colorForName('focus', props.theme)}
+  ), linear-gradient(to bottom,
+    ${props => colorForName('focus', props.theme)},
+    ${props => colorForName('focus', props.theme)}
+  );
   background-size: 0 2px, 100% 1px;
   background-position: 50% 100%, 50% 100%;
   transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);

@@ -8,7 +8,7 @@ import { autobind } from 'core-decorators';
 import cn from 'classnames';
 import 'react-virtualized/styles.css';
 import { Next } from 'grommet-icons';
-import Button   from 'grommet/components/Button';
+import { Button } from 'grommet';
 import ActivityOverlay from './network-activity-overlay';
 import './data-table/table-styles.scss';
 

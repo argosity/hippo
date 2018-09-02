@@ -7,8 +7,7 @@ import { CircleInformation } from 'grommet-icons';
 import { delay, isEmpty, includes, get } from 'lodash';
 import classnames from 'classnames';
 import styled from 'styled-components';
-import { backgroundStyle } from 'grommet/utils/styles';
-import color from 'grommet/utils/colors';
+import { backgroundStyle, colorForName } from 'grommet/utils';
 
 
 const StyledOverlay = styled.div`
@@ -54,7 +53,7 @@ span { margin-left: 1rem; }
   top: 25%;
   border-radius: 8px;
   padding: 10px;
-  box-shadow: 6px 7px 5px ${props => color.colorForName('neutral-4', props.theme)};
+  box-shadow: 6px 7px 5px ${props => colorForName('neutral-4', props.theme)};
   background-color: ${props => backgroundStyle(props.color || 'brand', props.theme)};
   color: black;
   display:flex;

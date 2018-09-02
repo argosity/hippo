@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { observer } from 'mobx-react';
 import { action, computed } from 'mobx';
 import { Box, Text, Select } from 'grommet';
@@ -13,6 +14,12 @@ const renderOption = (opt = { id: -1, label: 'None' }) => (
         <Text margin={{ horizontal: 'xsmall' }}>{opt.label}</Text>
     </Box>
 );
+
+const Wrapper = styled.div`
+flex: 1;
+display: flex;
+> button { flex: 1; }
+`;
 
 @observer
 export default class SelectFieldWrapper extends React.Component {
@@ -32,15 +39,16 @@ export default class SelectFieldWrapper extends React.Component {
         const { children, collection, ...otherProps } = this.props;
 
         return (
-            <Select
-                {...otherProps}
-                fill
-                value={this.value}
-                options={collection}
-                onChange={this.onSelectChange}
-            >
-                {children || renderOption}
-            </Select>
+            <Wrapper>
+                <Select
+                    {...otherProps}
+                    value={this.value}
+                    options={collection}
+                    onChange={this.onSelectChange}
+                >
+                    {children || renderOption}
+                </Select>
+            </Wrapper>
         );
     }
 

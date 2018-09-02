@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { observable } from 'mobx';
 import { PropTypes as MobxPropTypes, Provider as MobxProvider, observer } from 'mobx-react';
 import { ThemeProvider } from 'styled-components';
-import baseTheme from 'grommet/themes/vanilla';
+import { base as grommetTheme } from 'grommet/themes';
 import { observePubSub } from '../../models/pub_sub';
 import Layout from './layout';
 import { FormState } from './api';
 import Screen from '../screen';
 
 const Provider = ({ formState, children }, context) => {
-    const theme = isEmpty(context.theme) ? baseTheme : context.theme;
+    const theme = isEmpty(context.theme) ? grommetTheme : context.theme;
     return (
         <MobxProvider formState={formState}>
             <ThemeProvider theme={theme}>

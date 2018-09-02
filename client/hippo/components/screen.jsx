@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { observer } from 'mobx-react';
 import { Grid } from 'grommet';
 import styled, { ThemeProvider } from 'styled-components';
-import baseTheme from 'grommet/themes/vanilla';
+import { base as grommetTheme } from 'grommet/themes';
 import ScreenInstance from '../screens/instance';
 
 @observer
@@ -14,7 +14,7 @@ export default class Screen extends React.Component {
 
     static defaultProps = {
         className: '',
-        theme: baseTheme,
+        theme: grommetTheme,
     }
 
     static contextTypes = {
@@ -29,7 +29,7 @@ export default class Screen extends React.Component {
 
     render() {
         const { className, screen, ...gridProps } = this.props;
-        const theme = this.props.theme || this.context.theme || baseTheme;
+        const theme = this.props.theme || this.context.theme;
         return (
             <ThemeProvider theme={theme}>
                 <Grid

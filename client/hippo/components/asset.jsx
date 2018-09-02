@@ -5,8 +5,8 @@ import { observer }   from 'mobx-react';
 import { titleize } from 'hippo/lib/util';
 import Dropzone from 'react-dropzone';
 import styled from 'styled-components';
-import color from 'grommet/utils/colors';
-import baseTheme from 'grommet/themes/vanilla';
+import { colorForName } from 'grommet/utils/colors';
+import { base as grommetTheme } from 'grommet/themes';
 import { Box, Text, Button } from 'grommet';
 import { Document } from 'grommet-icons';
 import { BaseModel } from '../models/base';
@@ -39,9 +39,9 @@ max-height: 300px;
 -webkit-overflow-scrolling: touch;
 .labels { padding-left: 0; }
 &:hover {
- border-color: ${props => color.colorForName('light-3', props.theme)};
+ border-color: ${props => colorForName('light-3', props.theme)};
  cursor: pointer;
- background: ${props => color.colorForName('light-1', props.theme)};
+ background: ${props => colorForName('light-1', props.theme)};
 }
 `;
 
@@ -52,7 +52,7 @@ export default class Asset extends React.Component {
         label: '',
         className: '',
         tabIndex: 0,
-        theme: baseTheme,
+        theme: grommetTheme,
     }
 
     static propTypes = {

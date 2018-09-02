@@ -5,7 +5,8 @@ import { ThemeProvider } from 'styled-components';
 import { Router } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
-import baseTheme from 'grommet/themes/vanilla';
+import { base as grommetTheme } from 'grommet/themes';
+
 
 const TestWrapper = ({ history, routing, children }, { theme }) => {
     /* eslint-disable */
@@ -14,10 +15,10 @@ const TestWrapper = ({ history, routing, children }, { theme }) => {
     if (isEmpty(theme)) theme = baseTheme;
     /* eslint-enable */
     return (
-        <Grommet>
+        <Grommet theme={grommetTheme}>
             <Provider routing={routing}>
                 <Router history={history}>
-                    <ThemeProvider theme={theme}>
+                    <ThemeProvider theme={grommetTheme}>
                         {children}
                     </ThemeProvider>
                 </Router>

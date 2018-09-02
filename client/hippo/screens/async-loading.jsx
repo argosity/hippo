@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import Spinning from 'hippo/components/icon/spinning';
 import { Alert, FormRefresh } from 'grommet-icons';
-import Button from 'grommet/components/Button';
+import { Button } from 'grommet';
 import { asyncComponent } from 'react-async-component';
 import { observer } from 'mobx-react';
 import cn from 'classnames';
