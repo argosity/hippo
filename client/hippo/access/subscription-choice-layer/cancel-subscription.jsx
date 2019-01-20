@@ -14,6 +14,7 @@ import NetworkActivityOverlay from '../../components/network-activity-overlay';
 export default class CancelSubscription extends React.Component {
 
     @observable isCanceled = false;
+
     @observable isCanceling = false;
 
     @action.bound cancelSubscription() {

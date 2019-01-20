@@ -4,10 +4,10 @@ import { observer } from 'mobx-react';
 import { autorun, action, observable, computed } from 'mobx';
 import Spinning from 'hippo/components/icon/spinning';
 import { CircleInformation } from 'grommet-icons';
-import { delay, isEmpty, includes, get } from 'lodash';
+import { delay, isEmpty, get } from 'lodash';
 import classnames from 'classnames';
 import styled from 'styled-components';
-import { backgroundStyle, colorForName } from 'grommet/utils';
+import { backgroundStyle, normalizeColor } from 'grommet/utils';
 
 
 const StyledOverlay = styled.div`
@@ -53,7 +53,7 @@ span { margin-left: 1rem; }
   top: 25%;
   border-radius: 8px;
   padding: 10px;
-  box-shadow: 6px 7px 5px ${props => colorForName('neutral-4', props.theme)};
+  box-shadow: 6px 7px 5px ${props => normalizeColor('neutral-4', props.theme)};
   background-color: ${props => backgroundStyle(props.color || 'brand', props.theme)};
   color: black;
   display:flex;
@@ -83,11 +83,11 @@ export default class NetworkActivityOverlay extends React.Component {
     }
 
     @computed get isRequesting() {
-        const { syncInProgress } = this.props.model || {};
         if (this.props.method) {
-            return !!(syncInProgress && syncInProgress.method === this.props.method);
+            const pending = this.props.model.sync.pending[this.props.method];
+            return Boolean(pending && pending.size);
         }
-        return !!syncInProgress;
+        return this.props.model.sync.isBusy;
     }
 
     @computed get hasError() {
@@ -144,13 +144,15 @@ export default class NetworkActivityOverlay extends React.Component {
             if (this.hasError) {
                 message = get(model, 'errorMessage', 'Error');
             } else {
-                const method = get(model, 'syncInProgress.method');
-                if ('GET' === method) {
+                const method = get(model, 'sync.inProgressType');
+                if ('fetch' === method) {
                     message = 'Loading…';
-                } else if (includes(['PATCH', 'POST', 'PUT'], method)) {
+                } else if ('save' === method) {
                     message = 'Saving…';
-                } else if ('DELETE' === method) {
+                } else if ('delete' === method) {
                     message = 'Deleting…';
+                } else {
+                    message = 'Busy…';
                 }
             }
         }

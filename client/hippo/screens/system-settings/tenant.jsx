@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
-import { Anchor, Button, Layer, Box, Paragraph } from 'grommet';
-import { Link, Clear, UserAdmin } from 'grommet-icons';
+import { Anchor, Layer, Box, Paragraph } from 'grommet';
+import { Link } from 'grommet-icons';
 import {
     Form, Field, FormState, nonBlank, Heading, FieldsLayout,
 } from 'hippo/components/form';
@@ -34,7 +34,9 @@ export default class TenantConfig extends React.Component {
     formState = new FormState()
 
     @observable slugChangedFrom;
+
     @observable isCanceling;
+
     @observable showSubscriptionChoice = false;
 
     onSave() {
@@ -110,30 +112,31 @@ export default class TenantConfig extends React.Component {
                     <Field name="name" validate={nonBlank} />
                 </FieldsLayout>
                 <Heading>Subscription</Heading>
-                <Box margin="small" padding="small">
-                    <Field
-                        type="label"
-                        label=""
-                        name="subscription_name"
-                        value={
-                            <Box flex margin="small" direction="row" justify="between">
-                                <Button
-                                    plain
-                                    label={Tenant.current.subscription.nameAndCost}
-                                    icon={<UserAdmin />}
-                                    onClick={this.onSubscriptionChange}
-                                />
-                                <Button
-                                    plain label="Cancel" icon={<Clear />}
-                                    onClick={this.onSubscriptionCancel}
-                                />
-                            </Box>
-                        }
-                    />
-                </Box>
                 {this.renderIdChangeWarning()}
             </Form>
         );
     }
 
 }
+
+// <Box margin="small" padding="small">
+// <Field
+// type="label"
+// label=""
+// name="subscription_name"
+// value={
+//     <Box flex margin="small" direction="row" justify="between">
+//         <Button
+//             plain
+//             label={Tenant.current.subscription.nameAndCost}
+//             icon={<UserAdmin />}
+//             onClick={this.onSubscriptionChange}
+//         />
+//         <Button
+//             plain label="Cancel" icon={<Clear />}
+//             onClick={this.onSubscriptionCancel}
+//         />
+//     </Box>
+// }
+// />
+// </Box>

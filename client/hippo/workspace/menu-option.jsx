@@ -4,11 +4,11 @@ import { action, computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { RoutedAnchor } from 'grommet';
 import styled, { css } from 'styled-components';
-import { colorForName } from 'grommet/utils/colors';
+import { normalizeColor } from 'grommet/utils/colors';
 import Icon from '../components/icon';
 
 const activeStyle = css`
-  background-color: ${props => colorForName('border', props.theme)};
+  background-color: ${props => normalizeColor('border', props.theme)};
 `;
 
 const MenuLink = styled(RoutedAnchor)`
@@ -18,11 +18,11 @@ const MenuLink = styled(RoutedAnchor)`
     align-items: center;
   }
   padding: 10px 0 10px 10px;
-  color: ${props => colorForName('light-1', props.theme)};
+  color: ${props => normalizeColor('light-1', props.theme)};
   ${props => props.isActive && activeStyle}
   &:hover {
     text-decoration: none;
-    background-color: ${props => colorForName('neutral-3', props.theme)};
+    background-color: ${props => normalizeColor('neutral-3', props.theme)};
   }
 `;
 

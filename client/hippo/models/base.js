@@ -3,13 +3,14 @@ import { findModel } from 'mobx-decorated-models';
 import { readonly } from 'core-decorators';
 import invariant from 'invariant';
 import {
-    isEmpty, isNil, find, extend, pick, map, isArray,
+    isEmpty, isNil, find, pick,
 } from 'lodash';
 import { action, observable, computed } from 'mobx';
-import { identifier } from './decorators';
-import Sync from './sync';
+import ModelSyncAdapter from './model-sync';
+import lazyGetter from '../lib/lazy-getter';
 import Config from '../config';
-import { toSentence, humanize, classify } from '../lib/util';
+import { identifier } from './decorators';
+import { classify } from '../lib/util';
 import ModelCollection from './collection';
 
 export {
@@ -38,6 +39,8 @@ export class BaseModel {
     static get assignableKeys() {
         return Array.from(this.$mxdm.properties.keys());
     }
+
+    @lazyGetter sync = new ModelSyncAdapter({ model: this })
 
     static get propertyOptions() {
         const options = {};
@@ -74,17 +77,9 @@ export class BaseModel {
 
     @readonly isModel = true;
 
-    @observable syncInProgress = false;
-    @observable lastServerMessage = '';
-    @observable errors = {};
-
-    @computed get errorMessage() {
-        return this.errors ? toSentence(
-            map(this.errors, (v, k) => (
-                'base' === k ? v : `${humanize(k)} ${v}`
-            )),
-        ) : '';
-    }
+    //    @observable syncInProgress = false;
+    //    @observable lastServerMessage = '';
+    //    @observable errors = {};
 
     @computed get isValid() {
         return isNil(this.errors) || isEmpty(this.errors);
@@ -98,10 +93,10 @@ export class BaseModel {
         return this[this.constructor.identifierFieldName];
     }
 
-    @computed get syncUrl() {
-        const path = this.constructor.syncUrl;
-        return this.isNew ? path : `${path}/${this.identifierFieldValue}`;
-    }
+    // @computed get syncUrl() {
+    //     const path = this.constructor.syncUrl;
+    //     return this.isNew ? path : `${path}/${this.identifierFieldValue}`;
+    // }
 
     set(attrs = {}) {
         Object.assign(this, pick(attrs, this.constructor.assignableKeys));
@@ -112,38 +107,24 @@ export class BaseModel {
         this.constructor.assignableKeys.forEach((k) => { this[k] = null; });
     }
 
-    set syncData(data) {
-        if (!data) { return this; }
-        if (isArray(data) && data.length) {
-            this.update(data[0]);
-        } else {
-            this.update(data);
-        }
-        return this;
-    }
+    // fetch(options = {}) {
+    //     invariant((!this.isNew || options.query),
+    //         'Unable to fetch record without it’s identifier being set or a query');
+    //     const fetchOptions = extend(options, { limit: 1, method: 'GET' });
+    //     if (!fetchOptions.query) {
+    //         fetchOptions.query = { [`${this.constructor.identifierFieldName}`]: this.identifierFieldValue };
+    //     }
+    //     return Sync.forModel(this, fetchOptions);
+    // }
 
-    @computed
-    get syncData() {
-        return this.serialize();
-    }
-
-    fetch(options = {}) {
-        invariant((!this.isNew || options.query),
-            'Unable to fetch record without it’s identifier being set or a query');
-        const fetchOptions = extend(options, { limit: 1, method: 'GET' });
-        if (!fetchOptions.query) {
-            fetchOptions.query = { [`${this.constructor.identifierFieldName}`]: this.identifierFieldValue };
-        }
-        return Sync.forModel(this, fetchOptions);
-    }
-
-    save(options = {}) {
-        return Sync.forModel(this, options);
-    }
-
-    destroy(options = {}) {
-        return Sync.forModel(this, extend(options, { action: 'destroy' }));
-    }
+    // save(options = {}) {
+    //     return Sync.forModel(this, options);
+    // }
+    //
+    // destroy(options = {}) {
+    //     return Sync.forModel(this, extend(options, { action: 'destroy' }));
+    // }
+    //
 
 }
 

@@ -13,7 +13,9 @@ import WarningNotification from '../../components/warning-notification';
 export default class PaymentForm extends React.Component {
 
     @observable isTokenizing = false;
+
     @observable getToken;
+
     @observable fields = {
         postalCode: false,
         cardNumber: false,

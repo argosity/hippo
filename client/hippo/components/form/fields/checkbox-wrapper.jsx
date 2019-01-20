@@ -20,9 +20,11 @@ export default class CheckBoxWrapper extends React.Component {
     @action.bound onBlur(ev) {
         this.props.onBlur({ target: { value: ev.target.checked } });
     }
+
     @action.bound onChange({ target: { checked: value } }) {
         this.props.onChange({ target: { value } });
     }
+
     render() {
         const { className, ...props } = this.props;
         return (

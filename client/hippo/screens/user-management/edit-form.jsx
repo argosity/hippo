@@ -19,7 +19,9 @@ export default class EditForm extends React.Component {
     }
 
     static desiredHeight = 300
+
     @observable errorMessage;
+
     formState = new FormState();
 
     constructor(props) {

@@ -15,17 +15,29 @@ export asyncComponent from './async-loading';
 export default class ScreenDefinition extends BaseModel {
 
     @identifier({ type: 'string' }) id;
+
     @session title;
+
     @session url_prefix;
+
     @session description;
+
     @session view;
+
     @session icon;
+
     @session group_id;
+
     @session access;
+
     @session isLoading = false;
+
     @session extension_id;
+
     @session model;
+
     @session({ type: 'object' }) component;
+
     @session asset;
 
     @session url;

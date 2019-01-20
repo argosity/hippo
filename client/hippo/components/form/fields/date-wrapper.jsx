@@ -11,8 +11,11 @@ export default class DateWrapper extends React.Component {
     static defaultProps = {
         format: 'M/d/Y h:iK',
     }
+
     static childContextTypes = { onDropChange: PropTypes.func }
+
     @observable isSelecting;
+
     @observable dateValue;
 
     getChildContext() {

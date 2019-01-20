@@ -22,7 +22,7 @@
         "flexboxgrid": "identity-obj-proxy"
     },
     "transform": {
-        "^.+\\.jsx?$": "<rootDir>/config/jest/babel-transform.js",
+        "^.+\\.jsx?$": "babel7-jest",
         "^.+\\.yml$":  "<rootDir>/config/jest/yaml-transform.js"
     }
 }

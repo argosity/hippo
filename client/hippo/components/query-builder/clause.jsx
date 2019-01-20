@@ -123,6 +123,7 @@ export default class Clause extends React.Component {
 
 
     @observable dropTarget;
+
     @observable drop;
 
     renderDropFilter() {
@@ -137,17 +138,15 @@ export default class Clause extends React.Component {
             >
                 <Box direction='row' pad="small">
                     <Box size="small" gap="small">
-                        {clause.query.info.queryableFields.map(f =>
-                            <Radio
-                                key={f.id} model={f} clause={clause}
-                                onSelect={this.onSelect} name='field' />)}
+                        {clause.query.info.queryableFields.map(f => <Radio
+                            key={f.id} model={f} clause={clause}
+                            onSelect={this.onSelect} name='field' />)}
                     </Box>
                     <Box size="small" gap="small">
-                        {clause.validOperators.map(o =>
-                            <Radio
-                                key={o.id} model={o} clause={clause}
-                                onSelect={this.onSelect} name='operator'
-                            />)}
+                        {clause.validOperators.map(o => <Radio
+                            key={o.id} model={o} clause={clause}
+                            onSelect={this.onSelect} name='operator'
+                        />)}
                     </Box>
                 </Box>
             </Drop>

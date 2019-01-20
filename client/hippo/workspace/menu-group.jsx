@@ -28,12 +28,11 @@ export default class Group extends React.Component {
                         <Icon name={group.icon} />
                     </Heading>
                 </Box>
-                {group.screens.map(s =>
-                    <MenuOption
-                        key={s.id}
-                        screen={s}
-                        onSelection={this.props.onMenuSelection}
-                    />)}
+                {group.screens.map(s => <MenuOption
+                    key={s.id}
+                    screen={s}
+                    onSelection={this.props.onMenuSelection}
+                />)}
             </Box>
         );
     }

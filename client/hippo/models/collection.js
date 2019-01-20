@@ -1,9 +1,7 @@
-import { observable } from 'mobx';
 import invariant from 'invariant';
 import { extend, isArray, isObject } from 'lodash';
 import { createCollection } from 'mobx-decorated-models';
-
-import Sync from './sync';
+import CollectionSyncAdapter from './collection-sync';
 
 function extendAry(modelClass, models = [], options = {}) {
     invariant(isArray(models), 'models must be an array');
@@ -13,34 +11,29 @@ function extendAry(modelClass, models = [], options = {}) {
         ary.replace(models);
     }
 
-    ary.$map = observable.map({
-        lastServerMessage: '',
-        syncInProgress:    '',
-        errors:            {},
-    });
-
-    ary.$map.forEach((_, prop) => {
-        Object.defineProperty(ary, prop, {
-            get() { return this.$map.get(prop); },
-            set(val) { return this.$map.set(prop, val); },
-        });
-    });
     Object.defineProperties(ary, {
-        syncUrl: {
-            get() { return modelClass.syncUrl; },
-        },
-        syncData: {
-            set(rows) {
-                this.replace(rows);
+        sync: {
+            configurable: true,
+            enumerable: false,
+            get() {
+                const sync = new CollectionSyncAdapter({
+                    syncUrl: modelClass.syncUrl,
+                    array: ary,
+                });
+                Object.defineProperty(ary, 'sync', {
+                    configurable: true,
+                    enumerable: false,
+                    writable: false,
+                    value: sync,
+                });
+                return sync;
             },
         },
     });
-    ary.fetch = function(fetchOptions = {}) {
-        return Sync.forCollection(this, fetchOptions);
-    };
     if (options.fetch) {
-        ary.fetch(isObject(options.fetch) ? options.fetch : {});
+        ary.sync.fetch(isObject(options.fetch) ? options.fetch : {});
     }
+
     return ary;
 }
 
@@ -51,6 +44,7 @@ export default class ModelCollection {
         this.$collection = extendAry(model, [], {}, this);
         return this;
     }
+
     create(models = [], options = {}) {
         return extendAry(this.$model, models, options, this);
     }

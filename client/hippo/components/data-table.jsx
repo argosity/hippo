@@ -186,8 +186,8 @@ export default class DataTable extends React.Component {
 
     @autobind isRowLoaded({ index }) {
         return (
-            (this.query.results.rows.length > index) &&
-            (this.query.results.isRowLoading(index) || this.query.results.rows[index])
+            (this.query.results.rows.length > index)
+            && (this.query.results.isRowLoading(index) || this.query.results.rows[index])
         );
     }
 
@@ -212,30 +212,28 @@ export default class DataTable extends React.Component {
                     loadMoreRows={this.loadMoreRows}
                     rowCount={query.results.totalCount}
                 >
-                    {({ onRowsRendered, registerChild }) =>
-                        <AutoSizer
-                            updateKey={this.gridRenderKey}
+                    {({ onRowsRendered, registerChild }) => <AutoSizer
+                        updateKey={this.gridRenderKey}
+                    >
+                        {({ height, width }) => <Table
+                            height={height}
+                            width={width}
+                            ref={(table) => {
+                                registerChild(table); this.tableRef = table;
+                            }}
+                            rowHeight={this.calculateRowHeight}
+                            rowGetter={this.rowAtIndex}
+                            estimatedRowSize={40}
+                            headerHeight={50}
+                            rowClassName={this.getRowClassName}
+                            onRowsRendered={onRowsRendered}
+                            rowRenderer={this.rowRenderer}
+                            rowCount={query.results.rows.length}
+                            keyChange={this.gridRenderKey}
                         >
-                            {({ height, width }) =>
-                                <Table
-                                    height={height}
-                                    width={width}
-                                    ref={(table) => {
-                                        registerChild(table); this.tableRef = table;
-                                    }}
-                                    rowHeight={this.calculateRowHeight}
-                                    rowGetter={this.rowAtIndex}
-                                    estimatedRowSize={40}
-                                    headerHeight={50}
-                                    rowClassName={this.getRowClassName}
-                                    onRowsRendered={onRowsRendered}
-                                    rowRenderer={this.rowRenderer}
-                                    rowCount={query.results.rows.length}
-                                    keyChange={this.gridRenderKey}
-                                >
-                                    {map(this.columnDefinitions, props => <Column {...props} />)}
-                                </Table>}
-                        </AutoSizer>}
+                            {map(this.columnDefinitions, props => <Column {...props} />)}
+                        </Table>}
+                    </AutoSizer>}
                 </InfiniteLoader>
             </div>
         );

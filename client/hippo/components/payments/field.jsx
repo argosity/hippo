@@ -38,7 +38,9 @@ export default class PaymentField extends React.Component {
     }
 
     @observable isValid = false;
+
     @observable errorMessage = '';
+
     @observable isFocused;
 
     @action.bound onValidityChange({ isValid, isPotentiallyValid }) {

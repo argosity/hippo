@@ -6,10 +6,13 @@ import {
 export default class Operator extends BaseModel {
 
     @identifier({ type: 'string' }) id;
+
     @session label;
+
     @session selected;
 
     @session({ type: 'array' }) types;
+
     @belongsTo({ model: 'hippo/query/field' }) field;
 
     isValidForField(field) {

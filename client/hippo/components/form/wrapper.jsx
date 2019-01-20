@@ -98,8 +98,8 @@ export default class FormWrapper extends React.Component {
         let body = this.props.children;
         if (this.props.screen) { body = this.renderScreen(body); }
         if (this.props.grid) { body = this.renderLayout(body); }
-        return this.props.tag ?
-            this.renderTagged(body) : this.renderTagless(body);
+        return this.props.tag
+            ? this.renderTagged(body) : this.renderTagless(body);
     }
 
 }

@@ -8,13 +8,20 @@ import {
 
 export class FormField {
 
-    name: '';
+    name = '';
+
     @observable isTouched = false
+
     @observable isChanged = false;
+
     @observable value = '';
+
     @observable message = '';
+
     @observable help;
+
     @observable validate;
+
     @observable default;
 
     constructor(name, attrs) {
@@ -153,9 +160,9 @@ export class FormState {
 
     @action
     setFromModel(model) {
-        if (get(model, 'syncInProgress.isFetch')) {
+        if (get(model.sync, 'isFetching')) {
             when(
-                () => !get(model, 'syncInProgress.isFetch'),
+                () => !get(model.sync, 'isFetching'),
                 () => this.set(model),
             );
         } else {

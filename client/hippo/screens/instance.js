@@ -8,6 +8,7 @@ import {
 class InstanceCollection {
 
     @observable models = []
+
     @observable active;
 
     constructor() {
@@ -32,6 +33,7 @@ class InstanceCollection {
     }
 
     add(model) { this.models.push(model); }
+
     remove(model) { this.models.remove(model); }
 
 }
@@ -45,11 +47,13 @@ export default class Instance extends BaseModel {
     static get displaying() {
         return displaying.models;
     }
+
     static get active() {
         return displaying.active;
     }
 
     @session({ type: 'object' }) props = {};
+
     @belongsTo({ model: 'hippo/screen/definition' }) definition;
 
     @identifier({ type: 'string' }) id;

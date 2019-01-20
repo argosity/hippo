@@ -15,12 +15,14 @@ export default class TextWrapper extends React.Component {
     }
 
     render() {
-        const inputProps = this.props;
+        const { value, ...inputProps } = this.props;
         return (
             <TextInput
                 ref={(f) => { this.inputRef = f; }}
                 onSelect={this.onSelect}
-                {...inputProps} onInput={this.props.onChange}
+                value={String(value || '')}
+                {...inputProps}
+                onInput={this.props.onChange}
             />
         );
     }

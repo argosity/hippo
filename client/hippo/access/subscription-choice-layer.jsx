@@ -50,8 +50,11 @@ const SubscriptionChoices = styled.div`
 export default class SubscriptionChoiceLayer extends React.Component {
 
     @observable subscriptionId = Tenant.current.subscription_id;
+
     @observable displayIndex = 0;
+
     @observable showSubscription = false;
+
     @observable subscription;
 
     @action.bound onSubscriptionSelect(ev) {
@@ -132,7 +135,7 @@ export default class SubscriptionChoiceLayer extends React.Component {
                         <Box direction="row" justify="between">
                             <span>
                                 {subscription.name}
-                                {isCurrent && <Star colorIndex="brand" size="small" />}
+                                {isCurrent && <Star size="small" />}
                             </span>
 
                             <span className="price">

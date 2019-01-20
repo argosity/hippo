@@ -2,7 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { Grid } from 'styled-css-grid';
 import styled from 'styled-components';
 
-const Layout = Grid.extend.attrs({
+const Layout = styled(Grid).attrs({
     columns: props => props.columns || 'repeat(auto-fill, minmax(120px, 1fr))',
     flow: props => props.flow || 'row dense',
 })`

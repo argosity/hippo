@@ -9,21 +9,37 @@ import {
 export default class Field extends BaseModel {
 
     @identifier({ type: 'string' }) id;
+
     @session title;
+
     @session selected   = false;
+
     @session editable   = true;
+
     @session width      = 100;
+
     @session flexGrow   = 1;
+
     @session flexShrink = 1;
+
     @session visible    = true;
+
     @session loadable   = true;
+
     @session queryable  = true;
+
     @session sortable   = true;
+
     @session _className = '';
+
     @session align  = 'left';
+
     @session dataType   = 'string'
+
     @session cellRenderer;
+
     @session defaultValue;
+
     @session sortBy;
 
     @observable onColumnClick;

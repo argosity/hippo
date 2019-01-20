@@ -2,17 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { action } from 'mobx';
 import { observer }   from 'mobx-react';
+import cn from 'classnames';
 import { titleize } from 'hippo/lib/util';
 import Dropzone from 'react-dropzone';
 import styled from 'styled-components';
-import { colorForName } from 'grommet/utils/colors';
+import { normalizeColor } from 'grommet/utils/colors';
 import { base as grommetTheme } from 'grommet/themes';
 import { Box, Text, Button } from 'grommet';
 import { Document } from 'grommet-icons';
 import { BaseModel } from '../models/base';
 import { StyledWrapper } from './form/field-wrapper';
 
-const Preview = styled.div`
+const PreviewWrapper = styled.div`
 position: relative;
 img {
   max-width: 100%;
@@ -29,7 +30,7 @@ button {
 }
 `;
 
-const AssetWrapper = StyledWrapper.withComponent('div').extend`
+const AssetWrapper = styled(StyledWrapper)`
 border-bottom: 0;
 .drop-zone { height: 100%; }
 border: ${props => props.theme.global.borderSize.small} dashed transparent;
@@ -39,11 +40,46 @@ max-height: 300px;
 -webkit-overflow-scrolling: touch;
 .labels { padding-left: 0; }
 &:hover {
- border-color: ${props => colorForName('light-3', props.theme)};
+ border-color: ${props => normalizeColor('light-3', props.theme)};
  cursor: pointer;
- background: ${props => colorForName('light-1', props.theme)};
+ background: ${props => normalizeColor('light-1', props.theme)};
 }
 `;
+
+const DropZoneContent = styled.div`
+    flex: 1;
+`;
+
+@observer
+class Preview extends React.Component {
+
+    render() {
+        const { onRemove, asset } = this.props;
+
+        if (asset && asset.exists) {
+            const preview = asset.isImage
+                ? <img src={asset.previewUrl} alt="" />
+                : <Document size="xlarge" type="status" />;
+            return (
+                <PreviewWrapper>
+                    <Button
+                        primary
+                        onClick={onRemove}
+                        label={asset.isNew ? 'Clear' : 'Delete'}
+                    />
+                    {preview}
+                </PreviewWrapper>
+
+            );
+        }
+        return (
+            <div>
+                Drop a file here, or click to select one to upload.
+            </div>
+        );
+    }
+
+}
 
 @observer
 export default class Asset extends React.Component {
@@ -96,34 +132,9 @@ export default class Asset extends React.Component {
         if (this.asset.isNew) {
             this.props.model[this.props.name] = null;
         } else {
-            this.asset.destroy();
+            this.asset.sync.destroy();
         }
     }
-
-    preview() {
-        if (this.asset && this.asset.exists) {
-            const preview = this.asset.isImage ?
-                <img src={this.asset.previewUrl} alt="" /> :
-                <Document size="xlarge" type="status" />;
-            return (
-                <Preview>
-                    <Button
-                        primary
-                        onClick={this.onRemove}
-                        label={this.asset.isNew ? 'Clear' : 'Delete'}
-                    />
-                    {preview}
-                </Preview>
-
-            );
-        }
-        return (
-            <div>
-                Drop a file here, or click to select one to upload.
-            </div>
-        );
-    }
-
 
     render() {
         const {
@@ -157,17 +168,37 @@ export default class Asset extends React.Component {
                 {...wrapperProps}
             >
                 <Dropzone
-                    className="drop-zone"
+                    className={cn('drop-zone', {
+                        'is-new': this.asset && this.asset.isNew,
+                    })}
                     activeClassName="drop-zone-active"
                     onDrop={this.onDrop}
                     multiple={false}
                     ref={this.setDZRef}
                 >
-                    {header}
-                    {this.preview()}
+                    {({ getRootProps, getInputProps, isDragActive }) => (
+                        <DropZoneContent
+                            {...getRootProps()}
+                            className={cn('dropzone', { 'dropzone--isActive': isDragActive })}
+                        >
+                            <input {...getInputProps()} />
+                            {header}
+                            <Preview
+                                asset={this.asset}
+                                onRemove={this.onRemove}
+                            />
+                        </DropZoneContent>
+
+                    )}
                 </Dropzone>
             </AssetWrapper>
         );
     }
 
 }
+
+
+// <div>
+// {header}
+// {this.preview()}
+// </div>

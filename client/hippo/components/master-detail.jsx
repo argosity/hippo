@@ -32,6 +32,7 @@ export default class MasterDetail extends React.Component {
     }
 
     setVisible
+
     componentWillReceiveProps(nextProps) {
         if (this.props.detail && !nextProps.detail) {
             this.setVisible(false);

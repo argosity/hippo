@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'classnames';
 import { base as grommetTheme } from 'grommet/themes';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
@@ -10,7 +9,7 @@ import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 import { CirclePlay } from 'grommet-icons';
 import { Grommet, Button } from 'grommet';
 import Sidebar from 'react-sidebar';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import 'hippo/config-data';
 import 'hippo/screen-definitions';
 import User from '../user';
@@ -33,12 +32,27 @@ function NoMatch({ match: { path } }) {
     );
 }
 
+const SidebarToggle = styled(Button)`
+    left: 0;
+    z-index: 1;
+    opacity: 0.2;
+    bottom: 10px;
+    position: fixed;
+    transistion: all 0.4s;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    &:hover {
+        opacity: 1.0;
+    }
+    ${props => props.isOpen && 'display: none;'}
+`;
 
 @inject('routing')
 @observer
 class Workspace extends React.Component {
 
     @observable sidebarOpen   = true;
+
     @observable sidebarDocked = false;
 
     mql = window.matchMedia(`(min-width: ${Dimensions.dockedWidthBreakpoint}px)`);
@@ -79,11 +93,11 @@ class Workspace extends React.Component {
     renderOpenButton() {
         if (this.isDragSupported) { return null; }
         return (
-            <Button
+            <SidebarToggle
                 primary
                 icon={<CirclePlay />}
                 onClick={this.toggleSidebarDocked}
-                className={cn('sidebar-toggle', { 'is-open': this.sidebarOpen })}
+                isOpen={this.sidebarOpen}
             />
         );
     }
@@ -138,6 +152,7 @@ class Workspace extends React.Component {
 class WorkspaceRoot extends React.Component {
 
     routing = new RouterStore();
+
     history = syncHistoryWithStore(createBrowserHistory(), this.routing);
 
     render() {

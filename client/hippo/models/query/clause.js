@@ -8,11 +8,15 @@ import {
 export default class Clause extends BaseModel {
 
     @observable id = uniqueId('clause');
+
     @session visible = true;
+
     @session value;
+
     @belongsTo({ type: 'hippo/query' }) query;
 
     @belongsTo({ type: 'hippo/query/field' }) field;
+
     @belongsTo({ type: 'hippo/query/operator' }) operator;
 
     constructor(attrs) {

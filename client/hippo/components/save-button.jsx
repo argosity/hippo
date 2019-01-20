@@ -28,7 +28,7 @@ export default class SaveButton extends React.Component {
     }
 
     @computed get isBusy() {
-        return this.props.busy || get(this.props, 'model.syncInProgress.isUpdate');
+        return this.props.busy || get(this.props, 'model.sync.isSaving');
     }
 
     @computed get label() {

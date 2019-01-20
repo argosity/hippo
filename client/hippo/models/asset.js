@@ -1,5 +1,6 @@
 import { includes, get, extend } from 'lodash';
 import { observe, action } from 'mobx';
+import ModelSync from 'hippo/models/model-sync';
 import {
     BaseModel, identifiedBy, field, session, identifier, computed,
 } from './base';
@@ -13,19 +14,65 @@ const IS_IMAGE = content_type => !!(content_type && (-1 !== IMAGES.indexOf(conte
 
 const UPDATE_METHODS = { POST: true, PUT: true, PATCH: true };
 
+
+class AssetSync extends ModelSync {
+
+    destroy() {
+        return super.destroy().then(() => {
+            if (!this.model.owner) { return; }
+            this.model.owner[this.owner_association_name] = null;
+        });
+    }
+
+    save() {
+        if (!this.model.file) { return Promise.resolve(this.model); }
+        const form = new FormData();
+        if (this.model.id) { form.append('id', this.model.id); }
+        form.append('file', this.model.file, this.model.file.name);
+        form.append('owner_type', this.model.owner.constructor.identifiedBy);
+        form.append('owner_id', this.model.owner.identifierFieldValue);
+        form.append('owner_association', this.model.owner_association_name);
+
+        const options = { method: 'POST', body: form, headers: {} };
+        if (Config.access_token) {
+            options.headers.Authorization = Config.access_token;
+        }
+        return fetch(`${Config.api_path}${Config.assets_path_prefix}`, options)
+            .then(resp => resp.json())
+            .then(json => this.model.set(json.data))
+            .then((json) => {
+                if (this.model.file) {
+                    if (this.model.file.preview && window.URL.revokeObjectURL) {
+                        window.URL.revokeObjectURL(this.model.file.preview);
+                    }
+                    this.model.file = undefined;
+                }
+                return json;
+            });
+    }
+
+}
+
+
+export default
 @identifiedBy('hippo/asset')
-export default class Asset extends BaseModel {
+class Asset extends BaseModel {
 
     @identifier id;
+
     @field order;
 
     @session file;
 
     @session({ type: 'object' }) file_data;
+
     @session metadata;
 
     @field({ type: 'object' }) owner;
+
     @field owner_association_name;
+
+    @ModelSync.lazyCreate sync = new AssetSync({ model: this });
 
     constructor(props) {
         super(props);
@@ -45,13 +92,12 @@ export default class Asset extends BaseModel {
     onOwnerChange({ newValue: owner }) {
         if (this.ownerSaveDisposer) { this.ownerSaveDisposer(); }
         if (!owner || !owner.isModel) { return; }
-        this.ownerSaveDisposer = observe(owner, 'syncInProgress', ({ newValue, oldValue }) => {
-            if (this.isDirty &&
-                !this.syncInProgress &&
-                !oldValue &&
-                newValue && newValue.isUpdate
+        this.ownerSaveDisposer = observe(owner.sync, 'isSaving', ({ newValue, oldValue }) => {
+            if (this.isDirty
+                && !this.sync.isSaving
+                && !oldValue && newValue
             ) {
-                newValue.whenComplete(() => this.save());
+                owner.sync.whenComplete('fetch', () => this.sync.save());
             }
         });
     }
@@ -99,41 +145,6 @@ export default class Asset extends BaseModel {
 
     urlFor(size = 'original') {
         return this.constructor.urlForSize(this.file_data, size);
-    }
-
-    destroy() {
-        return super.destroy().then(() => {
-            if (!this.owner) { return; }
-            this.owner[this.owner_association_name] = null;
-        });
-    }
-
-    save() {
-        if (!this.file) { return Promise.resolve(this); }
-        const form = new FormData();
-
-        if (this.id) { form.append('id', this.id); }
-        form.append('file', this.file, this.file.name);
-        form.append('owner_type', this.owner.constructor.identifiedBy);
-        form.append('owner_id', this.owner.identifierFieldValue);
-        form.append('owner_association', this.owner_association_name);
-
-        const options = { method: 'POST', body: form, headers: {} };
-        if (Config.access_token) {
-            options.headers.Authorization = Config.access_token;
-        }
-        return fetch(`${Config.api_path}${Config.assets_path_prefix}`, options)
-            .then(resp => resp.json())
-            .then(json => this.set(json.data))
-            .then((json) => {
-                if (this.file) {
-                    if (this.file.preview && window.URL.revokeObjectURL) {
-                        window.URL.revokeObjectURL(this.file.preview);
-                    }
-                    this.file = undefined;
-                }
-                return json;
-            });
     }
 
 }

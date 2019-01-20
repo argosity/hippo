@@ -27,13 +27,12 @@ class AssetLoader {
 
 export default function RequestAssets(...urlArgs) {
     const urls = ((1 === urlArgs.length) && isArray(urlArgs[0])) ? urlArgs[0] : urlArgs;
-    return new Promise((resolve, reject) =>
-        new AssetLoader(urls, (completed) => {
-            const failures = pick(completed, status => !status.success);
-            if (isEmpty(failures)) {
-                return resolve(completed);
-            }
-            logger.warn(`${keys(failures).join(',')} failed to load`);
-            return reject(failures);
-        }));
+    return new Promise((resolve, reject) => new AssetLoader(urls, (completed) => {
+        const failures = pick(completed, status => !status.success);
+        if (isEmpty(failures)) {
+            return resolve(completed);
+        }
+        logger.warn(`${keys(failures).join(',')} failed to load`);
+        return reject(failures);
+    }));
 }

@@ -1,5 +1,5 @@
 import {
-    negate, isString, isObject, isBoolean, merge,
+    negate, isString, isBoolean, merge,
 } from 'lodash';
 import moment from 'moment';
 import isEmail from 'validator/lib/isEmail';
@@ -15,16 +15,6 @@ export Heading from './form/heading';
 
 function buildTest(options, defaultOptions) {
     return merge({}, defaultOptions, options);
-}
-
-export function hasLength(length) {
-    const options = isObject(length) ? length : { length };
-    return buildTest(options, {
-        message: `must be of length ${length}`,
-        test(s) {
-            return s && (s.length >= this.length);
-        },
-    });
 }
 
 const NUMBER = /^[+-]?(\d*\.)?\d+$/;

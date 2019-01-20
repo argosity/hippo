@@ -85,7 +85,7 @@ export default class DateTimePicker extends React.Component {
 
     componentDidMount() {
         const options = this.getOptions(this.props);
-        this.flatpickr = new Flatpickr(this.node, options);
+        this.flatpickr = Flatpickr(this.node, options);
         this.setValueFromProps(this.props);
     }
 
@@ -159,7 +159,7 @@ export default class DateTimePicker extends React.Component {
             <Input
                 {...props}
                 defaultValue={defaultValue}
-                innerRef={this.setNode}
+                ref={this.setNode}
             />
         );
     }

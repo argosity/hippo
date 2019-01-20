@@ -16,8 +16,8 @@ registerCustomType('date', {
 
 function decoratorWrapper(decorator, defaultOptions = {}) {
     return (targetOrOptions, ...args) => {
-        const options = isEmpty(args) ?
-            defaults(targetOrOptions, defaultOptions) : defaultOptions;
+        const options = isEmpty(args)
+            ? defaults(targetOrOptions, defaultOptions) : defaultOptions;
 
         const wrap = (target, property, descriptor) => {
             const decorationFn = decorator(options);

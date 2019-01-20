@@ -38,6 +38,7 @@ export default class DataList extends React.Component {
     }
 
     componentWillMount() { this.query.open(); }
+
     componentWillUnmount() { this.query.close(); }
 
     @autobind
@@ -52,8 +53,8 @@ export default class DataList extends React.Component {
     @autobind
     isRowLoaded({ index }) {
         return (
-            (this.query.results.rows.length > index) &&
-                (this.query.results.isRowLoading(index) || this.query.results.rows[index])
+            (this.query.results.rows.length > index)
+                && (this.query.results.isRowLoading(index) || this.query.results.rows[index])
         );
     }
 
@@ -87,29 +88,27 @@ export default class DataList extends React.Component {
                         rowCount={query.results.totalCount}
                         keyChange={query.results.fingerprint}
                     >
-                        {({ onRowsRendered, registerChild }) =>
-                            <AutoSizer
+                        {({ onRowsRendered, registerChild }) => <AutoSizer
+                            keyChange={query.results.fingerprint}
+                            updateKey={query.results.updateKey}
+                        >
+                            {({ height, width }) => <List
+                                {...listProps}
                                 keyChange={query.results.fingerprint}
-                                updateKey={query.results.updateKey}
-                            >
-                                {({ height, width }) =>
-                                    <List
-                                        {...listProps}
-                                        keyChange={query.results.fingerprint}
-                                        height={height}
-                                        width={width}
-                                        ref={(list) => {
-                                            registerChild(list);
-                                            this.listRef = list;
-                                        }}
-                                        rowHeight={rowHeight}
-                                        headerHeight={50}
-                                        onRowsRendered={onRowsRendered}
-                                        rowRenderer={rowRenderer || this.rowRenderer}
-                                        rowCount={query.results.rows.length}
-                                        keyChange={query.results.fingerprint}
-                                    />}
-                            </AutoSizer>}
+                                height={height}
+                                width={width}
+                                ref={(list) => {
+                                    registerChild(list);
+                                    this.listRef = list;
+                                }}
+                                rowHeight={rowHeight}
+                                headerHeight={50}
+                                onRowsRendered={onRowsRendered}
+                                rowRenderer={rowRenderer || this.rowRenderer}
+                                rowCount={query.results.rows.length}
+                                keyChange={query.results.fingerprint}
+                            />}
+                        </AutoSizer>}
                     </InfiniteLoader>
                 </Box>
             </Box>

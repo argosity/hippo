@@ -18,24 +18,33 @@ export default class Query extends BaseModel {
     @belongsTo src;
 
     @identifier id;
+
     @session pageSize = 20;
 
     @session initialField;
+
     @session idIndex;
+
     @session initialFieldIndex;
 
     @session sortField;
+
     @session sortAscending = false;
 
     @session results;
+
     @session customSyncUrl;
 
     @session autoFetch = false;
+
     @observable autoFetchDisposer;
+
     @field({ type: 'object' }) syncOptions = {};
 
     @hasMany({ model: Clause, inverseOf: 'query' }) clauses;
+
     @hasMany({ model: Operator, inverseOf: 'query' }) operators;
+
     @hasMany({ model: Field, inverseOf: 'query' }) fields;
 
     constructor(attrs = {}) {

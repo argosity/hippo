@@ -1,23 +1,24 @@
 import { pick, merge, includes, omit } from 'lodash';
 import { action } from 'mobx';
 import Sync from './models/sync';
-
 import {
     BaseModel, identifiedBy, field, identifier, computed,
 } from './models/base';
-
 import Config from './config';
 
 @identifiedBy('hippo/user-session')
 class Session extends BaseModel {
 
     @identifier id;
+
     @field login;
+
     @field password;
 
     set syncData(data) {
         this.data = data;
     }
+
     @computed
     get syncData() {
         return this.serialize();
@@ -31,12 +32,19 @@ const ADMIN = 'administrator';
 export class UserModel extends BaseModel {
 
     @identifier id;
+
     @field login;
+
     @field name;
+
     @field email;
+
     @field password;
+
     @field password_confirm;
+
     @field({ type: 'array' }) role_names;
+
     @field({ type: 'object' }) access;
 
     set is_admin(val) {

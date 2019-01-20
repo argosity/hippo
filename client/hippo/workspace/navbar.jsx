@@ -8,8 +8,8 @@ import Extensions from '../extensions';
 function Logo() {
     const url = get(Config, 'system_settings.logo.thumbnail_url');
     const title = get(Extensions, 'controlling.title');
-    return url ?
-        <img alt={`${title} Logo`} src={`//${Config.api_host}${url}`} /> : <span>{title}</span>;
+    return url
+        ? <img alt={`${title} Logo`} src={`//${Config.api_host}${url}`} /> : <span>{title}</span>;
 }
 
 export default class Navbar extends React.Component {

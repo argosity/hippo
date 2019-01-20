@@ -3,7 +3,7 @@ import {
 } from 'lodash';
 import { reaction, observe, toJS } from 'mobx';
 import objectHash from 'object-hash';
-import Sync from '../sync';
+import sync from '../sync';
 import Result from './result';
 import {
     belongsTo, computed, identifiedBy, observable, action,
@@ -13,14 +13,23 @@ import {
 export default class ArrayResult extends Result {
 
     @belongsTo query;
+
     @observable totalCount = 0;
+
     @observable rows;
+
     @observable rowUpdateCount = 0;
+
     @observable sortAscending;
+
     @observable sortField;
+
     @observable syncInProgress;
+
     @observable metaData;
+
     rows = observable.array([], { deep: false });
+
     loadingRows = observable.array([], { deep: false })
 
     constructor(attrs) {
@@ -86,9 +95,9 @@ export default class ArrayResult extends Result {
     }
 
     observeModelSave(model, index) {
-        observe(model, 'syncInProgress', ({ newValue, oldValue }) => {
-            if (newValue && !oldValue && newValue.isUpdate) {
-                newValue.whenComplete(() => {
+        observe(model.sync, 'isSaving', ({ newValue, oldValue }) => {
+            if (newValue && !oldValue) {
+                model.sync.whenComplete('fetch', () => {
                     const row = this.rows[index];
                     this.query.info.loadableFields.forEach((f) => {
                         if (!isUndefined(model[f.id])) { row[f.dataIndex] = model[f.id]; }
@@ -110,13 +119,13 @@ export default class ArrayResult extends Result {
 
     fetchModelForRow(index, syncOptions = {}) {
         const model = this.modelForRow(index);
-        return model.isNew ? Promise.resolve(model) :
-            model.fetch(extend({}, toJS(this.query.syncOptions), syncOptions));
+        return model.isNew ? Promise.resolve(model)
+            : model.sync.fetch(extend({}, toJS(this.query.syncOptions), syncOptions));
     }
 
     onQuerySortChange() {
-        if ((this.sortAscending === this.query.sortAscending) &&
-            (this.sortField === this.query.sortField)) {
+        if ((this.sortAscending === this.query.sortAscending)
+            && (this.sortField === this.query.sortField)) {
             return;
         }
         this.sortField = this.query.sortField;
@@ -170,9 +179,9 @@ export default class ArrayResult extends Result {
 
     canKeySetPage(index) {
         return Boolean(
-            this.rows.length && this.rows.length >= index &&
-            this.query.sortField && this.query.sortField.dataIndex &&
-            !isEmpty(this.rows[index - 1]),
+            this.rows.length && this.rows.length >= index
+            && this.query.sortField && this.query.sortField.dataIndex
+            && !isEmpty(this.rows[index - 1]),
         );
     }
 
@@ -218,7 +227,7 @@ export default class ArrayResult extends Result {
 
         this.syncInProgress = options;
 
-        return Sync.perform(this.query.info.syncUrl, options).then((resp) => {
+        return sync(this.query.info.syncUrl, options).then((resp) => {
             const rows = resp.data || [];
             if (start > this.rows.length) {
                 range(this.rows.length, start).forEach(() => this.rows.push([]));

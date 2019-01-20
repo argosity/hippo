@@ -51,9 +51,8 @@ export default class SmoothScroll {
 
         const startPos  = window.pageYOffset;
 
-        const endPos    =
-            destination.getBoundingClientRect().top -
-                document.body.getBoundingClientRect().top;
+        const endPos    =            destination.getBoundingClientRect().top
+                - document.body.getBoundingClientRect().top;
 
         const startTime = Date.now();
 

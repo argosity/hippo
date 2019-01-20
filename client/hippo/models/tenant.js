@@ -33,9 +33,13 @@ export default class Tenant extends BaseModel {
     }
 
     @identifier({ type: 'string' }) identifier = 'current';
+
     @field name;
+
     @field email;
+
     @field slug;
+
     @field subscription_id;
 
     @computed get hasSubscription() {
@@ -47,8 +51,8 @@ export default class Tenant extends BaseModel {
     }
 
     @computed get subscription() {
-        return this.subscription_id ?
-            find(Subscription.all, { id: this.subscription_id }) : null;
+        return this.subscription_id
+            ? find(Subscription.all, { id: this.subscription_id }) : null;
     }
 
     set syncData(data) {

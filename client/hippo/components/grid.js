@@ -1,5 +1,5 @@
 import { Grid, Cell } from 'styled-css-grid';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import media from './grid/media';
 
 const middle = css`
@@ -13,7 +13,7 @@ const gap = css`
   }
 `;
 
-const StyledCell = Cell.extend`
+const StyledCell = styled(Cell)`
   ${props => props.middle && middle}
   ${props => props.gap && gap}
   ${props => props.desktop && media.desktop`grid-column-end: span ${props.desktop};`}

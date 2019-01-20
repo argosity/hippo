@@ -21,8 +21,8 @@ export default class TagsWrapper extends React.Component {
     get tags() {
         if (isEmpty(this.props.value)) {
             return [];
-        } else if (!isArray(this.props.value) &&
-            !isObservableArray(this.props.value)) {
+        } if (!isArray(this.props.value)
+            && !isObservableArray(this.props.value)) {
             return [this.props.value];
         }
         return this.props.suggestions;

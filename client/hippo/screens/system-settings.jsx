@@ -9,7 +9,7 @@ import Asset  from '../components/asset';
 import Settings from '../models/system-setting';
 import Warning from '../components/warning-notification';
 import { Toolbar, SaveButton } from '../components/toolbar';
-import ScreenInstance from '../screens/instance';
+import ScreenInstance from './instance';
 import Extensions from '../extensions';
 import MailerConfig from './system-settings/mailer-config';
 import Config from '../config';
@@ -20,6 +20,7 @@ import './system-settings/system-settings.scss';
 export default class SystemSettings extends React.Component {
 
     @observable settings = new Settings();
+
     extensionPanelRefs = new Map();
 
     static propTypes = {
@@ -47,7 +48,7 @@ export default class SystemSettings extends React.Component {
 
     constructor(props) {
         super(props);
-        this.settings.fetch();
+        this.settings.sync.fetch();
     }
 
     @action.bound

@@ -43,6 +43,7 @@ export default class FormField extends React.Component {
         type:      'text',
         tabIndex: 0,
     }
+
     focus() {
         if (this.inputRef) { this.inputRef.focus(); }
     }

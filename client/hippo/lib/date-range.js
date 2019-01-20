@@ -18,6 +18,7 @@ function coerceToMoment(change) {
 export default class DateRange {
 
     @observable start;
+
     @observable end;
 
     constructor(range) {

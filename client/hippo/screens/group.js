@@ -11,9 +11,13 @@ export default class ScreensGroup extends BaseModel {
     static all = All;
 
     @identifier({ type: 'string' }) id;
+
     @session title;
+
     @session description;
+
     @session icon;
+
     @session active = false;
 
     @session({ type: 'array' }) screens;
@@ -21,6 +25,7 @@ export default class ScreensGroup extends BaseModel {
     static forId(groupId) {
         return All.find(g => g.id === groupId);
     }
+
     static register(json) {
         let group = this.forId(json.id);
         if (!group) {

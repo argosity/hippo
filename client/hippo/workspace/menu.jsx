@@ -44,6 +44,7 @@ class Logout extends React.Component {
         if (!User.isLoggedIn) { return null; }
         return (
             <MenuLink
+                path="/logout"
                 icon={<Icon name="sign-out-alt" />}
                 label="Log Out"
                 onClick={this.onLogoutClick}
@@ -94,12 +95,11 @@ export default class WorkspaceMenu extends React.Component {
                     <Logo />
                     {this.renderClose()}
                 </Box>
-                {Screens.activeGroups.map(g =>
-                    <Group
-                        key={g.id}
-                        group={g}
-                        onMenuSelection={this.onMenuSelection}
-                    />)}
+                {Screens.activeGroups.map(g => <Group
+                    key={g.id}
+                    group={g}
+                    onMenuSelection={this.onMenuSelection}
+                />)}
                 {this.renderUnGrouped()}
                 <Logout />
             </Box>

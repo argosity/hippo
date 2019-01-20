@@ -13,11 +13,15 @@ export default class Subscription extends BaseModel {
     }
 
     @identifier id;
+
     @field name;
+
     @field description;
+
     @field price;
 
     @field nonce;
+
     @session authorization;
 
     @computed get formattedPrice() {

@@ -6,12 +6,10 @@ let nextResponse = {
     message: 'success',
 };
 
-export default {
-    forModel: jest.fn(() => Promise.resolve(nextResponse)),
-    forCollection: jest.fn(() => Promise.resolve(nextResponse)),
-    perform: jest.fn(() => Promise.resolve(nextResponse)),
+const sync = jest.fn(() => Promise.resolve(nextResponse));
 
-    setResponseData(response) {
-        nextResponse = response;
-    },
+sync.setResponseData = (response) => {
+    nextResponse = response;
 };
+
+export default sync;

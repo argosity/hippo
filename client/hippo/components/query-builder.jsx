@@ -43,8 +43,10 @@ export default class QueryBuilder extends React.Component {
         const { query, typeHandlers } = this.props;
         return (
             <div className="query-builder">
-                {query.info.visibleClauses.map(c =>
-                    <Clause key={c.id} clause={c} typeHandlers={typeHandlers} />)}
+                {query.info.visibleClauses.map(c => <Clause
+                    key={c.id}
+                    clause={c}
+                    typeHandlers={typeHandlers} />)}
             </div>
         );
     }

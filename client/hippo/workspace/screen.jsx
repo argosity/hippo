@@ -13,9 +13,10 @@ const ScreenView = observer((props) => {
 });
 ScreenView.displayName = 'ScreenView';
 
+export default
 @inject('routing')
 @observer
-export default class Screen extends React.Component {
+class Screen extends React.Component {
 
     static propTypes = {
         match: PropTypes.shape({
@@ -48,12 +49,11 @@ export default class Screen extends React.Component {
                 align="stretch"
 
             >
-                {displaying.models.map(s =>
-                    <ScreenView
-                        key={s.id}
-                        {...this.props.match.params}
-                        screen={s}
-                    />)}
+                {displaying.models.map(s => <ScreenView
+                    key={s.id}
+                    {...this.props.match.params}
+                    screen={s}
+                />)}
             </Box>
 
         );

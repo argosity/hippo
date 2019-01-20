@@ -1,12 +1,10 @@
 // credit to https://github.com/jayphelps/core-decorators/blob/master/src/lazy-initialize.js
 export default function lazyGetter(target, key, descriptor) {
-    const {
-        configurable, enumerable, initializer, value,
-    } = descriptor;
+    const { configurable, initializer, value } = descriptor;
 
     return {
         configurable,
-        enumerable,
+        enumerable: false,
 
         get() {
             // This happens if someone accesses the
@@ -19,7 +17,7 @@ export default function lazyGetter(target, key, descriptor) {
 
             Object.defineProperty(this, key, {
                 configurable,
-                enumerable,
+                enumerable: false,
                 writable: false,
                 value: ret,
             });

@@ -83,9 +83,9 @@ export default class ImageResize {
     };
 
     handleClick = (evt) => {
-        if (evt.target &&
-            evt.target.tagName &&
-            'IMG' === evt.target.tagName.toUpperCase()
+        if (evt.target
+            && evt.target.tagName
+            && 'IMG' === evt.target.tagName.toUpperCase()
         ) {
             if (this.img === evt.target) {
                 // we are already focused on this image

@@ -1,11 +1,9 @@
 import { each, range } from 'lodash';
-
 import Group      from 'hippo/screens/group';
 import Screen     from 'hippo/screens/definition';
 import Menu       from 'hippo/workspace/menu';
 import MenuGroup  from 'hippo/workspace/menu-group';
 import { MenuOption } from 'hippo/workspace/menu-option';
-
 import { Snapshot } from 'hippo/testing/screens';
 import { getTestScreen } from '../test-models';
 

@@ -11,7 +11,7 @@ export default function Help({ message, ...ttProps }) {
             title={message}
             {...ttProps}
         >
-            <CircleQuestion colorIndex="brand" />
+            <CircleQuestion />
         </Tooltip>
     );
 }
